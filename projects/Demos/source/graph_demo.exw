@@ -1,0 +1,215 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+--with define safe
+
+include gui/gui.e as gui
+include gui/objects/graphs.e as graphs
+include gui/dialogs/msgbox.e as msgbox
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+
+atom void
+
+global constant 
+App_Name = "graphs",
+App_Version = "1.0.a1",
+App_AboutText = {
+    App_Name & "™ " & App_Version & " (alpha)",
+    "Copyright© 2014 Ryan Johnson™",
+    "programmed by Ryan Johnson",
+    "in the Euphoria programming language",
+    "with Redy Application Environment™"
+},
+App_Image_Path = "../../modules/gui/images"
+
+--Build test data series
+/*sequence testdata1 = repeat(repeat(0, 1024), 4)
+for s = 1 to length(testdata1) do
+    for d = 1 to length(testdata1[s]) do
+        if s = 1 then
+            testdata1[s][d] = d
+        else
+            testdata1[s][d] = rand(255)
+        end if
+    end for
+end for*/
+
+constant DataPoints = 50, DataPlots = 10
+sequence pldatay = repeat(repeat(0, DataPoints), DataPlots)
+for p = 1 to length(pldatay) do
+    for d = 1 to length(pldatay[p]) do
+        pldatay[p][d] = rand(255)
+    end for
+end for
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "canGraphs" then
+            --pretty_print(1, {"gui_event", evwidget, evtype, evdata}, {2})
+            switch evtype do
+                case "resized" then
+                    sequence cmds = {
+                        {DR_PenColor, rgb(220, 150, 200)},
+                        {DR_Rectangle, True, 0, 0, evdata[1], evdata[2]}
+                    }
+                    --gui:wproc(evwidget, "clear_handles", {})
+                    gui:wproc(evwidget, "draw_background", {cmds})
+            end switch
+            graphs:event(evwidget, evtype, evdata)
+    end switch
+end procedure
+
+
+procedure graphs_event(object graphsname, object evtype, object evdata)
+    --pretty_print(1, {"graphs_event", graphsname, evtype, evdata}, {2})
+    switch graphsname do
+        case "test1" then
+            switch evtype do
+                case "resized" then
+                     graphs:display("test1", {20, 20, evdata[1] - 20, floor(evdata[2] / 2) - 10})
+            end switch
+        case "test2" then
+            switch evtype do
+                case "resized" then
+                     graphs:display("test2", {20, floor(evdata[2] / 2) + 10, evdata[1] - 20, floor(evdata[2]) - 20})
+            end switch
+    end switch
+end procedure
+
+
+
+procedure stream_test()
+    while 1 do
+        for p = 1 to length(pldatay) do
+            pldatay[p] = rotate(pldatay[p], ROTATE_LEFT)
+            pldatay[p][$] = rand(255)
+            stream_plot_data("test1", "plot" & sprint(p), {}, pldatay[p])
+            stream_plot_data("test2", "plot" & sprint(p), {}, pldatay[p])
+        end for
+        task_yield()
+    end while
+end procedure
+atom stream_task
+    
+                
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"position", {50, 50}},
+        {"visible", 1},
+        {"size", {800, 580}}
+    })
+    
+    gui:load_bitmap("redy_logo", App_Image_Path & "/redy_logo.bmp")
+    
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "cntTop"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "equal"},
+        {"sizemode_y", "normal"},
+        {"align_x", "right"}
+    })
+
+    gui:wcreate({
+        {"name", "btnTest1"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Test1"}
+    })
+    gui:wcreate({
+        {"name", "btnTest2"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Test2"}
+    })    
+    gui:wcreate({
+        {"name", "btnTest3"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Test3"}
+    })
+    
+    gui:wcreate({
+        {"name", "cntBottom"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "canGraphs"},
+        {"parent", "cntBottom"},
+        {"class", "canvas"},
+        {"label", "graphs"},
+        {"handle_debug", 0}
+    })
+    
+    graphs:create("test1", "canGraphs", routine_id("graphs_event"))
+    graphs:create("test2", "canGraphs", routine_id("graphs_event"))
+    graphs:set_options("test1", {
+        --{"x_range", {0, DataPoints}},
+        {"y_range", {0, 255}}
+    })
+    graphs:set_options("test2", {
+        --{"x_range", {0, DataPoints}},
+        {"y_range", {0, 255}}
+    })
+    
+    for p = 1 to length(pldatay) do
+        create_plot("test1", "plot" & sprint(p), "Plot " & sprint(p), 0)
+        create_plot("test2", "plot" & sprint(p), "Plot " & sprint(p), 1)
+    end for
+    
+    stream_task = task_create(routine_id("stream_test"), {})
+    --task_schedule(stream_task, {0.25, 0.5})
+    task_schedule(stream_task, {0.1, 0.1})
+    
+    msgbox:msg("This is a refresh performance test, plotting graphs on a canvas widget.")
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+
+
+

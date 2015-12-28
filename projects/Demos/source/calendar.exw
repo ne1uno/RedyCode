@@ -1,0 +1,208 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+--with define safe
+
+include gui/gui.e as gui
+
+include gui/objects/calendar.e as cal
+include gui/objects/graphs.e as graph
+include gui/dialogs/msgbox.e as msgbox
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+
+atom void
+
+global constant 
+App_Name = "gui/objects/calendar.e test",
+App_Version = "0"
+
+constant DataPoints = 100, DataPlots = 10
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "canTest" then
+            switch evtype do
+                case "resized" then
+                    gui:wproc(evwidget, "clear_handles", {})
+                    
+                    cal:draw_month("calTest1", "canTest") --{100, 100, evdata[1]-100, evdata[2]-100})
+                    
+                    /*sequence dayrects = cal:day_rects("calTest1")
+                    sequence daystrings = cal:day_strings("calTest1")
+                    sequence gname
+                    for d = 1 to length(dayrects) do
+                        gname = "graphTest1_" & daystrings[d]
+                        
+                        if not graph:exists(gname) then
+                            graph:create(gname)
+                            graph:set_options(gname, {
+                                --{"x_range", {0, DataPoints}},
+                                {"y_range", {0, 255}}
+                            })
+                            
+                            --Build random test data for new graph:
+                            sequence pldatay = repeat(repeat(0, DataPoints), DataPlots)
+                            for p = 1 to length(pldatay) do
+                                for x = 1 to length(pldatay[p]) do
+                                    pldatay[p][x] = rand(255)
+                                end for
+                            end for
+                            
+                            for p = 1 to length(pldatay) do
+                                --create_plot(sequence gname, sequence plname, sequence pllabel = "", atom plstyle = 0, object plcolor = {0})
+                                create_plot(gname, "plot" & sprint(p), "Plot " & sprint(p), 1)
+                                --set_plot_data(sequence gname, sequence plname, sequence pldatax, sequence pldatay)
+                                set_plot_data(gname, "plot" & sprint(p), {}, pldatay[p])
+                            end for
+                            
+                        end if
+                        --graph:draw(gname, "canTest", dayrects[d])
+                    end for*/
+                    
+                    /*sequence cmds = {
+                        {DR_PenColor, rgb(50, 50, 200)},
+                        {DR_TextColor, rgb(50, 50, 200)},
+                        {DR_Font, "Arial", 9, Bold}
+                    }
+                    for d = 1 to length(dayrects) do
+                        cmds &= {
+                            {DR_Rectangle, False, dayrects[d][1], dayrects[d][2], dayrects[d][3], dayrects[d][4]},
+                            {DR_PenPos, dayrects[d][1] + 2, dayrects[d][2] + 2},
+                            {DR_Puts, daystrings[d]}
+                        }
+                    end for
+                    gui:wproc(evwidget, "draw_background", {cmds})*/
+            end switch
+        case "btnPrevMonth" then
+            switch evtype do
+                case "clicked" then
+                    cal:nav_date("calTest1", -30)
+                    cal:draw_month("calTest1", "canTest")
+            end switch
+        case "btnNextMonth" then
+            switch evtype do
+                case "clicked" then
+                    cal:nav_date("calTest1", 30)
+                    cal:draw_month("calTest1", "canTest")
+            end switch
+    end switch
+end procedure
+
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"position", {50, 50}},
+        {"visible", 1},
+        {"size", {480, 420}}
+    })
+    
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "cntTop"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "equal"},
+        {"sizemode_y", "normal"},
+        {"align_x", "right"}
+    })
+    gui:wcreate({
+        {"name", "btnPrevMonth"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "<< Prev Month"}
+    })
+    gui:wcreate({
+        {"name", "btnNextMonth"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Next Month >>"}
+    })
+    
+    gui:wcreate({
+        {"name", "cntBottom"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "canTest"},
+        {"parent", "cntBottom"},
+        {"class", "canvas"},
+        {"label", "This is a Calendar!"},
+        {"handle_debug", 0}
+    })
+    
+    cal:create("calTest1")
+    
+    --msgbox:msg("This is a calendar canvas object test. Sorry, it isn't complete yet.")
+    
+    /*
+    --sequence dayrects = cal:month(today(), {0, 0, 640, 480})
+    
+    cal:create("cal1", "canPlots", routine_id("cal_event"))
+    
+    
+    plot:create("test1", "canPlots", routine_id("plot_event"))
+    plot:create("test2", "canPlots", routine_id("plot_event"))
+    plot:set_options("test1", {
+        --{"x_range", {0, DataPoints}},
+        {"y_range", {0, 255}}
+    })
+    plot:set_options("test2", {
+        --{"x_range", {0, DataPoints}},
+        {"y_range", {0, 255}}
+    })
+    
+    for p = 1 to length(pldatay) do
+        create_plot("test1", "plot" & sprint(p), "Plot " & sprint(p), 0)
+        create_plot("test2", "plot" & sprint(p), "Plot " & sprint(p), 1)
+    end for
+    
+    stream_task = task_create(routine_id("stream_test"), {})
+    --task_schedule(stream_task, {0.25, 0.5})
+    task_schedule(stream_task, {0.1, 0.1})
+    */
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+

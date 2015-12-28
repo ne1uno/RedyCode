@@ -1,0 +1,218 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+--with define safe
+
+global constant 
+App_Name = "Redy - gui/objects/textedit.e test",
+App_Version = "1.0.a1"
+
+
+include gui/gui.e as gui
+include gui/objects/textedit.e as txte
+include gui/dialogs/dialog_file.e as dlgfile
+include gui/dialogs/msgbox.e as msgbox
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+include std/filesys.e
+
+--include euphoria/tokenize.e
+
+sequence filenames = {}, tabnames = {}
+
+procedure create_tab(sequence filename, sequence txt)
+    gui:wcreate({
+        {"name", "tabFiles_" & filename},
+        {"parent", "tabFiles"},
+        {"class", "container"},
+        {"label", filename},
+        --{"tab", 1},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    --Text editor
+    txte:create({
+        {"name", "txt_" & filename},
+        {"label", "Welcome"},
+        {"view_mode", "syntax"},
+        {"syntax_mode", "euphoria"},
+        {"text", txt}
+    })
+    
+    txte:show("txt_" & filename, "canFiles_" & filename, "tabFiles_" & filename)
+end procedure
+
+procedure destroy_tab(sequence filename)
+    gui:wdestroy("tabFiles_" & filename)
+    
+    --Text editor
+    txte:destroy("txt_" & filename)
+end procedure
+
+
+
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "btnNew" then
+            --sequence ans = msgbox:waitmsg("Are you sure you want to close the current file?", "Question")
+            --if equal(ans, "Yes") then
+            --    txte:set_text("txt1", {""})
+            --end if
+            create_tab("Untitled", "")
+            
+        case "btnOpen" then
+            
+            atom fn
+            object ln, txt = ""
+            
+            
+            object selfiles = dlgfile:os_select_open_file("winMain", {{"Euphoria", "*.ex;*.ew;*.exw;*.e;*.txt"}, {"All", "*.*"}}, 0)
+            if sequence(selfiles) then
+                fn = open(selfiles, "r")
+                if fn = -1 then
+                    txt = "read_file() error!"
+                    selfiles = "read_file() error!"
+                else
+                    while 1 do
+                        ln = gets(fn)
+                        if sequence(ln) then
+                            --ln = remove_all(10, ln)
+                            --ln = remove_all(13, ln)
+                            txt &= ln
+                        else
+                            exit
+                        end if
+                    end while
+                    close(fn)
+                end if
+            else
+                txt = "no file selected!"
+                selfiles = "no file selected!"
+            end if
+            
+            --txt = tokenize:tokenize_string(txt)
+            --txt = pretty_sprint(txt, {2})
+            
+            create_tab(filename(selfiles), txt)
+    end switch
+end procedure
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"visible", 1},
+        {"size", {640, 480}},
+        {"position", {0, 0}}
+    })
+    
+    --gui:show_debug()
+    
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "cntLeft"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    --Toolbar
+    gui:wcreate({
+        {"name", "toolbarFile"},
+        {"parent", "winMain"},
+        {"class", "toolbar"},
+        {"label", "File"},
+        {"dock", "top"}
+    })
+    
+    gui:wcreate({
+        {"name", "btnNew"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "New"},
+        {"label", "New"}
+    })
+    gui:wcreate({
+        {"name", "btnOpen"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Open"},
+        {"label", "Open"}
+    })
+    gui:wcreate({
+        {"name", "btnSave"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Save"},
+        {"label", "Save"},
+        {"enabled", 0}
+    })
+    gui:wcreate({
+        {"name", "btnSaveAs"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "SaveAs"},
+        {"label", "SaveAs"},
+        {"enabled", 0}
+    })
+    
+    gui:wcreate({
+        {"name", "btnClose"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Close"},
+        {"label", "Close"},
+        {"enabled", 0}
+    })
+    
+    --tabs
+    gui:wcreate({
+        {"name", "tabFiles"},
+        {"parent", "cntLeft"},
+        {"class", "tabs"}
+    })
+    
+    create_tab("Untitled", {""})
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+

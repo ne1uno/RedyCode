@@ -1,0 +1,636 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+without warning
+
+global sequence
+App_Name = "Redy Widget Test",
+App_Version = "1.0.a5"
+
+include gui/gui.e as gui
+include std/task.e
+include std/text.e
+include std/pretty.e
+
+include gui/dialogs/about.e as about
+
+
+sequence WelcomeText =
+"Thank you for trying Redy" & 153 & " application environment!\n" &
+"\n~~~~\n\n" &
+"Redy is the first widget toolkit for the Euphoria programing language that " &
+"is written in pure Euphoria code. The Redy widget system was designed from " &
+"scratch and has a unique API that makes it very easy to build a professional " &
+"quality graphical interface for your Euphoria programs.\n" &
+"\n" &
+"Welcome to the Demo Application. This program should give you a good idea of " &
+"what Redy can do and how it might be useful for your next project.\n" &
+"\n~~~~\n\n" &
+RedyAE_AboutText,
+BackCmds = {
+    {DR_Image, "redy_logo", 0, 0},
+    {DR_PenColor, rgb(200, 80, 150)},
+    {DR_Rectangle, True, 100, 300, 350, 220},
+    {DR_Font, "Arial", 12, Bold},
+    {DR_TextColor, rgb(0, 127, 0)},
+    {DR_PenPos, 160, 10},
+    {DR_Puts, "Canvas Demo"},
+    {DR_Font, "Arial", 12, Italic},
+    {DR_TextColor, rgb(0, 0, 0)}
+},
+HandleTestCmds = {
+    {DR_Rectangle, True, 100, 300, 350, 220}
+}
+
+
+procedure progress_gui_event(object evwidget, object evtype, object evdata)
+    /*switch evwidget do
+        case "" then
+            switch evtype do
+                case "" then 
+            end switch
+    end switch*/
+end procedure
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    gui:debug("demo gui_event", {evwidget, evtype, evdata})
+    switch evwidget do
+        case "mnuMain.mnuDemo" then
+            switch evdata do
+                case "Exit" then
+                    gui:wdestroy("winMain")
+            end switch
+            
+        case "mnuMain.mnuDemo.mnuShow Demo" then
+            switch evdata do
+                case "Welcome" then
+                    gui:wproc("lstDemo", "select_items", {{1}})
+                case "Automatic Layout" then
+                    gui:wproc("lstDemo", "select_items", {{2}})
+                case "Trees and Lists" then
+                    gui:wproc("lstDemo", "select_items", {{3}})
+                case "Dialogs" then
+                    gui:wproc("lstDemo", "select_items", {{4}})
+                case "Canvases" then
+                    gui:wproc("lstDemo", "select_items", {{5}})
+                case "Tasks and Operations" then
+                    gui:wproc("lstDemo", "select_items", {{6}})
+                case "Errors and Debugging" then
+                    gui:wproc("lstDemo", "select_items", {{7}})
+            end switch
+            
+        case "mnuMain.mnuHelp" then
+            switch evdata do
+                case "About Redy..." then
+                    about:show()
+            end switch
+            
+        case "lstDemo" then
+            --show_demo(evdata[1][1])
+            
+    end switch
+end procedure
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"position", {50, 50}},
+        {"visible", 1},
+        {"size", {700, 580}}
+    })
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "mnuMain"},
+        {"parent", "winMain"},
+        {"class", "menubar"},
+        {"menus", {
+            {"Demo", {
+                {"Show Demo", {
+                    "Welcome",
+                    "Automatic Layout",
+                    "Trees and Lists",
+                    "Dialogs",
+                    "Canvases",
+                    "Tasks and Operations",
+                    "Errors and Debugging"
+                    }
+                },
+                "-",
+                "Exit"
+                }
+            },
+            {"Help", {
+                "About Redy..."
+                }
+            }
+        }
+    }})
+    
+    gui:wcreate({
+        {"name", "info1"},
+        {"parent", "winMain"},
+        {"class", "infobar"}
+    })
+    gui:load_bitmap("eu16", "eu16.bmp")
+    
+    --Fancylist panel
+    gui:wcreate({
+        {"name", "panelFancy"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Fancy"},
+        {"dock", "left"}
+    })
+    gui:wcreate({
+        {"name", "cntFancy"},
+        {"parent", "panelFancy"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "lstFancy"},
+        {"parent", "cntFancy"},
+        {"class", "fancylist"},
+        --{"size", {200, 0}},
+        {"label", "Select a Demo"}
+    })
+    gui:wproc("lstFancy", "clear_list", {})
+    gui:wproc("lstFancy", "add_list_items", {{
+        {0, "Welcome", "Redy Demo Application"},
+        {1, "Automatic Layout", "Automatic layout engine"},
+        {2, "Trees and Lists", "Interacting with data"},
+        {2, "Dialogs", "Non-resizeable dialogs"},
+        {3, "Canvases", "Interactive graphics"},
+        {3, "Tasks and Operations", "Multitasking operations"},
+        {4, "Errors and Debugging", "Showing debug information"}
+    }})
+    gui:wproc("lstFancy", "select_items", {{1}})
+    
+    --Textbox panel
+    gui:wcreate({
+        {"name", "panelText"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Text"},
+        {"dock", "left"}
+    })
+    gui:wcreate({
+        {"name", "cntText"},
+        {"parent", "panelText"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo"},
+        {"parent", "cntText"},
+        {"class", "textbox"},
+        {"label", "Textbox"},
+        {"text", WelcomeText}
+    })
+    
+    --Treebox panel
+    gui:wcreate({
+        {"name", "panelTree"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Tree"},
+        {"dock", "right"}
+    })
+    gui:wcreate({
+        {"name", "cntTree"},
+        {"parent", "panelTree"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "treTest"},
+        {"parent", "cntTree"},
+        {"class", "treebox"},
+        {"label", "Tree Box"}
+        --{"size", {160, 0}}
+    })
+    sequence treenodes = {}
+    treenodes &= gui:wfunc("treTest", "add_item", {0, "eu16", "Root 1", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {0, "eu16", "Root 2", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {0, "eu16", "Root 3", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {0, "eu16", "Root 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {0, "eu16", "Root 5", 0})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[1], "eu16", "item 1", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[1], "eu16", "item 2", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[1], "eu16", "item 3", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[1], "eu16", "item 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[1], "eu16", "item 5", 0})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[2], "eu16", "item 1", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[2], "eu16", "item 2", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[2], "eu16", "item 3", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[2], "eu16", "item 4", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[2], "eu16", "item 5", 1})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[3], "eu16", "item 1", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[3], "eu16", "item 2", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[3], "eu16", "item 3", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[3], "eu16", "item 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[3], "eu16", "item 5", 0})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[4], "eu16", "item 1", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[4], "eu16", "item 2", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[4], "eu16", "item 3", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[4], "eu16", "item 4", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[4], "eu16", "item 5", 1})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[5], "eu16", "item 1", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[5], "eu16", "item 2", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[5], "eu16", "item 3", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[5], "eu16", "item 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[5], "eu16", "item 5", 0})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[8], "eu16", "item 1", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[8], "eu16", "item 2", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[8], "eu16", "item 3", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[8], "eu16", "item 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[8], "eu16", "item 5", 0})
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[10], "eu16", "item 1", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[10], "eu16", "item 2", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[10], "eu16", "item 3", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[10], "eu16", "item 4", 1})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[10], "eu16", "item 5", 1})        
+    
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[32], "eu16", "item 1", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[32], "eu16", "item 2", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[32], "eu16", "item 3", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[32], "eu16", "item 4", 0})
+    treenodes &= gui:wfunc("treTest", "add_item", {treenodes[32], "eu16", "item 5", 0})        
+    
+    
+    --Listbox panel
+    gui:wcreate({
+        {"name", "panelList"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "List"},
+        {"dock", "right"}
+    })
+    gui:wcreate({
+        {"name", "cntList"},
+        {"parent", "panelList"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "lstTest"},
+        {"parent", "cntList"},
+        {"class", "listbox"},
+        {"label", "List Box"}
+    })
+    gui:wproc("lstTest", "clear_list", {})
+    gui:wproc("lstTest", "add_column", {{"Type", 50, 0, 0}})
+    gui:wproc("lstTest", "add_column", {{"Name", 60, 0, 0}})
+    gui:wproc("lstTest", "add_column", {{"Details", 120, 0, 0}})
+    gui:wproc("lstTest", "add_list_items", {{
+        {rgb(127, 0, 0), "Type 0", "Item 1", "Extra information"},
+        {rgb(127, 127, 0), "Type 0", "Item 2", "Extra information"},
+        {rgb(127, 0, 127), "Type 1", "Item 3", "Extra information"},
+        {rgb(0, 127, 127), "Type 1", "Item 4", "Extra information"},
+        {rgb(127, 64, 0), "Type 1", "Item 5", "Extra information"},
+        {rgb(128, 0, 255), "Type 2", "Item 6", "Extra information"},
+        {rgb(192, 0, 64), "Type 1", "Item 8", "Extra information"},
+        {rgb(127, 64, 0), "Type 0", "Item 1", "Extra information"},
+        {rgb(127, 127, 64), "Type 0", "Item 2", "Extra information"},
+        {rgb(64, 255, 127), "Type 1", "Item 3", "Extra information"},
+        {rgb(64, 0, 255), "Type 1", "Item 4", "Extra information"},
+        {rgb(127, 64, 127), "Type 1", "Item 5", "Extra information"},
+        {rgb(128, 64, 128), "Type 2", "Item 6", "Extra information"},
+        {rgb(192, 64, 64), "Type 1", "Item 8", "Extra information"}
+    }})
+    
+    --Canvas panel
+    gui:wcreate({
+        {"name", "panelCanvas"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Canvas"},
+        {"dock", "right"}
+    })
+    gui:wcreate({
+        {"name", "cntCanvas"},
+        {"parent", "panelCanvas"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "canDemo"},
+        {"parent", "cntCanvas"},
+        {"class", "canvas"},
+        {"label", "Canvas Demo"},
+        {"handle_debug", 0}
+    })
+    gui:wproc("canDemo", "set_background_pointer", {"Crosshair"})
+    gui:wproc("canDemo", "draw_background", {BackCmds})
+    --gui:wproc("canDemo", "draw_foreground", {cmds})
+    gui:wproc("canDemo", "set_handle", {"handletest", HandleTestCmds, "Link"})
+    
+    
+    --Top panel
+    gui:wcreate({
+        {"name", "panelText2"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Text"},
+        {"dock", "top"}
+    })
+    gui:wcreate({
+        {"name", "cntText2"},
+        {"parent", "panelText2"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo2"},
+        {"parent", "cntText2"},
+        {"class", "textbox"},
+        {"label", "Textbox"},
+        {"text", WelcomeText}
+    })
+    
+    gui:wcreate({
+        {"name", "tabGroup1"},
+        {"parent", "winMain"},
+        {"class", "tabs"},
+        {"dock", "top"}
+    })
+    
+    gui:wcreate({
+        {"name", "panelText3"},
+        {"parent", "tabGroup1"},
+        {"class", "panel"},
+        {"label", "TextA"},
+        {"tab", 1}
+    })
+    gui:wcreate({
+        {"name", "cntText3"},
+        {"parent", "panelText3"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo3"},
+        {"parent", "cntText3"},
+        {"class", "textbox"},
+        {"label", "TextboxA"},
+        {"text", {"A text box\n"}}
+    })
+    
+    gui:wcreate({
+        {"name", "panelText4"},
+        {"parent", "tabGroup1"},
+        {"class", "panel"},
+        {"label", "TextB"},
+        {"tab", 2}
+    })
+    gui:wcreate({
+        {"name", "cntText4"},
+        {"parent", "panelText4"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo4"},
+        {"parent", "cntText4"},
+        {"class", "textbox"},
+        {"label", "TextboxB"},
+        {"text", {"Another textbox"}}
+    })
+    
+    gui:wcreate({
+        {"name", "panelText7"},
+        {"parent", "tabGroup1"},
+        {"class", "panel"},
+        {"label", "TextC"},
+        {"tab", 2}
+    })
+    gui:wcreate({
+        {"name", "cntText7"},
+        {"parent", "panelText7"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo7"},
+        {"parent", "cntText7"},
+        {"class", "textbox"},
+        {"label", "TextboxC"},
+        {"text", {"Another textbox"}}
+    })
+    
+    --Bottom panel
+    gui:wcreate({
+        {"name", "panelText5"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Text"},
+        {"dock", "bottom"}
+    })
+    gui:wcreate({
+        {"name", "cntText5"},
+        {"parent", "panelText5"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo5"},
+        {"parent", "cntText5"},
+        {"class", "textbox"},
+        {"label", "Textbox"},
+        {"text", WelcomeText}
+    })
+    
+    gui:wcreate({
+        {"name", "panelText6"},
+        {"parent", "winMain"},
+        {"class", "panel"},
+        {"label", "Text"},
+        {"dock", "bottom"}
+    })
+    gui:wcreate({
+        {"name", "cntText6"},
+        {"parent", "panelText6"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtDemo6"},
+        {"parent", "cntText6"},
+        {"class", "textbox"},
+        {"label", "Textbox"},
+        {"text", WelcomeText}
+    })
+    
+    /*
+    --Dock window
+    gui:wcreate({
+        {"name", "winDock1"},
+        {"class", "window"},
+        {"style", "tool"},
+        {"title", "Dock 1"},
+        {"position", {850, 50}},
+        {"visible", 1},
+        {"size", {300, 580}}
+    })
+    --Listbox panel
+    gui:wcreate({
+        {"name", "panelListD"},
+        {"parent", "winDock1"},
+        {"class", "panel"},
+        {"label", "List"},
+        {"dock", "right"}
+    })
+    gui:wcreate({
+        {"name", "cntListD"},
+        {"parent", "panelListD"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "lstTestD"},
+        {"parent", "cntList"},
+        {"class", "listbox"},
+        {"label", "List Box"}
+    })
+    gui:wproc("lstTestD", "clear_list", {})
+    gui:wproc("lstTestD", "add_column", {{"Type", 50, 0, 0}})
+    gui:wproc("lstTestD", "add_column", {{"Name", 60, 0, 0}})
+    gui:wproc("lstTestD", "add_column", {{"Details", 120, 0, 0}})
+    gui:wproc("lstTestD", "add_list_items", {{
+        {rgb(127, 0, 0), "Type 0", "Item 1", "Extra information"},
+        {rgb(127, 127, 0), "Type 0", "Item 2", "Extra information"},
+        {rgb(127, 0, 127), "Type 1", "Item 3", "Extra information"},
+        {rgb(0, 127, 127), "Type 1", "Item 4", "Extra information"},
+        {rgb(127, 64, 0), "Type 1", "Item 5", "Extra information"},
+        {rgb(128, 0, 255), "Type 2", "Item 6", "Extra information"},
+        {rgb(192, 0, 64), "Type 1", "Item 8", "Extra information"},
+        {rgb(127, 64, 0), "Type 0", "Item 1", "Extra information"},
+        {rgb(127, 127, 64), "Type 0", "Item 2", "Extra information"},
+        {rgb(64, 255, 127), "Type 1", "Item 3", "Extra information"},
+        {rgb(64, 0, 255), "Type 1", "Item 4", "Extra information"},
+        {rgb(127, 64, 127), "Type 1", "Item 5", "Extra information"},
+        {rgb(128, 64, 128), "Type 2", "Item 6", "Extra information"},
+        {rgb(192, 64, 64), "Type 1", "Item 8", "Extra information"}
+    }})
+    */
+    
+    --Toolbars
+    gui:wcreate({
+        {"name", "toolbarFile"},
+        {"parent", "winMain"},
+        {"class", "toolbar"},
+        {"label", "File"},
+        {"dock", "top"}
+    })
+    
+    gui:wcreate({
+        {"name", "btnNew"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "New"},
+        {"label", "New"}
+    })
+    gui:wcreate({
+        {"name", "btnOpen"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Open"},
+        {"label", "Open"}
+    })
+    gui:wcreate({
+        {"name", "btnSave"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Save"},
+        {"label", "Save"}
+    })
+    gui:wcreate({
+        {"name", "btnSaveAs"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "SaveAs"},
+        {"label", "SaveAs"}
+    })
+    
+    gui:wcreate({
+        {"name", "txtInfo"},
+        {"parent", "toolbarFile"},
+        {"class", "textbox"},
+        {"text", "Plain Text"},
+        {"size", {100, 0}}
+    })
+    
+    --main area
+    gui:wcreate({
+        {"name", "txtMain"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"label", "Textbox"},
+        {"text", WelcomeText}
+    })
+    
+    gui:show_debug()
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+
