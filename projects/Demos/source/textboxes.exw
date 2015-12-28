@@ -1,0 +1,146 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+--with define safe
+
+global constant 
+App_Name = "Redy Demo: Textbox widget class",
+App_Version = "1.0.a1"
+
+include gui/gui.e as gui
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+
+
+sequence WelcomeText =
+"Thank you for trying Redy" & 153 & " application environment!\n" &
+"\n~~~~\n\n" &
+"Redy is the first widget toolkit for the Euphoria programing language that " &
+"is written in pure Euphoria code. The Redy widget system was designed from " &
+"scratch and has a unique API that makes it very easy to build a professional " &
+"quality graphical interface for your Euphoria programs.\n" &
+"\n" &
+"Welcome to the Demo Application. This program should give you a good idea of " &
+"what Redy can do and how it might be useful for your next project.\n" &
+"\n~~~~\n\n" &
+RedyAE_AboutText
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    --switch evwidget do
+    --end switch
+end procedure
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"visible", 1},
+        {"size", {640, 480}}
+    })
+    
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "txtNumber"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "number"},
+        {"label", "Number"},
+        {"text", "1024"}
+        --{"show_control", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "txtText"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "text"},
+        {"label", "Text"},
+        {"text", WelcomeText}
+    })
+    
+    gui:wcreate({
+        {"name", "txtText2"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "text"},
+        {"label", "Text"},
+        {"label_position", "side"},
+        {"text", WelcomeText}
+    })
+    
+    gui:wcreate({
+        {"name", "txtString"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "string"},
+        {"label", "String"},
+        {"text", "This is a test"}
+    })
+    
+    gui:wcreate({
+        {"name", "txtItem"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "item"},
+        {"label", "Item"},
+        {"text", "None"}
+        --{"show_control", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "txtDatetime"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "datetime"},
+        {"label", "Datetime"},
+        {"text", "2014-11-18 14:58:27"}
+        --{"show_control", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "txtPassword"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "password"},
+        {"label", "Password"},
+        {"text", "idontknow"} 
+    })
+    
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+

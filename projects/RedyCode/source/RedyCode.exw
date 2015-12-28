@@ -1,0 +1,489 @@
+-- This file is part of RedyCode™ Integrated Development Environment
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+
+
+--TODO: research adding icon to exe file: 'wrc RedyCode.exe RedyCode.rc'
+
+
+without warning
+
+--Redy Application info
+global constant 
+App_Name = "RedyCode",
+App_Version = "1.0.0a",
+App_AboutText = {
+    App_Name & "™ " & App_Version & " (alpha)",
+    "Copyright© 2015™ Ryan Johnson",
+    "Programmed in the Euphoria programming language",
+    "with Redy™ Application Environment"
+},
+ApacheLicense = 
+"Licensed under the Apache License, Version 2.0 (the \"License\"); " &
+"you may not use this file except in compliance with the License. " &
+"You may obtain a copy of the License at" &
+"\n" &
+"  http://www.apache.org/licenses/LICENSE-2.0\n" &
+"\n" &
+"Unless required by applicable law or agreed to in writing, software " &
+"distributed under the License is distributed on an \"AS IS\" BASIS, " &
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. " &
+"See the License for the specific language governing permissions and " &
+"limitations under the License."
+
+
+--redylib includes
+include gui/gui.e as gui
+include gui/dialogs/dialog_file.e as dlgfile
+include gui/dialogs/msgbox.e as msgbox
+include gui/dialogs/about.e as about
+
+include app/msg.e as msg
+include app/config.e as cfg
+
+--stdlib includes
+include std/task.e
+include std/text.e
+include std/pretty.e
+
+--Modules
+include project.e as project  --project manager
+include redy_config.e as config --redy environment config dialog
+include preferences.e as pref --prefereces dialog
+include help.e as help        --context-sensitive help system
+
+atom void
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "mnuMain.mnuProject" then
+            switch evdata do
+                case "New Project..." then
+                    msg:publish("menu", "command", "new_project", 0)
+                case "Open Project..." then
+                    msg:publish("menu", "command", "open_project", 0)
+                case "Close Project" then
+                    msg:publish("menu", "command", "close_project", 0)
+                case "Save Project" then
+                    msg:publish("menu", "command", "save_all_files", 0)
+                case "Copy Project To..." then
+                    msg:publish("menu", "command", "copy_project_to", 0)
+                case "Project Settings..." then
+                    msg:publish("menu", "command", "edit_project", 0)
+                case "Run default app" then
+                    msg:publish("menu", "command", "run_app", 0)
+                case "Exit" then
+                    msg:publish("menu", "command", "exit", 0)
+            end switch
+            
+        case "mnuMain.mnuTools" then
+            switch evdata do
+                case "Redy Debug Console..." then
+                    msg:publish("menu", "command", "gui_debug", 0)
+                case "Redy configuration..." then
+                    msg:publish("main", "command", "config", 0)
+                case "Preferences..." then
+                    msg:publish("menu", "command", "preferences", 0)
+            end switch
+            
+        case "mnuMain.mnuHelp" then
+            switch evdata do
+                case "Help..." then
+                    msg:publish("menu", "command", "help", 0)
+                case "About RedyCode..." then
+                    msg:publish("menu", "command", "about", 0)
+            end switch
+            
+        case "winMain" then
+            if equal(evtype, "closed") then
+                msg:publish("menu", "command", "exit", 0)
+            end if
+            
+    end switch
+end procedure
+
+--{subscribername, topicname, msgname, msgdata, errlist})
+procedure msg_debug_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata, object errlist)
+    gui:debug("msg:publish", {"subscribername=" & subscribername, "topicname=" & topicname, "msgname=" & msgname, "msgdata=" & sprint(msgdata)})
+end procedure
+
+
+function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
+    --gui:debug("msg_event", {"subscribername=" & subscribername, "topicname=" & topicname, "msgname=" & msgname, "msgdata=" & sprint(msgdata)})
+    switch topicname do
+        case "command" then
+            if equal(msgname, "gui_debug") then
+                gui:show_debug()
+                
+            elsif equal(msgname, "about") then
+                about:show()
+                
+            elsif equal(msgname, "exit") then
+                --sequence ans = msgbox:waitmsg("Are you sure you want to exit?", "Question")
+                sequence ans = "Yes"
+                if equal(ans, "Yes") then
+                    /*deinitialize code here*/
+                    --get winMain pos and size
+                    sequence winpos = gui:get_window_pos(widget_get_handle("winMain"))
+                    sequence winsize = gui:get_window_size(widget_get_handle("winMain"))
+                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.left", winpos[1])
+                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.top", winpos[2])
+                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.width", winsize[1])
+                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.height", winsize[2])
+                    cfg:save_config(App_Name & ".cfg")
+                    
+                    gui:wdestroy("winMain")
+                end if
+            end if
+    end switch
+    return 1
+end function
+
+
+procedure show_splash()
+    gui:wcreate({
+        {"name", "winSplash"},
+        {"class", "window"},
+        {"mode", "screen"},
+        {"handler", routine_id("gui_event")},
+        {"title", App_Name & " " & App_Version},
+        {"topmost", 1}
+        --{"position", {300, 300}},
+        --{"size", {645, 425}}
+    })
+    gui:wcreate({
+        {"name", "winSplash.cntMain"},
+        {"parent", "winSplash"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"}
+    })
+    gui:wcreate({
+        {"name", "winSplash.canSplash"},
+        {"parent", "winSplash.cntMain"},
+        {"class", "canvas"},
+        {"size", {620, 240}},
+        {"border", 0}
+    })
+    
+    gui:wproc("winSplash.canSplash", "draw_background", {{
+        {DR_PenColor, rgb(255, 255, 255)},
+        {DR_Rectangle, True, 0, 0, 620, 238},
+        {DR_Image, "redy_logo", 10, 10},
+        {DR_Image, "eu16", 10, 10},
+        
+        {DR_Font, "Arial", 20, Bold},
+        {DR_TextColor, rgb(0, 30, 150)},
+        {DR_PenPos, 20, 205},
+        {DR_Puts, "Integrated Development Environment " & App_Version}
+    }})
+    
+    task_delay(1)
+    
+    gui:wdestroy("winSplash")
+end procedure
+
+
+procedure start()
+    sequence scrsize = gui:screen_size()
+    atom wleft, wtop, wwidth, wheight
+    
+    cfg:load_config(App_Name & ".cfg")
+    cfg:load_config("redy.cfg")
+    
+    wleft = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.left")
+    wtop = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.top")
+    wwidth = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.width")
+    wheight = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.height")
+    
+    --TODO: Improve window size handling and remember when maximized
+    if wwidth = 0 then
+        wwidth = 1280
+    end if
+    if wheight = 0 then
+        wheight = 768
+    end if
+    if wwidth < 0 then
+        wwidth = scrsize[1]
+    end if
+    if wheight < 0 then
+        wheight = scrsize[2]
+    end if
+    if wwidth > scrsize[1] then
+        wwidth = scrsize[1]
+    end if
+    if wheight > scrsize[2] then
+        wheight = scrsize[2]
+    end if
+    
+    if wleft > scrsize[1] then
+        wleft = scrsize[1] - wwidth
+    end if
+    if wtop > scrsize[2] then
+        wtop = scrsize[2] - wtop
+    end if
+    if wleft > scrsize[1] then
+        wleft = 0
+    end if
+    if wtop > scrsize[2] then
+        wtop = 0
+    end if
+    if wleft < 0 then
+        wleft = 0
+    end if
+    if wtop < 0 then
+        wtop = 0
+    end if
+    
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        --{"position", {floor(scrsize[1] / 2), floor(scrsize[2] / 2)}},
+        --{"size", {floor(scrsize[1] * 2 / 3), floor(scrsize[2] * 1 / 2)}},
+        {"position", {wleft, wtop}},
+        {"size", {wwidth, wheight}},
+        {"visible", 1},
+        {"allow_close", 0}
+    })
+    
+    sequence csections, cvars
+    
+    csections = cfg:list_sections(App_Name & ".cfg")
+    gui:debug("csections", csections)
+    
+    for s = 1 to length(csections) do
+        cvars = cfg:list_vars(App_Name & ".cfg", csections[s])
+        for v = 1 to length(cvars) do
+            gui:debug(csections[s] & ":" & cvars[v], cfg:get_var(App_Name & ".cfg", csections[s], cvars[v]))
+        end for
+    end for
+    
+    --save_config(App_Name & ".cfg")
+    
+    gui:call_task(routine_id("show_splash"), {})
+    
+    --Toolbars
+    /*
+    gui:wcreate({
+        {"name", "toolbarFile"},
+        {"parent", "winMain"},
+        {"class", "toolbar"},
+        {"label", "File"},
+        {"dock", "top"}
+    })
+    
+    gui:wcreate({
+        {"name", "btnNew"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "New"},
+        {"label", "New"}
+    })
+    gui:wcreate({
+        {"name", "btnOpen"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Open"},
+        {"label", "Open"}
+    })
+    gui:wcreate({
+        {"name", "btnSave"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Save"},
+        {"label", "Save"},
+        {"enabled", 1}
+    })
+    gui:wcreate({
+        {"name", "btnSaveAs"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "SaveAs"},
+        {"label", "SaveAs"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnClose"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Close"},
+        {"label", "Close"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "toolbarEdit"},
+        {"parent", "winMain"},
+        {"class", "toolbar"},
+        {"label", "Edit"},
+        {"dock", "top"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnUndo"},
+        {"parent", "toolbarEdit"},
+        {"class", "button"},
+        {"icon", "Undo"},
+        {"label", "Undo"},
+        {"enabled", 1}
+    })
+    gui:wcreate({
+        {"name", "btnRedo"},
+        {"parent", "toolbarEdit"},
+        {"class", "button"},
+        {"icon", "Redo"},
+        {"label", "Redo"},
+        {"enabled", 1}
+    })
+    gui:wcreate({
+        {"name", "btnCut"},
+        {"parent", "toolbarEdit"},
+        {"class", "button"},
+        {"icon", "Cut"},
+        {"label", "Cut"},
+        {"enabled", 1}
+    })
+    gui:wcreate({
+        {"name", "btnCopy"},
+        {"parent", "toolbarEdit"},
+        {"class", "button"},
+        {"icon", "Copy"},
+        {"label", "Copy"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnPaste"},
+        {"parent", "toolbarEdit"},
+        {"class", "button"},
+        {"icon", "Paste"},
+        {"label", "Paste"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnRun"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Run"},
+        {"label", "Run"},
+        {"enabled", 1}
+    })
+    gui:wcreate({
+        {"name", "btnHelp"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Help"},
+        {"label", "Help"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnWidgets"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Widgets"},
+        {"label", "Widgets"},
+        {"enabled", 1}
+    })
+    
+    gui:wcreate({
+        {"name", "btnColors"},
+        {"parent", "toolbarFile"},
+        {"class", "button"},
+        {"icon", "Colors"},
+        {"label", "Colors"},
+        {"enabled", 1}
+    })*/
+    
+    
+    --Menus
+    gui:wcreate({
+        {"name", "mnuMain"},
+        {"parent", "winMain"},
+        {"class", "menubar"},
+        {"handler", routine_id("gui_event")},
+        {"menus", {
+            {"Project", {
+                "New Project...",
+                "Open Project...",
+                "Close Project",
+                "-",
+                "Save Project",
+                "*Copy Project To...",
+                "-",
+                "Project Settings...",
+                "-",
+                "Run default app",
+                "-",
+                "Exit"
+                }
+            },
+            {"Tools", {
+                "Redy Debug Console...",
+                "-",
+                "Redy configuration...",
+                "Preferences..."
+                }
+            },
+            {"Help", {
+                "Help...",
+                "-",
+                "About RedyCode..."
+                }
+            }
+        }
+    }})
+    
+    
+    
+    msg:subscribe("menu", "command", routine_id("msg_event"))    --sequence subscribername, sequence topicname, atom msghandlerid
+    msg:debug(routine_id("msg_debug_event"))
+    
+    project:start()
+    config:start()
+    pref:start()
+    help:start()
+    
+    msg:publish("menu", "command", "list_projects", 0)
+    
+    /*
+    msg:publish("menu", "editor", "show", "cntMain")--subscribername, topicname, msgname, msgdata)
+    msg:publish("menu", "nav", "show", "panelNav")
+    msg:publish("menu", "help", "show", "panelHelp")
+    
+    msg:publish("menu", "project", "", "")
+    msg:publish("menu", "settings", "show", 0)
+    msg:publish("menu", "search", "show", 0)
+    msg:publish("menu", "color", "show", "panelUtilities")
+    msg:publish("menu", "ascii", "show", "panelUtilities")
+    msg:publish("menu", "install", "show", "cntMain")
+    msg:publish("menu", "build", "show", "cntMain")
+    msg:publish("menu", "widgets", "", "")
+    msg:publish("menu", "source", "", "")
+    msg:publish("menu", "image", "", "")
+    */
+    
+    msg:debug(routine_id("msg_debug_event"))
+end procedure
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+

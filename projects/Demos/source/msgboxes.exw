@@ -1,0 +1,175 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+
+global constant 
+App_Name = "Message Box Demo",
+App_Version = "1.0.a1",
+InfoText = {
+    "This demonstrates the Message Box library (include gui/forms/msgbox.e as msgbox).",
+    "",
+    "There are two types: msg and waitmsg. The msg type simply presents information with an OK button. The waitmsg function waits for a user response, while allowing other tasks to run. Message boxes can display images for three types of messages: Info, Warning, and Error. The waitmsg can also display a Question image.",
+    "",
+    "Message boxes are easy to use. They take care of word wrapping and setting the window size and position automatically. If the message is very long, a scrollbar will be added automatically.",
+    "",
+    "Click on the buttons to see message box examples."
+}
+
+
+include gui/gui.e as gui
+include gui/dialogs/msgbox.e as msgbox
+include gui/dialogs/about.e as about
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "btnInfoMsg" then
+            if equal(evtype, "clicked") then
+                msgbox:msg("Lorem ipsum dolor sit amet consectetuer dui adipiscing purus tincidunt eget. Congue amet interdum id Nam ipsum et auctor tempus mauris consequat. Vitae Nam semper suscipit turpis congue tortor justo Nam wisi at. Pretium accumsan Aenean Nunc quis pellentesque Nunc vel mauris facilisi Aliquam. Cursus dignissim scelerisque Pellentesque Quisque dictumst eu semper ipsum Curabitur In. Nulla tempus dis ullamcorper Phasellus aliquam quis vitae nonummy elit interdum. Nunc quis id condimentum scelerisque Donec arcu lacus at vitae senectus. Cursus senectus Nulla pede ligula morbi volutpat porttitor.")
+            end if
+        case "btnWarningMsg" then
+            if equal(evtype, "clicked") then
+                msgbox:msg("Congue amet interdum id Nam.", "Warning")
+            end if
+        case "btnErrorMsg" then
+            if equal(evtype, "clicked") then
+                msgbox:msg("Tempus mauris consequat!", "Error")
+            end if
+        case "btnLargeMsg" then
+            if equal(evtype, "clicked") then
+                msgbox:msg("Lorem ipsum dolor sit amet consectetuer malesuada Nulla Aenean volutpat elit. Suspendisse nibh Vivamus consequat sem elit Donec ante diam tincidunt enim. Mauris tristique Vivamus ac dui nec tempor parturient eget Morbi Nam. Curabitur nec fames mattis enim pellentesque sapien velit at Mauris ornare. Pulvinar quis pretium pretium arcu Maecenas Morbi velit et dui egestas. Risus vel sagittis pretium id eu pretium mollis Suspendisse In nisl. Vestibulum pretium orci Integer ac nibh magna congue malesuada leo In. Orci lacinia non parturient augue Nulla ac nibh congue et felis. Platea condimentum dui et orci sit Aenean vitae interdum massa purus. Mattis elit Lorem vitae Nulla tortor eu Aenean at fermentum Nunc. Lorem ac quis platea turpis sed tempus odio elit Nam sociis. At tellus risus orci cursus elit Suspendisse odio sed ridiculus neque. Nulla feugiat risus accumsan eu parturient enim metus amet neque et. Sem vel elit dui eget nibh ipsum quis tellus convallis ac. Lacinia Maecenas libero convallis Vivamus purus amet eros convallis non justo. Volutpat et ac sollicitudin ultrices dui Quisque fames gravida Vivamus adipiscing. Metus tristique a Sed sed Aenean elit tortor ac nonummy wisi. At ut malesuada Quisque convallis Nulla et Nam vel Curabitur sed. Nulla in lobortis Phasellus odio et consequat id Vestibulum consequat In. Habitant rutrum mattis pharetra at orci hendrerit mauris lacus Vivamus malesuada. Orci rutrum lorem pede Sed vitae elit molestie lacinia ligula ante. Iaculis id risus at nibh elit odio Curabitur sed dapibus est. Eget ut Sed dui pellentesque Vestibulum aliquam interdum ullamcorper quis velit. Nullam wisi montes nunc nibh orci odio sed ut pretium netus. Lorem ac id porttitor ac Nulla urna in dictumst Mauris Phasellus. Aenean sagittis iaculis Aliquam Curabitur quis Sed Curabitur neque leo Phasellus. Pretium Aenean turpis condimentum metus montes et interdum lacus vitae ac. Ornare vitae est nec tempor netus et pellentesque eget id eu. Id elit malesuada tempor platea justo ut laoreet malesuada et vel. Adipiscing neque In ipsum Ut Quisque consectetuer montes Quisque adipiscing ut. Nulla consequat Nulla enim pede malesuada et fermentum Pellentesque Sed at. Dis Aenean amet consectetuer non justo quis Nam nec sit venenatis. Morbi In lorem cursus orci interdum gravida vitae wisi quis lorem. Nibh arcu condimentum tincidunt tellus adipiscing dictumst Nulla et volutpat Phasellus. Semper et mus quam augue nulla Aliquam nonummy justo tempor justo. Augue vitae consectetuer enim condimentum commodo feugiat quis interdum Aliquam eget. Vestibulum gravida malesuada semper suscipit congue a egestas dapibus elit Aenean. Pulvinar quis accumsan lacus rhoncus dictum Aenean id eros volutpat sodales. Id a laoreet eget vel risus enim In dui malesuada urna. Sit elit nisl eu pretium pretium orci condimentum habitant lobortis facilisis. Justo penatibus mauris libero Nulla ut sodales tempus congue faucibus Aenean. Tincidunt condimentum vitae Aenean Vestibulum Sed Vivamus tortor diam Quisque turpis. Et semper et justo arcu condimentum augue Nunc Pellentesque elit fringilla. Sit feugiat orci non risus dolor interdum odio quis Fusce eget. Curabitur pretium neque volutpat Aenean Pellentesque et neque Phasellus id vel. Porta ut et tellus Curabitur quam et ullamcorper tincidunt ullamcorper dapibus. Egestas nunc enim at Vestibulum Sed porta dui consectetuer Curabitur ligula. Quisque convallis semper lorem turpis turpis tellus justo augue pretium convallis. Sed eu tincidunt enim Vestibulum amet ac augue parturient neque lacus. A adipiscing metus hendrerit In ac condimentum nec suscipit libero ante. Vivamus amet Nulla lorem tristique libero laoreet Cum purus orci nulla. Id et ante ac suscipit Integer interdum ac nibh mauris velit. Facilisi id mauris dui metus Curabitur condimentum pellentesque tempus sit justo. Montes suscipit tincidunt et ut eleifend ut vitae orci.", "Info")
+            end if
+        case "btnWait" then
+            if equal(evtype, "clicked") then
+                --? task_self()
+                --call_task(routine_id("ask_questions"), {})
+                ask_questions()
+            end if
+        case "btnAbout" then
+            if equal(evtype, "clicked") then
+                about:show()
+            end if
+    end switch
+end procedure
+
+
+procedure ask_questions()
+    --? task_self()
+    sequence ans
+    ans = msgbox:waitmsg("Dolor sit amet consectetuer dui adipiscing purus tincidunt eget?", "Question")
+    while not equal(ans, "Cancel") do
+        ans = msgbox:waitmsg("You answered: " & ans & ". Dolor sit amet consectetuer dui adipiscing purus tincidunt eget?", "Question", {"Yes", "No", "Cancel"})
+    end while
+    msgbox:waitmsg("You cancelled.", "Info")
+end procedure
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"position", {50, 50}},
+        {"visible", 1},
+        {"size", {640, 380}}
+    })
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "cntTop"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"}
+    })
+    gui:wcreate({
+        {"name", "btnInfoMsg"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Info Msg"}
+    })
+    gui:wcreate({
+        {"name", "btnWarningMsg"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Warning Msg"}
+    })
+    gui:wcreate({
+        {"name", "btnErrorMsg"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Error Msg"}
+    })
+    gui:wcreate({
+        {"name", "btnLargeMsg"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Large Msg"}
+    })
+    gui:wcreate({
+        {"name", "btnWait"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "Wait Question"}
+    })
+    gui:wcreate({
+        {"name", "btnAbout"},
+        {"parent", "cntTop"},
+        {"class", "button"},
+        {"label", "About..."}
+    })
+    gui:wcreate({
+        {"name", "cntBottom"},
+        {"parent", "cntMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "txtInfo"},
+        {"parent", "cntBottom"},
+        {"class", "textbox"},
+        {"monowidth", 1},
+        --{"multiline", 1},
+        {"text", InfoText},
+        {"wordwrap", 1}
+    })
+end procedure
+
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+
+
+

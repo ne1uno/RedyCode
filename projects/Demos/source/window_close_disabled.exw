@@ -1,0 +1,84 @@
+-- This file is part of redylib
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+--This demonstrates how to create a main window in Redy that has "allow_close" disabled.
+--This means when the user tries to close the window, it will not close automatically,
+--but the "closed" event is processed in the event handler, which gives the application
+--a chance to deinitialize, save data, or verify if the user really wants to close the 
+--window before destroying the window. 
+
+without warning
+
+global constant 
+App_Name = "Window Close Disabled Demo",
+App_Version = "1.0.a1"
+
+include gui/gui.e as gui
+include gui/dialogs/msgbox.e as msgbox
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    if equal(evwidget, "winMain") and equal(evtype, "closed") then
+        sequence ans = msgbox:waitmsg("Are you sure you want to exit?", "Question")
+        if equal(ans, "Yes") then
+            /*deinitialize code here*/
+            gui:wdestroy("winMain")
+        end if
+    end if
+end procedure
+
+
+procedure start()
+    gui:wcreate({
+        {"name", "winMain"},
+        {"class", "window"},
+        {"title", App_Name},
+        {"size", {400, 350}},
+        {"allow_close", 0}
+    })
+    
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "txtInfo"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"monowidth", 1},
+        {"mode", "text"},
+        {"text",
+            "This demonstrates how to create a main window in Redy that has " &
+            "\"allow_close\" disabled. This means when the user tries to close the " & 
+            "window, it will not close automatically, but the \"closed\" event is " &
+            "processed in the event handler, which gives the application a chance to " &
+            "deinitialize, save data, or verify if the user really wants to close " &
+            "the window before destroying the window."
+        }
+    })
+    
+    /*initialize code here*/
+end procedure
+
+gui:start(routine_id("start"), routine_id("gui_event"))
