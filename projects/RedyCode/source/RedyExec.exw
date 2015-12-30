@@ -54,15 +54,17 @@ sequence currProjectPath = "", currApp = ""
 
 procedure list_projects()
     sequence listitems = {}
-    object flist = dir(get_projects_path())
-    if sequence(flist) then
-        for f = 1 to length(flist) do 
-            if find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
-                listitems &= {{0, flist[f][D_NAME]}}
-            end if
-        end for
-    end if
     
+    if length(get_projects_path()) > 0 then
+        object flist = dir(get_projects_path())
+        if sequence(flist) then
+            for f = 1 to length(flist) do 
+                if find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
+                    listitems &= {{0, flist[f][D_NAME]}}
+                end if
+            end for
+        end if
+    end if
     
     gui:wproc("lstProjects", "clear_list", {})
     gui:wproc("lstProjects", "add_list_items", {listitems})
@@ -71,17 +73,20 @@ end procedure
 
 procedure list_apps(sequence projectpath)
     sequence listitems = {}
-    object flist = dir(projectpath)
-    if sequence(flist) then
-        for f = 1 to length(flist) do
-            if not find('d', flist[f][D_ATTRIBUTES]) then
-                if match(".ex", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 2 then --euphoria executable
-                    listitems &= {{rgb(210,210,210), flist[f][D_NAME]}}
-                elsif match(".exw", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --euphoria executable
-                    listitems &= {{rgb(210,210,210), flist[f][D_NAME]}}
+    
+    if length(projectpath) > 0 then
+        object flist = dir(projectpath)
+        if sequence(flist) then
+            for f = 1 to length(flist) do
+                if not find('d', flist[f][D_ATTRIBUTES]) then
+                    if match(".ex", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 2 then --euphoria executable
+                        listitems &= {{rgb(210,210,210), flist[f][D_NAME]}}
+                    elsif match(".exw", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --euphoria executable
+                        listitems &= {{rgb(210,210,210), flist[f][D_NAME]}}
+                    end if
                 end if
-            end if
-        end for
+            end for
+        end if
     end if
     
     gui:wproc("lstApps", "clear_list", {})
@@ -92,7 +97,8 @@ end procedure
 --run_app(sequence projectfile, sequence appfile, atom watcherr = 1)
 procedure run_app(sequence appfile)
     if file_exists(appfile) then
-        sequence cmdline = " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\" \"" & appfile & "\""
+        sequence cmdline = " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\""
+        & " \"" & appfile & "\""
         --system_exec(cmdline)
         gui:RunApp(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline)
         
@@ -122,28 +128,29 @@ procedure gui_event(object evwidget, object evtype, object evdata)
             end switch
         case "lstProjects" then
             if equal(evtype, "selection") then
-                if sequence(evdata) then
+                if sequence(evdata) and length(evdata) > 0 then
                     currProjectPath = get_projects_path() & evdata[1][2][1] & "/source/"
                     list_apps(currProjectPath)
+                    gui:wproc("lstApps", "select_items", {{1}})
                 end if
             end if
             
         case "lstApps" then
             if equal(evtype, "selection") then
-                currApp = evdata[1][2][1]
+                if sequence(evdata) and length(evdata) > 0 then
+                    currApp = evdata[1][2][1]
+                end if
                 
             elsif equal(evtype, "left_double_click") then
-                currApp = evdata[1][2][1]
-                
-                --msg:publish("main", "command", "run", 0)
-                run_app(currProjectPath & currApp) --evdata[1][2][1])
-                
+                if sequence(evdata) and length(evdata) > 0 then
+                    currApp = evdata[1][2][1]
+                    run_app(currProjectPath & currApp)
+                end if
             end if
             
         case "cmdRun" then
             switch evtype do
                 case "clicked" then
-                    --msg:publish("main", "command", "run", 0)
                     run_app(currProjectPath & currApp)
             end switch
             
@@ -198,6 +205,42 @@ procedure start()
     atom wleft, wtop, wwidth, wheight
     
     cfg:load_config(App_Name & ".cfg")
+    
+    config:start()
+        
+    sequence cmd = command_line()
+    
+    --pretty_print(1, cmd, {2})
+    
+    if length(cmd) > 3 then
+        gui:wcreate({
+            {"name", "winMain"},
+            {"class", "window"},
+            {"title", App_Name},
+            {"visible", 0},
+            {"allow_close", 1}
+        })
+        sequence exfile = get_projects_path() & cmd[3] & "\\source\\" & cmd[4]
+        sequence ans
+        
+        if not file_exists(get_euiw_path()) then 
+            --ans = msgbox:waitmsg("The path to euiw.exe is invalid. Please run RedyExec without arguments to configure paths.", "Error")
+            
+        else
+            if file_exists(exfile) then
+                run_app(exfile)
+                
+                --sequence cmdline = get_euiw_path() & " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\""
+                --& " \"" & exfile & "\""
+                --puts(1, cmdline & "\n")
+                --system_exec(cmdline)
+                --abort(0)
+            else
+                ans = msgbox:waitmsg("RedyExec error: the file \"" & canonical_path(exfile) & "\" does not exist.", "Error")
+            end if
+        end if
+        gui:wdestroy("winMain")
+    end if
     
     wleft = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.left")
     wtop = cfg:get_var(App_Name & ".cfg", "GUI", "winMain.top")
@@ -300,8 +343,6 @@ procedure start()
         {"sizemode_y", "expand"}
     })
     
-    --gui:wproc("lstProjects", "select_items", {{1}})
-    
     gui:wcreate({
         {"name", "lstApps"},
         {"parent", "cntRight"},
@@ -334,9 +375,10 @@ procedure start()
         {"label", "Run"}
     })
     
-    config:start()
+    
     
     list_projects()
+    gui:wproc("lstProjects", "select_items", {{1}})
     
     ------------------------
     
