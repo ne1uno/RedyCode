@@ -26,7 +26,7 @@ include app/msg.e as msg
 
 include redy_config.e as config --redy environment config dialog
 include tablist.e as tabs --tab manager
-include edit_resources.e as resources
+include edit_images.e as images
 include edit_source.e as source
 include edit_build.e as build
 include edit_docs.e as docs
@@ -41,6 +41,8 @@ include std/convert.e
 include std/error.e
 
 
+--puts(1, curdir() & "\n")
+--puts(1, canonical_path(ImgPath) & "\n")
 
 ------------------------
 
@@ -57,11 +59,13 @@ pIncludes = "",     --List of addition include folders
                     
 pProjectNode = 0,   --project properties node
 pBuildNode = 0,     --build node
-pResourcesNode = 0, --resource folder node
 pDocsNode = 0,      --docs folder node
 pSourceNode = 0,    --source folder node
 pIncludesNode = 0,  --redylib, stdlib, and additional include folders node
 pFileNodes = {}     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename})
+
+
+atom SettingsTabWid = 0
 
 
 procedure build_dir(atom parentnodeid, sequence path)
@@ -84,9 +88,7 @@ procedure build_dir(atom parentnodeid, sequence path)
         for f = 1 to length(flist) do
             ficon = ""
             if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
-                if match(".ex", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 2 then --euphoria executable
-                    ficon = "ex16"
-                elsif match(".exw", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --euphoria executable
+                if find(fileext(flist[f][D_NAME]), {"ex", "exw", "eu"}) then --euphoria executable
                     ficon = "ex16"
                 end if
             end if
@@ -103,10 +105,8 @@ procedure build_dir(atom parentnodeid, sequence path)
         for f = 1 to length(flist) do
             ficon = ""
             if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
-                if match(".e", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 1 then --euphoria library
+                if find(fileext(flist[f][D_NAME]), {"e"}) then --euphoria library
                     ficon = "e16"
-                --elsif match(".cfg", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --config file
-                --    ficon = "txt16"
                 end if
             end if
             
@@ -122,7 +122,7 @@ procedure build_dir(atom parentnodeid, sequence path)
         for f = 1 to length(flist) do
             ficon = ""
             if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
-                if match(".err", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --euphoria executable
+                if find(fileext(flist[f][D_NAME]), {"err"}) then --euphoria error report
                     ficon = "err16"
                 end if
             end if
@@ -138,8 +138,25 @@ procedure build_dir(atom parentnodeid, sequence path)
         for f = 1 to length(flist) do
             ficon = ""
             if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
-                if match(".cfg", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 3 then --config file
+                if find(fileext(flist[f][D_NAME]), {"cfg", "ini"}) then --config file
                     ficon = "txt16"
+                end if
+            end if
+            
+            if length(ficon) > 0 then
+                pFileNodes &= {{
+                    gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
+                    path,
+                    flist[f][D_NAME]
+                }}
+            end if
+        end for
+        --scan for image files
+        for f = 1 to length(flist) do
+            ficon = ""
+            if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
+                if find(fileext(flist[f][D_NAME]), {"bmp", "ico", "png", "jpg", "gif", "svg"}) then --image file
+                    ficon = "img16"
                 end if
             end if
             
@@ -193,7 +210,6 @@ procedure load_project(sequence projfile)
     
     projProjectNode = 0,
     projBuildNode = 0,
-    projResourcesNode = 0,
     projDocsNode = 0,
     projSourceNode = 0,
     projIncludesNode = 0,
@@ -300,7 +316,6 @@ procedure load_project(sequence projfile)
     projProjectNode = gui:wfunc("treeProject", "add_item", {0, "redy16", "Project: " & projName, 0})
     projBuildNode = gui:wfunc("treeProject", "add_item", {0, "ex16", "Build", 0})
     projDocsNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Docs", 0})
-    projResourcesNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Resources", 0})
     projSourceNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Source", 1})
     projIncludesNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Includes", 1})
     
@@ -324,7 +339,6 @@ procedure load_project(sequence projfile)
 
     pProjectNode = projProjectNode
     pBuildNode = projBuildNode
-    pResourcesNode = projResourcesNode
     pDocsNode = projDocsNode
     pSourceNode = projSourceNode
     pIncludesNode = projIncludesNode
@@ -384,12 +398,12 @@ procedure create_project()
         msgbox:msg("Unable to create folder '" & projpath & projname & "\\docs'.", "Error")
         return
     end if
-    if not create_directory(projpath & projname & "\\resources") then
-        msgbox:msg("Unable to create folder '" & projpath & projname & "\\resources'.", "Error")
-        return
-    end if
     if not create_directory(projpath & projname & "\\source") then
         msgbox:msg("Unable to create folder '" & projpath & projname & "\\source'.", "Error")
+        return
+    end if
+    if not create_directory(projpath & projname & "\\source\\images") then
+        msgbox:msg("Unable to create folder '" & projpath & projname & "\\source\\images'.", "Error")
         return
     end if
     
@@ -491,7 +505,7 @@ end procedure
 procedure close_project()
     source:close_all_src()
     build:hide()
-    resources:hide()
+    images:hide()
     docs:hide()
     
     gui:wdestroy("winProjectSettings")
@@ -509,7 +523,6 @@ procedure close_project()
     
     pProjectNode = 0
     pBuildNode = 0
-    pResourcesNode = 0
     pDocsNode = 0
     pSourceNode = 0
     pIncludesNode = 0
@@ -568,7 +581,8 @@ end procedure
 procedure gui_event(object evwidget, object evtype, object evdata)
     switch evwidget do
         case "lstProjects" then
-            if equal(evtype, "left_double_click") then
+            --if equal(evtype, "left_double_click") then
+            if equal(evtype, "selection") then
                 if sequence(evdata) and length(evdata) > 0 then
                     --pretty_print(1, evdata, {2})
                     load_project(evdata[1][2][2] & evdata[1][2][3])
@@ -585,50 +599,84 @@ procedure gui_event(object evwidget, object evtype, object evdata)
             msg:publish("project", "command", "run_app", 0)
             
         case "treeProject" then
-            switch evtype do
-                case  "selection" then
-                    --gui:debug("evdata", evdata)
-                    if evdata[1] = pProjectNode then
-                        msg:publish("project", "command", "edit_project", 0)
+            -- "expand_item"
+            
+            if evdata[1] = pProjectNode then
+                if equal(evtype, "selection") then
+                    msg:publish("project", "command", "edit_project", 0)
+                end if
+                
+            elsif evdata[1] = pBuildNode then
+                if equal(evtype, "selection") then
+                    msg:publish("project", "command", "edit_build", 0)
+                end if
+                
+            elsif evdata[1] = pDocsNode then
+                if equal(evtype, "selection") then
+                    msg:publish("project", "command", "edit_docs", 0)
+                end if
+                
+            elsif evdata[1] = pSourceNode then
+                if equal(evtype, "selection") then
+                    --msg:publish("project", "command", "edit_apps", 0)
+                end if
+                
+            elsif evdata[1] = pIncludesNode then
+                if equal(evtype, "selection") then
+                    --msg:publish("project", "command", "edit_include_paths", 0)
+                end if
+                
+            else
+                for f = 1 to length(pFileNodes) do
+                    if pFileNodes[f][1] = evdata[1] then
+                        if find(fileext(pFileNodes[f][3]), {"ex", "exw", "exu"}) then
+                            if equal(evtype, "selection") then
+                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                            elsif equal(evtype, "left_double_click") then
+                                run_app(pFileNodes[f][2] & pFileNodes[f][3])
+                            end if
                         
-                    elsif evdata[1] = pBuildNode then
-                        msg:publish("project", "command", "edit_build", 0)
-                        
-                    elsif evdata[1] = pResourcesNode then
-                        msg:publish("project", "command", "edit_resources", 0)
-                        
-                    elsif evdata[1] = pDocsNode then
-                        msg:publish("project", "command", "edit_docs", 0)
-                        
-                    elsif evdata[1] = pSourceNode then
-                        --msg:publish("project", "command", "edit_apps", 0)
-                        
-                    elsif evdata[1] = pIncludesNode then
-                        --msg:publish("project", "command", "edit_include_paths", 0)
-                        
-                    else
-                        for f = 1 to length(pFileNodes) do
-                            if pFileNodes[f][1] = evdata[1] then
-                                --pFileNodes][p][f]: {nodeid, filepath, filename}
-                                --sequence ttype, sequence tlabel, sequence tname, sequence tpathname, sequence tfilename)
-                                /*msg:publish("project", "command", "open_file", {
-                                    "source",
-                                    pFileNodes[f][3],
-                                    pFileNodes[f][3],
-                                    pFileNodes[f][2] & "\\" & pFileNodes[f][3],
-                                    pFileNodes[f][3]
-                                })*/
-                                --pretty_print(1, pFileNodes[f][2] & pFileNodes[f][3], {2})
+                        elsif find(fileext(pFileNodes[f][3]), {"e", "ew", "eu"}) then
+                            if equal(evtype, "selection") then
                                 source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
                             end if
-                        end for
+                            
+                        elsif find(fileext(pFileNodes[f][3]), {"txt", "cfg", "ini", "bat", "xml"}) then
+                            if equal(evtype, "selection") then
+                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                            end if
+                            
+                        elsif find(fileext(pFileNodes[f][3]), {"err"}) then
+                            if equal(evtype, "selection") then
+                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                            end if
+                            
+                        elsif find(fileext(pFileNodes[f][3]), {"bmp", "ico", "png", "jpg", "gif", "svg"}) then
+                            if equal(evtype, "selection") then
+                                images:load_img(pFileNodes[f][2] & pFileNodes[f][3])
+                            end if
+                            
+                        else
+                            --source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                            if equal(evtype, "selection") then
+                                msgbox:msg("Sorry, '" & fileext(pFileNodes[f][3]) & "' file type is not currently supported.", "Error")
+                            end if
+                            
+                        end if
                     end if
-                case "expand_item" then
-                    
-            end switch
+                end for
+            end if
         case "winProjectSettings.btnCreate" then
             create_project()
         
+        
+        
+        case "winProjectSettings.btnClose" then
+            if SettingsTabWid > 0 then
+                tabs:destroy_tab(SettingsTabWid)
+                SettingsTabWid = 0
+            end if
+            
         case "winProjectSettings.btnSave" then
             get_project_settings()
             msg:publish("project", "command", "save_project", 0)
@@ -721,9 +769,6 @@ function msg_event(sequence subscribername, sequence topicname, sequence msgname
             elsif equal(msgname, "edit_build") then
                 build:show()
                 
-            elsif equal(msgname, "edit_resources") then
-                resources:show()
-                
             elsif equal(msgname, "edit_docs") then
                 docs:show()
                 
@@ -750,7 +795,7 @@ function msg_event(sequence subscribername, sequence topicname, sequence msgname
     return 1
 end function
 
-
+    
 procedure show_project_settings(atom newproj)
     sequence wintitle
     object projPath, projName, projEuphoria, projRedyLib, projVersion, projAuthor, projDescription, projLicense
@@ -772,6 +817,16 @@ procedure show_project_settings(atom newproj)
         projDescription = "ProjectDescription"
         projLicense = ApacheLicense
     else
+        if SettingsTabWid > 0 then --file is already open, so switch to it's tab instead
+            select_tab(SettingsTabWid)
+            return
+        end if
+        
+        atom tabid = tabs:create("Project Settings")
+        sequence parname = gui:widget_get_name(tabid) 
+        sequence wname = sprint(tabid)
+        SettingsTabWid = tabid
+        
         wintitle = "Project Settings"
         projPath = pPath
         projName = pName
@@ -782,6 +837,7 @@ procedure show_project_settings(atom newproj)
         projDescription = pDescription
         projLicense = pLicense
     end if
+    
     if atom(projEuphoria) then
         defEuphoria = 1
         overrideEuphoria = 0
@@ -801,23 +857,57 @@ procedure show_project_settings(atom newproj)
         RedyLibTxt = projRedyLib
     end if
     
-    gui:wcreate({
-        {"name", "winProjectSettings"},
-        {"class", "window"},
-        --{"mode", "dialog"},
-        {"handler", routine_id("gui_event")},
-        {"title", wintitle},
-        {"topmost", 1},
-        {"size", {500, 550}}
-    })
-    gui:wcreate({
-        {"name", "winProjectSettings.cntMain"},
-        {"parent", "winProjectSettings"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"}
-    })
+    if newproj then
+        gui:wcreate({
+            {"name", "winProjectSettings"},
+            {"class", "window"},
+            --{"mode", "dialog"},
+            {"handler", routine_id("gui_event")},
+            {"title", wintitle},
+            {"topmost", 1},
+            {"size", {500, 550}}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.cntMain"},
+            {"parent", "winProjectSettings"},
+            {"class", "container"},
+            {"orientation", "vertical"},
+            {"sizemode_x", "expand"},
+            {"sizemode_y", "expand"}
+        })
+    else
+        gui:wcreate({
+            {"name", "winProjectSettings.cntMain"},
+            {"parent", gui:widget_get_name(SettingsTabWid)},
+            {"class", "container"},
+            {"orientation", "vertical"},
+            {"sizemode_x", "expand"},
+            {"sizemode_y", "expand"},
+            {"handler", routine_id("gui_event")}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.cntCommands"},
+            {"parent", "winProjectSettings.cntMain"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "normal"},
+            {"sizemode_y", "normal"}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.btnClose"},
+            {"parent", "winProjectSettings.cntCommands"},
+            {"class", "button"},
+            {"label", "Close"}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.btnSave"},
+            {"parent", "winProjectSettings.cntCommands"},
+            {"class", "button"},
+            {"label", "Save Project Settings"}
+        })
+    end if
+    
+    
     gui:wcreate({
         {"name", "winProjectSettings.cntTop"},
         {"parent", "winProjectSettings.cntMain"},
@@ -944,6 +1034,12 @@ procedure show_project_settings(atom newproj)
             {"class", "button"},
             {"label", "Create new project"}
         })
+        gui:wcreate({
+            {"name", "winProjectSettings.btnCancel"},
+            {"parent",  "winProjectSettings.cntBottom"},
+            {"class", "button"},
+            {"label", "Cancel"}
+        })
     else
         gui:wcreate({
             {"name",  "winProjectSettings.btnSave"},
@@ -953,21 +1049,17 @@ procedure show_project_settings(atom newproj)
         })
     end if
     
-    gui:wcreate({
-        {"name", "winProjectSettings.btnCancel"},
-        {"parent",  "winProjectSettings.cntBottom"},
-        {"class", "button"},
-        {"label", "Cancel"}
-    })
+    
 end procedure
 
 export procedure start()
-    gui:load_bitmap("folder_open_16", "./tempicons/folder_open_16.bmp")
-    gui:load_bitmap("redy16", "./tempicons/redy16.bmp")
-    gui:load_bitmap("e16", "./tempicons/e16.bmp")
-    gui:load_bitmap("ex16", "./tempicons/ex16.bmp")
-    gui:load_bitmap("err16", "./tempicons/err16.bmp")
-    gui:load_bitmap("txt16", "./tempicons/txt16.bmp")
+    gui:load_bitmap("folder_open_16", ImgPath & "folder_open_16.bmp")
+    gui:load_bitmap("redy16", ImgPath & "redy16.bmp")
+    gui:load_bitmap("e16", ImgPath & "e16.bmp")
+    gui:load_bitmap("ex16", ImgPath & "ex16.bmp")
+    gui:load_bitmap("err16", ImgPath & "err16.bmp")
+    gui:load_bitmap("txt16", ImgPath & "txt16.bmp")
+    gui:load_bitmap("img16", ImgPath & "img16.bmp")
     
     --http://findicons.com/
     
@@ -1063,7 +1155,7 @@ export procedure start()
     })*/
     
     tabs:start()
-    --resources:start()
+    --images:start()
     --source:start()
     --build:start()
     --docs:start()
