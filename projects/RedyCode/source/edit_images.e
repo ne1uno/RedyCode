@@ -35,22 +35,22 @@ include std/datetime.e as dt
 include std/filesys.e
 include std/utils.e
 
-atom ResourcesTabWid = 0
+atom ImagesTabWid = 0
 
-export procedure show()
-    if ResourcesTabWid > 0 then --file is already open, so switch to it's tab instead
-        select_tab(ResourcesTabWid)
+export procedure load_img(sequence fpathname)
+    if ImagesTabWid > 0 then --file is already open, so switch to it's tab instead
+        select_tab(ImagesTabWid)
         return
     end if
     
-    atom tabid = tabs:create("Resources")
-    sequence parname = gui:widget_get_name(tabid) 
+    atom tabid = tabs:create("Images")
+    sequence parname = gui:widget_get_name(tabid)
     sequence wname = sprint(tabid)
-    ResourcesTabWid = tabid
+    ImagesTabWid = tabid
     
     --create file command buttons
     gui:wcreate({
-        {"name", "cntResources" & wname},
+        {"name", "cntImages" & wname},
         {"parent", parname},
         {"class", "container"},
         {"orientation", "vertical"},
@@ -60,7 +60,7 @@ export procedure show()
     })
     gui:wcreate({
         {"name", "cntCommands" & wname},
-        {"parent", "cntResources" & wname},
+        {"parent", "cntImages" & wname},
         {"class", "container"},
         {"orientation", "horizontal"},
         {"sizemode_x", "normal"},
@@ -74,20 +74,20 @@ export procedure show()
     })
     
     gui:wcreate({
-        {"name", "txtResources" & wname},
-        {"parent", "cntResources" & wname},
+        {"name", "txtImages" & wname},
+        {"parent", "cntImages" & wname},
         {"class", "textbox"},
         {"mode", "text"},
-        {"label", "Resources Editor"},
-        {"text", "Sorry, this doesn't work yet."}
+        {"label", "Images Editor"},
+        {"text", "Sorry, images are not supported yet."}
     })
 end procedure
 
 
 export procedure hide()
-    if ResourcesTabWid > 0 then
-        tabs:destroy_tab(ResourcesTabWid)
-        ResourcesTabWid = 0
+    if ImagesTabWid > 0 then
+        tabs:destroy_tab(ImagesTabWid)
+        ImagesTabWid = 0
     end if
 end procedure
 
@@ -95,7 +95,7 @@ end procedure
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
-    sequence wname = sprint(ResourcesTabWid)
+    sequence wname = sprint(ImagesTabWid)
     
     if equal(evwidget, "btnClose" & wname) then
         hide()

@@ -119,8 +119,7 @@ end function
 procedure scan_euphoria_paths()
     object flist
     sequence currpath, scanpaths = {
-        "../euphoria/",
-        "../../../euphoria/",
+        "./euphoria/",
         "C:/Euphoria/",
         "C:/RedyCode/euphoria/"
     }
