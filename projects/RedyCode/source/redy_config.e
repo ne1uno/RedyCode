@@ -461,78 +461,122 @@ end procedure
 
 
 export function get_eui_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return EuiCons[idx]
+    if idx > 0 and idx <= length(EuiCons) then
+        ret = EuiCons[idx]
+    end if
+    return ret
 end function
 
 
 export function get_euiw_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return EuiWins[idx]
+    if idx > 0 and idx <= length(EuiCons) then
+        ret = EuiWins[idx]
+    end if
+    return ret
 end function
 
 
 export function get_euc_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return Eucs[idx]
+    if idx > 0 and idx <= length(Eucs) then
+        ret = Eucs[idx]
+    end if
+    return ret
 end function
 
 
 export function get_eub_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return Eubs[idx]
+    if idx > 0 and idx <= length(Eubs) then
+        ret = Eubs[idx]
+    end if
+    return ret
 end function
 
 
 export function get_euinclude_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return EuIncludes[idx][1..$-1]
+    if idx > 0 and idx <= length(EuIncludes) then
+        ret = EuIncludes[idx][1..$-1]
+    end if
+    return ret
 end function
 
 
 export function get_eudocs_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultEuIdx
     end if
-    return EuDocs[idx]
+    if idx > 0 and idx <= length(EuDocs) then
+        ret = EuDocs[idx]
+    end if
+    return ret
 end function
 
 
 export function get_redylib_path(atom idx = 0)
+    sequence ret = ""
     if idx = 0 then
         idx = DefaultRedylibIdx
     end if
-    return RedylibPaths[idx][1..$-1]
+    if idx > 0 and idx <= length(RedylibPaths) then
+        ret = RedylibPaths[idx][1..$-1]
+    end if
+    return ret
 end function
 
 
 export function get_default_eu()
-    return EuVersions[DefaultEuIdx]
+    sequence ret = ""
+    if DefaultEuIdx > 0 and DefaultEuIdx <= length(EuVersions) then
+        ret = EuVersions[DefaultEuIdx]
+    end if
+    return ret
 end function
 
 
 export function get_default_redylib()
-    return RedylibVersions[DefaultRedylibIdx]
+    sequence ret = ""
+    if DefaultRedylibIdx > 0 and DefaultRedylibIdx <= length(RedylibVersions) then
+        ret = RedylibVersions[DefaultRedylibIdx]
+    end if
+    return ret
 end function
 
 
 export function get_default_include_path()
-    return EuIncludes[DefaultEuIdx]
+    sequence ret = ""
+    if DefaultEuIdx > 0 and DefaultEuIdx <= length(EuIncludes) then
+        ret = EuIncludes[DefaultEuIdx]
+    end if
+    return ret
 end function
 
 
 export function get_default_redylib_path()
-    return RedylibPaths[DefaultRedylibIdx]
+    sequence ret = ""
+    if DefaultRedylibIdx > 0 and DefaultRedylibIdx <= length(RedylibPaths) then
+        ret = RedylibPaths[DefaultRedylibIdx]
+    end if
+    return ret
 end function
 
 

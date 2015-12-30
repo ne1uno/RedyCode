@@ -90,11 +90,13 @@ procedure send_selection_event(atom idx, sequence wname, sequence sel)
     sequence itms = {}
     
     for i = 1 to length(sel) do
-        itms &= {{
-            sel[i],  --wcprops[wcpItemIDs][idx][sel[i]],
-            wcprops[wcpItemText][idx][sel[i]]
-            --wcprops[wcpItemIcons][idx][sel[i]]
-        }}
+        if sel[i] > 0 and sel[i] <= length(wcprops[wcpItemText][idx]) then
+            itms &= {{
+                sel[i],  --wcprops[wcpItemIDs][idx][sel[i]],
+                wcprops[wcpItemText][idx][sel[i]]
+                --wcprops[wcpItemIcons][idx][sel[i]]
+            }}
+        end if
     end for
     widget:wc_send_event(wname, "selection", itms)
 end procedure
@@ -104,10 +106,12 @@ procedure send_double_click_event(atom idx, sequence wname, sequence sel)
     sequence itms = {}
     
     for i = 1 to length(sel) do
-        itms &= {{
-            sel[i],
-            wcprops[wcpItemText][idx][sel[i]]
-        }}
+        if sel[i] > 0 and sel[i] <= length(wcprops[wcpItemText][idx]) then
+            itms &= {{
+                sel[i],
+                wcprops[wcpItemText][idx][sel[i]]
+            }}
+        end if
     end for
     widget:wc_send_event(wname, "left_double_click", itms)
 end procedure
