@@ -2212,4 +2212,15 @@ end function
 wc_define_function("textbox", "get_label", routine_id("cmd_get_label"))
 
 
+procedure cmd_set_label(atom wid, sequence txt)
+    atom idx
+    
+    idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        wcprops[wcpLabel][idx] = txt
+        wc_call_event(wid, "changed", {})
+    end if
+end procedure
+wc_define_command("textbox", "set_label", routine_id("cmd_set_label"))
+
 

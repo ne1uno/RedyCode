@@ -53,7 +53,11 @@ enum
     
     wcpBackgroundPointer,    --what mouse pointer to show when over the background
     wcpOverridePointer,      --what mouse pointer to show to temporarily override other pointers(useful for when dragging a handle), 0 = no override 
-
+    
+    wcpKeyShift,             --Shift key (16) is pressed
+    wcpKeyCtrl,              --Ctrl key (17) is pressed
+    wcpKeyAlt,               --Alt key (18) is pressed
+    
     wcpShowHandleDebug,      --show handle bitmap instead of normal drawing
     wcpShowPerformanceDebug, --show performance info for debugging (number of draw cmds, handles, and drawing times)
 
@@ -341,6 +345,10 @@ procedure wc_create(atom wid, object wprops)
     wcprops[wcpBackgroundPointer] &= {wbackgroundpointer}
     wcprops[wcpOverridePointer] &= {0}
     
+    wcprops[wcpKeyShift] &= {0}
+    wcprops[wcpKeyCtrl] &= {0}
+    wcprops[wcpKeyAlt] &= {0}
+    
     wcprops[wcpShowHandleDebug] &= {whandledebug}
     wcprops[wcpShowPerformanceDebug] &= {wpreformancedebug}
     
@@ -575,18 +583,18 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     else
                         hname = ""
                     end if
-                    widget:wc_send_event(wname, "handle", {hname, "MouseMove", evdata[1] - lrect[1], evdata[2] - lrect[2]})
+                    widget:wc_send_event(wname, "handle", {hname, "MouseMove", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                 else
                     if wcprops[wcpSoftFocus][idx] then
                         set_mouse_pointer(wh, mArrow)
                     end if
                 end if
             
-            case "LeftDown" then        
+            case "LeftDown" then
+                wname = widget_get_name(wid)
                 if in_rect(evdata[1], evdata[2], wrect) then
                     if in_rect(evdata[1], evdata[2], lrect) then
                         oswin:capture_mouse(wh)
-                        wname = widget_get_name(wid)
                         --widget:wc_send_event(wname, "LeftDown", {evdata[1], evdata[2]})
                         hidx = identify_handle(idx, wh, evdata[1] - lrect[1], evdata[2] - lrect[2])
                         check_pointer(idx, wh, hidx)
@@ -595,16 +603,18 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         else
                             hname = ""
                         end if
-                        widget:wc_send_event(wname, "handle", {hname, "LeftDown", evdata[1] - lrect[1], evdata[2] - lrect[2]})
+                        widget:wc_send_event(wname, "handle", {hname, "LeftDown", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                     end if
                     
                     if wcprops[wcpHardFocus][idx] = 0 then
                         wcprops[wcpHardFocus][idx] = 1
+                        widget:wc_send_event(wname, "HardFocus", {1})
                         doredraw = 1
                     end if
                 else
                     if wcprops[wcpHardFocus][idx] = 1 then
                         wcprops[wcpHardFocus][idx] = 0
+                        widget:wc_send_event(wname, "HardFocus", {0})
                         doredraw = 1
                     end if
                 end if
@@ -620,7 +630,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     else
                         hname = ""
                     end if
-                    widget:wc_send_event(wname, "handle", {hname, "LeftUp", evdata[1] - lrect[1], evdata[2] - lrect[2]})
+                    widget:wc_send_event(wname, "handle", {hname, "LeftUp", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                     doredraw = 1
                 end if
             
@@ -636,7 +646,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         else
                             hname = ""
                         end if
-                        widget:wc_send_event(wname, "handle", {hname, "RightDown", evdata[1] - lrect[1], evdata[2] - lrect[2]})
+                        widget:wc_send_event(wname, "handle", {hname, "RightDown", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                     end if
                 end if
 
@@ -651,7 +661,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     else
                         hname = ""
                     end if
-                    widget:wc_send_event(wname, "handle", {hname, "RightUp", evdata[1] - lrect[1], evdata[2] - lrect[2]})
+                    widget:wc_send_event(wname, "handle", {hname, "RightUp", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                 end if
             
             case "WheelMove" then
@@ -671,39 +681,45 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 end if
             
             case "KeyDown" then
-            
                 if wcprops[wcpHardFocus][idx] then
-                    wname = widget_get_name(wid)
-                    widget:wc_send_event(wname, "KeyDown", evdata)
-                    
-                    if evdata[1] = 37 then --left
-                        
-                    elsif evdata[1] = 39 then --right
-                        
-                    elsif evdata[1] = 38 then --up
-                        
-                    elsif evdata[1] = 40 then --down
-                        
-                    elsif evdata[1] = 33 then --pgup
-                    elsif evdata[1] = 34 then --pgdown
-                    elsif evdata[1] = 36 then --home
-                        
-                    elsif evdata[1] = 35 then --end
-                        
-                    
+                    if evdata[1] = 16 then --shift
+                        wcprops[wcpKeyShift][idx] = 1
+                    elsif evdata[1] = 17 then --ctrl
+                        wcprops[wcpKeyCtrl][idx] = 1
+                    elsif evdata[1] = 18 then --alt
+                        wcprops[wcpKeyAlt][idx] = 1
+                    elsif evdata[1] = 92 then --win
                     end if
+                    
+                    wname = widget_get_name(wid)
+                    widget:wc_send_event(wname, "KeyDown", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                     
                     doredraw = 1
                 end if
                 
+            case "KeyUp" then
+                if wcprops[wcpHardFocus][idx] then
+                    if evdata[1] = 16 then --shift
+                        wcprops[wcpKeyShift][idx] = 0
+                    elsif evdata[1] = 17 then --ctrl
+                        wcprops[wcpKeyCtrl][idx] = 0
+                    elsif evdata[1] = 18 then --alt
+                        wcprops[wcpKeyAlt][idx] = 0
+                    elsif evdata[1] = 92 then --win
+                    end if
+                    
+                    wname = widget_get_name(wid)
+                    widget:wc_send_event(wname, "KeyUp", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
+                end if
+                
             case "KeyPress" then
                 if wcprops[wcpHardFocus][idx] then
-                    wname = widget_get_name(wid)
-                    widget:wc_send_event(wname, "KeyPress", evdata)
-                
                     if evdata[1] > 13 then --normal characters
                         
                     end if
+                    
+                    wname = widget_get_name(wid)
+                    widget:wc_send_event(wname, "KeyPress", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                     
                     doredraw = 1
                 end if
@@ -790,13 +806,15 @@ end procedure
 
 procedure wc_arrange(atom wid)
     atom idx = find(wid, wcprops[wcpID]), wh
-    sequence wpos, wsize, txex, trect, oldsize, newsize
+    sequence wname, wpos, wsize, txex, trect, oldsize, newsize
     
     if idx > 0 then
         wpos = widget_get_pos(wid)
         wsize = widget_get_size(wid)
         
         wh = widget_get_handle(wid)
+        wname = widget_get_name(wid)
+        widget:wc_send_event(wname, "HardFocus", {wcprops[wcpHardFocus][idx]})
         
         if wcprops[wcpShowBorder][idx] = 1 then
             --label:
@@ -903,7 +921,11 @@ function wc_debug(atom wid)
                                 
             {"BackgroundPointer", wcprops[wcpBackgroundPointer][idx]},
             {"OverridePointer", wcprops[wcpOverridePointer][idx]},
-                         
+            
+            {"KeyShift", wcprops[wcpKeyShift][idx]},
+            {"KeyCtrl", wcprops[wcpKeyCtrl][idx]},
+            {"KeyAlt", wcprops[wcpKeyAlt][idx]},
+               
             {"ShowHandleDebug", wcprops[wcpShowHandleDebug][idx]},
             {"ShowPerformanceDebug", wcprops[wcpShowPerformanceDebug][idx]},
      
@@ -1030,6 +1052,21 @@ end procedure
 wc_define_command("canvas", "set_background_pointer", routine_id("cmd_set_background_pointer"))
 
 
+procedure cmd_scroll_to(atom wid, atom cx, atom cy)
+    atom idx = find(wid, wcprops[wcpID])
+    
+    if idx > 0 then
+        if wcprops[wcpScrollXEnabled][idx] then
+            wc_call_command(wcprops[wcpScrollH][idx], "set_value", cx)
+        end if
+        if wcprops[wcpScrollYEnabled][idx] then
+            wc_call_command(wcprops[wcpScrollV][idx], "set_value", cy)
+        end if
+    end if
+end procedure
+wc_define_command("canvas", "scroll_to", routine_id("cmd_scroll_to"))
+
+
 procedure cmd_draw_background(atom wid, sequence drawcmds)
     atom idx = find(wid, wcprops[wcpID]), t0
     sequence cmds
@@ -1132,7 +1169,6 @@ procedure cmd_destroy_handle(atom wid, sequence hname)
     draw_handles(wid, idx)
 end procedure
 wc_define_command("canvas", "destroy_handle", routine_id("cmd_destroy_handle"))
-
 
 
 function cmd_get_canvas_size(atom wid)

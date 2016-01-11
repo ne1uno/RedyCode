@@ -66,9 +66,29 @@ include std/pretty.e
 include project.e as project  --project manager
 include redy_config.e as config --redy environment config dialog
 include preferences.e as pref --prefereces dialog
+include tips.e as tips        --show a random useful tip on startup
 include help.e as help        --context-sensitive help system
 
 atom void
+
+sequence
+RecentProjectList = {
+    "(No recent projects)"
+},
+RecentFileList = {
+    "(No recent files)"
+},
+AppList = {},
+AppRunList = {
+    "(No apps)"
+},
+ProjectTitle = ""
+
+object
+ProjectModified = 0,
+ActiveFileType = 0,
+ActiveFileName = "",
+ActiveFileSaveEnabled = 0
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
@@ -78,44 +98,143 @@ procedure gui_event(object evwidget, object evtype, object evdata)
                 case "New Project..." then
                     msg:publish("menu", "command", "new_project", 0)
                 case "Open Project..." then
+                
                     msg:publish("menu", "command", "open_project", 0)
                 case "Close Project" then
                     msg:publish("menu", "command", "close_project", 0)
+                case "Reopen Project"then
+                    msg:publish("menu", "command", "reopen_project", 0)
+                
                 case "Save Project" then
                     msg:publish("menu", "command", "save_all_files", 0)
+                case "Save Project As..."then
+                    msg:publish("menu", "command", "save_project_as", 0)
+                
+                case "Rename Project..."then
+                    msg:publish("menu", "command", "rename_project", 0)
                 case "Copy Project To..." then
                     msg:publish("menu", "command", "copy_project_to", 0)
-                case "Project Settings..." then
+                case "Delete Project"then
+                    msg:publish("menu", "command", "delete_project", 0)
+                
+                case "Project Settings" then
                     msg:publish("menu", "command", "edit_project", 0)
-                case "Run default app" then
-                    msg:publish("menu", "command", "run_app", 0)
+                case "Explore Project Folder" then
+                    msg:publish("menu", "command", "explore", 0)
+                case "Refresh Source Files" then
+                    msg:publish("menu", "command", "refresh_source_tree", 0)
+                    
                 case "Exit" then
-                    msg:publish("menu", "command", "exit", 0)
+                    msg:publish("menu", "command", "confirm_exit", 0)
+                    
+                case else
+                    --RecentProjectList
+            end switch
+        
+        case "mnuMain.mnuFile" then
+            switch evdata do
+                case "New..." then
+                    msg:publish("menu", "command", "new_file", 0)
+                    
+                case "Open..." then
+                    msg:publish("menu", "command", "open_file", 0)
+                    
+                case "Close" then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "close_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Close All" then
+                    msg:publish("menu", "command", "close_all_files", 0)
+                    
+                case "Reopen" then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "reopen_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Save" then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "save_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Save All" then
+                    msg:publish("menu", "command", "save_all_files", 0)
+                    
+                case "Save As..." then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "save_file_as", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Rename..." then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "rename_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Copy to..." then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "copy_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case "Delete" then
+                    if sequence(ActiveFileType) then
+                        msg:publish("menu", "command", "delete_file", {ActiveFileType, ActiveFileName, ActiveFileSaveEnabled})
+                    end if
+                    
+                case else
+                    --RecentFileList
             end switch
             
         case "mnuMain.mnuTools" then
             switch evdata do
-                case "Redy Debug Console..." then
-                    msg:publish("menu", "command", "gui_debug", 0)
-                case "Redy configuration..." then
+                case "Redy Configuration..." then
                     msg:publish("main", "command", "config", 0)
                 case "Preferences..." then
                     msg:publish("menu", "command", "preferences", 0)
+                
+                case "Check for Updates..." then
+                    msg:publish("menu", "command", "check_updates", 0)
+                    
+                case "Redy Debug Console..." then
+                    msg:publish("menu", "command", "gui_debug", 0)
+            end switch
+            
+        case "mnuMain.mnuApplication" then
+            switch evdata do
+                case "Build" then
+                    msg:publish("menu", "command", "build", 0)
+                case "Error Report" then
+                    msg:publish("menu", "command", "error_report", 0)
+                
+                case else
+                    for a = 1 to length(AppList) do
+                    if match("\"" & AppList[a] & "\"", evdata) > 0 then
+                        msg:publish("menu", "command", "run_app", AppList[a])
+                        exit
+                    end if
+                end for
             end switch
             
         case "mnuMain.mnuHelp" then
             switch evdata do
                 case "Help..." then
                     msg:publish("menu", "command", "help", 0)
+                case "Tips..." then
+                    msg:publish("menu", "command", "tips", 0)
+                    
                 case "About RedyCode..." then
                     msg:publish("menu", "command", "about", 0)
             end switch
             
         case "winMain" then
-            if equal(evtype, "closed") then
-                msg:publish("menu", "command", "exit", 0)
-            end if
-            
+            switch evtype do
+                case "GotFocus" then
+                    msg:publish("menu", "command", "refresh_source_tree", 0)
+                    
+                case "LostFocus" then
+                    
+                case "closed" then
+                    msg:publish("menu", "command", "confirm_exit", 0)
+            end switch
     end switch
 end procedure
 
@@ -126,31 +245,70 @@ end procedure
 
 
 function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
-    --gui:debug("msg_event", {"subscribername=" & subscribername, "topicname=" & topicname, "msgname=" & msgname, "msgdata=" & sprint(msgdata)})
+    --gui:debug("main_msg", {"subscribername=" & subscribername, "topicname=" & topicname, "msgname=" & msgname, "msgdata=" & pretty_sprint(msgdata, {2})})
     switch topicname do
         case "command" then
-            if equal(msgname, "gui_debug") then
+            
+            if equal(msgname, "active_file") then --a different file as been selected as active file
+                if atom(msgdata) then
+                    ActiveFileType = 0
+                    ActiveFileName = ""
+                    ActiveFileSaveEnabled = 0
+                else
+                    ActiveFileType = msgdata[1]
+                    ActiveFileName = msgdata[2]
+                    ActiveFileSaveEnabled = msgdata[3]
+                end if
+                RebuildMenu()
+                
+            elsif equal(msgname, "project_modified") then --a different file as been selected as active file
+                if ProjectModified != msgdata then 
+                    ProjectModified = msgdata
+                end if
+                RebuildMenu()
+            
+            
+            elsif equal(msgname, "gui_debug") then
                 gui:show_debug()
+            
+            elsif equal(msgname, "AppList") then
+                sequence applist = msgdata
+                AppList = applist
+                AppRunList = {}
+                for a = 1 to length(applist) do
+                    AppRunList &= {"Run \"" & applist[a] & "\""}
+                end for
+                RebuildMenu()
+                
+            elsif equal(msgname, "RecentProjectList") then
+                RecentProjectList = msgdata
+                RebuildMenu()
+                
+            elsif equal(msgname, "RecentFileList") then
+                RecentFileList = msgdata
+                RebuildMenu()
+                
+            elsif equal(msgname, "project_title") then
+                ProjectTitle = msgdata
+                gui:wproc("winMain", "set_title", {App_Name & " - " & ProjectTitle})
+                RebuildMenu()
                 
             elsif equal(msgname, "about") then
                 about:show()
                 
             elsif equal(msgname, "exit") then
-                --sequence ans = msgbox:waitmsg("Are you sure you want to exit?", "Question")
-                sequence ans = "Yes"
-                if equal(ans, "Yes") then
-                    /*deinitialize code here*/
-                    --get winMain pos and size
-                    sequence winpos = gui:get_window_pos(widget_get_handle("winMain"))
-                    sequence winsize = gui:get_window_size(widget_get_handle("winMain"))
-                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.left", winpos[1])
-                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.top", winpos[2])
-                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.width", winsize[1])
-                    cfg:set_var(App_Name & ".cfg", "GUI", "winMain.height", winsize[2])
-                    cfg:save_config(App_Name & ".cfg")
-                    
-                    gui:wdestroy("winMain")
-                end if
+                /*deinitialize code here*/
+                --get winMain pos and size
+                sequence winpos = gui:get_window_pos(widget_get_handle("winMain"))
+                sequence winsize = gui:get_window_size(widget_get_handle("winMain"))
+                cfg:set_var(App_Name & ".cfg", "GUI", "winMain.left", winpos[1])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winMain.top", winpos[2])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winMain.width", winsize[1])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winMain.height", winsize[2])
+                cfg:save_config(App_Name & ".cfg")
+                
+                gui:wdestroy("winMain")
+                
             end if
     end switch
     return 1
@@ -199,6 +357,143 @@ procedure show_splash()
     task_delay(1)
     
     gui:wdestroy("winSplash")
+end procedure
+
+
+procedure RebuildMenu()
+    sequence MainMenus = {}, psen = "*", fen = "*", sen = "*", saen = "*", ren = "*", den = "*"
+    
+    if ProjectModified then
+        psen = ""
+    end if
+    
+    if sequence(ActiveFileType) and length(ActiveFileName) > 0 then
+        fen = ""
+        if ActiveFileSaveEnabled then
+            sen = ""
+        end if
+        if equal(ActiveFileType, "settings") then
+            saen = "*"
+            ren = "*"
+            den = "*"
+        else
+            saen = ""
+            ren = ""
+            den = ""
+        end if
+    end if
+    
+    if gui:wexists("mnuMain") then
+        gui:wdestroy("mnuMain")
+    end if
+    if length(ProjectTitle) = 0 then
+        MainMenus = {
+            {"Project", {
+                "New Project...",
+                "Open Project...",
+                --{"Open Recent Project", 
+                --    RecentProjectList
+                --},
+                "-",
+                "Exit"
+                }
+            },
+            {"Tools", {
+                "Redy Configuration...",
+                "Preferences...",
+                "-",
+                "*Check for Updates...",
+                "-",
+                "Redy Debug Console..."
+                }
+            },
+            {"Help", {
+                "Help...",
+                "Tips...",
+                "-",
+                "About RedyCode..."
+                }
+            }
+        }
+    else
+        MainMenus = {
+            {"Project", {
+                "New Project...",
+                "Open Project...",
+                --{"Open Recent Project", 
+                --    RecentProjectList
+                --},
+                "-",
+                "Close Project",
+                "*Reopen Project",
+                "-",
+                psen & "Save Project",
+                "*Save Project As...",
+                "-",
+                "*Rename Project...",
+                "*Copy Project To...",
+                "*Delete Project",
+                "-",
+                "Project Settings",
+                "Explore Project Folder",
+                "Refresh Source Files",
+                "-",
+                "Exit"
+                }
+            },
+            {"File", {
+                "New...",
+                "Open...",
+                --{"Open Recent File", 
+                --    RecentFileList
+                --},
+                "-",
+                fen & "Close",
+                fen & "Close All",
+                fen & "Reopen",
+                "-",
+                sen & "Save",
+                fen & "Save All",
+                saen & "Save As...",
+                "-",
+                ren & "Rename...",
+                saen & "Copy to...",
+                den & "Delete"
+                }
+            },
+            {"Application", 
+                AppRunList & {
+                "-",
+                "*Build",
+                "*Error Report"
+                }
+            },
+            {"Tools", {
+                "Redy Configuration...",
+                "Preferences...",
+                "-",
+                "*Check for Updates...",
+                "-",
+                "Redy Debug Console..."
+                }
+            },
+            {"Help", {
+                "Help...",
+                "Tips...",
+                "-",
+                "About RedyCode..."
+                }
+            }
+        }
+    end if
+    
+    gui:wcreate({
+        {"name", "mnuMain"},
+        {"parent", "winMain"},
+        {"class", "menubar"},
+        {"handler", routine_id("gui_event")},
+        {"menus", MainMenus}
+    })
 end procedure
 
 
@@ -417,46 +712,7 @@ procedure start()
         {"enabled", 1}
     })*/
     
-    
-    --Menus
-    gui:wcreate({
-        {"name", "mnuMain"},
-        {"parent", "winMain"},
-        {"class", "menubar"},
-        {"handler", routine_id("gui_event")},
-        {"menus", {
-            {"Project", {
-                "New Project...",
-                "Open Project...",
-                "Close Project",
-                "-",
-                "Save Project",
-                "*Copy Project To...",
-                "-",
-                "Project Settings...",
-                "-",
-                "Run default app",
-                "-",
-                "Exit"
-                }
-            },
-            {"Tools", {
-                "Redy Debug Console...",
-                "-",
-                "Redy configuration...",
-                "Preferences..."
-                }
-            },
-            {"Help", {
-                "Help...",
-                "-",
-                "About RedyCode..."
-                }
-            }
-        }
-    }})
-    
-    
+    RebuildMenu()
     
     msg:subscribe("menu", "command", routine_id("msg_event"))    --sequence subscribername, sequence topicname, atom msghandlerid
     msg:debug(routine_id("msg_debug_event"))
@@ -464,6 +720,7 @@ procedure start()
     project:start()
     config:start()
     pref:start()
+    tips:start()
     help:start()
     
     msg:publish("menu", "command", "list_projects", 0)

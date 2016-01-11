@@ -501,10 +501,14 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 wc_call_arrange(wid)
                 
             case "GotFocus" then
+                wname = widget_get_name(wid)
+                widget:wc_send_event(wname, "GotFocus", {})
                 wcprops[wcpHardFocus][idx] = 1
                 widget:wc_call_draw(wid)
                 
             case "LostFocus" then
+                wname = widget_get_name(wid)
+                widget:wc_send_event(wname, "LostFocus", {})
                 wcprops[wcpHardFocus][idx] = 0
                 widget:wc_call_draw(wid)
                 
