@@ -36,19 +36,21 @@ include std/utils.e
 
 
 atom lastid = 0
+object CurrentTab = 0
 
 function next_tabnum()
     lastid += 1
     return sprintf("%d", {lastid})
 end function
 
-export function create(sequence tablabel)
+export function create(sequence tablabel, atom tabflagcolor = -1)
     sequence tabnum = next_tabnum()
     gui:wcreate({
         {"name", "tabEditor" & tabnum},
         {"parent", "tabEditor"},
         {"class", "container"},
         {"label", tablabel},
+        {"flag", tabflagcolor},
         --{"tab", 1},
         {"orientation", "vertical"},
         {"sizemode_x", "expand"},
@@ -60,12 +62,22 @@ end function
 
 
 export procedure destroy_tab(object tabnameorid)
-     gui:wdestroy(tabnameorid)
+    gui:wdestroy(tabnameorid)
 end procedure
 
 
 export procedure select_tab(object tabnameorid)
-     gui:wproc("tabEditor", "select_tab_by_widget", {tabnameorid})
+    gui:wproc("tabEditor", "select_tab_by_widget", {tabnameorid})
+end procedure
+
+
+export procedure set_tab_label(object tabnameorid, sequence lbl)
+    gui:wproc("tabEditor", "set_tab_label", {tabnameorid, lbl})
+end procedure
+
+
+export procedure set_tab_flag(object tabnameorid, atom flagcolor)
+    gui:wproc("tabEditor", "set_tab_flag", {tabnameorid, flagcolor})
 end procedure
 
 
@@ -76,14 +88,12 @@ procedure gui_event(object evwidget, object evtype, object evdata)
     switch evwidget do
         case "tabEditor" then
             if equal(evtype, "selection") then
-                /*sequence wname = gui:widget_get_name(evdata)
+                msg:publish("tablist", "command", "tab_selected", evdata)
                 
-                for t = 1 to length(tabs[tName]) do
-                    if equal(wname, "tabEditor_" & tabs[tName][t]) then
-                        CurrentTab = tabs[tName][t]
-                        exit
-                    end if
-                end for*/
+            elsif equal(evtype, "flag") then
+                --msg:publish("tablist", "command", "flag_color", evdata)
+                msg:publish("tablist", "command", "tab_selected", evdata[1])
+                
             end if
             
         case else
@@ -102,16 +112,6 @@ end function
 
 export procedure start()
     gui:wcreate({
-        {"name", "cntMain"},
-        {"parent", "winMain"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"},
-        {"handler", routine_id("gui_event")}
-    })
-    
-    gui:wcreate({
         {"name", "cntEditor"},
         {"parent", "cntMain"},
         {"class", "container"},
@@ -125,7 +125,8 @@ export procedure start()
     gui:wcreate({
         {"name", "tabEditor"},
         {"parent", "cntEditor"},
-        {"class", "tabs"}
+        {"class", "tabs"},
+        {"handler", routine_id("gui_event")}
     })
     
     /*
@@ -203,6 +204,6 @@ export procedure start()
     
     --create_tab("project", "Untitled", "project_untitled", "untitled", "untitled")
     
-    msg:subscribe("editor", "command", routine_id("msg_event"))
+    msg:subscribe("tablist", "command", routine_id("msg_event"))
 end procedure
 

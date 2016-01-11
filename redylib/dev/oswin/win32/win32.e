@@ -985,30 +985,36 @@ end function
 public function clipboard_write_txt(atom hWnd, sequence txt) --"cut" or "copy" text to the clipboard. hWnd is a Window handle
     atom lptStr, hglbCopy, lptstrCopy
     
-    --Open Clipboard
-    if c_func(xOpenClipboard, {hWnd}) = 0 then
-        return 0
-    end if
-    VOID = c_func(xEmptyClipboard, {})
-    
-    lptStr = allocate_string(txt)
-    
-    -- Allocate a export memory object for the text
-    hglbCopy = c_func(xGlobalAlloc, {GMEM_MOVEABLE, length(txt) + 1})
-    if hglbCopy = 0 then
+    if length(txt) > 0 then
+        if sequence(txt[1]) then --txt appears to be list of sequences, needs to be converted to a string
+            txt = join(txt, "\n")
+        end if
+        
+        --Open Clipboard
+        if c_func(xOpenClipboard, {hWnd}) = 0 then
+            return 0
+        end if
+        VOID = c_func(xEmptyClipboard, {})
+        
+        lptStr = allocate_string(txt)
+        
+        -- Allocate a export memory object for the text
+        hglbCopy = c_func(xGlobalAlloc, {GMEM_MOVEABLE, length(txt) + 1})
+        if hglbCopy = 0 then
+            VOID = c_func(xCloseClipboard, {})
+            return 0
+        end if
+        
+        -- Lock the handle and copy the text to the buffer
+        lptstrCopy = c_func(xGlobalLock, {hglbCopy})
+        mem_copy(lptstrCopy, lptStr, length(txt)+1)
+        c_func(xGlobalUnlock, {hglbCopy})
+        free(lptStr)
+        
+        -- Place the handle on the clipboard
+        VOID = c_func(xSetClipboardData, {CF_TEXT, hglbCopy})
         VOID = c_func(xCloseClipboard, {})
-        return 0
     end if
-    
-    -- Lock the handle and copy the text to the buffer
-    lptstrCopy = c_func(xGlobalLock, {hglbCopy})
-    mem_copy(lptstrCopy, lptStr, length(txt)+1)
-    c_func(xGlobalUnlock, {hglbCopy})
-    free(lptStr)
-    
-    -- Place the handle on the clipboard
-    VOID = c_func(xSetClipboardData, {CF_TEXT, hglbCopy})
-    VOID = c_func(xCloseClipboard, {})
     
     return 1
 end function

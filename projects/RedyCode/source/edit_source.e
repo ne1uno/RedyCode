@@ -22,7 +22,6 @@ include gui/gui.e as gui
 include gui/objects/textedit.e as txte
 include gui/dialogs/dialog_file.e as dlgfile
 include gui/dialogs/msgbox.e as msgbox
---include app/msg.e as msg
 
 include tablist.e as tabs --tab manager
 
@@ -40,6 +39,7 @@ include std/utils.e
 enum    --srcfiles
 fFilePathName,      --file path and name
 fModified,          --file modified
+fLocked,            --file locked (read only)
 fTabWid,            --widget ID of file's tab
 fRoutineNames,      --list of file's routine names
 fRoutineLineNums,   --list of file's routine line numbers
@@ -50,7 +50,49 @@ constant fLENGTH = fContext
 sequence srcfiles = repeat({}, fLENGTH)
 
 
-export procedure load_src(sequence fpathname)
+procedure txt_event(sequence evname, sequence evtype, object evdata)
+    for f = 1 to length(srcfiles[fTabWid]) do
+        if equal(evname, "txt" & sprint(srcfiles[fTabWid][f])) then
+            switch evtype do
+                case "modified" then
+                    if evdata = 1 then
+                        --set_tab_label(srcfiles[fTabWid][f], "*" & filename(srcfiles[fFilePathName][f]))
+                        srcfiles[fModified][f] = 1
+                        set_tab_flag(srcfiles[fTabWid][f], rgb(200, 0, 0))
+                    else
+                        --set_tab_label(srcfiles[fTabWid][f], filename(srcfiles[fFilePathName][f]))
+                        srcfiles[fModified][f] = 0
+                        set_tab_flag(srcfiles[fTabWid][f], -1)
+                    end if
+            end switch
+            exit
+        end if
+    end for
+end procedure
+
+procedure select_tool(sequence wname, sequence toolname)
+    gui:wcreate({
+        {"name", "btnSmart" & wname},
+        {"parent", "cntCommandsLeft" & wname},
+        {"class", "toggle"},
+        {"style", "button"},
+        {"label", "Smart Tools"}
+    })
+end procedure
+
+
+procedure create_edit_tools(sequence wname)
+    gui:wcreate({
+        {"name", "btnSmart" & wname},
+        {"parent", "cntCommandsLeft" & wname},
+        {"class", "toggle"},
+        {"style", "button"},
+        {"label", "Smart Tools"}
+    })
+end procedure
+
+
+export procedure load_file(sequence fpathname, atom readonly = 0)
     atom fidx = find(fpathname, srcfiles[fFilePathName])
     if fidx > 0 then --file is already open, so switch to it's tab instead
         select_tab(srcfiles[fTabWid][fidx])
@@ -85,8 +127,13 @@ export procedure load_src(sequence fpathname)
         end if
         
         atom tabid = tabs:create(filename(fpathname))
-        sequence parname = gui:widget_get_name(tabid) 
+        sequence parname = gui:widget_get_name(tabid)
         sequence wname = sprint(tabid)
+        sequence txtlbl, syntaxmode
+        
+        if readonly then
+            set_tab_flag(tabid, rgb(0, 0, 200))
+        end if
         
         --create file command buttons
         gui:wcreate({
@@ -103,24 +150,82 @@ export procedure load_src(sequence fpathname)
             {"parent", "cntSource" & wname},
             {"class", "container"},
             {"orientation", "horizontal"},
-            {"sizemode_x", "normal"},
+            {"sizemode_x", "expand"},
             {"sizemode_y", "normal"}
         })
         gui:wcreate({
-            {"name", "btnClose" & wname},
+            {"name", "cntCommandsLeft" & wname},
             {"parent", "cntCommands" & wname},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "normal"},
+            {"sizemode_y", "normal"},
+            {"justify_x", "left"}
+        })
+        gui:wcreate({
+            {"name", "cntCommandsRight" & wname},
+            {"parent", "cntCommands" & wname},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "normal"},
+            {"sizemode_y", "normal"},
+            {"justify_x", "right"}
+        })
+        gui:wcreate({
+            {"name", "btnFind" & wname},
+            {"parent", "cntCommandsLeft" & wname},
+            {"class", "toggle"},
+            {"style", "button"},
+            {"label", "Find"}
+        })
+        if readonly then
+            gui:wcreate({
+                {"name", "btnEdit" & wname},
+                {"parent", "cntCommandsRight" & wname},
+                {"class", "button"},
+                {"label", "Edit"}
+            })
+        else
+            create_edit_tools(wname)
+        end if
+        gui:wcreate({
+            {"name", "btnClose" & wname},
+            {"parent", "cntCommandsRight" & wname},
             {"class", "button"},
             {"label", "Close"}
         })
         
         --create text editor instance
-        
+        if find(fileext(fpathname), {"ex", "exw", "eu", "e", "exu", "err"}) then
+            syntaxmode = "euphoria"
+        /*
+        elsif find(fileext(fpathname), {"cfg", "ini"}) then
+            syntaxmode = "ini"
+        elsif find(fileext(fpathname), {"html"}) then
+            syntaxmode = "html"
+        elsif find(fileext(fpathname), {"css"}) then
+            syntaxmode = "css"
+        elsif find(fileext(fpathname), {"xml"}) then
+            syntaxmode = "xml"
+        elsif find(fileext(fpathname), {"c", "h", "cpp"}) then
+            syntaxmode = "c"
+        */
+        else
+            syntaxmode = "plain"
+        end if
+        if readonly then
+            txtlbl = fpathname & " (Read Only)"
+        else
+            txtlbl = fpathname
+        end if
         txte:create({
             {"name", "txt" & wname},
-            {"label", fpathname},
+            {"label", txtlbl},
             --{"view_mode", "syntax"},
-            {"syntax_mode", "euphoria"}, --syntax highlighting is very unstable!
-            {"text", txt}
+            {"syntax_mode", syntaxmode},
+            {"text", txt},
+            {"locked", readonly},
+            {"handler", routine_id("txt_event")}
         })
         
         txte:show("txt" & wname, "canFiles" & wname, "cntSource" & wname)
@@ -141,7 +246,7 @@ export procedure load_src(sequence fpathname)
             {"class", "textbox"},
             {"mode", "text"},
             {"label", "Current Context:"},
-            {"text", "top level"}
+            {"text", "Sorry, this doesn't work yet."}
         })
         gui:wcreate({
             {"name", "lstBuilder" & wname},
@@ -153,6 +258,7 @@ export procedure load_src(sequence fpathname)
         --temp example:
         gui:wproc("lstBuilder" & wname, "clear_list", {})
         gui:wproc("lstBuilder" & wname, "add_list_items", {{
+            {rgb(127, 127, 127), "Sorry, this doesn't work yet."},
             {rgb(127, 127, 127), "include"},
             {rgb(127, 127, 127), "object"},
             {rgb(127, 127, 127), "sequence"},
@@ -164,6 +270,7 @@ export procedure load_src(sequence fpathname)
         
         srcfiles[fFilePathName] &= {fpathname}
         srcfiles[fModified] &= {0}
+        srcfiles[fLocked] &= {readonly}
         srcfiles[fTabWid] &= {tabid}
         srcfiles[fRoutineNames] &= {{}}
         srcfiles[fRoutineLineNums] &= {{}}
@@ -172,17 +279,51 @@ export procedure load_src(sequence fpathname)
 end procedure
 
 
-export procedure save_src(sequence fname) --save data to file from tab
+export procedure save_file(sequence fname)
+    atom fidx = find(fname, srcfiles[fFilePathName])
+    if fidx > 0 then
+        if txte:save_to_file("txt" & sprint(srcfiles[fTabWid][fidx]), fname) then
+            txte:set_modified("txt" & sprint(srcfiles[fTabWid][fidx]), 0)
+            --msgbox:msg("Saved file\"" & fname & "\".", "Info")
+        else
+            msgbox:msg("Unable to save file\"" & fname & "\".", "Error")
+        end if
+    end if
+end procedure
+
+
+export procedure save_file_as(sequence fname) --save as different file and update tab to new file name
     
 end procedure
 
 
-export procedure close_src(sequence fname)
+export procedure confirm_close_file(sequence fname)
     atom fidx = find(fname, srcfiles[fFilePathName])
     if fidx > 0 then
+        sequence ans = "Cancel"
+        if srcfiles[fModified][fidx] then
+            ans = msgbox:waitmsg("File \"" & fname & "\" is not saved. Save before closing?", "Question", {"Yes", "No", "Cancel"})
+        else
+            ans = "No"
+        end if
+        if equal(ans, "Yes") then
+            save_file(fname)
+            close_file(fname)
+        elsif equal(ans, "No") then
+            close_file(fname)
+        end if
+    end if
+end procedure
+
+
+export procedure close_file(sequence fname)
+    atom fidx = find(fname, srcfiles[fFilePathName])
+    if fidx > 0 then
+        txte:destroy("txt" & sprint(srcfiles[fTabWid][fidx]))
         tabs:destroy_tab(srcfiles[fTabWid][fidx])
         srcfiles[fFilePathName] = remove(srcfiles[fFilePathName], fidx)
         srcfiles[fModified] = remove(srcfiles[fModified], fidx)
+        srcfiles[fLocked] = remove(srcfiles[fLocked], fidx)
         srcfiles[fTabWid] = remove(srcfiles[fTabWid], fidx)
         srcfiles[fRoutineNames] = remove(srcfiles[fRoutineNames], fidx)
         srcfiles[fRoutineLineNums] = remove(srcfiles[fRoutineLineNums], fidx)
@@ -191,174 +332,81 @@ export procedure close_src(sequence fname)
 end procedure
 
 
-
-export procedure save_all_src() --save data to file from tab
+export procedure save_all() --save data to file from tab
     sequence flist = srcfiles[fFilePathName]
     for f = 1 to length(flist) do
-        save_src(flist[f])
+        save_file(flist[f])
     end for
 end procedure
 
 
-export procedure close_all_src()
+export procedure close_all()
     sequence flist = srcfiles[fFilePathName]
     for f = 1 to length(flist) do
-        close_src(flist[f])
+        confirm_close_file(flist[f])
     end for
 end procedure
 
-export function is_modified()
+
+export function is_any_modified()
     atom modified = 0
     for f = 1 to length(srcfiles[fModified]) do
         if srcfiles[fModified][f] then
             modified = 1
+            exit
         end if
     end for
     return modified
 end function
 
 
+export function tab_file(atom tabwid)
+    sequence fname = ""
+    atom saveenabled = 0
+    atom fidx = find(tabwid, srcfiles[fTabWid])
+    if fidx > 0 then
+        fname = srcfiles[fFilePathName][fidx]
+        saveenabled = srcfiles[fModified][fidx]
+    end if
+    
+    return {fname, saveenabled}
+end function
+
 -----------------------------------
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
-    switch evwidget do
-        case "tabEditor" then
-            if equal(evtype, "selection") then
-                atom tabwid = evdata
-                ? tabwid                
-            end if
-            
-        case else
+    --switch evwidget do
+        --case "tabEditor" then
+        --    if equal(evtype, "selection") then
+        --        atom tabwid = evdata             
+        --    end if
+        --    
+        --case else
             for f = 1 to length(srcfiles[fTabWid]) do
                 if equal(evwidget, "btnClose" & sprint(srcfiles[fTabWid][f])) then
-                    sequence ans = "Yes"
-                    if srcfiles[fModified][f] then
-                        ans = msgbox:waitmsg("File is not saved. Are you sure you want to close it?", "Question")
-                    end if
-                    if equal(ans, "Yes") then
-                        close_src(srcfiles[fFilePathName][f])
-                        exit
-                    end if
+                    confirm_close_file(srcfiles[fFilePathName][f])
+                    exit
+                    
+                elsif equal(evwidget, "btnEdit" & sprint(srcfiles[fTabWid][f])) then
+                    srcfiles[fLocked][f] = 0
+                    set_tab_flag(srcfiles[fTabWid][f], -1)
+                    txte:set_prop("txt" & sprint(srcfiles[fTabWid][f]), "locked", 0)
+                    txte:set_prop("txt" & sprint(srcfiles[fTabWid][f]), "label", srcfiles[fFilePathName][f])
+                    gui:wdestroy("btnEdit" & sprint(srcfiles[fTabWid][f]))
+                    create_edit_tools(sprint(srcfiles[fTabWid][f]))
+                    exit
+                    
+                elsif equal(evwidget, "btnFind" & sprint(srcfiles[fTabWid][f])) then
+                    select_tool(sprint(srcfiles[fTabWid][f]), "btnFind")
+                    exit
+                    
+                elsif equal(evwidget, "btnSmart" & sprint(srcfiles[fTabWid][f])) then
+                    select_tool(sprint(srcfiles[fTabWid][f]), "btnSmart")
+                    exit
+                    
                 end if
             end for
-    end switch
+    --end switch
 end procedure
-
-
-/*function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
-    switch topicname do
-        case "command" then
-    end switch
-    
-    return 1
-end function*/
-
-
-export procedure start()
-    gui:wcreate({
-        {"name", "cntMain"},
-        {"parent", "winMain"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"},
-        {"handler", routine_id("gui_event")}
-    })
-    
-    gui:wcreate({
-        {"name", "cntEditor"},
-        {"parent", "cntMain"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"}
-    })
-    
-    
-    --srcfiles
-    gui:wcreate({
-        {"name", "tabEditor"},
-        {"parent", "cntEditor"},
-        {"class", "srcfiles"}
-    })
-    
-    /*
-    gui:wcreate({
-        {"name", "panelNav"},
-        {"parent", "winMain"},
-        {"class", "panel"},
-        {"label", "Navigation"},
-        {"dock", "right"},
-        {"handler", routine_id("gui_event")}
-    })
-    gui:wcreate({
-        {"name", "cntNav"},
-        {"parent", "panelNav"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"}
-    })
-    gui:wcreate({
-        {"name", "lstNav"},
-        {"parent", "cntNav"},
-        {"class", "listbox"}
-    })
-    
-    --temp example:
-    gui:wproc("lstNav", "clear_list", {})
-    gui:wproc("lstNav", "add_list_items", {{
-        {rgb(127, 127, 127), "top"}
-    }})
-    
-    gui:wcreate({
-        {"name", "panelBuilder"},
-        {"parent", "winMain"},
-        {"class", "panel"},
-        {"label", "Code Builder"},
-        {"dock", "right"},
-        {"handler", routine_id("gui_event")}
-    })
-    gui:wcreate({
-        {"name", "cntBuilder"},
-        {"parent", "panelBuilder"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"}
-    })
-    
-    gui:wcreate({
-        {"name", "txtBuilder"},
-        {"parent", "cntBuilder"},
-        {"class", "textbox"},
-        {"mode", "text"},
-        {"label", "Current Context:"},
-        {"text", "top level"}
-    })
-    gui:wcreate({
-        {"name", "lstBuilder"},
-        {"parent", "cntBuilder"},
-        {"class", "listbox"},
-        {"label", "Create code:"}
-    })
-    
-    --temp example:
-    gui:wproc("lstBuilder", "clear_list", {})
-    gui:wproc("lstBuilder", "add_list_items", {{
-        {rgb(127, 127, 127), "include"},
-        {rgb(127, 127, 127), "object"},
-        {rgb(127, 127, 127), "sequence"},
-        {rgb(127, 127, 127), "atom"},
-        {rgb(127, 127, 127), "integer"},
-        {rgb(127, 127, 127), "procedure"},
-        {rgb(127, 127, 127), "function"}
-    }})*/
-    
-    --msg:subscribe("editor", "command", routine_id("msg_event"))
-
-end procedure
-
-
 

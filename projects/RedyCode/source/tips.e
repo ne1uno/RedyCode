@@ -1,0 +1,198 @@
+-- This file is part of RedyCode™ Integrated Development Environment
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2015 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+
+include gui/gui.e as gui
+include app/msg.e as msg
+include app/config.e as cfg
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/rand.e
+
+atom currtip = 1
+sequence tips = {
+    {"Welcome to RedyCode! This is an alpha version, so there are probably going to be missing features, glitchs, and crashes. Remember to back up your files before editing them!"},
+    {"Once you have created a new project, a good way to get started with some code is: open the Demos project in a second instance of RedyCode, then open one of the demo files. Copy and paste it into your new file, then save and run it."},
+    {"Double-click on a .ex or .exw file in the project tree to run it."},
+    {"If you open a source file that is not part of your project (such as in redylib or include folders), the file will be open as Read Only. Click the Edit button if you wish to edit that file."},
+    {"Thanks for trying RedyCode 1.0 alpha! Many more features coming soon."}
+}
+
+procedure save_prefs()
+    cfg:set_var(App_Name & ".cfg", "Startup", "Disable tips", gui:wfunc("winTips.chkDisableStartup", "get_value", {}))
+    cfg:save_config(App_Name & ".cfg")
+end procedure
+
+
+procedure show_tip(atom tipidx)
+    gui:wproc("winTips.txtTip", "set_label", {"Tip #" & sprint(tipidx)})
+    gui:wproc("winTips.txtTip", "set_text", {tips[tipidx]})
+end procedure
+
+
+export procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+    case "winTips.btnOk" then
+        gui:wdestroy("winTips")
+        
+    case "winTips.btnNext" then
+        currtip += 1
+        if currtip > length(tips) then
+            currtip = 1
+        end if
+        show_tip(currtip)
+        
+    case "winTips.btnPrev" then
+        currtip -= 1
+        if currtip < 1 then
+            currtip = length(tips)
+        end if
+        show_tip(currtip)
+        
+    case "winTips.chkDisableStartup" then
+        if equal(evtype, "value") then
+            save_prefs()
+        end if
+    case "winTips" then
+        if equal(evtype, "closed") then
+            gui:wdestroy("winTips")
+        end if
+    end switch
+end procedure
+
+
+function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
+    switch topicname do
+        case "command" then
+            if equal(msgname, "tips") then
+                show()
+            end if
+    end switch
+    
+    return 1
+end function
+
+
+procedure show()
+    object prefDisableTips = cfg:get_var(App_Name & ".cfg", "Startup", "Disable tips")
+    if not atom(prefDisableTips) then
+        prefDisableTips = 0
+        save_prefs()
+    end if
+    
+    gui:wcreate({
+        {"name", "winTips"},
+        {"class", "window"},
+        {"mode", "dialog"},
+        {"handler", routine_id("gui_event")},
+        {"title", "Useful Tips"},
+        --{"modal", 1},
+        {"topmost", 1} 
+        --{"position", {350, 350}}
+        --{"visible", 0}
+    })
+    gui:wcreate({
+        {"name", "winTips.cntMain"},
+        {"parent", "winTips"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "winTips.cntTop"},
+        {"parent", "winTips.cntMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"},
+        {"size", {400, 200}}
+    })
+    
+    --data entry:
+    gui:wcreate({
+        {"name",  "winTips.txtTip"},
+        {"parent",  "winTips.cntTop"},
+        {"class", "textbox"},
+        {"mode", "text"},
+        {"label", "tip"}
+    })
+    currtip = 1 --rand_range(1, length(tips))
+    show_tip(currtip)
+    
+    gui:wcreate({
+        {"name",  "winTips.chkDisableStartup"},
+        {"parent",  "winTips.cntTop"},
+        {"class", "toggle"},
+        {"label", "Do not show tips on startup"},
+        {"value", prefDisableTips}
+    })
+    
+    gui:wcreate({
+        {"name", "winTips.cntBottom"},
+        {"parent", "winTips.cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "equal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "right"}
+    })
+    
+    gui:wcreate({
+        {"name", "winTips.btnPrev"},
+        {"parent",  "winTips.cntBottom"},
+        {"class", "button"},
+        {"label", "<< Previous"}
+    })
+    gui:wcreate({
+        {"name", "winTips.btnNext"},
+        {"parent",  "winTips.cntBottom"},
+        {"class", "button"},
+        {"label", "Next >>"}
+    })
+    gui:wcreate({
+        {"name",  "winTips.btnOk"},
+        {"parent",  "winTips.cntBottom"},
+        {"class", "button"},
+        {"label", "OK, Thanks!"}
+    })
+end procedure
+
+
+export procedure start()
+    object prefDisableTips = cfg:get_var(App_Name & ".cfg", "Startup", "Disable tips")
+    if not atom(prefDisableTips) then
+        prefDisableTips = 0
+        save_prefs()
+    end if
+    msg:subscribe("tips", "command", routine_id("msg_event"))
+    
+    if gui:wexists("winTips") then
+         gui:wdestroy("winTips")
+    end if
+    
+    if prefDisableTips = 0 then
+        show()
+    end if
+end procedure
+

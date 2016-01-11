@@ -37,7 +37,7 @@ include std/utils.e
 
 atom ImagesTabWid = 0
 
-export procedure load_img(sequence fpathname)
+export procedure load_img(sequence fpathname, atom readonly = 0)
     if ImagesTabWid > 0 then --file is already open, so switch to it's tab instead
         select_tab(ImagesTabWid)
         return
@@ -63,12 +63,30 @@ export procedure load_img(sequence fpathname)
         {"parent", "cntImages" & wname},
         {"class", "container"},
         {"orientation", "horizontal"},
-        {"sizemode_x", "normal"},
+        {"sizemode_x", "expand"},
         {"sizemode_y", "normal"}
     })
     gui:wcreate({
-        {"name", "btnClose" & wname},
+        {"name", "cntCommandsLeft" & wname},
         {"parent", "cntCommands" & wname},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "left"}
+    })
+    gui:wcreate({
+        {"name", "cntCommandsRight" & wname},
+        {"parent", "cntCommands" & wname},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "right"}
+    })
+    gui:wcreate({
+        {"name", "btnClose" & wname},
+        {"parent", "cntCommandsRight" & wname},
         {"class", "button"},
         {"label", "Close"}
     })
@@ -90,6 +108,32 @@ export procedure hide()
         ImagesTabWid = 0
     end if
 end procedure
+
+
+export function is_any_modified()
+    atom modified = 0
+    /*for f = 1 to length(srcfiles[fModified]) do
+        if srcfiles[fModified][f] then
+            modified = 1
+            exit
+        end if
+    end for*/
+    return modified
+end function
+
+
+export function tab_file(atom tabwid)
+    sequence fname = ""
+    atom saveenabled = 0
+    --atom fidx = find(tabwid, srcfiles[fTabWid])
+    --if fidx > 0 then
+    --    fname = srcfiles[fFilePathName][fidx]
+    --    saveenabled = srcfiles[fModified][fidx]
+    --end if
+    
+    return {fname, saveenabled}
+end function
+
 
 -----------------------------------
 

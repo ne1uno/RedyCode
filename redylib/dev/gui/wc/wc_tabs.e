@@ -39,6 +39,7 @@ enum
     wcpShowBorder,           --1 = show border and, if specified, a lable. 0 = no border (tabs rect covers the entire widget rect)
     wcpTabWidgets,  --list of widget ids of containers or panels assocciated with each tab page
     wcpTabLabels,
+    wcpTabFlags,   --colored spot on each tab
     wcpTabWidths,
     
     wcpSelectedTab,
@@ -67,8 +68,8 @@ BoxOffset = 3,
 InnerBox = 3,
 TabGap = 12,
 optScrollIncrement = 32,
-headingheight = 22
-
+headingheight = 22,
+thFlagSize = 7
 
 
 -- local routines ---------------------------------------------------------------------------
@@ -79,6 +80,7 @@ procedure select_tab(atom idx, atom wid, atom tabidx)
     
     if tabidx = 0 then
          wc_call_resize(wid)
+         widget:wc_send_event(widget_get_name(wid), "selection", 0)
     else
         for t = 1 to length(wcprops[wcpTabWidgets][idx]) do
             if t = tabidx then
@@ -214,6 +216,7 @@ procedure wc_create(atom wid, object wprops)
     wcprops[wcpShowBorder] &= {wshowborder}
     wcprops[wcpTabWidgets] &= {{}}
     wcprops[wcpTabLabels] &= {{}}
+    wcprops[wcpTabFlags] &= {{}}
     wcprops[wcpTabWidths] &= {{}}
     
     wcprops[wcpSelectedTab] &= {0}
@@ -351,18 +354,27 @@ procedure wc_draw(atom wid)
             
             for t = 1 to length(wcprops[wcpTabWidgets][idx]) do
                 if wcprops[wcpSelectedTab][idx] = t then
-                    if wcprops[wcpHardFocus][idx] and wf then
-                        hicolor = th:cOuterActive
-                    elsif wcprops[wcpSoftFocus][idx] then
-                        hicolor = th:cOuterHover
-                    else
-                        hicolor = th:cOuterFill
-                    end if
+                    hicolor = th:cOuterActive
                     box = {tx, ty, tx + wcprops[wcpTabWidths][idx][t], ty + trect[4] - trect[2]} --+ headingheight-2}
                     cmds &= {
                     --background:
                         {DR_PenColor, hicolor},
-                        {DR_Rectangle, True, box[1], box[2], box[3], box[4]-1},
+                        {DR_Rectangle, True, box[1], box[2], box[3], box[4]-1}
+                    }
+                    --Flag:
+                    if wcprops[wcpTabFlags][idx][t] >= 0 then
+                        cmds &= {
+                            {DR_PenColor, wcprops[wcpTabFlags][idx][t]},
+                            {DR_BrushColor, wcprops[wcpTabFlags][idx][t]},
+                            {DR_PolyLine, True, {
+                                {box[1]+1, box[2]+1},
+                                {box[1]+thFlagSize, box[2]+1},
+                                {box[1]+1, box[2]+thFlagSize},
+                                {box[1]+1, box[2]+1}
+                            }}
+                        }
+                    end if
+                    cmds &= {
                     --label:
                         {DR_Font, "Arial", 9, Normal},
                         {DR_TextColor, th:cOuterLabel},
@@ -388,7 +400,22 @@ procedure wc_draw(atom wid)
                     cmds &= {
                     --background:
                         {DR_PenColor, hicolor},
-                        {DR_Rectangle, True, box[1], box[2], box[3], box[4]-2},
+                        {DR_Rectangle, True, box[1], box[2], box[3], box[4]-2}
+                    }
+                    --Flag:
+                    if wcprops[wcpTabFlags][idx][t] >= 0 then
+                        cmds &= {
+                            {DR_PenColor, wcprops[wcpTabFlags][idx][t]},
+                            {DR_BrushColor, wcprops[wcpTabFlags][idx][t]},
+                            {DR_PolyLine, True, {
+                                {box[1]+1, box[2]+1},
+                                {box[1]+thFlagSize, box[2]+1},
+                                {box[1]+1, box[2]+thFlagSize},
+                                {box[1]+1, box[2]+1}
+                            }}
+                        }
+                    end if
+                    cmds &= {
                     --label:
                         {DR_Font, "Arial", 9, Normal},
                         {DR_TextColor, th:cOuterLabel},
@@ -543,7 +570,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
             case "child created" then
                 if find(widget_get_class(evdata[1]), {"container", "panel"}) then
                     sequence tlabel = "New Tab"
-                    atom tindex = 0
+                    atom tflag = -1, tindex = 0
                     wcprops[wcpTabWidgets][idx] &= evdata[1]
                     
                     for p = 1 to length(evdata[2]) do
@@ -551,6 +578,8 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                             switch evdata[2][p][1] do
                                 case "label" then
                                     tlabel = evdata[2][p][2]
+                                case "flag" then
+                                    tflag = evdata[2][p][2]
                                 case "tab" then
                                     tindex = evdata[2][p][2]
                                     --todo: insert new tab at specified index
@@ -558,6 +587,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         end if
                     end for
                     wcprops[wcpTabLabels][idx] &= {tlabel}
+                    wcprops[wcpTabFlags][idx] &= {tflag}
                     oswin:set_font(wh, "Arial", 9, Normal)
                     txex = oswin:get_text_extent(wh, tlabel)
                     wcprops[wcpTabWidths][idx] &= {txex[1] + TabGap}
@@ -570,6 +600,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 if tidx > 0 then
                     wcprops[wcpTabWidgets][idx] = remove(wcprops[wcpTabWidgets][idx], tidx)
                     wcprops[wcpTabLabels][idx] = remove(wcprops[wcpTabLabels][idx], tidx)
+                    wcprops[wcpTabFlags][idx] = remove(wcprops[wcpTabFlags][idx], tidx)
                     wcprops[wcpTabWidths][idx] = remove(wcprops[wcpTabWidths][idx], tidx)
                     if tidx > length(wcprops[wcpTabWidgets][idx]) then
                         tidx = length(wcprops[wcpTabWidgets][idx])
@@ -716,6 +747,7 @@ function wc_debug(atom wid)
             {"ShowBorder", wcprops[wcpShowBorder][idx]},
             {"TabWidgets", wcprops[wcpTabWidgets][idx]},
             {"TabLabels", wcprops[wcpTabLabels][idx]},
+            {"TabFlags", wcprops[wcpTabFlags][idx]},
             {"TabWidths", wcprops[wcpTabWidths][idx]},
             
             {"SelectedTab", wcprops[wcpSelectedTab][idx]},
@@ -769,7 +801,6 @@ wc_define_command("tabs", "select_tab_by_widget", routine_id("cmd_select_tab_by_
 
 procedure cmd_select_tab(atom wid, object tabidx_or_label)
     atom idx
-    
     idx = find(wid, wcprops[wcpID])
     if idx > 0 then
         if atom(tabidx_or_label) then
@@ -787,6 +818,33 @@ end procedure
 wc_define_command("tabs", "select_tab", routine_id("cmd_select_tab"))
 
 
+procedure cmd_set_tab_label(atom wid, object tabwidget, object lbl)
+    atom idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        atom tabwid = widget_get_id(tabwidget)
+        atom tidx = find(tabwid, wcprops[wcpTabWidgets][idx])
+        if tidx > 0 then
+            wcprops[wcpTabLabels][idx][tidx] = lbl
+            wc_call_resize(wid)
+        end if
+    end if
+end procedure
+wc_define_command("tabs", "set_tab_label", routine_id("cmd_set_tab_label"))
+
+
+procedure cmd_set_tab_flag(atom wid, object tabwidget, object flagcolor)
+    atom idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        atom tabwid = widget_get_id(tabwidget)
+        atom tidx = find(tabwid, wcprops[wcpTabWidgets][idx])
+        if tidx > 0 then
+            wcprops[wcpTabFlags][idx][tidx] = flagcolor
+            wc_call_draw(wid)
+            widget:wc_send_event(widget_get_name(wid), "flag", {tabwid, flagcolor})
+        end if
+    end if
+end procedure
+wc_define_command("tabs", "set_tab_flag", routine_id("cmd_set_tab_flag"))
 
 
 

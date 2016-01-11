@@ -119,7 +119,7 @@ end function
 procedure scan_euphoria_paths()
     object flist
     sequence currpath, scanpaths = {
-        "./euphoria/",
+        current_dir() & "/euphoria/",
         "C:/Euphoria/",
         "C:/RedyCode/euphoria/"
     }
@@ -199,9 +199,7 @@ end procedure
 procedure scan_redy_paths()
     object flist
     sequence currpath, scanpaths = {
-        "../redylib/",
-        "../../../redylib/",
-        "C:/RedyCode/redylib/"
+        current_dir() & "/redylib/"
     }
     sequence redylibpath
     --atom found = 0
@@ -233,9 +231,7 @@ end procedure
 procedure scan_project_paths()
     object flist
     sequence currpath, scanpaths = {
-        "../",
-        "../../../",
-        "C:/RedyCode/"
+        current_dir() & "/"
     }
     
     while length(scanpaths) > 0 do

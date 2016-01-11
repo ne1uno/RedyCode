@@ -895,8 +895,13 @@ end function
 -- 
 
 
-public procedure RunApp(atom WinHwnd, sequence appname, sequence parameter)
-    atom result,szapp,szpara,szaction
+
+
+
+
+
+public function ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb = "", sequence workingdir = "")
+    atom result,szapp,szpara,szaction,szdirectory
     --RunApp_old(appname,parameter)
     -- in Shell32.dll ShellExecuteA
     --HINSTANCE ShellExecute(
@@ -907,16 +912,24 @@ public procedure RunApp(atom WinHwnd, sequence appname, sequence parameter)
     --  __in_opt    LPCTSTR lpDirectory,
     --  __in        INT nShowCmd
     --);
-    szaction=allocate_string("open")
-    szapp=allocate_string(appname)
+    --Commond verbs: "edit", "explore", "find", "open", "print"
+    
+    szaction=allocate_string(verb)
+    szapp=allocate_string(filename)
     szpara=allocate_string(parameter)
-    result=c_func(xShellExecute,{WinHwnd,szaction,szapp,szpara,0,SW_SHOWNORMAL})
+    szdirectory=allocate_string(workingdir)
+    result=c_func(xShellExecute,{WinHwnd,szaction,szapp,szpara,szdirectory,SW_SHOWNORMAL})
     free(szaction)
     free(szpara)
     free(szapp)
-end procedure
+    
 
-
+    if result > 32 then  --If the function succeeds, it returns a value greater than 32.
+        return 1 --success
+    else
+        return 0 --failure
+    end if
+end function
 
 
 

@@ -46,7 +46,7 @@ include std/error.e
 
 ------------------------
 
-object    --projects
+object
 pPath = "",         --project folder path
 pName = "",         --project name (used for name of *.redy file)
 pEuphoria = 0,      --0=use default eu version, sequence=override eu version
@@ -56,24 +56,42 @@ pAuthor = "",       --Project Author
 pDescription = {},  --Project Description
 pLicense = {},      --Project License
 pIncludes = "",     --List of addition include folders
-                    
+pModified = 0,      --Whether or not any files in project are modified
+
 pProjectNode = 0,   --project properties node
 pBuildNode = 0,     --build node
 pDocsNode = 0,      --docs folder node
 pSourceNode = 0,    --source folder node
 pIncludesNode = 0,  --redylib, stdlib, and additional include folders node
-pFileNodes = {}     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename})
+pFileNodes = {}     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename, readonly})
 
 
 atom SettingsTabWid = 0
 
 
-procedure build_dir(atom parentnodeid, sequence path)
+procedure build_app_list()
+    object flist = dir(pPath & "\\source\\")
+    sequence AppList = {}
+    
+    if sequence(flist) then
+        for f = 1 to length(flist) do
+            if not find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
+                if find(fileext(flist[f][D_NAME]), {"ex", "exw", "eu"}) then --euphoria executable
+                    AppList &= {flist[f][D_NAME]}
+                end if
+            end if
+        end for
+    end if
+    msg:publish("project", "command", "AppList", AppList)
+end procedure
+
+
+procedure build_dir(atom parentnodeid, sequence path, atom readonly)
     object ficon, flist
     atom dnode
      
     flist = dir(path)
-
+    
     if sequence(flist) then
         --scan for subfolders
         for f = 1 to length(flist) do 
@@ -81,7 +99,7 @@ procedure build_dir(atom parentnodeid, sequence path)
             if find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
                 ficon = "folder_open_16"
                 dnode = gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0})
-                build_dir(dnode, path & flist[f][D_NAME] & "\\")
+                build_dir(dnode, path & flist[f][D_NAME] & "\\", readonly)
             end if
         end for
         --scan for executable files
@@ -97,7 +115,8 @@ procedure build_dir(atom parentnodeid, sequence path)
                 pFileNodes &= {{
                     gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
                     path,
-                    flist[f][D_NAME]
+                    flist[f][D_NAME],
+                    readonly
                 }}
             end if
         end for
@@ -114,7 +133,8 @@ procedure build_dir(atom parentnodeid, sequence path)
                 pFileNodes &= {{
                     gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
                     path,
-                    flist[f][D_NAME]
+                    flist[f][D_NAME],
+                    readonly
                 }}
             end if
         end for
@@ -130,7 +150,8 @@ procedure build_dir(atom parentnodeid, sequence path)
                 pFileNodes &= {{
                     gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
                     path,
-                    flist[f][D_NAME]
+                    flist[f][D_NAME],
+                    readonly
                 }}
             end if
         end for
@@ -147,7 +168,8 @@ procedure build_dir(atom parentnodeid, sequence path)
                 pFileNodes &= {{
                     gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
                     path,
-                    flist[f][D_NAME]
+                    flist[f][D_NAME],
+                    readonly
                 }}
             end if
         end for
@@ -164,7 +186,8 @@ procedure build_dir(atom parentnodeid, sequence path)
                 pFileNodes &= {{
                     gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0}),
                     path,
-                    flist[f][D_NAME]
+                    flist[f][D_NAME],
+                    readonly
                 }}
             end if
         end for
@@ -174,24 +197,21 @@ end procedure
 
 procedure refresh_source_tree() --scan source folders for files and subfolders, rebuild tree
     atom fnode
-    if pSourceNode > 0 then
-        gui:wproc("treeProject", "del_item", {pSourceNode})
-    end if
-    if pIncludesNode > 0 then
-        gui:wproc("treeProject", "del_item", {pIncludesNode})
-    end if
-    --pSourceNode = gui:wfunc("treeProject", "add_item", {pProjectNode, "folder_open_16", "Source", 1})
-    --pIncludesNode = gui:wfunc("treeProject", "add_item", {pProjectNode, "folder_open_16", "Includes", 1})
+    
+    gui:wproc("treeProject", "clear_tree", {})
+    pProjectNode = gui:wfunc("treeProject", "add_item", {0, "redy16", "Project: " & pName, 0})
+    pBuildNode = gui:wfunc("treeProject", "add_item", {0, "ex16", "Build", 0})
+    pDocsNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Docs", 0})
     pSourceNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Source", 1})
     pIncludesNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Includes", 1})
     pFileNodes = {}
     
-    build_dir(pSourceNode, pPath & "\\source\\")
+    build_dir(pSourceNode, pPath & "\\source\\", 0)
+    build_app_list()
     
     for f = 1 to length(pIncludes) do
         fnode = gui:wfunc("treeProject", "add_item", {pIncludesNode, "folder_open_16", pIncludes[f][1], 0})
-        
-        build_dir(fnode, pIncludes[f][2])
+        build_dir(fnode, pIncludes[f][2], 1)
     end for
 end procedure
 
@@ -207,13 +227,7 @@ procedure load_project(sequence projfile)
     projDescription = {},
     projLicense = {},
     projIncludes = "",
-    
-    projProjectNode = 0,
-    projBuildNode = 0,
-    projDocsNode = 0,
-    projSourceNode = 0,
-    projIncludesNode = 0,
-    projFileNodes = {}
+    projModified = 0
     
     sequence dSections = {}, dNames = {}, dValues = {}
 
@@ -303,7 +317,7 @@ procedure load_project(sequence projfile)
     end for
     
     if atom(projEuphoria) then
-        projIncludes &=  {{"stdlib",  get_default_include_path() & "std\\"}}
+        projIncludes &=  {{"stdlib",  get_default_include_path()}} -- & "std\\"}}
     else
         projIncludes &=  {{"stdlib",  projEuphoria}}
     end if
@@ -313,16 +327,10 @@ procedure load_project(sequence projfile)
         projIncludes &=  {{"redylib",  projRedyLib}}
     end if
     
-    projProjectNode = gui:wfunc("treeProject", "add_item", {0, "redy16", "Project: " & projName, 0})
-    projBuildNode = gui:wfunc("treeProject", "add_item", {0, "ex16", "Build", 0})
-    projDocsNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Docs", 0})
-    projSourceNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Source", 1})
-    projIncludesNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Includes", 1})
-    
     gui:widget_hide("lstProjects")
     gui:widget_hide("btnNewProject")
     gui:widget_hide("btnOpenProject")
-    gui:widget_show("btnRunMainApp")
+    gui:widget_show("btnRun")
     gui:widget_show("treeProject")
     gui:widget_show("divProjects")
     gui:widget_show("treeContents")
@@ -336,15 +344,19 @@ procedure load_project(sequence projfile)
     pDescription = projDescription
     pLicense = projLicense
     pIncludes = projIncludes
-
-    pProjectNode = projProjectNode
-    pBuildNode = projBuildNode
-    pDocsNode = projDocsNode
-    pSourceNode = projSourceNode
-    pIncludesNode = projIncludesNode
-    pFileNodes = projFileNodes
+    pModified = projModified
+    
+    pProjectNode = 0
+    pBuildNode = 0
+    pDocsNode = 0
+    pSourceNode = 0
+    pIncludesNode = 0
+    pFileNodes = {}
     
     refresh_source_tree()
+    
+--msg:publish("project", "command", "RecentProjectList", 0)
+    msg:publish("project", "command", "project_title", pPath)
 end procedure
 
 
@@ -503,7 +515,7 @@ end procedure
 
 
 procedure close_project()
-    source:close_all_src()
+    source:close_all()
     build:hide()
     images:hide()
     docs:hide()
@@ -520,6 +532,7 @@ procedure close_project()
     pDescription = {}
     pLicense = {}
     pIncludes = ""
+    pModified = 0
     
     pProjectNode = 0
     pBuildNode = 0
@@ -527,6 +540,8 @@ procedure close_project()
     pSourceNode = 0
     pIncludesNode = 0
     pFileNodes = {}
+    
+    msg:publish("project", "command", "project_title", "")
 end procedure
 
 
@@ -555,7 +570,7 @@ procedure show_project_list()
     gui:widget_show("lstProjects")
     gui:widget_show("btnNewProject")
     gui:widget_show("btnOpenProject")
-    gui:widget_hide("btnRunMainApp")
+    gui:widget_hide("btnRun")
     gui:widget_hide("treeProject")
     gui:widget_hide("divProjects")
     gui:widget_hide("treeContents")
@@ -568,12 +583,37 @@ end procedure
 procedure run_app(sequence appfile)
     if file_exists(appfile) then
         --puts(1, "Running '" & appfile & "'...\n")
-        sequence cmdline = " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\" \"" & appfile & "\""
-        gui:RunApp(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline)
-        
+        sequence cmdline = 
+        --" -EUDIR \"\"" & eupath --is this needed to override possible conflicts with installed version of euphoria? 
+        " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\" \"" & appfile & "\""
+        --puts(1, cmdline & "\n")
+        --puts(1, pPath & "\\source\\" & "\n")
+        gui:ShellExecute(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline, "open", pPath & "\\source\\")
     end if
 end procedure
 
+
+procedure confirm_close_project()
+    if length(pPath) > 0 then
+        sequence ans = "Yes"
+        if pModified then
+            ans = msgbox:waitmsg("Save project before closing?", "Question", {"Yes", "No", "Cancel"})
+        end if
+        if equal(ans, "Yes") then
+            if length(pPath) > 0 then
+                save_project(pPath & "\\" & pName & ".redy.")
+                source:save_all()
+                --images:
+                --docs:
+            end if
+            close_project()
+            show_project_list()
+        elsif equal(ans, "No") then
+            close_project()
+            show_project_list()
+        end if
+    end if
+end procedure
 
 ------------------------
 
@@ -595,7 +635,7 @@ procedure gui_event(object evwidget, object evtype, object evdata)
         case "btnOpenProject" then
             msg:publish("project", "command", "open_project", 0)
             
-        case "btnRunMainApp" then
+        case "btnRun" then
             msg:publish("project", "command", "run_app", 0)
             
         case "treeProject" then
@@ -627,37 +667,38 @@ procedure gui_event(object evwidget, object evtype, object evdata)
                 end if
                 
             else
+                --msg:publish("project", "command", "RecentFileList", 0)
                 for f = 1 to length(pFileNodes) do
                     if pFileNodes[f][1] = evdata[1] then
                         if find(fileext(pFileNodes[f][3]), {"ex", "exw", "exu"}) then
                             if equal(evtype, "selection") then
-                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                                source:load_file(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             elsif equal(evtype, "left_double_click") then
                                 run_app(pFileNodes[f][2] & pFileNodes[f][3])
                             end if
                         
                         elsif find(fileext(pFileNodes[f][3]), {"e", "ew", "eu"}) then
                             if equal(evtype, "selection") then
-                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                                source:load_file(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             end if
                             
                         elsif find(fileext(pFileNodes[f][3]), {"txt", "cfg", "ini", "bat", "xml"}) then
                             if equal(evtype, "selection") then
-                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                                source:load_file(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             end if
                             
                         elsif find(fileext(pFileNodes[f][3]), {"err"}) then
                             if equal(evtype, "selection") then
-                                source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                                source:load_file(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             end if
                             
                         elsif find(fileext(pFileNodes[f][3]), {"bmp", "ico", "png", "jpg", "gif", "svg"}) then
                             if equal(evtype, "selection") then
-                                images:load_img(pFileNodes[f][2] & pFileNodes[f][3])
+                                images:load_img(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             end if
                             
                         else
-                            --source:load_src(pFileNodes[f][2] & pFileNodes[f][3])
+                            --source:load_file(pFileNodes[f][2] & pFileNodes[f][3], pFileNodes[f][4])
                             if equal(evtype, "selection") then
                                 msgbox:msg("Sorry, '" & fileext(pFileNodes[f][3]) & "' file type is not currently supported.", "Error")
                             end if
@@ -666,11 +707,10 @@ procedure gui_event(object evwidget, object evtype, object evdata)
                     end if
                 end for
             end if
+            
         case "winProjectSettings.btnCreate" then
             create_project()
-        
-        
-        
+            
         case "winProjectSettings.btnClose" then
             if SettingsTabWid > 0 then
                 tabs:destroy_tab(SettingsTabWid)
@@ -694,72 +734,117 @@ procedure gui_event(object evwidget, object evtype, object evdata)
             
     end switch
 end procedure
-       
+
 
 function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
     switch topicname do
         case "command" then
-            if equal(msgname, "list_projects") then
+            if equal(msgname, "tab_selected") then
+                object tabfile, filetype = 0
+                
+                tabfile = source:tab_file(msgdata)
+                if length(tabfile[1]) > 0 then
+                    filetype = "source"
+                end if
+                
+                if atom(filetype) then
+                    tabfile = images:tab_file(msgdata)
+                    if length(tabfile[1]) > 0 then
+                        filetype = "image"
+                    end if
+                end if
+                
+                if atom(filetype) then
+                    tabfile = docs:tab_file(msgdata)
+                    if length(tabfile[1]) > 0 then
+                        filetype = "doc"
+                    end if
+                end if
+                
+                if atom(filetype) then
+                    --if projsettingstab = 1 then 
+                    --    msg:publish("project", "command", "active_file", {"settings", msgdata[1], msgdata[2]})
+                    --end if
+                end if
+                
+                if sequence(filetype) then
+                    msg:publish("project", "command", "active_file", {filetype, tabfile[1], tabfile[2]})
+                else
+                    msg:publish("project", "command", "active_file", 0)
+                end if
+                
+                --check if any files have modified flag set
+                atom isanymodified = 0
+                if source:is_any_modified() then
+                    isanymodified = 1
+                end if
+                if images:is_any_modified() then
+                    isanymodified = 1
+                end if
+                if docs:is_any_modified() then
+                    isanymodified = 1
+                end if
+                --if settingschanged then
+                --    isanymodified = 1
+                --end if
+                pModified = isanymodified
+                msg:publish("project", "command", "project_modified", isanymodified)
+                
+            elsif equal(msgname, "list_projects") then
                 show_project_list()
                 
             elsif equal(msgname, "new_project") then
-                sequence ans = "Yes"
-                if source:is_modified() then
-                    ans = msgbox:waitmsg("Are you sure you want to close the current project?", "Question")
+                confirm_close_project()
+                if length(pPath) = 0 then
+                    show_project_settings(1)
                 end if
-                if equal(ans, "Yes") then
-                    close_project()
-                    show_project_list()
-                end if
-                show_project_settings(1)
                 
             elsif equal(msgname, "open_project") then
-                sequence ans = "Yes"
-                if source:is_modified() then
-                    ans = msgbox:waitmsg("Are you sure you want to close the current project?", "Question")
-                end if
-                if equal(ans, "Yes") then
-                    close_project()
-                    show_project_list()
-                end if
-                if sequence(msgdata) then
-                    load_project(msgdata)
-                else  --file not specified, show open file standard dialog instead
-                    sequence ttype, tlabel, tname, tpathname, tfilename
-                    object selfiles = dlgfile:os_select_open_file("winMain", {{"RedyCode Project", "*.redy"}}, 0)
-                    
-                    --pretty_print(1, selfiles, {2})
-                    if sequence(selfiles) then
-                        load_project(selfiles)
+                confirm_close_project()
+                if length(pPath) = 0 then
+                    if sequence(msgdata) then
+                        load_project(msgdata)
+                    else  --file not specified, show open file standard dialog instead
+                        sequence ttype, tlabel, tname, tpathname, tfilename
+                        object selfiles = dlgfile:os_select_open_file("winMain", {{"RedyCode Project", "*.redy"}}, 0)
+                        
+                        --pretty_print(1, selfiles, {2})
+                        if sequence(selfiles) then
+                            load_project(selfiles)
+                        end if
                     end if
                 end if
                 
             elsif equal(msgname, "close_project") then
-                if length(pPath) > 0 then
-                    sequence ans = "Yes"
-                    if source:is_modified() then
-                        ans = msgbox:waitmsg("Are you sure you want to close the current project?", "Question")
-                    end if
-                    if equal(ans, "Yes") then
-                        close_project()
-                        show_project_list()
-                    end if
+                confirm_close_project()
+                
+            elsif equal(msgname, "confirm_exit") then
+                confirm_close_project()
+                if length(pPath) = 0 then
+                    msg:publish("menu", "command", "exit", 0)
                 end if
                 
+            elsif equal(msgname, "reopen_project") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
             elsif equal(msgname, "save_project") then
                 if length(pPath) > 0 then
                     save_project(pPath & "\\" & pName & ".redy.")
+                    source:save_all()
+                    --images:
+                    --docs:
                 end if
                 
-            elsif equal(msgname, "save_all_files") then
-                --todo: save all open source, docs, and resource files 
-                if length(pPath) > 0 then
-                end if
-                
+            elsif equal(msgname, "save_project_as") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+            elsif equal(msgname, "rename_project") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
             elsif equal(msgname, "copy_project_to") then
                 --todo: copy project folder to specified location
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
                 if length(pPath) > 0 then
                 end if
+                
+            elsif equal(msgname, "delete_project") then
                 
             elsif equal(msgname, "edit_project") then
                 if length(pPath) > 0 then
@@ -776,19 +861,108 @@ function msg_event(sequence subscribername, sequence topicname, sequence msgname
                 
             elsif equal(msgname, "edit_include_paths") then
                 
+            elsif equal(msgname, "explore") then
+                if length(pPath) > 0 then
+                    if atom(msgdata) then
+                        gui:ShellExecute(gui:widget_get_handle("winMain"), pPath, "", "explore")
+                    else
+                        gui:ShellExecute(gui:widget_get_handle("winMain"), pPath & "\\" & msgdata, "", "explore")
+                    end if
+                end if
+                 
             elsif equal(msgname, "refresh_projects") then
                 if length(pPath) = 0 then
                     show_project_list()
                 end if
                 
+            elsif equal(msgname, "refresh_source_tree") then
+                refresh_source_tree() 
+                
+            elsif equal(msgname, "new_file") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+                
+            elsif equal(msgname, "open_file") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+                --object selfiles = dlgfile:os_select_open_file("winMain", {{"File Type", "*.fileext"}}, 0)...
+                
+                
+            elsif equal(msgname, "close_file") then
+                if equal(msgdata[1], "source") then
+                    source:confirm_close_file(msgdata[2])
+                elsif equal(msgdata[1], "image") then
+                    
+                elsif equal(msgdata[1], "doc") then
+                    
+                elsif equal(msgdata[1], "settings") then
+                    
+                end if
+                
+            elsif equal(msgname, "close_all_files") then
+                source:close_all()
+                
+            elsif equal(msgname, "reopen_file") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+                if equal(msgdata[1], "source") then
+                    
+                elsif equal(msgdata[1], "image") then
+                    
+                elsif equal(msgdata[1], "doc") then
+                    
+                elsif equal(msgdata[1], "settings") then
+                    
+                end if
+                
+            elsif equal(msgname, "save_file") then
+                if equal(msgdata[1], "source") then
+                    source:save_file(msgdata[2])
+                    
+                elsif equal(msgdata[1], "image") then
+                    
+                elsif equal(msgdata[1], "doc") then
+                    
+                elsif equal(msgdata[1], "settings") then
+                    
+                end if
+                
+            elsif equal(msgname, "save_all_files") then
+                --todo: all open source, docs, and image files 
+                if length(pPath) > 0 then
+                    --images:save_all_imgs()
+                    source:save_all()
+                    --docs:save_all_docs()
+                end if
+                
+            elsif equal(msgname, "save_file_as") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+                if equal(msgdata[1], "source") then
+                    source:save_file_as(msgdata[2])
+                elsif equal(msgdata[1], "image") then
+                    
+                elsif equal(msgdata[1], "doc") then
+                    
+                elsif equal(msgdata[1], "settings") then
+                    
+                end if
+                
+            elsif equal(msgname, "rename_file") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+            elsif equal(msgname, "copy_file_to") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+            elsif equal(msgname, "delete_file") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+            elsif equal(msgname, "build") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
+            elsif equal(msgname, "error_report") then
+                msgbox:msg("Sorry, this feature doesn't work yet :-(", "Info")
             elsif equal(msgname, "run_app") then
                 if length(pPath) > 0 then
                     if atom(msgdata) then
                         run_app(pPath & "\\source\\" & pName & ".exw")
                     else
-                        run_app(msgdata)
+                        run_app(pPath & "\\source\\" & msgdata)
                     end if
                 end if
+                
             end if
     end switch
     
@@ -890,18 +1064,36 @@ procedure show_project_settings(atom newproj)
             {"parent", "winProjectSettings.cntMain"},
             {"class", "container"},
             {"orientation", "horizontal"},
-            {"sizemode_x", "normal"},
+            {"sizemode_x", "expand"},
             {"sizemode_y", "normal"}
         })
         gui:wcreate({
-            {"name", "winProjectSettings.btnClose"},
+            {"name", "winProjectSettings.cntCommandsLeft"},
             {"parent", "winProjectSettings.cntCommands"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "normal"},
+            {"sizemode_y", "normal"},
+            {"justify_x", "left"}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.cntCommandsRight"},
+            {"parent", "winProjectSettings.cntCommands"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "normal"},
+            {"sizemode_y", "normal"},
+            {"justify_x", "right"}
+        })
+        gui:wcreate({
+            {"name", "winProjectSettings.btnClose"},
+            {"parent", "winProjectSettings.cntCommandsRight"},
             {"class", "button"},
             {"label", "Close"}
         })
         gui:wcreate({
             {"name", "winProjectSettings.btnSave"},
-            {"parent", "winProjectSettings.cntCommands"},
+            {"parent", "winProjectSettings.cntCommandsLeft"},
             {"class", "button"},
             {"label", "Save Project Settings"}
         })
@@ -1105,12 +1297,13 @@ export procedure start()
         {"visible", 0}
     })
     gui:wcreate({
-        {"name", "btnRunMainApp"},
+        {"name", "btnRun"},
         {"parent", "cntProject"},
         {"class", "button"},
-        {"label", "Run default app"},
+        {"label", "Run"},
         {"visible", 0}
     })
+    
     gui:wcreate({
         {"name", "btnProjectFiles"},
         {"parent", "cntProject"},
@@ -1154,11 +1347,17 @@ export procedure start()
         {"visible", 0}
     })*/
     
+    gui:wcreate({
+        {"name", "cntMain"},
+        {"parent", "winMain"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"},
+        {"handler", routine_id("gui_event")}
+    })
+    
     tabs:start()
-    --images:start()
-    --source:start()
-    --build:start()
-    --docs:start()
     
     msg:subscribe("project", "command", routine_id("msg_event"))
 end procedure

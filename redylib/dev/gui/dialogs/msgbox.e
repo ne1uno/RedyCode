@@ -287,7 +287,7 @@ function msgbox(sequence msgtxt, sequence msgicon, sequence msgbuttons, atom msg
                 {"name", wname & ".btnOk"},
                 {"parent", wname & ".cntButtons"},
                 {"class", "button"},
-                {"label", "Ok"},
+                {"label", "OK"},
                 {"size", {50, 0}}
             })
             msgButtons &= {wname & ".btnOk"}

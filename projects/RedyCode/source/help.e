@@ -35,6 +35,7 @@ include gui/objects/textedit.e as txte
 include gui/dialogs/dialog_file.e as dlgfile
 include gui/dialogs/msgbox.e as msgbox
 include app/msg.e as msg
+include app/config.e as cfg
 
 include std/task.e
 include std/text.e
@@ -42,39 +43,22 @@ include std/pretty.e
 include std/utils.e
 include std/sequence.e
 include std/filesys.e
-
-
-
-procedure show_help()
-    /*gui:wcreate({
-        {"name", "panelHelp"},
-        {"parent", "winMain"},
-        {"class", "panel"},
-        {"label", "Help"},
-        {"dock", "right"}
-    })
-    
-    gui:wcreate({
-        {"name", "cntHelp"},
-        {"parent", "panelHelp"},
-        {"class", "container"},
-        {"orientation", "vertical"},
-        {"sizemode_x", "expand"},
-        {"sizemode_y", "expand"}
-    })
-    
-    gui:wcreate({
-        {"name", "txtHelp"},
-        {"parent", "cntHelp"},
-        {"class", "textbox"},
-        {"text", TempText}
-    })*/
-end procedure 
     
     
 procedure gui_event(object evwidget, object evtype, object evdata)
     switch evwidget do
-        
+        case "winHelp" then
+            if equal(evtype, "closed") then
+                sequence winpos = gui:get_window_pos(widget_get_handle("winHelp"))
+                sequence winsize = gui:get_window_size(widget_get_handle("winHelp"))
+                cfg:set_var(App_Name & ".cfg", "GUI", "winHelp.left", winpos[1])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winHelp.top", winpos[2])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winHelp.width", winsize[1])
+                cfg:set_var(App_Name & ".cfg", "GUI", "winHelp.height", winsize[2])
+                cfg:save_config(App_Name & ".cfg")
+                
+                gui:wdestroy("winHelp")
+            end if
     end switch
 end procedure
 
@@ -89,6 +73,87 @@ function msg_event(sequence subscribername, sequence topicname, sequence msgname
     end switch
     return 1
 end function
+
+
+procedure show_help()
+    sequence scrsize = gui:screen_size()
+    atom wleft, wtop, wwidth, wheight
+    
+    if gui:wexists("winHelp") then
+        return
+    end if
+    wleft = cfg:get_var(App_Name & ".cfg", "GUI", "winHelp.left")
+    wtop = cfg:get_var(App_Name & ".cfg", "GUI", "winHelp.top")
+    wwidth = cfg:get_var(App_Name & ".cfg", "GUI", "winHelp.width")
+    wheight = cfg:get_var(App_Name & ".cfg", "GUI", "winHelp.height")
+    
+    --TODO: Improve window size handling and remember when maximized
+    if wwidth = 0 then
+        wwidth = 1280
+    end if
+    if wheight = 0 then
+        wheight = 768
+    end if
+    if wwidth < 0 then
+        wwidth = scrsize[1]
+    end if
+    if wheight < 0 then
+        wheight = scrsize[2]
+    end if
+    if wwidth > scrsize[1] then
+        wwidth = scrsize[1]
+    end if
+    if wheight > scrsize[2] then
+        wheight = scrsize[2]
+    end if
+    
+    if wleft > scrsize[1] then
+        wleft = scrsize[1] - wwidth
+    end if
+    if wtop > scrsize[2] then
+        wtop = scrsize[2] - wtop
+    end if
+    if wleft > scrsize[1] then
+        wleft = 0
+    end if
+    if wtop > scrsize[2] then
+        wtop = 0
+    end if
+    if wleft < 0 then
+        wleft = 0
+    end if
+    if wtop < 0 then
+        wtop = 0
+    end if
+    
+    gui:wcreate({
+        {"name", "winHelp"},
+        {"class", "window"},
+        {"title", App_Name & " Help"},
+        {"position", {wleft, wtop}},
+        {"size", {wwidth, wheight}},
+        {"visible", 1},
+        {"topmost", 1},
+        {"allow_close", 0},
+        {"handler", routine_id("gui_event")}
+    })
+    
+    gui:wcreate({
+        {"name", "cntHelp"},
+        {"parent", "winHelp"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    
+    gui:wcreate({
+        {"name", "txtHelp"},
+        {"parent", "cntHelp"},
+        {"class", "textbox"},
+        {"text", TempText}
+    })
+end procedure 
 
 
 export procedure start()

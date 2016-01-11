@@ -97,13 +97,26 @@ end procedure
 --run_app(sequence projectfile, sequence appfile, atom watcherr = 1)
 procedure run_app(sequence appfile)
     if file_exists(appfile) then
+        --puts(1, "Running '" & appfile & "'...\n")
+        sequence cmdline = 
+        --" -EUDIR \"\"" & eupath --is this needed to override possible conflicts with installed version of euphoria? 
+        " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\" \"" & appfile & "\""
+        --puts(1, cmdline & "\n")
+        --puts(1, currProjectPath & "\n")
+        gui:ShellExecute(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline, "open", currProjectPath)
+    end if
+end procedure
+
+/* --old version:
+procedure run_app(sequence appfile)
+    if file_exists(appfile) then
         sequence cmdline = " -I \"" & get_redylib_path() & "\" -I \"" & get_euinclude_path() & "\""
         & " \"" & appfile & "\""
         --system_exec(cmdline)
-        gui:RunApp(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline)
-        
+        --gui:RunApp(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline)
+        gui:ShellExecute(gui:widget_get_handle("winMain"), get_euiw_path(), cmdline, "open", currProjectPath & "\\source\\")
     end if
-end procedure
+end procedure*/
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
