@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="installing_euphoria.html"><img src="images/prev.png" /></a></td>
+									<td><a href="installation.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="installing_euphoria.html">2.2 Post Install</a>
+									</td>
+									<td width="20%">
+										Up: <a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="using.html">3 Using Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 
+<a name="set_up_the_euphoria_configuration_file"></a><a name="up_the_euphoria_configuration_file"></a> </p>
+
+<!-- ..\docs\installing.txt -->
+<h2>2.3 Set Up the Euphoria Configuration File (eu.cfg)</h2>
+<a name="_46_setuptheeuphoriaconfigurationfileeucfg"></a><a name="setuptheeuphoriaconfigurationfileeucfg"></a>
+<p> Euphoria supports reading command line switches from configuration files. The default name for the configuration file is <tt>eu.cfg</tt>. However you can specify different ones by using the <tt>-C</tt> switch.</p>
+
+<!-- ..\docs\installing.txt -->
+<h3>2.3.1 Configuration file format</h3>
+<a name="_47_configurationfileformat"></a><a name="configurationfileformat"></a>
+<p> The configuration file is a text file. Each line in the file is either a command line switch, a section header, an include path or a comment. </p>
+<ul><li>Comments are lines that begin with a double dash "--". Everything on the line is ignored.
+</li><li>A section header is a <em>name</em> enclosed in square brackets. eg.  <tt>[interpret]</tt>.<ul><li>There are a number of predefined sections.
+</li><li>The lines in a section are only added to the command line switches if they apply to the mode that Euphoria is running in.<ul><li>[windows] Applies to Windows platform only.
+</li><li>[unix] Applies to any Unix platform only.
+</li><li>[interpret] Applies to the interpreter running in any platform.
+</li><li>[translate] Applies to the translator running in any platform.
+</li><li>[bind] Applies to the binder running in any platform.
+</li><li>[interpret:windows] Applies to the interpreter when running under <em>Windows</em> only.
+</li><li>[interpret:unix] Applies to the interpreter when running under <em>Unix</em> only.
+</li><li>[translate:windows] Applies to the translator when running under <em>Windows</em> only.
+</li><li>[translate:unix] Applies to the translator when running under <em>Unix</em> only.
+</li><li>[bind:windows] Applies to the binder when running under <em>Windows</em> only.
+</li><li>[bind:unix] Applies to the binder when running under <em>Unix</em> only.
+</li><li>[all] Applies to all running modes.
+</li></ul>
+</li><li>All configuration lines before the first section header are assumed to be the  <tt>[all]</tt> section.
+</li><li>You can have any number of section headers, but only the predefined ones are used. All lines in other sections are treated as comments.
+</li></ul>
+</li><li>A command line switch is a line that begins with a single dash. The entire line is added to the actual command line as if it was originally there.
+</li><li>An include path is any other line that is not one of the above. The string  <tt>-I</tt> is prepended to the line and then it is added to the command line.
+</li></ul>
+<!-- ..\docs\installing.txt -->
+<h3>2.3.2 Config File Locations</h3>
+<a name="_48_configfilelocations"></a><a name="configfilelocations"></a>
+<p> When Euphoria starts up, it looks for configuration files in the following order: </p>
+<ul><li>For <em>Windows</em> systems<ol><li>%ALLUSERSPROFILE%\euphoria\eu.cfg
+</li><li>%APPDATA%\euphoria\eu.cfg
+</li><li>%EUDIR%\eu.cfg
+</li><li>%HOMEDRIVE%\%HOMEPATH%\eu.cfg
+</li><li>From where ever the executable is run from "&lt;exepath&gt;/eu.cfg"
+</li><li>Current working directory - "./eu.cfg"
+</li><li>Command line -C switches
+</li></ol>
+</li><li>For <em>Unix</em> systems<ol><li>/etc/euphoria/eu.cfg
+</li><li>${EUDIR}/eu.cfg
+</li><li>${HOME}/.eu.cfg
+</li><li>From where ever the executable is run from "&lt;exepath&gt;/eu.cfg"
+</li><li>Current working directory - "./eu.cfg"
+</li><li>Command line -C switches
+</li></ol>
+</li></ul>
+<!-- ..\docs\installing.txt -->
+<h3>2.3.3 Config File Notes</h3>
+<a name="_49_configfilenotes"></a><a name="configfilenotes"></a><ul><li>Euphoria processes every configuration file found, and in the order described above. This means that settings specified in earlier configuration files may be overridden by subsequent configuration files. For example, a configuration file in the current directory will override the same settings in a configuration file in the executable's directory.
+</li><li>If a configuration file contains a <tt>-C</tt> switch, the new configuration file specified on that switch is processed before subsequent lines in the old file.
+</li><li>A configuration file is only ever processed once. Additional references to the same file are ignored.
+</li></ul>
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="installing_euphoria.html"><img src="images/prev.png" /></a></td>
+									<td><a href="installation.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="installing_euphoria.html">2.2 Post Install</a>
+									</td>
+									<td width="20%">
+										Up: <a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="using.html">3 Using Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

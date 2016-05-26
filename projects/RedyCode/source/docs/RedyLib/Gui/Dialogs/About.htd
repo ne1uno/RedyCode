@@ -1,0 +1,10 @@
+==About Dialog
+gui/dialogs/about.e
+
+This dialog shows information about the application and platform.
+
+===API
+====Actions
+=====action:do_proc("show_about", {})
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

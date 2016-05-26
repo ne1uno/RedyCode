@@ -1,0 +1,2492 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_base64.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_mathcons.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_base64.html">8.24 Base 64 Encoding and Decoding</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_mathcons.html">8.26 Math Constants</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\math.e -->
+<h2>8.25 Math</h2>
+<a name="_3435_math"></a><a name="math"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_math.html#_3435_math">8.25 Math</a></div>
+<div class="toc_3"><a href="std_math.html#_3436_signandcomparisons">8.25.1 Sign and Comparisons</a></div>
+<div class="toc_4"><a href="std_math.html#_3438_abs">8.25.1.1 abs</a></div>
+<div class="toc_4"><a href="std_math.html#_3445_sign">8.25.1.2 sign</a></div>
+<div class="toc_4"><a href="std_math.html#_3452_larger_of">8.25.1.3 larger_of</a></div>
+<div class="toc_4"><a href="std_math.html#_3459_smaller_of">8.25.1.4 smaller_of</a></div>
+<div class="toc_4"><a href="std_math.html#_3466_max">8.25.1.5 max</a></div>
+<div class="toc_4"><a href="std_math.html#_3473_min">8.25.1.6 min</a></div>
+<div class="toc_4"><a href="std_math.html#_3479_ensure_in_range">8.25.1.7 ensure_in_range</a></div>
+<div class="toc_4"><a href="std_math.html#_3484_ensure_in_list">8.25.1.8 ensure_in_list</a></div>
+<div class="toc_3"><a href="std_math.html#_3489_roundingsandremainders">8.25.2 Roundings and Remainders</a></div>
+<div class="toc_4"><a href="std_math.html#_3491_remainder">8.25.2.1 remainder</a></div>
+<div class="toc_4"><a href="std_math.html#_3502_mod">8.25.2.2 mod</a></div>
+<div class="toc_4"><a href="std_math.html#_3512_trunc">8.25.2.3 trunc</a></div>
+<div class="toc_4"><a href="std_math.html#_3520_frac">8.25.2.4 frac</a></div>
+<div class="toc_4"><a href="std_math.html#_3528_intdiv">8.25.2.5 intdiv</a></div>
+<div class="toc_4"><a href="std_math.html#_3534_floor">8.25.2.6 floor</a></div>
+<div class="toc_4"><a href="std_math.html#_3541_ceil">8.25.2.7 ceil</a></div>
+<div class="toc_4"><a href="std_math.html#_3548_round">8.25.2.8 round</a></div>
+<div class="toc_3"><a href="std_math.html#_3554_trigonometry">8.25.3 Trigonometry</a></div>
+<div class="toc_4"><a href="std_math.html#_3556_arctan">8.25.3.1 arctan</a></div>
+<div class="toc_4"><a href="std_math.html#_3563_tan">8.25.3.2 tan</a></div>
+<div class="toc_4"><a href="std_math.html#_3571_cos">8.25.3.3 cos</a></div>
+<div class="toc_4"><a href="std_math.html#_3578_sin">8.25.3.4 sin</a></div>
+<div class="toc_4"><a href="std_math.html#_3585_arccos">8.25.3.5 arccos</a></div>
+<div class="toc_4"><a href="std_math.html#_3593_arcsin">8.25.3.6 arcsin</a></div>
+<div class="toc_4"><a href="std_math.html#_3601_atan2">8.25.3.7 atan2</a></div>
+<div class="toc_4"><a href="std_math.html#_3607_rad2deg">8.25.3.8 rad2deg</a></div>
+<div class="toc_4"><a href="std_math.html#_3614_deg2rad">8.25.3.9 deg2rad</a></div>
+<div class="toc_3"><a href="std_math.html#_3620_logarithmsandpowers">8.25.4 Logarithms and Powers</a></div>
+<div class="toc_4"><a href="std_math.html#_3622_log">8.25.4.1 log</a></div>
+<div class="toc_4"><a href="std_math.html#_3630_log10">8.25.4.2 log10</a></div>
+<div class="toc_4"><a href="std_math.html#_3638_exp">8.25.4.3 exp</a></div>
+<div class="toc_4"><a href="std_math.html#_3645_power">8.25.4.4 power</a></div>
+<div class="toc_4"><a href="std_math.html#_3656_sqrt">8.25.4.5 sqrt</a></div>
+<div class="toc_4"><a href="std_math.html#_3664_fib">8.25.4.6 fib</a></div>
+<div class="toc_3"><a href="std_math.html#_3669_hyperbolictrigonometry">8.25.5 Hyperbolic Trigonometry</a></div>
+<div class="toc_4"><a href="std_math.html#_3671_cosh">8.25.5.1 cosh</a></div>
+<div class="toc_4"><a href="std_math.html#_3678_sinh">8.25.5.2 sinh</a></div>
+<div class="toc_4"><a href="std_math.html#_3685_tanh">8.25.5.3 tanh</a></div>
+<div class="toc_4"><a href="std_math.html#_3692_arcsinh">8.25.5.4 arcsinh</a></div>
+<div class="toc_4"><a href="std_math.html#_3699_arccosh">8.25.5.5 arccosh</a></div>
+<div class="toc_4"><a href="std_math.html#_3707_arctanh">8.25.5.6 arctanh</a></div>
+<div class="toc_3"><a href="std_math.html#_3714_accumulation">8.25.6 Accumulation</a></div>
+<div class="toc_4"><a href="std_math.html#_3716_sum">8.25.6.1 sum</a></div>
+<div class="toc_4"><a href="std_math.html#_3723_product">8.25.6.2 product</a></div>
+<div class="toc_4"><a href="std_math.html#_3730_or_all">8.25.6.3 or_all</a></div>
+<div class="toc_3"><a href="std_math.html#_3736_bitwiseoperations">8.25.7 Bitwise Operations</a></div>
+<div class="toc_4"><a href="std_math.html#_3738_and_bits">8.25.7.1 and_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3747_xor_bits">8.25.7.2 xor_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3754_or_bits">8.25.7.3 or_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3762_not_bits">8.25.7.4 not_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3769_shift_bits">8.25.7.5 shift_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3776_rotate_bits">8.25.7.6 rotate_bits</a></div>
+<div class="toc_4"><a href="std_math.html#_3783_gcd">8.25.7.7 gcd</a></div>
+<div class="toc_4"><a href="std_math.html#_3789_approx">8.25.7.8 approx</a></div>
+<div class="toc_4"><a href="std_math.html#_3795_powof2">8.25.7.9 powof2</a></div>
+<div class="toc_4"><a href="std_math.html#_3800_is_even">8.25.7.10 is_even</a></div>
+<div class="toc_4"><a href="std_math.html#_3805_is_even_obj">8.25.7.11 is_even_obj</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.1 Sign and Comparisons</h3>
+<a name="_3436_signandcomparisons"></a><a name="signandcomparisons"></a>
+<p> 
+<a name="mathabs"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.1 abs</h4>
+<a name="_3438_abs"></a><a name="abs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">abs</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the absolute value of numbers.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3439_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom is processed, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3440_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is the same if not less than zero, and the opposite value otherwise.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3441_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3442_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = abs</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10.5, -12, 3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- x is {10.5, 12, 3}</font>
+
+<font color="#330033">i = abs</font><font color="#880033">(</font><font color="#330033">-4</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 4</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3443_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3445_sign">sign</a></p>
+
+<p> 
+<a name="mathsign"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.2 sign</h4>
+<a name="_3445_sign"></a><a name="sign"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">sign</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns -1, 0 or 1 for each element according to it being negative, zero or positive.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3446_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom of which will be acted upon, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3447_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is -1 if <tt>value</tt> is less than zero, 1 if greater and 0 if equal.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3448_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> For an atom, <tt>sign(x)</tt> is the same as <a href="std_search.html#_2316_compare">compare</a>(x,0).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3449_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">i = sign</font><font color="#880033">(</font><font color="#330033">5</font><font color="#880033">)</font>
+<font color="#330033">i is 1</font>
+
+<font color="#330033">i = sign</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 0</font>
+
+<font color="#330033">i = sign</font><font color="#880033">(</font><font color="#330033">-2</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is -1</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3450_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a></p>
+
+<p> 
+<a name="mathlarger_of"></a><a name="of"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.3 larger_of</h4>
+<a name="_3452_larger_of"></a><a name="larger_of"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">larger_of</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">objA, </font><font color="#0000FF">object </font><font color="#330033">objB</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the larger of two objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3453_parameters"></a><a name="parameters"></a><ol><li><tt>objA</tt> : an object.
+</li><li><tt>objB</tt> : an object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3454_returns"></a><a name="returns"></a>
+<p> Whichever of <tt>objA</tt> and <tt>objB</tt> is the larger one.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3455_comments"></a><a name="comments"></a>
+<p> Introduced in v4.0.3</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3456_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? larger_of</font><font color="#880033">(</font><font color="#330033">10, 15.4</font><font color="#880033">) </font><font color="#FF0055">-- returns 15.4</font>
+<font color="#330033">? larger_of</font><font color="#880033">(</font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#880033">) </font><font color="#FF0055">-- returns "dog"</font>
+<font color="#330033">? larger_of</font><font color="#880033">(</font><font color="#330033">"apple"</font><font color="#330033">, </font><font color="#330033">"apes"</font><font color="#880033">) </font><font color="#FF0055">-- returns "apple"</font>
+<font color="#330033">? larger_of</font><font color="#880033">(</font><font color="#330033">10, 10</font><font color="#880033">) </font><font color="#FF0055">-- returns 10</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3457_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3466_max">max</a>, <a href="std_search.html#_2316_compare">compare</a>, <a href="std_math.html#_3459_smaller_of">smaller_of</a></p>
+
+<p> 
+<a name="mathsmaller_of"></a><a name="of"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.4 smaller_of</h4>
+<a name="_3459_smaller_of"></a><a name="smaller_of"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">smaller_of</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">objA, </font><font color="#0000FF">object </font><font color="#330033">objB</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the smaller of two objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3460_parameters"></a><a name="parameters"></a><ol><li><tt>objA</tt> : an object.
+</li><li><tt>objB</tt> : an object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3461_returns"></a><a name="returns"></a>
+<p> Whichever of <tt>objA</tt> and <tt>objB</tt> is the smaller one.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3462_comments"></a><a name="comments"></a>
+<p> Introduced in v4.0.3</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3463_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? smaller_of</font><font color="#880033">(</font><font color="#330033">10, 15.4</font><font color="#880033">) </font><font color="#FF0055">-- returns 10</font>
+<font color="#330033">? smaller_of</font><font color="#880033">(</font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#880033">) </font><font color="#FF0055">-- returns "cat"</font>
+<font color="#330033">? smaller_of</font><font color="#880033">(</font><font color="#330033">"apple"</font><font color="#330033">, </font><font color="#330033">"apes"</font><font color="#880033">) </font><font color="#FF0055">-- returns "apes"</font>
+<font color="#330033">? smaller_of</font><font color="#880033">(</font><font color="#330033">10, 10</font><font color="#880033">) </font><font color="#FF0055">-- returns 10</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3464_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3473_min">min</a>, <a href="std_search.html#_2316_compare">compare</a>, <a href="std_math.html#_3452_larger_of">larger_of</a></p>
+
+<p> 
+<a name="mathmax"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.5 max</h4>
+<a name="_3466_max"></a><a name="max"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">max</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the maximum value among all the argument's elements.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3467_parameters"></a><a name="parameters"></a><ol><li><tt>values</tt> : an object, all atoms of which will be inspected, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3468_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the maximum of all atoms in <a href="std_sequence.html#_2817_flatten">flatten</a>(<tt>values</tt>).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3469_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to a sequence of any shape.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3470_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = max</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10,15.4,3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 15.4</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3471_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3473_min">min</a>, <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sequence.html#_2817_flatten">flatten</a></p>
+
+<p> 
+<a name="mathmin"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.6 min</h4>
+<a name="_3473_min"></a><a name="min"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">min</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the minimum value among all the argument's elements.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3474_parameters"></a><a name="parameters"></a><ol><li><tt>values</tt> : an object, all atoms of which will be inspected, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3475_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the minimum of all atoms in <a href="std_sequence.html#_2817_flatten">flatten</a>(<tt>values</tt>).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3476_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to a sequence of any shape.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3477_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = min</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10,15.4,3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 3</font>
+</pre>
+
+<p> 
+<a name="mathensure_in_range"></a><a name="in_range"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.7 ensure_in_range</h4>
+<a name="_3479_ensure_in_range"></a><a name="ensure_in_range"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">ensure_in_range</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">item, </font><font color="#0000FF">sequence </font><font color="#330033">range_limits</font><font color="#880033">)</font>
+</pre>
+
+<p>   ensures that the <tt>item</tt> is in a range of values supplied by inclusive <tt>range_limits</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3480_parameters"></a><a name="parameters"></a><ol><li><tt>item</tt> : The object to test for.
+</li><li><tt>range_limits</tt> : A sequence of two or more elements. The first is assumed to be the smallest value and the last is assumed to be the highest value.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3481_returns"></a><a name="returns"></a>
+<p> A <strong>object</strong>, If <tt>item</tt> is lower than the first item in the <tt>range_limits</tt> it returns the first item. If  <tt>item</tt> is higher than the last element in the <tt>range_limits</tt> it returns the last item. Otherwise it returns <tt>item</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3482_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">valid_data = ensure_in_range</font><font color="#880033">(</font><font color="#330033">user_data, </font><font color="#993333">{</font><font color="#330033">2, 75</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">if not equal</font><font color="#880033">(</font><font color="#330033">valid_data, user_data</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    errmsg</font><font color="#880033">(</font><font color="#330033">"Invalid input supplied. Using %d instead."</font><font color="#330033">, valid_data</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+<font color="#330033">procA</font><font color="#880033">(</font><font color="#330033">valid_data</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="mathensure_in_list"></a><a name="in_list"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.1.8 ensure_in_list</h4>
+<a name="_3484_ensure_in_list"></a><a name="ensure_in_list"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">ensure_in_list</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">item, </font><font color="#0000FF">sequence </font><font color="#330033">list, </font><font color="#0000FF">integer </font><font color="#330033">default = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   ensures that the <tt>item</tt> is in a list of values supplied by <tt>list</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3485_parameters"></a><a name="parameters"></a><ol><li><tt>item</tt> : The object to test for.
+</li><li><tt>list</tt> : A sequence of elements that <tt>item</tt> should be a member of.
+</li><li><tt>default</tt> : an integer, the index of the list item to return if <tt>item</tt> is not found. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3486_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, if <tt>item</tt> is not in the list, it returns the list item of index <tt>default</tt>, otherwise it returns <tt>item</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3487_comments"></a><a name="comments"></a>
+<p> If <tt>default</tt> is set to an invalid index, the first item on the list is returned instead when <tt>item</tt> is not on the list.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3488_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">valid_data = ensure_in_list</font><font color="#880033">(</font><font color="#330033">user_data, </font><font color="#993333">{</font><font color="#330033">100, 45, 2, 75, 121</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">if not equal</font><font color="#880033">(</font><font color="#330033">valid_data, user_data</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    errmsg</font><font color="#880033">(</font><font color="#330033">"Invalid input supplied. Using %d instead."</font><font color="#330033">, valid_data</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+<font color="#330033">procA</font><font color="#880033">(</font><font color="#330033">valid_data</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.2 Roundings and Remainders</h3>
+<a name="_3489_roundingsandremainders"></a><a name="roundingsandremainders"></a>
+<p> 
+<a name="euremainder"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.1 remainder</h4>
+<a name="_3491_remainder"></a><a name="remainder"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function remainder</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">dividend, </font><font color="#0000FF">object </font><font color="#330033">divisor</font><font color="#880033">)</font>
+</pre>
+
+<p> computes the remainder of the division of two objects using truncated division.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3492_parameters"></a><a name="parameters"></a><ol><li><tt>dividend</tt> : any Euphoria object.
+</li><li><tt>divisor</tt> : any Euphoria object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3493_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the shape of which depends on <tt>dividend</tt>'s and <tt>divisor</tt>'s. For two atoms, this is the remainder of dividing <tt>dividend</tt> by  <tt>divisor</tt>, with <tt>dividend</tt>'s sign.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3494_errors"></a><a name="errors"></a><ol><li>If any atom in <tt>divisor</tt> is 0, this is an error condition as it amounts to an attempt to divide by zero.
+</li><li>If both <tt>dividend</tt> and <tt>divisor</tt> are sequences, they must be the same length as each other.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3495_comments"></a><a name="comments"></a><ul><li>There is a integer <tt>N</tt> such that <tt>dividend</tt> = <tt>N</tt> * <tt>divisor</tt> + result.
+</li><li>The result has the sign of <tt>dividend</tt> and lesser magnitude than <tt>divisor</tt>.
+</li><li>The result has the same sign as the dividend.
+</li><li>This differs from <a href="std_math.html#_3502_mod">mod</a> in that when the operands' signs are different this function rounds <tt>dividend/divisior</tt> towards zero whereas <tt>mod</tt> rounds away from zero.
+</li></ul>
+<p>The arguments to this function may be atoms or sequences. The rules for <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a> apply, and determine the shape of the returned object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3496_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">remainder</font><font color="#880033">(</font><font color="#330033">9, 4</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 1</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3497_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">remainder</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">81, -3.5, -9, 5.5</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">8, -1.7, 2, -4</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1, -0.1, -1, 1.5}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 3:</h5>
+<a name="_3498_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">remainder</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">17, 12, 34</font><font color="#993333">}</font><font color="#330033">, 16</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1, 12, 2}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 4:</h5>
+<a name="_3499_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">remainder</font><font color="#880033">(</font><font color="#330033">16, </font><font color="#993333">{</font><font color="#330033">2, 3, 5</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {0, 1, 1}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3500_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3502_mod">mod</a>, <a href="lang_def.html#_91_relationaloperators">Relational operators</a>, <a href="lang_def.html#_94_operationsonsequences">Operations on sequences</a></p>
+
+<p> 
+<a name="mathmod"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.2 mod</h4>
+<a name="_3502_mod"></a><a name="mod"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">mod</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x, </font><font color="#0000FF">object </font><font color="#330033">y</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the remainder of the division of two objects using floored division.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3503_parameters"></a><a name="parameters"></a><ol><li><tt>dividend</tt> : any Euphoria object.
+</li><li><tt>divisor</tt> : any Euphoria object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3504_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the shape of which depends on <tt>dividend</tt>'s and <tt>divisor</tt>'s. For two atoms, this is the remainder of dividing <tt>dividend</tt> by <tt>divisor</tt>, with <tt>divisor</tt>'s sign.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3505_comments"></a><a name="comments"></a><ul><li>There is a integer <tt>N</tt> such that <tt>dividend</tt> = N * <tt>divisor</tt> + result.
+</li><li>The result is non-negative and has lesser magnitude than <tt>divisor</tt>. n needs not fit in an Euphoria integer.
+</li><li>The result has the same sign as the dividend.
+</li><li>The arguments to this function may be atoms or sequences. The rules for <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a> apply, and determine the shape of the returned object.
+</li><li>When both arguments have the same sign, mod() and <a href="std_math.html#_3491_remainder">remainder</a> return the same result.
+</li><li>This differs from <a href="std_math.html#_3491_remainder">remainder</a> in that when the operands' signs are different this function rounds <tt>dividend/divisior</tt> away from zero whereas <tt>remainder</tt> rounds towards zero.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3506_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = mod</font><font color="#880033">(</font><font color="#330033">9, 4</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 1</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3507_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = mod</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">81, -3.5, -9, 5.5</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">8, -1.7, 2, -4</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1,-0.1,1,-2.5}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 3:</h5>
+<a name="_3508_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = mod</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">17, 12, 34</font><font color="#993333">}</font><font color="#330033">, 16</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1, 12, 2}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 4:</h5>
+<a name="_3509_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">s = mod</font><font color="#880033">(</font><font color="#330033">16, </font><font color="#993333">{</font><font color="#330033">2, 3, 5</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {0, 1, 1}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3510_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3491_remainder">remainder</a>, <a href="lang_def.html#_91_relationaloperators">Relational operators</a>, <a href="lang_def.html#_94_operationsonsequences">Operations on sequences</a></p>
+
+<p> 
+<a name="mathtrunc"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.3 trunc</h4>
+<a name="_3512_trunc"></a><a name="trunc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">trunc</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the integer portion of a number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3513_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : any Euphoria object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3514_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the shape of which depends on <tt>values</tt>'s. Each item in the returned object will be an integer. These are the same corresponding items in <tt>value</tt> except with any fractional portion removed.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3515_comments"></a><a name="comments"></a><ul><li>This is essentially done by always rounding towards zero. The <a href="std_math.html#_3534_floor">floor</a> function rounds towards negative infinity, which means it rounds towards zero for positive values and away from zero for negative values.
+</li><li>Note that <tt>trunc(x) + frac(x) = x</tt>
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3516_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = trunc</font><font color="#880033">(</font><font color="#330033">9.4</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 9</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3517_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = trunc</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">81, -3.5, -9.999, 5.5</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {81,-3, -9, 5}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3518_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3534_floor">floor</a> <a href="std_math.html#_3520_frac">frac</a></p>
+
+<p> 
+<a name="mathfrac"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.4 frac</h4>
+<a name="_3520_frac"></a><a name="frac"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">frac</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the fractional portion of a number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3521_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : any Euphoria object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3522_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the shape of which depends on <tt>values</tt>'s. Each item in the returned object will be the same corresponding items in <tt>value</tt> except with the integer portion removed.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3523_comments"></a><a name="comments"></a>
+<p> Note that <tt>trunc(x) + frac(x) = x</tt></p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3524_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = frac</font><font color="#880033">(</font><font color="#330033">9.4</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 0.4</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3525_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = frac</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">81, -3.5, -9.999, 5.5</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {0, -0.5, -0.999, 0.5}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3526_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3512_trunc">trunc</a></p>
+
+<p> 
+<a name="mathintdiv"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.5 intdiv</h4>
+<a name="_3528_intdiv"></a><a name="intdiv"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">intdiv</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns an integral division of two objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3529_parameters"></a><a name="parameters"></a><ol><li><tt>divided</tt> : any Euphoria object.
+</li><li><tt>divisor</tt> : any Euphoria object.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3530_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, which will be a sequence if either <tt>dividend</tt> or <tt>divisor</tt> is a sequence.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3531_comments"></a><a name="comments"></a><ul><li>This calculates how many non-empty sets when <tt>dividend</tt> is divided by <tt>divisor</tt>.
+</li><li>The result's sign is the same as the <tt>dividend</tt>'s sign.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3532_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">Tokens = 101</font>
+<font color="#0000FF">object </font><font color="#330033">MaxPerEnvelope = 5</font>
+<font color="#0000FF">integer </font><font color="#330033">Envelopes = intdiv</font><font color="#880033">( </font><font color="#330033">Tokens, MaxPerEnvelope</font><font color="#880033">) </font><font color="#FF0055">--&gt; 21</font>
+</pre>
+
+<p> 
+<a name="eufloor"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.6 floor</h4>
+<a name="_3534_floor"></a><a name="floor"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function floor</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">value</font><font color="#880033">)</font>
+</pre>
+
+<p> Rounds <tt>value</tt> down to the next integer less than or equal to <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3535_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : any Euphoria object; each atom in <tt>value</tt> will be acted upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3536_comments"></a><a name="comments"></a>
+<p> It does not simply truncate the fractional part, but actually rounds towards negative infinity.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3537_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt> but with each item guarenteed to be an integer less than or equal to the corresponding item in <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3538_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">y = </font><font color="#0000FF">floor</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">0.5, -1.6, 9.99, 100</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- y is {0, -2, 9, 100}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3539_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3541_ceil">ceil</a>, <a href="std_math.html#_3548_round">round</a></p>
+
+<p> 
+<a name="mathceil"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.7 ceil</h4>
+<a name="_3541_ceil"></a><a name="ceil"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">ceil</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the next integer equal or greater than the argument.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3542_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom of which processed, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3543_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. Each atom in <tt>value</tt> is returned as an integer that is the smallest integer equal to or greater than the corresponding atom in <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3544_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> <tt>ceil(X)</tt> is 1 more than <tt>floor(X)</tt> for non-integers. For integers, <tt>X = floor(X) = ceil(X)</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3545_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">nums</font>
+<font color="#330033">nums = </font><font color="#880033">{</font><font color="#330033">8, -5, 3.14, 4.89, -7.62, -4.3</font><font color="#880033">}</font>
+<font color="#330033">nums = ceil</font><font color="#880033">(</font><font color="#330033">nums</font><font color="#880033">) </font><font color="#FF0055">-- {8, -5, 4, 5, -7, -4}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3546_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3534_floor">floor</a>, <a href="std_math.html#_3548_round">round</a></p>
+
+<p> 
+<a name="mathround"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.2.8 round</h4>
+<a name="_3548_round"></a><a name="round"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">round</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">precision = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the argument's elements rounded to some precision.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3549_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom of which will be acted upon, no matter how deeply nested.
+</li><li><tt>precision</tt> : an object, the rounding precision(s). If not passed, this defaults to 1.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3550_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is that atom rounded to the nearest integer multiple of 1/<tt>precision</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3551_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3552_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">round</font><font color="#880033">(</font><font color="#330033">5.2</font><font color="#880033">) </font><font color="#FF0055">-- 5</font>
+<font color="#330033">round</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">4.12, 4.67, -5.8, -5.21</font><font color="#993333">}</font><font color="#330033">, 10</font><font color="#880033">) </font><font color="#FF0055">-- {4.1, 4.7, -5.8, -5.2}</font>
+<font color="#330033">round</font><font color="#880033">(</font><font color="#330033">12.2512, 100</font><font color="#880033">) </font><font color="#FF0055">-- 12.25</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3553_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3534_floor">floor</a>, <a href="std_math.html#_3541_ceil">ceil</a></p>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.3 Trigonometry</h3>
+<a name="_3554_trigonometry"></a><a name="trigonometry"></a>
+<p> 
+<a name="euarctan"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.1 arctan</h4>
+<a name="_3556_arctan"></a><a name="arctan"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function arctan</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">tangent</font><font color="#880033">)</font>
+</pre>
+
+<p> returns an angle with given tangent.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3557_parameters"></a><a name="parameters"></a><ol><li><tt>tangent</tt> : an object, each atom of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3558_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, of the same shape as <tt>tangent</tt>. For each atom in <tt>flatten(tangent)</tt>, the angle with smallest magnitude that has this atom as tangent is computed.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3559_comments"></a><a name="comments"></a>
+<p> All atoms in the returned value lie between <tt>-PI/2</tt> and <tt>PI/2</tt>, exclusive.</p>
+
+<p> This function may be applied to an atom or to all elements of a sequence (of sequence (...)).</p>
+
+<p> <tt>arctan</tt> is faster than <tt><a href="std_math.html#_3593_arcsin">arcsin</a></tt> or <tt><a href="std_math.html#_3585_arccos">arccos</a></tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3560_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">arctan</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {0.785398, 1.10715, 1.24905}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3561_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3593_arcsin">arcsin</a>, <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_math.html#_3563_tan">tan</a>, <a href="std_sequence.html#_2817_flatten">flatten</a></p>
+
+<p> 
+<a name="eutan"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.2 tan</h4>
+<a name="_3563_tan"></a><a name="tan"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function tan</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">angle</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the tangent of an angle, or a sequence of angles.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3564_parameters"></a><a name="parameters"></a><ol><li><tt>angle</tt> : an object, each atom of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3565_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, of the same shape as <tt>angle</tt>. Each atom in the flattened <tt>angle</tt> is replaced by its tangent.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3566_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>angle</tt> is an odd multiple of PI/2, an error occurs, as its tangent would be infinite.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3567_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence of arbitrary shape, recursively.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3568_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t = </font><font color="#0000FF">tan</font><font color="#880033">(</font><font color="#330033">1.0</font><font color="#880033">)</font>
+<font color="#FF0055">-- t is 1.55741</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3569_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3578_sin">sin</a>, <a href="std_math.html#_3571_cos">cos</a>, <a href="std_math.html#_3556_arctan">arctan</a></p>
+
+<p> 
+<a name="eucos"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.3 cos</h4>
+<a name="_3571_cos"></a><a name="cos"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function cos</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">angle</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the cosine of an angle expressed in radians.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3572_parameters"></a><a name="parameters"></a><ol><li><tt>angle</tt> : an object, each atom of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3573_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>angle</tt>. Each atom in <tt>angle</tt> is turned into its cosine.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3574_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> The cosine of an angle is an atom between -1 and 1 inclusive. 0.0 is hit by odd multiples of <tt>PI/2</tt> only.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3575_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = </font><font color="#0000FF">cos</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">.5, .6, .7</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- x is {0.8775826, 0.8253356, 0.7648422}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3576_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3578_sin">sin</a>, <a href="std_math.html#_3563_tan">tan</a>, <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_mathcons.html#_3815_pi">PI</a>, <a href="std_math.html#_3614_deg2rad">deg2rad</a></p>
+
+<p> 
+<a name="eusin"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.4 sin</h4>
+<a name="_3578_sin"></a><a name="sin"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function sin</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">angle</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the sine of an angle expressed in radians.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3579_parameters"></a><a name="parameters"></a><ol><li><tt>angle</tt> : an object, each atom in which will be acted upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3580_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>angle</tt>. When <tt>angle</tt> is an atom, the result is the sine of <tt>angle</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3581_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> The sine of an angle is an atom between -1 and 1 inclusive. 0.0 is hit by integer multiples of <tt>PI</tt> only.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3582_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">sin_x = </font><font color="#0000FF">sin</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">.5, .9, .11</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- sin_x is {.479, .783, .110}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3583_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3571_cos">cos</a>, <a href="std_math.html#_3593_arcsin">arcsin</a>, <a href="std_mathcons.html#_3815_pi">PI</a>, <a href="std_math.html#_3614_deg2rad">deg2rad</a></p>
+
+<p> 
+<a name="matharccos"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.5 arccos</h4>
+<a name="_3585_arccos"></a><a name="arccos"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">arccos</font><font color="#880033">(</font><font color="#330033">trig_range x</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns an angle given its cosine.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3586_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom in which will be acted upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3587_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is an atom, an angle whose cosine is <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3588_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>value</tt> is not in the -1..1 range, it cannot be the cosine of a real number, and an error occurs.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3589_comments"></a><a name="comments"></a>
+<p> A value between 0 and <a href="std_mathcons.html#_3815_pi">PI</a> radians will be returned.</p>
+
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> <tt>arccos</tt> is not as fast as <a href="std_math.html#_3556_arctan">arctan</a>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3590_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = arccos</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">-1,0,1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {3.141592654, 1.570796327, 0}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3591_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3571_cos">cos</a>, <a href="std_mathcons.html#_3815_pi">PI</a>, <a href="std_math.html#_3556_arctan">arctan</a></p>
+
+<p> 
+<a name="matharcsin"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.6 arcsin</h4>
+<a name="_3593_arcsin"></a><a name="arcsin"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">arcsin</font><font color="#880033">(</font><font color="#330033">trig_range x</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns an angle given its sine.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3594_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom in which will be acted upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3595_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is an atom, an angle whose sine is <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3596_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>value</tt> is not in the -1..1 range, it cannot be the sine of a real number, and an error occurs.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3597_comments"></a><a name="comments"></a>
+<p> A value between <tt>-PI/2</tt> and <tt>+PI/2</tt> (radians) inclusive will be returned.</p>
+
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> <tt>arcsin</tt> is not as fast as <a href="std_math.html#_3556_arctan">arctan</a>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3598_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = arcsin</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">-1,0,1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">s is </font><font color="#880033">{</font><font color="#330033">-1.570796327, 0, 1.570796327</font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3599_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_math.html#_3578_sin">sin</a></p>
+
+<p> 
+<a name="mathatan2"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.7 atan2</h4>
+<a name="_3601_atan2"></a><a name="atan2"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">atan2</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">y, </font><font color="#0000FF">atom </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   calculate the arctangent of a ratio.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3602_parameters"></a><a name="parameters"></a><ol><li><tt>y</tt> : an atom, the numerator of the ratio
+</li><li><tt>x</tt> : an atom, the denominator of the ratio
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3603_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, which is equal to <a href="std_math.html#_3556_arctan">arctan</a>(<tt>y</tt>/<tt>x</tt>), except that it can handle zero denominator and is more accurate.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3604_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = atan2</font><font color="#880033">(</font><font color="#330033">10.5, 3.1</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 1.283713958</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3605_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3556_arctan">arctan</a></p>
+
+<p> 
+<a name="mathrad2deg"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.8 rad2deg</h4>
+<a name="_3607_rad2deg"></a><a name="rad2deg"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">rad2deg</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an angle measured in radians to an angle measured in degrees.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3608_parameters"></a><a name="parameters"></a><ol><li><tt>angle</tt> : an object, all atoms of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3609_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>angle</tt>, all atoms of which were multiplied by <tt>180/PI</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3610_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or sequence. A flat angle is <tt>PI</tt> radians and 180 degrees.</p>
+
+<p> <a href="std_math.html#_3593_arcsin">arcsin</a>, <a href="std_math.html#_3585_arccos">arccos</a> and <a href="std_math.html#_3556_arctan">arctan</a> return angles in radians.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3611_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = rad2deg</font><font color="#880033">(</font><font color="#330033">3.385938749</font><font color="#880033">)</font>
+<font color="#FF0055">-- x is 194</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3612_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3614_deg2rad">deg2rad</a></p>
+
+<p> 
+<a name="mathdeg2rad"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.3.9 deg2rad</h4>
+<a name="_3614_deg2rad"></a><a name="deg2rad"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">deg2rad</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an angle measured in degrees to an angle measured in radians.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3615_parameters"></a><a name="parameters"></a><ol><li><tt>angle</tt> : an object, all atoms of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3616_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>angle</tt>, all atoms of which were multiplied by <tt>PI/180</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3617_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or sequence. A flat angle is <tt>PI</tt> radians and 180 degrees. <a href="std_math.html#_3578_sin">sin</a>, <a href="std_math.html#_3571_cos">cos</a> and <a href="std_math.html#_3563_tan">tan</a> expect angles in radians.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3618_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = deg2rad</font><font color="#880033">(</font><font color="#330033">194</font><font color="#880033">)</font>
+<font color="#FF0055">-- x is 3.385938749</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3619_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3607_rad2deg">rad2deg</a></p>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.4 Logarithms and Powers</h3>
+<a name="_3620_logarithmsandpowers"></a><a name="logarithmsandpowers"></a>
+<p> 
+<a name="eulog"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.1 log</h4>
+<a name="_3622_log"></a><a name="log"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function log</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">value</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the natural logarithm of a positive number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3623_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, any atom of which <tt>log</tt> acts upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3624_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. For an atom, the returned atom is its logarithm of base E.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3625_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>value</tt> is not greater than zero, an error occurs as its logarithm is not defined.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3626_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> To compute the inverse, you can use <tt>power(E, x)</tt> where E is 2.7182818284590452, or equivalently <a href="std_math.html#_3638_exp">exp</a>(x). Beware that the logarithm grows very slowly with x, so that <a href="std_math.html#_3638_exp">exp</a> grows very fast.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3627_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">log</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 4.60517</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3628_seealso"></a><a name="seealso"></a>
+<p> <a href="std_mathcons.html#_3829_e">E</a>, <a href="std_math.html#_3638_exp">exp</a>, <a href="std_math.html#_3630_log10">log10</a></p>
+
+<p> 
+<a name="mathlog10"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.2 log10</h4>
+<a name="_3630_log10"></a><a name="log10"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">log10</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x1</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the base 10 logarithm of a number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3631_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom of which will be converted, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3632_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, raising 10 to the returned atom yields <tt>value</tt> back.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3633_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>value</tt> is not greater than zero, its logarithm is not a real number and an error occurs.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3634_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<p> <tt>log10</tt> is proportional to <tt>log</tt> by a factor of <tt>1/log(10)</tt>, which is about <tt>0.435</tt> .</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3635_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = log10</font><font color="#880033">(</font><font color="#330033">12</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 2.48490665</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3636_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3622_log">log</a></p>
+
+<p> 
+<a name="mathexp"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.3 exp</h4>
+<a name="_3638_exp"></a><a name="exp"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">exp</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes some power of E.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3639_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, all atoms of which will be acted upon, no matter how deeply nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3640_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, its exponential is being returned.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3641_comments"></a><a name="comments"></a>
+<p> This function can be applied to a single atom or to a sequence of any shape.</p>
+
+<p> Due to its rapid growth, the returned values start losing accuracy as soon as values are greater than 10.  Values above 710 will cause an overflow in hardware.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3642_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = exp</font><font color="#880033">(</font><font color="#330033">5.4</font><font color="#880033">)</font>
+<font color="#FF0055">-- x is 221.4064162</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3643_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3622_log">log</a></p>
+
+<p> 
+<a name="eupower"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.4 power</h4>
+<a name="_3645_power"></a><a name="power"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function power</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">base, </font><font color="#0000FF">object </font><font color="#330033">exponent</font><font color="#880033">)</font>
+</pre>
+
+<p> raises a base value to some power.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3646_parameters"></a><a name="parameters"></a><ol><li><tt>base</tt> : an object, the value or values to raise to some power.
+</li><li><tt>exponent</tt> : an object, the exponent or exponents to apply to <tt>base</tt>.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3647_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the shape of which depends on <tt>base</tt>'s and <tt>exponent</tt>'s. For two atoms, this will be <tt>base</tt> raised to the power <tt>exponent</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3648_errors"></a><a name="errors"></a>
+<p> If some atom in <tt>base</tt> is negative and is raised to a non integer exponent, an error will occur, as the result is undefined.</p>
+
+<p> If 0 is raised to any negative power, this is the same as a zero divide and causes an error.</p>
+
+<p> <tt>power(0,0)</tt> is illegal, because there is not an unique value that can be assigned to that quantity.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3649_comments"></a><a name="comments"></a>
+<p> The arguments to this function may be atoms or sequences. The rules for <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a> apply.</p>
+
+<p> Powers of 2 are calculated very efficiently.</p>
+
+<p> Other languages have a <tt>**</tt> or <tt>^</tt> operator to perform the same action. But they do not have  sequences.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3650_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#330033">5, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- 25 is printed</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3651_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">5, 4, 3.5</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">2, 1, -0.5</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- {25, 4, 0.534522} is printed</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 3:</h5>
+<a name="_3652_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#993333">{</font><font color="#330033">1, 2, 3, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- {2, 4, 8, 16}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 4:</h5>
+<a name="_3653_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 3, 4</font><font color="#993333">}</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- {1, 4, 9, 16}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3654_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3622_log">log</a>, <a href="lang_def.html#_94_operationsonsequences">Operations on sequences</a></p>
+
+<p> 
+<a name="eusqrt"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.5 sqrt</h4>
+<a name="_3656_sqrt"></a><a name="sqrt"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function sqrt</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">value</font><font color="#880033">)</font>
+</pre>
+
+<p> calculates the square root of a number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3657_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an object, each atom in which will be acted upon.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3658_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>value</tt>. When <tt>value</tt> is an atom, the result is the positive atom whose square is <tt>value</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3659_errors"></a><a name="errors"></a>
+<p> If any atom in <tt>value</tt> is less than zero, an error will occur, as no squared real can be less than zero.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3660_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3661_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">r = </font><font color="#0000FF">sqrt</font><font color="#880033">(</font><font color="#330033">16</font><font color="#880033">)</font>
+<font color="#FF0055">-- r is 4</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3662_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3645_power">power</a>, <a href="lang_def.html#_94_operationsonsequences">Operations on sequences</a></p>
+
+<p> 
+<a name="mathfib"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.4.6 fib</h4>
+<a name="_3664_fib"></a><a name="fib"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">fib</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">i</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the nth Fibonacci Number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3665_parameters"></a><a name="parameters"></a><ol><li><tt>value</tt> : an integer. The starting value to compute a Fibonacci Number from.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3666_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, </p>
+<ul><li>The Fibonacci Number specified by value.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3667_comments"></a><a name="comments"></a><ul><li>Note that due to the limitations of the floating point implementation, only 'i' values less than 76 are accurate on <em>Windows</em> platforms, and 69 on other platforms (due to rounding differences in the native C runtime libraries).
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3668_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? fib</font><font color="#880033">(</font><font color="#330033">6</font><font color="#880033">)</font>
+<font color="#FF0055">-- output ... </font>
+<font color="#FF0055">-- 8</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.5 Hyperbolic Trigonometry</h3>
+<a name="_3669_hyperbolictrigonometry"></a><a name="hyperbolictrigonometry"></a>
+<p> 
+<a name="mathcosh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.1 cosh</h4>
+<a name="_3671_cosh"></a><a name="cosh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">cosh</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the hyperbolic cosine of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3672_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3673_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3674_comments"></a><a name="comments"></a>
+<p> The hyperbolic cosine grows like the exponential function.</p>
+
+<p> For all reals, <tt>power(cosh(x), 2) - power(sinh(x), 2) = 1</tt>. Compare with ordinary trigonometry.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3675_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? cosh</font><font color="#880033">(</font><font color="#330033">LN2</font><font color="#880033">) </font><font color="#FF0055">-- prints out 1.25</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3676_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3571_cos">cos</a>, <a href="std_math.html#_3678_sinh">sinh</a>, <a href="std_math.html#_3699_arccosh">arccosh</a></p>
+
+<p> 
+<a name="mathsinh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.2 sinh</h4>
+<a name="_3678_sinh"></a><a name="sinh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">sinh</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the hyperbolic sine of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3679_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3680_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3681_comments"></a><a name="comments"></a>
+<p> The hyperbolic sine grows like the exponential function.</p>
+
+<p> For all reals, <tt>power(cosh(x), 2) - power(sinh(x), 2) = 1</tt>. Compare with ordinary trigonometry.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3682_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? sinh</font><font color="#880033">(</font><font color="#330033">LN2</font><font color="#880033">) </font><font color="#FF0055">-- prints out 0.75</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3683_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3671_cosh">cosh</a>, <a href="std_math.html#_3578_sin">sin</a>, <a href="std_math.html#_3692_arcsinh">arcsinh</a></p>
+
+<p> 
+<a name="mathtanh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.3 tanh</h4>
+<a name="_3685_tanh"></a><a name="tanh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">tanh</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the hyperbolic tangent of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3686_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3687_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3688_comments"></a><a name="comments"></a>
+<p> The hyperbolic tangent takes values from -1 to +1.</p>
+
+<p> <tt>tanh</tt> is the ratio <tt>sinh / cosh</tt>. Compare with ordinary trigonometry.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3689_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? tanh</font><font color="#880033">(</font><font color="#330033">LN2</font><font color="#880033">) </font><font color="#FF0055">-- prints out 0.6</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3690_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3671_cosh">cosh</a>, <a href="std_math.html#_3678_sinh">sinh</a>, <a href="std_math.html#_3563_tan">tan</a>, <a href="std_math.html#_3707_arctanh">arctanh</a></p>
+
+<p> 
+<a name="matharcsinh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.4 arcsinh</h4>
+<a name="_3692_arcsinh"></a><a name="arcsinh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">arcsinh</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the reverse hyperbolic sine of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3693_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3694_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3695_comments"></a><a name="comments"></a>
+<p> The hyperbolic sine grows like the logarithm function.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3696_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? arcsinh</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">-- prints out 0,4812118250596034</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3697_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3699_arccosh">arccosh</a>, <a href="std_math.html#_3593_arcsin">arcsin</a>, <a href="std_math.html#_3678_sinh">sinh</a></p>
+
+<p> 
+<a name="matharccosh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.5 arccosh</h4>
+<a name="_3699_arccosh"></a><a name="arccosh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">arccosh</font><font color="#880033">(</font><font color="#330033">not_below_1 a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the reverse hyperbolic cosine of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3700_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3701_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3702_errors"></a><a name="errors"></a>
+<p> Since <a href="std_math.html#_3671_cosh">cosh</a> only takes values not below 1, an argument below 1 causes an error.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3703_comments"></a><a name="comments"></a>
+<p> The hyperbolic cosine grows like the logarithm function.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3704_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? arccosh</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">-- prints out 0</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3705_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_math.html#_3692_arcsinh">arcsinh</a>, <a href="std_math.html#_3671_cosh">cosh</a></p>
+
+<p> 
+<a name="matharctanh"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.5.6 arctanh</h4>
+<a name="_3707_arctanh"></a><a name="arctanh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">arctanh</font><font color="#880033">(</font><font color="#330033">abs_below_1 a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the reverse hyperbolic tangent of an object.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3708_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to process.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3709_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>x</tt>, each atom of which was acted upon.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Errors:</h5>
+<a name="_3710_errors"></a><a name="errors"></a>
+<p> Since <a href="std_math.html#_3685_tanh">tanh</a> only takes values between -1 and +1 excluded, an out of range argument causes an error.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3711_comments"></a><a name="comments"></a>
+<p> The hyperbolic cosine grows like the logarithm function.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3712_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? arctanh</font><font color="#880033">(</font><font color="#330033">1/2</font><font color="#880033">) </font><font color="#FF0055">-- prints out 0,5493061443340548456976</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3713_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3585_arccos">arccos</a>, <a href="std_math.html#_3692_arcsinh">arcsinh</a>, <a href="std_math.html#_3671_cosh">cosh</a></p>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.6 Accumulation</h3>
+<a name="_3714_accumulation"></a><a name="accumulation"></a>
+<p> 
+<a name="mathsum"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.6.1 sum</h4>
+<a name="_3716_sum"></a><a name="sum"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">sum</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the sum of all atoms in the argument, no matter how deeply nested.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3717_parameters"></a><a name="parameters"></a><ol><li><tt>values</tt> : an object, all atoms of which will be added up, no matter how nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3718_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the sum of all atoms in <a href="std_sequence.html#_2817_flatten">flatten</a>(<tt>values</tt>).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3719_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3720_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = sum</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10, 20, 30</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 60</font>
+
+<font color="#330033">a = sum</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10.5, </font><font color="#0000FF">{</font><font color="#330033">11.2</font><font color="#0000FF">} </font><font color="#330033">, 8.1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 29.8</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3721_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3723_product">product</a>, <a href="std_math.html#_3730_or_all">or_all</a></p>
+
+<p> 
+<a name="mathproduct"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.6.2 product</h4>
+<a name="_3723_product"></a><a name="product"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">product</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the product of all the atom in the argument, no matter how deeply nested.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3724_parameters"></a><a name="parameters"></a><ol><li><tt>values</tt> : an object, all atoms of which will be multiplied up, no matter how nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3725_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the product of all atoms in <a href="std_sequence.html#_2817_flatten">flatten</a>(<tt>values</tt>).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3726_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3727_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = product</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10, 20, 30</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 6000</font>
+
+<font color="#330033">a = product</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10.5, </font><font color="#0000FF">{</font><font color="#330033">11.2</font><font color="#0000FF">} </font><font color="#330033">, 8.1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 952.56</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3728_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3716_sum">sum</a>, <a href="std_math.html#_3730_or_all">or_all</a></p>
+
+<p> 
+<a name="mathor_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.6.3 or_all</h4>
+<a name="_3730_or_all"></a><a name="or_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">or_all</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   or's together all atoms in the argument, no matter how deeply nested.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3731_parameters"></a><a name="parameters"></a><ol><li><tt>values</tt> : an object, all atoms of which will be added up, no matter how nested.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3732_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the result of bitwise or of all atoms in <a href="std_sequence.html#_2817_flatten">flatten</a>(<tt>values</tt>).</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3733_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence. It performs <a href="std_math.html#_3754_or_bits">or_bits</a> operations repeatedly.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3734_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = or_all</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10, 7, 35</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 47 </font>
+<font color="#FF0055">-- To see why notice:</font>
+<font color="#FF0055">-- 10=0b1010, 7=0b111 and 35=0b100011.</font>
+<font color="#FF0055">-- combining these gives:</font>
+<font color="#FF0055">--               0b001010</font>
+<font color="#FF0055">--      (or_bits)0b000111</font>
+<font color="#FF0055">--               0b100011</font>
+<font color="#FF0055">--               --------</font>
+<font color="#FF0055">--               0b101111 = 47</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3735_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3716_sum">sum</a>, <a href="std_math.html#_3723_product">product</a>, <a href="std_math.html#_3754_or_bits">or_bits</a></p>
+
+<!-- ..\include\std\math.e -->
+<h3>8.25.7 Bitwise Operations</h3>
+<a name="_3736_bitwiseoperations"></a><a name="bitwiseoperations"></a>
+<p> 
+<a name="euand_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.1 and_bits</h4>
+<a name="_3738_and_bits"></a><a name="and_bits"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function and_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+</pre>
+
+<p> performs the bitwise AND operation on corresponding bits in two objects. A bit in the result will be 1 only if the corresponding bits in both arguments are 1.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3739_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : one of the objects involved
+</li><li><tt>b</tt> : the second object
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3740_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, whose shape depends on the shape of both arguments. Each atom in this object is obtained by bitwise AND between atoms on both objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3741_comments"></a><a name="comments"></a>
+<p> The arguments to this function may be atoms or sequences. The rules for operations on sequences apply. The atoms in the arguments must be representable as 32-bit numbers, either signed or unsigned.</p>
+
+<p> If you intend to manipulate full 32-bit values, you should declare your variables as atom, rather than integer. Euphoria's integer type is limited to 31-bits.</p>
+
+<p> Results are treated as signed numbers. They will be negative when the highest-order bit is 1.</p>
+
+<p> To understand the binary representation of a number you should display it in hexadecimal notation. Use the %x format of <a href="std_io.html#_1515_printf">printf</a>. Using <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a> is an even more direct approach.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3742_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">and_bits</font><font color="#880033">(</font><font color="#330033">#0F0F0000, #12345678</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is #02040000</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3743_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">and_bits</font><font color="#880033">(</font><font color="#330033">#FF, </font><font color="#993333">{</font><font color="#330033">#123456, #876543, #2211</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is {#56, #43, #11}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 3:</h5>
+<a name="_3744_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">and_bits</font><font color="#880033">(</font><font color="#330033">#FFFFFFFF, #FFFFFFFF</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is -1</font>
+<font color="#FF0055">-- Note that #FFFFFFFF is a positive number,</font>
+<font color="#FF0055">-- but the result of a bitwise operation is interpreted</font>
+<font color="#FF0055">-- as a signed 32-bit number, so it's negative.</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3745_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3754_or_bits">or_bits</a>, <a href="std_math.html#_3747_xor_bits">xor_bits</a>, <a href="std_math.html#_3762_not_bits">not_bits</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a></p>
+
+<p> 
+<a name="euxor_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.2 xor_bits</h4>
+<a name="_3747_xor_bits"></a><a name="xor_bits"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function xor_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+</pre>
+
+<p> performs the bitwise XOR operation on corresponding bits in two objects. A bit in the result will be 1 only if the corresponding bits in both arguments are different.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3748_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : one of the objects involved
+</li><li><tt>b</tt> : the second object
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3749_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, whose shape depends on the shape of both arguments. Each atom in this object is obtained by bitwisel XOR between atoms on both objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3750_comments"></a><a name="comments"></a>
+<p> The arguments must be representable as 32-bit numbers, either signed or unsigned.</p>
+
+<p> If you intend to manipulate full 32-bit values, you should declare your variables as atom, rather than integer. Euphoria's integer type is limited to 31-bits.</p>
+
+<p> Results are treated as signed numbers. They will be negative when the highest-order bit is 1.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3751_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">xor_bits</font><font color="#880033">(</font><font color="#330033">#0110, #1010</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is #1100</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3752_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3738_and_bits">and_bits</a>, <a href="std_math.html#_3754_or_bits">or_bits</a>, <a href="std_math.html#_3762_not_bits">not_bits</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a></p>
+
+<p> 
+<a name="euor_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.3 or_bits</h4>
+<a name="_3754_or_bits"></a><a name="or_bits"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function or_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+</pre>
+
+<p> performs the bitwise OR operation on corresponding bits in two objects. A bit in the result will be 1 only if the corresponding bits in both arguments are both 0.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3755_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : one of the objects involved
+</li><li><tt>b</tt> : the second object
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3756_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, whose shape depends on the shape of both arguments. Each atom in this object is obtained by bitwise OR between atoms on both objects.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3757_comments"></a><a name="comments"></a>
+<p> The arguments must be representable as 32-bit numbers, either signed or unsigned.</p>
+
+<p> If you intend to manipulate full 32-bit values, you should declare your variables as atom, rather than integer. Euphoria's integer type is limited to 31-bits.</p>
+
+<p> Results are treated as signed numbers. They will be negative when the highest-order bit is 1.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3758_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">or_bits</font><font color="#880033">(</font><font color="#330033">#0F0F0000, #12345678</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is #1F3F5678</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3759_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">or_bits</font><font color="#880033">(</font><font color="#330033">#FF, </font><font color="#993333">{</font><font color="#330033">#123456, #876543, #2211</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is {#1234FF, #8765FF, #22FF}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3760_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3738_and_bits">and_bits</a>, <a href="std_math.html#_3747_xor_bits">xor_bits</a>, <a href="std_math.html#_3762_not_bits">not_bits</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a></p>
+
+<p> 
+<a name="eunot_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.4 not_bits</h4>
+<a name="_3762_not_bits"></a><a name="not_bits"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function not_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p> performs the bitwise NOT operation on each bit in an object. A bit in the result will be 1 when the corresponding bit in x1 is 0, and will be 0 when the corresponding bit in x1 is 1.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3763_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : the object to invert the bits of.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3764_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the same shape as <tt>a</tt>. Each bit in an atom of the result is the reverse of the corresponding bit inside <tt>a</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3765_comments"></a><a name="comments"></a>
+<p> The argument to this function may be an atom or a sequence.</p>
+
+<p> The argument must be representable as a 32-bit number, either signed or unsigned.</p>
+
+<p> If you intend to manipulate full 32-bit values, you should declare your variables as atom, rather than integer. Euphoria's integer type is limited to 31-bits.</p>
+
+<p> Results are treated as signed numbers. They will be negative when the highest-order bit is 1.</p>
+
+<p> A simple equality holds for an atom <tt>a</tt>: <tt>a + not_bits(a) = -1</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3766_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = </font><font color="#0000FF">not_bits</font><font color="#880033">(</font><font color="#330033">#000000F7</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is -248 (i.e. FFFFFF08 interpreted as a negative number)</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3767_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3738_and_bits">and_bits</a>, <a href="std_math.html#_3754_or_bits">or_bits</a>, <a href="std_math.html#_3747_xor_bits">xor_bits</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a></p>
+
+<p> 
+<a name="mathshift_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.5 shift_bits</h4>
+<a name="_3769_shift_bits"></a><a name="shift_bits"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">shift_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">source_number, </font><font color="#0000FF">integer </font><font color="#330033">shift_distance</font><font color="#880033">)</font>
+</pre>
+
+<p>   moves the bits in the input value by the specified distance.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3770_parameters"></a><a name="parameters"></a><ol><li><tt>source_number</tt> : object: The value or values whose bits will be be moved.
+</li><li><tt>shift_distance</tt> : integer: number of bits to be moved by.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3771_comments"></a><a name="comments"></a><ul><li>If <tt>source_number</tt> is a sequence, each element is shifted.
+</li><li>The value or values in <tt>source_number</tt> are first truncated to a 32-bit integer.
+</li><li>The output is truncated to a 32-bit integer.
+</li><li>Vacated bits are replaced with zero.
+</li><li>If <tt>shift_distance</tt> is negative, the bits in <tt>source_number</tt> are moved left.
+</li><li>If <tt>shift_distance</tt> is positive, the bits in <tt>source_number</tt> are moved right.
+</li><li>If <tt>shift_distance</tt> is zero, the bits in <tt>source_number</tt> are not moved.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3772_returns"></a><a name="returns"></a>
+<p> Atom or atoms containing a 32-bit integer. A single atom in <tt>source_number</tt> is an atom, or a sequence in the same form as <tt>source_number</tt> containing 32-bit integers.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3773_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? shift_bits</font><font color="#880033">(</font><font color="#993333">(</font><font color="#330033">7, -3</font><font color="#993333">) </font><font color="#FF0055">--&gt; 56</font>
+<font color="#330033">? shift_bits</font><font color="#993333">(</font><font color="#0000FF">(</font><font color="#330033">0, -9</font><font color="#0000FF">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? shift_bits</font><font color="#0000FF">(</font><font color="#5500FF">(</font><font color="#330033">4, -7</font><font color="#5500FF">) </font><font color="#FF0055">--&gt; 512</font>
+<font color="#330033">? shift_bits</font><font color="#5500FF">(</font><font color="#00FF00">(</font><font color="#330033">8, -4</font><font color="#00FF00">) </font><font color="#FF0055">--&gt; 128</font>
+<font color="#330033">? shift_bits</font><font color="#00FF00">(</font><font color="#330033">(0xFE427AAC, -7) </font><font color="#FF0055">--&gt; 0x213D5600</font>
+<font color="#330033">? shift_bits((-7, -3) </font><font color="#FF0055">--&gt; -56  which is 0xFFFFFFC8 </font>
+<font color="#330033">? shift_bits((131, 0) </font><font color="#FF0055">--&gt; 131</font>
+<font color="#330033">? shift_bits((184.464, 0) </font><font color="#FF0055">--&gt; 184</font>
+<font color="#330033">? shift_bits((999_999_999_999_999, 0) </font><font color="#FF0055">--&gt; -1530494977 which is 0xA4C67FFF</font>
+<font color="#330033">? shift_bits((184, 3) </font><font color="#FF0055">-- 23</font>
+<font color="#330033">? shift_bits((48, 2) </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">? shift_bits((121, 3) </font><font color="#FF0055">--&gt; 15</font>
+<font color="#330033">? shift_bits((0xFE427AAC, 7) </font><font color="#FF0055">--&gt;  0x01FC84F5</font>
+<font color="#330033">? shift_bits((-7, 3) </font><font color="#FF0055">--&gt; 0x1FFFFFFF</font>
+<font color="#330033">? shift_bits({48, 121}, 2) </font><font color="#FF0055">--&gt; {12, 30}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3774_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3776_rotate_bits">rotate_bits</a></p>
+
+<p> 
+<a name="mathrotate_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.6 rotate_bits</h4>
+<a name="_3776_rotate_bits"></a><a name="rotate_bits"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">rotate_bits</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">source_number, </font><font color="#0000FF">integer </font><font color="#330033">shift_distance</font><font color="#880033">)</font>
+</pre>
+
+<p>   rotates the bits in the input value by the specified distance.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3777_parameters"></a><a name="parameters"></a><ol><li><tt>source_number</tt> : object: value or values whose bits will be be rotated.
+</li><li><tt>shift_distance</tt> : integer: number of bits to be moved by.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3778_comments"></a><a name="comments"></a><ul><li>If <tt>source_number</tt> is a sequence, each element is rotated.
+</li><li>The value(s) in <tt>source_number</tt> are first truncated to a 32-bit integer.
+</li><li>The output is truncated to a 32-bit integer.
+</li><li>If <tt>shift_distance</tt> is negative, the bits in <tt>source_number</tt> are rotated left.
+</li><li>If <tt>shift_distance</tt> is positive, the bits in <tt>source_number</tt> are rotated right.
+</li><li>If <tt>shift_distance</tt> is zero, the bits in <tt>source_number</tt> are not rotated.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3779_returns"></a><a name="returns"></a>
+<p> Atom or atoms containing a 32-bit integer. A single atom in <tt>source_number</tt> is an atom, or a sequence in the same form as <tt>source_number</tt> containing 32-bit integers.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3780_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">7, -3</font><font color="#880033">) </font><font color="#FF0055">--&gt; 56</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">0, -9</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">4, -7</font><font color="#880033">) </font><font color="#FF0055">--&gt; 512</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">8, -4</font><font color="#880033">) </font><font color="#FF0055">--&gt; 128</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">0xFE427AAC, -7</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0x213D567F</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">-7, -3</font><font color="#880033">) </font><font color="#FF0055">--&gt; -49  which is 0xFFFFFFCF </font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">131, 0</font><font color="#880033">) </font><font color="#FF0055">--&gt; 131</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">184.464, 0</font><font color="#880033">) </font><font color="#FF0055">--&gt; 184</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">999_999_999_999_999, 0</font><font color="#880033">) </font><font color="#FF0055">--&gt; -1530494977 which is 0xA4C67FFF</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">184, 3</font><font color="#880033">) </font><font color="#FF0055">-- 23</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">48, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">121, 3</font><font color="#880033">) </font><font color="#FF0055">--&gt; 536870927</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">0xFE427AAC, 7</font><font color="#880033">) </font><font color="#FF0055">--&gt;  0x59FC84F5</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#330033">-7, 3</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0x3FFFFFFF</font>
+<font color="#330033">? rotate_bits</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">48, 121</font><font color="#993333">}</font><font color="#330033">, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; {12, 1073741854}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>See Also:</h5>
+<a name="_3781_seealso"></a><a name="seealso"></a>
+<p> <a href="std_math.html#_3769_shift_bits">shift_bits</a></p>
+
+<p> Arithmetic</p>
+
+<p> 
+<a name="mathgcd"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.7 gcd</h4>
+<a name="_3783_gcd"></a><a name="gcd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">gcd</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">p, </font><font color="#0000FF">atom </font><font color="#330033">q</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the greater common divisor of to atoms.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3784_parameters"></a><a name="parameters"></a><ol><li><tt>p</tt> : one of the atoms to consider
+</li><li><tt>q</tt> : the other atom.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3785_returns"></a><a name="returns"></a>
+<p> A positive <strong>integer</strong>, which is the largest value that evenly divides into both parameters.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3786_comments"></a><a name="comments"></a><ul><li>Signs are ignored. Atoms are rounded down to integers.
+</li><li>If both parameters are zero, 0 is returned.
+</li><li>If one parameter is zero, the other parameter is returned.
+</li></ul>
+<p>Parameters and return value are atoms so as to take mathematical integers up to <tt>power(2,53)</tt>.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3787_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? gcd</font><font color="#880033">(</font><font color="#330033">76.3, -114</font><font color="#880033">) </font><font color="#FF0055">--&gt; 38</font>
+<font color="#330033">? gcd</font><font color="#880033">(</font><font color="#330033">0, -114</font><font color="#880033">) </font><font color="#FF0055">--&gt; 114</font>
+<font color="#330033">? gcd</font><font color="#880033">(</font><font color="#330033">0, 0</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0 (This is often regarded as an error condition)</font>
+</pre>
+
+<p> Floating Point</p>
+
+<p> 
+<a name="mathapprox"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.8 approx</h4>
+<a name="_3789_approx"></a><a name="approx"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">approx</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">p, </font><font color="#0000FF">object </font><font color="#330033">q, </font><font color="#0000FF">atom </font><font color="#330033">epsilon = 0.005</font><font color="#880033">)</font>
+</pre>
+
+<p>   compares two (sets of) numbers based on approximate equality.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3790_parameters"></a><a name="parameters"></a><ol><li><tt>p</tt> : an object, one of the sets to consider
+</li><li><tt>q</tt> : an object, the other set.
+</li><li><tt>epsilon</tt> : an atom used to define the amount of inequality allowed. This must be a positive value. Default is 0.005
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3791_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>1 when p &gt; (q + epsilon) : P is definitely greater than q.
+</li><li>-1 when p &lt; (q - epsilon) : P is definitely less than q.
+</li><li>0 when p &gt;= (q - epsilon) and p &lt;= (q + epsilon) : p and q are approximately equal.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Comments:</h5>
+<a name="_3792_comments"></a><a name="comments"></a>
+<p> This can be used to see if two numbers are near enough to each other.</p>
+
+<p> Also, because of the way floating point numbers are stored, it not always possible express every real number exactly, especially after a series of arithmetic operations. You can use <tt>approx</tt> to see if two floating point numbers are almost the same value.</p>
+
+<p> If <tt>p</tt> and <tt>q</tt> are both sequences, they must be the same length as each other.</p>
+
+<p> If <tt>p</tt> or <tt>q</tt> is a sequence, but the other is not, then the result is a sequence of results whose length is the same as the sequence argument.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3793_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? approx</font><font color="#880033">(</font><font color="#330033">10, 33.33 * 30.01 / 100</font><font color="#880033">)</font>
+<font color="#FF0055">          --&gt; 0 because 10 and 10.002333 are within 0.005 of each other</font>
+<font color="#330033">? approx</font><font color="#880033">(</font><font color="#330033">10, 10.001</font><font color="#880033">) </font>
+<font color="#FF0055">          --&gt; 0 because 10 and 10.001 are within 0.005 of each other</font>
+<font color="#330033">? approx</font><font color="#880033">(</font><font color="#330033">10, </font><font color="#993333">{</font><font color="#330033">10.001,9.999, 9.98, 10.04</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">          --&gt; {0,0,1,-1}</font>
+<font color="#330033">? approx</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10.001,9.999, 9.98, 10.04</font><font color="#993333">}</font><font color="#330033">, 10</font><font color="#880033">) </font>
+<font color="#FF0055">          --&gt; {0,0,-1,1}</font>
+<font color="#330033">? approx</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10.001,</font><font color="#0000FF">{</font><font color="#330033">9.999, 10.01</font><font color="#0000FF">}</font><font color="#330033">, 9.98, 10.04</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">10.01,9.99, 9.8, 10.4</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">          --&gt; {-1,{1,1},1,-1}</font>
+<font color="#330033">? approx</font><font color="#880033">(</font><font color="#330033">23,32, 10</font><font color="#880033">) </font>
+<font color="#FF0055">          --&gt; 0 because 23 and 32 are within 10 of each other.</font>
+</pre>
+
+<p> 
+<a name="mathpowof2"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.9 powof2</h4>
+<a name="_3795_powof2"></a><a name="powof2"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">powof2</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">p</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for power of 2.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3796_parameters"></a><a name="parameters"></a><ol><li><tt>p</tt> : an object. The item to test. This can be an integer, atom or sequence.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3797_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>1 for each item in <tt>p</tt> that is a power of two (like <tt> 2,4,8,16,32, ...</tt>)
+</li><li>0 for each item in <tt>p</tt> that is <strong>not</strong> a power of two (like <tt>3, 54.322, -2</tt>)
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3798_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">do</font>
+<font color="#330033">  ? </font><font color="#880033">{</font><font color="#330033">i, powof2</font><font color="#993333">(</font><font color="#330033">i</font><font color="#993333">)</font><font color="#880033">}</font>
+<font color="#0000FF">end for</font>
+<font color="#FF0055">-- output ... </font>
+<font color="#FF0055">-- {1,1}</font>
+<font color="#FF0055">-- {2,1}</font>
+<font color="#FF0055">-- {3,0}</font>
+<font color="#FF0055">-- {4,1}</font>
+<font color="#FF0055">-- {5,0}</font>
+<font color="#FF0055">-- {6,0}</font>
+<font color="#FF0055">-- {7,0}</font>
+<font color="#FF0055">-- {8,1}</font>
+<font color="#FF0055">-- {9,0}</font>
+<font color="#FF0055">-- {10,0}</font>
+</pre>
+
+<p> 
+<a name="mathis_even"></a><a name="even"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.10 is_even</h4>
+<a name="_3800_is_even"></a><a name="is_even"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">is_even</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">test_integer</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests if the supplied integer is a even or odd number.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3801_parameters"></a><a name="parameters"></a><ol><li><tt>test_integer</tt> : an integer. The item to test.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3802_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>1 if its even.
+</li><li>0 if its odd.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3803_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">do</font>
+<font color="#330033">  ? </font><font color="#880033">{</font><font color="#330033">i, is_even</font><font color="#993333">(</font><font color="#330033">i</font><font color="#993333">)</font><font color="#880033">}</font>
+<font color="#0000FF">end for</font>
+<font color="#FF0055">-- output ... </font>
+<font color="#FF0055">-- {1,0}</font>
+<font color="#FF0055">-- {2,1}</font>
+<font color="#FF0055">-- {3,0}</font>
+<font color="#FF0055">-- {4,1}</font>
+<font color="#FF0055">-- {5,0}</font>
+<font color="#FF0055">-- {6,1}</font>
+<font color="#FF0055">-- {7,0}</font>
+<font color="#FF0055">-- {8,1}</font>
+<font color="#FF0055">-- {9,0}</font>
+<font color="#FF0055">-- {10,1}</font>
+</pre>
+
+<p> 
+<a name="mathis_even_obj"></a><a name="even_obj"></a> </p>
+
+<!-- ..\include\std\math.e -->
+<h4>8.25.7.11 is_even_obj</h4>
+<a name="_3805_is_even_obj"></a><a name="is_even_obj"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">math</font>
+<font color="#0000FF">public function </font><font color="#330033">is_even_obj</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_object</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests if the supplied Euphoria object is even or odd.</p>
+
+<!-- ..\include\std\math.e -->
+<h5>Parameters:</h5>
+<a name="_3806_parameters"></a><a name="parameters"></a><ol><li><tt>test_object</tt> : any Euphoria object. The item to test.
+</li></ol>
+<!-- ..\include\std\math.e -->
+<h5>Returns:</h5>
+<a name="_3807_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, </p>
+<ul><li>If <tt>test_object</tt> is an integer...<ul><li>1 if its even.
+</li><li>0 if its odd.
+</li></ul>
+</li><li>Otherwise if <tt>test_object</tt> is an atom this always returns 0
+</li><li>otherwise if <tt>test_object</tt> is an sequence it tests each element recursively, returning a sequence of the same structure containing ones and zeros for each element. A 1 means that the element at this position was even otherwise it was odd.
+</li></ul>
+<!-- ..\include\std\math.e -->
+<h5>Example 1:</h5>
+<a name="_3808_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">5 </font><font color="#0000FF">do</font>
+<font color="#330033">  ? </font><font color="#880033">{</font><font color="#330033">i, is_even_obj</font><font color="#993333">(</font><font color="#330033">i</font><font color="#993333">)</font><font color="#880033">}</font>
+<font color="#0000FF">end for</font>
+<font color="#FF0055">-- output ... </font>
+<font color="#FF0055">-- {1,0}</font>
+<font color="#FF0055">-- {2,1}</font>
+<font color="#FF0055">-- {3,0}</font>
+<font color="#FF0055">-- {4,1}</font>
+<font color="#FF0055">-- {5,0}</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 2:</h5>
+<a name="_3809_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">? is_even_obj</font><font color="#880033">(</font><font color="#330033">3.4</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+</pre>
+
+<!-- ..\include\std\math.e -->
+<h5>Example 3:</h5>
+<a name="_3810_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">? is_even_obj</font><font color="#880033">(</font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">1,2,3</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#5500FF">{</font><font color="#330033">4,5</font><font color="#5500FF">}</font><font color="#330033">,6,</font><font color="#5500FF">{</font><font color="#330033">7,8</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#330033">,9</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">--&gt; {{0,1,0},{{1,0},1,{0,1}},0}</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\mathcons.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_base64.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_mathcons.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_base64.html">8.24 Base 64 Encoding and Decoding</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_mathcons.html">8.26 Math Constants</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

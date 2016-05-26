@@ -1,7 +1,7 @@
 -- This file is part of RedyCode™ Integrated Development Environment
 -- <http://redy-project.org/>
 -- 
--- Copyright 2015 Ryan W. Johnson
+-- Copyright 2016 Ryan W. Johnson
 -- 
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -20,27 +20,36 @@
 
 without warning
 
-include gui/gui.e as gui
-include app/msg.e as msg
-include app/config.e as cfg
+include redylib_0_9/app.e as app
+include redylib_0_9/gui.e as gui
+include redylib_0_9/msg.e as msg
+include redylib_0_9/config.e as cfg
+include redylib_0_9/actions.e as action
 
 include std/task.e
 include std/text.e
 include std/pretty.e
 include std/rand.e
 
+
 atom currtip = 1
 sequence tips = {
-    {"Welcome to RedyCode! This is an alpha version, so there are probably going to be missing features, glitchs, and crashes. Remember to back up your files before editing them!"},
-    {"Once you have created a new project, a good way to get started with some code is: open the Demos project in a second instance of RedyCode, then open one of the demo files. Copy and paste it into your new file, then save and run it."},
-    {"Double-click on a .ex or .exw file in the project tree to run it."},
-    {"If you open a source file that is not part of your project (such as in redylib or include folders), the file will be open as Read Only. Click the Edit button if you wish to edit that file."},
-    {"Thanks for trying RedyCode 1.0 alpha! Many more features coming soon."}
+    {"Welcome to RedyCode! Go to the Help menu -> Help for complete documentation for RedyCode and the RedyLib API. Enjoy! :-)"}
 }
 
+
+action:define({
+    {"name", "show_tips"},
+    {"do_proc", routine_id("do_show_tips")},
+    {"label", "Show Tips..."},
+    {"icon", "dialog-information"},
+    {"description", "Show Tips dialog"}
+})
+
+
 procedure save_prefs()
-    cfg:set_var(App_Name & ".cfg", "Startup", "Disable tips", gui:wfunc("winTips.chkDisableStartup", "get_value", {}))
-    cfg:save_config(App_Name & ".cfg")
+    cfg:set_var("", "Startup", "Disable tips", gui:wfunc("winTips.chkDisableStartup", "get_value", {}))
+    cfg:save_config("")
 end procedure
 
 
@@ -81,20 +90,8 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
 end procedure
 
 
-function msg_event(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
-    switch topicname do
-        case "command" then
-            if equal(msgname, "tips") then
-                show()
-            end if
-    end switch
-    
-    return 1
-end function
-
-
-procedure show()
-    object prefDisableTips = cfg:get_var(App_Name & ".cfg", "Startup", "Disable tips")
+procedure do_show_tips()
+    object prefDisableTips = cfg:get_var("", "Startup", "Disable tips")
     if not atom(prefDisableTips) then
         prefDisableTips = 0
         save_prefs()
@@ -105,9 +102,9 @@ procedure show()
         {"class", "window"},
         {"mode", "dialog"},
         {"handler", routine_id("gui_event")},
-        {"title", "Useful Tips"},
+        {"title", "Useful Tips"}
         --{"modal", 1},
-        {"topmost", 1} 
+        --{"topmost", 1} 
         --{"position", {350, 350}}
         --{"visible", 0}
     })
@@ -158,18 +155,21 @@ procedure show()
         {"justify_x", "right"}
     })
     
-    gui:wcreate({
-        {"name", "winTips.btnPrev"},
-        {"parent",  "winTips.cntBottom"},
-        {"class", "button"},
-        {"label", "<< Previous"}
-    })
-    gui:wcreate({
-        {"name", "winTips.btnNext"},
-        {"parent",  "winTips.cntBottom"},
-        {"class", "button"},
-        {"label", "Next >>"}
-    })
+    if length(tips) > 1 then
+        gui:wcreate({
+            {"name", "winTips.btnPrev"},
+            {"parent",  "winTips.cntBottom"},
+            {"class", "button"},
+            {"label", "<< Previous"}
+        })
+        gui:wcreate({
+            {"name", "winTips.btnNext"},
+            {"parent",  "winTips.cntBottom"},
+            {"class", "button"},
+            {"label", "Next >>"}
+        })
+    end if
+    
     gui:wcreate({
         {"name",  "winTips.btnOk"},
         {"parent",  "winTips.cntBottom"},
@@ -180,7 +180,7 @@ end procedure
 
 
 export procedure start()
-    object prefDisableTips = cfg:get_var(App_Name & ".cfg", "Startup", "Disable tips")
+    object prefDisableTips = cfg:get_var("", "Startup", "Disable tips")
     if not atom(prefDisableTips) then
         prefDisableTips = 0
         save_prefs()
@@ -192,7 +192,7 @@ export procedure start()
     end if
     
     if prefDisableTips = 0 then
-        show()
+        action:do_proc("show_tips")
     end if
 end procedure
 

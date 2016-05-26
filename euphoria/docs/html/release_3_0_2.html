@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_3_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_0_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_3_1_0.html">9.12 Version 3.1 June 2007</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_0_1.html">9.14 Version 3.0.1 November 3, 2006</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\3.0.2.txt -->
+<h2>9.13 Version 3.0.2 February 9, 2007</h2>
+<a name="_6705_version302february92007"></a><a name="version302february92007"></a>
+<p> This release fixes some important bugs in 3.0.1, and improves the source code documentation.</p>
+
+<!-- ..\docs\release\3.0.2.txt -->
+<h3>9.13.1 Bug Fixes</h3>
+<a name="_6706_bugfixes"></a><a name="bugfixes"></a><ul><li><strong>bug fixed: </strong> <strong>Translator: </strong> Programs translated to C and compiled for Windows would crash if they used the new multitasking feature.  (This worked in 3.0.0 but was broken accidentally in 3.0.1 because some stack offsets changed.)
+</li><li><strong>bug fixed: </strong> <strong>Interpreter: </strong> In fairly rare situations, the interpreter for Windows might crash.  This was due to a bug in load_private_block() where it was freeing a block of memory and then returning a pointer into that block.  In rare cases, a page of virtual memory might be removed from the heap by the Windows O/S before the block could be read.  Thanks to Andy Serpa, Pete Lomax, Matt Lewis, Derek Parnell, and others for helping to pin-point the location of the bug.
+</li><li><strong>bug fixed: </strong> <strong>Source Code: </strong> "\euphoria" was changed to to %EUDIR% in 4 .bat files in the source directory. Thanks to Jaime Marcos.
+</li></ul>
+<!-- ..\docs\release\3.0.2.txt -->
+<h3>9.13.2 Improved Documentation</h3>
+<a name="_6707_improveddocumentation"></a><a name="improveddocumentation"></a><ul><li>A new document (translator.doc) was added to euphoria\source. It describes the internals of the Translator, with emphasis on the many optimizations that the Translator performs.
+</li><li>The user documentation was also improved in a few places.
+</li></ul>
+<!-- ..\docs\release\3.0.2.txt -->
+<h3>9.13.3 C Source Code Changes</h3>
+<a name="_6708_csourcecodechanges"></a><a name="csourcecodechanges"></a><ul><li>Matthew Lewis added a Linux/FreeBSD make file, and made source code changes to better support Open Watcom and a newer version of GCC.
+</li></ul>
+<p> 
+<!-- ..\docs\release\3.0.1.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_3_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_0_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_3_1_0.html">9.12 Version 3.1 June 2007</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_0_1.html">9.14 Version 3.0.1 November 3, 2006</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="syntax.html"><img src="images/prev.png" /></a></td>
+									<td><a href="syntax_toc.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="syntax.html">5.1 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										Up: <a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="miniguide.html">6 Mini-Guides</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\internals.txt -->
+<h2>5.2 Euphoria Internals</h2>
+<a name="_247_euphoriainternals"></a><a name="euphoriainternals"></a>
+<p> The interpreter has four binary components: </p>
+<ul><li>Interpreter
+</li><li>Translator
+</li><li>Backend
+</li><li>Library
+</li></ul>
+<p>The Euphoria interpreter has two parts: the frontend and the backend. The <strong>frontend</strong> is a parser that converts source-code into a set of <strong>Intermediate Language</strong> (IL) instructions. The <strong>backend</strong> then takes the IL instructions and executes the program.</p>
+
+<p> When the <em>interpreter</em> executes source-code, the frontend parses and prepares the code, and then the backend executes the code.</p>
+
+<p> When the <em>shrouder</em> executes source-code, only the frontend is run producing an <tt>.il</tt> file. This <tt>.il</tt> file may be run by the backend as an independent step to execute the program.</p>
+
+<p> When the <em>binder</em> executes source-code, the <tt>.il</tt> instructions produced by the frontend are combined with the backend to produce a stand-alone executable program. The executable program may then be run independetly at any time.</p>
+
+<p> When the <em>translator</em> executes source-code, the <tt>.il</tt> instructions are translated into C-code. This C-code is compiled with an installed C compiler producing an executable program.</p>
+
+<p> The <em>library</em> is called by the backend for the many builtins included in Euphoria.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.1 The Euphoria Data Structures</h3>
+<a name="_248_theeuphoriadatastructures"></a><a name="theeuphoriadatastructures"></a>
+<!-- ..\docs\internals.txt -->
+<h4>5.2.1.1 The Euphoria representation of a Euphoria Object</h4>
+<a name="_249_theeuphoriarepresentationofaeuphoriaobject"></a><a name="theeuphoriarepresentationofaeuphoriaobject"></a>
+<p> Every Euphoria object is stored as-is.  A special unlikely floating point value is used for <tt>NOVALUE</tt>.  <tt>NOVALUE</tt> signifies that a variable has not been assigned a value or the end of a sequence.</p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.1.2 The C Representation of a Euphoria Object</h4>
+<a name="_250_thecrepresentationofaeuphoriaobject"></a><a name="thecrepresentationofaeuphoriaobject"></a>
+<p> Every Euphoria object is either stored as is, or as an encoded pointer.  A Euphoria <tt>integer</tt> is stored in a 32-bit signed integer.  If the number is too big for a Euphoria <tt>integer</tt>, it is assigned to a 64-bit double float in a structure and an encoded pointer to that structure is stored in the said 32-bit memory space.  Sequences are stored in a similar way.</p>
+
+<p> 
+<pre>
+ 32 bit number range:
+  0X8      0XA      0XC      0XE      0X0      0X2      0X4      0X6      0X8
+-4*2^29  -3*2^29  -2*2^29-1  -2^29   0*2^29   1*2^29   2*2^29   3*2^29 4*2^29 
+   *--------*--------*--------*--------*--------*--------*--------*--------o
+                     o NOVALUE = -2*2^29-1
+		     o&lt;-----------ATOM_INT---------[-2*2^29..4*2^29)------&gt;o
+	    |&lt;----------------ATOM_DBL-------[-3*2^29..4*2^29)------------&gt;o
+--&gt;|        |&lt;-- IS_SEQUENCE [-4*2^29..-3*2^29)
+--&gt;|                 o&lt;--- IS_DBL_OR_SEQUENCE [-4*2^29..-2*2^29-1)
+--&gt;|sequence|&lt;-------
+            |&lt;------------------  atom   ---------------&gt;|
+    -------&gt;| double |&lt;--------  
+                     |&lt;--------     integer    ---------&gt;|
+   |&lt;--------------------- object ----------------------&gt;|		     
+
+</pre>
+
+<p> Euphoria integers are stored in object variables as-is.  An object variable is a four byte signed integer.  Legal integer values for Euphoria integers are between -1,073,741,824 ( -2<sup>30</sup> ) and +1,073,741,823 ( 2<sup>30</sup>-1 ). Unsigned hexadecimal numbers from C000_0000 to FFFF_FFFF are the negative integers and numbers from 0000_0000 to 3FFF_FFFF are the positive integers.  The hexadecimal values not used as integers are thus 4000_0000 to BFFF_FFFF.  Other values are for encoded pointers.  Pointers are always 8 byte aligned.  So a pointer is stored in 29-bits instead of 32 and can fit in a hexadecimal range 0x2000_0000 long. The pointers are encoded in such a way that their encoded values will never be in the range of the integers. Pointers to sequence structures (struct s1) are encoded into a range between 8000_0000 to 9FFF_FFFF.  Pointers to structures for doubles (struct d) are encoded into a range between A000_0000 to BFFF_FFFF. A special value NOVALUE is at the end of the range of encoded pointers is BFFF_FFFF and it signifies that there is no value yet assigned to a variable and it also signifies the end of a sequence.  In C, values of this type are stored in the 'object' type.  The range 4000_0000 to 7FFF_FFFF is unused.</p>
+
+<p> A double structure 'struct d' could indeed contain a value that is legally in the range of a Euphoria integer.  So the encoded pointer to this structure is recognized by the interpreter as an 'integer' but in this internals document when we say Euphoria integer we mean it actually is a C integer in the legal Euphoria integer range.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.2 The C Representations of a Euphoria Sequence and a Euphoria Atom</h3>
+<a name="_251_thecrepresentationsofaeuphoriasequenceandaeuphoriaatom"></a><a name="thecrepresentationsofaeuphoriasequenceandaeuphoriaatom"></a>
+<p> 
+<pre>// Sequence Header 
+struct s1
+{
+ object_ptr base;     // base is such that base[1] is the first element
+ long length;         // this is the sequence length
+ long ref;            // ref is the number of as virtual copies of this sequence
+ long postfill;       // is how many extra objects could fit at the end of base
+ cleanup_ptr cleanup; // this is a pointer to a Euphoria routine that is run 
+                      // just before the sequence is freed.
+}
+
+</pre>
+
+<p> However, we allocate more than this structure.  Inside the allocated data but past the structure, there also is an area of 'pre free space'; sequence data pointed to by base[1] to base[$], $ being the length; a NOVALUE terminator for the sequence, and an area of post fill space.  In memory, immediately following the structure there is the following data stored:</p>
+
+<p> 
+<pre> object pre_fill_space[]; // could have 0 (not exist) or more elements before used data
+ object base[1..$];       // sequence members pointed to by base
+ object base[$+1];        // a magic number terminating the sequence members (NOVALUE)
+ object post_fill_space[];// could have 0 (not exist) or more elements after used data
+</pre>
+ </p>
+
+<p> Taken together these are what get represented in memory. </p>
+<table><tr><td>  base  </td>
+<td> length </td>
+<td>   ref  </td>
+<td>postfill</td>
+<td> cleanup</td>
+<td>  pre fill space </td>
+<td> base[1..$] </td>
+<td> <tt>NOVALUE</tt> </td>
+<td> post fill space  </td>
+</tr>
+</table>
+
+<p> By their nature, sequences are variable length, dynamic entities and so the C structure needs to cater for this. When a sequence is created, we allocate enough RAM for the combined header and the initial storage for the elements. </p>
+<table><tr><th> Field    </th>
+<th> Description </th>
+</tr>
+<tr><td>  base     </td>
+<td> This contains the address of the first element less the length of one element. Thus <tt>base[1]</tt> points to the first element and <tt>base[0]</tt> points to a fictitious element just before the first one, which is never used.<br />
+Initially, <tt>base</tt> contains the address of the last member of the sequence header but as the sequence is resized, it can point to the last member or anywhere after.</td>
+</tr>
+<tr><td>  length   </td>
+<td> Contains the current number of elements in the sequence.</td>
+</tr>
+<tr><td>  ref      </td>
+<td> Contains the count of references to this sequence. Only when this is zero, can the RAM used by the sequence be returned to the system for reuse.</td>
+</tr>
+<tr><td>  postfill </td>
+<td> The size of 'post fill space' in element spaces.  Rather than using bytes, postfill is measured in objects which are each address wide elements. If this is non-zero, we can append to the sequence with at most <tt>postfill</tt> new elements before needing to reallocate RAM.<br />
+</td>
+</tr>
+<tr><td>  cleanup  </td>
+<td> If not null, it points to a routine that is called immediately before the sequence is deleted.<br />
+</td>
+</tr>
+<tr><td> pre fill space </td>
+<td> There are 0 or more spaces before base[1].  We can calculate the free space in *objects* at the front of a sequence, s1, in C by<br />
+<tt>(&amp;s1.base[1] - (object_ptr)(1+&amp;s1))</tt>.<br />
+In EUPHORIA, you will have to divide by the size of a C_POINTER on the difference. When elements are removed from the front of a sequence, we simply adjust the address in <tt>base</tt> to point to the new <em>first</em> element and reduce the <tt>length</tt> count. If we want to prepend and this pre fill space has some positive size, then we make room by decrementing <tt>base</tt> and increment the <tt>length</tt>.  The new data is then assigned to <tt>base</tt>[1].</td>
+</tr>
+<tr><td> base[1]..base[length] sequence data </td>
+<td>      This is actual data.</td>
+</tr>
+<tr><td> base[$+1]  </td>
+<td>      This is always set to <tt>NOVALUE</tt>.</td>
+</tr>
+<tr><td> post fill space </td>
+<td> There are 0 or more spaces after <tt>base</tt>[<tt>length</tt>+1].  The number of spaces is stored in <tt>postfill</tt>.  If <tt>postfill</tt> is non-zero we can append by incrementing the <tt>length</tt>, decrementing <tt>postfill</tt> and assigning the new data to <tt>base</tt>[$]. When we remove from the end of the sequence, we increment <tt>postfill</tt> and decrement the <tt>length</tt>.</td>
+</tr>
+</table>
+
+<p> 
+<pre>// Atom Header
+struct d
+{
+ double dbl;          // the actual value of a double number.
+ long ref;            // ref is the number of virtual copies of this double
+ cleanup_ptr cleanup; // this is a pointer to a Euphoria routine that is run 
+                      // just before the sequence is freed.
+}
+</pre>
+
+<p> Now offset of the 'ref' in struct d must be the same as the offset of the 'ref' in struct s1.  To this end, the 64bit implementation of 4.1 has these members in a different order.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.3 The Euphoria Object Macros and Functions</h3>
+<a name="_252_theeuphoriaobjectmacrosandfunctions"></a><a name="theeuphoriaobjectmacrosandfunctions"></a>
+<!-- ..\docs\internals.txt -->
+<h4>5.2.3.1 Description</h4>
+<a name="_253_description"></a><a name="description"></a>
+<p> The macros are imperfect.  For example, <tt>IS_SEQUENCE(NOVALUE)</tt> returns <tt>TRUE</tt> and <tt>IS_ATOM_DBL</tt> will return <tt>TRUE</tt> for integer values as well as encoded pointers to 'struct d's.   This is why there is an order that these tests are made: We test <tt>IS_ATOM_INT</tt> and if that fails we can use <tt>IS_ATOM_DBL</tt> and then that will only be true if we pass an encoded pointer to a double.  We must be sure that something is not <tt>NOVALUE</tt> before we use <tt>IS_SEQUENCE</tt> on it.</p>
+
+<p> <em> Often we know foo is not NOVALUE before getting into this:</em></p>
+
+<p> 
+<pre>// object foo
+if (IS_ATOM_INT(foo)) {
+ // some code for a Euphoria integer
+} else if (IS_ATOM_DBL(foo)) {
+ // some code for a double
+} else {
+ // code for a sequence foo
+}
+</pre>
+
+<p> A sequence is held in a 'struct s1' type and a double is contained in a 'struct d'.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.4 Type Value Functions and Macros</h3>
+<a name="_254_typevaluefunctionsandmacros"></a><a name="typevaluefunctionsandmacros"></a>
+<p> 
+<a name="internalsis_atom_int"></a><a name="atom_int"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.4.1 IS_ATOM_INT</h4>
+<a name="_256_is_atom_int"></a><a name="is_atom_int"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; int IS_ATOM_INT</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_257_returns"></a><a name="returns"></a>
+<p> true if object is a Euphoria integer and not an encoded pointer.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Note</h5>
+<a name="_258_note"></a><a name="note"></a>
+<p> <tt>IS_ATOM_INT</tt> will return true even though the argument is out of the Euphoria integer range when the argument is positive.  These values are not possible encoded pointers.</p>
+
+<p> 
+<a name="internalsis_atom_dbl"></a><a name="atom_dbl"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.4.2 IS_ATOM_DBL</h4>
+<a name="_260_is_atom_dbl"></a><a name="is_atom_dbl"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; int IS_ATOM_DBL</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_261_returns"></a><a name="returns"></a>
+<p> true if the object is an encoded pointer to a double struct.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Assumption</h5>
+<a name="_262_assumption"></a><a name="assumption"></a>
+<p> <em>o</em> must not be a Euphoria integer.</p>
+
+<p> 
+<a name="internalsis_atom"></a><a name="atom"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.4.3 IS_ATOM</h4>
+<a name="_264_is_atom"></a><a name="is_atom"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; int IS_ATOM</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_265_returns"></a><a name="returns"></a>
+<p> true if the object is a Euphoria integer or an encoded pointer to a <tt>'struct d'</tt>. </p>
+
+<p> 
+<a name="internalsis_sequence"></a><a name="sequence"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.4.4 IS_SEQUENCE</h4>
+<a name="_267_is_sequence"></a><a name="is_sequence"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; int IS_SEQUENCE</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_268_returns"></a><a name="returns"></a>
+<p> true if the object is an encoded pointer to a <tt>'struct s1'</tt>.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Assumption</h5>
+<a name="_269_assumption"></a><a name="assumption"></a>
+<p> <em>o</em> is not NOVALUE.</p>
+
+<p> 
+<a name="internalsis_dbl_or_sequence"></a><a name="dbl_or_sequence"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.4.5 IS_DBL_OR_SEQUENCE</h4>
+<a name="_271_is_dbl_or_sequence"></a><a name="is_dbl_or_sequence"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; int IS_DBL_OR_SEQUENCE</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_272_returns"></a><a name="returns"></a>
+<p> true if the object is an encoded pointer of either kind of structure.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.5 Type Conversion Functions and Macros</h3>
+<a name="_273_typeconversionfunctionsandmacros"></a><a name="typeconversionfunctionsandmacros"></a>
+<p> 
+<a name="internalsmake_int"></a><a name="int"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.1 MAKE_INT</h4>
+<a name="_275_make_int"></a><a name="make_int"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">MAKE_INT</font><font color="#880033">( </font><font color="#330033">signed int x </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_276_returns"></a><a name="returns"></a>
+<p> an object with the same value as x.  x must be with in the integer range of a legal Euphoria integer type.</p>
+
+<p> 
+<a name="internalsmake_uint"></a><a name="uint"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.2 MAKE_UINT</h4>
+<a name="_278_make_uint"></a><a name="make_uint"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">MAKE_UINT</font><font color="#880033">( </font><font color="#330033">unsigned int x </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_279_returns"></a><a name="returns"></a>
+<p> an object with the same value as x.  </p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Assumption</h5>
+<a name="_280_assumption"></a><a name="assumption"></a>
+<p> x must be an <strong>unsigned</strong> integer with in the integer range of a C unsigned int type.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Example</h5>
+<a name="_281_example"></a><a name="example"></a>
+<p> MAKE_UINT(4*1000*1000*1000) will make a Euphoria value of four billion by creating a double.</p>
+
+<p> 
+<a name="internalsmake_seq"></a><a name="seq"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.3 MAKE_SEQ</h4>
+<a name="_283_make_seq"></a><a name="make_seq"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">MAKE_SEQ</font><font color="#880033">( </font><font color="#330033">struct s1 * sptr </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_284_returns"></a><a name="returns"></a>
+<p> an object with an argument of a pointer to a <tt>'struct s1'</tt> The pointer is encoded into a range for sequences and returned.</p>
+
+<p> 
+<a name="internalsnewstring"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.4 NewString</h4>
+<a name="_286_newstring"></a><a name="newstring"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">NewString</font><font color="#880033">(</font><font color="#330033">char *s</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_287_returns"></a><a name="returns"></a>
+<p> an object representation of a Euphoria byte string s.  The returned encoded pointer is a sequence with all of the bytes from s copied over.</p>
+
+<p> 
+<a name="internalsmake_dbl"></a><a name="dbl"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.5 MAKE_DBL</h4>
+<a name="_289_make_dbl"></a><a name="make_dbl"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">MAKE_DBL</font><font color="#880033">( </font><font color="#330033">struct d * dptr </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_290_returns"></a><a name="returns"></a>
+<p> an object with an argument of a pointer to a <tt>'struct d'</tt> The pointer is encoded into a range for doubles and returned.</p>
+
+<p> 
+<a name="internalsnewdouble"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.6 NewDouble</h4>
+<a name="_292_newdouble"></a><a name="newdouble"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">NewDouble</font><font color="#880033">( </font><font color="#330033">double dbl </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_293_returns"></a><a name="returns"></a>
+<p> an object with an argument a double <tt>dbl</tt>.  A <tt>struct d</tt> is allocated and dbl is assigned to the value part of that structure.  The pointer is encoded into the  range for doubles and returned.</p>
+
+<p> 
+<a name="internalsdbl_ptr"></a><a name="ptr"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.7 DBL_PTR</h4>
+<a name="_295_dbl_ptr"></a><a name="dbl_ptr"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; struct d * DBL_PTR</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_296_returns"></a><a name="returns"></a>
+<p> The pointer to a 'struct d' from the object o.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Assumption</h5>
+<a name="_297_assumption"></a><a name="assumption"></a>
+<p> IS_ATOM_INT(o) is FALSE and IS_ATOM_DBL(o) is TRUE.</p>
+
+<p> 
+<a name="internalsseq_ptr"></a><a name="ptr"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.5.8 SEQ_PTR</h4>
+<a name="_299_seq_ptr"></a><a name="seq_ptr"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; struct s1 * SEQ_PTR</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">o </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_300_returns"></a><a name="returns"></a>
+<p> The pointer to a <tt>'struct s1'</tt> from the object o.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Assumption</h5>
+<a name="_301_assumption"></a><a name="assumption"></a>
+<p> IS_SEQUENCE(o) is TRUE and <em>o</em> is not NOVALUE.</p>
+
+<p> 
+<a name="internalsget_pos_int"></a><a name="pos_int"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h5>get_pos_int</h5>
+<a name="_303_get_pos_int"></a><a name="get_pos_int"></a>
+<pre class="examplecode"><font color="#330033">#include be_machine.h</font>
+<font color="#330033">&lt;internal&gt; uintptr_t get_pos_int</font><font color="#880033">(</font><font color="#330033">char *where, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_304_returns"></a><a name="returns"></a>
+<p> a unsigned long value by truncating what x's value is to an integer</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Comment</h5>
+<a name="_305_comment"></a><a name="comment"></a>
+<p> Any object may be passed.  A sequence results in a runtime failure. There may be a cast of a double to a smaller ranged long type.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.6 Creating Objects</h3>
+<a name="_306_creatingobjects"></a><a name="creatingobjects"></a>
+<p> 
+<a name="internalsnews1"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.6.1 NewS1</h4>
+<a name="_308_news1"></a><a name="news1"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">NewS1 </font><font color="#880033">( </font><font color="#330033">long size </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\internals.txt -->
+<h5>Returns</h5>
+<a name="_309_returns"></a><a name="returns"></a>
+<p> A sequence object with size members which are not yet set to a value.</p>
+
+<!-- ..\docs\internals.txt -->
+<h3>5.2.7 Object Constants</h3>
+<a name="_310_objectconstants"></a><a name="objectconstants"></a>
+<p> Use MAXINT and MININT to check for overflow and underflow, NOVALUE to check if a variable has not been assigned, and use NOVALUE to terminate a sequence.</p>
+
+<p> 
+<a name="internalsnovalue"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.1 NOVALUE</h4>
+<a name="_312_novalue"></a><a name="novalue"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; </font><font color="#0000FF">object </font><font color="#330033">NOVALUE</font>
+</pre>
+
+<p> Indicates that a variable has not been assigned and also terminates a sequence.</p>
+
+<p> 
+<a name="internalsminint"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.2 MININT</h4>
+<a name="_314_minint"></a><a name="minint"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; signed int MININT</font>
+</pre>
+
+<p> The minimal Euphoria integer.  This is -(2<sup>30</sup>).</p>
+
+<p> 
+<a name="internalsmaxint"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.3 MAXINT</h4>
+<a name="_316_maxint"></a><a name="maxint"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; signed int MAXINT</font>
+</pre>
+
+<p> The maximal Euphoria integer.  This is 2<sup>30</sup>-1.</p>
+
+<p> 
+<a name="internalshigh_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.4 HIGH_BITS</h4>
+<a name="_318_high_bits"></a><a name="high_bits"></a>
+<pre class="examplecode"><font color="#330033">&lt;internal&gt; signed int HIGH_BITS</font>
+</pre>
+
+<p> HIGH_BITS is an integer value such that if another integer value c lies outside of the range between MININT and MAXINT, c+HIGH_BITS will be non-negative.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Proof that HIGH_BITS is #C000_0000 on 32-bit version of EUPHORIA.</h5>
+<a name="_319_proofthathigh_bitsisc000_0000on32bitversionofeuphoria"></a><a name="proofthathigh_bitsisc000_0000on32bitversionofeuphoria"></a><ul><li>In the following expressions powers have higher precedence than unuary minus.* if c is a non-ATOM-INT value, then
+</li></ul>
+<p>     c belongs to the set  [-2<sup>31</sup>,-2<sup>30</sup>-1(=NOVALUE)] U [2<sup>30</sup>,2<sup>31</sup>].</p>
+
+<p>    c+-2<sup>30</sup> belongs to the set  [-2<sup>31</sup>-2<sup>30</sup>,-2<sup>30</sup>-1-2<sup>30</sup>] U [2<sup>30</sup>-2<sup>30</sup>,2<sup>30</sup>]     which is [-3*2<sup>30</sup>,-2<sup>31</sup>-1] U [0,2<sup>30</sup>].  However the lower values wrap around     to non-negative numbers:</p>
+
+<p>    -2<sup>31</sup>-1 wraps to 2<sup>31</sup>-1.  -3*2<sup>30</sup> wraps around to 2<sup>30</sup>.</p>
+
+<p>    c+-2<sup>30</sup> belongs to the set  [2<sup>30</sup>,2<sup>31</sup>-1] U [0,2<sup>30</sup>] = [0,2<sup>31</sup>-1]</p>
+
+<p>    This is the set of all non-negative numbers that can fit into 32-bit signed    longs.  -2<sup>30</sup> is the unsigned version of #C000_0000.  QED.</p>
+
+<p>    A visual way of looking at it is, adding #C000_0000 to the set of non-ATOM_INTS    rotates the set to the negative side by -MININT (2^30).  The already negative ones wrap    around to the positive; the positive numbers stay positive and hug the zero.     Since adding #C000_0000 on registers is 1-1 and onto, we also know that ATOM_INTs    will all be mapped to negative signed longs.</p>
+
+<!-- ..\docs\internals.txt -->
+<h5>Testing for Overflow:</h5>
+<a name="_320_testingforoverflow"></a><a name="testingforoverflow"></a>
+<p>     There are two ways to test for overflow:     	</p>
+<ol><li>(c &gt; MAXINT) || (c &lt; MININT)
+</li><li>(c + HIGH_BITS) &gt;= 0
+</li></ol>
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.5 Parser</h4>
+<a name="_321_parser"></a><a name="parser"></a>
+<p> Inserting tokens into the token buffer is the easiest way to add features to the EUPHORIA parser. The tokens are two-element sequences one of the class of token and the other the token's value:</p>
+
+<p>  {&lt;class&gt;,&lt;value&gt;}</p>
+
+<p> Each of the class values are capitalized words for some keyword or VARIABLE.  The list of constants is in reswords.e.  Often it is enough to only examin the class. In the case of variables, it is important to know which variable. In this case the second element, comes into play.</p>
+
+<p> You can use <tt>putback</tt> to put tokens into the token buffer.  The tokens will be pulled out by the parser in a filo manner, like a stack.  </p>
+
+<!-- ..\docs\internals.txt -->
+<h4>5.2.7.6 Backend Instructions</h4>
+<a name="_322_backendinstructions"></a><a name="backendinstructions"></a>
+<p> After the Parser processes the instructions.  It creates Backend instructions that are easily translated or interpreted.  The system uses opcodes and some parameters which are put on a stack.  This backend language is similar to assembler.  You have opcodes (instructions) and parameters.  These parameters must be integers themselves but some may serve as pointers to arbitrary EUPHORIA objects.  As a developer of EUPHORIA itself, rather than a developer that uses EUPHORIA, it is important to know exactly what these opcodes do and what they are for.  In this section we will document what they are for, and how they manipulate the instruction pointer, and stack.</p>
+
+<p> IF instruction:</p>
+
+<p> The IF instruction is used for making runtime branch statements.  The IF instruction takes the top of the stack as the condition value, if the condition is 0, it passes control to the address stored just below the top of the stack.  If the condition is non-zero and an atom the instruction pointer just past the failure address.</p>
+
+<p> [ IF instruction ] [ test value ] [ failure address ]</p>
+
+<p> INTEGER_CHECK instruction:</p>
+
+<p> The INTEGER_CHECK is used to ensure that something has a value considered to be 'integer' to the EUPHORIA language definition.  The instruction takes the next argument as a pointer to a value and determines whether this value is in the legal integer range, regardless of how that number is represented.  If not in legal range, then the program ends execution in a type-check failure error message.</p>
+
+<p> [ INTEGER_CHECK instruction ] [ test pointer ]</p>
+
+<p> ATOM_CHECK instruction:</p>
+
+<p> The ATOM_CHECK is used to determine whether something has a numeric value rather than a sequence.  The instruction takes an argument as a pointer to a value and determines whether the value is an atom.  If it is not an atom, then the program ends execution in a type-check failure error message.</p>
+
+<p> [ ATOM_CHECK instruction ] [ test pointer ]</p>
+
+<p> IS_AN_INTEGER instruction:</p>
+
+<p> The IS_AN_INTEGER instruction is used to determine whether something has a value considered to be 'integer' to the EUPHORIA language definition.  The instruction takes the argument as a pointer to a value and determines whether this value is in the legal integer range, regardless of how that number is represented.  If it is in the 'integer' range then the value pointed by the second argument will be 1 otherwise it will be 0.</p>
+
+<p> [ IS_AN_INTEGER instruction ] [ test pointer ][ return value pointer ] </p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="syntax.html"><img src="images/prev.png" /></a></td>
+									<td><a href="syntax_toc.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="syntax.html">5.1 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										Up: <a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="miniguide.html">6 Mini-Guides</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

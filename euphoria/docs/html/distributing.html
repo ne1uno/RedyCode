@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="editing_source.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="command_switches.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="editing_source.html">3.3 Editing a Program</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="command_switches.html">3.5 Command Line Switches</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h2>3.4 Distributing a Program</h2>
+<a name="_73_distributingaprogram"></a><a name="distributingaprogram"></a>
+<p> Euphoria provides you with 4 distinct ways of distributing a program.</p>
+<ul><li>"source-code", with the Euphoria "interpreter"
+</li><li>"shroud" into <tt>.il</tt> code, with Euphoria "backend"
+</li><li>"bind" into a Euphoria executable
+</li><li>"translate" into a C-compiled executable
+</li></ul>
+<p> In the first way you simply ship your users the interpreter along with your Euphoria source files including any Euphoria includes that may be necessary from the <tt>euphoria/include</tt> directory. If the Euphoria source files and the interpreter are placed together in one directory then your user can run your program by typing <tt>eui</tt> followed by the path of your main executable source file. You might also provide a small <tt>.bat</tt> file so people will not actually have to type the interpreter name. This way assumes that you are willing to share your Euphoria source code with your users.</p>
+
+<p> The Binder gives you two more ways of distribution. You can <tt>shroud</tt> your program, or you can <tt>bind</tt> your program. <strong>Shrouding</strong> combines all of the Euphoria source code that your program needs to create a single <tt>.il</tt> file. <strong>Binding</strong> combines your shrouded program with the Euphoria backend (<tt>eub</tt> or <tt>eubw</tt> on Windows) to create a single, stand-alone executable file. For example, if your program is called "<tt>myprog.ex</tt>" you can create "<tt>myprog.exe</tt>" which will run identically. For more information about shrouding and binding, see <a href="bind.html#_525_shroudingandbinding">Shrouding and Binding</a>.</p>
+
+<p> Finally, with the <a href="e2c.html#_533_euphoriatoctranslator">Euphoria To C Translator</a>, you can translate your Euphoria program into C and then compile it with a C compiler to get an executable program.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="editing_source.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="command_switches.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="editing_source.html">3.3 Editing a Program</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="command_switches.html">3.5 Command Line Switches</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

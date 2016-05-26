@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_3_1_1.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_0_2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_3_1_1.html">9.11 Version 3.1.1 August 2007</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_0_2.html">9.13 Version 3.0.2 February 9, 2007</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\3.1.0.txt -->
+<h2>9.12 Version 3.1 June 2007</h2>
+<a name="_6700_version31june2007"></a><a name="version31june2007"></a>
+<p> This release adds some new features, fixes some bugs, and improves the documentation.</p>
+
+<!-- ..\docs\release\3.1.0.txt -->
+<h3>9.12.1 New Features</h3>
+<a name="_6701_newfeatures"></a><a name="newfeatures"></a><ul><li>New built-in routines, <strong>find_from()</strong> and <strong>match_from()</strong> have been added. These work like find() and match() but they let you start searching from any element in the sequence, not necessarily at element 1.  This makes some algorithms simpler and much faster. Implemented by Matthew Lewis.
+</li><li>When searching for an include file specified with a relative (i.e. not absolute) file path, Euphoria will check first for a file relative to the location of the current source file.  If not found, then the usual rules will apply, i.e. it will check relative to the main program file, then check the EUINC directories (if any), and finally euphoria\include.  Suggested by C.K. Lester and, in various forms, by several other people. Implemented by C.K. Lester.  Checked in by Matt Lewis.
+</li><li><strong>ex int.ex</strong> (in euphoria\source) will now work, since the interpreter now supports machine_proc(65,...) which passes IL to the fast C-coded back-end. You can also run int.ex with eui.  This lets you easily modify the front end and get a modified Euphoria interpreter, for all platforms, that runs programs at full speed (much faster than the Euphoria-coded execute.e). You might also bind int.ex to get a single executable file for whatever platform you like.
+</li><li>If the user does not supply a filename with an extension, Euphoria will attempt to open the file first with the standard extension for its respective platform, but if it does not find it, it will also look for files with the standard extensions for the other platforms. Implemented by Matthew Lewis.
+</li><li><strong>Translator: </strong> The limit on the number of additional .c files that can be created per Euphoria file has been raised from 36 to well over 1000.
+</li></ul>
+<!-- ..\docs\release\3.1.0.txt -->
+<h3>9.12.2 New Documentation</h3>
+<a name="_6702_newdocumentation"></a><a name="newdocumentation"></a><ul><li>The "storage cache" compression technique that's used for bound executables and .il files, was documented in comments added to compress.e.  It reduces the size of the IL by 30% or more, while allowing fast decompression.
+</li><li>A documentation file, tasks.doc, was added to euphoria\demo\langwar. It describes the multiple tasks used in Language War.
+</li></ul>
+<!-- ..\docs\release\3.1.0.txt -->
+<h3>9.12.3 Bug Fixes</h3>
+<a name="_6703_bugfixes"></a><a name="bugfixes"></a><ul><li><strong>bug fixed: </strong> <strong>Translator: </strong> Translated code for routine_id() erroneously returned -1 when a global symbol was looked up which matched a symbol in the same file as the call to routine_id(), as well as a global symbol in another earlier file. It was treated incorrectly as a multiply-defined symbol that was lacking a namespace qualifier. Thanks to Daniel Kluss.
+</li><li><strong>bug fixed: </strong> <strong>Translator: </strong> In rare situations, a naming conflict could occur when more than one .c file is created for a Euphoria file.  Thanks to DB James.
+</li><li><strong>bug fixed: </strong> <strong>Translator:</strong> get_key(), when translated/compiled with Borland or LCC, required an extra keystroke after a carriage return. Implemented by Jacques Deschenes.
+</li><li><strong>bug fixed: </strong> <strong>Source Code Portability:</strong> euphoria.h: CLK_TCK is now defined as CLOCKS_PER_SEC if not defined previously in the source. Implemented by Matt Lewis.
+</li><li><strong>bug fixed: </strong> <strong>Installer:</strong> Double-quotes were added around several filenames used in the INNO installer script (though this did not seem to affect many people).
+</li></ul>
+<p> 
+<!-- ..\docs\release\3.0.2.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_3_1_1.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_0_2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_3_1_1.html">9.11 Version 3.1.1 August 2007</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_0_2.html">9.13 Version 3.0.2 February 9, 2007</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

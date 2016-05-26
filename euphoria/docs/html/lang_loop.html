@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_branch.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_flow.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_branch.html">4.4 Branching Statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_flow.html">4.6 Flow control statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.5 Loop statements</h2>
+<a name="_159_loopstatements"></a><a name="loopstatements"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_loop.html#_159_loopstatements">4.5 Loop statements</a></div>
+<div class="toc_3"><a href="lang_loop.html#_160_whilestatement">4.5.1 while statement</a></div>
+<div class="toc_3"><a href="lang_loop.html#_161_loopuntilstatement">4.5.2 loop until statement</a></div>
+<div class="toc_3"><a href="lang_loop.html#_164_forstatement">4.5.3 for statement</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> An iterative code block repeats its own execution zero, one or more times. There are several ways to specify for how long the process should go on, and how to stop or otherwise alter it.  An iterative block may be informally called a loop, and each execution of code in a loop is called an iteration of the loop.</p>
+
+<p> Euphoria has three flavors of loops. They all may harbor a <a href="lang_flow.html#_173_headerlabels">Header Labels</a>, in order to make exiting or resuming them more flexible.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.5.1 while statement</h3>
+<a name="_160_whilestatement"></a><a name="whilestatement"></a>
+<p> A <strong>while statement</strong> tests a condition to see if it is non-zero (true), and if so, a body of statements is executed. The condition is re-tested after when the statements are run, and if still true the statements are run again, and so on.</p>
+
+<p> Syntax Format: <div style="margin-left:2em"><tt><strong>while</strong> <em>expr</em> <em>[</em><strong>with entry</strong><em>]</em> <em>[</em><strong>label</strong> <em>"name"</em> <em>]</em> <strong>do</strong></tt> <div style="margin-left:2em"><tt><em>statements</em></tt> </div><tt><em>[</em><strong>entry</strong><em>]</em></tt> <div style="margin-left:2em"><tt><em>statements</em></tt> </div><tt><strong>end while</strong></tt></p>
+</div>
+<p> Example 1 </p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">x &gt; 0 </font><font color="#0000FF">do</font>
+<font color="#330033">    a = a * 2</font>
+<font color="#330033">    x = x - 1</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> Example 2 </p>
+
+<pre class="examplecode"><font color="#0000FF">while sequence</font><font color="#880033">(</font><font color="#330033">Line</font><font color="#880033">) </font><font color="#0000FF">with entry do</font>
+<font color="#330033">    proc</font><font color="#880033">(</font><font color="#330033">Line</font><font color="#880033">)</font>
+<font color="#0000FF">entry</font>
+<font color="#330033">    Line = </font><font color="#0000FF">gets</font><font color="#880033">(</font><font color="#330033">handle</font><font color="#880033">)</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> Example 3 </p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">true </font><font color="#0000FF">label </font><font color="#330033">"main" </font><font color="#0000FF">do</font>
+<font color="#330033">   res = funcA</font><font color="#880033">()</font>
+<font color="#0000FF">   if </font><font color="#330033">res &gt; 5 </font><font color="#0000FF">then</font>
+<font color="#0000FF">       if </font><font color="#330033">funcB</font><font color="#880033">() </font><font color="#330033">&gt; some_value </font><font color="#0000FF">then</font>
+<font color="#0000FF">          continue </font><font color="#330033">"main" </font><font color="#FF0055">-- go to start of loop</font>
+<font color="#0000FF">       end if</font>
+<font color="#330033">       procC</font><font color="#880033">()</font>
+<font color="#0000FF">   end if</font>
+<font color="#330033">   procD</font><font color="#880033">(</font><font color="#330033">res</font><font color="#880033">)</font>
+<font color="#0000FF">   for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">res </font><font color="#0000FF">do</font>
+<font color="#0000FF">       if </font><font color="#330033">i &gt; some_value </font><font color="#0000FF">then</font>
+<font color="#0000FF">          exit </font><font color="#330033">"main" </font><font color="#FF0055">-- exit the "main" loop, not just this 'for' loop.</font>
+<font color="#0000FF">       end if</font>
+<font color="#330033">       procF</font><font color="#880033">(</font><font color="#330033">i,res</font><font color="#880033">)</font>
+<font color="#0000FF">   end if</font>
+
+<font color="#330033">   res = funcE</font><font color="#880033">(</font><font color="#330033">res, some_value</font><font color="#880033">)</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.5.2 loop until statement</h3>
+<a name="_161_loopuntilstatement"></a><a name="loopuntilstatement"></a>
+<p> A <strong>loop</strong> statement tests a condition to see if it is non-zero (true), and until it is true a loop is executed.</p>
+
+<p> Syntax Format: <div style="margin-left:2em"><tt><strong>loop</strong> <em>[</em><strong>with entry</strong><em>]</em> <em>[</em><strong>label</strong> <em>"name"</em> <em>]</em> <strong>do</strong></tt> <div style="margin-left:2em"><tt><em>statements</em></tt> <br />
+<tt><strong>until</strong> <em>expr</em></tt> </div><tt>end loop</tt></p>
+</div>
+<pre class="examplecode"><font color="#0000FF">loop do</font>
+<font color="#330033">    a = a * 2</font>
+<font color="#330033">    x = x - 1</font>
+<font color="#0000FF">    until </font><font color="#330033">x&lt;=0</font>
+<font color="#0000FF">end loop</font>
+</pre>
+
+<pre class="examplecode"><font color="#0000FF">loop with entry do</font>
+<font color="#330033">    a = a * 2</font>
+<font color="#0000FF">  entry</font>
+<font color="#330033">    x = x - 1</font>
+<font color="#0000FF">    until </font><font color="#330033">x&lt;=0</font>
+<font color="#0000FF">end loop</font>
+</pre>
+
+<pre class="examplecode"><font color="#0000FF">loop label </font><font color="#330033">"GONEXT" </font><font color="#0000FF">do</font>
+<font color="#330033">    a = a * 2</font>
+<font color="#330033">    y += 1</font>
+<font color="#0000FF">    if </font><font color="#330033">y = 7 </font><font color="#0000FF">then continue </font><font color="#330033">"GONEXT" </font><font color="#0000FF">end if</font>
+<font color="#330033">    x = x - 1</font>
+<font color="#0000FF">    until </font><font color="#330033">x&lt;=0</font>
+<font color="#0000FF">end loop</font>
+</pre>
+
+<p> A <tt>while</tt> statement differs from a <tt>loop</tt> statement because the body of a loop is executed at least once, since testing takes place <strong>after</strong> the body completes.  However in a <tt>while</tt> statement, the test is taken <strong>before</strong> the body is executed.</p>
+
+<p> 
+<a name="to"></a> 
+<a name="by"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.5.3 for statement</h3>
+<a name="_164_forstatement"></a><a name="forstatement"></a>
+<p> Syntax Format: <div style="margin-left:2em"><tt><strong>for</strong> <strong>loopvar</strong> = <strong>startexpr</strong> to <strong>endexpr</strong> <em>[</em><strong>by delta</strong><em>]</em> <strong>do</strong></tt> <div style="margin-left:2em"><tt><em>statements</em></tt> </div><tt>end for</tt></p>
+</div>
+<p> A <strong>for</strong> statement sets up a special loop that has its own <strong>loop variable</strong>. The <strong>loop variable</strong> starts with the specified initial value and increments or decrements it to the specified final value. The <strong>for</strong> statement is used when you need to repeat a set of statements a specific number of times.<br />
+Example: </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Display the numbers 1 to 6 on the screen.</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"1\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"2\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"3\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"4\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"5\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"6\n"</font><font color="#880033">)</font>
+</pre>
+
+<p> This block of code simply starts at the first line and runs each in turn. But it could be written more simply and flexibly by using a <strong>for</strong> statement.</p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">6 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%d\n"</font><font color="#330033">, i</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> Now it's just three lines of code rather than six. More importantly, if we needed to change the program to print the numbers from 1 to 100, we only have to change one line rather than add 94 new lines.</p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">100 </font><font color="#0000FF">do </font><font color="#FF0055">-- One line change.</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%d\n"</font><font color="#330033">, i</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> Or using another way ...</p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">do</font>
+<font color="#330033">    ? i   </font><font color="#FF0055">-- ? is a short form for print()</font>
+<font color="#0000FF">end for</font>
+
+<font color="#FF0055">-- fractional numbers allowed too</font>
+<font color="#0000FF">for </font><font color="#330033">i = 10.0 </font><font color="#0000FF">to </font><font color="#330033">20.5 </font><font color="#0000FF">by </font><font color="#330033">0.3 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    for </font><font color="#330033">j = 20 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">by </font><font color="#330033">-2 </font><font color="#0000FF">do    </font><font color="#FF0055">-- counting down</font>
+<font color="#330033">        ? </font><font color="#880033">{</font><font color="#330033">i, j</font><font color="#880033">}</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> However, adding together floating point numbers that are not the ratio of an integer by a power of 2 --<em> 0.3 is not such a ratio</em>--leads to some "fuzz" in the value of the index. In some cases, you might get unexpected results because of this fuzz, which arises from a common hardware limitation. For instance, <tt>floor(10*0.1)</tt> is <tt>1</tt> as expected, but <tt>floor(0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1)</tt> is <tt>0</tt>.</p>
+
+<p> The <strong>loop variable</strong> is declared automatically and exists until the end of the loop. Outside of the loop the variable has no value and is not even declared.  If you need its final value, copy it into another variable before leaving the loop. The compiler will not allow any assignments to a loop variable. The initial value, loop limit and increment must all be atoms. If no increment is specified then +1 is assumed. The limit and increment values are established only on entering the loop, and are not affected by anything that happens during the execution of the loop.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_branch.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_flow.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_branch.html">4.4 Branching Statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_flow.html">4.6 Flow control statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

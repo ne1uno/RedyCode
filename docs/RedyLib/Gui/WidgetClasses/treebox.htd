@@ -1,0 +1,43 @@
+==Treebox Widget Class
+
+Widget Class name: "treebox"
+
+===API
+====Properties
+
+====="label"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "selection", itm}
+====={widgetname, "left_double_click", itm}
+====={widgetname, "expand_item", itm}
+====={widgetname, "collapse_item", itm}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====function cmd_add_item(atom wid, integer pitm, object iconid, sequence lbltxt, atom itmexpand)
+=====procedure cmd_del_item(atom wid, atom itmid)
+=====procedure cmd_clear_tree(atom wid)
+=====procedure cmd_select_item(atom wid, atom itmid)
+=====procedure cmd_expand_item(atom wid, atom itmid)
+=====procedure cmd_collapse_item(atom wid, atom itmid)
+
+Example:
+<eucode>
+</eucode>
+
+
+
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

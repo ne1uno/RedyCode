@@ -1,0 +1,41 @@
+==Slider Widget Class
+
+Widget Class name: "slider"
+
+(Not implemented yet)
+
+===API
+====Properties
+
+====="min"
+====="max"
+====="value"
+====="range"
+====="length"
+====="orientation"
+    "horizontal"
+====="attach"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+=====procedure cmd_set_length(atom wid, atom slen)
+=====procedure cmd_set_min(atom wid, atom smin)
+=====procedure cmd_set_max(atom wid, atom smax)
+=====procedure cmd_set_range(atom wid, atom srange)
+=====procedure cmd_set_value(atom wid, atom sv)
+=====procedure cmd_set_value_rel(atom wid, atom sv)
+
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

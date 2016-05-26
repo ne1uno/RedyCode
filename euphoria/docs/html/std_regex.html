@@ -1,0 +1,1634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_localeconv.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_text.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_localeconv.html">8.20 Locale Names</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_text.html">8.22 Text Manipulation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\regex.e -->
+<h2>8.21 Regular Expressions</h2>
+<a name="_3079_regularexpressions"></a><a name="regularexpressions"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_regex.html#_3079_regularexpressions">8.21 Regular Expressions</a></div>
+<div class="toc_3"><a href="std_regex.html#_3080_introduction">8.21.1 Introduction</a></div>
+<div class="toc_3"><a href="std_regex.html#_3081_generaluse">8.21.2 General Use</a></div>
+<div class="toc_3"><a href="std_regex.html#_3082_optionconstants">8.21.3 Option Constants</a></div>
+<div class="toc_4"><a href="std_regex.html#_3083_compiletimeandmatchtime">8.21.3.1 Compile Time and Match Time</a></div>
+<div class="toc_4"><a href="std_regex.html#_3087_anchored">8.21.3.2 ANCHORED</a></div>
+<div class="toc_4"><a href="std_regex.html#_3089_auto_callout">8.21.3.3 AUTO_CALLOUT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3091_bsr_anycrlf">8.21.3.4 BSR_ANYCRLF</a></div>
+<div class="toc_4"><a href="std_regex.html#_3093_bsr_unicode">8.21.3.5 BSR_UNICODE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3095_caseless">8.21.3.6 CASELESS</a></div>
+<div class="toc_4"><a href="std_regex.html#_3097_default">8.21.3.7 DEFAULT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3099_dfa_shortest">8.21.3.8 DFA_SHORTEST</a></div>
+<div class="toc_4"><a href="std_regex.html#_3101_dfa_restart">8.21.3.9 DFA_RESTART</a></div>
+<div class="toc_4"><a href="std_regex.html#_3103_dollar_endonly">8.21.3.10 DOLLAR_ENDONLY</a></div>
+<div class="toc_4"><a href="std_regex.html#_3105_dotall">8.21.3.11 DOTALL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3107_dupnames">8.21.3.12 DUPNAMES</a></div>
+<div class="toc_4"><a href="std_regex.html#_3109_extended">8.21.3.13 EXTENDED</a></div>
+<div class="toc_4"><a href="std_regex.html#_3111_extra">8.21.3.14 EXTRA</a></div>
+<div class="toc_4"><a href="std_regex.html#_3113_firstline">8.21.3.15 FIRSTLINE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3115_multiline">8.21.3.16 MULTILINE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3117_newline_cr">8.21.3.17 NEWLINE_CR</a></div>
+<div class="toc_4"><a href="std_regex.html#_3119_newline_lf">8.21.3.18 NEWLINE_LF</a></div>
+<div class="toc_4"><a href="std_regex.html#_3121_newline_crlf">8.21.3.19 NEWLINE_CRLF</a></div>
+<div class="toc_4"><a href="std_regex.html#_3123_newline_any">8.21.3.20 NEWLINE_ANY</a></div>
+<div class="toc_4"><a href="std_regex.html#_3125_newline_anycrlf">8.21.3.21 NEWLINE_ANYCRLF</a></div>
+<div class="toc_4"><a href="std_regex.html#_3127_notbol">8.21.3.22 NOTBOL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3129_noteol">8.21.3.23 NOTEOL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3131_no_auto_capture">8.21.3.24 NO_AUTO_CAPTURE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3133_no_utf8_check">8.21.3.25 NO_UTF8_CHECK</a></div>
+<div class="toc_4"><a href="std_regex.html#_3135_notempty">8.21.3.26 NOTEMPTY</a></div>
+<div class="toc_4"><a href="std_regex.html#_3137_partial">8.21.3.27 PARTIAL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3139_string_offsets">8.21.3.28 STRING_OFFSETS</a></div>
+<div class="toc_4"><a href="std_regex.html#_3141_ungreedy">8.21.3.29 UNGREEDY</a></div>
+<div class="toc_4"><a href="std_regex.html#_3143_utf8">8.21.3.30 UTF8</a></div>
+<div class="toc_3"><a href="std_regex.html#_3144_errorconstants">8.21.4 Error Constants</a></div>
+<div class="toc_4"><a href="std_regex.html#_3146_error_nomatch">8.21.4.1 ERROR_NOMATCH</a></div>
+<div class="toc_4"><a href="std_regex.html#_3148_error_null">8.21.4.2 ERROR_NULL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3150_error_badoption">8.21.4.3 ERROR_BADOPTION</a></div>
+<div class="toc_4"><a href="std_regex.html#_3152_error_badmagic">8.21.4.4 ERROR_BADMAGIC</a></div>
+<div class="toc_4"><a href="std_regex.html#_3154_error_unknown_opcode">8.21.4.5 ERROR_UNKNOWN_OPCODE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3156_error_unknown_node">8.21.4.6 ERROR_UNKNOWN_NODE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3158_error_nomemory">8.21.4.7 ERROR_NOMEMORY</a></div>
+<div class="toc_4"><a href="std_regex.html#_3160_error_nosubstring">8.21.4.8 ERROR_NOSUBSTRING</a></div>
+<div class="toc_4"><a href="std_regex.html#_3162_error_matchlimit">8.21.4.9 ERROR_MATCHLIMIT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3164_error_callout">8.21.4.10 ERROR_CALLOUT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3166_error_badutf8">8.21.4.11 ERROR_BADUTF8</a></div>
+<div class="toc_4"><a href="std_regex.html#_3168_error_badutf8_offset">8.21.4.12 ERROR_BADUTF8_OFFSET</a></div>
+<div class="toc_4"><a href="std_regex.html#_3170_error_partial">8.21.4.13 ERROR_PARTIAL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3172_error_badpartial">8.21.4.14 ERROR_BADPARTIAL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3174_error_internal">8.21.4.15 ERROR_INTERNAL</a></div>
+<div class="toc_4"><a href="std_regex.html#_3176_error_badcount">8.21.4.16 ERROR_BADCOUNT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3178_error_dfa_uitem">8.21.4.17 ERROR_DFA_UITEM</a></div>
+<div class="toc_4"><a href="std_regex.html#_3180_error_dfa_ucond">8.21.4.18 ERROR_DFA_UCOND</a></div>
+<div class="toc_4"><a href="std_regex.html#_3182_error_dfa_umlimit">8.21.4.19 ERROR_DFA_UMLIMIT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3184_error_dfa_wssize">8.21.4.20 ERROR_DFA_WSSIZE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3186_error_dfa_recurse">8.21.4.21 ERROR_DFA_RECURSE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3188_error_recursionlimit">8.21.4.22 ERROR_RECURSIONLIMIT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3190_error_nullwslimit">8.21.4.23 ERROR_NULLWSLIMIT</a></div>
+<div class="toc_4"><a href="std_regex.html#_3192_error_badnewline">8.21.4.24 ERROR_BADNEWLINE</a></div>
+<div class="toc_4"><a href="std_regex.html#_3194_error_names">8.21.4.25 error_names</a></div>
+<div class="toc_3"><a href="std_regex.html#_3195_createanddestroy">8.21.5 Create and Destroy</a></div>
+<div class="toc_4"><a href="std_regex.html#_3197_regex">8.21.5.1 regex</a></div>
+<div class="toc_4"><a href="std_regex.html#_3199_option_spec">8.21.5.2 option_spec</a></div>
+<div class="toc_4"><a href="std_regex.html#_3201_option_spec_to_string">8.21.5.3 option_spec_to_string</a></div>
+<div class="toc_4"><a href="std_regex.html#_3203_error_to_string">8.21.5.4 error_to_string</a></div>
+<div class="toc_4"><a href="std_regex.html#_3206_new">8.21.5.5 new</a></div>
+<div class="toc_4"><a href="std_regex.html#_3214_error_message">8.21.5.6 error_message</a></div>
+<div class="toc_3"><a href="std_regex.html#_3219_utilityroutines">8.21.6 Utility Routines</a></div>
+<div class="toc_4"><a href="std_regex.html#_3221_escape">8.21.6.1 escape</a></div>
+<div class="toc_4"><a href="std_regex.html#_3227_get_ovector_size">8.21.6.2 get_ovector_size</a></div>
+<div class="toc_3"><a href="std_regex.html#_3230_match">8.21.7 Match</a></div>
+<div class="toc_4"><a href="std_regex.html#_3232_find">8.21.7.1 find</a></div>
+<div class="toc_4"><a href="std_regex.html#_3237_find_all">8.21.7.2 find_all</a></div>
+<div class="toc_4"><a href="std_regex.html#_3243_has_match">8.21.7.3 has_match</a></div>
+<div class="toc_4"><a href="std_regex.html#_3247_is_match">8.21.7.4 is_match</a></div>
+<div class="toc_4"><a href="std_regex.html#_3251_matches">8.21.7.5 matches</a></div>
+<div class="toc_4"><a href="std_regex.html#_3257_all_matches">8.21.7.6 all_matches</a></div>
+<div class="toc_3"><a href="std_regex.html#_3262_splitting">8.21.8 Splitting</a></div>
+<div class="toc_4"><a href="std_regex.html#_3264_split">8.21.8.1 split</a></div>
+<div class="toc_4"><a href="std_regex.html#_3269_split_limit">8.21.8.2 split_limit</a></div>
+<div class="toc_3"><a href="std_regex.html#_3270_replacement">8.21.9 Replacement</a></div>
+<div class="toc_4"><a href="std_regex.html#_3272_find_replace">8.21.9.1 find_replace</a></div>
+<div class="toc_4"><a href="std_regex.html#_3278_find_replace_limit">8.21.9.2 find_replace_limit</a></div>
+<div class="toc_4"><a href="std_regex.html#_3284_find_replace_callback">8.21.9.3 find_replace_callback</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.1 Introduction</h3>
+<a name="_3080_introduction"></a><a name="introduction"></a>
+<p> Regular expressions in Euphoria are based on the PCRE (Perl Compatible Regular Expressions) library created by Philip Hazel.</p>
+
+<p> This document will detail the Euphoria interface to Regular Expressions, not really regular expression syntax. It is a very complex subject that many books have been written on. Here are a few good resources online that can help while learning regular expressions.</p>
+<ul><li><a class="external" href="http://openeuphoria.org/wiki/euwiki.cgi?EuGuide%20Regular%20Expressions">EUForum Article</a>
+</li><li><a class="external" href="http://perldoc.perl.org/perlre.html">Perl Regular Expressions Man Page</a>
+</li><li><a class="external" href="http://regexlib.com/">Regular Expression Library</a> (user supplied regular expressions for just about any task).
+</li><li><a class="external" href="http://en.wikipedia.org/wiki/Regular_expression">WikiPedia Regular Expression Article</a>
+</li><li><a class="external" href="http://www.slabihoud.de/software/archives/pcrecompat.html">Man page of PCRE in HTML</a>
+</li></ul>
+<!-- ..\include\std\regex.e -->
+<h3>8.21.2 General Use</h3>
+<a name="_3081_generaluse"></a><a name="generaluse"></a>
+<p> Many functions take an optional <tt>options</tt> argument. This argument can be either a single option constant (see <a href="std_regex.html#_3082_optionconstants">Option Constants</a>), multiple option constants or'ed together into a single atom or a sequence of options, in which the function will take care of ensuring the are or'ed together correctly.  Options are like their C equivalents with the 'PCRE_' prefix stripped off.  Name spaces disambiguate symbols so we do not need this prefix.</p>
+
+<p> All strings passed into this library must be either 8-bit per character strings or UTF which uses multiple bytes to encode UNICODE characters. You can use UTF8 encoded UNICODE strings when you pass the UTF8 option.</p>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.3 Option Constants</h3>
+<a name="_3082_optionconstants"></a><a name="optionconstants"></a>
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.1 Compile Time and Match Time</h4>
+<a name="_3083_compiletimeandmatchtime"></a><a name="compiletimeandmatchtime"></a>
+<p> When a regular expression object is created via <tt>new</tt> we call also say it gets "compiled." The options you may use for this are called "compile time" option constants.  Once the regular expression is created you can use the other functions that take this regular expression and a string.  These routines' options are called "match time" option constants. To not set any options at all, do not supply the options argument or supply <a href="std_regex.html#_3097_default">DEFAULT</a>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Compile Time Option Constants</h5>
+<a name="_3084_compiletimeoptionconstants"></a><a name="compiletimeoptionconstants"></a>
+<p> The only options that may set at "compile time" (that is to pass to <tt>new</tt>) are <a href="std_regex.html#_3087_anchored">ANCHORED</a>, <a href="std_regex.html#_3089_auto_callout">AUTO_CALLOUT</a>, <a href="std_regex.html#_3091_bsr_anycrlf">BSR_ANYCRLF</a>, <a href="std_regex.html#_3093_bsr_unicode">BSR_UNICODE</a>, <a href="std_regex.html#_3095_caseless">CASELESS</a>, <a href="std_regex.html#_3097_default">DEFAULT</a>, <a href="std_regex.html#_3103_dollar_endonly">DOLLAR_ENDONLY</a>, <a href="std_regex.html#_3105_dotall">DOTALL</a>, <a href="std_regex.html#_3107_dupnames">DUPNAMES</a>, <a href="std_regex.html#_3109_extended">EXTENDED</a>, <a href="std_regex.html#_3111_extra">EXTRA</a>, <a href="std_regex.html#_3113_firstline">FIRSTLINE</a>, <a href="std_regex.html#_3115_multiline">MULTILINE</a>, <a href="std_regex.html#_3117_newline_cr">NEWLINE_CR</a>, <a href="std_regex.html#_3119_newline_lf">NEWLINE_LF</a>, <a href="std_regex.html#_3121_newline_crlf">NEWLINE_CRLF</a>, <a href="std_regex.html#_3123_newline_any">NEWLINE_ANY</a>, <a href="std_regex.html#_3125_newline_anycrlf">NEWLINE_ANYCRLF</a>,  <a href="std_regex.html#_3131_no_auto_capture">NO_AUTO_CAPTURE</a>, <a href="std_regex.html#_3133_no_utf8_check">NO_UTF8_CHECK</a>, <a href="std_regex.html#_3141_ungreedy">UNGREEDY</a>, and <a href="std_regex.html#_3143_utf8">UTF8</a>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Match Time Option Constants</h5>
+<a name="_3085_matchtimeoptionconstants"></a><a name="matchtimeoptionconstants"></a>
+<p> Options that may be set at "match time" are: <a href="std_regex.html#_3087_anchored">ANCHORED</a>, <a href="std_regex.html#_3117_newline_cr">NEWLINE_CR</a>, <a href="std_regex.html#_3119_newline_lf">NEWLINE_LF</a>, <a href="std_regex.html#_3121_newline_crlf">NEWLINE_CRLF</a>, <a href="std_regex.html#_3123_newline_any">NEWLINE_ANY</a> <a href="std_regex.html#_3125_newline_anycrlf">NEWLINE_ANYCRLF</a> <a href="std_regex.html#_3127_notbol">NOTBOL</a>, <a href="std_regex.html#_3129_noteol">NOTEOL</a>, <a href="std_regex.html#_3135_notempty">NOTEMPTY</a>, <a href="std_regex.html#_3133_no_utf8_check">NO_UTF8_CHECK</a>.</p>
+
+<p> Routines that take match time option constants: <tt>match</tt>, <tt>split</tt>, or <tt>replace</tt> a regular expression against some string.</p>
+
+<p> 
+<a name="regexanchored"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.2 ANCHORED</h4>
+<a name="_3087_anchored"></a><a name="anchored"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">ANCHORED</font>
+</pre>
+
+<p> Forces matches to be only from the first place it is asked to try to make a search. In C, this is called PCRE_ANCHORED. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexauto_callout"></a><a name="callout"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.3 AUTO_CALLOUT</h4>
+<a name="_3089_auto_callout"></a><a name="auto_callout"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">AUTO_CALLOUT</font>
+</pre>
+
+<p> In C, this is called PCRE_AUTO_CALLOUT. To get the functionality of this flag in Euphoria, you can use: <a href="std_regex.html#_3284_find_replace_callback">find_replace_callback</a> without passing this option. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexbsr_anycrlf"></a><a name="anycrlf"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.4 BSR_ANYCRLF</h4>
+<a name="_3091_bsr_anycrlf"></a><a name="bsr_anycrlf"></a>
+<p> &lt;eucode public constant BSR_ANYCRLF &lt;/eucode&gt;</p>
+
+<p> With this option only ASCII new line sequences are recognized as newlines.  Other UNICODE newline sequences (encoded as UTF8) are not recognized as an end of line marker. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexbsr_unicode"></a><a name="unicode"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.5 BSR_UNICODE</h4>
+<a name="_3093_bsr_unicode"></a><a name="bsr_unicode"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">BSR_UNICODE</font>
+</pre>
+
+<p> With this option any UNICODE new line sequence is recognized as a newline. The UNICODE will have to be encoded as UTF8, however. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexcaseless"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.6 CASELESS</h4>
+<a name="_3095_caseless"></a><a name="caseless"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">CASELESS</font>
+</pre>
+
+<p> This will make your regular expression matches case insensitive.  With this flag for example, <tt>[a-z]</tt> is the same as <tt>[A-Za-z]</tt>. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexdefault"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.7 DEFAULT</h4>
+<a name="_3097_default"></a><a name="default"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DEFAULT</font>
+</pre>
+
+<p> This is a value used for not setting any flags at all.  This can be passed to all routines including <a href="std_regex.html#_3206_new">new</a></p>
+
+<p> 
+<a name="regexdfa_shortest"></a><a name="shortest"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.8 DFA_SHORTEST</h4>
+<a name="_3099_dfa_shortest"></a><a name="dfa_shortest"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DFA_SHORTEST</font>
+</pre>
+
+<p> This is NOT used by any standard library routine.</p>
+
+<p> 
+<a name="regexdfa_restart"></a><a name="restart"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.9 DFA_RESTART</h4>
+<a name="_3101_dfa_restart"></a><a name="dfa_restart"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DFA_RESTART</font>
+</pre>
+
+<p> This is NOT used by any standard library routine.</p>
+
+<p> 
+<a name="regexdollar_endonly"></a><a name="endonly"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.10 DOLLAR_ENDONLY</h4>
+<a name="_3103_dollar_endonly"></a><a name="dollar_endonly"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DOLLAR_ENDONLY</font>
+</pre>
+
+<p> If this bit is set, a dollar sign metacharacter in the pattern matches only at the end of the subject string. Without this option,  a  dollar sign  also matches  immediately before a newline at the end of the string (but not before any other newlines). Thus you must include the newline character in the pattern before the dollar sign if you want to match a line that contanis a newline character. The <tt>DOLLAR_ENDONLY</tt> option  is  ignored if  <tt>MULTILINE</tt>  is  set. There is no way to set this option within a pattern. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexdotall"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.11 DOTALL</h4>
+<a name="_3105_dotall"></a><a name="dotall"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DOTALL</font>
+</pre>
+
+<p> With this option the '.' character also matches a newline sequence. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexdupnames"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.12 DUPNAMES</h4>
+<a name="_3107_dupnames"></a><a name="dupnames"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">DUPNAMES</font>
+</pre>
+
+<p> Allow duplicate names for named subpatterns. Since there is no way to access named subpatterns this flag has no effect. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexextended"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.13 EXTENDED</h4>
+<a name="_3109_extended"></a><a name="extended"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">EXTENDED</font>
+</pre>
+
+<p> Whitespace and characters beginning with a hash mark to the end of the line in the pattern will be ignored when searching except when the whitespace or hash is escaped or in a character class. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexextra"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.14 EXTRA</h4>
+<a name="_3111_extra"></a><a name="extra"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">EXTRA</font>
+</pre>
+
+<p> When an alphanumeric follows a backslash ( <tt>\</tt> ) has no special meaning an error is generated. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexfirstline"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.15 FIRSTLINE</h4>
+<a name="_3113_firstline"></a><a name="firstline"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">FIRSTLINE</font>
+</pre>
+
+<p> If <tt>PCRE_FIRSTLINE</tt> is set, the match must happen before or at the first newline in the subject (though it may continue over the newline). This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexmultiline"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.16 MULTILINE</h4>
+<a name="_3115_multiline"></a><a name="multiline"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">MULTILINE</font>
+</pre>
+
+<p> When  <tt>MULTILINE</tt>  is set the "start of line" and "end of line" constructs match immediately following or immediately  before  internal newlines  in  the  subject string, respectively, as well as at the very start and end.  This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnewline_cr"></a><a name="cr"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.17 NEWLINE_CR</h4>
+<a name="_3117_newline_cr"></a><a name="newline_cr"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NEWLINE_CR</font>
+</pre>
+
+<p> Sets CR as the <tt>NEWLINE</tt> sequence. The <tt>NEWLINE</tt> sequence will match <tt>$</tt> when <tt>MULTILINE</tt> is set. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnewline_lf"></a><a name="lf"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.18 NEWLINE_LF</h4>
+<a name="_3119_newline_lf"></a><a name="newline_lf"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NEWLINE_LF</font>
+</pre>
+
+<p> Sets LF as the <tt>NEWLINE</tt> sequence. The <tt>NEWLINE</tt> sequence will match <tt>$</tt> when <tt>MULTILINE</tt> is set. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnewline_crlf"></a><a name="crlf"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.19 NEWLINE_CRLF</h4>
+<a name="_3121_newline_crlf"></a><a name="newline_crlf"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NEWLINE_CRLF</font>
+</pre>
+
+<p> Sets <tt>CRLF</tt> as the <tt>NEWLINE</tt> sequence The <tt>NEWLINE</tt> sequence will match <tt>$</tt> when <tt>MULTILINE</tt> is set. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnewline_any"></a><a name="any"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.20 NEWLINE_ANY</h4>
+<a name="_3123_newline_any"></a><a name="newline_any"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NEWLINE_ANY</font>
+</pre>
+
+<p> Sets <tt>ANY</tt> newline sequence as the <tt>NEWLINE</tt> sequence including those from UNICODE when UTF8 is also set.  The string will have to be encoded as UTF8, however. The <tt>NEWLINE</tt> sequence will match <tt>$</tt> when <tt>MULTILINE</tt> is set. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnewline_anycrlf"></a><a name="anycrlf"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.21 NEWLINE_ANYCRLF</h4>
+<a name="_3125_newline_anycrlf"></a><a name="newline_anycrlf"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NEWLINE_ANYCRLF</font>
+</pre>
+
+<p> Sets <tt>ANY</tt> newline sequence from ASCII. The <tt>NEWLINE</tt> sequence will match <tt>$</tt> when <tt>MULTILINE</tt> is set. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnotbol"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.22 NOTBOL</h4>
+<a name="_3127_notbol"></a><a name="notbol"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NOTBOL</font>
+</pre>
+
+<p> This indicates that beginning of the passed string does NOTBOL ( <strong>NOT</strong> start at the <strong>B</strong>eginning <strong>O</strong>f a <strong>L</strong>ine) so a carrot symbol (<tt>^</tt>) in the original pattern will <em>not match</em> the beginning of the string. This is used by routines other than <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnoteol"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.23 NOTEOL</h4>
+<a name="_3129_noteol"></a><a name="noteol"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NOTEOL</font>
+</pre>
+
+<p> This indicates that end of the passed string does NOTEOL ( <strong>NOT</strong> end at the <strong>E</strong>nd <strong>O</strong>f a <strong>L</strong>ine) so a dollar sign (<tt>$</tt>) in the original pattern will <em>not match</em> the end of the string. This is used by routines other than <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexno_auto_capture"></a><a name="auto_capture"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.24 NO_AUTO_CAPTURE</h4>
+<a name="_3131_no_auto_capture"></a><a name="no_auto_capture"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NO_AUTO_CAPTURE</font>
+</pre>
+
+<p> Disables capturing subpatterns except when the subpatterns are named. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexno_utf8_check"></a><a name="utf8_check"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.25 NO_UTF8_CHECK</h4>
+<a name="_3133_no_utf8_check"></a><a name="no_utf8_check"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NO_UTF8_CHECK</font>
+</pre>
+
+<p> Turn off checking for the validity of your UTF string.  Use this with caution.  An invalid utf8 string with this option could <em>crash</em> your program.  Only use this if you know the string is a valid utf8 string. This is passed to all routines including <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexnotempty"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.26 NOTEMPTY</h4>
+<a name="_3135_notempty"></a><a name="notempty"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NOTEMPTY</font>
+</pre>
+
+<p> Here matches of empty strings will not be allowed.  In C, this is <tt>PCRE_NOTEMPTY</tt>. The pattern: <tt>`A*a*`</tt> will match <tt>"AAAA"</tt>, <tt>"aaaa"</tt>, and <tt>"Aaaa"</tt> but not <tt>""</tt>. This is used by routines other than <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexpartial"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.27 PARTIAL</h4>
+<a name="_3137_partial"></a><a name="partial"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">PARTIAL</font>
+</pre>
+
+<p> This option has no effect on whether a match will occur or not. However, it does affect the error code generated by <a href="std_regex.html#_3232_find">find</a> in the event of a failure: If for some pattern <tt>re</tt>, and two strings <tt>s1</tt> and <tt>s2</tt>, <tt>find( re, s1 &amp; s2 )</tt> would return a match but both <tt>find( re, s1 )</tt> and <tt>find( re, s2 )</tt> would not, then <tt>find( re, s1, 1, PCRE_PARTIAL )</tt> will return <tt>ERROR_PARTIAL</tt> rather than <tt>ERROR_NOMATCH</tt>. We say <tt>s1</tt> has a <em>partial match</em> of <tt>re</tt>.</p>
+
+<p> Note that <tt>find( re, s2, 1, PCRE_PARTIAL )</tt> will <tt>ERROR_NOMATCH</tt>. In C, this constant is called <tt>PCRE_PARTIAL</tt>.</p>
+
+<p> 
+<a name="regexstring_offsets"></a><a name="offsets"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.28 STRING_OFFSETS</h4>
+<a name="_3139_string_offsets"></a><a name="string_offsets"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">STRING_OFFSETS</font>
+</pre>
+
+<p> This is used by <a href="std_regex.html#_3251_matches">matches</a> and <a href="std_regex.html#_3257_all_matches">all_matches</a>.</p>
+
+<p> 
+<a name="regexungreedy"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.29 UNGREEDY</h4>
+<a name="_3141_ungreedy"></a><a name="ungreedy"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">UNGREEDY</font>
+</pre>
+
+<p> This is passed to <a href="std_regex.html#_3206_new">new</a>. This modifier sets the pattern such that quantifiers are not greedy by default, but become greedy if followed by a question mark.</p>
+
+<p> 
+<a name="regexutf8"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.3.30 UTF8</h4>
+<a name="_3143_utf8"></a><a name="utf8"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">UTF8</font>
+</pre>
+
+<p> Makes strings passed in to be interpreted as a UTF8 encoded string. This is passed to <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.4 Error Constants</h3>
+<a name="_3144_errorconstants"></a><a name="errorconstants"></a>
+<p> Error constants differ from their C equivalents as they do not have <tt>PCRE_</tt> prepended to each name.</p>
+
+<p> 
+<a name="regexerror_nomatch"></a><a name="nomatch"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.1 ERROR_NOMATCH</h4>
+<a name="_3146_error_nomatch"></a><a name="error_nomatch"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_NOMATCH</font>
+</pre>
+
+<p>  There was no match found.</p>
+
+<p> 
+<a name="regexerror_null"></a><a name="null"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.2 ERROR_NULL</h4>
+<a name="_3148_error_null"></a><a name="error_null"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_NULL</font>
+</pre>
+
+<p>  There was an internal error in the EUPHORIA wrapper (std/regex.e in the standard include directory or be_regex.c in the EUPHORIA source).</p>
+
+<p> 
+<a name="regexerror_badoption"></a><a name="badoption"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.3 ERROR_BADOPTION</h4>
+<a name="_3150_error_badoption"></a><a name="error_badoption"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADOPTION</font>
+</pre>
+
+<p>  There was an internal error in the EUPHORIA wrapper (std/regex.e in the standard include directory or be_regex.c in the EUPHORIA source).</p>
+
+<p> 
+<a name="regexerror_badmagic"></a><a name="badmagic"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.4 ERROR_BADMAGIC</h4>
+<a name="_3152_error_badmagic"></a><a name="error_badmagic"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADMAGIC</font>
+</pre>
+
+<p>  The pattern passed is not a value returned from <a href="std_regex.html#_3206_new">new</a>.</p>
+
+<p> 
+<a name="regexerror_unknown_opcode"></a><a name="unknown_opcode"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.5 ERROR_UNKNOWN_OPCODE</h4>
+<a name="_3154_error_unknown_opcode"></a><a name="error_unknown_opcode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_UNKNOWN_OPCODE</font>
+</pre>
+
+<p>  An internal error either in the pcre library EUPHORIA uses or its wrapper occured.</p>
+
+<p> 
+<a name="regexerror_unknown_node"></a><a name="unknown_node"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.6 ERROR_UNKNOWN_NODE</h4>
+<a name="_3156_error_unknown_node"></a><a name="error_unknown_node"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_UNKNOWN_NODE</font>
+</pre>
+
+<p>  An internal error either in the pcre library EUPHORIA uses or its wrapper occured.</p>
+
+<p> 
+<a name="regexerror_nomemory"></a><a name="nomemory"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.7 ERROR_NOMEMORY</h4>
+<a name="_3158_error_nomemory"></a><a name="error_nomemory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_NOMEMORY</font>
+</pre>
+
+<p>  Out of memory.</p>
+
+<p> 
+<a name="regexerror_nosubstring"></a><a name="nosubstring"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.8 ERROR_NOSUBSTRING</h4>
+<a name="_3160_error_nosubstring"></a><a name="error_nosubstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_NOSUBSTRING</font>
+</pre>
+
+<p>  The wrapper or the PCRE backend did not preallocate enough capturing groups for this pattern.</p>
+
+<p> 
+<a name="regexerror_matchlimit"></a><a name="matchlimit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.9 ERROR_MATCHLIMIT</h4>
+<a name="_3162_error_matchlimit"></a><a name="error_matchlimit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_MATCHLIMIT</font>
+</pre>
+
+<p>  Too many matches encountered.</p>
+
+<p> 
+<a name="regexerror_callout"></a><a name="callout"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.10 ERROR_CALLOUT</h4>
+<a name="_3164_error_callout"></a><a name="error_callout"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_CALLOUT</font>
+</pre>
+
+<p>  Not applicable to our implementation.</p>
+
+<p> 
+<a name="regexerror_badutf8"></a><a name="badutf8"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.11 ERROR_BADUTF8</h4>
+<a name="_3166_error_badutf8"></a><a name="error_badutf8"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADUTF8</font>
+</pre>
+
+<p>  The subject or pattern is not valid UTF8 but it was specified as such with <a href="std_regex.html#_3143_utf8">UTF8</a>.</p>
+
+<p> 
+<a name="regexerror_badutf8_offset"></a><a name="badutf8_offset"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.12 ERROR_BADUTF8_OFFSET</h4>
+<a name="_3168_error_badutf8_offset"></a><a name="error_badutf8_offset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADUTF8_OFFSET</font>
+</pre>
+
+<p>  The offset specified does not start on a UTF8 character boundary but it was specified as UTF8 with <a href="std_regex.html#_3143_utf8">UTF8</a>.</p>
+
+<p> 
+<a name="regexerror_partial"></a><a name="partial"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.13 ERROR_PARTIAL</h4>
+<a name="_3170_error_partial"></a><a name="error_partial"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_PARTIAL</font>
+</pre>
+
+<p>  Pattern didn't match, but there is a <em>partial match</em>.  See <a href="std_regex.html#_3137_partial">PARTIAL</a>.</p>
+
+<p> 
+<a name="regexerror_badpartial"></a><a name="badpartial"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.14 ERROR_BADPARTIAL</h4>
+<a name="_3172_error_badpartial"></a><a name="error_badpartial"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADPARTIAL</font>
+</pre>
+
+<p>  PCRE backend doesn't support partial matching for this pattern.</p>
+
+<p> 
+<a name="regexerror_internal"></a><a name="internal"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.15 ERROR_INTERNAL</h4>
+<a name="_3174_error_internal"></a><a name="error_internal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_INTERNAL</font>
+</pre>
+
+<p> 
+<a name="regexerror_badcount"></a><a name="badcount"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.16 ERROR_BADCOUNT</h4>
+<a name="_3176_error_badcount"></a><a name="error_badcount"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADCOUNT</font>
+</pre>
+
+<p>  size parameter to find is less than minus 1.</p>
+
+<p> 
+<a name="regexerror_dfa_uitem"></a><a name="dfa_uitem"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.17 ERROR_DFA_UITEM</h4>
+<a name="_3178_error_dfa_uitem"></a><a name="error_dfa_uitem"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_DFA_UITEM</font>
+</pre>
+
+<p>  Not applicable to our implementation: The PCRE wrapper doesn't use DFA routines</p>
+
+<p> 
+<a name="regexerror_dfa_ucond"></a><a name="dfa_ucond"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.18 ERROR_DFA_UCOND</h4>
+<a name="_3180_error_dfa_ucond"></a><a name="error_dfa_ucond"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_DFA_UCOND</font>
+</pre>
+
+<p>  Not applicable to our implementation: The PCRE wrapper doesn't use DFA routines</p>
+
+<p> 
+<a name="regexerror_dfa_umlimit"></a><a name="dfa_umlimit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.19 ERROR_DFA_UMLIMIT</h4>
+<a name="_3182_error_dfa_umlimit"></a><a name="error_dfa_umlimit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_DFA_UMLIMIT</font>
+</pre>
+
+<p>  Not applicable to our implementation: The PCRE wrapper doesn't use DFA routines</p>
+
+<p> 
+<a name="regexerror_dfa_wssize"></a><a name="dfa_wssize"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.20 ERROR_DFA_WSSIZE</h4>
+<a name="_3184_error_dfa_wssize"></a><a name="error_dfa_wssize"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_DFA_WSSIZE</font>
+</pre>
+
+<p>  Not applicable to our implementation: The PCRE wrapper doesn't use DFA routines</p>
+
+<p> 
+<a name="regexerror_dfa_recurse"></a><a name="dfa_recurse"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.21 ERROR_DFA_RECURSE</h4>
+<a name="_3186_error_dfa_recurse"></a><a name="error_dfa_recurse"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_DFA_RECURSE</font>
+</pre>
+
+<p>  Not applicable to our implementation: The PCRE wrapper doesn't use DFA routines</p>
+
+<p> 
+<a name="regexerror_recursionlimit"></a><a name="recursionlimit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.22 ERROR_RECURSIONLIMIT</h4>
+<a name="_3188_error_recursionlimit"></a><a name="error_recursionlimit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_RECURSIONLIMIT</font>
+</pre>
+
+<p>  Too much recursion used for match.</p>
+
+<p> 
+<a name="regexerror_nullwslimit"></a><a name="nullwslimit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.23 ERROR_NULLWSLIMIT</h4>
+<a name="_3190_error_nullwslimit"></a><a name="error_nullwslimit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_NULLWSLIMIT</font>
+</pre>
+
+<p>  This error isn't in the source code.</p>
+
+<p> 
+<a name="regexerror_badnewline"></a><a name="badnewline"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.24 ERROR_BADNEWLINE</h4>
+<a name="_3192_error_badnewline"></a><a name="error_badnewline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERROR_BADNEWLINE</font>
+</pre>
+
+<p>  Both BSR_UNICODE and BSR_ANY options were specified.  These options are contradictory.</p>
+
+<p> 
+<a name="regexerror_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.4.25 error_names</h4>
+<a name="_3194_error_names"></a><a name="error_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public constant </font><font color="#330033">error_names</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.5 Create and Destroy</h3>
+<a name="_3195_createanddestroy"></a><a name="createanddestroy"></a>
+<p> 
+<a name="regexregex"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.1 regex</h4>
+<a name="_3197_regex"></a><a name="regex"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public type </font><font color="#330033">regex</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   Regular expression type</p>
+
+<p> 
+<a name="regexoption_spec"></a><a name="spec"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.2 option_spec</h4>
+<a name="_3199_option_spec"></a><a name="option_spec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public type </font><font color="#330033">option_spec</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   Regular expression option specification type</p>
+
+<p> Although the functions do not use this type (they return an error instead), you can use this to check if your routine is receiving something sane.</p>
+
+<p> 
+<a name="regexoption_spec_to_string"></a><a name="spec_to_string"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.3 option_spec_to_string</h4>
+<a name="_3201_option_spec_to_string"></a><a name="option_spec_to_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">option_spec_to_string</font><font color="#880033">(</font><font color="#330033">option_spec o</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an option spec to a string.</p>
+
+<p> This can be useful for debugging what options were passed in. Without it you have to convert a number to hex and lookup the constants in the source code.</p>
+
+<p> 
+<a name="regexerror_to_string"></a><a name="to_string"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.4 error_to_string</h4>
+<a name="_3203_error_to_string"></a><a name="error_to_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">error_to_string</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">i</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an regex error to a string.</p>
+
+<p> This can be useful for debugging and even something rough to give to the user incase of a regex failure.  It is preferable to a number.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>See Also:</h5>
+<a name="_3204_seealso"></a><a name="seealso"></a>
+<p> <a href="std_regex.html#_3214_error_message">error_message</a></p>
+
+<p> 
+<a name="regexnew"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.5 new</h4>
+<a name="_3206_new"></a><a name="new"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">new</font><font color="#880033">(</font><font color="#330033">string pattern, option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns an allocated regular expression.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3207_parameters"></a><a name="parameters"></a><ol><li><tt>pattern</tt> : a sequence representing a human readable regular expression
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3084_compiletimeoptionconstants">Compile Time Option Constants</a>.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3208_returns"></a><a name="returns"></a>
+<p> A <strong>regex</strong>, which other regular expression routines can work on or an atom to indicate an error. If an error, you can call <a href="std_regex.html#_3214_error_message">error_message</a> to get a detailed error message.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3209_comments"></a><a name="comments"></a>
+<p> This is the only routine that accepts a human readable regular expression. The string is compiled and a <a href="std_regex.html#_3197_regex">regex</a> is returned. Analyzing and compiling a regular expression is a costly operation and should not be done more than necessary. For instance, if your application looks for an email address among text frequently, you should create the regular expression as a constant accessible to your source code and any files that may use it, thus, the regular expression is analyzed and compiled only once per run of your application.</p>
+
+<pre class="examplecode"><font color="#FF0055">-- Bad Example</font>
+<font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+
+<font color="#0000FF">while sequence</font><font color="#880033">(</font><font color="#330033">line</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#330033">    re:regex proper_name = re:new</font><font color="#880033">(</font><font color="#330033">"[A-Z][a-z]+ [A-Z][a-z]+"</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">re:</font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">proper_name, line</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- code</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- Good Example</font>
+<font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#0000FF">constant </font><font color="#330033">re_proper_name = re:new</font><font color="#880033">(</font><font color="#330033">"[A-Z][a-z]+ [A-Z][a-z]+"</font><font color="#880033">)</font>
+<font color="#0000FF">while sequence</font><font color="#880033">(</font><font color="#330033">line</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    if </font><font color="#330033">re:</font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">re_proper_name, line</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- code</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3210_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#330033">re:regex number = re:new</font><font color="#880033">(</font><font color="#330033">"[0-9]+"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h5>Note:</h5>
+<a name="_3211_note"></a><a name="note"></a>
+<p> For simple matches, the built-in Euphoria routine <a href="std_search.html#eumatch">eu:match</a> and the library routine <a href="std_wildcard.html#wildcardis_match">wildcard:is_match</a> are often times easier to use and a little faster. Regular expressions are faster for complex searching/matching.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>See Also:</h5>
+<a name="_3212_seealso"></a><a name="seealso"></a>
+<p> <a href="std_regex.html#_3214_error_message">error_message</a>, <a href="std_regex.html#_3232_find">find</a>, <a href="std_regex.html#_3237_find_all">find_all</a></p>
+
+<p> 
+<a name="regexerror_message"></a><a name="message"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.5.6 error_message</h4>
+<a name="_3214_error_message"></a><a name="error_message"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">error_message</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">re</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a text based error message.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3215_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt>: Regular expression to get the error message from
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3216_returns"></a><a name="returns"></a>
+<p> An atom (0) when no error message exists, otherwise a sequence describing the error.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3217_comments"></a><a name="comments"></a>
+<p> If <tt><a href="std_regex.html#_3206_new">new</a></tt> returns an atom, this function will return a text error message as to the reason.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3218_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">object </font><font color="#330033">r = regex:new</font><font color="#880033">(</font><font color="#330033">"[A-Z[a-z]*"</font><font color="#880033">)</font>
+<font color="#0000FF">if atom</font><font color="#880033">(</font><font color="#330033">r</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">  printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Regex failed to compile: %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">regex:error_message</font><font color="#0000FF">(</font><font color="#330033">r</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.6 Utility Routines</h3>
+<a name="_3219_utilityroutines"></a><a name="utilityroutines"></a>
+<p> 
+<a name="regexescape"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.6.1 escape</h4>
+<a name="_3221_escape"></a><a name="escape"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">escape</font><font color="#880033">(</font><font color="#330033">string s</font><font color="#880033">)</font>
+</pre>
+
+<p>   escapes special regular expression characters that may be entered into a search string from user input.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3222_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt>: string sequence to escape
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3223_returns"></a><a name="returns"></a>
+<p> An escaped <tt>sequence</tt> representing <tt>s</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Note:</h5>
+<a name="_3224_note"></a><a name="note"></a>
+<p> Special regex characters are: 
+<pre>. \ + * ? [ ^ ] $ ( ) { } = ! &lt; &gt; | : -
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3225_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#0000FF">sequence </font><font color="#330033">search_s = re:escape</font><font color="#880033">(</font><font color="#330033">"Payroll is $***15.00"</font><font color="#880033">)</font>
+<font color="#FF0055">-- search_s = "Payroll is \\$\\*\\*\\*15\\.00"</font>
+</pre>
+
+<p> 
+<a name="regexget_ovector_size"></a><a name="ovector_size"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.6.2 get_ovector_size</h4>
+<a name="_3227_get_ovector_size"></a><a name="get_ovector_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">get_ovector_size</font><font color="#880033">(</font><font color="#330033">regex ex, </font><font color="#0000FF">integer </font><font color="#330033">maxsize = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the number of capturing subpatterns (the ovector size) for a regex.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3228_parameters"></a><a name="parameters"></a><ol><li><tt>ex</tt> : a regex
+</li><li><tt>maxsize</tt> : optional maximum number of named groups to get data from
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3229_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong></p>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.7 Match</h3>
+<a name="_3230_match"></a><a name="match"></a>
+<p> 
+<a name="regexfind"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.1 find</h4>
+<a name="_3232_find"></a><a name="find"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function find</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT,</font>
+<font color="#0000FF">        integer </font><font color="#330033">size = get_ovector_size</font><font color="#993333">(</font><font color="#330033">re, 30</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the first match of <tt>re</tt> in <tt>haystack</tt>. You can optionally start at the position <tt>from</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3233_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>. The only options that may be set when calling find are <a href="std_regex.html#_3087_anchored">ANCHORED</a>, <a href="std_regex.html#_3117_newline_cr">NEWLINE_CR</a>, <a href="std_regex.html#_3119_newline_lf">NEWLINE_LF</a>, <a href="std_regex.html#_3121_newline_crlf">NEWLINE_CRLF</a>, <a href="std_regex.html#_3123_newline_any">NEWLINE_ANY</a> <a href="std_regex.html#_3125_newline_anycrlf">NEWLINE_ANYCRLF</a> <a href="std_regex.html#_3127_notbol">NOTBOL</a>, <a href="std_regex.html#_3129_noteol">NOTEOL</a>, <a href="std_regex.html#_3135_notempty">NOTEMPTY</a>, and <a href="std_regex.html#_3133_no_utf8_check">NO_UTF8_CHECK</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li><li><tt>size</tt> : internal (how large an array the C backend should allocate). Defaults to 90, in rare cases this number may need to be increased in order to accomodate complex regex expressions.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3234_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, which is either an atom of 0, meaning nothing matched or a sequence of index pairs.  These index pairs may be fewer than the number of groups specified.  These index pairs may be the invalid index pair <tt>{0,0}</tt>.</p>
+
+<p> The first pair is the starting and ending indeces of the sub-string that matches the expression.  This pair may be followed by indeces of the groups.  The groups are subexpressions in the regular expression surrounded by parenthesis ().</p>
+
+<p> Now, it is possible to get a match without having all of the groups match. This can happen when there is a quantifier after a group.  For example: <tt>'([01])*'</tt> or <tt>'([01])?'</tt>. In this case, the returned sequence of pairs will be missing the last group indeces for which there is no match. However, if the missing group is followed by a group that *does* match, <tt>{0,0}</tt> will be used as a place holder. You can ensure your groups match when your expression matches by keeping quantifiers inside your groups: For example use: <tt>'([01]?)'</tt> instead of <tt>'([01])?'</tt></p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3235_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#330033">r = re:new</font><font color="#880033">(</font><font color="#330033">"([A-Za-z]+) ([0-9]+)"</font><font color="#880033">) </font><font color="#FF0055">-- John 20 or Jane 45</font>
+<font color="#0000FF">object </font><font color="#330033">result = re:</font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">r, </font><font color="#330033">"John 20"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- The return value will be:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--    { 1, 7 }, -- Total match</font>
+<font color="#FF0055">--    { 1, 4 }, -- First grouping "John" ([A-Za-z]+)</font>
+<font color="#FF0055">--    { 6, 7 }  -- Second grouping "20" ([0-9]+)</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<a name="regexfind_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.2 find_all</h4>
+<a name="_3237_find_all"></a><a name="find_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">find_all</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT,</font>
+<font color="#0000FF">        integer </font><font color="#330033">size = get_ovector_size</font><font color="#993333">(</font><font color="#330033">re, 30</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns all matches of <tt>re</tt> in <tt>haystack</tt> optionally starting at the sequence position <tt>from</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3238_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3239_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> of <strong>sequences</strong> that were returned by <a href="std_regex.html#_3232_find">find</a> and in the case of no matches this returns an empty <strong>sequence</strong>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3240_comments"></a><a name="comments"></a>
+<p> Please see <a href="std_regex.html#_3232_find">find</a> for a detailed description of each member of the return sequence.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3241_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#0000FF">constant </font><font color="#330033">re_number = re:new</font><font color="#880033">(</font><font color="#330033">"[0-9]+"</font><font color="#880033">)</font>
+<font color="#0000FF">object </font><font color="#330033">matches = re:find_all</font><font color="#880033">(</font><font color="#330033">re_number, </font><font color="#330033">"10 20 30"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- matches is:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--     {{1, 2}},</font>
+<font color="#FF0055">--     {{4, 5}},</font>
+<font color="#FF0055">--     {{7, 8}}</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<a name="regexhas_match"></a><a name="match"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.3 has_match</h4>
+<a name="_3243_has_match"></a><a name="has_match"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">has_match</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines if <tt>re</tt> matches any portion of <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3244_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3245_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, 1 if <tt>re</tt> matches any portion of <tt>haystack</tt> or 0 if not.</p>
+
+<p> 
+<a name="regexis_match"></a><a name="match"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.4 is_match</h4>
+<a name="_3247_is_match"></a><a name="is_match"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">is_match</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines if the entire <tt>haystack</tt> matches <tt>re</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3248_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>.  See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3249_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>,  1 if <tt>re</tt> matches the entire <tt>haystack</tt> or 0 if not.</p>
+
+<p> 
+<a name="regexmatches"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.5 matches</h4>
+<a name="_3251_matches"></a><a name="matches"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">matches</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the matched text only.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3252_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or STRING_OFFSETS or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3253_returns"></a><a name="returns"></a>
+<p> Returns a <strong>sequence</strong> of strings, the first being the entire match and subsequent items being each of the captured groups or <strong>ERROR_NOMATCH</strong> of there is no match. The size of the sequence is the number of groups in the expression plus one (for the entire match).</p>
+
+<p> If <tt>options</tt> contains the bit <a href="std_regex.html#_3139_string_offsets">STRING_OFFSETS</a>, then the result is different. For each item, a sequence is returned containing the matched text, the starting index in <tt>haystack</tt> and the ending index in <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3254_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#0000FF">constant </font><font color="#330033">re_name = re:new</font><font color="#880033">(</font><font color="#330033">"([A-Z][a-z]+) ([A-Z][a-z]+)"</font><font color="#880033">)</font>
+
+<font color="#0000FF">object </font><font color="#330033">matches = re:matches</font><font color="#880033">(</font><font color="#330033">re_name, </font><font color="#330033">"John Doe and Jane Doe"</font><font color="#880033">)</font>
+<font color="#FF0055">-- matches is:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   "John Doe", -- full match data</font>
+<font color="#FF0055">--   "John",     -- first group</font>
+<font color="#FF0055">--   "Doe"       -- second group</font>
+<font color="#FF0055">-- }</font>
+
+<font color="#330033">matches = re:matches</font><font color="#880033">(</font><font color="#330033">re_name, </font><font color="#330033">"John Doe and Jane Doe"</font><font color="#330033">, 1, re:STRING_OFFSETS</font><font color="#880033">)</font>
+<font color="#FF0055">-- matches is:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   { "John Doe", 1, 8 }, -- full match data</font>
+<font color="#FF0055">--   { "John",     1, 4 }, -- first group</font>
+<font color="#FF0055">--   { "Doe",      6, 8 }  -- second group</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h5>See Also:</h5>
+<a name="_3255_seealso"></a><a name="seealso"></a>
+<p> <a href="std_regex.html#_3257_all_matches">all_matches</a></p>
+
+<p> 
+<a name="regexall_matches"></a><a name="matches"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.7.6 all_matches</h4>
+<a name="_3257_all_matches"></a><a name="all_matches"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">all_matches</font><font color="#880033">(</font><font color="#330033">regex re, string haystack, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the text of all matches.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3258_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex for a subject to be matched against
+</li><li><tt>haystack</tt> : a string in which to searched
+</li><li><tt>from</tt> : an integer setting the starting position to begin searching from. Defaults to 1
+</li><li><tt>options</tt> : options, defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>.  See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3259_returns"></a><a name="returns"></a>
+<p> Returns <strong>ERROR_NOMATCH</strong> if there are no matches, or a <strong>sequence</strong> of <strong>sequences</strong> of <strong>strings</strong> if there is at least one match. In each member sequence of the returned sequence, the first string is the entire match and subsequent items being each of the captured groups.  The size of the sequence is the number of groups in the expression plus one (for the entire match).  In other words, each member of the return value will be of the same structure of that is returned by <a href="std_regex.html#_3251_matches">matches</a>.</p>
+
+<p> If <tt>options</tt> contains the bit <a href="std_regex.html#_3139_string_offsets">STRING_OFFSETS</a>, then the result is different. In each member sequence, instead of each member being a string each member is itself a sequence containing the matched text, the starting index in <tt>haystack</tt> and the ending index in <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3260_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#0000FF">constant </font><font color="#330033">re_name = re:new</font><font color="#880033">(</font><font color="#330033">"([A-Z][a-z]+) ([A-Z][a-z]+)"</font><font color="#880033">)</font>
+
+<font color="#0000FF">object </font><font color="#330033">matches = re:all_matches</font><font color="#880033">(</font><font color="#330033">re_name, </font><font color="#330033">"John Doe and Jane Doe"</font><font color="#880033">)</font>
+<font color="#FF0055">-- matches is:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   {             -- first match</font>
+<font color="#FF0055">--     "John Doe", -- full match data</font>
+<font color="#FF0055">--     "John",     -- first group</font>
+<font color="#FF0055">--     "Doe"       -- second group</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   {             -- second match</font>
+<font color="#FF0055">--     "Jane Doe", -- full match data</font>
+<font color="#FF0055">--     "Jane",     -- first group</font>
+<font color="#FF0055">--     "Doe"       -- second group</font>
+<font color="#FF0055">--   }</font>
+<font color="#FF0055">-- }</font>
+
+<font color="#330033">matches = re:all_matches</font><font color="#880033">(</font><font color="#330033">re_name, </font><font color="#330033">"John Doe and Jane Doe"</font><font color="#330033">, , re:STRING_OFFSETS</font><font color="#880033">)</font>
+<font color="#FF0055">-- matches is:</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   {                         -- first match</font>
+<font color="#FF0055">--     { "John Doe",  1,  8 }, -- full match data</font>
+<font color="#FF0055">--     { "John",      1,  4 }, -- first group</font>
+<font color="#FF0055">--     { "Doe",       6,  8 }  -- second group</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   {                         -- second match</font>
+<font color="#FF0055">--     { "Jane Doe", 14, 21 }, -- full match data</font>
+<font color="#FF0055">--     { "Jane",     14, 17 }, -- first group</font>
+<font color="#FF0055">--     { "Doe",      19, 21 }  -- second group</font>
+<font color="#FF0055">--   }</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h5>See Also:</h5>
+<a name="_3261_seealso"></a><a name="seealso"></a>
+<p> <a href="std_regex.html#_3251_matches">matches</a></p>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.8 Splitting</h3>
+<a name="_3262_splitting"></a><a name="splitting"></a>
+<p> 
+<a name="regexsplit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.8.1 split</h4>
+<a name="_3264_split"></a><a name="split"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">split</font><font color="#880033">(</font><font color="#330033">regex re, string text, </font><font color="#0000FF">integer </font><font color="#330033">from = 1, option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   splits a string based on a regex as a delimiter.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3265_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex which will be used for matching
+</li><li><tt>text</tt> : a string on which search and replace will apply
+</li><li><tt>from</tt> : optional start position
+</li><li><tt>options</tt> : options, defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>. See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3266_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> of string values split at the delimiter and if no delimiters were matched this <strong>sequence</strong> will be a one member sequence equal to <tt>{text}</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3267_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e </font><font color="#0000FF">as </font><font color="#330033">re</font>
+<font color="#330033">regex comma_space_re = re:new</font><font color="#880033">(</font><font color="#330033">`,\s`</font><font color="#880033">)</font>
+<font color="#0000FF">sequence </font><font color="#330033">data = re:split</font><font color="#880033">(</font><font color="#330033">comma_space_re, </font>
+<font color="#330033">                         "euphoria programming, source code, reference data"</font><font color="#880033">)</font>
+<font color="#FF0055">-- data is</font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   "euphoria programming",</font>
+<font color="#FF0055">--   "source code",</font>
+<font color="#FF0055">--   "reference data"</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<a name="regexsplit_limit"></a><a name="limit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.8.2 split_limit</h4>
+<a name="_3269_split_limit"></a><a name="split_limit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">split_limit</font><font color="#880033">(</font><font color="#330033">regex re, string text, </font><font color="#0000FF">integer </font><font color="#330033">limit = 0, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\regex.e -->
+<h3>8.21.9 Replacement</h3>
+<a name="_3270_replacement"></a><a name="replacement"></a>
+<p> 
+<a name="regexfind_replace"></a><a name="replace"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.9.1 find_replace</h4>
+<a name="_3272_find_replace"></a><a name="find_replace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">find_replace</font><font color="#880033">(</font><font color="#330033">regex ex, string text, </font><font color="#0000FF">sequence </font><font color="#330033">replacement, </font><font color="#0000FF">integer </font><font color="#330033">from = 1,</font>
+<font color="#330033">        option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   replaces all matches of a regex with the replacement text.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3273_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex which will be used for matching
+</li><li><tt>text</tt> : a string on which search and replace will apply
+</li><li><tt>replacement</tt> : a string, used to replace each of the full matches
+</li><li><tt>from</tt> : optional start position
+</li><li><tt>options</tt> : options, defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>.  See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3274_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the modified <tt>text</tt>.  If there is no match with <tt>re</tt> the return value will be the same as <tt>text</tt> when it was passed in.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3275_comments"></a><a name="comments"></a>
+<p> Special replacement operators:</p>
+<ul><li><strong><tt>\</tt></strong>  -- Causes the next character to lose its special meaning.
+</li><li><strong><tt>\n</tt></strong> ~ -- Inserts a <tt>0x0A</tt> (LF) character.
+</li><li><strong><tt>\r</tt></strong> -- Inserts a <tt>0x0D</tt> (CR) character.
+</li><li><strong><tt>\t</tt></strong> -- Inserts a <tt>0x09</tt> (TAB) character.
+</li><li><strong><tt>\1</tt></strong> to <strong><tt>\9</tt></strong> -- Recalls stored substrings from registers (\1, \2, \3, to \9).
+</li><li><strong><tt>\0</tt></strong> -- Recalls entire matched pattern.
+</li><li><strong><tt>\u</tt></strong> -- Convert next character to uppercase
+</li><li><strong><tt>\l</tt></strong> -- Convert next character to lowercase
+</li><li><strong><tt>\U</tt></strong> -- Convert to uppercase till <tt>\E</tt> or <tt>\e</tt>
+</li><li><strong><tt>\L</tt></strong> -- Convert to lowercase till <tt>\E</tt> or <tt>\e</tt>
+</li><li><strong><tt>\E</tt></strong> or <strong><tt>\e</tt></strong> -- Terminate a <tt>\\U</tt> or <tt>\L</tt> conversion
+</li></ul>
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3276_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#330033">regex r = new</font><font color="#880033">(</font><font color="#330033">`([A-Za-z]+)\.([A-Za-z]+)`</font><font color="#880033">)</font>
+<font color="#0000FF">sequence </font><font color="#330033">details = find_replace</font><font color="#880033">(</font><font color="#330033">r, </font><font color="#330033">"hello.txt"</font><font color="#330033">, </font>
+<font color="#330033">                                        `Filename: \U\1\e Extension: \U\2\e`</font><font color="#880033">)</font>
+<font color="#FF0055">-- details = "Filename: HELLO Extension: TXT"</font>
+</pre>
+
+<p> 
+<a name="regexfind_replace_limit"></a><a name="replace_limit"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.9.2 find_replace_limit</h4>
+<a name="_3278_find_replace_limit"></a><a name="find_replace_limit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">find_replace_limit</font><font color="#880033">(</font><font color="#330033">regex ex, string text, </font><font color="#0000FF">sequence </font><font color="#330033">replacement,</font>
+<font color="#0000FF">        integer </font><font color="#330033">limit, </font><font color="#0000FF">integer </font><font color="#330033">from = 1, option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   replaces up to <tt>limit</tt> matches of <tt>ex</tt> in <tt>text</tt> except when <tt>limit</tt> is 0.  When <tt>limit</tt> is 0, this routine replaces all of the matches.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3279_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex which will be used for matching
+</li><li><tt>text</tt> : a string on which search and replace will apply
+</li><li><tt>replacement</tt> : a string, used to replace each of the full matches
+</li><li><tt>limit</tt> : the number of matches to process
+</li><li><tt>from</tt> : optional start position
+</li><li><tt>options</tt> : options, defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>.  See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3280_comments"></a><a name="comments"></a>
+<p> This function is identical to <a href="std_regex.html#_3272_find_replace">find_replace</a> except it allows you to limit the number of replacements to perform. Please see the documentation for <a href="std_regex.html#_3272_find_replace">find_replace</a> for all the details.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3281_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the modified <tt>text</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>See Also:</h5>
+<a name="_3282_seealso"></a><a name="seealso"></a>
+<p> <a href="std_regex.html#_3272_find_replace">find_replace</a></p>
+
+<p> 
+<a name="regexfind_replace_callback"></a><a name="replace_callback"></a> </p>
+
+<!-- ..\include\std\regex.e -->
+<h4>8.21.9.3 find_replace_callback</h4>
+<a name="_3284_find_replace_callback"></a><a name="find_replace_callback"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/regex.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">regex</font>
+<font color="#0000FF">public function </font><font color="#330033">find_replace_callback</font><font color="#880033">(</font><font color="#330033">regex ex, string text, </font><font color="#0000FF">integer </font><font color="#330033">rid, </font><font color="#0000FF">integer </font><font color="#330033">limit = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">from = 1, option_spec options = DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds and then replaces text that is processed by a call back function.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Parameters:</h5>
+<a name="_3285_parameters"></a><a name="parameters"></a><ol><li><tt>re</tt> : a regex which will be used for matching
+</li><li><tt>text</tt> : a string on which search and replace will apply
+</li><li><tt>rid</tt> : routine id to execute for each match
+</li><li><tt>limit</tt> : the number of matches to process
+</li><li><tt>from</tt> : optional start position
+</li><li><tt>options</tt> : options, defaults to <a href="std_regex.html#_3097_default">DEFAULT</a>.  See <a href="std_regex.html#_3085_matchtimeoptionconstants">Match Time Option Constants</a>.  <tt>options</tt> can be any match time option or a sequence of valid options or it can be a value that comes from using or_bits on any two valid option values.
+</li></ol>
+<!-- ..\include\std\regex.e -->
+<h5>Returns:</h5>
+<a name="_3286_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the modified <tt>text</tt>.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Comments:</h5>
+<a name="_3287_comments"></a><a name="comments"></a>
+<p> When <tt>limit</tt> is positive, this routine replaces up to <tt>limit</tt> matches of <tt>ex</tt> in <tt>text</tt> with the result of the user defined callback, <tt>rid</tt>, and when <tt>limit</tt> is 0, replaces all matches of <tt>ex</tt> in <tt>text</tt> with the result of this user defined callback, <tt>rid</tt>.</p>
+
+<p> The callback should take one sequence.  The first member of this sequence will be a a string representing the entire match and the subsequent members, if they exist, will be a strings for the captured groups within the regular expression.</p>
+
+<p> The function rid.  Must take one sequence parameter.  The function needs to accept a sequence of strings and return a string.  For each match, the function will be passed a sequence of strings.  The first string is the entire match the subsequent strings are for the capturing groups. If a match succeeds with groups that don't exist, that place will contain a 0. If the sub-group does exist, the palce will contain the matching group string. for that group.</p>
+
+<!-- ..\include\std\regex.e -->
+<h5>Example 1:</h5>
+<a name="_3288_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">function </font><font color="#330033">my_convert</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">params</font><font color="#880033">)</font>
+<font color="#0000FF">    switch </font><font color="#330033">params</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#0000FF">do</font>
+<font color="#0000FF">        case </font><font color="#330033">"1" </font><font color="#0000FF">then</font>
+<font color="#0000FF">            return </font><font color="#330033">"one "</font>
+<font color="#0000FF">        case </font><font color="#330033">"2" </font><font color="#0000FF">then</font>
+<font color="#0000FF">            return </font><font color="#330033">"two "</font>
+<font color="#0000FF">        case else</font>
+<font color="#0000FF">            return </font><font color="#330033">"unknown "</font>
+<font color="#0000FF">    end switch</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">regex r = re:new</font><font color="#880033">(</font><font color="#330033">`\d`</font><font color="#880033">)</font>
+<font color="#0000FF">sequence </font><font color="#330033">result = re:find_replace_callback</font><font color="#880033">(</font><font color="#330033">r, </font><font color="#330033">"125"</font><font color="#330033">,</font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"my_convert"</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = "one two unknown "</font>
+
+
+<font color="#0000FF">integer </font><font color="#330033">missing_data_flag = 0</font>
+<font color="#330033">regex r2 = re:new</font><font color="#880033">(</font><font color="#330033">`[A-Z][a-z]+ ([A-Z][a-z]+)?`</font><font color="#880033">)</font>
+<font color="#0000FF">function </font><font color="#330033">my_toupper</font><font color="#880033">( </font><font color="#0000FF">sequence </font><font color="#330033">params</font><font color="#880033">)</font>
+<font color="#FF0055">      -- here params[2] may be 0.</font>
+<font color="#0000FF">      return </font><font color="#330033">upper</font><font color="#880033">( </font><font color="#330033">params</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">] </font><font color="#880033">)</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">result = find_replace_callback</font><font color="#880033">(</font><font color="#330033">r2, </font><font color="#330033">"John Doe"</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"my_toupper"</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">-- params[2] is "Doe"</font>
+<font color="#FF0055">-- result = "JOHN DOE"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"result=%s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">result</font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#330033">result = find_replace_callback</font><font color="#880033">(</font><font color="#330033">r2, </font><font color="#330033">"Mary"</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"my_toupper"</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = "MARY"</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\text.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_localeconv.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_text.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_localeconv.html">8.20 Locale Names</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_text.html">8.22 Text Manipulation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

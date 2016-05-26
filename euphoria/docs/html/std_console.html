@@ -1,0 +1,1241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_cmdline.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_datetime.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_cmdline.html">8.2 Command Line Handling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_datetime.html">8.4 Date and Time</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\console.e -->
+<h2>8.3 Console</h2>
+<a name="_819_console"></a><a name="console"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_console.html#_819_console">8.3 Console</a></div>
+<div class="toc_3"><a href="std_console.html#_820_information">8.3.1 Information</a></div>
+<div class="toc_4"><a href="std_console.html#_822_has_console">8.3.1.1 has_console</a></div>
+<div class="toc_4"><a href="std_console.html#_827_key_codes">8.3.1.2 key_codes</a></div>
+<div class="toc_3"><a href="std_console.html#_832_keycodenames">8.3.2 Key Code Names</a></div>
+<div class="toc_4"><a href="std_console.html#_835_kc_lbutton">8.3.2.1 KC_LBUTTON</a></div>
+<div class="toc_4"><a href="std_console.html#_837_set_keycodes">8.3.2.2 set_keycodes</a></div>
+<div class="toc_3"><a href="std_console.html#_843_cursorstyleconstants">8.3.3 Cursor Style Constants</a></div>
+<div class="toc_4"><a href="std_console.html#_846_no_cursor">8.3.3.1 NO_CURSOR</a></div>
+<div class="toc_4"><a href="std_console.html#_848_underline_cursor">8.3.3.2 UNDERLINE_CURSOR</a></div>
+<div class="toc_4"><a href="std_console.html#_850_thick_underline_cursor">8.3.3.3 THICK_UNDERLINE_CURSOR</a></div>
+<div class="toc_4"><a href="std_console.html#_852_half_block_cursor">8.3.3.4 HALF_BLOCK_CURSOR</a></div>
+<div class="toc_4"><a href="std_console.html#_854_block_cursor">8.3.3.5 BLOCK_CURSOR</a></div>
+<div class="toc_3"><a href="std_console.html#_855_keyboardrelatedroutines">8.3.4 Keyboard Related Routines</a></div>
+<div class="toc_4"><a href="std_console.html#_857_get_key">8.3.4.1 get_key</a></div>
+<div class="toc_4"><a href="std_console.html#_863_allow_break">8.3.4.2 allow_break</a></div>
+<div class="toc_4"><a href="std_console.html#_869_check_break">8.3.4.3 check_break</a></div>
+<div class="toc_4"><a href="std_console.html#_875_wait_key">8.3.4.4 wait_key</a></div>
+<div class="toc_4"><a href="std_console.html#_879_any_key">8.3.4.5 any_key</a></div>
+<div class="toc_4"><a href="std_console.html#_886_maybe_any_key">8.3.4.6 maybe_any_key</a></div>
+<div class="toc_4"><a href="std_console.html#_893_prompt_number">8.3.4.7 prompt_number</a></div>
+<div class="toc_4"><a href="std_console.html#_902_prompt_string">8.3.4.8 prompt_string</a></div>
+<div class="toc_3"><a href="std_console.html#_908_crossplatformtextgraphics">8.3.5 Cross Platform Text Graphics</a></div>
+<div class="toc_4"><a href="std_console.html#_910_positive_int">8.3.5.1 positive_int</a></div>
+<div class="toc_4"><a href="std_console.html#_912_clear_screen">8.3.5.2 clear_screen</a></div>
+<div class="toc_4"><a href="std_console.html#_916_get_screen_char">8.3.5.3 get_screen_char</a></div>
+<div class="toc_4"><a href="std_console.html#_924_put_screen_char">8.3.5.4 put_screen_char</a></div>
+<div class="toc_4"><a href="std_console.html#_932_attr_to_colors">8.3.5.5 attr_to_colors</a></div>
+<div class="toc_4"><a href="std_console.html#_938_colors_to_attr">8.3.5.6 colors_to_attr</a></div>
+<div class="toc_4"><a href="std_console.html#_944_display_text_image">8.3.5.7 display_text_image</a></div>
+<div class="toc_4"><a href="std_console.html#_950_save_text_image">8.3.5.8 save_text_image</a></div>
+<div class="toc_4"><a href="std_console.html#_957_text_rows">8.3.5.9 text_rows</a></div>
+<div class="toc_4"><a href="std_console.html#_964_cursor">8.3.5.10 cursor</a></div>
+<div class="toc_4"><a href="std_console.html#_971_free_console">8.3.5.11 free_console</a></div>
+<div class="toc_4"><a href="std_console.html#_975_display">8.3.5.12 display</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\console.e -->
+<h3>8.3.1 Information</h3>
+<a name="_820_information"></a><a name="information"></a>
+<p> 
+<a name="consolehas_console"></a><a name="console"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.1.1 has_console</h4>
+<a name="_822_has_console"></a><a name="has_console"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">has_console</font><font color="#880033">()</font>
+</pre>
+
+<p>   determines if the process has a console (terminal) window.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_823_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, </p>
+<ul><li><tt>1</tt> if there is more than one process attached to the current console,
+</li><li><tt>0</tt> if a console does not exist or only one process (Euphoria) is attached to the current console.
+</li></ul>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_824_comments"></a><a name="comments"></a><ul><li>On <em>Unix</em> systems always returns <tt>1</tt> .
+</li><li>On <em>Windows</em> client systems earlier than Windows XP the function always returns <tt>0</tt> .
+</li><li>On <em>Windows</em> server systems earlier than Windows Server 2003 the function always returns <tt>0</tt> .
+</li></ul>
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_825_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+
+<font color="#0000FF">if </font><font color="#330033">has_console</font><font color="#880033">() </font><font color="#0000FF">then</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello Console!"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="consolekey_codes"></a><a name="codes"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.1.2 key_codes</h4>
+<a name="_827_key_codes"></a><a name="key_codes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">key_codes</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">codes = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets and sets the keyboard codes used internally by Euphoria.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_828_parameters"></a><a name="parameters"></a><ol><li><tt>codes</tt> : Either a sequence of exactly 256 integers or an atom (the default).
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_829_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of the current 256 keyboard codes, prior to any changes that this function might make.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_830_comments"></a><a name="comments"></a>
+<p> When <tt>codes</tt> is a atom then no change to the existing codes is made, otherwise the set of 256 integers in <tt>codes</tt> completely replaces the existing codes.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_831_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">kc</font>
+<font color="#330033">kc = key_codes</font><font color="#880033">() </font><font color="#FF0055">-- Get existing set.</font>
+<font color="#330033">kc</font><font color="#880033">[</font><font color="#330033">KC_LEFT</font><font color="#880033">] </font><font color="#330033">= 263 </font><font color="#FF0055">-- Change the code for the left-arrow press.</font>
+<font color="#330033">key_codes</font><font color="#880033">(</font><font color="#330033">kc</font><font color="#880033">) </font><font color="#FF0055">-- Set the new codes.</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h3>8.3.2 Key Code Names</h3>
+<a name="_832_keycodenames"></a><a name="keycodenames"></a>
+<p> These are the names of the index values for each of the 256 key code values.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_833_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_827_key_codes">key_codes</a></p>
+
+<p> 
+<a name="consolekc_lbutton"></a><a name="lbutton"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.2.1 KC_LBUTTON</h4>
+<a name="_835_kc_lbutton"></a><a name="kc_lbutton"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">KC_LBUTTON</font>
+</pre>
+
+<p> 
+<a name="consoleset_keycodes"></a><a name="keycodes"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.2.2 set_keycodes</h4>
+<a name="_837_set_keycodes"></a><a name="set_keycodes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">set_keycodes</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">kcfile</font><font color="#880033">)</font>
+</pre>
+
+<p>   changes the default codes returned by the keyboard.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_838_parameters"></a><a name="parameters"></a><ol><li><tt>kcfile</tt> : Either the name of a text file or the handle of an opened (for reading) text file.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_839_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li><tt>0</tt> means no error.
+</li><li><tt>-1</tt> means that the supplied file could not me loaded in to a <a href="std_map.html#_4419_map">map</a>.
+</li><li><tt>-2</tt> means that a new key value was not an integer.
+</li><li><tt>-3</tt> means that an unknown key name was found in the file.
+</li></ul>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_840_comments"></a><a name="comments"></a>
+<p> The text file is expected to contain bindings for one or more keyboard codes.</p>
+
+<p> The format of the files is a set of lines, one line per key binding, in the form <tt>KEYNAME = NEWVALUE</tt>. The <tt>KEYNAME</tt> is the same as the constants but without the "<tt>KC_</tt>" prefix. The key bindings can be in any order.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_841_example1"></a><a name="example1"></a>
+<p> 
+<pre>-- doskeys.txt file containing some key bindings
+F1 = 260
+F2 = 261
+INSERT = 456
+</pre>
+
+<pre class="examplecode"><font color="#330033">set_keycodes</font><font color="#880033">( </font><font color="#330033">"doskeys.txt" </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_842_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_827_key_codes">key_codes</a></p>
+
+<!-- ..\include\std\console.e -->
+<h3>8.3.3 Cursor Style Constants</h3>
+<a name="_843_cursorstyleconstants"></a><a name="cursorstyleconstants"></a>
+<p> In cursor constants the second and fourth hex digits (from the left) determine the top and bottom row of pixels in the cursor. The first digit controls whether the cursor will be visible or not. For example: <tt>#0407</tt> turns on the 4th through 7th rows.</p>
+
+<p> Note: <em>Windows</em> only.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_844_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_964_cursor">cursor</a></p>
+
+<p> 
+<a name="consoleno_cursor"></a><a name="cursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.3.1 NO_CURSOR</h4>
+<a name="_846_no_cursor"></a><a name="no_cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">NO_CURSOR</font>
+</pre>
+
+<p> 
+<a name="consoleunderline_cursor"></a><a name="cursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.3.2 UNDERLINE_CURSOR</h4>
+<a name="_848_underline_cursor"></a><a name="underline_cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">UNDERLINE_CURSOR</font>
+</pre>
+
+<p> 
+<a name="consolethick_underline_cursor"></a><a name="underline_cursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.3.3 THICK_UNDERLINE_CURSOR</h4>
+<a name="_850_thick_underline_cursor"></a><a name="thick_underline_cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">THICK_UNDERLINE_CURSOR</font>
+</pre>
+
+<p> 
+<a name="consolehalf_block_cursor"></a><a name="block_cursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.3.4 HALF_BLOCK_CURSOR</h4>
+<a name="_852_half_block_cursor"></a><a name="half_block_cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">HALF_BLOCK_CURSOR</font>
+</pre>
+
+<p> 
+<a name="consoleblock_cursor"></a><a name="cursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.3.5 BLOCK_CURSOR</h4>
+<a name="_854_block_cursor"></a><a name="block_cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public constant </font><font color="#330033">BLOCK_CURSOR</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h3>8.3.4 Keyboard Related Routines</h3>
+<a name="_855_keyboardrelatedroutines"></a><a name="keyboardrelatedroutines"></a>
+<p> 
+<a name="euget_key"></a><a name="key"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.1 get_key</h4>
+<a name="_857_get_key"></a><a name="get_key"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function get_key</font><font color="#880033">()</font>
+</pre>
+
+<p> returns the key that was pressed by the user, without waiting. Special codes are returned for the function keys, arrow keys, and so on.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_858_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either -1 if no key waiting, or the code of the next key waiting in keyboard buffer.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_859_comments"></a><a name="comments"></a>
+<p> The operating system can hold a small number of key-hits in its keyboard buffer. <tt>get_key</tt> will return the next one from the buffer, or <tt>-1</tt> if the buffer is empty.</p>
+
+<p> Run the <tt>.../euphoria/demo/key.ex</tt> program to see what key code is generated for each key on your keyboard.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_860_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">n = </font><font color="#0000FF">get_key</font><font color="#880033">()</font>
+<font color="#0000FF">if </font><font color="#330033">n=-1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"No key waiting.\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_861_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_875_wait_key">wait_key</a></p>
+
+<p> 
+<a name="consoleallow_break"></a><a name="break"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.2 allow_break</h4>
+<a name="_863_allow_break"></a><a name="allow_break"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">allow_break</font><font color="#880033">(</font><font color="#330033">types :boolean b</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the behavior of Control+C and Control+Break keys.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_864_parameters"></a><a name="parameters"></a><ol><li><tt>b</tt> : a boolean,  TRUE ( != 0 ) to enable the trapping of Control+C and Control+Break, FALSE ( 0 ) to disable it.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_865_comments"></a><a name="comments"></a>
+<p> When <tt>b</tt> is <tt>1</tt> (true), Control+C and Control+Break can terminate your program when it tries to read input from the keyboard. When <tt>b</tt> is <tt>0</tt> (false) your program will not be terminated by Control+C or Control+Break.</p>
+
+<p> Initially your program can be terminated at any point where it tries to read from the keyboard.</p>
+
+<p> You can find out if the user has pressed Control+C or Control+Break by calling <a href="std_console.html#_869_check_break">check_break</a>.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_866_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">allow_break</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)  </font><font color="#FF0055">-- don't let the user kill the program!</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_867_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_869_check_break">check_break</a></p>
+
+<p> 
+<a name="consolecheck_break"></a><a name="break"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.3 check_break</h4>
+<a name="_869_check_break"></a><a name="check_break"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">check_break</font><font color="#880033">()</font>
+</pre>
+
+<p> returns the number of Control+C and Control+Break key presses.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_870_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the number of times that Control+C or Control+Break have been pressed since the last call to <tt>check_break</tt>, or since the beginning of the program if this is the first call.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_871_comments"></a><a name="comments"></a>
+<p> This is useful after you have called <a href="std_console.html#_863_allow_break">allow_break</a>(0) which prevents Control+C or Control+Break from terminating your program. You can use <tt>check_break</tt> to find out if the user has pressed one of these keys. You might then perform some action such as a graceful shutdown of your program.</p>
+
+<p> Neither Control+C nor Control+Break will be returned as input characters when you read the keyboard. You can only detect them by calling <tt>check_break</tt>.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_872_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">k = </font><font color="#0000FF">get_key</font><font color="#880033">()</font>
+<font color="#0000FF">if </font><font color="#330033">check_break</font><font color="#880033">() </font><font color="#0000FF">then  </font><font color="#FF0055">-- ^C or ^Break was hit once or more</font>
+<font color="#330033">    temp = graphics_mode</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"Shutting down..."</font><font color="#880033">)</font>
+<font color="#330033">    save_all_user_data</font><font color="#880033">()</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_873_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_863_allow_break">allow_break</a></p>
+
+<p> 
+<a name="consolewait_key"></a><a name="key"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.4 wait_key</h4>
+<a name="_875_wait_key"></a><a name="wait_key"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">wait_key</font><font color="#880033">()</font>
+</pre>
+
+<p> waits for user to press a key, unless any is pending, and returns key code.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_876_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, which is a key code. If one is waiting in keyboard buffer, then return it. Otherwise, wait for one to come up.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_877_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_857_get_key">get_key</a>, <a href="std_io.html#_1534_getc">getc</a></p>
+
+<p> 
+<a name="consoleany_key"></a><a name="key"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.5 any_key</h4>
+<a name="_879_any_key"></a><a name="any_key"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">any_key</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">prompt = </font><font color="#330033">"Press Any Key to continue..."</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">con = 1</font><font color="#880033">)</font>
+</pre>
+
+<p> displays a prompt to the user and waits for any key.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_880_parameters"></a><a name="parameters"></a><ol><li><tt>prompt</tt> : Prompt to display, defaults to <tt>"Press Any Key to continue..."</tt> .
+</li><li><tt>con</tt> : Either <tt>1</tt> (stdout), or <tt>2</tt> (stderr). Defaults to <tt>1</tt> .
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_881_comments"></a><a name="comments"></a>
+<p> This wraps <a href="std_console.html#_875_wait_key">wait_key</a> by giving a clue that the user should press a key, and perhaps do some other things as well.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_882_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">any_key</font><font color="#880033">() </font><font color="#FF0055">-- "Press Any Key to continue..."</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 2:</h5>
+<a name="_883_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">any_key</font><font color="#880033">(</font><font color="#330033">"Press Any Key to quit"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_884_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_875_wait_key">wait_key</a></p>
+
+<p> 
+<a name="consolemaybe_any_key"></a><a name="any_key"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.6 maybe_any_key</h4>
+<a name="_886_maybe_any_key"></a><a name="maybe_any_key"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">maybe_any_key</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">prompt = </font><font color="#330033">"Press Any Key to continue..."</font><font color="#330033">,</font>
+<font color="#0000FF">        integer </font><font color="#330033">con = 1</font><font color="#880033">)</font>
+</pre>
+
+<p> displays a prompt to the user and waits for any key. <em>Only</em> if the user is running under a GUI environment.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_887_parameters"></a><a name="parameters"></a><ol><li><tt>prompt</tt> : Prompt to display, defaults to <tt>"Press Any Key to continue..."</tt>
+</li><li><tt>con</tt> : Either 1 (stdout), or 2 (stderr). Defaults to 1.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_888_comments"></a><a name="comments"></a>
+<p> This wraps <a href="std_console.html#_875_wait_key">wait_key</a> by giving a clue that the user should press a key, and perhaps do some other things as well.</p>
+
+<p> Requires Windows XP or later or Windows 2003 or later to work.  Earlier versions of <em>Windows</em> or O/S will always pause even when not needed.</p>
+
+<p> On <em>Unix</em> systems this will not pause even when needed.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_889_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">any_key</font><font color="#880033">() </font><font color="#FF0055">-- "Press Any Key to continue..."</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 2:</h5>
+<a name="_890_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">any_key</font><font color="#880033">(</font><font color="#330033">"Press Any Key to quit"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_891_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_875_wait_key">wait_key</a></p>
+
+<p> 
+<a name="consoleprompt_number"></a><a name="number"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.7 prompt_number</h4>
+<a name="_893_prompt_number"></a><a name="prompt_number"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">prompt_number</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">prompt, </font><font color="#0000FF">sequence </font><font color="#330033">range</font><font color="#880033">)</font>
+</pre>
+
+<p> prompts the user to enter a number and returns only validated input.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_894_parameters"></a><a name="parameters"></a><ol><li><tt>st</tt> : is a string of text that will be displayed on the screen.
+</li><li><tt>s</tt> : is a sequence of two values {lower, upper} which determine the range of values that the user may enter. s can be empty, {}, if there are no restrictions.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_895_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, in the assigned range which the user typed in.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Errors:</h5>
+<a name="_896_errors"></a><a name="errors"></a>
+<p> If <a href="std_io.html#_1526_puts">puts</a> cannot display <tt>st</tt> on standard output, or if the first or second element of <tt>s</tt> is a sequence, a runtime error will be raised.</p>
+
+<p> If user tries cancelling the prompt by hitting Control+Z, the program will abort as well, issuing a type check error.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_897_comments"></a><a name="comments"></a>
+<p> As long as the user enters a number that is less than lower or greater than upper, the user will be prompted again.</p>
+
+<p> If this routine is too simple for your needs, feel free to copy it and make your own more specialized version.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_898_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">age = prompt_number</font><font color="#880033">(</font><font color="#330033">"What is your age? "</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">0, 150</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 2:</h5>
+<a name="_899_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">t = prompt_number</font><font color="#880033">(</font><font color="#330033">"Enter a temperature in Celcius:\n"</font><font color="#330033">, </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_900_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1526_puts">puts</a>, <a href="std_console.html#_902_prompt_string">prompt_string</a></p>
+
+<p> 
+<a name="consoleprompt_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.4.8 prompt_string</h4>
+<a name="_902_prompt_string"></a><a name="prompt_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">prompt_string</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">prompt</font><font color="#880033">)</font>
+</pre>
+
+<p>   prompts the user to enter a string of text.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_903_parameters"></a><a name="parameters"></a><ol><li><tt>st</tt> : is a string that will be displayed on the screen.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_904_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the string that the user typed in, stripped of any new-line character.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_905_comments"></a><a name="comments"></a>
+<p> If the user happens to type Control+Z (indicates end-of-file), "" will be returned.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_906_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">name = prompt_string</font><font color="#880033">(</font><font color="#330033">"What is your name? "</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_907_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_893_prompt_number">prompt_number</a></p>
+
+<!-- ..\include\std\console.e -->
+<h3>8.3.5 Cross Platform Text Graphics</h3>
+<a name="_908_crossplatformtextgraphics"></a><a name="crossplatformtextgraphics"></a>
+<p> 
+<a name="consolepositive_int"></a><a name="int"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.1 positive_int</h4>
+<a name="_910_positive_int"></a><a name="positive_int"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public type </font><font color="#330033">positive_int</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="euclear_screen"></a><a name="screen"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.2 clear_screen</h4>
+<a name="_912_clear_screen"></a><a name="clear_screen"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure clear_screen</font><font color="#880033">()</font>
+</pre>
+
+<p> clears the screen using the current background color.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_913_comments"></a><a name="comments"></a>
+<p> The background color can be set by <a href="std_graphics.html#_6038_bk_color">bk_color</a> ).</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_914_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6038_bk_color">bk_color</a></p>
+
+<p> 
+<a name="consoleget_screen_char"></a><a name="screen_char"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.3 get_screen_char</h4>
+<a name="_916_get_screen_char"></a><a name="get_screen_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">get_screen_char</font><font color="#880033">(</font><font color="#330033">positive_atom line, positive_atom column, </font><font color="#0000FF">integer </font><font color="#330033">fgbg = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the value and attribute of the character at a given screen location.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_917_parameters"></a><a name="parameters"></a><ol><li><tt>line</tt> : the 1-base line number of the location.
+</li><li><tt>column</tt> : the 1-base column number of the location.
+</li><li><tt>fgbg</tt> : an integer, if <tt>0</tt> (the default) you get an attribute_code returned otherwise you get a foreground and background color number returned.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_918_returns"></a><a name="returns"></a><ul><li>If fgbg is zero then a <strong>sequence</strong> of <em>two</em> elements, <tt>{character, attribute_code}</tt> for the specified location.
+</li><li>If fgbg is not zero then a <strong>sequence</strong> of <em>three</em> elements, <tt>{characterfg_color, bg_color}</tt>.
+</li></ul>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_919_comments"></a><a name="comments"></a><ul><li>This function inspects a single character on the <em>active page</em>.
+</li><li>The attribute_code is an atom that contains the foreground and background color of the character, and possibly other operating-system dependant information describing the appearance of the character on the screen.
+</li><li>With <tt>get_screen_char</tt> and <tt>put_screen_char</tt> you can save and restore a character on the screen along with its attribute_code.
+</li><li>The <tt>fg_color</tt> and <tt>bg_color</tt> are integers in the range <tt>0</tt> to <tt>15</tt> which correspond to the values in the table:
+</li></ul>
+<p>Color Table</p>
+<table><tr><th> color number </th>
+<th> name </th>
+</tr>
+<tr><td>       0       </td>
+<td> black      </td>
+</tr>
+<tr><td>       1       </td>
+<td> dark blue      </td>
+</tr>
+<tr><td>       2       </td>
+<td> green      </td>
+</tr>
+<tr><td>       3       </td>
+<td> cyan      </td>
+</tr>
+<tr><td>       4       </td>
+<td> crimson      </td>
+</tr>
+<tr><td>       5       </td>
+<td> purple      </td>
+</tr>
+<tr><td>       6       </td>
+<td> brown      </td>
+</tr>
+<tr><td>       7       </td>
+<td> light gray      </td>
+</tr>
+<tr><td>       8       </td>
+<td> dark gray      </td>
+</tr>
+<tr><td>       9       </td>
+<td> blue      </td>
+</tr>
+<tr><td>       10      </td>
+<td> bright green      </td>
+</tr>
+<tr><td>       11      </td>
+<td> light blue      </td>
+</tr>
+<tr><td>       12      </td>
+<td> red      </td>
+</tr>
+<tr><td>       13      </td>
+<td> magenta      </td>
+</tr>
+<tr><td>       14      </td>
+<td> yellow      </td>
+</tr>
+<tr><td>       15      </td>
+<td> white      </td>
+</tr>
+</table>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_920_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- read character and attributes at top left corner</font>
+<font color="#330033">s = get_screen_char</font><font color="#880033">(</font><font color="#330033">1,1</font><font color="#880033">)</font>
+<font color="#FF0055">-- s could be {'A', 92}</font>
+<font color="#FF0055">-- store character and attributes at line 25, column 10</font>
+<font color="#330033">put_screen_char</font><font color="#880033">(</font><font color="#330033">25, 10, s</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 2:</h5>
+<a name="_921_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- read character and colors at line 25, column 10.</font>
+<font color="#330033">s = get_screen_char</font><font color="#880033">(</font><font color="#330033">25,10, 1</font><font color="#880033">)</font>
+<font color="#FF0055">-- s could be {'A', 12, 5}</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_922_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_924_put_screen_char">put_screen_char</a>, <a href="std_console.html#_950_save_text_image">save_text_image</a></p>
+
+<p> 
+<a name="consoleput_screen_char"></a><a name="screen_char"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.4 put_screen_char</h4>
+<a name="_924_put_screen_char"></a><a name="put_screen_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">put_screen_char</font><font color="#880033">(</font><font color="#330033">positive_atom line, positive_atom column, </font><font color="#0000FF">sequence </font><font color="#330033">char_attr</font><font color="#880033">)</font>
+</pre>
+
+<p>   stores and displays a sequence of characters with attributes at a given location.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_925_parameters"></a><a name="parameters"></a><ol><li><tt>line</tt> : the 1-based line at which to start writing.
+</li><li><tt>column</tt> : the 1-based column at which to start writing.
+</li><li><tt>char_attr</tt> : a sequence of alternated characters and attribute codes.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_926_comments"></a><a name="comments"></a>
+<p> <tt>char_attr</tt> must be in the form  <tt>{character, attribute code, character, attribute code, ...}</tt>.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Errors:</h5>
+<a name="_927_errors"></a><a name="errors"></a>
+<p> The length of <tt>char_attr</tt> must be a multiple of two.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_928_comments"></a><a name="comments"></a>
+<p> The attributes atom contains the foreground color, background color, and possibly other platform-dependent information controlling how the character is displayed on the screen. If <tt>char_attr</tt> has <tt>0</tt> length, nothing will be written to the screen. The characters are written to the <em>active page</em>. It is faster to write several characters to the screen with a single call to <tt>put_screen_char</tt> than it is to write one character at a time.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_929_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- write AZ to the top left of the screen</font>
+<font color="#FF0055">-- (attributes are platform-dependent)</font>
+<font color="#330033">put_screen_char</font><font color="#880033">(</font><font color="#330033">1, 1, </font><font color="#993333">{</font><font color="#330033">'A'</font><font color="#330033">, 152, </font><font color="#330033">'Z'</font><font color="#330033">, 131</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_930_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_916_get_screen_char">get_screen_char</a>, <a href="std_console.html#_944_display_text_image">display_text_image</a></p>
+
+<p> 
+<a name="consoleattr_to_colors"></a><a name="to_colors"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.5 attr_to_colors</h4>
+<a name="_932_attr_to_colors"></a><a name="attr_to_colors"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">attr_to_colors</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">attr_code</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an attribute code to its foreground and background color components.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_933_parameters"></a><a name="parameters"></a><ol><li><tt>attr_code</tt> : integer, an attribute code.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_934_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of two elements -- <tt>{fgcolor, bgcolor}</tt></p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_935_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? attr_to_colors</font><font color="#880033">(</font><font color="#330033">92</font><font color="#880033">) </font><font color="#FF0055">--&gt; {12, 5}</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_936_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_916_get_screen_char">get_screen_char</a>, <a href="std_console.html#_938_colors_to_attr">colors_to_attr</a></p>
+
+<p> 
+<a name="consolecolors_to_attr"></a><a name="to_attr"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.6 colors_to_attr</h4>
+<a name="_938_colors_to_attr"></a><a name="colors_to_attr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">colors_to_attr</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">fgbg, </font><font color="#0000FF">integer </font><font color="#330033">bg = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a foreground and background color set to its attribute code format.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_939_parameters"></a><a name="parameters"></a><ol><li><tt>fgbg</tt> : Either a sequence of <tt>{fgcolor, bgcolor}</tt> or just an integer fgcolor.
+</li><li><tt>bg</tt> : An integer bgcolor. Only used when <tt>fgbg</tt> is an integer.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_940_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, an attribute code.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_941_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? colors_to_attr</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">12, 5</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">--&gt; 92</font>
+<font color="#330033">? colors_to_attr</font><font color="#880033">(</font><font color="#330033">12, 5</font><font color="#880033">) </font><font color="#FF0055">--&gt; 92</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_942_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_916_get_screen_char">get_screen_char</a>, <a href="std_console.html#_924_put_screen_char">put_screen_char</a>, <a href="std_console.html#_932_attr_to_colors">attr_to_colors</a></p>
+
+<p> 
+<a name="consoledisplay_text_image"></a><a name="text_image"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.7 display_text_image</h4>
+<a name="_944_display_text_image"></a><a name="display_text_image"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">display_text_image</font><font color="#880033">(</font><font color="#330033">text_point xy, </font><font color="#0000FF">sequence </font><font color="#330033">text</font><font color="#880033">)</font>
+</pre>
+
+<p>   displays a text image in any text mode.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_945_parameters"></a><a name="parameters"></a><ol><li><tt>xy</tt> : a pair of 1-based coordinates representing the point at which to start writing.
+</li><li><tt>text</tt> : a list of sequences of alternated character and attribute.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_946_comments"></a><a name="comments"></a>
+<p> This routine displays to the active text page, and only works in text modes.</p>
+
+<p> You might use <a href="std_console.html#_950_save_text_image">save_text_image</a> and <a href="std_console.html#_944_display_text_image">display_text_image</a> in a text-mode graphical user interface, to allow "pop-up" dialog boxes, and drop-down menus to appear and disappear without losing what was previously on the screen.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_947_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">clear_screen</font><font color="#880033">()</font>
+<font color="#330033">display_text_image</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,1</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">'A'</font><font color="#330033">, WHITE, </font><font color="#330033">'B'</font><font color="#330033">, GREEN</font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">                           {</font><font color="#330033">'C'</font><font color="#330033">, RED+16*WHITE</font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">                           {</font><font color="#330033">'D'</font><font color="#330033">, BLUE</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- displays:</font>
+<font color="#FF0055">--     AB</font>
+<font color="#FF0055">--     C</font>
+<font color="#FF0055">--     D</font>
+<font color="#FF0055">-- at the top left corner of the screen.</font>
+<font color="#FF0055">-- 'A' will be white with black (0) background color,</font>
+<font color="#FF0055">-- 'B' will be green on black,</font>
+<font color="#FF0055">-- 'C' will be red on white, and</font>
+<font color="#FF0055">-- 'D' will be blue on black.</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_948_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_950_save_text_image">save_text_image</a>, <a href="std_console.html#_924_put_screen_char">put_screen_char</a></p>
+
+<p> 
+<a name="consolesave_text_image"></a><a name="text_image"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.8 save_text_image</h4>
+<a name="_950_save_text_image"></a><a name="save_text_image"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">save_text_image</font><font color="#880033">(</font><font color="#330033">text_point top_left, text_point bottom_right</font><font color="#880033">)</font>
+</pre>
+
+<p>   copies a rectangular block of text out of screen memory.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_951_parameters"></a><a name="parameters"></a><ol><li><tt>top_left</tt> : the coordinates, given as a pair, of the upper left corner of the area to save.
+</li><li><tt>bottom_right</tt> : the coordinates, given as a pair, of the lower right corner of the area to save.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_952_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of <tt>{character, attribute, character, ...}</tt> lists.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_953_comments"></a><a name="comments"></a>
+<p> The returned value is appropriately handled by <a href="std_console.html#_944_display_text_image">display_text_image</a>.</p>
+
+<p> This routine reads from the active text page, and only works in text modes.</p>
+
+<p> You might use this function in a text-mode graphical user interface to save a portion of the screen before displaying a drop-down menu, dialog box, alert box, and so on.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_954_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Top 2 lines are: Hello and World</font>
+<font color="#330033">s = save_text_image</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,1</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">2,5</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- s is something like: {"H-e-l-l-o-", "W-o-r-l-d-"}</font>
+</pre>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_955_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_944_display_text_image">display_text_image</a>, <a href="std_console.html#_916_get_screen_char">get_screen_char</a></p>
+
+<p> 
+<a name="consoletext_rows"></a><a name="rows"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.9 text_rows</h4>
+<a name="_957_text_rows"></a><a name="text_rows"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public function </font><font color="#330033">text_rows</font><font color="#880033">(</font><font color="#330033">positive_int rows</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the number of lines on a text-mode screen.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_958_parameters"></a><a name="parameters"></a><ol><li><tt>rows</tt> : an integer, the desired number of rows.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Platform:</h5>
+<a name="_959_platform"></a><a name="platform"></a>
+<p> <em>Windows</em></p>
+
+<!-- ..\include\std\console.e -->
+<h5>Returns:</h5>
+<a name="_960_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the actual number of text lines.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_961_comments"></a><a name="comments"></a>
+<p> Values of 25, 28, 43 and 50 lines are supported by most video cards.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_962_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6065_graphics_mode">graphics_mode</a>, <a href="std_graphcst.html#_6007_video_config">video_config</a></p>
+
+<p> 
+<a name="consolecursor"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.10 cursor</h4>
+<a name="_964_cursor"></a><a name="cursor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">cursor</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">style</font><font color="#880033">)</font>
+</pre>
+
+<p>   selects a style of cursor.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_965_parameters"></a><a name="parameters"></a><ol><li><tt>style</tt> : an integer defining the cursor shape.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Platform:</h5>
+<a name="_966_platform"></a><a name="platform"></a>
+<p> <em>Windows</em></p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_967_comments"></a><a name="comments"></a>
+<p> In pixel-graphics modes no cursor is displayed.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_968_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">cursor</font><font color="#880033">(</font><font color="#330033">BLOCK_CURSOR</font><font color="#880033">)</font>
+</pre>
+
+<p> Cursor Type Constants: </p>
+<ul><li><a href="std_console.html#_846_no_cursor">NO_CURSOR</a>
+</li><li><a href="std_console.html#_848_underline_cursor">UNDERLINE_CURSOR</a>
+</li><li><a href="std_console.html#_850_thick_underline_cursor">THICK_UNDERLINE_CURSOR</a>
+</li><li><a href="std_console.html#_852_half_block_cursor">HALF_BLOCK_CURSOR</a>
+</li><li><a href="std_console.html#_854_block_cursor">BLOCK_CURSOR</a>
+</li></ul>
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_969_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6065_graphics_mode">graphics_mode</a>, <a href="std_console.html#_957_text_rows">text_rows</a></p>
+
+<p> 
+<a name="consolefree_console"></a><a name="console"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.11 free_console</h4>
+<a name="_971_free_console"></a><a name="free_console"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">free_console</font><font color="#880033">()</font>
+</pre>
+
+<p>   frees (deletes) any console window associated with your program.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_972_comments"></a><a name="comments"></a>
+<p> Euphoria will create a console text window for your program the first time that your program prints something to the screen, reads something from the keyboard, or in some way needs a console. On <em>Windows</em> this window will automatically disappear when your program terminates, but you can call <tt>free_console</tt> to make it disappear sooner. On <em>Unix</em> the text mode console is always there, but an xterm window will disappear after Euphoria issues a <tt>"Press Enter"</tt> prompt at the end of execution.</p>
+
+<p> On <em>Unix</em> <tt>free_console</tt> will set the terminal parameters back to normal, undoing the effect that curses has on the screen.</p>
+
+<p> In a <em>Unix</em> terminal a call to <tt>free_console</tt> (without any further printing to the screen or reading from the keyboard) will eliminate the "Press Enter" prompt that Euphoria normally issues at the end of execution.</p>
+
+<p> After freeing the console window, you can create a new console window by printing something to the screen, calling <tt>clear_screen</tt>, <tt>position</tt>, or any other routine that needs a console.</p>
+
+<p> When you use the trace facility, or when your program has an error, Euphoria will automatically create a console window to display trace information, error messages, and so on.</p>
+
+<p> There is a WINDOWS API routine, FreeConsole() that does something similar to <tt>free_console</tt>. Use the Euphoria <tt>free_console</tt> because it lets the interpreter know that there is no longer a console to write to or read from.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>See Also:</h5>
+<a name="_973_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_912_clear_screen">clear_screen</a></p>
+
+<p> 
+<a name="consoledisplay"></a> </p>
+
+<!-- ..\include\std\console.e -->
+<h4>8.3.5.12 display</h4>
+<a name="_975_display"></a><a name="display"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">console</font>
+<font color="#0000FF">public procedure </font><font color="#330033">display</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">data_in, </font><font color="#0000FF">object </font><font color="#330033">args = 1, </font><font color="#0000FF">integer </font><font color="#330033">finalnl = - 918_273_645</font><font color="#880033">)</font>
+</pre>
+
+<p>   displays the supplied data on the console screen at the current cursor position.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Parameters:</h5>
+<a name="_976_parameters"></a><a name="parameters"></a><ol><li><tt>data_in</tt> : Any object.
+</li><li><tt>args</tt> : Optional arguments used to format the output. Default is <tt>1</tt> .
+</li><li><tt>finalnl</tt> : Optional. Determines if a new line is output after the data. Default is to output a new line.
+</li></ol>
+<!-- ..\include\std\console.e -->
+<h5>Comments:</h5>
+<a name="_977_comments"></a><a name="comments"></a><ul><li>If <tt>data_in</tt> is an atom or integer, it is simply displayed.
+</li></ul><ul><li>If <tt>data_in</tt> is a simple text string, then <tt>args</tt> can be used to produce a formatted output with <tt>data_in</tt> providing the <a href="std_text.html#textformat">text:format</a> string and  <tt>args</tt> being a sequence containing the data to be formatted.<ul><li>If the last character of <tt>data_in</tt> is an underscore character then it is stripped off and <tt>finalnl</tt> is set to zero. Thus ensuring that a new line is <strong>not</strong> output.
+</li><li>The formatting codes expected in <tt>data_in</tt> are the ones used by <a href="std_text.html#textformat">text:format</a>. It is not mandatory to use formatting codes, and if <tt>data_in</tt> does not contain any then it is simply displayed and anything in <tt>args</tt> is ignored.
+</li></ul>
+</li></ul><ul><li>If <tt>data_in</tt> is a sequence containing floating-point numbers, sub-sequences or integers that are not characters, then <tt>data_in</tt> is forwarded on to the <a href="std_pretty.html#_1873_pretty_print">pretty_print</a> to display.<ul><li>If <tt>args</tt> is a non-empty sequence, it is assumed to contain the pretty_print formatting options.
+</li><li>if <tt>args</tt> is an atom or an empty sequence, the assumed pretty_print formatting options are assumed to be <tt>{2}</tt>.
+</li></ul>
+</li></ul>
+<p>After the data is displayed, the routine will normally output a New Line. If you want to avoid this, ensure that the last parameter is a zero. Or to put this another way, if the last parameter is zero then a New Line will <strong>not</strong> be output.</p>
+
+<!-- ..\include\std\console.e -->
+<h5>Example 1:</h5>
+<a name="_978_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"Some plain text"</font><font color="#880033">)</font>
+<font color="#FF0055">        -- Displays this string on the console plus a new line.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"Your answer:"</font><font color="#330033">,0</font><font color="#880033">)  </font>
+<font color="#FF0055">       -- Displays this string on the console without a new line.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"cat"</font><font color="#880033">)</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"Your answer:"</font><font color="#330033">,,0</font><font color="#880033">) </font>
+<font color="#FF0055">        -- Displays this string on the console without a new line.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">""</font><font color="#880033">)</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"Your answer:_"</font><font color="#880033">)   </font>
+<font color="#FF0055">       -- Displays this string, </font>
+<font color="#FF0055">       -- except the '_', on the console without a new line.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"dog"</font><font color="#880033">)</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"abc"</font><font color="#330033">, 3.44554</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">       -- Displays the contents of 'res' on the console.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">"The answer to [1] was [2]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"'why'"</font><font color="#330033">, 42</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">       -- formats these with a new line.</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">""</font><font color="#330033">,2</font><font color="#880033">)</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">51,362,71</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<p> Output would be: 
+<pre>Some plain text
+Your answer:cat
+===== Your answer:
+Your answer:dog
+{
+"abc",
+3.44554
+}
+The answer to 'why' was 42
+""
+{51'3',362,71'G'}
+</pre>
+
+<p> 
+<!-- ..\include\std\datetime.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_cmdline.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_datetime.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_cmdline.html">8.2 Command Line Handling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_datetime.html">8.4 Date and Time</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

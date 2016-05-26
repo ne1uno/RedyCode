@@ -1,0 +1,23 @@
+==Error Report Library
+err.e : Error report system
+
+===Introduction
+Makes a graphical error message and crashes the application, and generates debug data (not fully implemented).
+
+===API
+====Routines
+=====procedure warn(sequence errorigin, sequence errmsgtxt, object errdebugdata)
+
+=====procedure die(sequence errorigin, sequence errmsgtxt, object errdebugdata)
+
+=====procedure set_warn_callback(atom warnrid)
+
+=====procedure set_die_callback(atom dierid)
+
+=====procedure set_error_log_file(object logfile)
+
+=====function get_errors(sequence errcount, object errtype, object errorigin)
+
+
+
+Next page: [[Graphical User Interface->RedyLib\Gui]]

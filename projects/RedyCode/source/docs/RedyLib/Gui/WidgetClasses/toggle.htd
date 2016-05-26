@@ -1,0 +1,36 @@
+==Toggle Widget Class
+
+Widget Class name: "toggle"
+
+===API
+====Properties
+
+====="label"   
+====="style"
+    "button"
+====="value"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "value", IsPressed}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====function cmd_get_value(atom wid)
+=====procedure cmd_set_value(atom wid, atom newval)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

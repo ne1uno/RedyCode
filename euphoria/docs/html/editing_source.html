@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="creating_eu_progs.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="distributing.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="creating_eu_progs.html">3.2 Creating Euphoria programs</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="distributing.html">3.4 Distributing a Program</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h2>3.3 Editing a Program</h2>
+<a name="_72_editingaprogram"></a><a name="editingaprogram"></a>
+<p> If you have not selected your "favorite editor," then try <tt>edx</tt>:</p>
+
+<p> You can use any text editor to edit a Euphoria program. However, Euphoria comes with its own special editor that is written entirely in Euphoria. Type: <tt>edx</tt> followed by the complete name of the file you wish to edit. You can use this editor to edit any kind of text file. When you edit a Euphoria file some extra features such as color syntax highlighting and auto-completion of certain statements are available to make your job easier.</p>
+
+<p> Whenever you run a Euphoria program and get an error message, during compilation or execution, you can simply type <tt>edx</tt> with no file name and you will be automatically positioned in the file containing the error, at the correct line and column, and with the error message displayed at the top of the screen.</p>
+
+<p> Under <em>Windows</em> you can associate <tt>edx.bat</tt> with various kinds of text files that you want to edit. Color syntax highlighting is provided for <tt>.ex</tt>, <tt>.exw</tt>, <tt>.exd</tt>, <tt>.e</tt> and <tt>.pro</tt> (<a href="debug.html#_521_profiling">profile files</a>).</p>
+
+<p> Most keys that you type are inserted into the file at the cursor position. Hit the <tt>Esc</tt> key once to get a menu bar of special commands. The arrow keys, and the <tt>Insert/Delete/Home/End/PageUp/PageDown</tt> keys are also active. Under <em>Linux/FreeBSD</em> some keys may not be available, and alternate keys are provided. See <a href="edx.html#_697_edxdemonstrationcodeeditor">Edx Demonstration Code Editor</a> for a complete description of the editing commands.</p>
+
+<p> If you need to understand or modify any detail of the editor's operation, you can edit the file <tt>edx.ex</tt> in <tt>euphoria\bin</tt> (be sure to make a backup copy so you don't lose your ability to edit).  If the name <tt>edx</tt> conflicts with some other command on your system, simply rename the file <tt>euphoria\bin\edx.bat</tt> to something else. Because this editor is written in Euphoria, it is remarkably concise and easy to understand. The same functionality implemented in a language like C, would take far more lines of code.</p>
+
+<p> <tt>edx</tt> is a simple text-mode editor that runs on all platforms and is distributed with Euphoria. There is a list of other editors at the <a class="external" href="/wiki/view.wc?page=Editors">OpenEuphoria web site</a>, many of which include extra features such as syntax highlighting.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="creating_eu_progs.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="distributing.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="creating_eu_progs.html">3.2 Creating Euphoria programs</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="distributing.html">3.4 Distributing a Program</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

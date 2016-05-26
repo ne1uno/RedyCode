@@ -1,0 +1,28 @@
+==Welcome to TempApp!
+
+TempApp is a simple text editor written in the Euphoria programing language
+using the Redy application environment. This application is a demo of what
+Redy can do, but it is also a useable generic text editor :-)
+
+This template is based on the source of the RedyPad application. This is a good starting point for writing your own applications in the RedyCode IDE.
+
+====Features
+* Opening multiple files at the same time in tabs
+* Syntax highlighting (currently for Euphoria source only)
+* Smart indentation when pressing Enter on an indented line
+* Indent/unindent selected lines
+* Word Wrap
+* Customizeable toolbars
+* Remembers window positions
+* Portable (no installation needed, just make sure RedyPad is able to write
+to the folder it is in, so it can save to a config file).
+
+====Hotkeys currently implemented:
+* Ctrl + A : Select all
+* Ctrl + X : Cut selection to clipboard
+* Ctrl + C : Copy selection to clipboard
+* Ctrl + V : Paste from clipboard
+* Tab : Indent selection or shift text to next tab stop
+* Shift + Tab : Unindent selection
+* Home, End, PgUp, PgDown, Arrow keys
+

@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="preproc.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="platform.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="preproc.html">6.8 The User Defined Pre-Processor</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="platform.html">6.10 Platform Specific Issues</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\trouble.txt -->
+<h2>6.9 Euphoria Trouble-Shooting Guide</h2>
+<a name="_620_euphoriatroubleshootingguide"></a><a name="euphoriatroubleshootingguide"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="trouble.html#_620_euphoriatroubleshootingguide">6.9 Euphoria Trouble-Shooting Guide</a></div>
+<div class="toc_3"><a href="trouble.html#_621_commonproblemsandsolutions">6.9.1 Common Problems and Solutions</a></div>
+<div class="toc_4"><a href="trouble.html#_622_consolewindowdisappeared">6.9.1.1 Console window disappeared</a></div>
+<div class="toc_4"><a href="trouble.html#_623_pressenter">6.9.1.2 Press Enter</a></div>
+<div class="toc_4"><a href="trouble.html#_624_cgiprogramhangsnooutput">6.9.1.3 CGI Program Hangs / No Output</a></div>
+<div class="toc_4"><a href="trouble.html#_625_readwriteports">6.9.1.4 Read / Write Ports?</a></div>
+<div class="toc_4"><a href="trouble.html#_626_programhasnoerrorsnooutput">6.9.1.5 Program has no errors, no output</a></div>
+<div class="toc_4"><a href="trouble.html#_627_routinenotdeclared">6.9.1.6 Routine not declared</a></div>
+<div class="toc_4"><a href="trouble.html#_628_routinenotdeclaredmyfile">6.9.1.7 Routine not declared, my file</a></div>
+<div class="toc_4"><a href="trouble.html#_629_afteruserinputleftmarginproblem">6.9.1.8 After user input, left margin problem</a></div>
+<div class="toc_4"><a href="trouble.html#_630_floatingpointcalculationsnotexact">6.9.1.9 Floating-point calculations not exact</a></div>
+<div class="toc_4"><a href="trouble.html#_631_numbertoastring">6.9.1.10 Number to a string?</a></div>
+<div class="toc_4"><a href="trouble.html#_632_stringtoanumber">6.9.1.11 String to a number?</a></div>
+<div class="toc_4"><a href="trouble.html#_633_redefinemyforloopvariable">6.9.1.12 Redefine my for-loop variable?</a></div>
+<div class="toc_4"><a href="trouble.html#_634_unknownescapecharacter">6.9.1.13 Unknown Escape Character</a></div>
+<div class="toc_4"><a href="trouble.html#_635_onlyfirstcharacterinprintf">6.9.1.14 Only first character in printf</a></div>
+<div class="toc_4"><a href="trouble.html#_636_only10significantdigitsduringprinting">6.9.1.15 Only 10 significant digits during printing</a></div>
+<div class="toc_4"><a href="trouble.html#_637_atypeisexpectedhere">6.9.1.16 A type is expected here</a></div>
+<div class="toc_4"><a href="trouble.html#_638_expectedtosee">6.9.1.17 Expected to see...</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> If you get stuck, here are some things you can do:</p>
+<ol><li>Type: <tt>guru</tt> followed by some keywords associated with your problem. For example, <tt>guru declare global include</tt>
+</li><li>Check the list of common problems (<a href="trouble.html#_621_commonproblemsandsolutions">Common Problems and Solutions</a>).
+</li><li>Read the relevant parts of the documentation, i.e. <a href="eu_intro.html#toc">Euphoria Programming Language v4.0</a> or <a href="apiref.html#_719_apireference">API Reference</a>.
+</li><li>Try running your program with trace:
+</li></ol>
+<pre class="examplecode"><font color="#0000FF">with trace</font>
+<font color="#0000FF">trace</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+</pre>
+<ol><li>The <a class="external" href="http://openeuphoria.org/forum/index.wc">Euphoria Forum</a> has a search facility. You can search the archive of all previous messages. There is a good chance that your question has already been discussed.
+</li><li>Post a message on the forum.
+</li><li>Visit the Euphoria IRC channel, <a class="external" href="irc://irc.freenode.net/#euphoria">irc://irc.freenode.net/#euphoria</a>.
+</li></ol>
+<!-- ..\docs\trouble.txt -->
+<h3>6.9.1 Common Problems and Solutions</h3>
+<a name="_621_commonproblemsandsolutions"></a><a name="commonproblemsandsolutions"></a>
+<p> Here are some commonly reported problems and their solutions.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.1 Console window disappeared</h4>
+<a name="_622_consolewindowdisappeared"></a><a name="consolewindowdisappeared"></a>
+<p> <em>I ran my program with <tt>euiw.exe</tt> and the console window disappeared before I could read the output.</em></p>
+
+<p> The console window will only appear if required, and will disappear immediately when your program finishes execution. Perhaps you should code something like:</p>
+
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"\nPress Enter\n"</font><font color="#880033">)</font>
+<font color="#0000FF">if getc</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> at the end of your program.</p>
+
+<p> You may also run your console program with <tt>eui.exe</tt>.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.2 Press Enter</h4>
+<a name="_623_pressenter"></a><a name="pressenter"></a>
+<p> <em>At the end of execution of my program, I see "Press Enter" and I have to hit the Enter key. How do I get rid of that?</em></p>
+
+<p> Call <a href="std_console.html#_971_free_console">free_console</a> just before your program terminates.</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">dll.e</font>
+
+<font color="#330033">free_console</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.3 CGI Program Hangs / No Output</h4>
+<a name="_624_cgiprogramhangsnooutput"></a><a name="cgiprogramhangsnooutput"></a>
+<p> <em>My Euphoria CGI program hangs or has no output</em></p>
+<ol><li>Make sure that you are using the <tt>-batch</tt> parameter to <tt>eui</tt>. This causes Euphoria to not present the normal "Press any key to continue..." prompt when a warning or error occurs. The web server will not respond to this prompt and your application will hang waiting for ENTER to be pressed.
+</li><li>Use the <tt>-wf</tt> parameter to write all warnings to a file instead of the console. The warnings that Euphoria will write to the console may interfere with the actual output of your web content.
+</li><li>Look for an ex.err file in your cgi-bin directory. Turn on  <tt>with trace</tt> / <tt>trace(3)</tt> to see  what statements are executed (see  <tt>ctrace.out</tt> in your cgi-bin). On <em>Windows</em> you should always use <tt>eui.exe</tt> to run CGI programs, or you may have problems with standard output. With Apache Web Server, you can have a first line in your program of:
+</li><li>!.\eui.exe to run your program using eui.exe in the current (cgi-bin) directory. Be careful that your first line ends with the line breaking characters appropriate for your platform, or the <tt>!</tt> won't be handled correctly. You must also set the execute permissions on your program correctly, and <tt>ex.err</tt> and ctrace.out must be writable by the server process or they won't be updated.
+</li></ol>
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.4 Read / Write Ports?</h4>
+<a name="_625_readwriteports"></a><a name="readwriteports"></a>
+<p> <em>How do I read/write ports?</em></p>
+
+<p> There are collections of machine-level routines from the <a class="external" href="http://www.rapideuphoria.com">Euphoria Web Page</a>.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.5 Program has no errors, no output</h4>
+<a name="_626_programhasnoerrorsnooutput"></a><a name="programhasnoerrorsnooutput"></a>
+<p> <em>When I run my program there are no errors but nothing happens.</em></p>
+
+<p> You probably forgot to call your main procedure. You need a top-level statement that comes after your main procedure to call the main procedure and start execution.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.6 Routine not declared</h4>
+<a name="_627_routinenotdeclared"></a><a name="routinenotdeclared"></a>
+<p> <em>I'm trying to call a routine documented in <tt>library.doc</tt>, but it keeps saying the routine has not been declared.</em></p>
+
+<p> Did you remember to include the necessary <tt>.e</tt> file from the <tt>euphoria\include</tt> directory? If the syntax of the routine says for example, "<tt>include\std\graphics.e</tt>", then your program must have "<tt>include\std\graphics.e</tt>" (without the quotes) before the place where you first call the routine.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.7 Routine not declared, my file</h4>
+<a name="_628_routinenotdeclaredmyfile"></a><a name="routinenotdeclaredmyfile"></a>
+<p> <em>I have an include file with a routine in it that I want to call, but when I try to call the routine it says the routine has not been declared. But it <strong>has</strong> been declared.</em></p>
+
+<p> Did you remember to define the routine as <tt>public</tt>, <tt>export</tt> or possibly <tt>global</tt>? If not, the routine is not visible outside of its own file.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.8 After user input, left margin problem</h4>
+<a name="_629_afteruserinputleftmarginproblem"></a><a name="afteruserinputleftmarginproblem"></a>
+<p> <em>After inputting a string from the user with <tt>gets</tt>, the next line that comes out on the screen does not start at the left margin.</em></p>
+
+<p> Your program should output a <em>new-line</em> character e.g.</p>
+
+<pre class="examplecode"><font color="#330033">input = </font><font color="#0000FF">gets</font><font color="#880033">()</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">SCREEN, </font><font color="#330033">'\n'</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.9 Floating-point calculations not exact</h4>
+<a name="_630_floatingpointcalculationsnotexact"></a><a name="floatingpointcalculationsnotexact"></a>
+<p> <em>Why aren't my floating-point calculations coming out exact?</em></p>
+
+<p> Intel CPU's, and most other CPU's, use binary numbers to represent fractions. Decimal fractions such as 0.1, 0.01 and similar numbers can't be represented precisely. For example, 0.1 might be stored internally as <tt>0.0999999999999999</tt> . That means that <tt>10 * 0.1</tt> might come out as <tt>0.999999999999999</tt>, and <tt>floor(10 * 0.1)</tt> might be <tt>0</tt>, not <tt>1</tt> as you would expect. This can be a nuisance when you are dealing with money calculations, but it is not a Euphoria problem. It's a general problem that you must face in most programming languages. Always remember: floating-point numbers are just an approximation to the "real" numbers in mathematics. Assume that any floating-point calculation might have a tiny bit of error in the result. Sometimes you can solve the problem by rounding, e.g. x = round( x, 100 ) would round x off to the nearest hundredth.  Storing money values as an integer number of pennies, rather than a fractional number of dollars (or similar currency) will help, but some calculations could still cause problems.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.10 Number to a string?</h4>
+<a name="_631_numbertoastring"></a><a name="numbertoastring"></a>
+<p> <em>How do I convert a number to a string?</em></p>
+
+<p> Use <a href="std_text.html#_3293_sprintf">sprintf</a>:</p>
+
+<pre class="examplecode"><font color="#330033">string = eu:</font><font color="#0000FF">sprintf</font><font color="#880033">(</font><font color="#330033">"%d"</font><font color="#330033">, 10</font><font color="#880033">) </font><font color="#FF0055">-- string is "10"</font>
+</pre>
+
+<p> or use <a href="std_locale.html#_3033_number">number</a>:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e </font><font color="#0000FF">as </font><font color="#330033">locale</font>
+<font color="#330033">string = locale:number</font><font color="#880033">(</font><font color="#330033">10</font><font color="#880033">) </font>
+<font color="#FF0055">         -- string is probably "10.00" if called in the U.S.</font>
+<font color="#FF0055">         -- It depends on the locale preferences set on your computer.</font>
+</pre>
+
+<p> Number formats according to the locale setting on your computer and strangely, this means to give you two decimal places whether or not you supply an integer value for the U.S. locale.</p>
+
+<p> Besides <tt>%d</tt>, you can also try other formats, such as <tt>%x</tt> (Hex) or <tt>%f</tt> (floating-point).</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.11 String to a number?</h4>
+<a name="_632_stringtoanumber"></a><a name="stringtoanumber"></a>
+<p> <em>How do I convert a string to a number?</em></p>
+
+<p> Use <a href="std_get.html#_2298_value">value</a>.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.12 Redefine my for-loop variable?</h4>
+<a name="_633_redefinemyforloopvariable"></a><a name="redefinemyforloopvariable"></a>
+<p> <em>It says I'm attempting to redefine my for-loop variable.</em></p>
+
+<p> For-loop variables are declared automatically. Apparently you already have a declaration with the same name earlier in your routine or your program. Remove that earlier declaration or change the name of your loop variable.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.13 Unknown Escape Character</h4>
+<a name="_634_unknownescapecharacter"></a><a name="unknownescapecharacter"></a>
+<p> <em>I get the message "unknown escape character" on a line where I am trying to specify a file name.</em></p>
+
+<p> <strong>Do not</strong> say <tt>"C:\TMP\MYFILE"</tt>. You need to say <tt>"C:\\TMP\\MYFILE"</tt> or use back-quotes <tt>`C:\TMP\MYFILE`</tt>.</p>
+
+<p> Backslash is used for escape characters such as <tt>\n</tt> or <tt>\t</tt>. To specify a single backslash in a string you need to type <tt>\\</tt>. Therefore, say <tt>"C:\\TMP\\MYFILE"</tt> instead of <tt>"C:\TMP\MYFILE"</tt></p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.14 Only first character in printf</h4>
+<a name="_635_onlyfirstcharacterinprintf"></a><a name="onlyfirstcharacterinprintf"></a>
+<p> <em>I'm trying to print a string using <a href="std_io.html#_1515_printf">printf</a> but only the first character comes out.</em></p>
+
+<p> You need to put braces around the parameters sequence to <a href="std_io.html#_1515_printf">printf</a>. You probably wrote:</p>
+
+<pre class="examplecode"><font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, %s!\n"</font><font color="#330033">, mystring</font><font color="#880033">)</font>
+</pre>
+
+<p> but you need:</p>
+
+<pre class="examplecode"><font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, %s!\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">mystring</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.15 Only 10 significant digits during printing</h4>
+<a name="_636_only10significantdigitsduringprinting"></a><a name="only10significantdigitsduringprinting"></a>
+<p> <em>When I print numbers using <a href="std_io.html#_1515_printf">printf</a> or <a href="std_io.html#q_print">?</a> only 10 significant digits are displayed.</em></p>
+
+<p> Euphoria normally only shows about 10 digits. Internally, all calculations are performed using at least 15 significant digits. To see more digits you have to use <a href="std_io.html#_1515_printf">printf</a>. For example,</p>
+
+<pre class="examplecode"><font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%.15f"</font><font color="#330033">, 1/3</font><font color="#880033">)</font>
+</pre>
+
+<p> This will display 15 digits.</p>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.16 A type is expected here</h4>
+<a name="_637_atypeisexpectedhere"></a><a name="atypeisexpectedhere"></a>
+<p> <em>It complains about my routine declaration, saying, "a type is expected here."</em></p>
+
+<p> When declaring subroutine parameters, Euphoria requires you to provide an explicit type for each individual parameter. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x, y</font><font color="#880033">)         </font><font color="#FF0055">-- WRONG</font>
+<font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">y</font><font color="#880033">) </font><font color="#FF0055">-- RIGHT</font>
+</pre>
+
+<p> In all other contexts it is ok to make a list:</p>
+
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">a, b, c, d, e</font>
+</pre>
+
+<!-- ..\docs\trouble.txt -->
+<h4>6.9.1.17 Expected to see...</h4>
+<a name="_638_expectedtosee"></a><a name="expectedtosee"></a>
+<p> <em>It says: <tt>Syntax Error - expected to see possibly 'xxx', not 'yyy'</tt></em></p>
+
+<p> At this point in your program you have typed a variable, keyword, number or punctuation symbol, yyy, that does not fit syntactically with what has come before it. The compiler is offering you one example, xxx, of something that would be accepted at this point in place of yyy. Note that there may be many other legal (and much better) possibilities at this point than xxx, but xxx might at least give you a clue as to what the compiler is "thinking."</p>
+
+<p> 
+<!-- ..\docs\platform.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="preproc.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="platform.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="preproc.html">6.8 The User Defined Pre-Processor</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="platform.html">6.10 Platform Specific Issues</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

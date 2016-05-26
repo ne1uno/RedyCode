@@ -1,0 +1,697 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_memconst.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_graphics.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_memconst.html">8.46 Memory Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_graphics.html">8.48 Graphics - Cross Platform</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\graphcst.e -->
+<h2>8.47 Graphics Constants</h2>
+<a name="_5926_graphicsconstants"></a><a name="graphicsconstants"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_graphcst.html#_5926_graphicsconstants">8.47 Graphics Constants</a></div>
+<div class="toc_3"><a href="std_graphcst.html#_5927_errorcodeconstants">8.47.1 Error Code Constants</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5929_bmp_success">8.47.1.1 BMP_SUCCESS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5931_bmp_open_failed">8.47.1.2 BMP_OPEN_FAILED</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5933_bmp_unexpected_eof">8.47.1.3 BMP_UNEXPECTED_EOF</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5935_bmp_unsupported_format">8.47.1.4 BMP_UNSUPPORTED_FORMAT</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5937_bmp_invalid_mode">8.47.1.5 BMP_INVALID_MODE</a></div>
+<div class="toc_3"><a href="std_graphcst.html#_5938_video_configsequenceaccessors">8.47.2 video_config Sequence Accessors</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5940_vc_color">8.47.2.1 VC_COLOR</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5942_vc_mode">8.47.2.2 VC_MODE</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5944_vc_lines">8.47.2.3 VC_LINES</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5946_vc_columns">8.47.2.4 VC_COLUMNS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5948_vc_xpixels">8.47.2.5 VC_XPIXELS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5950_vc_ypixels">8.47.2.6 VC_YPIXELS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5952_vc_ncolors">8.47.2.7 VC_NCOLORS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5954_vc_pages">8.47.2.8 VC_PAGES</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5956_vc_scrnlines">8.47.2.9 VC_SCRNLINES</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5958_vc_scrncols">8.47.2.10 VC_SCRNCOLS</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5959_colors">8.47.2.11 Colors</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5961_black">8.47.2.12 BLACK</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5963_blue">8.47.2.13 BLUE</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5965_green">8.47.2.14 GREEN</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5967_cyan">8.47.2.15 CYAN</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5969_red">8.47.2.16 RED</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5971_magenta">8.47.2.17 MAGENTA</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5973_brown">8.47.2.18 BROWN</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5975_white">8.47.2.19 WHITE</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5977_gray">8.47.2.20 GRAY</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5979_bright_blue">8.47.2.21 BRIGHT_BLUE</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5981_bright_green">8.47.2.22 BRIGHT_GREEN</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5983_bright_cyan">8.47.2.23 BRIGHT_CYAN</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5985_bright_red">8.47.2.24 BRIGHT_RED</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5987_bright_magenta">8.47.2.25 BRIGHT_MAGENTA</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5989_yellow">8.47.2.26 YELLOW</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5991_bright_white">8.47.2.27 BRIGHT_WHITE</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5993_true_fgcolor">8.47.2.28 true_fgcolor</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5995_true_bgcolor">8.47.2.29 true_bgcolor</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5997_blinking">8.47.2.30 BLINKING</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_5999_bytes_per_char">8.47.2.31 BYTES_PER_CHAR</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_6001_color">8.47.2.32 color</a></div>
+<div class="toc_3"><a href="std_graphcst.html#_6002_routines">8.47.3 Routines</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_6004_mixture">8.47.3.1 mixture</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_6007_video_config">8.47.3.2 video_config</a></div>
+<div class="toc_3"><a href="std_graphcst.html#_6012_colorsetselection">8.47.4 Color Set Selection</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_6014_fgset">8.47.4.1 FGSET</a></div>
+<div class="toc_4"><a href="std_graphcst.html#_6016_bgset">8.47.4.2 BGSET</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\graphcst.e -->
+<h3>8.47.1 Error Code Constants</h3>
+<a name="_5927_errorcodeconstants"></a><a name="errorcodeconstants"></a>
+<p> 
+<a name="graphcstbmp_success"></a><a name="success"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.1.1 BMP_SUCCESS</h4>
+<a name="_5929_bmp_success"></a><a name="bmp_success"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BMP_SUCCESS</font>
+</pre>
+
+<p> 
+<a name="graphcstbmp_open_failed"></a><a name="open_failed"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.1.2 BMP_OPEN_FAILED</h4>
+<a name="_5931_bmp_open_failed"></a><a name="bmp_open_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BMP_OPEN_FAILED</font>
+</pre>
+
+<p> 
+<a name="graphcstbmp_unexpected_eof"></a><a name="unexpected_eof"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.1.3 BMP_UNEXPECTED_EOF</h4>
+<a name="_5933_bmp_unexpected_eof"></a><a name="bmp_unexpected_eof"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BMP_UNEXPECTED_EOF</font>
+</pre>
+
+<p> 
+<a name="graphcstbmp_unsupported_format"></a><a name="unsupported_format"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.1.4 BMP_UNSUPPORTED_FORMAT</h4>
+<a name="_5935_bmp_unsupported_format"></a><a name="bmp_unsupported_format"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BMP_UNSUPPORTED_FORMAT</font>
+</pre>
+
+<p> 
+<a name="graphcstbmp_invalid_mode"></a><a name="invalid_mode"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.1.5 BMP_INVALID_MODE</h4>
+<a name="_5937_bmp_invalid_mode"></a><a name="bmp_invalid_mode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BMP_INVALID_MODE</font>
+</pre>
+
+<!-- ..\include\std\graphcst.e -->
+<h3>8.47.2 video_config Sequence Accessors</h3>
+<a name="_5938_video_configsequenceaccessors"></a><a name="video_configsequenceaccessors"></a>
+<p> 
+<a name="graphcstvc_color"></a><a name="color"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.1 VC_COLOR</h4>
+<a name="_5940_vc_color"></a><a name="vc_color"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_COLOR</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_mode"></a><a name="mode"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.2 VC_MODE</h4>
+<a name="_5942_vc_mode"></a><a name="vc_mode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_MODE</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.3 VC_LINES</h4>
+<a name="_5944_vc_lines"></a><a name="vc_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_LINES</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_columns"></a><a name="columns"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.4 VC_COLUMNS</h4>
+<a name="_5946_vc_columns"></a><a name="vc_columns"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_COLUMNS</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_xpixels"></a><a name="xpixels"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.5 VC_XPIXELS</h4>
+<a name="_5948_vc_xpixels"></a><a name="vc_xpixels"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_XPIXELS</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_ypixels"></a><a name="ypixels"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.6 VC_YPIXELS</h4>
+<a name="_5950_vc_ypixels"></a><a name="vc_ypixels"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_YPIXELS</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_ncolors"></a><a name="ncolors"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.7 VC_NCOLORS</h4>
+<a name="_5952_vc_ncolors"></a><a name="vc_ncolors"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_NCOLORS</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_pages"></a><a name="pages"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.8 VC_PAGES</h4>
+<a name="_5954_vc_pages"></a><a name="vc_pages"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_PAGES</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_scrnlines"></a><a name="scrnlines"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.9 VC_SCRNLINES</h4>
+<a name="_5956_vc_scrnlines"></a><a name="vc_scrnlines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_SCRNLINES</font>
+</pre>
+
+<p> 
+<a name="graphcstvc_scrncols"></a><a name="scrncols"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.10 VC_SCRNCOLS</h4>
+<a name="_5958_vc_scrncols"></a><a name="vc_scrncols"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">VC_SCRNCOLS</font>
+</pre>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.11 Colors</h4>
+<a name="_5959_colors"></a><a name="colors"></a>
+<p> 
+<a name="graphcstblack"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.12 BLACK</h4>
+<a name="_5961_black"></a><a name="black"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BLACK</font>
+</pre>
+
+<p> 
+<a name="graphcstblue"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.13 BLUE</h4>
+<a name="_5963_blue"></a><a name="blue"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BLUE</font>
+</pre>
+
+<p> 
+<a name="graphcstgreen"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.14 GREEN</h4>
+<a name="_5965_green"></a><a name="green"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">GREEN</font>
+</pre>
+
+<p> 
+<a name="graphcstcyan"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.15 CYAN</h4>
+<a name="_5967_cyan"></a><a name="cyan"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">CYAN</font>
+</pre>
+
+<p> 
+<a name="graphcstred"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.16 RED</h4>
+<a name="_5969_red"></a><a name="red"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">RED</font>
+</pre>
+
+<p> 
+<a name="graphcstmagenta"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.17 MAGENTA</h4>
+<a name="_5971_magenta"></a><a name="magenta"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">MAGENTA</font>
+</pre>
+
+<p> 
+<a name="graphcstbrown"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.18 BROWN</h4>
+<a name="_5973_brown"></a><a name="brown"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BROWN</font>
+</pre>
+
+<p> 
+<a name="graphcstwhite"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.19 WHITE</h4>
+<a name="_5975_white"></a><a name="white"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">WHITE</font>
+</pre>
+
+<p> 
+<a name="graphcstgray"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.20 GRAY</h4>
+<a name="_5977_gray"></a><a name="gray"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">GRAY</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_blue"></a><a name="blue"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.21 BRIGHT_BLUE</h4>
+<a name="_5979_bright_blue"></a><a name="bright_blue"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_BLUE</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_green"></a><a name="green"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.22 BRIGHT_GREEN</h4>
+<a name="_5981_bright_green"></a><a name="bright_green"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_GREEN</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_cyan"></a><a name="cyan"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.23 BRIGHT_CYAN</h4>
+<a name="_5983_bright_cyan"></a><a name="bright_cyan"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_CYAN</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_red"></a><a name="red"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.24 BRIGHT_RED</h4>
+<a name="_5985_bright_red"></a><a name="bright_red"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_RED</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_magenta"></a><a name="magenta"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.25 BRIGHT_MAGENTA</h4>
+<a name="_5987_bright_magenta"></a><a name="bright_magenta"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_MAGENTA</font>
+</pre>
+
+<p> 
+<a name="graphcstyellow"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.26 YELLOW</h4>
+<a name="_5989_yellow"></a><a name="yellow"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">YELLOW</font>
+</pre>
+
+<p> 
+<a name="graphcstbright_white"></a><a name="white"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.27 BRIGHT_WHITE</h4>
+<a name="_5991_bright_white"></a><a name="bright_white"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BRIGHT_WHITE</font>
+</pre>
+
+<p> 
+<a name="graphcsttrue_fgcolor"></a><a name="fgcolor"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.28 true_fgcolor</h4>
+<a name="_5993_true_fgcolor"></a><a name="true_fgcolor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">export sequence </font><font color="#330033">true_fgcolor</font>
+</pre>
+
+<p> 
+<a name="graphcsttrue_bgcolor"></a><a name="bgcolor"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.29 true_bgcolor</h4>
+<a name="_5995_true_bgcolor"></a><a name="true_bgcolor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">export sequence </font><font color="#330033">true_bgcolor</font>
+</pre>
+
+<p> 
+<a name="graphcstblinking"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.30 BLINKING</h4>
+<a name="_5997_blinking"></a><a name="blinking"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BLINKING</font>
+</pre>
+
+<p>   Add to color number to get blinking text.</p>
+
+<p> 
+<a name="graphcstbytes_per_char"></a><a name="per_char"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.31 BYTES_PER_CHAR</h4>
+<a name="_5999_bytes_per_char"></a><a name="bytes_per_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public constant </font><font color="#330033">BYTES_PER_CHAR</font>
+</pre>
+
+<p> 
+<a name="graphcstcolor"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.2.32 color</h4>
+<a name="_6001_color"></a><a name="color"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public type </font><font color="#330033">color</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphcst.e -->
+<h3>8.47.3 Routines</h3>
+<a name="_6002_routines"></a><a name="routines"></a>
+<p> 
+<a name="graphcstmixture"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.3.1 mixture</h4>
+<a name="_6004_mixture"></a><a name="mixture"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public type </font><font color="#330033">mixture</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">s</font><font color="#880033">)</font>
+</pre>
+
+<p>   Mixture Type</p>
+
+<!-- ..\include\std\graphcst.e -->
+<h5>Comments:</h5>
+<a name="_6005_comments"></a><a name="comments"></a>
+<p> A mixture is a <tt>{red, green, blue}</tt> triple of intensities, which enables you to define custom colors. Intensities must be from 0 (weakest) to 63 (strongest). Thus, the brightest white is <tt>{63, 63, 63}</tt>.</p>
+
+<p> 
+<a name="graphcstvideo_config"></a><a name="config"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.3.2 video_config</h4>
+<a name="_6007_video_config"></a><a name="video_config"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public function </font><font color="#330033">video_config</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns a description of the current video configuration.</p>
+
+<!-- ..\include\std\graphcst.e -->
+<h5>Returns:</h5>
+<a name="_6008_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of 10 non-negative integers, laid out as follows: </p>
+<ol><li>color monitor? -- 0 if monochrome, 1 otherwise
+</li><li>current video mode
+</li><li>number of text rows in console buffer
+</li><li>number of text columns in console buffer
+</li><li>screen width in pixels
+</li><li>screen height in pixels
+</li><li>number of colors
+</li><li>number of display pages
+</li><li>number of text rows for current screen size
+</li><li>number of text columns for current screen size
+</li></ol>
+<!-- ..\include\std\graphcst.e -->
+<h5>Comments:</h5>
+<a name="_6009_comments"></a><a name="comments"></a>
+<p> A public enum is available for convenient access to the returned configuration data: </p>
+<ul><li><tt>VC_COLOR</tt>
+</li><li><tt>VC_MODE</tt>
+</li><li><tt>VC_LINES</tt>
+</li><li><tt>VC_COLUMNS</tt>
+</li><li><tt>VC_XPIXELS</tt>
+</li><li><tt>VC_YPIXELS</tt>
+</li><li><tt>VC_NCOLORS</tt>
+</li><li><tt>VC_PAGES</tt>
+</li><li><tt>VC_SCRNLINES</tt>
+</li><li><tt>VC_SCRNCOLS</tt>
+</li></ul>
+<p>This routine makes it easy for you to parameterize a program so it will work in many different graphics modes.</p>
+
+<!-- ..\include\std\graphcst.e -->
+<h5>Example 1:</h5>
+<a name="_6010_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">vc = video_config</font><font color="#880033">()</font>
+<font color="#FF0055">-- vc could be {1, 3, 300, 132, 0, 0, 32, 8, 37, 90}</font>
+</pre>
+
+<!-- ..\include\std\graphcst.e -->
+<h5>See Also:</h5>
+<a name="_6011_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6065_graphics_mode">graphics_mode</a></p>
+
+<!-- ..\include\std\graphcst.e -->
+<h3>8.47.4 Color Set Selection</h3>
+<a name="_6012_colorsetselection"></a><a name="colorsetselection"></a>
+<p> 
+<a name="graphcstfgset"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.4.1 FGSET</h4>
+<a name="_6014_fgset"></a><a name="fgset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">FGSET</font>
+</pre>
+
+<p>  Foreground ( text) set of colors</p>
+
+<p> 
+<a name="graphcstbgset"></a> </p>
+
+<!-- ..\include\std\graphcst.e -->
+<h4>8.47.4.2 BGSET</h4>
+<a name="_6016_bgset"></a><a name="bgset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphcst.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphcst</font>
+<font color="#0000FF">public enum </font><font color="#330033">BGSET</font>
+</pre>
+
+<p> Background set of colors</p>
+
+<p> 
+<!-- ..\include\std\graphics.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_memconst.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_graphics.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_memconst.html">8.46 Memory Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_graphics.html">8.48 Graphics - Cross Platform</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

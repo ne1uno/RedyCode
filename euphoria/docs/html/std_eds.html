@@ -1,0 +1,1849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_stats.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_primes.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_stats.html">8.28 Statistics</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_primes.html">8.30 Prime Numbers</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\eds.e -->
+<h2>8.29 Euphoria Database (EDS)</h2>
+<a name="_4074_euphoriadatabaseeds"></a><a name="euphoriadatabaseeds"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_eds.html#_4074_euphoriadatabaseeds">8.29 Euphoria Database (EDS)</a></div>
+<div class="toc_3"><a href="std_eds.html#_4075_errorstatusconstants">8.29.1 Error Status Constants</a></div>
+<div class="toc_4"><a href="std_eds.html#_4077_db_ok">8.29.1.1 DB_OK</a></div>
+<div class="toc_4"><a href="std_eds.html#_4079_db_open_fail">8.29.1.2 DB_OPEN_FAIL</a></div>
+<div class="toc_4"><a href="std_eds.html#_4081_db_exists_already">8.29.1.3 DB_EXISTS_ALREADY</a></div>
+<div class="toc_4"><a href="std_eds.html#_4083_db_lock_fail">8.29.1.4 DB_LOCK_FAIL</a></div>
+<div class="toc_4"><a href="std_eds.html#_4085_db_bad_name">8.29.1.5 DB_BAD_NAME</a></div>
+<div class="toc_4"><a href="std_eds.html#_4087_db_fatal_fail">8.29.1.6 DB_FATAL_FAIL</a></div>
+<div class="toc_3"><a href="std_eds.html#_4088_locktypeconstants">8.29.2 Lock Type Constants</a></div>
+<div class="toc_4"><a href="std_eds.html#_4090_db_lock_no">8.29.2.1 DB_LOCK_NO</a></div>
+<div class="toc_4"><a href="std_eds.html#_4092_db_lock_shared">8.29.2.2 DB_LOCK_SHARED</a></div>
+<div class="toc_4"><a href="std_eds.html#_4094_db_lock_exclusive">8.29.2.3 DB_LOCK_EXCLUSIVE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4096_db_lock_read_only">8.29.2.4 DB_LOCK_READ_ONLY</a></div>
+<div class="toc_3"><a href="std_eds.html#_4097_errorcodeconstants">8.29.3 Error Code Constants</a></div>
+<div class="toc_4"><a href="std_eds.html#_4099_missing_end">8.29.3.1 MISSING_END</a></div>
+<div class="toc_4"><a href="std_eds.html#_4101_no_database">8.29.3.2 NO_DATABASE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4103_bad_seek">8.29.3.3 BAD_SEEK</a></div>
+<div class="toc_4"><a href="std_eds.html#_4105_no_table">8.29.3.4 NO_TABLE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4107_dup_table">8.29.3.5 DUP_TABLE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4109_bad_recno">8.29.3.6 BAD_RECNO</a></div>
+<div class="toc_4"><a href="std_eds.html#_4111_insert_failed">8.29.3.7 INSERT_FAILED</a></div>
+<div class="toc_4"><a href="std_eds.html#_4113_last_error_code">8.29.3.8 LAST_ERROR_CODE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4115_bad_file">8.29.3.9 BAD_FILE</a></div>
+<div class="toc_3"><a href="std_eds.html#_4116_indexesforconnectionoptionstructure">8.29.4 Indexes for Connection Option Structure.</a></div>
+<div class="toc_4"><a href="std_eds.html#_4118_connect_lock">8.29.4.1 CONNECT_LOCK</a></div>
+<div class="toc_4"><a href="std_eds.html#_4120_connect_tables">8.29.4.2 CONNECT_TABLES</a></div>
+<div class="toc_4"><a href="std_eds.html#_4122_connect_free">8.29.4.3 CONNECT_FREE</a></div>
+<div class="toc_3"><a href="std_eds.html#_4123_databaseconnectionoptions">8.29.5 Database Connection Options</a></div>
+<div class="toc_4"><a href="std_eds.html#_4125_disconnect">8.29.5.1 DISCONNECT</a></div>
+<div class="toc_4"><a href="std_eds.html#_4127_lock_method">8.29.5.2 LOCK_METHOD</a></div>
+<div class="toc_4"><a href="std_eds.html#_4129_init_tables">8.29.5.3 INIT_TABLES</a></div>
+<div class="toc_4"><a href="std_eds.html#_4131_init_free">8.29.5.4 INIT_FREE</a></div>
+<div class="toc_4"><a href="std_eds.html#_4133_connection">8.29.5.5 CONNECTION</a></div>
+<div class="toc_3"><a href="std_eds.html#_4134_variables">8.29.6 Variables</a></div>
+<div class="toc_4"><a href="std_eds.html#_4136_db_fatal_id">8.29.6.1 db_fatal_id</a></div>
+<div class="toc_3"><a href="std_eds.html#_4137_routines">8.29.7 Routines</a></div>
+<div class="toc_4"><a href="std_eds.html#_4139_db_get_errors">8.29.7.1 db_get_errors</a></div>
+<div class="toc_4"><a href="std_eds.html#_4145_db_dump">8.29.7.2 db_dump</a></div>
+<div class="toc_4"><a href="std_eds.html#_4151_check_free_list">8.29.7.3 check_free_list</a></div>
+<div class="toc_3"><a href="std_eds.html#_4153_managingdatabases">8.29.8 Managing Databases</a></div>
+<div class="toc_4"><a href="std_eds.html#_4155_db_connect">8.29.8.1 db_connect</a></div>
+<div class="toc_4"><a href="std_eds.html#_4164_db_create">8.29.8.2 db_create</a></div>
+<div class="toc_4"><a href="std_eds.html#_4171_db_open">8.29.8.3 db_open</a></div>
+<div class="toc_4"><a href="std_eds.html#_4178_db_select">8.29.8.4 db_select</a></div>
+<div class="toc_4"><a href="std_eds.html#_4186_db_close">8.29.8.5 db_close</a></div>
+<div class="toc_3"><a href="std_eds.html#_4188_managingtables">8.29.9 Managing Tables</a></div>
+<div class="toc_4"><a href="std_eds.html#_4190_db_select_table">8.29.9.1 db_select_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4198_db_current_table">8.29.9.2 db_current_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4204_db_create_table">8.29.9.3 db_create_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4212_db_delete_table">8.29.9.4 db_delete_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4218_db_clear_table">8.29.9.5 db_clear_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4224_db_rename_table">8.29.9.6 db_rename_table</a></div>
+<div class="toc_4"><a href="std_eds.html#_4230_db_table_list">8.29.9.7 db_table_list</a></div>
+<div class="toc_3"><a href="std_eds.html#_4235_managingrecords">8.29.10 Managing Records</a></div>
+<div class="toc_4"><a href="std_eds.html#_4237_db_find_key">8.29.10.1 db_find_key</a></div>
+<div class="toc_4"><a href="std_eds.html#_4245_db_insert">8.29.10.2 db_insert</a></div>
+<div class="toc_4"><a href="std_eds.html#_4252_db_delete_record">8.29.10.3 db_delete_record</a></div>
+<div class="toc_4"><a href="std_eds.html#_4258_db_replace_data">8.29.10.4 db_replace_data</a></div>
+<div class="toc_4"><a href="std_eds.html#_4264_db_table_size">8.29.10.5 db_table_size</a></div>
+<div class="toc_4"><a href="std_eds.html#_4270_db_record_data">8.29.10.6 db_record_data</a></div>
+<div class="toc_4"><a href="std_eds.html#_4279_db_fetch_record">8.29.10.7 db_fetch_record</a></div>
+<div class="toc_4"><a href="std_eds.html#_4288_db_record_key">8.29.10.8 db_record_key</a></div>
+<div class="toc_4"><a href="std_eds.html#_4296_db_compress">8.29.10.9 db_compress</a></div>
+<div class="toc_4"><a href="std_eds.html#_4301_db_current">8.29.10.10 db_current</a></div>
+<div class="toc_4"><a href="std_eds.html#_4308_db_cache_clear">8.29.10.11 db_cache_clear</a></div>
+<div class="toc_4"><a href="std_eds.html#_4313_db_set_caching">8.29.10.12 db_set_caching</a></div>
+<div class="toc_4"><a href="std_eds.html#_4319_db_replace_recid">8.29.10.13 db_replace_recid</a></div>
+<div class="toc_4"><a href="std_eds.html#_4325_db_record_recid">8.29.10.14 db_record_recid</a></div>
+<div class="toc_4"><a href="std_eds.html#_4332_db_get_recid">8.29.10.15 db_get_recid</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.1 Error Status Constants</h3>
+<a name="_4075_errorstatusconstants"></a><a name="errorstatusconstants"></a>
+<p> 
+<a name="edsdb_ok"></a><a name="ok"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.1 DB_OK</h4>
+<a name="_4077_db_ok"></a><a name="db_ok"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_OK</font>
+</pre>
+
+<p>  Database is OK, not error has occurred.</p>
+
+<p> 
+<a name="edsdb_open_fail"></a><a name="open_fail"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.2 DB_OPEN_FAIL</h4>
+<a name="_4079_db_open_fail"></a><a name="db_open_fail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_OPEN_FAIL</font>
+</pre>
+
+<p>  The database could not be opened.</p>
+
+<p> 
+<a name="edsdb_exists_already"></a><a name="exists_already"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.3 DB_EXISTS_ALREADY</h4>
+<a name="_4081_db_exists_already"></a><a name="db_exists_already"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_EXISTS_ALREADY</font>
+</pre>
+
+<p>  The database could not be created, it already exists.</p>
+
+<p> 
+<a name="edsdb_lock_fail"></a><a name="lock_fail"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.4 DB_LOCK_FAIL</h4>
+<a name="_4083_db_lock_fail"></a><a name="db_lock_fail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_LOCK_FAIL</font>
+</pre>
+
+<p>  A lock could not be gained on the database.</p>
+
+<p> 
+<a name="edsdb_bad_name"></a><a name="bad_name"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.5 DB_BAD_NAME</h4>
+<a name="_4085_db_bad_name"></a><a name="db_bad_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_BAD_NAME</font>
+</pre>
+
+<p>  An invalid name suppled when creating a table.</p>
+
+<p> 
+<a name="edsdb_fatal_fail"></a><a name="fatal_fail"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.1.6 DB_FATAL_FAIL</h4>
+<a name="_4087_db_fatal_fail"></a><a name="db_fatal_fail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_FATAL_FAIL</font>
+</pre>
+
+<p>  A fatal error has occurred.</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.2 Lock Type Constants</h3>
+<a name="_4088_locktypeconstants"></a><a name="locktypeconstants"></a>
+<p> 
+<a name="edsdb_lock_no"></a><a name="lock_no"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.2.1 DB_LOCK_NO</h4>
+<a name="_4090_db_lock_no"></a><a name="db_lock_no"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_LOCK_NO</font>
+</pre>
+
+<p>  Do not lock the file.</p>
+
+<p> 
+<a name="edsdb_lock_shared"></a><a name="lock_shared"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.2.2 DB_LOCK_SHARED</h4>
+<a name="_4092_db_lock_shared"></a><a name="db_lock_shared"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_LOCK_SHARED</font>
+</pre>
+
+<p>  Open the database with read-only access but allow others to update it.</p>
+
+<p> 
+<a name="edsdb_lock_exclusive"></a><a name="lock_exclusive"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.2.3 DB_LOCK_EXCLUSIVE</h4>
+<a name="_4094_db_lock_exclusive"></a><a name="db_lock_exclusive"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_LOCK_EXCLUSIVE</font>
+</pre>
+
+<p>  Open the database with read and write access.</p>
+
+<p> 
+<a name="edsdb_lock_read_only"></a><a name="lock_read_only"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.2.4 DB_LOCK_READ_ONLY</h4>
+<a name="_4096_db_lock_read_only"></a><a name="db_lock_read_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DB_LOCK_READ_ONLY</font>
+</pre>
+
+<p>  Open the database with read-only access and ignore others updating it</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.3 Error Code Constants</h3>
+<a name="_4097_errorcodeconstants"></a><a name="errorcodeconstants"></a>
+<p> 
+<a name="edsmissing_end"></a><a name="end"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.1 MISSING_END</h4>
+<a name="_4099_missing_end"></a><a name="missing_end"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">MISSING_END</font>
+</pre>
+
+<p>  Missing 0 terminator</p>
+
+<p> 
+<a name="edsno_database"></a><a name="database"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.2 NO_DATABASE</h4>
+<a name="_4101_no_database"></a><a name="no_database"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_DATABASE</font>
+</pre>
+
+<p>  current_db is not set</p>
+
+<p> 
+<a name="edsbad_seek"></a><a name="seek"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.3 BAD_SEEK</h4>
+<a name="_4103_bad_seek"></a><a name="bad_seek"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">BAD_SEEK</font>
+</pre>
+
+<p>  <tt>io:seek</tt> failed.</p>
+
+<p> 
+<a name="edsno_table"></a><a name="table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.4 NO_TABLE</h4>
+<a name="_4105_no_table"></a><a name="no_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_TABLE</font>
+</pre>
+
+<p>  no table was found.</p>
+
+<p> 
+<a name="edsdup_table"></a><a name="table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.5 DUP_TABLE</h4>
+<a name="_4107_dup_table"></a><a name="dup_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">DUP_TABLE</font>
+</pre>
+
+<p>  this table already exists.</p>
+
+<p> 
+<a name="edsbad_recno"></a><a name="recno"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.6 BAD_RECNO</h4>
+<a name="_4109_bad_recno"></a><a name="bad_recno"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">BAD_RECNO</font>
+</pre>
+
+<p>  unknown key_location index was supplied.</p>
+
+<p> 
+<a name="edsinsert_failed"></a><a name="failed"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.7 INSERT_FAILED</h4>
+<a name="_4111_insert_failed"></a><a name="insert_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">INSERT_FAILED</font>
+</pre>
+
+<p>  could not insert a new record.</p>
+
+<p> 
+<a name="edslast_error_code"></a><a name="error_code"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.8 LAST_ERROR_CODE</h4>
+<a name="_4113_last_error_code"></a><a name="last_error_code"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">LAST_ERROR_CODE</font>
+</pre>
+
+<p>  last error code</p>
+
+<p> 
+<a name="edsbad_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.3.9 BAD_FILE</h4>
+<a name="_4115_bad_file"></a><a name="bad_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">BAD_FILE</font>
+</pre>
+
+<p>  bad file</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.4 Indexes for Connection Option Structure.</h3>
+<a name="_4116_indexesforconnectionoptionstructure"></a><a name="indexesforconnectionoptionstructure"></a>
+<p> 
+<a name="edsconnect_lock"></a><a name="lock"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.4.1 CONNECT_LOCK</h4>
+<a name="_4118_connect_lock"></a><a name="connect_lock"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">CONNECT_LOCK</font>
+</pre>
+
+<p>  Locking method</p>
+
+<p> 
+<a name="edsconnect_tables"></a><a name="tables"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.4.2 CONNECT_TABLES</h4>
+<a name="_4120_connect_tables"></a><a name="connect_tables"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">CONNECT_TABLES</font>
+</pre>
+
+<p>  Initial number of tables to create</p>
+
+<p> 
+<a name="edsconnect_free"></a><a name="free"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.4.3 CONNECT_FREE</h4>
+<a name="_4122_connect_free"></a><a name="connect_free"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public enum </font><font color="#330033">CONNECT_FREE</font>
+</pre>
+
+<p>  Initial number of free pointers to create</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.5 Database Connection Options</h3>
+<a name="_4123_databaseconnectionoptions"></a><a name="databaseconnectionoptions"></a>
+<p> 
+<a name="edsdisconnect"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.5.1 DISCONNECT</h4>
+<a name="_4125_disconnect"></a><a name="disconnect"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public constant </font><font color="#330033">DISCONNECT</font>
+</pre>
+
+<p>  Disconnect a connected database</p>
+
+<p> 
+<a name="edslock_method"></a><a name="method"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.5.2 LOCK_METHOD</h4>
+<a name="_4127_lock_method"></a><a name="lock_method"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public constant </font><font color="#330033">LOCK_METHOD</font>
+</pre>
+
+<p>  Locking method to use</p>
+
+<p> 
+<a name="edsinit_tables"></a><a name="tables"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.5.3 INIT_TABLES</h4>
+<a name="_4129_init_tables"></a><a name="init_tables"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public constant </font><font color="#330033">INIT_TABLES</font>
+</pre>
+
+<p>  The initial number of tables to reserve space for when creating a database.</p>
+
+<p> 
+<a name="edsinit_free"></a><a name="free"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.5.4 INIT_FREE</h4>
+<a name="_4131_init_free"></a><a name="init_free"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public constant </font><font color="#330033">INIT_FREE</font>
+</pre>
+
+<p>  The initial number of free space pointers to reserve space for when creating a database.</p>
+
+<p> 
+<a name="edsconnection"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.5.5 CONNECTION</h4>
+<a name="_4133_connection"></a><a name="connection"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public constant </font><font color="#330033">CONNECTION</font>
+</pre>
+
+<p>  Fetch the details about the alias</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.6 Variables</h3>
+<a name="_4134_variables"></a><a name="variables"></a>
+<p> 
+<a name="edsdb_fatal_id"></a><a name="fatal_id"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.6.1 db_fatal_id</h4>
+<a name="_4136_db_fatal_id"></a><a name="db_fatal_id"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public integer </font><font color="#330033">db_fatal_id</font>
+</pre>
+
+<p>   This is an <em>Exception handler</em>.</p>
+
+<p> Set this to a valid routine_id value for a procedure that will be called whenever the library detects a serious error. Your procedure will be passed a single text string that describes the error. It may also call <a href="std_eds.html#_4139_db_get_errors">db_get_errors</a> to get more detail about the cause of the error.</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.7 Routines</h3>
+<a name="_4137_routines"></a><a name="routines"></a>
+<p> 
+<a name="edsdb_get_errors"></a><a name="get_errors"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.7.1 db_get_errors</h4>
+<a name="_4139_db_get_errors"></a><a name="db_get_errors"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_get_errors</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">clearing = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   fetches the most recent set of errors recorded by the library.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4140_parameters"></a><a name="parameters"></a><ol><li><tt>clearing</tt> : if zero the set of errors is not reset, otherwise it will be cleared out. The default is to clear the set.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4141_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, each element is a set of four fields. </p>
+<ol><li>Error Code.
+</li><li>Error Text.
+</li><li>Name of library routine that recorded the error.
+</li><li>Parameters passed to that routine.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4142_comments"></a><a name="comments"></a><ul><li>A number of library routines can detect errors. If the routine is a function, it usually returns an error code. However, procedures that detect an error can not do that. Instead, they record the error details and you can query that after calling the library routine.
+</li><li>Both functions and procedures that detect errors record the details in the <tt>Last Error Set</tt>, which is fetched by this function.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4143_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">db_replace_data</font><font color="#880033">(</font><font color="#330033">recno, new_data</font><font color="#880033">)</font>
+<font color="#330033">errs = db_get_errors</font><font color="#880033">()</font>
+<font color="#0000FF">if length</font><font color="#880033">(</font><font color="#330033">errs</font><font color="#880033">) </font><font color="#330033">!= 0 </font><font color="#0000FF">then</font>
+<font color="#330033">    display_errors</font><font color="#880033">(</font><font color="#330033">errs</font><font color="#880033">)</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="edsdb_dump"></a><a name="dump"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.7.2 db_dump</h4>
+<a name="_4145_db_dump"></a><a name="db_dump"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_dump</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file_id, </font><font color="#0000FF">integer </font><font color="#330033">low_level_too = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   prints the current database in readable form to file <tt>fn</tt>.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4146_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : the destination file for printing the current Euphoria database;
+</li><li><tt>low_level_too</tt> : a boolean. If <em>true</em>, a byte-by-byte binary dump is presented as well; otherwise this step is skipped. If omitted, <em>false</em> is assumed.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4147_errors"></a><a name="errors"></a>
+<p> If the current database is not defined, an error will occur.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4148_comments"></a><a name="comments"></a><ul><li>All records in all tables are shown.
+</li><li>If low_level_too is non-zero, then a low-level byte-by-byte dump is also shown. The low-level dump will only be meaningful to someone who is familiar with the internal format of a Euphoria database.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4149_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_open</font><font color="#880033">(</font><font color="#330033">"mydata"</font><font color="#330033">, DB_LOCK_SHARED</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Couldn't open the database!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"db.txt"</font><font color="#330033">, </font><font color="#330033">"w"</font><font color="#880033">)</font>
+<font color="#330033">db_dump</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">) </font><font color="#FF0055">-- Simple output</font>
+<font color="#330033">db_dump</font><font color="#880033">(</font><font color="#330033">"lowlvl_db.txt"</font><font color="#330033">, 1</font><font color="#880033">) </font><font color="#FF0055">-- Full low-level dump created.</font>
+</pre>
+
+<p> 
+<a name="edscheck_free_list"></a><a name="free_list"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.7.3 check_free_list</h4>
+<a name="_4151_check_free_list"></a><a name="check_free_list"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">check_free_list</font><font color="#880033">()</font>
+</pre>
+
+<p>   detects corruption of the free list in a Euphoria database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4152_comments"></a><a name="comments"></a>
+<p> This is a debug routine used by RDS to detect corruption of the free list. Users do not normally call this.</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.8 Managing Databases</h3>
+<a name="_4153_managingdatabases"></a><a name="managingdatabases"></a>
+<p> 
+<a name="edsdb_connect"></a><a name="connect"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.8.1 db_connect</h4>
+<a name="_4155_db_connect"></a><a name="db_connect"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_connect</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">dbalias, </font><font color="#0000FF">sequence </font><font color="#330033">path = </font><font color="#330033">""</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">dboptions = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   defines a symbolic name for a database and its default attributes.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4156_parameters"></a><a name="parameters"></a><ol><li><tt>dbalias</tt> : a sequence. This is the symbolic name that the database can be referred to by.
+</li><li><tt>path</tt> : a sequence, the path to the file that will contain the database.
+</li><li><tt>dboptions</tt>: a sequence. Contains the set of attributes for the database. The default is <tt>{}</tt> meaning it will use the various EDS default values.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4157_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, status code, either <tt>DB_OK</tt> if creation successful or anything else on an error.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4158_comments"></a><a name="comments"></a><ul><li>This does not create or open a database. It only associates a symbolic name with a database path. This name can then be used in the calls to <tt>db_create</tt>, <tt>db_open</tt>, and <tt>db_select</tt> instead of the physical database name.
+</li><li>If the file in the path does not have an extention, <tt>".edb"</tt> will be added automatically.
+</li><li>The <tt>dboptions</tt> can contain any of the options detailed below. These can be given as a single string of the form <tt>"option=value, option=value, ..."</tt> or as as sequence containing option-value pairs, <tt>{ {option,value}, {option,value}, ... }</tt> <em>Note:</em> The options can be in any order.
+</li><li>The options are:<ul><li><tt>LOCK_METHOD</tt> : an integer specifying which type of access can be granted to the database. This must be one of <tt>DB_LOCK_NO</tt>, <tt>DB_LOCK_EXCLUSIVE</tt>,  <tt>DB_LOCK_SHARDED</tt> or <tt>DB_LOCK_READ_ONLY</tt>.
+</li><li><tt>INIT_TABLES</tt> : an integer giving the initial number of tables to reserve space for. The default is 5 and the minimum is 1.
+</li><li><tt>INIT_FREE</tt> : an integer giving the initial amount of free space pointers to reserve space for. The default is 5 and the minimum is 0.
+</li></ul>
+</li><li>If a symbolic name has already been defined for a database, you can get it's full path and options by calling this function with <tt>dboptions</tt> set to <tt>CONNECTION</tt>. The returned value is a sequence of two elements. The first is the full path name and the second is a list of the option values. These options are indexed by  <tt>[CONNECT_LOCK]</tt>, <tt>[CONNECT_TABLES]</tt>, and <tt>[CONNECT_FREE]</tt>.
+</li><li>If a symbolic name has already been defined for a database, you remove the symbolic name by calling this function with <tt>dboptions</tt> set to <tt>DISCONNECT</tt>.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4159_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">db_connect</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#330033">, </font><font color="#330033">"/usr/data/myapp/customer.edb"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">LOCK_METHOD,DB_LOCK_NO</font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">                                                            {</font><font color="#330033">INIT_TABLES,1</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">db_open</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 2:</h5>
+<a name="_4160_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">db_connect</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#330033">, </font><font color="#330033">"/usr/data/myapp/customer.edb"</font><font color="#330033">,</font>
+<font color="#0000FF">                          sprintf</font><font color="#993333">(</font><font color="#330033">"init_tables=1,lock_method=%d"</font><font color="#330033">,DB_LOCK_NO</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#330033">db_open</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 3:</h5>
+<a name="_4161_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">db_connect</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#330033">, </font><font color="#330033">"/usr/data/myapp/customer.edb"</font><font color="#330033">,</font>
+<font color="#0000FF">                          sprintf</font><font color="#993333">(</font><font color="#330033">"init_tables=1,lock_method=%d"</font><font color="#330033">,DB_LOCK_NO</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#330033">db_connect</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#330033">,,CONNECTION</font><font color="#880033">) </font><font color="#FF0055">--&gt; {"/usr/data/myapp/customer.edb", {0,1,1}}</font>
+<font color="#330033">db_connect</font><font color="#880033">(</font><font color="#330033">"myDB"</font><font color="#330033">,,DISCONNECT</font><font color="#880033">) </font><font color="#FF0055">-- The name 'myDB' is removed from EDS.</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4162_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4164_db_create">db_create</a>, <a href="std_eds.html#_4171_db_open">db_open</a>, <a href="std_eds.html#_4178_db_select">db_select</a></p>
+
+<p> 
+<a name="edsdb_create"></a><a name="create"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.8.2 db_create</h4>
+<a name="_4164_db_create"></a><a name="db_create"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_create</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">lock_method = DB_LOCK_NO,</font>
+<font color="#0000FF">        integer </font><font color="#330033">init_tables = DEF_INIT_TABLES,</font>
+<font color="#0000FF">        integer </font><font color="#330033">init_free = DEF_INIT_FREE</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new database given a file path and a lock method.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4165_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : a sequence, the path to the file that will contain the database.
+</li><li><tt>lock_method</tt> : an integer specifying which type of access can be granted to the database. The value of <tt>lock_method</tt> can be either <tt>DB_LOCK_NO</tt> (no lock) or  <tt>DB_LOCK_EXCLUSIVE</tt> (exclusive lock).
+</li><li><tt>init_tables</tt> : an integer giving the initial number of tables to reserve space for. The default is <tt>5</tt> and the minimum is <tt>1</tt> .
+</li><li><tt>init_free</tt> : an integer giving the initial amount of free space pointers to reserve space for. The default is <tt>5</tt> and the minimum is <tt>0</tt> .
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4166_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, status code, either <tt>DB_OK</tt> if creation successful or anything else on an error.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4167_comments"></a><a name="comments"></a>
+<p> On success, the newly created database becomes the <strong>current database</strong> to which all other database operations will apply.</p>
+
+<p> If the file in the path does not have an extention, <tt>.edb</tt> will be added automatically.</p>
+
+<p> A version number is stored in the database file so future versions of the database software can recognize the format, and possibly read it and deal with it in some way.</p>
+
+<p> If the database already exists, it will not be overwritten. <tt>db_create</tt> will return <tt>DB_EXISTS_ALREADY</tt>.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4168_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_create</font><font color="#880033">(</font><font color="#330033">"mydata"</font><font color="#330033">, DB_LOCK_NO</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Couldn't create the database!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4169_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4171_db_open">db_open</a>, <a href="std_eds.html#_4178_db_select">db_select</a></p>
+
+<p> 
+<a name="edsdb_open"></a><a name="open"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.8.3 db_open</h4>
+<a name="_4171_db_open"></a><a name="db_open"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_open</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">lock_method = DB_LOCK_NO</font><font color="#880033">)</font>
+</pre>
+
+<p>   opens an existing Euphoria database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4172_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : a sequence, the path to the file containing the database
+</li><li><tt>lock_method</tt> : an integer specifying which sort of access can be granted to the database. The types of lock that you can use are:<ol><li><tt>DB_LOCK_NO</tt> : (no lock) -- The default
+</li><li><tt>DB_LOCK_SHARED</tt> : (shared lock for read-only access)
+</li><li><tt>DB_LOCK_EXCLUSIVE</tt> : (for read and write access).
+</li></ol>
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4173_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, status code, either <tt>DB_OK</tt> if creation successful or anything else on an error.</p>
+
+<p> The return codes are:</p>
+
+<pre class="examplecode"><font color="#0000FF">public constant</font>
+<font color="#330033">    DB_OK = 0          </font><font color="#FF0055">-- success</font>
+<font color="#330033">    DB_OPEN_FAIL = -1  </font><font color="#FF0055">-- could not open the file</font>
+<font color="#330033">    DB_LOCK_FAIL = -3  </font><font color="#FF0055">-- could not lock the file in the</font>
+<font color="#FF0055">                       -- manner requested</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4174_comments"></a><a name="comments"></a>
+<p> <tt>DB_LOCK_SHARED</tt> is only supported on <em>Unix</em> platforms. It allows you to read the database, but not write anything to it. If you request <tt>DB_LOCK_SHARED</tt> on <em>Windows</em> it will be treated as if you had asked for <tt>DB_LOCK_EXCLUSIVE</tt>.</p>
+
+<p> If the lock fails, your program should wait a few seconds and try again. Another process might be currently accessing the database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4175_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">tries = 0</font>
+<font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#330033">    err = db_open</font><font color="#880033">(</font><font color="#330033">"mydata"</font><font color="#330033">, DB_LOCK_SHARED</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">err = DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">        exit</font>
+<font color="#0000FF">    elsif </font><font color="#330033">err = DB_LOCK_FAIL </font><font color="#0000FF">then</font>
+<font color="#330033">        tries += 1</font>
+<font color="#0000FF">        if </font><font color="#330033">tries &gt; 10 </font><font color="#0000FF">then</font>
+<font color="#0000FF">            puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"too many tries, giving up\n"</font><font color="#880033">)</font>
+<font color="#0000FF">            abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            sleep</font><font color="#880033">(</font><font color="#330033">5</font><font color="#880033">)</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    else</font>
+<font color="#0000FF">        puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Couldn't open the database!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">        abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4176_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4164_db_create">db_create</a>, <a href="std_eds.html#_4178_db_select">db_select</a></p>
+
+<p> 
+<a name="edsdb_select"></a><a name="select"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.8.4 db_select</h4>
+<a name="_4178_db_select"></a><a name="db_select"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_select</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">lock_method = - 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   chooses a new, already open, database to be the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4179_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : a sequence, the path to the database to be the new current database.
+</li><li><tt>lock_method</tt> : an integer. Optional locking method.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4180_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>DB_OK</tt> on success or an error code.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4181_comments"></a><a name="comments"></a><ul><li>Subsequent database operations will apply to this database. <tt>path</tt> is the path of the database file as it was originally opened with <tt>db_open</tt> or <tt>db_create</tt>.
+</li><li>When you create (<tt>db_create</tt>) or open (<tt>db_open</tt>) a database, it automatically becomes the current database. Use <tt>db_select</tt> when you want to switch back and forth between open databases, perhaps to copy records from one to the other. After selecting a new database, you should select a table within that database using <tt>db_select_table</tt>.
+</li><li>If the <tt>lock_method</tt> is omitted and the database has not already been opened, this function will fail. However, if <tt>lock_method</tt> is a valid lock type for <a href="std_eds.html#_4171_db_open">db_open</a>  and the database is not open yet, this function will attempt to open it. It may still fail if the database cannot be opened.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4182_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_select</font><font color="#880033">(</font><font color="#330033">"employees"</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Could not select employees database\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 2:</h5>
+<a name="_4183_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_select</font><font color="#880033">(</font><font color="#330033">"customer"</font><font color="#330033">, DB_LOCK_SHARED</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Could not open or select Customer database\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4184_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4171_db_open">db_open</a>, <a href="std_eds.html#_4178_db_select">db_select</a></p>
+
+<p> 
+<a name="edsdb_close"></a><a name="close"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.8.5 db_close</h4>
+<a name="_4186_db_close"></a><a name="db_close"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_close</font><font color="#880033">()</font>
+</pre>
+
+<p>   unlocks and closes the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4187_comments"></a><a name="comments"></a>
+<p> Call this procedure when you are finished with the current database. Any lock will be removed, allowing other processes to access the database file. The current database becomes undefined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.9 Managing Tables</h3>
+<a name="_4188_managingtables"></a><a name="managingtables"></a>
+<p> 
+<a name="edsdb_select_table"></a><a name="select_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.1 db_select_table</h4>
+<a name="_4190_db_select_table"></a><a name="db_select_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_select_table</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4191_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence which defines the name of the new current table.
+</li></ol>
+<p>On success, the table with name given by name becomes the current table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4192_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either <tt>DB_OK</tt> on success or <tt>DB_OPEN_FAIL</tt> otherwise.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4193_errors"></a><a name="errors"></a>
+<p> An error occurs if the current database is not defined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4194_comments"></a><a name="comments"></a>
+<p> All record-level database operations apply automatically to the current table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4195_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_select_table</font><font color="#880033">(</font><font color="#330033">"salary"</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Couldn't find salary table!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4196_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4230_db_table_list">db_table_list</a></p>
+
+<p> 
+<a name="edsdb_current_table"></a><a name="current_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.2 db_current_table</h4>
+<a name="_4198_db_current_table"></a><a name="db_current_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_current_table</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the name of currently selected table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4199_parameters"></a><a name="parameters"></a><ol><li>None.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4200_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the name of the current table. An empty string means that no table is currently selected.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4201_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = db_current_table</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4202_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4190_db_select_table">db_select_table</a>, <a href="std_eds.html#_4230_db_table_list">db_table_list</a></p>
+
+<p> 
+<a name="edsdb_create_table"></a><a name="create_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.3 db_create_table</h4>
+<a name="_4204_db_create_table"></a><a name="db_create_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_create_table</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">integer </font><font color="#330033">init_records = DEF_INIT_RECORDS</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new table within the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4205_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the new table.
+</li><li><tt>init_records</tt> : The number of records to initially reserve space for. (Default is 50)
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4206_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either <tt>DB_OK</tt> on success or <tt>DB_EXISTS_ALREADY</tt> on failure.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4207_errors"></a><a name="errors"></a>
+<p> An error occurs if the current database is not defined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4208_comments"></a><a name="comments"></a><ul><li>The supplied name must not exist already on the current database.
+</li><li>The table that you create will initially have zero records. However it will reserve some space for a number of records, which will improve the initial data load for the table.
+</li><li>It becomes the current table.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4209_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_create_table</font><font color="#880033">(</font><font color="#330033">"my_new_table"</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Could not create my_new_table!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4210_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4190_db_select_table">db_select_table</a>, <a href="std_eds.html#_4230_db_table_list">db_table_list</a></p>
+
+<p> 
+<a name="edsdb_delete_table"></a><a name="delete_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.4 db_delete_table</h4>
+<a name="_4212_db_delete_table"></a><a name="db_delete_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_delete_table</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   deletes a table in the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4213_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the table to delete.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4214_errors"></a><a name="errors"></a>
+<p> An error occurs if the current database is not defined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4215_comments"></a><a name="comments"></a>
+<p> If there is no table with the name given by name, then nothing happens. On success, all records are deleted and all space used by the table is freed up. If the table was the current table, the current table becomes undefined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4216_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4230_db_table_list">db_table_list</a>, <a href="std_eds.html#_4190_db_select_table">db_select_table</a>, <a href="std_eds.html#_4218_db_clear_table">db_clear_table</a></p>
+
+<p> 
+<a name="edsdb_clear_table"></a><a name="clear_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.5 db_clear_table</h4>
+<a name="_4218_db_clear_table"></a><a name="db_clear_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_clear_table</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">integer </font><font color="#330033">init_records = DEF_INIT_RECORDS</font><font color="#880033">)</font>
+</pre>
+
+<p>   clears a table of all its records, in the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4219_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the table to clear.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4220_errors"></a><a name="errors"></a>
+<p> An error occurs if the current database is not defined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4221_comments"></a><a name="comments"></a>
+<p> If there is no table with the name given by name, then nothing happens. On success, all records are deleted and all space used by the table is freed up. If this is the current table, after this operation it will still be the current table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4222_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4230_db_table_list">db_table_list</a>, <a href="std_eds.html#_4190_db_select_table">db_select_table</a>, <a href="std_eds.html#_4212_db_delete_table">db_delete_table</a></p>
+
+<p> 
+<a name="edsdb_rename_table"></a><a name="rename_table"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.6 db_rename_table</h4>
+<a name="_4224_db_rename_table"></a><a name="db_rename_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_rename_table</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">sequence </font><font color="#330033">new_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   renames a table in the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4225_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the table to rename
+</li><li><tt>new_name</tt> : a sequence, the new name for the table
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4226_errors"></a><a name="errors"></a><ul><li>An error occurs if the current database is not defined.
+</li><li>If <tt>name</tt> does not exist on the current database, or if <tt>new_name</tt> does exist on the current database, an error will occur.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4227_comments"></a><a name="comments"></a>
+<p> The table to be renamed can be the current table, or some other table in the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4228_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4230_db_table_list">db_table_list</a></p>
+
+<p> 
+<a name="edsdb_table_list"></a><a name="table_list"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.9.7 db_table_list</h4>
+<a name="_4230_db_table_list"></a><a name="db_table_list"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_table_list</font><font color="#880033">()</font>
+</pre>
+
+<p>   lists all tables in the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4231_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of all the table names in the current database. Each element of this sequence is a sequence, the name of a table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4232_errors"></a><a name="errors"></a>
+<p> An error occurs if the current database is undefined.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4233_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">names = db_table_list</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">names</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, names</font><font color="#993333">[</font><font color="#330033">i</font><font color="#993333">] </font><font color="#330033">&amp; </font><font color="#330033">'\n'</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4234_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4190_db_select_table">db_select_table</a>, <a href="std_eds.html#_4204_db_create_table">db_create_table</a></p>
+
+<!-- ..\include\std\eds.e -->
+<h3>8.29.10 Managing Records</h3>
+<a name="_4235_managingrecords"></a><a name="managingrecords"></a>
+<p> 
+<a name="edsdb_find_key"></a><a name="find_key"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.1 db_find_key</h4>
+<a name="_4237_db_find_key"></a><a name="db_find_key"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_find_key</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds the record in the current table with supplied key.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4238_parameters"></a><a name="parameters"></a><ol><li><tt>key</tt> : the identifier of the record to be looked up.
+</li><li><tt>table_name</tt> : optional name of table to find key in
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4239_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either greater or less than zero: </p>
+<ul><li>If above zero, the record identified by <tt>key</tt> was found on the current table, and the returned integer is its record number.
+</li><li>If less than zero, the record was not found. The returned integer is the opposite of what the record number would have been, had the record been found.
+</li><li>If equal to zero, an error occured.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4240_errors"></a><a name="errors"></a>
+<p> If the current table is not defined, it returns <tt>0</tt> .</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4241_comments"></a><a name="comments"></a>
+<p> A fast binary search is used to find the key in the current table. The number of comparisons is proportional to the log of the number of records in the table. The key is unique--a table is more like a dictionary than like a spreadsheet.</p>
+
+<p> You can select a range of records by searching for the first and last key values in the range. If those key values don't exist, you'll at least get a negative value showing <tt>io:where</tt> they would be, if they existed.</p>
+
+<p> For example, suppose you want to know which records have keys greater than <tt>"GGG"</tt> and less than <tt>"MMM"</tt>. If <tt>-5</tt> is returned for key <tt>"GGG"</tt>, it means a record with <tt>"GGG"</tt> as a key would be inserted as record number <tt>5</tt> . <tt>-27</tt> for <tt>"MMM"</tt> means a record with <tt>"MMM"</tt> as its key would be inserted as record number <tt>27</tt>. This quickly tells you that all records, <tt>&gt;= 5</tt> and <tt>&lt; 27</tt> qualify.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4242_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">rec_num = db_find_key</font><font color="#880033">(</font><font color="#330033">"Millennium"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">rec_num &gt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">    ? db_record_key</font><font color="#880033">(</font><font color="#330033">rec_num</font><font color="#880033">)</font>
+<font color="#330033">    ? db_record_data</font><font color="#880033">(</font><font color="#330033">rec_num</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Not found, but if you insert it,\n"</font><font color="#880033">)</font>
+
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"it will be #%d\n"</font><font color="#330033">, -rec_num</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4243_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4245_db_insert">db_insert</a>, <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a>, <a href="std_eds.html#_4252_db_delete_record">db_delete_record</a>, <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a></p>
+
+<p> 
+<a name="edsdb_insert"></a><a name="insert"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.2 db_insert</h4>
+<a name="_4245_db_insert"></a><a name="db_insert"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_insert</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">data, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   inserts a new record into the current table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4246_parameters"></a><a name="parameters"></a><ol><li><tt>key</tt> : an object, the record key, which uniquely identifies it inside the current table
+</li><li><tt>data</tt> : an object, associated to <tt>key</tt>.
+</li><li><tt>table_name</tt> : optional table name to insert record into
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4247_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either <tt>DB_OK</tt> on success or an error code on failure.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4248_comments"></a><a name="comments"></a>
+<p> Within a table, all keys must be unique. <tt>db_insert</tt> will fail with <tt>DB_EXISTS_ALREADY</tt> if a record already exists on current table with the same key value.</p>
+
+<p> Both key and data can be any Euphoria data objects, atoms or sequences.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4249_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_insert</font><font color="#880033">(</font><font color="#330033">"Smith"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"Peter"</font><font color="#330033">, 100, 34.5</font><font color="#993333">}</font><font color="#880033">) </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"insert failed!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4250_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a>, <a href="std_eds.html#_4252_db_delete_record">db_delete_record</a></p>
+
+<p> 
+<a name="edsdb_delete_record"></a><a name="delete_record"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.3 db_delete_record</h4>
+<a name="_4252_db_delete_record"></a><a name="db_delete_record"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_delete_record</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">key_location, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   deletes record number <tt>key_location</tt> from the current table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4253_parameters"></a><a name="parameters"></a><ol><li><tt>key_location</tt> : a positive integer, designating the record to delete.
+</li><li><tt>table_name</tt> : optional table name to delete record from.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4254_errors"></a><a name="errors"></a>
+<p> If the current table is not defined, or <tt>key_location</tt> is not a valid record index, an error will occur. Valid record indexes are between 1 and the number of records in the table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4255_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">db_delete_record</font><font color="#880033">(</font><font color="#330033">55</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4256_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4237_db_find_key">db_find_key</a></p>
+
+<p> 
+<a name="edsdb_replace_data"></a><a name="replace_data"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.4 db_replace_data</h4>
+<a name="_4258_db_replace_data"></a><a name="db_replace_data"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_replace_data</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">key_location, </font><font color="#0000FF">object </font><font color="#330033">data,</font>
+<font color="#0000FF">        object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   replaces, the current table, the data portion of a record  with new data.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4259_parameters"></a><a name="parameters"></a><ol><li><tt>key_location</tt>: an integer, the index of the record the data is to be altered.
+</li><li><tt>data</tt>: an object , the new value associated to the key of the record.
+</li><li><tt>table_name</tt>: optional table name of record to replace data in.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4260_comments"></a><a name="comments"></a>
+<p> <tt>key_location</tt> must be from <tt>1</tt> to the number of records in the current table. <tt>data</tt> is an Euphoria object of any kind, atom or sequence.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4261_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">db_replace_data</font><font color="#880033">(</font><font color="#330033">67, </font><font color="#993333">{</font><font color="#330033">"Peter"</font><font color="#330033">, 150, 34.5</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4262_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4237_db_find_key">db_find_key</a></p>
+
+<p> 
+<a name="edsdb_table_size"></a><a name="table_size"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.5 db_table_size</h4>
+<a name="_4264_db_table_size"></a><a name="db_table_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_table_size</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the size (number of records) of the default table.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4265_parameters"></a><a name="parameters"></a><ol><li><tt>table_name</tt> : optional table name to get the size of.
+</li></ol>
+<p>Returns An <strong>integer</strong>, the current number of records in the current table. If a value less than zero is returned, it means that an error occured.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4266_errors"></a><a name="errors"></a>
+<p> If the current table is undefined, an error will occur.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4267_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- look at all records in the current table</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">db_table_size</font><font color="#880033">() </font><font color="#0000FF">do</font>
+<font color="#0000FF">    if </font><font color="#330033">db_record_key</font><font color="#880033">(</font><font color="#330033">i</font><font color="#880033">) </font><font color="#330033">= 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    	puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"0 key found\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    	exit</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4268_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a></p>
+
+<p> 
+<a name="edsdb_record_data"></a><a name="record_data"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.6 db_record_data</h4>
+<a name="_4270_db_record_data"></a><a name="db_record_data"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_record_data</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">key_location, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the data in a record queried by position.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4271_parameters"></a><a name="parameters"></a><ol><li><tt>key_location</tt> : the index of the record the data of which is being fetched.
+</li><li><tt>table_name</tt> : optional table name to get record data from.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4272_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the data portion of requested record.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Note:</h5>
+<a name="_4273_note"></a><a name="note"></a>
+<p> This function calls <tt>fatal</tt> and returns a value of <tt>-1</tt> if an error prevented the correct data being returned.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4274_comments"></a><a name="comments"></a>
+<p> Each record in a Euphoria database consists of a key portion and a data portion. Each of these can be any Euphoria atom or sequence.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4275_errors"></a><a name="errors"></a>
+<p> If the current table is not defined, or if the record index is invalid, an error will occur.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4276_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The 6th record has data value: "</font><font color="#880033">)</font>
+<font color="#330033">? db_record_data</font><font color="#880033">(</font><font color="#330033">6</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4277_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4237_db_find_key">db_find_key</a>, <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a></p>
+
+<p> 
+<a name="edsdb_fetch_record"></a><a name="fetch_record"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.7 db_fetch_record</h4>
+<a name="_4279_db_fetch_record"></a><a name="db_fetch_record"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_fetch_record</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the data for the record with supplied key.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4280_parameters"></a><a name="parameters"></a><ol><li><tt>key</tt> : the identifier of the record to be looked up.
+</li><li><tt>table_name</tt> : optional name of table to find key in
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4281_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>If less than zero, the record was not found. The returned integer is the opposite of what the record number would have been, had the record been found.
+</li><li>If equal to zero, an error occured. A sequence, the data for the record.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4282_errors"></a><a name="errors"></a>
+<p> If the current table is not defined, it returns 0.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4283_comments"></a><a name="comments"></a>
+<p> Each record in a Euphoria database consists of a key portion and a data portion. Each of these can be any Euphoria atom or sequence.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Note:</h5>
+<a name="_4284_note"></a><a name="note"></a>
+<p> This function does not support records that data consists of a single non-sequence value. In those cases you will need to use <a href="std_eds.html#_4237_db_find_key">db_find_key</a> and <a href="std_eds.html#_4270_db_record_data">db_record_data</a>.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4285_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The record['%s'] has data value:\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"foo"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">? db_fetch_record</font><font color="#880033">(</font><font color="#330033">"foo"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4286_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4237_db_find_key">db_find_key</a>, <a href="std_eds.html#_4270_db_record_data">db_record_data</a></p>
+
+<p> 
+<a name="edsdb_record_key"></a><a name="record_key"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.8 db_record_key</h4>
+<a name="_4288_db_record_key"></a><a name="db_record_key"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_record_key</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">key_location, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the key of a record given an index. </p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4289_parameters"></a><a name="parameters"></a><ol><li><tt>key_location</tt> : an integer, the index of the record the key is being requested.
+</li><li><tt>table_name</tt> : optional table name to get record key from.
+</li></ol>
+<p>Returns An <strong>object</strong>, the key of the record being queried by index.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Note:</h5>
+<a name="_4290_note"></a><a name="note"></a>
+<p> This function calls <tt>fatal</tt> and returns a value of <tt>-1</tt> if an error prevented the correct data being returned.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4291_errors"></a><a name="errors"></a>
+<p> If the current table is not defined, or if the record index is invalid, an error will occur.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4292_comments"></a><a name="comments"></a>
+<p> Each record in a Euphoria database consists of a key portion and a data portion. Each of these can be any Euphoria atom or sequence.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4293_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The 6th record has key value: "</font><font color="#880033">)</font>
+<font color="#330033">? db_record_key</font><font color="#880033">(</font><font color="#330033">6</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4294_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4270_db_record_data">db_record_data</a></p>
+
+<p> 
+<a name="edsdb_compress"></a><a name="compress"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.9 db_compress</h4>
+<a name="_4296_db_compress"></a><a name="db_compress"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_compress</font><font color="#880033">()</font>
+</pre>
+
+<p>   compresses the current database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4297_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either DB_OK on success or an error code on failure.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4298_comments"></a><a name="comments"></a>
+<p> The current database is copied to a new file such that any blocks of unused space are eliminated. If successful, the return value will be set to <tt>DB_OK</tt>, and the new compressed database file will retain the same name. The current table will be undefined. As a backup, the original, uncompressed file will be renamed with an extension of <tt>.t0 (or .t1, .t2, ..., .t99)</tt>. In the highly unusual case that the compression is unsuccessful, the database will be left unchanged, and no backup will be made.</p>
+
+<p> When you delete items from a database, you create blocks of free space within the database file. The system keeps track of these blocks and tries to use them for storing new data that you insert. <tt>db_compress</tt> will copy the current database without copying these free areas. The size of the database file may therefore be reduced. If the backup filenames reach <tt>.t99</tt> you will have to delete some of them.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4299_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">db_compress</font><font color="#880033">() </font><font color="#330033">!= DB_OK </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"compress failed!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="edsdb_current"></a><a name="current"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.10 db_current</h4>
+<a name="_4301_db_current"></a><a name="db_current"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_current</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets name of currently selected database.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4302_parameters"></a><a name="parameters"></a><ol><li>None.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4303_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the name of the current database. An empty string means that no database is currently selected.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4304_comments"></a><a name="comments"></a>
+<p> The actual name returned is the <em>path</em> as supplied to the <tt>db_open</tt> routine.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4305_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = db_current_database</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4306_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4178_db_select">db_select</a></p>
+
+<p> 
+<a name="edsdb_cache_clear"></a><a name="cache_clear"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.11 db_cache_clear</h4>
+<a name="_4308_db_cache_clear"></a><a name="db_cache_clear"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_cache_clear</font><font color="#880033">()</font>
+</pre>
+
+<p>   forces the database index cache to be cleared.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4309_parameters"></a><a name="parameters"></a><ol><li>None
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4310_comments"></a><a name="comments"></a><ul><li>This is not normally required to the run. You might run it to set up a predetermined state for performance timing, or to release some memory back to the application.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4311_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">db_cache_clear</font><font color="#880033">() </font><font color="#FF0055">-- Clear the cache.</font>
+</pre>
+
+<p> 
+<a name="edsdb_set_caching"></a><a name="set_caching"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.12 db_set_caching</h4>
+<a name="_4313_db_set_caching"></a><a name="db_set_caching"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_set_caching</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">new_setting</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the key cache behavior.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4314_parameters"></a><a name="parameters"></a><ol><li><tt>integer</tt> : <tt>0</tt> will turn of caching, <tt>1</tt> will turn it back on.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4315_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the previous setting of the option.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4316_comments"></a><a name="comments"></a>
+<p> Initially, the cache option is turned on. This means that when possible, the keys of a table are kept in RAM rather than read from disk each time <tt>db_select_table</tt> is called. For most databases, this will improve performance when you have more than one table in it.</p>
+
+<p> When caching is turned off, the current cache contents is totally cleared.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4317_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = db_set_caching</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">) </font><font color="#FF0055">-- Turn off key caching.</font>
+</pre>
+
+<p> 
+<a name="edsdb_replace_recid"></a><a name="replace_recid"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.13 db_replace_recid</h4>
+<a name="_4319_db_replace_recid"></a><a name="db_replace_recid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public procedure </font><font color="#330033">db_replace_recid</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">recid, </font><font color="#0000FF">object </font><font color="#330033">data</font><font color="#880033">)</font>
+</pre>
+
+<p>   replaces, in the current database, the data portion of a record with new data.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4320_parameters"></a><a name="parameters"></a><ol><li><tt>recid</tt> : an atom, the <tt>recid</tt> of the record to be updated.
+</li><li><tt>data</tt> : an object, the new value of the record.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4321_comments"></a><a name="comments"></a>
+<p> This can be used to quickly update records that have already been located by calling <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a>. This operation is faster than using <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a></p>
+<ul><li><tt>recid</tt> must be fetched using <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a> first.
+</li><li><tt>data</tt> is an Euphoria object of any kind, atom or sequence.
+</li><li>The <tt>recid</tt> does not have to be from the current table.
+</li><li>This does no error checking. It assumes the database is open and valid.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4322_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">rid = db_get_recid</font><font color="#880033">(</font><font color="#330033">"Peter"</font><font color="#880033">)</font>
+<font color="#330033">rec = db_record_recid</font><font color="#880033">(</font><font color="#330033">rid</font><font color="#880033">)</font>
+<font color="#330033">rec</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">][</font><font color="#330033">3</font><font color="#880033">] </font><font color="#330033">*= 1.10</font>
+<font color="#330033">db_replace_recid</font><font color="#880033">(</font><font color="#330033">rid, rec</font><font color="#993333">[</font><font color="#330033">2</font><font color="#993333">]</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4323_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a>, <a href="std_eds.html#_4237_db_find_key">db_find_key</a>, <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a></p>
+
+<p> 
+<a name="edsdb_record_recid"></a><a name="record_recid"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.14 db_record_recid</h4>
+<a name="_4325_db_record_recid"></a><a name="db_record_recid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_record_recid</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">recid</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the key and data in a record queried by <tt>recid</tt>.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4326_parameters"></a><a name="parameters"></a><ol><li><tt>recid</tt> : the <tt>recid</tt> of the required record, which has been previously fetched using <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a>.
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4327_returns"></a><a name="returns"></a>
+<p> An <strong>sequence</strong>, the first element is the key and the second element is the data portion of requested record.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4328_comments"></a><a name="comments"></a><ul><li>This is much faster than calling <a href="std_eds.html#_4288_db_record_key">db_record_key</a> and <a href="std_eds.html#_4270_db_record_data">db_record_data</a>.
+</li><li>This does no error checking. It assumes the database is open and valid.
+</li><li>This function does not need the requested record to be from the current table. The <tt>recid</tt> can refer to a record in any table.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4329_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">rid = db_get_recid</font><font color="#880033">(</font><font color="#330033">"SomeKey"</font><font color="#880033">)</font>
+<font color="#330033">? db_record_recid</font><font color="#880033">(</font><font color="#330033">rid</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4330_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4332_db_get_recid">db_get_recid</a>, <a href="std_eds.html#_4319_db_replace_recid">db_replace_recid</a></p>
+
+<p> 
+<a name="edsdb_get_recid"></a><a name="get_recid"></a> </p>
+
+<!-- ..\include\std\eds.e -->
+<h4>8.29.10.15 db_get_recid</h4>
+<a name="_4332_db_get_recid"></a><a name="db_get_recid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eds</font>
+<font color="#0000FF">public function </font><font color="#330033">db_get_recid</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">table_name = current_table_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the unique record identifier (<tt>recid</tt>) value for the record.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Parameters:</h5>
+<a name="_4333_parameters"></a><a name="parameters"></a><ol><li><tt>key</tt> : the identifier of the record to be looked up.
+</li><li><tt>table_name</tt> : optional name of table to find key in
+</li></ol>
+<!-- ..\include\std\eds.e -->
+<h5>Returns:</h5>
+<a name="_4334_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, either greater or equal to zero: </p>
+<ul><li>If above zero, it is a <tt>recid</tt>.
+</li><li>If less than zero, the record wasn't found.
+</li><li>If equal to zero, an error occured.
+</li></ul>
+<!-- ..\include\std\eds.e -->
+<h5>Errors:</h5>
+<a name="_4335_errors"></a><a name="errors"></a>
+<p> If the table is not defined, an error is raised.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Comments:</h5>
+<a name="_4336_comments"></a><a name="comments"></a>
+<p> A <strong><tt>recid</tt></strong> is a number that uniquely identifies a record in the database. No two records in a database has the same <tt>recid</tt> value. They can be used instead of keys to <em>quickly</em> refetch a record, as they avoid the overhead of looking for a matching record key. They can also be used without selecting a table first, as the <tt>recid</tt> is unique to the database and not just a table. However, they only remain valid while a database is open and so long as it does not get compressed. Compressing the database will give each record a new <tt>recid</tt> value.</p>
+
+<p> Because it is faster to fetch a record with a <tt>recid</tt> rather than with its key, these are used when you know you have to <em>refetch</em> a record.</p>
+
+<!-- ..\include\std\eds.e -->
+<h5>Example 1:</h5>
+<a name="_4337_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">rec_num = db_get_recid</font><font color="#880033">(</font><font color="#330033">"Millennium"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">rec_num &gt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">    ? db_record_recid</font><font color="#880033">(</font><font color="#330033">rec_num</font><font color="#880033">) </font><font color="#FF0055">-- fetch key and data.</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"Not found\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\eds.e -->
+<h5>See Also:</h5>
+<a name="_4338_seealso"></a><a name="seealso"></a>
+<p> <a href="std_eds.html#_4245_db_insert">db_insert</a>, <a href="std_eds.html#_4258_db_replace_data">db_replace_data</a>, <a href="std_eds.html#_4252_db_delete_record">db_delete_record</a>, <a href="std_eds.html#_4237_db_find_key">db_find_key</a></p>
+
+<p> 
+<!-- ..\include\std\primes.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_stats.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_primes.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_stats.html">8.28 Statistics</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_primes.html">8.30 Prime Numbers</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

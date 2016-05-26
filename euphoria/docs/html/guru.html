@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eused.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="hash.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eused.html">6.1.10 eused.ex</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="hash.html">6.1.12 hash.ex</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\demo\guru.ex -->
+<h3>6.1.11 guru.ex</h3>
+<a name="_375_guruex"></a><a name="guruex"></a>
+<p> Searches for the best articles that contain the words that you type. Each word can contain * and ? wildcard characters. The articles are given a score and presented to you sorted by score. The scoring system strongly favors articles that contain several of your words, rather than just several occurrences of one of your words. Some very common words are ignored (see noise_words). e.g. 
+<pre>guru sequence* atom *pend g?r?
+</pre>
+
+<p> Results are displayed on screen and also saved in "c:\guru.out" or $HOME/guru.out (Linux).</p>
+
+<!-- ..\demo\guru.ex -->
+<h4>6.1.11.1 Hints</h4>
+<a name="_376_hints"></a><a name="hints"></a><ul><li>remember to add * to words that can be pluralized or have many different endings.
+</li><li>enter an important word twice to double the value of that word
+</li><li>If you get a "Critical Error", type 'i' for ignore. It just means that a file is currently locked by another application.
+</li></ul>
+<!-- ..\demo\guru.ex -->
+<h4>6.1.11.2 Usage</h4>
+<a name="_377_usage"></a><a name="usage"></a>
+<!-- ..\demo\guru.ex -->
+<h5>to search EUPHORIA directories:</h5>
+<a name="_378_tosearcheuphoriadirectories"></a><a name="tosearcheuphoriadirectories"></a>
+<p> 
+<pre>guru word1 word2 word3 ...
+</pre>
+
+<p> Euphoria .doc and other files are searched. .htm files are skipped.</p>
+
+<!-- ..\demo\guru.ex -->
+<h5>To search the current directory and all subdirectories:</h5>
+<a name="_379_tosearchthecurrentdirectoryandallsubdirectories"></a><a name="tosearchthecurrentdirectoryandallsubdirectories"></a>
+<p> 
+<pre>cdguru word1 word2 word3 ...
+</pre>
+
+<p> 
+<!-- ..\demo\hash.ex -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eused.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="hash.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eused.html">6.1.10 eused.ex</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="hash.html">6.1.12 hash.ex</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

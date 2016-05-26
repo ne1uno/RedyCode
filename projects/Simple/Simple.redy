@@ -1,0 +1,23 @@
+[Project]
+Header = "This file is part of $title$"
+Header = "$url$"
+Header = ""
+Header = "Copyright $year$ $author$"
+Header = ""
+Header = "Licensed under the Apache License, Version 2.0 (the "License");"
+Header = "you may not use this file except in compliance with the License."
+Header = "You may obtain a copy of the License at"
+Header = ""
+Header = "  http://www.apache.org/licenses/LICENSE-2.0"
+Header = ""
+Header = "Unless required by applicable law or agreed to in writing, software"
+Header = "distributed under the License is distributed on an "AS IS" BASIS,"
+Header = "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
+Header = "See the License for the specific language governing permissions and"
+Header = "limitations under the License."
+Header = ""
+
+[Euphoria]
+EuiPath = 0
+EubindPath = 0
+IncludePath = 0

@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_0_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_1_5_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_0_0b.html">9.44 Version 2.0 Beta February 26, 1998</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_1_5_1.html">9.46 Version 1.5.1 (release a) June 13, 1997</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.0.0a.txt -->
+<h2>9.45 Version 2.0 Alpha November 5, 1997</h2>
+<a name="_6802_version20alphanovember51997"></a><a name="version20alphanovember51997"></a><ul><li>A <strong><em>new platform</em></strong> is now supported.  <strong>exw.exe</strong> will run Euphoria programs using the <strong>WIN32</strong> (Windows 32-bit) operating system. <strong>ex.exe</strong> will run programs using <strong>DOS32</strong> (extended DOS).  See <strong>platform.doc</strong> for further details.
+</li><li>The following library routines have been introduced.<ul><li>For both DOS32 and WIN32:<ul><li><tt>platform()</tt> - find out which platform you are executing on. (The PLATFORM constant is available in Euphoria 2.2 and later).
+</li><li><tt>routine_id()</tt> - get a small integer id number for a Euphoria procedure or function.
+</li><li><tt>call_proc()</tt> - call a Euphoria procedure by using its id.
+</li><li><tt>call_func()</tt> - call a Euphoria function by using its id.
+</li><li><tt>custom_sort()</tt> - sort a sequence using a compare function that you specify.
+</li><li><tt>poke4()</tt> - store a number into 4 bytes of memory.  poke4(address, value) is at least 10x faster than: poke(address, int_to_bytes(value)).  poke4() also works with sequences of values."
+</li><li><tt>peek4s()</tt> - read 4 bytes of memory as a signed integer (works on sequences too).
+</li><li><tt>peek4u()</tt> - read 4 bytes of memory as an unsigned integer (works on sequences too). peek4u(address) is 10x faster than: bytes_to_int(peek({address, 4})).
+</li><li><tt>allocate_string()</tt> - allocate and store a 0-terminated string in memory.
+</li></ul>
+</li><li>For WIN32 only:<ul><li><tt>open_dll()</tt> - open a Windows <strong>.</strong>dll file.
+</li><li><tt>define_c_proc()</tt> - define a C routine that will be called from Euphoria (no value returned).
+</li><li><tt>define_c_func()</tt> -define a C routine that will be called from Euphoria (a value will be returned).
+</li><li><tt>call_c_proc()</tt> - call a C routine from Euphoria (no value is returned).
+</li><li><tt>call_c_func()</tt> - call a C routine from Euphoria (a value is returned).
+</li><li><tt>call_back()</tt> - get a <strong><em>call-back address</em></strong>, so Windows can call your Euphoria routine when the user interacts with your window."
+</li><li><tt>message_box()</tt> - display a simple <strong>Yes/No/Cancel</strong> window.
+</li></ul>
+</li></ul>
+</li><li>New Demo programs:
+</li><li><strong>csort.ex</strong>
+</li><li><strong>email.exw</strong>
+</li><li><strong>window.exw</strong>
+</li><li><strong>winwire.exw</strong>
+</li><li><strong>dsearch.exw</strong>
+</li><li>New include files:<ul><li><tt>safe.e</tt> - debug version of <strong>machine.e</strong>"
+</li><li><tt>misc.e</tt> - miscellaneous
+</li><li><tt>dll.e</tt> - dll access
+</li><li><tt>msgbox.e</tt> - Windows message box
+</li></ul>
+</li><li>The following additional improvements have been made to the <strong>DOS32</strong> version:<ul><li>On Pentium and higher systems, floating-point calculations are now about 20% faster (and floating-point in <strong>exw</strong> is a further 20% faster than <strong>ex</strong> for 2.0).
+</li><li><strong>printf()</strong> to the screen, and <strong>print()</strong> to the screen are both significantly faster in most cases.
+</li><li>The <strong>trace</strong> screen is updated a bit faster.
+</li><li>The <strong>time profile</strong> is more accurate regarding <strong>getc()</strong>.
+</li><li>The <strong>mset.ex</strong> demo runs 30% faster.
+</li></ul>
+</li></ul>
+<p> 
+<!-- ..\docs\release\1.5.1.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_0_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_1_5_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_0_0b.html">9.44 Version 2.0 Beta February 26, 1998</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_1_5_1.html">9.46 Version 1.5.1 (release a) June 13, 1997</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

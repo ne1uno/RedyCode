@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_unittest.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_win32_msgbox.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_unittest.html">8.54 Unit Testing Framework</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_win32_msgbox.html">8.56 Windows Message Box</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h2>8.55 Debugging tools</h2>
+<a name="_6474_debuggingtools"></a><a name="debuggingtools"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="euphoria_debug_debug.html#_6474_debuggingtools">8.55 Debugging tools</a></div>
+<div class="toc_3"><a href="euphoria_debug_debug.html#_6475_callstackconstants">8.55.1 Call Stack Constants</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6477_cs_routine_name">8.55.1.1 CS_ROUTINE_NAME</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6479_cs_file_name">8.55.1.2 CS_FILE_NAME</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6481_cs_line_no">8.55.1.3 CS_LINE_NO</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6483_cs_routine_sym">8.55.1.4 CS_ROUTINE_SYM</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6485_cs_pc">8.55.1.5 CS_PC</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6487_cs_gline">8.55.1.6 CS_GLINE</a></div>
+<div class="toc_3"><a href="euphoria_debug_debug.html#_6488_debug_routineenumtype">8.55.2 DEBUG_ROUTINE Enum Type</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6490_type">8.55.2.1 type</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6492_badsigeucode">8.55.2.2 BadSig: <eucode></a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6494_badsigeucode">8.55.2.3 BadSig: <eucode></a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6496_badsigeucode">8.55.2.4 BadSig: <eucode></a></div>
+<div class="toc_3"><a href="euphoria_debug_debug.html#_6497_debuggingroutines">8.55.3 Debugging Routines</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6499_call_stack">8.55.3.1 call_stack</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6502_m_init_debugger">8.55.3.2 M_INIT_DEBUGGER</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6504_initialize_debugger">8.55.3.3 initialize_debugger</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6507_set_debug_rid">8.55.3.4 set_debug_rid</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6509_read_object">8.55.3.5 read_object</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6511_trace_off">8.55.3.6 trace_off</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6513_disable_trace">8.55.3.7 disable_trace</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6515_step_over">8.55.3.8 step_over</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6517_abort_program">8.55.3.9 abort_program</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6519_get_current_line">8.55.3.10 get_current_line</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6521_symbol_lookup">8.55.3.11 symbol_lookup</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6523_get_pc">8.55.3.12 get_pc</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6525_is_novalue">8.55.3.13 is_novalue</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6527_debugger_call_stack">8.55.3.14 debugger_call_stack</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6529_break_routine">8.55.3.15 break_routine</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6531_get_name">8.55.3.16 get_name</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6533_get_source">8.55.3.17 get_source</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6535_get_file_no">8.55.3.18 get_file_no</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6537_get_file_name">8.55.3.19 get_file_name</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6539_get_file_line">8.55.3.20 get_file_line</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6541_get_next">8.55.3.21 get_next</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6543_is_variable">8.55.3.22 is_variable</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6545_get_parameter_syms">8.55.3.23 get_parameter_syms</a></div>
+<div class="toc_4"><a href="euphoria_debug_debug.html#_6547_get_symbol_table">8.55.3.24 get_symbol_table</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h3>8.55.1 Call Stack Constants</h3>
+<a name="_6475_callstackconstants"></a><a name="callstackconstants"></a>
+<p> 
+<a name="debugcs_routine_name"></a><a name="routine_name"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.1 CS_ROUTINE_NAME</h4>
+<a name="_6477_cs_routine_name"></a><a name="cs_routine_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_ROUTINE_NAME</font>
+</pre>
+
+<p>  CS_ROUTINE_NAME: index of the routine name in the sequence returned by <a href="euphoria_debug_debug.html#_6499_call_stack">call_stack</a></p>
+
+<p> 
+<a name="debugcs_file_name"></a><a name="file_name"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.2 CS_FILE_NAME</h4>
+<a name="_6479_cs_file_name"></a><a name="cs_file_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_FILE_NAME</font>
+</pre>
+
+<p>  CS_FILE_NAME: index of the file name in the sequence returned by <a href="euphoria_debug_debug.html#_6499_call_stack">call_stack</a></p>
+
+<p> 
+<a name="debugcs_line_no"></a><a name="line_no"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.3 CS_LINE_NO</h4>
+<a name="_6481_cs_line_no"></a><a name="cs_line_no"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_LINE_NO</font>
+</pre>
+
+<p>  CS_LINE_NO: index of the line number in the sequence returned by <a href="euphoria_debug_debug.html#_6499_call_stack">call_stack</a></p>
+
+<p> 
+<a name="debugcs_routine_sym"></a><a name="routine_sym"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.4 CS_ROUTINE_SYM</h4>
+<a name="_6483_cs_routine_sym"></a><a name="cs_routine_sym"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_ROUTINE_SYM</font>
+</pre>
+
+<p>  CS_ROUTINE_SYM: (debugger only) Pointer to the routine symbol</p>
+
+<p> 
+<a name="debugcs_pc"></a><a name="pc"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.5 CS_PC</h4>
+<a name="_6485_cs_pc"></a><a name="cs_pc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_PC</font>
+</pre>
+
+<p>  CS_PC: (debugger only) The program counter pointer for this routine</p>
+
+<p> 
+<a name="debugcs_gline"></a><a name="gline"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.1.6 CS_GLINE</h4>
+<a name="_6487_cs_gline"></a><a name="cs_gline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_GLINE</font>
+</pre>
+
+<p>  CS_GLINE: (debugger only) The index into the global line array</p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h3>8.55.2 DEBUG_ROUTINE Enum Type</h3>
+<a name="_6488_debug_routineenumtype"></a><a name="debug_routineenumtype"></a>
+<p> These constants are used to register euphoria routines that handle various debugger tasks, displaying information or waiting for user input.</p>
+
+<p> 
+<a name="debugtype"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.2.1 type</h4>
+<a name="_6490_type"></a><a name="type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public enum type </font><font color="#330033">DEBUG_ROUTINE</font>
+</pre>
+
+<p> SHOW_DEBUG a procedure that takes an integer parameter that represents the current line in the global line table</p>
+
+<p> DISPLAY_VAR A procedure that takes a pointer to the variable in the symbol table, and a flag to indicate whether the user requested this variable or not.  Euphoria generally calls this when a variable is assigned to.</p>
+
+<p> UPDATE_GLOBALS A procedure called when the debug screen should update the display of any non-private variables</p>
+
+<p> 
+<a name="debugbadsigeucode"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.2.2 BadSig: <eucode></h4>
+<a name="_6492_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#330033">DEBUG_SCREEN</font>
+</pre>
+
+<p> 
+<a name="debugbadsigeucode"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.2.3 BadSig: <eucode></h4>
+<a name="_6494_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#330033">ERASE_PRIVATES</font>
+</pre>
+
+<p> 
+<a name="debugbadsigeucode"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.2.4 BadSig: <eucode></h4>
+<a name="_6496_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#330033">ERASE_SYMBOL</font>
+</pre>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h3>8.55.3 Debugging Routines</h3>
+<a name="_6497_debuggingroutines"></a><a name="debuggingroutines"></a>
+<p> 
+<a name="debugcall_stack"></a><a name="stack"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.1 call_stack</h4>
+<a name="_6499_call_stack"></a><a name="call_stack"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">call_stack</font><font color="#880033">()</font>
+</pre>
+
+<p> Returns information about the call stack of the code currently running.</p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h5>Returns:</h5>
+<a name="_6500_returns"></a><a name="returns"></a>
+<p> A sequence where each element represents one level in the call stack.  See the <a href="euphoria_debug_debug.html#_6475_callstackconstants">Call Stack Constants</a> for constants that can be used to access the call stack information. </p>
+<ol><li>routine name
+</li><li>file name
+</li><li>line number
+</li></ol>
+<p> 
+<a name="debugm_init_debugger"></a><a name="init_debugger"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.2 M_INIT_DEBUGGER</h4>
+<a name="_6502_m_init_debugger"></a><a name="m_init_debugger"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public constant </font><font color="#330033">M_INIT_DEBUGGER</font>
+</pre>
+
+<p> 
+<a name="debuginitialize_debugger"></a><a name="debugger"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.3 initialize_debugger</h4>
+<a name="_6504_initialize_debugger"></a><a name="initialize_debugger"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">initialize_debugger</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">init_ptr</font><font color="#880033">)</font>
+</pre>
+
+<p> Initializes an external debugger.  It can also be called from a debugger compiled into a DLL / SO.</p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h5>Parameters:</h5>
+<a name="_6505_parameters"></a><a name="parameters"></a><ol><li><tt>init_ptr</tt> : The result of <tt><a href="std_machine.html#_5881_machine_func">machine_func</a>( M_INIT_DEBUGGER, {} )</tt>.
+</li></ol>
+<p> 
+<a name="debugset_debug_rid"></a><a name="debug_rid"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.4 set_debug_rid</h4>
+<a name="_6507_set_debug_rid"></a><a name="set_debug_rid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_debug_rid</font><font color="#880033">(</font><font color="#330033">DEBUG_ROUTINE rtn, </font><font color="#0000FF">integer </font><font color="#330033">rid</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugread_object"></a><a name="object"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.5 read_object</h4>
+<a name="_6509_read_object"></a><a name="read_object"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">read_object</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sym</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugtrace_off"></a><a name="off"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.6 trace_off</h4>
+<a name="_6511_trace_off"></a><a name="trace_off"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">trace_off</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugdisable_trace"></a><a name="trace"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.7 disable_trace</h4>
+<a name="_6513_disable_trace"></a><a name="disable_trace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">disable_trace</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugstep_over"></a><a name="over"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.8 step_over</h4>
+<a name="_6515_step_over"></a><a name="step_over"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">step_over</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugabort_program"></a><a name="program"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.9 abort_program</h4>
+<a name="_6517_abort_program"></a><a name="abort_program"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public procedure </font><font color="#330033">abort_program</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugget_current_line"></a><a name="current_line"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.10 get_current_line</h4>
+<a name="_6519_get_current_line"></a><a name="get_current_line"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_current_line</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugsymbol_lookup"></a><a name="lookup"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.11 symbol_lookup</h4>
+<a name="_6521_symbol_lookup"></a><a name="symbol_lookup"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">symbol_lookup</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">integer </font><font color="#330033">line = get_current_line</font><font color="#993333">()</font><font color="#330033">,</font>
+<font color="#0000FF">        atom </font><font color="#330033">pc = get_pc</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_pc"></a><a name="pc"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.12 get_pc</h4>
+<a name="_6523_get_pc"></a><a name="get_pc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_pc</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugis_novalue"></a><a name="novalue"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.13 is_novalue</h4>
+<a name="_6525_is_novalue"></a><a name="is_novalue"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">is_novalue</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sym_ptr</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugdebugger_call_stack"></a><a name="call_stack"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.14 debugger_call_stack</h4>
+<a name="_6527_debugger_call_stack"></a><a name="debugger_call_stack"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">debugger_call_stack</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="debugbreak_routine"></a><a name="routine"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.15 break_routine</h4>
+<a name="_6529_break_routine"></a><a name="break_routine"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">break_routine</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">routine_sym, </font><font color="#0000FF">integer </font><font color="#330033">enable</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_name"></a><a name="name"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.16 get_name</h4>
+<a name="_6531_get_name"></a><a name="get_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_name</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sym</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_source"></a><a name="source"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.17 get_source</h4>
+<a name="_6533_get_source"></a><a name="get_source"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_source</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">line</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_file_no"></a><a name="file_no"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.18 get_file_no</h4>
+<a name="_6535_get_file_no"></a><a name="get_file_no"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_file_no</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">line</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_file_name"></a><a name="file_name"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.19 get_file_name</h4>
+<a name="_6537_get_file_name"></a><a name="get_file_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_file_name</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">file_no</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_file_line"></a><a name="file_line"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.20 get_file_line</h4>
+<a name="_6539_get_file_line"></a><a name="get_file_line"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_file_line</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">line</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_next"></a><a name="next"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.21 get_next</h4>
+<a name="_6541_get_next"></a><a name="get_next"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_next</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sym</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugis_variable"></a><a name="variable"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.22 is_variable</h4>
+<a name="_6543_is_variable"></a><a name="is_variable"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">is_variable</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sym_ptr</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_parameter_syms"></a><a name="parameter_syms"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.23 get_parameter_syms</h4>
+<a name="_6545_get_parameter_syms"></a><a name="get_parameter_syms"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_parameter_syms</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">rtn_sym</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="debugget_symbol_table"></a><a name="symbol_table"></a> </p>
+
+<!-- ..\include\euphoria\debug\debug.e -->
+<h4>8.55.3.24 get_symbol_table</h4>
+<a name="_6547_get_symbol_table"></a><a name="get_symbol_table"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/debug/debug.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">debug</font>
+<font color="#0000FF">public function </font><font color="#330033">get_symbol_table</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\win32\msgbox.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_unittest.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_win32_msgbox.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_unittest.html">8.54 Unit Testing Framework</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_win32_msgbox.html">8.56 Windows Message Box</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

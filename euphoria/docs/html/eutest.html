@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="perform.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="eudoc.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="perform.html">6.11 Performance Tips</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="eudoc.html">7.2 EuDOC Source Documentation Tool</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\eutest.txt -->
+<h2>7.1 eutest Unit Testing</h2>
+<a name="_674_eutestunittesting"></a><a name="eutestunittesting"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="eutest.html#_674_eutestunittesting">7.1 eutest Unit Testing</a></div>
+<div class="toc_3"><a href="eutest.html#_675_introduction">7.1.1 Introduction</a></div>
+<div class="toc_3"><a href="eutest.html#_676_eutesttool">7.1.2 eutest Tool</a></div>
+<div class="toc_4"><a href="eutest.html#_677_synopsisrunningtests">7.1.2.1 Synopsis, Running Tests</a></div>
+<div class="toc_4"><a href="eutest.html#_678_synopsisreportfromlog">7.1.2.2 Synopsis, Report From Log</a></div>
+<div class="toc_4"><a href="eutest.html#_679_generalbehavior">7.1.2.3 General Behavior</a></div>
+<div class="toc_4"><a href="eutest.html#_680_optionsdetail">7.1.2.4 Options Detail</a></div>
+<div class="toc_3"><a href="eutest.html#_681_theunittestfiles">7.1.3 The Unit Test Files</a></div>
+<div class="toc_4"><a href="eutest.html#_682_trivialexample">7.1.3.1 Trivial Example</a></div>
+<div class="toc_3"><a href="eutest.html#_683_theerrorcontrolfiles">7.1.4 The Error Control Files</a></div>
+<div class="toc_3"><a href="eutest.html#_684_testcoverage">7.1.5 Test Coverage</a></div>
+<div class="toc_4"><a href="eutest.html#_685_coveragecommandlineswitches">7.1.5.1 Coverage Command Line Switches</a></div>
+<div class="toc_4"><a href="eutest.html#_686_coveragepostprocessing">7.1.5.2 Coverage Post-Processing</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\docs\eutest.txt -->
+<h3>7.1.1 Introduction</h3>
+<a name="_675_introduction"></a><a name="introduction"></a>
+<p> The testing system gives you the ability to check if the library, interpreter and translator works properly by use of <em>unit tests</em>.  The unit tests are Euphoria <em>include</em> files that <tt>include unittest.e</tt> at the top, several test-routines for comparison between expected value and true value and at the end of the program a call to <tt>test_report</tt>.  There are error control files for when we expect the interpreter to fail but we want it to fail with a particular error message. You may use this section as an outline for testing your own code.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h3>7.1.2 eutest Tool</h3>
+<a name="_676_eutesttool"></a><a name="eutesttool"></a>
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.2.1 Synopsis, Running Tests</h4>
+<a name="_677_synopsisrunningtests"></a><a name="synopsisrunningtests"></a>
+<p> 
+<pre>eutest [-D NO_INET ] [-D NO_INET_TESTS ]
+    [-verbose] [-log] [-i include path] [-cc wat|gcc] [-exe interpreter]
+    [-ec translator] [-lib binary library path]
+    [optional list of unit test files]
+</pre>
+
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.2.2 Synopsis, Report From Log</h4>
+<a name="_678_synopsisreportfromlog"></a><a name="synopsisreportfromlog"></a>
+<p> 
+<pre>eutest -process-log [-html]
+</pre>
+
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.2.3 General Behavior</h4>
+<a name="_679_generalbehavior"></a><a name="generalbehavior"></a>
+<p> If you want to test translation of your tests as well as interpreted tests, you can specify it with <tt>-ec</tt>.</p>
+
+<p> If you don't specify unit tests on the command line eutest will scan the directory for unit test files using the pattern <tt>t_*.e</tt>.  If you specify a pattern it will interpret the pattern, as some shells do not do this for programs.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.2.4 Options Detail</h4>
+<a name="_680_optionsdetail"></a><a name="optionsdetail"></a><ul><li>-D REC: Is for creating control files, use only when on tests that work already on an interpreter that correctly works or correctly *fails* with them.  This option must come before the <tt>eutest.ex</tt> program itself in the command line and is the option with that requirement.
+</li><li>-log: Is for creating a log file for later processing
+</li><li>-verbose: Is for <tt>eutest.ex</tt> to give you detail of what it is doing
+</li><li>-i: is for specify the include path which will be passed to both the interpreter and the translator when interpreting and translating the test.
+</li><li>-cc: is for specifying the compiler.  This can be any one of -wat, djg, or gcc.  Each of these represent the kind of compiler we will request the translator to use.
+</li><li>-process-log: Is for processing a log created by a previous invocation of <tt>eutest.ex</tt> output is sent to standard output as a report of how the tests went.  By default this is in ASCII format.  Use -html to make it HTML format.
+</li><li>-html: Is for making the report creation to be in HTML format
+</li><li>-D NO_INET: This is for keeping tests from trying to use the Internet.  The tests have to be written to support them by using ifdef/end ifdef statements. Since in some Euphoria unit tests "-D NO_INET_TESTS" is used in its place, you must use both options to prevent them from trying to connect through the Internet.
+</li><li>-D NO_INET_TESTS: See NO_INET
+</li></ul>
+<!-- ..\docs\eutest.txt -->
+<h3>7.1.3 The Unit Test Files</h3>
+<a name="_681_theunittestfiles"></a><a name="theunittestfiles"></a>
+<p> Unit test files must match a pattern <tt>t_*.e</tt>.  If the unit test file matches <tt>t_c_*.e</tt> the test program will expect the program to fail, if there is an error control file in a directory with its same name and 'd' extension it will also expect it to fail according to the control file's contents found in the said directory.  Such a failure is marked as a successful test run.  However, if there is no such directory or file the counter test will be marked as a failed test run.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.3.1 Trivial Example</h4>
+<a name="_682_trivialexample"></a><a name="trivialexample"></a>
+<p> The following is a minimal unit test file: 
+<pre>include std/unittest.e
+
+test_report()
+</pre>
+
+<p> Please see the <a href="std_unittest.html#_6405_unittestingframework">Unit Testing Framework</a>, for information on how to construct these files.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h3>7.1.4 The Error Control Files</h3>
+<a name="_683_theerrorcontrolfiles"></a><a name="theerrorcontrolfiles"></a>
+<p> There are times when we expect something to fail.  We want good EUPHORIA code to do the correct thing and there is a correct thing to do also for *bad* code.  The interpreter must return with an error message of why it failed and the error must be correct and it must get written to <tt>ex.err</tt>. We must thus check the ex.err file to see if it has the correct error message.</p>
+
+<p> If the unit test is <tt>t_foo.e</tt> then the location for its control file can be in the following locations:</p>
+<ul><li><tt>t_foo.d/interpreter<em>/OSNAME/</em>control.err</tt>
+</li><li><tt>t_foo.d<em>/OSNAME/</em>control.err</tt>
+</li><li><tt>t_foo.d/control.err</tt>
+</li></ul>
+<p>The <em>OSNAME</em> is the name of the operating system.  Which is either UNIX or Win32.</p>
+
+<p> Now, if <tt>t_foo.d/Win32/control.err</tt> exists, then the testing program eutest.ex expects t_foo.e to fail when run with the <em>Windows</em> interpreter. However, this is not necessarily true for other platforms.  In <em>Windows</em> eutest runs it, watches it fail, then compares the ex.err file to <tt>t_foo.d/Win32/control.err</tt>.  If they ex.err is different from control.err an error message is written to the log.  Now on, say NetBSD, t_file.e is tested with the expectation it will return 0 and the tests will all pass unless <tt>t_foo.d/UNIX/control.err</tt> or <tt>t_foo.d/control.err</tt> also exist. Thus you can have different expectations for differing platforms. Some feature that is not possible to implement under <em>Windows</em> can be put into a unit test and the resulting <tt>ex.err</tt> file can be put into a control file for <em>Windows</em>. This means we do not need to have all of these errors that we expect to get drawing our attention away from errors that need our attention. On the other hand, if an unexpected error message not like <tt>t_foo.d/Win32/control.err</tt> gets generated in the <em>Windows</em> case then <tt>eutest</tt> will tell us that.</p>
+
+<p> How do we construct these control files?  You don't really need to, you can take an <tt>ex.err</tt> file that results from running a stable interpreter on a test and rename it and move it to the appropriate place.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h3>7.1.5 Test Coverage</h3>
+<a name="_684_testcoverage"></a><a name="testcoverage"></a>
+<p> When writing and evaluating the results of unit tests, it is important to understand which parts of your code are and are not being tested.  The Euphoria interpreter has a  built in capability to instrument your code to analyze how many times each line of your code is executed during your suite of tests.  The data is output into an EDS database.  Euphoria also comes with a coverage data post-processor that generates html reports to make analysis of your coverage easy.</p>
+
+<p> The coverage capabilities can be used manually, with arguments supplied on the command line, or passed to <tt>eutest</tt>.  Indeed, <tt>eutest</tt> simply passes these along to the interpreter.  The Euphoria suite of unit tests can be run via the makefiles, and there is a special target to run a coverage analysis of the standard library:</p>
+
+<p> 
+<pre>Windows:
+&gt; wmake coverage
+
+Unix:
+$ make coverage
+</pre>
+
+<p> Then, in your build directory, <tt>eutest</tt> will run the tests to create the coverage database <tt>unit-test.edb</tt>, and will post-process the results, placing the HTML reports into a unit-test subdirectory from your build directory.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.5.1 Coverage Command Line Switches</h4>
+<a name="_685_coveragecommandlineswitches"></a><a name="coveragecommandlineswitches"></a><ul><li><tt>-coverage [file|dir]</tt> This specifies what files to gather stats for.  If you supply a directory, it recurses on child directories.  Only files that are obviously Euphoria are included ( <tt>.e, .ew, .eu, .ex, .exw, .exu</tt>).
+</li></ul><ul><li><tt>-coverage-db &lt;file&gt;</tt> This one allows you to specify a specific location and name for the database where coverage information is stored.  It is an EDS database. By default, the DB is <tt>eui-cvg.edb</tt>.
+</li></ul><ul><li><tt>-coverage-erase</tt>  Tells the interpreter to start over.  By default, multiple runs accumulate coverage in the DB to allow coverage analysis based on a suite of unit test files.
+</li></ul><ul><li><tt>-coverage-exclude &lt;pattern&gt;</tt>  Specifies a regular expression that is used to exclude files from coverage analysis.
+</li></ul><ul><li><tt>-coverage-pp &lt;post-processor&gt;</tt>  Supported by <tt>eutest</tt> only (i.e., not the interpreter itself). Tells <tt>eutest</tt> how to post process the coverage data.  <tt>&lt;post-processor&gt;</tt> must be the path to a the post processing application. After running the suite of tests, <tt>eutest</tt> will execute this program with the path to the coverage db as an argument.
+</li></ul>
+<!-- ..\docs\eutest.txt -->
+<h4>7.1.5.2 Coverage Post-Processing</h4>
+<a name="_686_coveragepostprocessing"></a><a name="coveragepostprocessing"></a>
+<p> Once you have run tests to generate a coverage database, the data is not easily viewed. Euphoria comes with a post-processor called <tt>eucoverage.ex</tt>, which is installed in the bin directory. On a <em>Unix</em> packaged install, you should be able to simply use <tt>eucoverage</tt>, which is configured to run <tt>eucoverage.ex</tt>.</p>
+
+<p> The post-processor generates an index page, with coverage stats for each file, and individual html files, linked from the index page, for each file analyzed for test coverage.  At the file level, statistics are presented for total and executed routines and lines of code.  The files are sorted in descending order of lines that were never executed, in order to highlight the parts of your code that are less tested.  The page for each file shows this information, as well as a similar breakdown by routine, displaying the number of lines in each routine that was executed.  The routines are also sorted in descending order by the most unexecuted lines.  </p>
+
+<p> Additionally, the source of the file is displayed below the statistics.  The routines are linked to their place in the code. Each line is colored either green red or white.  White lines are those that are not executed.  These are typically blank, comments, declarations or "end" clauses of code blocks that do not create any executable code.  Red lines are those that were never executed, and lines that were executed are colored green.  The line number is displayed in the left margin, and the number of times each line was executed is displayed just to the left of where the source code begins.</p>
+
+<!-- ..\docs\eutest.txt -->
+<h5>Command Line Switches</h5>
+<a name="_687_commandlineswitches"></a><a name="commandlineswitches"></a><ul><li><tt>-o &lt;dir&gt;</tt> Specify the output directory.  The default is to create a subdirectory, from the same directory as the coverage database, with the name of the base filename (without extension) of the coverage database.
+</li></ul><ul><li><tt>-v</tt> Verbose output
+</li></ul>
+<p> 
+<!-- ..\docs\eudoc.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="perform.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="eudoc.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="perform.html">6.11 Performance Tips</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="eudoc.html">7.2 EuDOC Source Documentation Tool</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

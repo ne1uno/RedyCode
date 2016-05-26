@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_io.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_pipeio.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_io.html">8.6 I/O</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_pipeio.html">8.8 Pipe Input and Output</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\os.e -->
+<h2>8.7 Operating System Helpers</h2>
+<a name="_1717_operatingsystemhelpers"></a><a name="operatingsystemhelpers"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_os.html#_1717_operatingsystemhelpers">8.7 Operating System Helpers</a></div>
+<div class="toc_4"><a href="std_os.html#_1719_cmd_switches">8.7.0.1 CMD_SWITCHES</a></div>
+<div class="toc_3"><a href="std_os.html#_1720_operatingsystemconstants">8.7.1 Operating System Constants</a></div>
+<div class="toc_4"><a href="std_os.html#_1722_win32">8.7.1.1 WIN32</a></div>
+<div class="toc_4"><a href="std_os.html#_1724_windows">8.7.1.2 WINDOWS</a></div>
+<div class="toc_4"><a href="std_os.html#_1726_linux">8.7.1.3 LINUX</a></div>
+<div class="toc_4"><a href="std_os.html#_1728_osx">8.7.1.4 OSX</a></div>
+<div class="toc_4"><a href="std_os.html#_1730_openbsd">8.7.1.5 OPENBSD</a></div>
+<div class="toc_4"><a href="std_os.html#_1732_netbsd">8.7.1.6 NETBSD</a></div>
+<div class="toc_4"><a href="std_os.html#_1734_freebsd">8.7.1.7 FREEBSD</a></div>
+<div class="toc_3"><a href="std_os.html#_1736_environment">8.7.2 Environment</a></div>
+<div class="toc_4"><a href="std_os.html#_1738_instance">8.7.2.1 instance</a></div>
+<div class="toc_4"><a href="std_os.html#_1741_get_pid">8.7.2.2 get_pid</a></div>
+<div class="toc_4"><a href="std_os.html#_1745_uname">8.7.2.3 uname</a></div>
+<div class="toc_4"><a href="std_os.html#_1749_is_win_nt">8.7.2.4 is_win_nt</a></div>
+<div class="toc_4"><a href="std_os.html#_1752_getenv">8.7.2.5 getenv</a></div>
+<div class="toc_4"><a href="std_os.html#_1759_setenv">8.7.2.6 setenv</a></div>
+<div class="toc_4"><a href="std_os.html#_1764_unsetenv">8.7.2.7 unsetenv</a></div>
+<div class="toc_4"><a href="std_os.html#_1769_platform">8.7.2.8 platform</a></div>
+<div class="toc_3"><a href="std_os.html#_1774_interactingwiththeos">8.7.3 Interacting with the OS</a></div>
+<div class="toc_4"><a href="std_os.html#_1776_system">8.7.3.1 system</a></div>
+<div class="toc_4"><a href="std_os.html#_1784_system_exec">8.7.3.2 system_exec</a></div>
+<div class="toc_3"><a href="std_os.html#_1792_miscellaneous">8.7.4 Miscellaneous</a></div>
+<div class="toc_4"><a href="std_os.html#_1794_sleep">8.7.4.1 sleep</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="oscmd_switches"></a><a name="switches"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.0.1 CMD_SWITCHES</h4>
+<a name="_1719_cmd_switches"></a><a name="cmd_switches"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public constant </font><font color="#330033">CMD_SWITCHES</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h3>8.7.1 Operating System Constants</h3>
+<a name="_1720_operatingsystemconstants"></a><a name="operatingsystemconstants"></a>
+<p> 
+<a name="oswin32"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.1 WIN32</h4>
+<a name="_1722_win32"></a><a name="win32"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">WIN32</font>
+</pre>
+
+<p> 
+<a name="oswindows"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.2 WINDOWS</h4>
+<a name="_1724_windows"></a><a name="windows"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">WINDOWS</font>
+</pre>
+
+<p> 
+<a name="oslinux"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.3 LINUX</h4>
+<a name="_1726_linux"></a><a name="linux"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">LINUX</font>
+</pre>
+
+<p> 
+<a name="ososx"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.4 OSX</h4>
+<a name="_1728_osx"></a><a name="osx"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">OSX</font>
+</pre>
+
+<p> 
+<a name="osopenbsd"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.5 OPENBSD</h4>
+<a name="_1730_openbsd"></a><a name="openbsd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">OPENBSD</font>
+</pre>
+
+<p> 
+<a name="osnetbsd"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.6 NETBSD</h4>
+<a name="_1732_netbsd"></a><a name="netbsd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">NETBSD</font>
+</pre>
+
+<p> 
+<a name="osfreebsd"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.1.7 FREEBSD</h4>
+<a name="_1734_freebsd"></a><a name="freebsd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public enum </font><font color="#330033">FREEBSD</font>
+</pre>
+
+<p> These constants are returned by the <a href="std_os.html#_1769_platform">platform</a> function.</p>
+<ul><li><tt>WIN32</tt>   -- Host operating system is Windows
+</li><li><tt>LINUX</tt>   -- Host operating system is Linux
+</li><li><tt>FREEBSD</tt> -- Host operating system is FreeBSD
+</li><li><tt>OSX</tt>     -- Host operating system is Mac OS X
+</li><li><tt>OPENBSD</tt> -- Host operating system is OpenBSD
+</li><li><tt>NETBSD</tt>  -- Host operating system is NetBSD
+</li></ul>
+<!-- ..\include\std\os.e -->
+<h5>Note:</h5>
+<a name="_1735_note"></a><a name="note"></a>
+<p> In most situations you are better off to test the host platform by using the <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a>. It is faster.</p>
+
+<!-- ..\include\std\os.e -->
+<h3>8.7.2 Environment</h3>
+<a name="_1736_environment"></a><a name="environment"></a>
+<p> 
+<a name="osinstance"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.1 instance</h4>
+<a name="_1738_instance"></a><a name="instance"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">instance</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns <tt>hInstance</tt> on <em>Windows</em> and Process ID (pid) on <em>Unix</em>.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1739_comments"></a><a name="comments"></a>
+<p> On <em>Windows</em> the <tt>hInstance</tt> can be passed around to various <em>Windows</em> routines.</p>
+
+<p> 
+<a name="osget_pid"></a><a name="pid"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.2 get_pid</h4>
+<a name="_1741_get_pid"></a><a name="get_pid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">get_pid</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns the ID of the current Process (pid).</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1742_returns"></a><a name="returns"></a>
+<p> An atom: The current id for a process.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1743_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">mypid = get_pid</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="osuname"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.3 uname</h4>
+<a name="_1745_uname"></a><a name="uname"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">uname</font><font color="#880033">()</font>
+</pre>
+
+<p>   retrieves the name of the host OS.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1746_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, starting with the OS name. If identification fails, returns an OS name of <tt>UNKNOWN</tt>. Extra information depends on the OS.</p>
+
+<p> On <em>Unix</em> returns the same information as the <tt>uname</tt> syscall in the same order as the struct <tt>utsname</tt>. This information is: 
+<pre>OS Name/Kernel Name
+Local Hostname
+Kernel Version/Kernel Release
+Kernel Specific Version information (This is usually the date that the
+kernel was compiled on and the name of the host that performed the compiling.)
+Architecture Name (Usually a string of i386 vs x86_64 vs ARM vs etc)
+</pre>
+
+<p> On <em>Windows</em> returns the following in order: 
+<pre>Windows Platform (out of WinCE, Win9x, WinNT, Win32s, or Unknown Windows)
+Name of Windows OS (Windows 3.1, Win95, WinXP, etc)
+Platform Number
+Build Number
+Minor OS version number
+Major OS version number
+</pre>
+
+<p> On <tt>UNKNOWN</tt> returns an OS name of <tt>"UNKNOWN"</tt>. No other information is returned.</p>
+
+<p> Returns an empty string of "" if an internal error has occured.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1747_comments"></a><a name="comments"></a>
+<p> On <em>Unix</em>  <tt>M_UNAME</tt> is defined as a <tt>machine_func</tt> and this is passed to the C backend. If the <tt>M_UNAME</tt> call fails, the raw <tt>machine_func</tt> returns -1. On non-<em>Unix</em> platforms, calling the <tt>machine_func</tt> directly returns 0.</p>
+
+<p> 
+<a name="osis_win_nt"></a><a name="win_nt"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.4 is_win_nt</h4>
+<a name="_1749_is_win_nt"></a><a name="is_win_nt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">is_win_nt</font><font color="#880033">()</font>
+</pre>
+
+<p>   reports whether the host system is a newer Windows version (NT/2K/XP/Vista).</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1750_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if host system is a newer Windows (NT/2K/XP/Vista), else 0.</p>
+
+<p> 
+<a name="eugetenv"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.5 getenv</h4>
+<a name="_1752_getenv"></a><a name="getenv"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function getenv</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">var_name</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the value of an environment variable.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1753_parameters"></a><a name="parameters"></a><ol><li><tt>var_name</tt> : a string, the name of the variable being queried.
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1754_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, -1 if the variable does not exist, else a sequence holding its value.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1755_comments"></a><a name="comments"></a>
+<p> Both the argument and the return value, may, or may not be, case sensitive. You might need to test this on your own system.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1756_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">e = </font><font color="#0000FF">getenv</font><font color="#880033">(</font><font color="#330033">"EUDIR"</font><font color="#880033">)</font>
+<font color="#FF0055">-- e will be "C:\EUPHORIA" -- or perhaps D:, E: etc.</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1757_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1759_setenv">setenv</a>, <a href="std_cmdline.html#_779_command_line">command_line</a></p>
+
+<p> 
+<a name="ossetenv"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.6 setenv</h4>
+<a name="_1759_setenv"></a><a name="setenv"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">setenv</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">sequence </font><font color="#330033">val, </font><font color="#0000FF">integer </font><font color="#330033">overwrite = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets an environment variable.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1760_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the environment variable name
+</li><li><tt>val</tt> : a string, the value to set to
+</li><li><tt>overwrite</tt> : an integer, nonzero to overwrite an existing variable, 0 to disallow this.
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1761_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? setenv</font><font color="#880033">(</font><font color="#330033">"NAME"</font><font color="#330033">, </font><font color="#330033">"John Doe"</font><font color="#880033">)</font>
+<font color="#330033">? setenv</font><font color="#880033">(</font><font color="#330033">"NAME"</font><font color="#330033">, </font><font color="#330033">"Jane Doe"</font><font color="#880033">)</font>
+<font color="#330033">? setenv</font><font color="#880033">(</font><font color="#330033">"NAME"</font><font color="#330033">, </font><font color="#330033">"Jim Doe"</font><font color="#330033">, 0</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1762_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1752_getenv">getenv</a>, <a href="std_os.html#_1764_unsetenv">unsetenv</a></p>
+
+<p> 
+<a name="osunsetenv"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.7 unsetenv</h4>
+<a name="_1764_unsetenv"></a><a name="unsetenv"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public function </font><font color="#330033">unsetenv</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">env</font><font color="#880033">)</font>
+</pre>
+
+<p>   unsets an environment variable.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1765_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : name of environment variable to unset
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1766_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? unsetenv</font><font color="#880033">(</font><font color="#330033">"NAME"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1767_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1759_setenv">setenv</a>, <a href="std_os.html#_1752_getenv">getenv</a></p>
+
+<p> 
+<a name="euplatform"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.2.8 platform</h4>
+<a name="_1769_platform"></a><a name="platform"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function platform</font><font color="#880033">()</font>
+</pre>
+
+<p> indicates the platform that the program is being executed on.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1770_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+
+<pre class="examplecode"><font color="#0000FF">public constant</font>
+<font color="#330033">    WIN32 = WINDOWS,</font>
+<font color="#330033">    LINUX,</font>
+<font color="#330033">    FREEBSD,</font>
+<font color="#330033">    OSX,</font>
+<font color="#330033">   OPENBSD,</font>
+<font color="#330033">    NETBSD,</font>
+<font color="#330033">    FREEBSD</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1771_comments"></a><a name="comments"></a>
+<p> The <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a> is much more versatile and in most cases supersedes <tt>platform</tt>.</p>
+
+<p> <tt>platform</tt> used to be the way to execute different code depending on which platform the program is running on. Additional platforms will be added as Euphoria is ported to new machines and operating environments.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1772_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">ifdef </font><font color="#330033">WINDOWS </font><font color="#0000FF">then</font>
+<font color="#FF0055">    -- call system Beep routine</font>
+<font color="#330033">    err = </font><font color="#0000FF">c_func</font><font color="#880033">(</font><font color="#330033">Beep, </font><font color="#993333">{</font><font color="#330033">0,0</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">elsedef</font>
+<font color="#FF0055">    -- do nothing (Linux/FreeBSD)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1773_seealso"></a><a name="seealso"></a>
+<p> <a href="platform.html#_640_platformspecificissues">Platform-Specific Issues</a>, <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a></p>
+
+<!-- ..\include\std\os.e -->
+<h3>8.7.3 Interacting with the OS</h3>
+<a name="_1774_interactingwiththeos"></a><a name="interactingwiththeos"></a>
+<p> 
+<a name="eusystem"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.3.1 system</h4>
+<a name="_1776_system"></a><a name="system"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure system</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">command, </font><font color="#0000FF">integer </font><font color="#330033">mode=0</font><font color="#880033">)</font>
+</pre>
+
+<p> passes a command string to the operating system command interpreter.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1777_parameters"></a><a name="parameters"></a><ol><li><tt>command</tt> : a string to be passed to the shell
+</li><li><tt>mode</tt> : an integer, indicating the manner in which to return from the call.
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Errors:</h5>
+<a name="_1778_errors"></a><a name="errors"></a>
+<p> <tt>command</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1779_comments"></a><a name="comments"></a>
+<p> Allowable values for <tt>mode</tt> are: </p>
+<ul><li>0: the previous graphics mode is restored and the screen is cleared.
+</li><li>1: a beep sound will be made and the program will wait for the user to press a key before the previous graphics mode is restored.
+</li><li>2: the graphics mode is not restored and the screen is not cleared.
+</li></ul>
+<p><tt>mode</tt> = 2 should only be used when it is known that the command executed by <tt>system</tt> will not change the graphics mode.</p>
+
+<p> You can use Euphoria as a sophisticated "batch" (.bat) language by making calls to <tt>system</tt> and <tt>system_exec</tt>.</p>
+
+<p> <tt>system</tt> will start a new command shell.</p>
+
+<p> <tt>system</tt> allows you to use command-line redirection of standard input and output in <tt>command</tt>.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1780_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">system</font><font color="#880033">(</font><font color="#330033">"copy temp.txt a:\\temp.bak"</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- note use of double backslash in literal string to get</font>
+<font color="#FF0055">-- single backslash</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 2:</h5>
+<a name="_1781_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">system</font><font color="#880033">(</font><font color="#330033">"eui \\test\\myprog.ex &lt; indata &gt; outdata"</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- executes myprog by redirecting standard input and</font>
+<font color="#FF0055">-- standard output</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1782_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1784_system_exec">system_exec</a>, <a href="std_cmdline.html#_779_command_line">command_line</a>, <a href="std_filesys.html#_1200_current_dir">current_dir</a>, <a href="std_os.html#_1752_getenv">getenv</a></p>
+
+<p> 
+<a name="eusystem_exec"></a><a name="exec"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.3.2 system_exec</h4>
+<a name="_1784_system_exec"></a><a name="system_exec"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function system_exec</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">command, </font><font color="#0000FF">integer </font><font color="#330033">mode=0</font><font color="#880033">)</font>
+</pre>
+
+<p> tries to run the a shell executable command.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1785_parameters"></a><a name="parameters"></a><ol><li><tt>command</tt> : a string to be passed to the shell, representing an executable command
+</li><li><tt>mode</tt> : an integer, indicating the manner in which to return from the call.
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Returns:</h5>
+<a name="_1786_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, basically the exit or return code from the called process.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Errors:</h5>
+<a name="_1787_errors"></a><a name="errors"></a>
+<p> <tt>command</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1788_comments"></a><a name="comments"></a>
+<p> Allowable values for <tt>mode</tt> are: </p>
+<ul><li>0 -- the previous graphics mode is restored and the screen is cleared.
+</li><li>1 -- a beep sound will be made and the program will wait for the user to press a key before the previous graphics mode is restored.
+</li><li>2 -- the graphics mode is not restored and the screen is not cleared.
+</li></ul>
+<p>If it is not possible to run the program, <tt>system_exec</tt> will return -1.</p>
+
+<p> On <em>Windows</em> <tt>system_exec</tt> will only run <tt>.exe</tt> and <tt>.com</tt> programs. To run <tt>.bat</tt> files, or built-in shell commands, you need <a href="std_os.html#_1776_system">system</a>. Some commands, such as <tt>DEL</tt>, are not programs, they are actually built-in to the command interpreter.</p>
+
+<p> On <em>Windows</em> <tt>system_exec</tt> does not allow the use of command-line redirection in <tt>command</tt>. Nor does it allow you to quote strings that contain blanks, such as file names.</p>
+
+<p> exit codes from <em>Windows</em> programs are normally in the range 0 to 255, with 0 indicating "success".</p>
+
+<p> You can run a Euphoria program using <tt>system_exec</tt>. A Euphoria program can return an exit code using <a href="std_error.html#_5522_abort">abort</a>.</p>
+
+<p> <tt>system_exec</tt> does not start a new command shell.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1789_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">exit_code</font>
+<font color="#330033">exit_code = </font><font color="#0000FF">system_exec</font><font color="#880033">(</font><font color="#330033">"xcopy temp1.dat temp2.dat"</font><font color="#330033">, 2</font><font color="#880033">)</font>
+
+<font color="#0000FF">if </font><font color="#330033">exit_code = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"\n couldn't run xcopy.exe\n"</font><font color="#880033">)</font>
+<font color="#0000FF">elsif </font><font color="#330033">exit_code = 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"\n xcopy succeeded\n"</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"\n xcopy failed with code %d\n"</font><font color="#330033">, exit_code</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 2:</h5>
+<a name="_1790_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- executes myprog with two file names as arguments</font>
+<font color="#0000FF">if system_exec</font><font color="#880033">(</font><font color="#330033">"eui \\test\\myprog.ex indata outdata"</font><font color="#330033">, 2</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#330033">"failure!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1791_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1776_system">system</a>, <a href="std_error.html#_5522_abort">abort</a></p>
+
+<!-- ..\include\std\os.e -->
+<h3>8.7.4 Miscellaneous</h3>
+<a name="_1792_miscellaneous"></a><a name="miscellaneous"></a>
+<p> 
+<a name="ossleep"></a> </p>
+
+<!-- ..\include\std\os.e -->
+<h4>8.7.4.1 sleep</h4>
+<a name="_1794_sleep"></a><a name="sleep"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/os.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">os</font>
+<font color="#0000FF">public procedure </font><font color="#330033">sleep</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">t</font><font color="#880033">)</font>
+</pre>
+
+<p>   suspend thread execution for <tt>t</tt> seconds.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Parameters:</h5>
+<a name="_1795_parameters"></a><a name="parameters"></a><ol><li><tt>t</tt> : an atom, the number of seconds for which to sleep.
+</li></ol>
+<!-- ..\include\std\os.e -->
+<h5>Comments:</h5>
+<a name="_1796_comments"></a><a name="comments"></a>
+<p> The operating system will suspend your process and schedule other processes.</p>
+
+<p> With multiple tasks, the whole program sleeps, not just the current task. To make just the current task sleep, you can call <tt><a href="std_task.html#_1921_task_schedule">task_schedule</a>(<a href="std_task.html#_1927_task_self">task_self</a>(), {i, i})</tt> and then execute <a href="std_task.html#_1945_task_yield">task_yield</a>. Another option is to call <a href="std_task.html#_1893_task_delay">task_delay</a>.</p>
+
+<!-- ..\include\std\os.e -->
+<h5>Example 1:</h5>
+<a name="_1797_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Waiting 15 seconds and a quarter...\n"</font><font color="#880033">)</font>
+<font color="#330033">sleep</font><font color="#880033">(</font><font color="#330033">15.25</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Done.\n"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\os.e -->
+<h5>See Also:</h5>
+<a name="_1798_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1893_task_delay">task_delay</a></p>
+
+<p> 
+<!-- ..\include\std\pipeio.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_io.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_pipeio.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_io.html">8.6 I/O</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_pipeio.html">8.8 Pipe Input and Output</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

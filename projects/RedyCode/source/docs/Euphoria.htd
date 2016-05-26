@@ -1,0 +1,86 @@
+=Euphoria
+Euphoria is a powerful but easy-to-learn programming language. It has a simple syntax and structure with consistent rules, and is also easy to read. You can quickly, and with little effort, develop applications, big and small, for Windows, Unix variants (Linux, FreeBSD, ...) and OS X.
+
+Euphoria was first released as shareware way back in 1993. Nowadays, it is being developed as an open source project that is community driven and maintained. The language has evolved into a sophisticated tool for programmers.
+
+Surprising to many, Euphoria is one of the fastest interpreted languages around however for more speed and ease of distribution Euphoria also includes an integrated Euphoria to C translator. Euphoria provides subscript checking, uninitialized variable checking, garbage collection, and numerous other run-time checks, and is still extremely fast.
+
+Euphoria is a general purpose programming language with a large library base making it usable for a variety of tasks. Its use of simple English words rather than punctuation enables you to quickly read the source code and understand it.
+
+==Example Code
+
+Here is some sample code:
+<eucode>
+include std/console.e
+sequence original_list
+
+function merge_sort(sequence x)
+-- put x into ascending order using a recursive merge sort
+    integer n, mid
+    sequence merged, a, b
+
+    n = length(x)
+    if n = 0 or n = 1 then
+        return x  -- trivial case
+    end if
+
+    mid = floor(n/2)
+    a = merge_sort(x[1..mid])       -- sort first half of x
+    b = merge_sort(x[mid+1..n])     -- sort second half of x
+
+    -- merge the two sorted halves into one
+    merged = {}
+    while length(a) > 0 and length(b) > 0 do
+        if compare(a[1], b[1]) < 0 then
+            merged = append(merged, a[1])
+            a = a[2..length(a)]
+        else
+            merged = append(merged, b[1])
+            b = b[2..length(b)]
+        end if
+    end while
+    return merged & a & b  -- merged data plus leftovers
+end function
+
+procedure print_sorted_list()
+-- generate sorted_list from original_list
+    sequence sorted_list
+    
+    original_list = {19, 10, 23, 41, 84, 55, 98, 67, 76, 32}
+    sorted_list = merge_sort(original_list)
+    for i = 1 to length(sorted_list) do
+    	display("Number [] was at position [:2], now at [:2]", 
+    	        {sorted_list[i], find(sorted_list[i], original_list), i}
+    	    )
+    end for
+end procedure
+
+print_sorted_list()     -- this command starts the program
+</eucode>
+
+==Overview
+ What makes Euphoria unique is a design that uses just two basic data-types -- atom and sequence, and two 'helper' data-types -- object and integer.
+
+    * An atom is single numeric value (either an integer or floating point)
+    * A sequence is a list of zero or more objects.
+    * An object is a variant type in that it can hold an atom or a sequence.
+    * An integer is just a special form of atom that can only hold integers. You can use the integer type for a performance advantage in situations where floating point values are not required. 
+
+What follows from this design are some advantages over conventional languages:
+
+    * The language syntax is smaller -- and thus easier to learn
+    * The language syntax is consistent -- and thus easier to program
+    * Routines are more generic -- a routine used for strings may also be applied to any data structure
+    * A higher level view of programming -- because sequences encompass conventional lists, arrays, tables, tuples, ..., and all other data-structures.
+    * Sequences are dynamic -- you may create and destroy at will -- and modify them to any size and complexity
+    * It supports both static data typing and dynamic data typing.
+
+For more information, see the Euphoria owners manual at <http://openeuphoria.org/docs/>.
+
+==Standard Library
+The Euphoria Standard Library is located at /include/std. You can browse it under the Includes section in the [[ProjectTree->RedyCode/ProjectTree]]. 
+
+See the Euphoria manual at <http://openeuphoria.org/docs/>.
+
+
+Next page: [[RedyLib->RedyLib]]

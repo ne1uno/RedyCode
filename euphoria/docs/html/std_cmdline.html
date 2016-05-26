@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="builtins.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_console.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="builtins.html">8.1 Built-in Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_console.html">8.3 Console</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h2>8.2 Command Line Handling</h2>
+<a name="_723_commandlinehandling"></a><a name="commandlinehandling"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_cmdline.html#_723_commandlinehandling">8.2 Command Line Handling</a></div>
+<div class="toc_3"><a href="std_cmdline.html#_724_constants">8.2.1 Constants</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_726_no_parameter">8.2.1.1 NO_PARAMETER</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_728_has_parameter">8.2.1.2 HAS_PARAMETER</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_730_no_case">8.2.1.3 NO_CASE</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_732_has_case">8.2.1.4 HAS_CASE</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_734_mandatory">8.2.1.5 MANDATORY</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_736_optional">8.2.1.6 OPTIONAL</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_738_once">8.2.1.7 ONCE</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_740_multiple">8.2.1.8 MULTIPLE</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_742_help">8.2.1.9 HELP</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_744_header">8.2.1.10 HEADER</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_746_versioning">8.2.1.11 VERSIONING</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_748_help_rid">8.2.1.12 HELP_RID</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_750_validate_all">8.2.1.13 VALIDATE_ALL</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_752_no_validation">8.2.1.14 NO_VALIDATION</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_754_no_validation_after_first_extra">8.2.1.15 NO_VALIDATION_AFTER_FIRST_EXTRA</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_756_show_only_options">8.2.1.16 SHOW_ONLY_OPTIONS</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_758_at_expansion">8.2.1.17 AT_EXPANSION</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_760_no_at_expansion">8.2.1.18 NO_AT_EXPANSION</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_762_pause_msg">8.2.1.19 PAUSE_MSG</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_764_no_help">8.2.1.20 NO_HELP</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_766_no_help_on_error">8.2.1.21 NO_HELP_ON_ERROR</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_768_opt_idx">8.2.1.22 OPT_IDX</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_770_opt_cnt">8.2.1.23 OPT_CNT</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_772_opt_val">8.2.1.24 OPT_VAL</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_774_opt_rev">8.2.1.25 OPT_REV</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_776_extras">8.2.1.26 EXTRAS</a></div>
+<div class="toc_3"><a href="std_cmdline.html#_777_routines">8.2.2 Routines</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_779_command_line">8.2.2.1 command_line</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_785_option_switches">8.2.2.2 option_switches</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_791_show_help">8.2.2.3 show_help</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_797_cmd_parse">8.2.2.4 cmd_parse</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_805_build_commandline">8.2.2.5 build_commandline</a></div>
+<div class="toc_4"><a href="std_cmdline.html#_813_parse_commandline">8.2.2.6 parse_commandline</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h3>8.2.1 Constants</h3>
+<a name="_724_constants"></a><a name="constants"></a>
+<p> 
+<a name="cmdlineno_parameter"></a><a name="parameter"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.1 NO_PARAMETER</h4>
+<a name="_726_no_parameter"></a><a name="no_parameter"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">NO_PARAMETER</font>
+</pre>
+
+<p>  This option switch does not have a parameter. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinehas_parameter"></a><a name="parameter"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.2 HAS_PARAMETER</h4>
+<a name="_728_has_parameter"></a><a name="has_parameter"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">HAS_PARAMETER</font>
+</pre>
+
+<p>  This option switch does have a parameter. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineno_case"></a><a name="case"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.3 NO_CASE</h4>
+<a name="_730_no_case"></a><a name="no_case"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">NO_CASE</font>
+</pre>
+
+<p>  This option switch is not case sensitive. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinehas_case"></a><a name="case"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.4 HAS_CASE</h4>
+<a name="_732_has_case"></a><a name="has_case"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">HAS_CASE</font>
+</pre>
+
+<p>  This option switch is case sensitive. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinemandatory"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.5 MANDATORY</h4>
+<a name="_734_mandatory"></a><a name="mandatory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">MANDATORY</font>
+</pre>
+
+<p>  This option switch must be supplied on command line. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineoptional"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.6 OPTIONAL</h4>
+<a name="_736_optional"></a><a name="optional"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">OPTIONAL</font>
+</pre>
+
+<p>  This option switch does not have to be on command line. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineonce"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.7 ONCE</h4>
+<a name="_738_once"></a><a name="once"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">ONCE</font>
+</pre>
+
+<p>  This option switch must only occur once on the command line. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinemultiple"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.8 MULTIPLE</h4>
+<a name="_740_multiple"></a><a name="multiple"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">MULTIPLE</font>
+</pre>
+
+<p>  This option switch may occur multiple times on a command line. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinehelp"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.9 HELP</h4>
+<a name="_742_help"></a><a name="help"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">HELP</font>
+</pre>
+
+<p>  This option switch triggers the 'help' display. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineheader"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.10 HEADER</h4>
+<a name="_744_header"></a><a name="header"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">HEADER</font>
+</pre>
+
+<p>  This option switch is simply a help display header to group like options together. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineversioning"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.11 VERSIONING</h4>
+<a name="_746_versioning"></a><a name="versioning"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">VERSIONING</font>
+</pre>
+
+<p>  This option switch sets the program version information. If this option is chosen by the user <tt>cmd_parse</tt> will display the program version information and then end the program with a zero error code.</p>
+
+<p> 
+<a name="cmdlinehelp_rid"></a><a name="rid"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.12 HELP_RID</h4>
+<a name="_748_help_rid"></a><a name="help_rid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">HELP_RID</font>
+</pre>
+
+<p> Additional help routine id. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlinevalidate_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.13 VALIDATE_ALL</h4>
+<a name="_750_validate_all"></a><a name="validate_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">VALIDATE_ALL</font>
+</pre>
+
+<p> Validate all parameters (default). See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineno_validation"></a><a name="validation"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.14 NO_VALIDATION</h4>
+<a name="_752_no_validation"></a><a name="no_validation"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_VALIDATION</font>
+</pre>
+
+<p> Do not cause an error for an invalid parameter. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineno_validation_after_first_extra"></a><a name="validation_after_first_extra"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.15 NO_VALIDATION_AFTER_FIRST_EXTRA</h4>
+<a name="_754_no_validation_after_first_extra"></a><a name="no_validation_after_first_extra"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_VALIDATION_AFTER_FIRST_EXTRA</font>
+</pre>
+
+<p> Do not cause an error for an invalid parameter after the first extra item has been found. This can be helpful for processes such as the Interpreter itself that must deal with command line parameters that it is not meant to handle.  At expansions after the first extra are also disabled.</p>
+
+<p> For instance:</p>
+
+<p> <tt>eui -D TEST greet.ex -name John -greeting Bye</tt></p>
+
+<p> <tt>-D TEST</tt> is meant for <tt>eui</tt>, but <tt>-name</tt> and <tt>-greeting</tt> options are meant for <tt>greet.ex</tt>. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> <tt>eui @euopts.txt greet.ex @hotmail.com</tt></p>
+
+<p> here 'hotmail.com' is not expanded into the command line but 'euopts.txt' is.</p>
+
+<p> 
+<a name="cmdlineshow_only_options"></a><a name="only_options"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.16 SHOW_ONLY_OPTIONS</h4>
+<a name="_756_show_only_options"></a><a name="show_only_options"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">SHOW_ONLY_OPTIONS</font>
+</pre>
+
+<p> Only display the option list in <tt>show_help</tt>. Do not display other information (such as program name, options, and so on) See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineat_expansion"></a><a name="expansion"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.17 AT_EXPANSION</h4>
+<a name="_758_at_expansion"></a><a name="at_expansion"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">AT_EXPANSION</font>
+</pre>
+
+<p> Expand arguments that begin with <tt>'@'</tt> into the command line. (default) For example, <tt>@filename</tt> will expand the contents of file named 'filename' as if the file's contents were passed in on the command line.  Arguments that come after the first extra will not be expanded when <tt>NO_VALIDATION_AFTER_FIRST_EXTRA</tt> is specified.</p>
+
+<p> 
+<a name="cmdlineno_at_expansion"></a><a name="at_expansion"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.18 NO_AT_EXPANSION</h4>
+<a name="_760_no_at_expansion"></a><a name="no_at_expansion"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_AT_EXPANSION</font>
+</pre>
+
+<p> Do not expand arguments that begin with <tt>'@'</tt> into the command line. Normally <tt>@filename</tt> will expand the file names contents as if the file's contents were passed in on the command line.  This option supresses this behavior.</p>
+
+<p> 
+<a name="cmdlinepause_msg"></a><a name="msg"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.19 PAUSE_MSG</h4>
+<a name="_762_pause_msg"></a><a name="pause_msg"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">PAUSE_MSG</font>
+</pre>
+
+<p> Supply a message to display and pause just prior to <tt>abort</tt> being called.</p>
+
+<p> 
+<a name="cmdlineno_help"></a><a name="help"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.20 NO_HELP</h4>
+<a name="_764_no_help"></a><a name="no_help"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_HELP</font>
+</pre>
+
+<p> Disable the automatic inclusion of <tt>-h</tt>, <tt>-?</tt>, and <tt>--help</tt> as help switches.</p>
+
+<p> 
+<a name="cmdlineno_help_on_error"></a><a name="help_on_error"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.21 NO_HELP_ON_ERROR</h4>
+<a name="_766_no_help_on_error"></a><a name="no_help_on_error"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">NO_HELP_ON_ERROR</font>
+</pre>
+
+<p> Disable the automatic display of all of the possible options on error.</p>
+
+<p> 
+<a name="cmdlineopt_idx"></a><a name="idx"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.22 OPT_IDX</h4>
+<a name="_768_opt_idx"></a><a name="opt_idx"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">OPT_IDX</font>
+</pre>
+
+<p> An index into the <tt>opts</tt> list. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineopt_cnt"></a><a name="cnt"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.23 OPT_CNT</h4>
+<a name="_770_opt_cnt"></a><a name="opt_cnt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">OPT_CNT</font>
+</pre>
+
+<p> The number of times that the routine has been called by <tt>cmd_parse</tt> for this option. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineopt_val"></a><a name="val"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.24 OPT_VAL</h4>
+<a name="_772_opt_val"></a><a name="opt_val"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">OPT_VAL</font>
+</pre>
+
+<p> The option's value as found on the command line. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineopt_rev"></a><a name="rev"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.25 OPT_REV</h4>
+<a name="_774_opt_rev"></a><a name="opt_rev"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public enum </font><font color="#330033">OPT_REV</font>
+</pre>
+
+<p> The value <tt>1</tt> if the command line indicates that this option is to remove any earlier occurrences of it. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<p> 
+<a name="cmdlineextras"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.1.26 EXTRAS</h4>
+<a name="_776_extras"></a><a name="extras"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public constant </font><font color="#330033">EXTRAS</font>
+</pre>
+
+<p> The extra parameters on the cmd line, not associated with any specific option. See <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></p>
+
+<!-- ..\include\std\cmdline.e -->
+<h3>8.2.2 Routines</h3>
+<a name="_777_routines"></a><a name="routines"></a>
+<p> 
+<a name="eucommand_line"></a><a name="line"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.1 command_line</h4>
+<a name="_779_command_line"></a><a name="command_line"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function command_line</font><font color="#880033">()</font>
+</pre>
+
+<p> returns sequence of strings containing each word entered at the command-line that started your program.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Returns:</h5>
+<a name="_780_returns"></a><a name="returns"></a><ol><li>The <tt>path</tt>, to either the Euphoria executable (<tt>eui</tt>, <tt>eui.exe</tt>, <tt>euid.exe</tt>, <tt>euiw.exe</tt>) or to your bound executable file.
+</li><li>The <tt>next word</tt>, is either the name of your Euphoria main file or (again) the path to your bound executable file.
+</li><li>Any <tt>extra words</tt>, typed by the user. You can use these words in your program.
+</li></ol>
+<p>There are as many entries as words, plus the two mentioned above.</p>
+
+<p> The Euphoria interpreter itself does not use any command-line options. You are free to use any options for your own program. The interpreter does have <a href="command_switches.html#_74_commandlineswitches">command line switches</a> though.</p>
+
+<p> The user can put quotes around a series of words to make them into a single argument.</p>
+
+<p> If you convert your program into an executable file, either by binding it, or translationg it to C, you will find that all command-line arguments remain the same, except for the first two, even though your user no longer types "eui" on the command-line (see examples below).</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_781_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The user types:  eui myprog myfile.dat 12345 "the end"</font>
+
+<font color="#330033">cmd = </font><font color="#0000FF">command_line</font><font color="#880033">()</font>
+
+<font color="#FF0055">-- cmd will be:</font>
+<font color="#880033">      {</font><font color="#330033">"C:\EUPHORIA\BIN\EUI.EXE"</font><font color="#330033">,</font>
+<font color="#330033">       "myprog"</font><font color="#330033">,</font>
+<font color="#330033">       "myfile.dat"</font><font color="#330033">,</font>
+<font color="#330033">       "12345"</font><font color="#330033">,</font>
+<font color="#330033">       "the end"</font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 2:</h5>
+<a name="_782_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- Your program is bound with the name "myprog.exe"</font>
+<font color="#FF0055">-- and is stored in the directory c:\myfiles</font>
+<font color="#FF0055">-- The user types:  myprog myfile.dat 12345 "the end"</font>
+
+<font color="#330033">cmd = </font><font color="#0000FF">command_line</font><font color="#880033">()</font>
+
+<font color="#FF0055">-- cmd will be:</font>
+<font color="#880033">       {</font><font color="#330033">"C:\MYFILES\MYPROG.EXE"</font><font color="#330033">,</font>
+<font color="#330033">        "C:\MYFILES\MYPROG.EXE"</font><font color="#330033">, </font><font color="#FF0055">-- place holder</font>
+<font color="#330033">        "myfile.dat"</font><font color="#330033">,</font>
+<font color="#330033">        "12345"</font><font color="#330033">,</font>
+<font color="#330033">        "the end"</font>
+<font color="#880033">        }</font>
+
+<font color="#FF0055">-- Note that all arguments remain the same as in Example 1</font>
+<font color="#FF0055">-- except for the first two. The second argument is always</font>
+<font color="#FF0055">-- the same as the first and is inserted to keep the numbering</font>
+<font color="#FF0055">-- of the subsequent arguments the same, whether your program</font>
+<font color="#FF0055">-- is bound or translated as a .exe, or not.</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>See Also:</h5>
+<a name="_783_seealso"></a><a name="seealso"></a>
+<p> <a href="std_cmdline.html#_805_build_commandline">build_commandline</a>, <a href="std_cmdline.html#_785_option_switches">option_switches</a>,  <a href="std_os.html#_1752_getenv">getenv</a>, <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a>, <a href="std_cmdline.html#_791_show_help">show_help</a></p>
+
+<p> 
+<a name="euoption_switches"></a><a name="switches"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.2 option_switches</h4>
+<a name="_785_option_switches"></a><a name="option_switches"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function option_switches</font><font color="#880033">()</font>
+</pre>
+
+<p> retrieves the list of switches passed to the interpreter on the command line.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Returns:</h5>
+<a name="_786_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of strings, each containing a word related to switches.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Comments:</h5>
+<a name="_787_comments"></a><a name="comments"></a>
+<p> All switches are recorded in upper case.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_788_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">euiw -d helLo</font>
+<font color="#FF0055">-- will result in</font>
+<font color="#FF0055">-- option_switches() being {"-D","helLo"}</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>See Also:</h5>
+<a name="_789_seealso"></a><a name="seealso"></a>
+<p> <a href="command_switches.html#_74_commandlineswitches">Command line switches</a></p>
+
+<p> 
+<a name="cmdlineshow_help"></a><a name="help"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.3 show_help</h4>
+<a name="_791_show_help"></a><a name="show_help"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public procedure </font><font color="#330033">show_help</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">opts, </font><font color="#0000FF">object </font><font color="#330033">add_help_rid = - 1,</font>
+<font color="#0000FF">        sequence </font><font color="#330033">cmds = </font><font color="#0000FF">command_line</font><font color="#993333">()</font><font color="#330033">, </font><font color="#0000FF">object </font><font color="#330033">parse_options = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   shows the help message for the given opts.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Parameters:</h5>
+<a name="_792_parameters"></a><a name="parameters"></a><ol><li><tt>opts</tt> : a sequence of options. See the <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a> for details.
+</li><li><tt>add_help_rid</tt> : an object. Either a routine_id or a set of text strings. The default is -1 meaning that no additional help text will be used.
+</li><li><tt>cmds</tt> : a sequence of strings. By default this is the output from <a href="std_cmdline.html#_779_command_line">command_line</a>
+</li><li><tt>parse_options</tt> : An option set of behavior modifiers.  See the <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a> for details.
+</li></ol>
+<!-- ..\include\std\cmdline.e -->
+<h5>Comments:</h5>
+<a name="_793_comments"></a><a name="comments"></a><ul><li><tt>opts</tt> is identical to the one used by <a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a>
+</li><li><tt>add_help_rid</tt> can be used to provide additional help text. By default, just the option switches and their descriptions will be displayed. However you can provide additional text by either supplying a routine_id of a procedure that accepts no parameters; this procedure is expected to write text to the stdout device. Or you can supply one or more lines of text that will be displayed.
+</li></ul>
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_794_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- in myfile.ex</font>
+<font color="#0000FF">constant </font><font color="#330033">description = </font><font color="#880033">{</font>
+<font color="#330033">       "Creates a file containing an analysis of the weather."</font><font color="#330033">,</font>
+<font color="#330033">       "The analysis includes temperature and rainfall data"</font><font color="#330033">,</font>
+<font color="#330033">       "for the past week."</font>
+<font color="#880033">    }</font>
+
+<font color="#330033">show_help</font><font color="#880033">(</font><font color="#993333">{</font>
+<font color="#0000FF">    {</font><font color="#330033">"q"</font><font color="#330033">, </font><font color="#330033">"silent"</font><font color="#330033">, </font><font color="#330033">"Suppresses any output to console"</font><font color="#330033">, NO_PARAMETER, -1</font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">    {</font><font color="#330033">"r"</font><font color="#330033">, 0, </font><font color="#330033">"Sets how many lines the console should display"</font><font color="#330033">, </font>
+<font color="#5500FF">    {</font><font color="#330033">HAS_PARAMETER,</font><font color="#330033">"lines"</font><font color="#5500FF">}</font><font color="#330033">, -1</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">, description</font><font color="#880033">)</font>
+</pre>
+
+<p> Outputs: 
+<pre>myfile.ex options:
+-q, --silent      Suppresses any output to console
+-r lines          Sets how many lines the console should display
+
+Creates a file containing an analysis of the weather.
+The analysis includes temperature and rainfall data
+for the past week.
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 2:</h5>
+<a name="_795_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- in myfile.ex</font>
+<font color="#0000FF">constant </font><font color="#330033">description = </font><font color="#880033">{</font>
+<font color="#330033">       "Creates a file containing an analysis of the weather."</font><font color="#330033">,</font>
+<font color="#330033">       "The analysis includes temperature and rainfall data"</font><font color="#330033">,</font>
+<font color="#330033">       "for the past week."</font>
+<font color="#880033">    }</font>
+<font color="#0000FF">procedure </font><font color="#330033">sh</font><font color="#880033">()</font>
+<font color="#0000FF">  for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">description</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">     printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">" &gt;&gt; %s &lt;&lt;\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">description</font><font color="#0000FF">[</font><font color="#330033">i</font><font color="#0000FF">]</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">  end for</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">show_help</font><font color="#880033">(</font><font color="#993333">{</font>
+<font color="#0000FF">    {</font><font color="#330033">"q"</font><font color="#330033">, </font><font color="#330033">"silent"</font><font color="#330033">, </font><font color="#330033">"Suppresses any output to console"</font><font color="#330033">, NO_PARAMETER, -1</font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">    {</font><font color="#330033">"r"</font><font color="#330033">, 0, </font><font color="#330033">"Sets how many lines the console should display"</font><font color="#330033">, </font>
+<font color="#5500FF">     {</font><font color="#330033">HAS_PARAMETER,</font><font color="#330033">"lines"</font><font color="#5500FF">}</font><font color="#330033">, -1</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"sh"</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<p> Outputs: 
+<pre>myfile.ex options:
+-q, --silent      Suppresses any output to console
+-r lines          Sets how many lines the console should display
+
+&gt;&gt; Creates a file containing an analysis of the weather. &lt;&lt;
+&gt;&gt; The analysis includes temperature and rainfall data  &lt;&lt;
+&gt;&gt; for the past week.  &lt;&lt;
+</pre>
+
+<p> 
+<a name="cmdlinecmd_parse"></a><a name="parse"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.4 cmd_parse</h4>
+<a name="_797_cmd_parse"></a><a name="cmd_parse"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public function </font><font color="#330033">cmd_parse</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">opts, </font><font color="#0000FF">object </font><font color="#330033">parse_options = </font><font color="#993333">{}</font><font color="#330033">,</font>
+<font color="#0000FF">        sequence </font><font color="#330033">cmds = </font><font color="#0000FF">command_line</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<p>   parses command line options and optionally calls procedures based on these options.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Parameters:</h5>
+<a name="_798_parameters"></a><a name="parameters"></a><ol><li><tt>opts</tt> : a sequence of records that define the various command line <em>switches</em> and <em>options</em> that are valid for the application: See Comments: section for details
+</li><li><tt>parse_options</tt> : an optional list of special behavior modifiers: See Parse Options section for details
+</li><li><tt>cmds</tt> : an optional sequence of command line arguments. If omitted the output from  <tt>command_line</tt> is used.
+</li></ol>
+<!-- ..\include\std\cmdline.e -->
+<h5>Returns:</h5>
+<a name="_799_returns"></a><a name="returns"></a>
+<p> A <strong>map</strong>, containing the set of actual options used in <tt>cmds</tt>. The returned map has one special key, <tt>EXTRAS</tt> that are values passed on the command line that are not part of any of the defined options. This is commonly used to get the list of files entered on the command line. For instance, if the command line used was <em><tt>myprog -verbose file1.txt file2.txt</tt></em> then the <tt>EXTRAS</tt> data value would be <tt>{"file1.txt", "file2.txt"}</tt>.</p>
+
+<p> When any command item begins with an <strong><tt>@</tt></strong> symbol then it is assumed that it prefixes a file name. That file will then be opened and its contents used to add to the command line, as if the file contents had actually been entered as part of the original command line.</p>
+
+<p> Parse Options: <tt>parse_options</tt> is used to provide a set of behavior modifiers that change the default rules for parsing the command line. If used, it is a list of values that will affect the parsing of the command line options.</p>
+
+<p> These modifers can be any combination of:</p>
+<ol><li><tt>VALIDATE_ALL</tt> -- The default. All options will be validated for all possible errors.
+</li><li><tt>NO_VALIDATION</tt> -- Do not validate any parameter.
+</li><li><tt>NO_VALIDATION_AFTER_FIRST_EXTRA</tt> -- Do not validate any parameter after the first extra was encountered. This is helpful for programs such as the Interpreter itself:  <tt>eui -D TEST greet.ex -name John</tt>. -D TEST should be validated but anything after "greet.ex" should not as it is meant for greet.ex to handle, not eui.
+</li><li><tt>HELP_RID</tt> -- The next Parse Option must either a routine id or a set of text strings. The routine is called or the text is displayed when a parse error (invalid option given, mandatory option not given, no parameter given for an option that requires a parameter, etc...) occurs. This can be used to provide additional help text. By default, just the option switches and their descriptions will be displayed. However you can provide additional text by either supplying a routine_id of a procedure that accepts no parameters, or a sequence containing lines of text (one line per element).  The procedure is expected to write text to the stdout device.
+</li><li><tt>NO_HELP_ON_ERROR</tt> -- Do not show a list of options on a command line error.
+</li><li><tt>NO_HELP</tt> -- Do not automatically add the switches '-h', '-?', and '--help' to display the help text (if any).
+</li><li><tt>NO_AT_EXPANSION</tt> -- Do not expand arguments that begin with '@.'
+</li><li><tt>AT_EXPANSION</tt> -- Expand arguments that begin with '@'.  The name that follows @ will be opened as a file, read, and each trimmed non-empty line that does not begin with a '#' character will be inserted as arguments in the command line. These lines replace the original '@' argument as if they had been entered on the original command line. <br />
+<ul><li>If the name following the '@' begins with another '@', the extra '@' is removed and the remainder is the name of the file. However, if that file cannot be read, it is simply ignored. This allows <em>optional</em> files to be included on the command line. Normally, with just a single '@', if the file cannot be found the program aborts.
+</li><li>Lines whose first non-whitespace character is '#' are treated as a comment and thus ignored.
+</li><li>Lines enclosed with double quotes will have the quotes stripped off and the result is used as an argument. This can be used for arguments that begin with a '#' character, for example.
+</li><li>Lines enclosed with single quotes will have the quotes stripped off and the line is then further split up use the space character as a delimiter. The resulting 'words' are then all treated as individual arguments on the command line.
+</li></ul>
+</li></ol>
+<p>An example of parse options: </p>
+
+<pre class="examplecode"><font color="#880033">{ </font><font color="#330033">HELP_RID, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"my_help"</font><font color="#993333">)</font><font color="#330033">, NO_VALIDATION </font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Comments:</h5>
+<a name="_800_comments"></a><a name="comments"></a>
+<p> Token types recognized on the command line:</p>
+<ol><li>a single '-'. Simply added to the 'extras' list
+</li><li>a single "--". This signals the end of command line options. What remains of the command line is added to the 'extras' list, and the parsing terminates.
+</li><li>-shortName. The option will be looked up in the short name field of <tt>opts</tt>.
+</li><li>/shortName. Same as -shortName.
+</li><li>-!shortName. If the 'shortName' has already been found the option is removed.
+</li><li>/!shortName. Same as -!shortName
+</li><li>--longName. The option will be looked up in the long name field of <tt>opts</tt>.
+</li><li>--!longName. If the 'longName' has already been found the option is removed.
+</li><li>anything else. The word is simply added to the 'extras' list.
+</li></ol>
+<p>For those options that require a parameter to also be supplied, the parameter can be given as either the next command line argument, or by appending '=' or ':' to the command option then appending the parameter data. <br />
+For example, <strong><tt>-path=/usr/local</tt></strong> or as <strong><tt>-path /usr/local</tt></strong>.</p>
+
+<p> On a failed lookup, the program shows the help by calling <a href="std_cmdline.html#_791_show_help">show_help</a>(<tt>opts</tt>, <tt>add_help_rid</tt>, <tt>cmds</tt>) and terminates with status code 1.</p>
+
+<p> If you do not explicitly define the switches <tt>-h</tt>, <tt>-?</tt>, or <tt>--help</tt>, these will be automatically added to the list of valid switches and will be set to call the <a href="std_cmdline.html#_791_show_help">show_help</a> routine.</p>
+
+<p> You can remove any of these as default 'help' switches simply by explicitly using them for something else.</p>
+
+<p> You can also remove all of these switches as <em>automatic</em> help switches by using the <tt>NO_HELP</tt> parsing option. This just means that these switches are not automatically used as 'help' switches, regardless of whether they are used explicitly or not. So if <tt>NO_HELP</tt> is used, and you want to give the user the ability to display the 'help' then you must explicitly set up your own switch to do so. <strong>N.B</strong>, the 'help' is still displayed if an invalid command line switch is used at runtime, regardless of whether <tt>NO_HELP</tt> is used or not.</p>
+
+<p> Option records have the following structure: </p>
+<ol><li>a sequence representing the (short name) text that will follow the "-" option format. Use an atom if not relevant
+</li><li>a sequence representing the (long name) text that will follow the "--" option format. Use an atom if not relevant
+</li><li>a sequence, text that describes the option's purpose. Usually short as it is displayed when "-h"/"--help" is on the command line. Use an atom if not required.
+</li><li>An object ...<ul><li>If an <strong>atom</strong> then it can be either <tt>HAS_PARAMETER</tt> or anything else if there is no parameter for this option. This format also implies that the option is optional, case-sensitive and can only occur once.
+</li><li>If a <strong>sequence</strong>, it can containing zero or more processing flags in any order ...<ul><li><tt>MANDATORY</tt> to indicate that the option must always be supplied.
+</li><li><tt>HAS_PARAMETER</tt> to indicate that the option must have a parameter following it. You can optionally have a name for the parameter immediately follow the <tt>HAS_PARAMETER</tt> flag. If one isn't there, the help text will show "x" otherwise it shows the supplied name.
+</li><li><tt>NO_CASE</tt> to indicate that the case of the supplied option is not significant.
+</li><li><tt>ONCE</tt> to indicate that the option must only occur once on the command line.
+</li><li><tt>MULTIPLE</tt> to indicate that the option can occur any number of times on the command line.
+</li></ul>
+</li><li>If both <tt>ONCE</tt> and <tt>MULTIPLE</tt> are omitted then switches that also have  <tt>HAS_PARAMETER</tt> are only allowed once but switches without <tt>HAS_PARAMETER</tt> can have multuple occurances but only one is recorded in the output map.
+</li></ul>
+</li><li>an integer; a <a href="std_machine.html#_5855_routine_id">routine_id</a>. This function will be called when the option is located on the command line and before it updates the map. <br />
+Use -1 if cmd_parse is not to invoke a function for this option.<br />
+The user defined function must accept a single sequence parameter containing four values. If the function returns <tt>1</tt> then the command option does not update the map. You can use the predefined index values <tt>OPT_IDX</tt>, <tt>OPT_CNT</tt>, <tt>OPT_VAL</tt>, <tt>OPT_REV</tt> when referencing the function's parameter elements.<ol><li>An index into the <tt>opts</tt> list.
+</li><li>The number of times that the routine has been called by cmd_parse for this option
+</li><li>The option's value as found on the command line
+</li><li>1 if the command line indicates that this option is to remove any earlier occurrences of it.
+</li></ol>
+</li></ol>
+<p>One special circumstance exists and that is an option group header. It should contain only two elements: </p>
+<ol><li>The header constant: HEADER
+</li><li>A sequence to display as the option group header
+</li></ol>
+<p>When assigning a value to the resulting map, the key is the long name if present, otherwise it uses the short name. For options, you must supply a short name, a long name or both.</p>
+
+<p> If you want <tt>cmd_parse</tt> to call a user routine for the extra command line values, you need to specify an Option Record that has neither a short name or a long name, in which case only the routine_id field is used.</p>
+
+<p> For more details on how the command line is being pre-parsed, see <a href="std_cmdline.html#_779_command_line">command_line</a>.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_801_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- simple usage</font>
+
+<font color="#330033">map args = cmd_parse</font><font color="#880033">(</font><font color="#993333">{  </font>
+<font color="#0000FF">    { </font><font color="#330033">"o"</font><font color="#330033">, 0, </font><font color="#330033">"Output directory"</font><font color="#330033">, </font><font color="#5500FF">{ </font><font color="#330033">HAS_PARAMETER </font><font color="#5500FF">} </font><font color="#0000FF">}</font><font color="#330033">,  </font>
+<font color="#0000FF">    { </font><font color="#330033">"v"</font><font color="#330033">, 0, </font><font color="#330033">"Verbose mode" </font><font color="#0000FF">}  </font>
+<font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#0000FF">if </font><font color="#330033">map:get</font><font color="#880033">(</font><font color="#330033">args, </font><font color="#330033">"v"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Output directory is %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">map:get</font><font color="#0000FF">(</font><font color="#330033">args, </font><font color="#330033">"o"</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 2:</h5>
+<a name="_802_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- complex usage</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">option_definition</font>
+<font color="#0000FF">integer </font><font color="#330033">gVerbose = 0</font>
+<font color="#0000FF">sequence </font><font color="#330033">gOutFile = </font><font color="#880033">{}</font>
+<font color="#0000FF">sequence </font><font color="#330033">gInFile = </font><font color="#880033">{}</font>
+<font color="#0000FF">function </font><font color="#330033">opt_verbose</font><font color="#880033">( </font><font color="#0000FF">sequence </font><font color="#330033">value</font><font color="#880033">)</font>
+<font color="#0000FF">   if </font><font color="#330033">value</font><font color="#880033">[</font><font color="#330033">OPT_VAL</font><font color="#880033">] </font><font color="#330033">= -1 </font><font color="#0000FF">then </font><font color="#FF0055">-- (-!v used on command line)</font>
+<font color="#330033">   	gVerbose = 0</font>
+<font color="#0000FF">   else</font>
+<font color="#0000FF">     if </font><font color="#330033">value</font><font color="#880033">[</font><font color="#330033">OPT_CNT</font><font color="#880033">] </font><font color="#330033">= 1 </font><font color="#0000FF">then</font>
+<font color="#330033">        gVerbose = 1</font>
+<font color="#0000FF">     else</font>
+<font color="#330033">        gVerbose += 1</font>
+<font color="#0000FF">     end if</font>
+<font color="#0000FF">   end if</font>
+<font color="#0000FF">	return </font><font color="#330033">1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">opt_output_filename</font><font color="#880033">( </font><font color="#0000FF">sequence </font><font color="#330033">value</font><font color="#880033">)</font>
+<font color="#330033">   gOutFile = value</font><font color="#880033">[</font><font color="#330033">OPT_VAL</font><font color="#880033">]</font>
+<font color="#0000FF">	return </font><font color="#330033">1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">extras</font><font color="#880033">( </font><font color="#0000FF">sequence </font><font color="#330033">value</font><font color="#880033">)</font>
+<font color="#0000FF">   if not </font><font color="#330033">file_exists</font><font color="#880033">(</font><font color="#330033">value</font><font color="#993333">[</font><font color="#330033">OPT_VAL</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">       show_help</font><font color="#880033">(</font><font color="#330033">option_definition, </font><font color="#0000FF">sprintf</font><font color="#993333">(</font><font color="#330033">"Cannot find '%s'"</font><font color="#330033">, </font>
+<font color="#0000FF">                 {</font><font color="#330033">value</font><font color="#5500FF">[</font><font color="#330033">OPT_VAL</font><font color="#5500FF">]</font><font color="#0000FF">}</font><font color="#993333">) </font><font color="#880033">)</font>
+<font color="#0000FF">       abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">   end if</font>
+<font color="#330033">   gInFile = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">gInFile, value</font><font color="#993333">[</font><font color="#330033">OPT_VAL</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#0000FF">	return </font><font color="#330033">1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">option_definition = </font><font color="#880033">{</font>
+<font color="#993333">    { </font><font color="#330033">HEADER,         </font><font color="#330033">"General options" </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">"h"</font><font color="#330033">, </font><font color="#330033">"hash"</font><font color="#330033">,    </font><font color="#330033">"Calc hash values"</font><font color="#330033">, </font><font color="#0000FF">{ </font><font color="#330033">NO_PARAMETER </font><font color="#0000FF">}</font><font color="#330033">, -1 </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">HEADER,         </font><font color="#330033">"Input and output" </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">"o"</font><font color="#330033">, </font><font color="#330033">"output"</font><font color="#330033">,  </font><font color="#330033">"Output filename"</font><font color="#330033">,  </font><font color="#0000FF">{ </font><font color="#330033">MANDATORY, HAS_PARAMETER, ONCE </font><font color="#0000FF">} </font><font color="#330033">, </font>
+<font color="#0000FF">                                            routine_id</font><font color="#0000FF">(</font><font color="#330033">"opt_output_filename"</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">"i"</font><font color="#330033">, </font><font color="#330033">"import"</font><font color="#330033">,  </font><font color="#330033">"An import path"</font><font color="#330033">,   </font><font color="#0000FF">{ </font><font color="#330033">HAS_PARAMETER, MULTIPLE</font><font color="#0000FF">}</font><font color="#330033">, -1 </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">HEADER,         </font><font color="#330033">"Miscellaneous" </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">"v"</font><font color="#330033">, </font><font color="#330033">"verbose"</font><font color="#330033">, </font><font color="#330033">"Verbose output"</font><font color="#330033">,   </font><font color="#0000FF">{ </font><font color="#330033">NO_PARAMETER </font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#0000FF">(</font><font color="#330033">"opt_verbose"</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">"e"</font><font color="#330033">, </font><font color="#330033">"version"</font><font color="#330033">, </font><font color="#330033">"Display version"</font><font color="#330033">,  </font><font color="#0000FF">{ </font><font color="#330033">VERSIONING, </font><font color="#330033">"myprog v1.0" </font><font color="#0000FF">} </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {  </font><font color="#330033">0, 0, 0, 0, </font><font color="#0000FF">routine_id</font><font color="#0000FF">(</font><font color="#330033">"extras"</font><font color="#0000FF">)</font><font color="#993333">}</font>
+<font color="#880033">}</font>
+
+<font color="#330033">map:map opts = cmd_parse</font><font color="#880033">(</font><font color="#330033">option_definition, NO_HELP</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- When run as: </font>
+<font color="#FF0055">--             eui myprog.ex -v @output.txt -i /etc/app input1.txt input2.txt</font>
+<font color="#FF0055">-- and the file "output.txt" contains the two lines ...</font>
+<font color="#FF0055">--   --output=john.txt</font>
+<font color="#FF0055">--   '-i /usr/local'</font>
+<font color="#FF0055">--</font>
+<font color="#FF0055">-- map:get(opts, "verbose") --&gt; 1</font>
+<font color="#FF0055">-- map:get(opts, "hash") --&gt; 0 (not supplied on command line)</font>
+<font color="#FF0055">-- map:get(opts, "output") --&gt; "john.txt"</font>
+<font color="#FF0055">-- map:get(opts, "import") --&gt; {"/usr/local", "/etc/app"}</font>
+<font color="#FF0055">-- map:get(opts, EXTRAS) --&gt; {"input1.txt", "input2.txt"}</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>See Also:</h5>
+<a name="_803_seealso"></a><a name="seealso"></a>
+<p> <a href="std_cmdline.html#_791_show_help">show_help</a>, <a href="std_cmdline.html#_779_command_line">command_line</a></p>
+
+<p> 
+<a name="cmdlinebuild_commandline"></a><a name="commandline"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.5 build_commandline</h4>
+<a name="_805_build_commandline"></a><a name="build_commandline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public function </font><font color="#330033">build_commandline</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">cmds</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a text string based on the set of supplied strings.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Parameters:</h5>
+<a name="_806_parameters"></a><a name="parameters"></a><ol><li><tt>cmds</tt> : A sequence. Contains zero or more strings.
+</li></ol>
+<!-- ..\include\std\cmdline.e -->
+<h5>Returns:</h5>
+<a name="_807_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, which is a text string. Each of the strings in <tt>cmds</tt> is quoted if they contain spaces, and then concatenated to form a single string.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Comments:</h5>
+<a name="_808_comments"></a><a name="comments"></a>
+<p> Typically, this is used to ensure that arguments on a command line are properly formed before submitting it to the shell.</p>
+
+<p> Though this function does the quoting for you it is not going to protect your programs from globing <tt>*</tt>, <tt>?</tt> .  And it is not specied here what happens if you pass redirection or piping characters.</p>
+
+<p> When passing a result from with build_commandline to <a href="std_os.html#_1784_system_exec">system_exec</a>, file arguments will benefit from using <a href="std_filesys.html#_1349_canonical_path">canonical_path</a> with the <a href="std_filesys.html#_1345_to_short">TO_SHORT</a>. On <em>Windows</em> this is required for file arguments to always work.  There is a complication with files that contain spaces.  On <em>Unix</em> this call will also return a useable filename.</p>
+
+<p> Alternatively, you can leave out calls to <a href="std_filesys.html#_1349_canonical_path">canonical_path</a> and use <a href="std_os.html#_1776_system">system</a> instead.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_809_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = build_commandline</font><font color="#880033">( </font><font color="#993333">{ </font><font color="#330033">"-d"</font><font color="#330033">, canonical_path</font><font color="#0000FF">(</font><font color="#330033">"/usr/my docs/"</font><font color="#330033">,,TO_SHORT</font><font color="#0000FF">)</font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#FF0055">-- s now contains a short name equivalent to '-d "/usr/my docs/"'</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 2:</h5>
+<a name="_810_example2"></a><a name="example2"></a>
+<p> You can use this to run things that might be difficult to quote out. Suppose you want to run a program that requires quotes on its command line?  Use this function to pass quotation marks:</p>
+
+<pre class="examplecode"><font color="#330033">s = build_commandline</font><font color="#880033">( </font><font color="#993333">{ </font><font color="#330033">"awk"</font><font color="#330033">, </font><font color="#330033">"-e"</font><font color="#330033">, </font><font color="#330033">"'{ print $1"x"" </font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#0000FF">system</font><font color="#880033">(</font><font color="#330033">s,0</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>See Also:</h5>
+<a name="_811_seealso"></a><a name="seealso"></a>
+<p> <a href="std_cmdline.html#_813_parse_commandline">parse_commandline</a>, <a href="std_os.html#_1776_system">system</a>, <a href="std_os.html#_1784_system_exec">system_exec</a>, <a href="std_cmdline.html#_779_command_line">command_line</a>, <a href="std_filesys.html#_1349_canonical_path">canonical_path</a>,  <a href="std_filesys.html#_1345_to_short">TO_SHORT</a></p>
+
+<p> 
+<a name="cmdlineparse_commandline"></a><a name="commandline"></a> </p>
+
+<!-- ..\include\std\cmdline.e -->
+<h4>8.2.2.6 parse_commandline</h4>
+<a name="_813_parse_commandline"></a><a name="parse_commandline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/cmdline.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">cmdline</font>
+<font color="#0000FF">public function </font><font color="#330033">parse_commandline</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">cmdline</font><font color="#880033">)</font>
+</pre>
+
+<p>   parses a command line string breaking it into a sequence of command line options.</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Parameters:</h5>
+<a name="_814_parameters"></a><a name="parameters"></a><ol><li><tt>cmdline</tt> : Command line sequence (string)
+</li></ol>
+<!-- ..\include\std\cmdline.e -->
+<h5>Returns:</h5>
+<a name="_815_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of command line options</p>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>Example 1:</h5>
+<a name="_816_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">opts = parse_commandline</font><font color="#880033">(</font><font color="#330033">"-v -f '%Y-%m-%d %H:%M'"</font><font color="#880033">)</font>
+<font color="#FF0055">-- opts = { "-v", "-f", "%Y-%m-%d %H:%M" }</font>
+</pre>
+
+<!-- ..\include\std\cmdline.e -->
+<h5>See Also:</h5>
+<a name="_817_seealso"></a><a name="seealso"></a>
+<p> <a href="std_cmdline.html#_805_build_commandline">build_commandline</a></p>
+
+<p> 
+<!-- ..\include\std\console.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="builtins.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_console.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="builtins.html">8.1 Built-in Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_console.html">8.3 Console</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

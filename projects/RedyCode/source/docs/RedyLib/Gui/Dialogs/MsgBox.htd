@@ -1,0 +1,56 @@
+==Message Box Dialog
+gui/dialogs/msgbox.e 
+
+eee
+
+===API
+====Routines
+=====procedure msg(sequence msgtxt, sequence msgicon : "Info")
+Displays a modal dialog window with a message with an "OK" button. This allows the calling task to continue running.
+
+There are three different icons to choose from:
+    * "Info" (default, white *)
+    * "Warning" (yellow !)
+    * "Error" (red X)
+
+<eucode>
+msgbox:msg("This is a message.")
+msgbox:msg("This is a warning.", "Warning")
+msgbox:msg("This is an error!", "Error")
+</eucode>
+
+=====function waitmsg(sequence msgtxt, sequence msgicon, sequence msgbuttons : {})
+Displays a modal dialog window with a message with one or more buttons and waits for the user to respond. This causes the calling task to block until the user responds, but other tasks continue running.
+
+There are four different icons to choose from:
+    * "Info" (white *)
+    * "Warning" (yellow !)
+    * "Error" (red X)
+    * "Question" (blue ?)
+
+Buttons are defined by a sequence of strings that represent button labels. Which ever button is cliicked by the user, that button's label string is returned.
+
+Here are some examples:
+<eucode>
+    sequence ans = msgbox:waitmsg(
+        "The file \"" & fTabFileNames[fidx] & "\" already exists. Do you want to overwrite it?",
+        "Question",
+        {"Overwrite", "Cancel"}
+    )
+    if equal(ans, "Overwrite") then
+    else
+    end if
+----
+    sequence ans = msgbox:waitmsg("Do you want to save the file \"" & fTabFileNames[fidx] & "\" before closing it?",
+        "Question",
+        {"Save", "Discard", "Cancel"}
+    )
+    if equal(ans, "Save") then
+    elsif equal(ans, "Discard") then
+    else
+    end if
+----
+    msgbox:waitmsg("Waiting until you are ready.", "Start")
+</eucode>
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

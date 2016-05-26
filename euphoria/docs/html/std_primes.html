@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_eds.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_flags.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_eds.html">8.29 Euphoria Database (EDS)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_flags.html">8.31 Flags</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\primes.e -->
+<h2>8.30 Prime Numbers</h2>
+<a name="_4340_primenumbers"></a><a name="primenumbers"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_primes.html#_4340_primenumbers">8.30 Prime Numbers</a></div>
+<div class="toc_3"><a href="std_primes.html#_4341_routines">8.30.1 Routines</a></div>
+<div class="toc_4"><a href="std_primes.html#_4343_calc_primes">8.30.1.1 calc_primes</a></div>
+<div class="toc_4"><a href="std_primes.html#_4350_next_prime">8.30.1.2 next_prime</a></div>
+<div class="toc_4"><a href="std_primes.html#_4357_prime_list">8.30.1.3 prime_list</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\primes.e -->
+<h3>8.30.1 Routines</h3>
+<a name="_4341_routines"></a><a name="routines"></a>
+<p> 
+<a name="primescalc_primes"></a><a name="primes"></a> </p>
+
+<!-- ..\include\std\primes.e -->
+<h4>8.30.1.1 calc_primes</h4>
+<a name="_4343_calc_primes"></a><a name="calc_primes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/primes.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">primes</font>
+<font color="#0000FF">public function </font><font color="#330033">calc_primes</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">approx_limit, </font><font color="#0000FF">atom </font><font color="#330033">time_limit_p = 10</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns all the prime numbers below a threshold, with a cap on computation time.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Parameters:</h5>
+<a name="_4344_parameters"></a><a name="parameters"></a><ol><li><tt>approx_limit</tt> : an integer, This is not the upper limit but the last prime returned is the <em>next</em> prime after or on this value.
+</li><li><tt>time_out_p</tt> : an atom, the maximum number of seconds that this function can run for. The default is 10 (ten) seconds.
+</li></ol>
+<!-- ..\include\std\primes.e -->
+<h5>Returns:</h5>
+<a name="_4345_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, made of prime numbers in increasing order. The last value is the next prime number that falls on or <em>after</em> the value of <tt>approx_limit</tt>.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Comments:</h5>
+<a name="_4346_comments"></a><a name="comments"></a><ul><li>The <tt>approx_limit</tt> argument <em>does not</em> represent the largest value to return. The largest value returned will be the next prime number on or after 
+</li><li>The returned sequence contains all the prime numbers less than its last element.
+</li></ul><ul><li>If the function times out, it may not hold all primes below <tt>approx_limit</tt>, but only the largest ones will be absent. If the last element returned is less than <tt>approx_limit</tt> then the function timed out.
+</li></ul><ul><li>To disable the timeout, simply give it a negative value.
+</li></ul>
+<!-- ..\include\std\primes.e -->
+<h5>Example 1:</h5>
+<a name="_4347_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? calc_primes</font><font color="#880033">(</font><font color="#330033">1000, 5</font><font color="#880033">)</font>
+<font color="#FF0055">-- On a very slow computer, you may only get all primes up to say 719. </font>
+<font color="#FF0055">-- On a faster computer, the last element printed out will be 1009. </font>
+<font color="#FF0055">-- This call will never take longer than 5 seconds.</font>
+</pre>
+
+<!-- ..\include\std\primes.e -->
+<h5>See Also:</h5>
+<a name="_4348_seealso"></a><a name="seealso"></a>
+<p> <a href="std_primes.html#_4350_next_prime">next_prime</a> <a href="std_primes.html#_4357_prime_list">prime_list</a></p>
+
+<p> 
+<a name="primesnext_prime"></a><a name="prime"></a> </p>
+
+<!-- ..\include\std\primes.e -->
+<h4>8.30.1.2 next_prime</h4>
+<a name="_4350_next_prime"></a><a name="next_prime"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/primes.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">primes</font>
+<font color="#0000FF">public function </font><font color="#330033">next_prime</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">n, </font><font color="#0000FF">object </font><font color="#330033">fail_signal_p = - 1, </font><font color="#0000FF">atom </font><font color="#330033">time_out_p = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the next prime number on or after the supplied number.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Parameters:</h5>
+<a name="_4351_parameters"></a><a name="parameters"></a><ol><li><tt>n</tt> : an integer, the starting point for the search
+</li><li><tt>fail_signal_p</tt> : an integer, used to signal error. Defaults to -1.
+</li></ol>
+<!-- ..\include\std\primes.e -->
+<h5>Returns:</h5>
+<a name="_4352_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, which is prime only if it took less than one second to determine the next prime greater or equal to <tt>n</tt>.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Comments:</h5>
+<a name="_4353_comments"></a><a name="comments"></a>
+<p> The default value of -1 will alert you about an invalid returned value, since a prime not less than <tt>n</tt> is expected. However, you can pass another value for this parameter.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Example 1:</h5>
+<a name="_4354_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? next_prime</font><font color="#880033">(</font><font color="#330033">997</font><font color="#880033">)</font>
+<font color="#FF0055">-- On a very slow computer, you might get -997, but 1009 is expected.</font>
+</pre>
+
+<!-- ..\include\std\primes.e -->
+<h5>See Also:</h5>
+<a name="_4355_seealso"></a><a name="seealso"></a>
+<p> <a href="std_primes.html#_4343_calc_primes">calc_primes</a></p>
+
+<p> 
+<a name="primesprime_list"></a><a name="list"></a> </p>
+
+<!-- ..\include\std\primes.e -->
+<h4>8.30.1.3 prime_list</h4>
+<a name="_4357_prime_list"></a><a name="prime_list"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/primes.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">primes</font>
+<font color="#0000FF">public function </font><font color="#330033">prime_list</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">top_prime_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a list of prime numbers.</p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Parameters:</h5>
+<a name="_4358_parameters"></a><a name="parameters"></a><ol><li><tt>top_prime_p</tt> : The list will end with the prime less than or equal to this value. If <tt>top_prime_p</tt> is zero, the current list of calculated primes is returned.
+</li></ol>
+<!-- ..\include\std\primes.e -->
+<h5>Returns:</h5>
+<a name="_4359_returns"></a><a name="returns"></a>
+<p> An <strong>sequence</strong>, a list of prime numbers from <tt>2</tt> to <tt>&lt;=</tt> <tt>top_prime_p</tt></p>
+
+<!-- ..\include\std\primes.e -->
+<h5>Example 1:</h5>
+<a name="_4360_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">pList = prime_list</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+<font color="#FF0055">-- pList will now contain all the primes from 2 up to the largest less than or</font>
+<font color="#FF0055">--    equal to 1000, which is 997.</font>
+</pre>
+
+<!-- ..\include\std\primes.e -->
+<h5>See Also:</h5>
+<a name="_4361_seealso"></a><a name="seealso"></a>
+<p> <a href="std_primes.html#_4343_calc_primes">calc_primes</a>, <a href="std_primes.html#_4350_next_prime">next_prime</a></p>
+
+<p> 
+<!-- ..\include\std\flags.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_eds.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_flags.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_eds.html">8.29 Euphoria Database (EDS)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_flags.html">8.31 Flags</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

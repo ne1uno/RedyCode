@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_os.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_pretty.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_os.html">8.7 Operating System Helpers</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_pretty.html">8.9 Pretty Printing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h2>8.8 Pipe Input and Output</h2>
+<a name="_1800_pipeinputandoutput"></a><a name="pipeinputandoutput"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_pipeio.html#_1800_pipeinputandoutput">8.8 Pipe Input and Output</a></div>
+<div class="toc_3"><a href="std_pipeio.html#_1801_notes">8.8.1 Notes</a></div>
+<div class="toc_3"><a href="std_pipeio.html#_1802_accessorconstants">8.8.2 Accessor Constants</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1804_stdin">8.8.2.1 STDIN</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1806_stdout">8.8.2.2 STDOUT</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1808_stderr">8.8.2.3 STDERR</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1810_pid">8.8.2.4 PID</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1812_parent">8.8.2.5 PARENT</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1814_child">8.8.2.6 CHILD</a></div>
+<div class="toc_3"><a href="std_pipeio.html#_1815_openingandclosing">8.8.3 Opening and Closing</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1817_process">8.8.3.1 process</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1819_close">8.8.3.2 close</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1823_kill">8.8.3.3 kill</a></div>
+<div class="toc_3"><a href="std_pipeio.html#_1826_readandwriteprocess">8.8.4 Read and Write Process</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1828_read">8.8.4.1 read</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1832_write">8.8.4.2 write</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1836_error_no">8.8.4.3 error_no</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1840_create">8.8.4.4 create</a></div>
+<div class="toc_4"><a href="std_pipeio.html#_1844_exec">8.8.4.5 exec</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h3>8.8.1 Notes</h3>
+<a name="_1801_notes"></a><a name="notes"></a>
+<p> Due to a bug, Euphoria does not handle <tt>STDERR</tt> properly. <tt>STDERR</tt> cannot captured for Euphoria programs (other programs will work fully) The IO functions currently work with file handles, a future version might wrap them in streams so that they can be used directly alongside other file/socket/other-streams with a <tt>stream_select</tt> function.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h3>8.8.2 Accessor Constants</h3>
+<a name="_1802_accessorconstants"></a><a name="accessorconstants"></a>
+<p> 
+<a name="pipeiostdin"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.1 STDIN</h4>
+<a name="_1804_stdin"></a><a name="stdin"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">STDIN</font>
+</pre>
+
+<p>  Child processes standard input</p>
+
+<p> 
+<a name="pipeiostdout"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.2 STDOUT</h4>
+<a name="_1806_stdout"></a><a name="stdout"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">STDOUT</font>
+</pre>
+
+<p>  Child processes standard output</p>
+
+<p> 
+<a name="pipeiostderr"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.3 STDERR</h4>
+<a name="_1808_stderr"></a><a name="stderr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">STDERR</font>
+</pre>
+
+<p>  Child processes standard error</p>
+
+<p> 
+<a name="pipeiopid"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.4 PID</h4>
+<a name="_1810_pid"></a><a name="pid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">PID</font>
+</pre>
+
+<p>  Process ID</p>
+
+<p> 
+<a name="pipeioparent"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.5 PARENT</h4>
+<a name="_1812_parent"></a><a name="parent"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">PARENT</font>
+</pre>
+
+<p>  Set of pipes that are for the use of the parent</p>
+
+<p> 
+<a name="pipeiochild"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.2.6 CHILD</h4>
+<a name="_1814_child"></a><a name="child"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public enum </font><font color="#330033">CHILD</font>
+</pre>
+
+<p>  Set of pipes that are given to the child -- should not be used by the parent</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h3>8.8.3 Opening and Closing</h3>
+<a name="_1815_openingandclosing"></a><a name="openingandclosing"></a>
+<p> 
+<a name="pipeioprocess"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.3.1 process</h4>
+<a name="_1817_process"></a><a name="process"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public type </font><font color="#330033">process</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   Process Type</p>
+
+<p> 
+<a name="pipeioclose"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.3.2 close</h4>
+<a name="_1819_close"></a><a name="close"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function close</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">fd</font><font color="#880033">)</font>
+</pre>
+
+<p>   closes handle <tt>fd</tt>.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Returns:</h5>
+<a name="_1820_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success, -1 on failure</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1821_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">status = pipeio:</font><font color="#0000FF">close</font><font color="#880033">(</font><font color="#330033">p</font><font color="#993333">[</font><font color="#330033">STDIN</font><font color="#993333">]</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="pipeiokill"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.3.3 kill</h4>
+<a name="_1823_kill"></a><a name="kill"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public procedure </font><font color="#330033">kill</font><font color="#880033">(</font><font color="#330033">process p, </font><font color="#0000FF">atom </font><font color="#330033">signal = 15</font><font color="#880033">)</font>
+</pre>
+
+<p>   closes pipes and kills process <tt>p</tt> with signal signal (default 15).</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Comments:</h5>
+<a name="_1824_comments"></a><a name="comments"></a>
+<p> Signal is ignored on <em>Windows</em>.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1825_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">kill</font><font color="#880033">(</font><font color="#330033">p</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\pipeio.e -->
+<h3>8.8.4 Read and Write Process</h3>
+<a name="_1826_readandwriteprocess"></a><a name="readandwriteprocess"></a>
+<p> 
+<a name="pipeioread"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.4.1 read</h4>
+<a name="_1828_read"></a><a name="read"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function </font><font color="#330033">read</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">fd, </font><font color="#0000FF">integer </font><font color="#330033">bytes</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads <tt>bytes</tt> bytes from handle <tt>fd</tt>.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Returns:</h5>
+<a name="_1829_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing data, an empty sequence on EOF or an error code. Similar to <a href="std_io.html#_1550_get_bytes">get_bytes</a>.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1830_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">data=read</font><font color="#880033">(</font><font color="#330033">p</font><font color="#993333">[</font><font color="#330033">STDOUT</font><font color="#993333">]</font><font color="#330033">,256</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="pipeiowrite"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.4.2 write</h4>
+<a name="_1832_write"></a><a name="write"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function </font><font color="#330033">write</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">fd, </font><font color="#0000FF">sequence </font><font color="#330033">str</font><font color="#880033">)</font>
+</pre>
+
+<p>   writes <tt>bytes</tt> to handle <tt>fd</tt>.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Returns:</h5>
+<a name="_1833_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, number of bytes written, or -1 on error</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1834_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">bytes_written = write</font><font color="#880033">(</font><font color="#330033">p</font><font color="#993333">[</font><font color="#330033">STDIN</font><font color="#993333">]</font><font color="#330033">,</font><font color="#330033">"Hello World!"</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="pipeioerror_no"></a><a name="no"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.4.3 error_no</h4>
+<a name="_1836_error_no"></a><a name="error_no"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function </font><font color="#330033">error_no</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets error no from last call to a pipe function.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Comments:</h5>
+<a name="_1837_comments"></a><a name="comments"></a>
+<p> Value returned will be OS-specific, and is not always set on <em>Windows</em> at least</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1838_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">error = error_no</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="pipeiocreate"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.4.4 create</h4>
+<a name="_1840_create"></a><a name="create"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function </font><font color="#330033">create</font><font color="#880033">()</font>
+</pre>
+
+<p>   creates pipes for inter-process communication.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Returns:</h5>
+<a name="_1841_returns"></a><a name="returns"></a>
+<p> A <strong>handle</strong>, process handles { {parent side pipes},{child side pipes} }</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1842_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">p = exec</font><font color="#880033">(</font><font color="#330033">"dir"</font><font color="#330033">, create</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="pipeioexec"></a> </p>
+
+<!-- ..\include\std\pipeio.e -->
+<h4>8.8.4.5 exec</h4>
+<a name="_1844_exec"></a><a name="exec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pipeio.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pipeio</font>
+<font color="#0000FF">public function </font><font color="#330033">exec</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">cmd, </font><font color="#0000FF">sequence </font><font color="#330033">pipe</font><font color="#880033">)</font>
+</pre>
+
+<p>   opens process with command line cmd.</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Returns:</h5>
+<a name="_1845_returns"></a><a name="returns"></a>
+<p> A <strong>handle</strong>, process handles { <a href="std_pipeio.html#_1810_pid">PID</a>, <a href="std_pipeio.html#_1804_stdin">STDIN</a>, <a href="std_pipeio.html#_1806_stdout">STDOUT</a>, <a href="std_pipeio.html#_1808_stderr">STDERR</a> }</p>
+
+<!-- ..\include\std\pipeio.e -->
+<h5>Example 1:</h5>
+<a name="_1846_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">p = exec</font><font color="#880033">(</font><font color="#330033">"dir"</font><font color="#330033">, create</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\pretty.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_os.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_pretty.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_os.html">8.7 Operating System Helpers</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_pretty.html">8.9 Pretty Printing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

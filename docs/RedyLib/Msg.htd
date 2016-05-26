@@ -1,0 +1,28 @@
+==Message Library
+action.e : Action system
+
+===Introduction
+Subscribe/Publish message system.
+
+===API
+====Routines
+=====procedure publish(sequence subscribername, sequence topicname, sequence msgname, object msgdata)
+Publish data to other subscribers in group. Subscriber's handler function must return 1 to indicate success
+
+=====procedure subscribe(sequence subscribername, sequence topicname, atom msghandlerid)
+Subscribe to a group to receive sync updates. If the subscriber only needs to publish but not recieve messages, set msgshandlerid to 0.
+
+=====procedure unsubscribe(sequence subscribername, sequence topicname)
+unsubscribe from a group.
+
+=====function list_groups()
+list all groups.
+
+=====function list_subscribers(sequence topicname)
+list all subscribers in a specified group.
+
+=====procedure debug(atom debughandlerid)
+register a routine to be called for debug messages.
+
+
+Next page: [[OSWin->RedyLib\OsWin]]

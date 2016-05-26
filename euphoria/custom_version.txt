@@ -1,0 +1,11 @@
+This is a stripped-down version of:
+
+Euphoria Interpreter v4.1.0 development
+   32-bit Windows, Using System Memory
+   Revision Date: 2015-02-02 14:18:53, Id: 6300:57179171dbed
+
+Only the minimal binary files and standard library needed for the Redy 
+environment are included. This is included with RedyCode for your convenience.
+
+Euphoria is licensed under the OpenEuphoria license and is not supported by the
+RedyCode developement team.

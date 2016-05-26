@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_convert.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_search.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_convert.html">8.13 Data Type Conversion</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_search.html">8.15 Searching</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\get.e -->
+<h2>8.14 Input Routines</h2>
+<a name="_2273_inputroutines"></a><a name="inputroutines"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_get.html#_2273_inputroutines">8.14 Input Routines</a></div>
+<div class="toc_3"><a href="std_get.html#_2274_errorstatusconstants">8.14.1 Error Status Constants</a></div>
+<div class="toc_4"><a href="std_get.html#_2276_get_success">8.14.1.1 GET_SUCCESS</a></div>
+<div class="toc_4"><a href="std_get.html#_2278_get_eof">8.14.1.2 GET_EOF</a></div>
+<div class="toc_4"><a href="std_get.html#_2280_get_fail">8.14.1.3 GET_FAIL</a></div>
+<div class="toc_4"><a href="std_get.html#_2282_get_nothing">8.14.1.4 GET_NOTHING</a></div>
+<div class="toc_3"><a href="std_get.html#_2283_answertypes">8.14.2 Answer Types</a></div>
+<div class="toc_4"><a href="std_get.html#_2285_get_short_answer">8.14.2.1 GET_SHORT_ANSWER</a></div>
+<div class="toc_4"><a href="std_get.html#_2287_get_long_answer">8.14.2.2 GET_LONG_ANSWER</a></div>
+<div class="toc_3"><a href="std_get.html#_2288_routines">8.14.3 Routines</a></div>
+<div class="toc_4"><a href="std_get.html#_2290_get">8.14.3.1 get</a></div>
+<div class="toc_4"><a href="std_get.html#_2298_value">8.14.3.2 value</a></div>
+<div class="toc_4"><a href="std_get.html#_2307_defaulted_value">8.14.3.3 defaulted_value</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\get.e -->
+<h3>8.14.1 Error Status Constants</h3>
+<a name="_2274_errorstatusconstants"></a><a name="errorstatusconstants"></a>
+<p> These are returned from <a href="std_get.html#_2290_get">get</a> and <a href="std_get.html#_2298_value">value</a>.</p>
+
+<p> 
+<a name="stdgetget_success"></a><a name="success"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.1.1 GET_SUCCESS</h4>
+<a name="_2276_get_success"></a><a name="get_success"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_SUCCESS</font>
+</pre>
+
+<p> 
+<a name="stdgetget_eof"></a><a name="eof"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.1.2 GET_EOF</h4>
+<a name="_2278_get_eof"></a><a name="get_eof"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_EOF</font>
+</pre>
+
+<p> 
+<a name="stdgetget_fail"></a><a name="fail"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.1.3 GET_FAIL</h4>
+<a name="_2280_get_fail"></a><a name="get_fail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_FAIL</font>
+</pre>
+
+<p> 
+<a name="stdgetget_nothing"></a><a name="nothing"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.1.4 GET_NOTHING</h4>
+<a name="_2282_get_nothing"></a><a name="get_nothing"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_NOTHING</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h3>8.14.2 Answer Types</h3>
+<a name="_2283_answertypes"></a><a name="answertypes"></a>
+<p> 
+<a name="stdgetget_short_answer"></a><a name="short_answer"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.2.1 GET_SHORT_ANSWER</h4>
+<a name="_2285_get_short_answer"></a><a name="get_short_answer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_SHORT_ANSWER</font>
+</pre>
+
+<p> 
+<a name="stdgetget_long_answer"></a><a name="long_answer"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.2.2 GET_LONG_ANSWER</h4>
+<a name="_2287_get_long_answer"></a><a name="get_long_answer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public constant </font><font color="#330033">GET_LONG_ANSWER</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h3>8.14.3 Routines</h3>
+<a name="_2288_routines"></a><a name="routines"></a>
+<p> 
+<a name="stdgetget"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.3.1 get</h4>
+<a name="_2290_get"></a><a name="get"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public function </font><font color="#330033">get</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">file, </font><font color="#0000FF">integer </font><font color="#330033">offset = 0, </font><font color="#0000FF">integer </font><font color="#330033">answer = GET_SHORT_ANSWER</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads from an open file a human-readable string of characters representing a Euphoria object. Converts the string into the numeric value of that object.</p>
+
+<!-- ..\include\std\get.e -->
+<h5>Parameters:</h5>
+<a name="_2291_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an integer, the handle to an open file from which to read
+</li><li><tt>offset</tt> : an integer, an offset to apply to file position before reading. Defaults to 0.
+</li><li><tt>answer</tt> : an integer, either <tt>GET_SHORT_ANSWER</tt> (the default) or <tt>GET_LONG_ANSWER</tt>.
+</li></ol>
+<!-- ..\include\std\get.e -->
+<h5>Returns:</h5>
+<a name="_2292_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of length two (<tt>GET_SHORT_ANSWER</tt>) or four (<tt>GET_LONG_ANSWER</tt>) consisting of:</p>
+<ul><li>an integer, the return status. This is any of:<ul><li><tt>GET_SUCCESS</tt> -- object was read successfully
+</li><li><tt>GET_EOF</tt> --     end of file before object was read completely
+</li><li><tt>GET_FAIL</tt> --    object is not syntactically correct
+</li><li><tt>GET_NOTHING</tt> -- nothing was read, even a partial object string, before end of input
+</li></ul>
+</li><li>an object, the value that was read. This is valid only if return status is <tt>GET_SUCCESS</tt>.
+</li><li>an integer, the number of characters read. On an error, this is the point at which the error was detected.
+</li><li>an integer, the amount of initial whitespace read before the first active character was found
+</li></ul>
+<!-- ..\include\std\get.e -->
+<h5>Comments:</h5>
+<a name="_2293_comments"></a><a name="comments"></a>
+<p> When <tt>answer</tt> is not specified, or explicitly <tt>GET_SHORT_ANSWER</tt>, only the first two elements in the returned sequence are actually returned.</p>
+
+<p> The <tt>GET_NOTHING</tt> return status will not be returned if <tt>answer</tt> is <tt>GET_SHORT_ANSWER</tt>.</p>
+
+<p> <tt>get</tt> can read arbitrarily complicated Euphoria objects. You could have a long sequence of values in braces and separated by commas and comments. For example: <tt>{23, {49, 57}, 0.5, -1, 99, 'A', "john"}</tt>. A single call to <tt>get</tt> will read in this entire sequence,  return its value as a result, and return complementary information.</p>
+
+<p> If a nonzero offset is supplied, it is interpreted as an offset to the current file position; the file will start <tt>seek</tt> from there first.</p>
+
+<p> <tt>get</tt> returns a two or four element sequence; similar to what <tt><a href="std_get.html#_2298_value">value</a></tt> returns:</p>
+<ul><li>a status code ( success, error, end of file, no value at all )
+</li><li>the value just read (meaningful only when the status code is <tt>GET_SUCCESS</tt>) (optionally)
+</li><li>the total number of characters read
+</li><li>the amount of initial whitespace read.
+</li></ul>
+<p>Using the default value for answer, or setting it to <tt>GET_SHORT_ANSWER</tt>, returns two elements. Setting it to <tt>GET_LONG_ANSWER</tt> causes four elements to be returned.</p>
+
+<p> Each call to <tt>get</tt> picks up where the previous call left off. For instance: a series of five calls to <tt>get</tt> would be needed to read in this sequence: <tt> `99 5.2 {1, 2, 3} "Hello" -1`</tt> On the sixth and any subsequent call to <tt>get</tt> you would see a <tt>GET_EOF</tt> status.</p>
+
+<p> If you had something like <tt> {1, 2, xxx} </tt> in the input stream you would see a <tt>GET_FAIL</tt> error status because <tt>xxx</tt> is not a Euphoria object.</p>
+
+<p> After seeing <tt>-- something\nBut no value </tt> and the input stream stops right there, you will receive a status code of <tt>GET_NOTHING</tt>, because nothing but whitespace or comments was read. If you had opted for a short answer, you would get <tt>GET_EOF</tt> instead.</p>
+
+<p> Multiple "top-level" objects in the input stream must be separated from each other with one or more "whitespace" characters (blank, tab, \r, or \n). At the very least, a top level number must be followed by a white space from the following object. Whitespace is not necessary <em>within</em> a top-level object. Comments, terminated by either '\n' or '\r', are allowed anywhere inside sequences, and ignored if at the top level. A call to <tt>get</tt> will read one entire top-level object, plus possibly one additional (whitespace) character, after a top level number, even though the next object may have an identifiable starting point.</p>
+
+<p> The combination of <tt><a href="std_io.html#_1506_print">print</a></tt> and <tt>get</tt> can be used to save a Euphoria object to disk and later read it back. This technique could be used to implement a database as one or more large Euphoria sequences stored in disk files. The sequences could be read into memory, updated and then written back to disk after each series of transactions is complete. Remember to write out a whitespace character (using <tt><a href="std_io.html#_1526_puts">puts</a></tt>) after each call to <tt><a href="std_io.html#_1506_print">print</a></tt>, at least when a top level number was just printed.</p>
+
+<p> The value returned is not meaningful unless you have a <tt>GET_SUCCESS</tt> status.</p>
+
+<!-- ..\include\std\get.e -->
+<h5>Example 1:</h5>
+<a name="_2294_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- If he types 77.5, get(0) would return:</font>
+<font color="#880033">{</font><font color="#330033">GET_SUCCESS, 77.5</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- whereas gets(0) would return:</font>
+<font color="#330033">"77.5\n"</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h5>Example 2:</h5>
+<a name="_2295_example2"></a><a name="example2"></a>
+<p> See <tt>.../euphoria/demo/mydata.ex</tt></p>
+
+<!-- ..\include\std\get.e -->
+<h5>See Also:</h5>
+<a name="_2296_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2298_value">value</a></p>
+
+<p> 
+<a name="stdgetvalue"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.3.2 value</h4>
+<a name="_2298_value"></a><a name="value"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public function </font><font color="#330033">value</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">st, </font><font color="#0000FF">integer </font><font color="#330033">start_point = 1, </font><font color="#0000FF">integer </font><font color="#330033">answer = GET_SHORT_ANSWER</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads, from a string, a human-readable string of characters representing a Euphoria object. Converts the string into the numeric value of that object.</p>
+
+<!-- ..\include\std\get.e -->
+<h5>Parameters:</h5>
+<a name="_2299_parameters"></a><a name="parameters"></a><ol><li><tt>st</tt> : a sequence, from which to read text
+</li><li><tt>offset</tt> : an integer, the position at which to start reading. Defaults to 1.
+</li><li><tt>answer</tt> : an integer, either <tt>GET_SHORT_ANSWER</tt> (the default) or <tt>GET_LONG_ANSWER</tt>.
+</li></ol>
+<!-- ..\include\std\get.e -->
+<h5>Returns:</h5>
+<a name="_2300_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of length two (<tt>GET_SHORT_ANSWER</tt>) or four (<tt>GET_LONG_ANSWER</tt>) made of:</p>
+<ul><li>an integer, the return status. This is any of<ul><li><tt>GET_SUCCESS</tt> -- object was read successfully
+</li><li><tt>GET_EOF</tt> --     end of file before object was read completely
+</li><li><tt>GET_FAIL</tt> --    object is not syntactically correct
+</li><li><tt>GET_NOTHING</tt> -- nothing was read, even a partial object string, before end of input
+</li></ul>
+</li><li>an object, the value that was read. This is valid only if return status is <tt>GET_SUCCESS</tt>.
+</li><li>an integer, the number of characters read. On an error, this is the point at which the error was detected.
+</li><li>an integer, the amount of initial whitespace read before the first active character was found
+</li></ul>
+<!-- ..\include\std\get.e -->
+<h5>Comments:</h5>
+<a name="_2301_comments"></a><a name="comments"></a>
+<p> When <tt>answer</tt> is not specified, or explicitly <tt>GET_SHORT_ANSWER</tt>, only the first two elements in the returned sequence are actually returned.</p>
+
+<p> This works the same as <a href="std_get.html#_2290_get">get</a> but it reads from a string that you supply, rather than from a file or device.</p>
+
+<p> After reading one valid representation of a Euphoria object <tt>value</tt> will stop reading and ignore any additional characters in the string. For example: <tt>"36"</tt> and <tt>"36P"</tt> will both give you <tt>{GET_SUCCESS, 36}</tt>.</p>
+
+<p> The function returns <tt>{return_status, value}</tt> if the answer type is not passed or set to <tt>GET_SHORT_ANSWER</tt>. If set to <tt>GET_LONG_ANSWER</tt>, the number of characters read and the amount of leading whitespace are returned in 3rd and 4th position. The <tt>GET_NOTHING</tt> return status can occur only on a long answer.</p>
+
+<!-- ..\include\std\get.e -->
+<h5>Example 1:</h5>
+<a name="_2302_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = value</font><font color="#880033">(</font><font color="#330033">"12345"</font><font color="#880033">}</font>
+<font color="#330033">s is </font><font color="#880033">{</font><font color="#330033">GET_SUCCESS, 12345</font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h5>Example 2:</h5>
+<a name="_2303_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = value</font><font color="#880033">(</font><font color="#330033">"{0, 1, -99.9}"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {GET_SUCCESS, {0, 1, -99.9}}</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h5>Example 3:</h5>
+<a name="_2304_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = value</font><font color="#880033">(</font><font color="#330033">"+++"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {GET_FAIL, 0}</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h5>See Also:</h5>
+<a name="_2305_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2290_get">get</a></p>
+
+<p> 
+<a name="stdgetdefaulted_value"></a><a name="value"></a> </p>
+
+<!-- ..\include\std\get.e -->
+<h4>8.14.3.3 defaulted_value</h4>
+<a name="_2307_defaulted_value"></a><a name="defaulted_value"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/get.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdget</font>
+<font color="#0000FF">public function </font><font color="#330033">defaulted_value</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">st, </font><font color="#0000FF">object </font><font color="#330033">def, </font><font color="#0000FF">integer </font><font color="#330033">start_point = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   calls the <tt>value</tt> function and returns the resulting value on success or the default default on failure.</p>
+
+<!-- ..\include\std\get.e -->
+<h5>Parameters:</h5>
+<a name="_2308_parameters"></a><a name="parameters"></a><ol><li><tt>st</tt> : object to retrieve value from.
+</li><li><tt>def</tt> : the value returned if <tt>st</tt> is an atom or <tt>value(st)</tt> fails.
+</li><li><tt>start_point</tt> : an integer, the position in <tt>st</tt> at which to start getting the value from. Defaults to 1
+</li></ol>
+<!-- ..\include\std\get.e -->
+<h5>Returns:</h5>
+<a name="_2309_returns"></a><a name="returns"></a><ul><li>If <tt>st</tt>, is an atom then <tt>def</tt> is returned.
+</li><li>If calling <tt>value(st)</tt> is a success. then <tt>value()[2]</tt>, otherwise it will return the parameter <tt>def</tt>.
+</li></ul>
+<!-- ..\include\std\get.e -->
+<h5>Example 1:</h5>
+<a name="_2310_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">i = defaulted_value</font><font color="#880033">(</font><font color="#330033">"10"</font><font color="#330033">, 0</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 10</font>
+
+<font color="#330033">i = defaulted_value</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#330033">, 39</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 39</font>
+
+<font color="#330033">i = defaulted_value</font><font color="#880033">(</font><font color="#330033">12, 42</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 42</font>
+
+<font color="#330033">i = defaulted_value</font><font color="#880033">(</font><font color="#330033">"{1,2}"</font><font color="#330033">, 42</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is {1,2}</font>
+</pre>
+
+<!-- ..\include\std\get.e -->
+<h5>See Also:</h5>
+<a name="_2311_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2298_value">value</a></p>
+
+<p> 
+<!-- ..\include\std\search.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_convert.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_search.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_convert.html">8.13 Data Type Conversion</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_search.html">8.15 Searching</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

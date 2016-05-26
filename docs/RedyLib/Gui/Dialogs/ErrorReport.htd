@@ -1,0 +1,12 @@
+==Error Report Dialog
+gui/dialogs/error_report.e
+
+Displays a nice GUI error report window for the [[Error Report Library->RedyLib/Err]]. 
+
+===API
+====Routines
+=====procedure enable()
+
+=====procedure disable()
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

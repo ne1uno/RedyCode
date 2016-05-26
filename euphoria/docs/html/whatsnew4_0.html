@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="intro.html"><img src="images/prev.png" /></a></td>
+									<td><a href="eu_intro.html">Up</a></td>
+									<td><a href="licensing.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="intro.html">1.2 Introduction</a>
+									</td>
+									<td width="20%">
+										Up: <a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										<a href="licensing.html">1.4 Licensing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="installation.html">2 Installing Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\whatsnew4_0.txt -->
+<h2>1.3 What's new in 4.0?</h2>
+<a name="_17_whatsnewin40"></a><a name="whatsnewin40"></a>
+<p> Euphoria v4.0 is a very large jump in functionality from the previous stable release, 3.1.1.</p>
+
+<p> Euphoria has a brand new standard library consisting of over 800 public members. Too numerous to list here, please see the reference section of this manual.</p>
+
+<!-- ..\docs\whatsnew4_0.txt -->
+<h3>1.3.1 General Changes</h3>
+<a name="_18_generalchanges"></a><a name="generalchanges"></a><ul><li>New manual and documentation system
+</li><li>New logo
+</li><li>Switched to using our own ticket system
+</li><li>Switched to using our own self hosted Mercurial SCM system
+</li></ul>
+<!-- ..\docs\whatsnew4_0.txt -->
+<h3>1.3.2 Executable name changes</h3>
+<a name="_19_executablenamechanges"></a><a name="executablenamechanges"></a><table><tr><th> Old                         </th>
+<th> New         </th>
+<th> Description             </th>
+</tr>
+<tr><td> <tt>ex</tt> and <tt>exwc</tt>           </td>
+<td> <tt>eui</tt>      </td>
+<td> Euphoria Interpreter     </td>
+</tr>
+<tr><td> <tt>ec</tt> and <tt>ecw</tt>            </td>
+<td> <tt>euc</tt>      </td>
+<td> Euphoria to C Translator </td>
+</tr>
+<tr><td> <tt>bind.bat</tt> and <tt>bind</tt>     </td>
+<td> <tt>eubind</tt>   </td>
+<td> Euphoria Binder          </td>
+</tr>
+<tr><td> <tt>shroud.bat</tt> and <tt>shroud</tt> </td>
+<td> <tt>eushroud</tt> </td>
+<td> Euphoria Shrouder        </td>
+</tr>
+</table>
+
+<!-- ..\docs\whatsnew4_0.txt -->
+<h3>1.3.3 Language Enhancements</h3>
+<a name="_20_languageenhancements"></a><a name="languageenhancements"></a><ul><li>Conditional compilation using the <tt><a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a></tt>.
+</li><li><a href="lang_def.html#_84_characterstringsandindividualcharacters">Raw strings</a>, which can include multilined text.
+</li><li><a href="lang_def.html#_89_comments">Multiline comments</a> using the C-styled comments <tt>/* .. */</tt>, which can be nested.
+</li><li><a href="lang_def.html#_83_atomsandsequences">Binary, Octal and alternative Decimal and Hexadecimal number format</a> -  <tt>0b10 (2), 0t10 (8), 0d10 (10), 0x10 (16)</tt>
+</li><li><a href="lang_def.html#_84_characterstringsandindividualcharacters">Hexadecimal string</a> formats. Use <tt>\x</tt> to embed any byte value into a standard string, or create an entire hexadecimal byte string using  <tt>x" ... "</tt>
+</li><li>Function results can now be ignored.
+</li><li>Optional list terminator. The final item in a list can be the dollar symbol (<tt>$</tt>). This is just a place holder for the <em>end-of-list</em>, making it easier to add and delete items from the source code without having to adjust the commas.
+</li><li><a href="lang_decl.html#_119_enum">Enumerated values/types</a> (<tt>enum</tt>, <tt>enum type</tt>)
+</li><li>Built-in <tt>eu:</tt> <a href="lang_decl.html#namespace">namespace</a>
+</li><li>Declare variable anywhere, not just at the top of a routine.
+</li><li>Scoped variables (declared inside an <tt>if</tt> for example)
+</li><li>Assign on declaration. You can now declare a variable and assign it an initial value on the same statement.
+</li><li>The <tt><a href="lang_decl.html#_128_object">object</a>()</tt> built-in function can now be used to safely test if a variable has been initialized or not.
+</li><li>Forward referencing. You no longer need to lexically declare a routine before using it.
+</li><li>Additional loop constructs ...<ul><li><tt><a href="syntax.html#_223_loop">loop</a></tt>/<tt><a href="lang_loop.html#_161_loopuntilstatement">until</a></tt>
+</li><li>You can <a href="lang_flow.html#_173_headerlabels">label</a> a loop
+</li><li><tt>while X with <a href="lang_flow.html#entry">entry</a></tt>
+</li><li><tt><a href="syntax.html#_215_exit">exit</a></tt>, <tt><a href="syntax.html#_211_continue">continue</a></tt>, <tt><a href="syntax.html#_213_retry">retry</a></tt>. All with an optional <tt>"label"</tt>
+</li><li><tt><a href="lang_flow.html#_172_gotostatement">goto</a></tt>
+</li></ul>
+</li><li>Additional conditional constructs<ul><li><tt>switch</tt> statement with or without <tt><a href="syntax.html#_217_fallthru">fallthru</a></tt>
+</li><li>You can <a href="lang_flow.html#_173_headerlabels">label</a> an <tt>if</tt> or <tt>switch</tt>
+</li><li><tt>break</tt> keyword allows exiting from <tt><a href="syntax.html#_203_if">if</a></tt> / <tt><a href="syntax.html#_207_switch">switch</a></tt> blocks
+</li></ul>
+</li><li>Default/optional parameters for routines
+</li><li>Additional scope modifiers<ul><li><tt><a href="lang_decl.html#_134_thevisibilityofpublicandexportidentifiers">export</a></tt>
+</li><li><tt><a href="lang_decl.html#_134_thevisibilityofpublicandexportidentifiers">public</a></tt> (<tt>public include</tt>)
+</li><li><tt><a href="lang_decl.html#override">override</a></tt>
+</li></ul>
+</li><li>Built in <a href="std_socket.html#_4739_coresockets">sockets</a>
+</li><li>Built in <a href="std_regex.html#_3079_regularexpressions">Regular Expressions</a>
+</li><li>Resource clean up that can be triggered manually, or when an object's reference count goes to zero
+</li><li>Automatic inlining of small routines, <a href="lang_toplevel.html#_189_withwithoutinline">with / without inline</a>
+</li><li>Built in, optimized sequence operations (<tt><a href="std_sequence.html#_2715_remove">remove</a></tt>, <tt><a href="std_sequence.html#_2624_insert">insert</a></tt>, <tt><a href="std_sequence.html#_2632_splice">splice</a></tt>,  <tt><a href="std_sequence.html#_2760_replace">replace</a></tt>, <tt><a href="std_sequence.html#_2672_head">head</a></tt>, <tt><a href="std_sequence.html#_2680_tail">tail</a></tt>)
+</li><li>Built in peek and poke 2 byte values, 1 byte signed values, peek null terminated strings,  <tt><a href="std_machine.html#_5640_peek">peek</a></tt>, <tt><a href="std_machine.html#_5664_peek2u">peek2</a></tt>, <tt><a href="std_machine.html#_5712_peek_string">peek_string</a></tt>, <tt><a href="std_machine.html#_5727_poke">poke</a></tt> and <tt><a href="std_machine.html#_5735_poke2">poke2</a></tt>
+</li><li>Fine grained control over which, if any, warnings will be generated by Euphoria, <a href="lang_toplevel.html#_185_withwithoutwarning">with / without warning</a>.
+</li></ul>
+<!-- ..\docs\whatsnew4_0.txt -->
+<h3>1.3.4 Tool Additions / Enhancements</h3>
+<a name="_21_tooladditionsenhancements"></a><a name="tooladditionsenhancements"></a><ul><li>General<ul><li><a href="preproc.html#_606_theuserdefinedpreprocessor">User Defined Preprocessor</a>
+</li><li><a href="configuration.html#_46_setuptheeuphoriaconfigurationfileeucfg">Configuration system</a> (eu.cfg)
+</li><li>Version display for all tools
+</li></ul>
+</li><li>Interpreter<ul><li>New test mode, <a href="command_switches.html#_74_commandlineswitches">Command line switches</a>
+</li><li>Batch mode for unattended execution such as a CGI application, <a href="command_switches.html#_74_commandlineswitches">Command line switches</a>
+</li></ul>
+</li><li><a href="e2c.html#_533_euphoriatoctranslator">Translator</a><ul><li>Compiles directly
+</li><li>Can compile in debug mode using the <tt>-debug</tt> argument
+</li><li>Can write a makefile
+</li><li>Can compile/bind a resource file on Windows
+</li><li>Now includes <tt>eudbg.lib</tt>, <tt>eu.a</tt> and <tt>eudbg.a</tt> files in addition to the <tt>eu.lib</tt> file enabling one to link against debug libraries and also use the MinGW compiler directly without having to recompile sources.
+</li></ul>
+</li><li>New independent shrouder
+</li><li>Coverage Analysis
+</li><li>Disassembler
+</li><li><a href="eudist.html#_716_eudistdistributingprograms">EuDist - Distributing Programs</a>
+</li><li><a href="eudoc.html#_689_eudocsourcedocumentationtool">EuDOC - Source Documentation Tool</a>
+</li><li><a href="eutest.html#_674_eutestunittesting">EuTEST - Unit Testing</a>
+</li></ul>
+<p>
+<!-- ..\docs\licensing.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="intro.html"><img src="images/prev.png" /></a></td>
+									<td><a href="eu_intro.html">Up</a></td>
+									<td><a href="licensing.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="intro.html">1.2 Introduction</a>
+									</td>
+									<td width="20%">
+										Up: <a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										<a href="licensing.html">1.4 Licensing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="installation.html">2 Installing Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

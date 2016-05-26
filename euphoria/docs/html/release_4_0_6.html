@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_5.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_1_0.html">9.1 Version 4.1.0 Date TBD</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_5.html">9.3 Version 4.0.5 October 19, 2012</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.6.txt -->
+<h2>9.2 Version 4.0.6 Date TBD</h2>
+<a name="_6652_version406datetbd"></a><a name="version406datetbd"></a>
+<!-- ..\docs\release\4.0.6.txt -->
+<h3>9.2.1 Bug Fixes</h3>
+<a name="_6653_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=872">ticket:872</a> fix documentation error involving <tt><a href="std_math.html#_3730_or_all">or_all</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=880">ticket:880</a> fix documentaiton error involving <tt><a href="std_machine.html#_5735_poke2">poke2</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=708">ticket:708</a> specified that color triples are specified between 0..255 in <tt><a href="std_image.html#_6077_read_bitmap">read_bitmap</a></tt> and <tt><a href="std_image.html#_6084_save_bitmap">save_bitmap</a></tt>.
+</li><li><a class="external" href="/ticket/view.wc?id=801">ticket:801</a> fix translator memory leak for <tt><a href="std_sequence.html#_2624_insert">insert</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=799">ticket:799</a> fix memory leak in <tt><a href="std_io.html#_1541_gets">gets</a></tt> when reading EOF
+</li><li><a class="external" href="/ticket/view.wc?id=819">ticket:819</a> use operating system sleep functions for fractions of seconds to avoid needless CPU utilization
+</li><li><a class="external" href="/ticket/view.wc?id=824">ticket:824</a> fix OpenWatcom installer PCRE directory
+</li><li><a class="external" href="/ticket/view.wc?id=823">ticket:823</a> emit error in translator when user specifies a file for the build directory
+</li><li><a class="external" href="/ticket/view.wc?id=781">ticket:781</a> http_post and http_get now follow redirects
+</li><li><a class="external" href="/ticket/view.wc?id=835">ticket:835</a> translator properly handles sequences passed to <tt>floor</tt>
+</li><li><a class="external" href="/ticket/view.wc?id=830">ticket:830</a> fixed memory leak in <tt><a href="std_sequence.html#_2760_replace">replace</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=847">ticket:847</a> fixed memory leak in <tt><a href="std_sequence.html#_2715_remove">remove</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=837">ticket:837</a> fixed documentation error involving <tt><a href="std_map.html#_4552_load_map">load_map</a></tt>
+</li><li>Fix std/sequence.e so store() will correctly handle the one-element index case - it was duplicating the entire sequence before.
+</li><li><a class="external" href="/ticket/view.wc?id=638">ticket:638</a> <tt><a href="std_get.html#_2298_value">value</a></tt> and <tt><a href="std_get.html#_2290_get">get</a></tt> handle multi-line strings
+</li><li><a class="external" href="/ticket/view.wc?id=836">ticket:836</a> <tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a></tt> works when path is not on the current drive on Windows
+</li><li><a class="external" href="/ticket/view.wc?id=630">ticket:630</a> shrouder ignores binder options that are not applicable
+</li><li><a class="external" href="/ticket/view.wc?id=776">ticket:776</a> Updated <tt><a href="std_filesys.html#_1215_walk_dir">walk_dir</a></tt> parameter documentation
+</li><li>functions imported from msvcrt.dll should use cdecl (affects <tt><a href="std_datetime.html#_1053_now_gmt">now_gmt</a></tt>, <tt><a href="std_locale.html#localeget">locale:get</a></tt>,  <tt><a href="std_locale.html#localeset">locale:set</a></tt> and <tt><a href="std_locale.html#localedatetime">locale:datetime</a></tt>)
+</li><li><a class="external" href="/ticket/view.wc?id=882">ticket:882</a> Translated <tt><a href="std_sequence.html#_2715_remove">remove</a></tt> works correctly with empty sequence
+</li><li><a class="external" href="/ticket/view.wc?id=885">ticket:885</a> Translated <tt><a href="std_sequence.html#_2632_splice">splice</a></tt> properly counts references when splicing an atom
+</li><li><a class="external" href="/ticket/view.wc?id=898">ticket:898</a> fix <tt><a href="std_os.html#_1745_uname">uname</a></tt> to report Windows 8 correctly
+</li></ul>
+<!-- ..\docs\release\4.0.6.txt -->
+<h3>9.2.2 Enhancements</h3>
+<a name="_6654_enhancements"></a><a name="enhancements"></a><ul><li>command line help is now sorted by option
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.5.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_5.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_1_0.html">9.1 Version 4.1.0 Date TBD</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_5.html">9.3 Version 4.0.5 October 19, 2012</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

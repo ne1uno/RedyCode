@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="distributing.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="distributing.html">3.4 Distributing a Program</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h2>3.5 Command Line Switches</h2>
+<a name="_74_commandlineswitches"></a><a name="commandlineswitches"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="command_switches.html#_74_commandlineswitches">3.5 Command Line Switches</a></div>
+<div class="toc_3"><a href="command_switches.html#_77_furthernotes">3.5.1 Further Notes</a></div>
+</div>
+</div>
+</div>
+<p> You can launch Euphoria with some extra command line switches, in order to add or change configuration elements. When running a GUI, there is always some way to open a prompt and enter any text with options, arguments and whatever the program being launched may need for proper, expected operation. Under <em>Windows</em>, this is achieved by clicking the <tt>Start</tt> button and selecting <tt>Run...</tt>, or hitting <tt>Windows-R</tt>.</p>
+
+<p> Command line switches may be changed or added, one at a time.</p>
+
+<p> In the table below, <tt>(all)</tt> indicates that the given switch applies to the Interpreter, Translator and Binder. Use of <tt>(interpreter)</tt>, <tt>(translator)</tt> and/or <tt>(binder)</tt> indicates that the referenced switch applies only to that execution mode.</p>
+
+<p> 
+<a name="batch_command_line"></a><a name="command_line"></a> <dl>
+<dt><tt>-BATCH</tt> (all)
+</dt>
+<dd>Executes the program but if any error occurs, the "Press Enter" prompt is   not presented. The exit code will be set to 1 on error, 0 on success. This   option can also be set via the <a href="lang_toplevel.html#with_batch">with batch</a> directive.</dd>
+</dl>
+<dl>
+<dt><tt>-COM dir</tt> (translator)
+</dt>
+<dd></dd>
+<dt>Specifies the include directory for the C compiler once EUPHORIA code is translated.
+</dt>
+<dd></dd>
+<dt>This should be set such that dir/include/euphoria.h exists.
+</dt>
+<dd></dd>
+</dl>
+<dl>
+<dt><tt>-COPYRIGHT</tt> (all)
+</dt>
+<dd>Displays the copyright banner for euphoria.</dd>
+</dl>
+
+<a name="eucfg"></a> <dl>
+<dt><tt>-C config_file</tt> (all)
+</dt>
+<dd>Specifies either a file name or the path for where the default file called   eu.cfg exists. The configuration file which holds a set of additional   command line switches. See Also <a href="configuration.html#_47_configurationfileformat">Configuration file format</a></dd>
+</dl>
+<dl>
+<dt><tt>-CON</tt> (translator)
+</dt>
+<dd>Windows only.  Specifies that the translated program should be a console   application.  The default is to build a windowed application.</dd>
+</dl>
+<dl>
+<dt><tt>-D word</tt> (all)
+</dt>
+<dd>Defines a word as being set. Words are processed by the <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a>.   Words can also be defined via the <a href="lang_toplevel.html#_187_withwithoutdefine">with / without define</a> directive.</dd>
+</dl>
+<dl>
+<dt><tt>-DEBUG</tt> (translator)
+</dt>
+<dd>Enable debug mode for the generated code.</dd>
+</dl>
+<dl>
+<dt><tt></tt> (interpreter)
+</dt>
+<dd>An external debugger translated into a .DLL or .so library to be used instead   of the built-in debugger.</dd>
+</dl>
+<dl>
+<dt><tt>-DLL, -SO</tt> (translator)
+</dt>
+<dd>Compiles and links the translated euphoria code into a DLL, SO or DYLIB (depending on the platform).</dd>
+</dl>
+<dl>
+<dt><tt>-EUDIR dir</tt> (all)
+</dt>
+<dd>This overrides the environment variable EUDIR.</dd>
+</dl>
+<dl>
+<dt><tt>-H, </tt> (all)
+</dt>
+<dd>Displays the list of available command line options.</dd>
+</dl>
+<dl>
+<dt><tt>-I include_path</tt> (all)
+</dt>
+<dd>Specifies an extra include path.</dd>
+</dl>
+<dl>
+<dt><tt>-LIB file</tt> (translator)
+</dt>
+<dd>Specifies the run-time library to use when translating euphoria programs.</dd>
+</dl>
+<dl>
+<dt><tt>-LIB-PIC file</tt> (translator)
+</dt>
+<dd>Specifies the run-time library to use when translating euphoria programs as   shared objects.  The library should be built using the -fPIC (position independent   code) flag.  This is meant to be used in a eu.cfg file to be able to specify both   a non-PIC (using the -lib option) and a PIC option in the same eu.cfg file.</dd>
+</dl>
+<dl>
+<dt><tt>-PLAT word</tt> (translator)
+</dt>
+<dd>Specify the target platform for translation.  This allows euphoria code to   be translated for any supported platform from any other supported platform.   Supported platforms: FREEBSD, LINUX, NETBSD, OPENBSD, OSX, WINDOWS</dd>
+</dl>
+<dl>
+<dt><tt>-STRICT</tt> (all)
+</dt>
+<dd>This turns on all warnings, overriding any with/without warning statement   found in the source. This option can also be set via the   <a href="lang_toplevel.html#_185_withwithoutwarning">with/without warning</a> directive.</dd>
+</dl>
+<dl>
+<dt><tt>-TEST</tt> (all)
+</dt>
+<dd>Parses the code only and issues any warnings or errors to <tt>STDOUT</tt>. On   error the exit code will be 1, otherwise 0. If an error was found, the   normal "Press Enter" prompt will not be presented when using the <tt>-TEST</tt>   parameter which enables many editor/IDE programs to test the syntax of your   Euphoria source in real time.</dd>
+</dl>
+<dl>
+<dt><tt>-TRACE-LINES n</tt> (all)
+</dt>
+<dd>Changes the number of lines that will be used in ctrace.out for lines traced   under <tt>trace(3)</tt>.  The default is 500.</dd>
+</dl>
+<dl>
+<dt><tt>-VERSION</tt> (all)
+</dt>
+<dd>Displays the version of euphoria that is running.</dd>
+</dl>
+<dl>
+<dt><tt>-W warning_name</tt> (all)
+</dt>
+<dd>Resets, or adds to, the current list of warnings that may be emitted. The list of known names is to be found in the subsection <a href="lang_toplevel.html#_185_withwithoutwarning">with/without warning</a>. A name should appear without quotes.   If the <tt>warning_name</tt> begins with a plus symbol '<tt>+</tt>', this warning is   added to the current   set of warnings checked for, otherwise the first usage resets the list   to the warning being introduced, and each subsequent <tt>-W</tt> warning_name adds   to the list.</dd>
+</dl>
+<dl>
+<dt><tt>-WF file_name</tt> (all)
+</dt>
+<dd>Sets the file where the warnings should go instead of the standard error. Warnings are written to that file regardless of whether or not there are errors in the source. If there are no warnings, the <tt>-wf</tt> file is not created. If the <tt>-wf</tt> file cannot be created, a suitable message  is displayed on STDERR and written to <tt>ex.err</tt>.</dd>
+</dl>
+ <dl>
+<dt><tt>-X</tt>;
+</dt>
+<dd>Resets, or adds to, the list of warnings that will not be issued. This is opposite of the <tt>-W</tt> switch.</dd>
+</dl>
+The case of the switches is ignored, so <tt>-I</tt> and <tt>-i</tt> are equivalent.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.5.1 Further Notes</h3>
+<a name="_77_furthernotes"></a><a name="furthernotes"></a><ul><li>Included files are searched for in all included paths, in the following order:<ol><li>The current path
+</li><li>Paths specified in a <tt>-I</tt> command line switch, which can also come from any configuration files found.
+</li><li>Paths listed in the <tt>EUINC</tt> environment variable, in the order in which they appear
+</li><li>Paths listed in the <tt>EUDIR</tt> environment variable, in the order in which they appear
+</li><li>The interpreter's path
+</li></ol>
+</li></ul>
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="distributing.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="distributing.html">3.4 Distributing a Program</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_task.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_utils.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_task.html">8.10 Multi-Tasking</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_utils.html">8.12 Utilities</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\types.e -->
+<h2>8.11 Types - Extended</h2>
+<a name="_1950_typesextended"></a><a name="typesextended"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_types.html#_1950_typesextended">8.11 Types - Extended</a></div>
+<div class="toc_4"><a href="std_types.html#_1952_obj_unassigned">8.11.0.1 OBJ_UNASSIGNED</a></div>
+<div class="toc_4"><a href="std_types.html#_1954_obj_integer">8.11.0.2 OBJ_INTEGER</a></div>
+<div class="toc_4"><a href="std_types.html#_1956_obj_atom">8.11.0.3 OBJ_ATOM</a></div>
+<div class="toc_4"><a href="std_types.html#_1958_obj_sequence">8.11.0.4 OBJ_SEQUENCE</a></div>
+<div class="toc_4"><a href="std_types.html#_1960_object">8.11.0.5 object</a></div>
+<div class="toc_4"><a href="std_types.html#_1965_integer">8.11.0.6 integer</a></div>
+<div class="toc_4"><a href="std_types.html#_1970_atom">8.11.0.7 atom</a></div>
+<div class="toc_4"><a href="std_types.html#_1975_sequence">8.11.0.8 sequence</a></div>
+<div class="toc_4"><a href="std_types.html#_1980_false">8.11.0.9 FALSE</a></div>
+<div class="toc_4"><a href="std_types.html#_1982_true">8.11.0.10 TRUE</a></div>
+<div class="toc_3"><a href="std_types.html#_1983_predefinedcharactersets">8.11.1 Predefined Character Sets</a></div>
+<div class="toc_4"><a href="std_types.html#_1985_cs_first">8.11.1.1 CS_FIRST</a></div>
+<div class="toc_4"><a href="std_types.html#_1987_cs_consonant">8.11.1.2 CS_Consonant</a></div>
+<div class="toc_4"><a href="std_types.html#_1989_cs_vowel">8.11.1.3 CS_Vowel</a></div>
+<div class="toc_4"><a href="std_types.html#_1991_cs_hexadecimal">8.11.1.4 CS_Hexadecimal</a></div>
+<div class="toc_4"><a href="std_types.html#_1993_cs_whitespace">8.11.1.5 CS_Whitespace</a></div>
+<div class="toc_4"><a href="std_types.html#_1995_cs_punctuation">8.11.1.6 CS_Punctuation</a></div>
+<div class="toc_4"><a href="std_types.html#_1997_cs_printable">8.11.1.7 CS_Printable</a></div>
+<div class="toc_4"><a href="std_types.html#_1999_cs_displayable">8.11.1.8 CS_Displayable</a></div>
+<div class="toc_4"><a href="std_types.html#_2001_cs_lowercase">8.11.1.9 CS_Lowercase</a></div>
+<div class="toc_4"><a href="std_types.html#_2003_cs_uppercase">8.11.1.10 CS_Uppercase</a></div>
+<div class="toc_4"><a href="std_types.html#_2005_cs_alphanumeric">8.11.1.11 CS_Alphanumeric</a></div>
+<div class="toc_4"><a href="std_types.html#_2007_cs_identifier">8.11.1.12 CS_Identifier</a></div>
+<div class="toc_4"><a href="std_types.html#_2009_cs_alphabetic">8.11.1.13 CS_Alphabetic</a></div>
+<div class="toc_4"><a href="std_types.html#_2011_cs_ascii">8.11.1.14 CS_ASCII</a></div>
+<div class="toc_4"><a href="std_types.html#_2013_cs_control">8.11.1.15 CS_Control</a></div>
+<div class="toc_4"><a href="std_types.html#_2015_cs_digit">8.11.1.16 CS_Digit</a></div>
+<div class="toc_4"><a href="std_types.html#_2017_cs_graphic">8.11.1.17 CS_Graphic</a></div>
+<div class="toc_4"><a href="std_types.html#_2019_cs_bytes">8.11.1.18 CS_Bytes</a></div>
+<div class="toc_4"><a href="std_types.html#_2021_cs_specword">8.11.1.19 CS_SpecWord</a></div>
+<div class="toc_4"><a href="std_types.html#_2023_cs_boolean">8.11.1.20 CS_Boolean</a></div>
+<div class="toc_4"><a href="std_types.html#_2025_cs_last">8.11.1.21 CS_LAST</a></div>
+<div class="toc_3"><a href="std_types.html#_2026_supportfunctions">8.11.2 Support Functions</a></div>
+<div class="toc_4"><a href="std_types.html#_2028_char_test">8.11.2.1 char_test</a></div>
+<div class="toc_4"><a href="std_types.html#_2034_set_default_charsets">8.11.2.2 set_default_charsets</a></div>
+<div class="toc_4"><a href="std_types.html#_2037_get_charsets">8.11.2.3 get_charsets</a></div>
+<div class="toc_4"><a href="std_types.html#_2043_set_charsets">8.11.2.4 set_charsets</a></div>
+<div class="toc_3"><a href="std_types.html#_2048_types">8.11.3 Types</a></div>
+<div class="toc_4"><a href="std_types.html#_2050_boolean">8.11.3.1 boolean</a></div>
+<div class="toc_4"><a href="std_types.html#_2054_t_boolean">8.11.3.2 t_boolean</a></div>
+<div class="toc_4"><a href="std_types.html#_2058_t_alnum">8.11.3.3 t_alnum</a></div>
+<div class="toc_4"><a href="std_types.html#_2062_t_identifier">8.11.3.4 t_identifier</a></div>
+<div class="toc_4"><a href="std_types.html#_2066_t_alpha">8.11.3.5 t_alpha</a></div>
+<div class="toc_4"><a href="std_types.html#_2070_t_ascii">8.11.3.6 t_ascii</a></div>
+<div class="toc_4"><a href="std_types.html#_2074_t_cntrl">8.11.3.7 t_cntrl</a></div>
+<div class="toc_4"><a href="std_types.html#_2078_t_digit">8.11.3.8 t_digit</a></div>
+<div class="toc_4"><a href="std_types.html#_2082_t_graph">8.11.3.9 t_graph</a></div>
+<div class="toc_4"><a href="std_types.html#_2086_t_specword">8.11.3.10 t_specword</a></div>
+<div class="toc_4"><a href="std_types.html#_2091_t_bytearray">8.11.3.11 t_bytearray</a></div>
+<div class="toc_4"><a href="std_types.html#_2095_t_lower">8.11.3.12 t_lower</a></div>
+<div class="toc_4"><a href="std_types.html#_2099_t_print">8.11.3.13 t_print</a></div>
+<div class="toc_4"><a href="std_types.html#_2103_t_display">8.11.3.14 t_display</a></div>
+<div class="toc_4"><a href="std_types.html#_2107_t_punct">8.11.3.15 t_punct</a></div>
+<div class="toc_4"><a href="std_types.html#_2111_t_space">8.11.3.16 t_space</a></div>
+<div class="toc_4"><a href="std_types.html#_2115_t_upper">8.11.3.17 t_upper</a></div>
+<div class="toc_4"><a href="std_types.html#_2119_t_xdigit">8.11.3.18 t_xdigit</a></div>
+<div class="toc_4"><a href="std_types.html#_2123_t_vowel">8.11.3.19 t_vowel</a></div>
+<div class="toc_4"><a href="std_types.html#_2127_t_consonant">8.11.3.20 t_consonant</a></div>
+<div class="toc_4"><a href="std_types.html#_2131_integer_array">8.11.3.21 integer_array</a></div>
+<div class="toc_4"><a href="std_types.html#_2135_t_text">8.11.3.22 t_text</a></div>
+<div class="toc_4"><a href="std_types.html#_2140_number_array">8.11.3.23 number_array</a></div>
+<div class="toc_4"><a href="std_types.html#_2144_sequence_array">8.11.3.24 sequence_array</a></div>
+<div class="toc_4"><a href="std_types.html#_2148_ascii_string">8.11.3.25 ascii_string</a></div>
+<div class="toc_4"><a href="std_types.html#_2153_string">8.11.3.26 string</a></div>
+<div class="toc_4"><a href="std_types.html#_2158_cstring">8.11.3.27 cstring</a></div>
+<div class="toc_4"><a href="std_types.html#_2163_invalid_routine_id">8.11.3.28 INVALID_ROUTINE_ID</a></div>
+<div class="toc_4"><a href="std_types.html#_2165_no_routine_id">8.11.3.29 NO_ROUTINE_ID</a></div>
+<div class="toc_4"><a href="std_types.html#_2167_t_integer32">8.11.3.30 t_integer32</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="typesobj_unassigned"></a><a name="unassigned"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.1 OBJ_UNASSIGNED</h4>
+<a name="_1952_obj_unassigned"></a><a name="obj_unassigned"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">OBJ_UNASSIGNED</font>
+</pre>
+
+<p>   Object not assigned</p>
+
+<p> 
+<a name="typesobj_integer"></a><a name="integer"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.2 OBJ_INTEGER</h4>
+<a name="_1954_obj_integer"></a><a name="obj_integer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">OBJ_INTEGER</font>
+</pre>
+
+<p>   Object is integer</p>
+
+<p> 
+<a name="typesobj_atom"></a><a name="atom"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.3 OBJ_ATOM</h4>
+<a name="_1956_obj_atom"></a><a name="obj_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">OBJ_ATOM</font>
+</pre>
+
+<p>   Object is atom</p>
+
+<p> 
+<a name="typesobj_sequence"></a><a name="sequence"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.4 OBJ_SEQUENCE</h4>
+<a name="_1958_obj_sequence"></a><a name="obj_sequence"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">OBJ_SEQUENCE</font>
+</pre>
+
+<p>   Object is sequence</p>
+
+<p> 
+<a name="euobject"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.5 object</h4>
+<a name="_1960_object"></a><a name="object"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">type object</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> returns information about the object type of the supplied argument <tt>x</tt>.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_1961_returns"></a><a name="returns"></a><ol><li>An <strong>integer</strong>,<ul><li><tt>OBJ_UNASSIGNED</tt> if <tt>x</tt> has not been assigned anything yet.
+</li><li><tt>OBJ_INTEGER</tt> if <tt>x</tt> holds an integer value.
+</li><li><tt>OBJ_ATOM</tt> if <tt>x</tt> holds a number that is not an integer.
+</li><li><tt>OBJ_SEQUENCE</tt> if <tt>x</tt> holds a sequence value.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_1962_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">object</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">--&gt; OBJ_INTEGER</font>
+<font color="#330033">? </font><font color="#0000FF">object</font><font color="#880033">(</font><font color="#330033">1.1</font><font color="#880033">) </font><font color="#FF0055">--&gt; OBJ_ATOM</font>
+<font color="#330033">? </font><font color="#0000FF">object</font><font color="#880033">(</font><font color="#330033">"1"</font><font color="#880033">) </font><font color="#FF0055">--&gt; OBJ_SEQUENCE</font>
+<font color="#0000FF">object </font><font color="#330033">x</font>
+<font color="#330033">? </font><font color="#0000FF">object</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">) </font><font color="#FF0055">--&gt; OBJ_UNASSIGNED</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_1963_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_1975_sequence">sequence</a>, <a href="std_types.html#_1965_integer">integer</a>, <a href="std_types.html#_1970_atom">atom</a></p>
+
+<p> 
+<a name="euinteger"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.6 integer</h4>
+<a name="_1965_integer"></a><a name="integer"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">type integer</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> tests the supplied argument <tt>x</tt> to see if it is an integer or not.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_1966_returns"></a><a name="returns"></a><ol><li>An <strong>integer</strong>.<ul><li>1 if <tt>x</tt> is an integer.
+</li><li>0 if <tt>x</tt> is not an integer.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_1967_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">integer</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? </font><font color="#0000FF">integer</font><font color="#880033">(</font><font color="#330033">1.1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? </font><font color="#0000FF">integer</font><font color="#880033">(</font><font color="#330033">"1"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_1968_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_1975_sequence">sequence</a>, <a href="std_types.html#_1960_object">object</a>, <a href="std_types.html#_1970_atom">atom</a></p>
+
+<p> 
+<a name="euatom"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.7 atom</h4>
+<a name="_1970_atom"></a><a name="atom"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">type atom</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> tests the supplied argument <tt>x</tt> to see if it is an atom or not.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_1971_returns"></a><a name="returns"></a><ol><li>An <strong>integer</strong>,<ul><li>1 if <tt>x</tt> is an atom.
+</li><li>0 if <tt>x</tt> is not an atom.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_1972_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">atom</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? </font><font color="#0000FF">atom</font><font color="#880033">(</font><font color="#330033">1.1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? </font><font color="#0000FF">atom</font><font color="#880033">(</font><font color="#330033">"1"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_1973_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_1975_sequence">sequence</a>, <a href="std_types.html#_1960_object">object</a>, <a href="std_types.html#_1965_integer">integer</a></p>
+
+<p> 
+<a name="eusequence"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.8 sequence</h4>
+<a name="_1975_sequence"></a><a name="sequence"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">type sequence</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> tests the supplied argument <tt>x</tt> to see if it is a sequence or not.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_1976_returns"></a><a name="returns"></a><ol><li>An <ul><li>1 if <tt>x</tt> is a sequence.
+</li><li>0 if <tt>x</tt> is not an sequence.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_1977_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#0000FF">sequence</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? </font><font color="#0000FF">sequence</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? </font><font color="#0000FF">sequence</font><font color="#880033">(</font><font color="#330033">"1"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_1978_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_1965_integer">integer</a>, <a href="std_types.html#_1960_object">object</a>, <a href="std_types.html#_1970_atom">atom</a></p>
+
+<p> 
+<a name="typesfalse"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.9 FALSE</h4>
+<a name="_1980_false"></a><a name="false"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">FALSE</font>
+</pre>
+
+<p>   Boolean FALSE value</p>
+
+<p> 
+<a name="typestrue"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.0.10 TRUE</h4>
+<a name="_1982_true"></a><a name="true"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">TRUE</font>
+</pre>
+
+<p>   Boolean TRUE value</p>
+
+<!-- ..\include\std\types.e -->
+<h3>8.11.1 Predefined Character Sets</h3>
+<a name="_1983_predefinedcharactersets"></a><a name="predefinedcharactersets"></a>
+<p> 
+<a name="typescs_first"></a><a name="first"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.1 CS_FIRST</h4>
+<a name="_1985_cs_first"></a><a name="cs_first"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_FIRST</font>
+</pre>
+
+<p> 
+<a name="typescs_consonant"></a><a name="consonant"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.2 CS_Consonant</h4>
+<a name="_1987_cs_consonant"></a><a name="cs_consonant"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Consonant</font>
+</pre>
+
+<p> 
+<a name="typescs_vowel"></a><a name="vowel"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.3 CS_Vowel</h4>
+<a name="_1989_cs_vowel"></a><a name="cs_vowel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Vowel</font>
+</pre>
+
+<p> 
+<a name="typescs_hexadecimal"></a><a name="hexadecimal"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.4 CS_Hexadecimal</h4>
+<a name="_1991_cs_hexadecimal"></a><a name="cs_hexadecimal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Hexadecimal</font>
+</pre>
+
+<p> 
+<a name="typescs_whitespace"></a><a name="whitespace"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.5 CS_Whitespace</h4>
+<a name="_1993_cs_whitespace"></a><a name="cs_whitespace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Whitespace</font>
+</pre>
+
+<p> 
+<a name="typescs_punctuation"></a><a name="punctuation"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.6 CS_Punctuation</h4>
+<a name="_1995_cs_punctuation"></a><a name="cs_punctuation"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Punctuation</font>
+</pre>
+
+<p> 
+<a name="typescs_printable"></a><a name="printable"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.7 CS_Printable</h4>
+<a name="_1997_cs_printable"></a><a name="cs_printable"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Printable</font>
+</pre>
+
+<p> 
+<a name="typescs_displayable"></a><a name="displayable"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.8 CS_Displayable</h4>
+<a name="_1999_cs_displayable"></a><a name="cs_displayable"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Displayable</font>
+</pre>
+
+<p> 
+<a name="typescs_lowercase"></a><a name="lowercase"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.9 CS_Lowercase</h4>
+<a name="_2001_cs_lowercase"></a><a name="cs_lowercase"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Lowercase</font>
+</pre>
+
+<p> 
+<a name="typescs_uppercase"></a><a name="uppercase"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.10 CS_Uppercase</h4>
+<a name="_2003_cs_uppercase"></a><a name="cs_uppercase"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Uppercase</font>
+</pre>
+
+<p> 
+<a name="typescs_alphanumeric"></a><a name="alphanumeric"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.11 CS_Alphanumeric</h4>
+<a name="_2005_cs_alphanumeric"></a><a name="cs_alphanumeric"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Alphanumeric</font>
+</pre>
+
+<p> 
+<a name="typescs_identifier"></a><a name="identifier"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.12 CS_Identifier</h4>
+<a name="_2007_cs_identifier"></a><a name="cs_identifier"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Identifier</font>
+</pre>
+
+<p> 
+<a name="typescs_alphabetic"></a><a name="alphabetic"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.13 CS_Alphabetic</h4>
+<a name="_2009_cs_alphabetic"></a><a name="cs_alphabetic"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Alphabetic</font>
+</pre>
+
+<p> 
+<a name="typescs_ascii"></a><a name="ascii"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.14 CS_ASCII</h4>
+<a name="_2011_cs_ascii"></a><a name="cs_ascii"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_ASCII</font>
+</pre>
+
+<p> 
+<a name="typescs_control"></a><a name="control"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.15 CS_Control</h4>
+<a name="_2013_cs_control"></a><a name="cs_control"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Control</font>
+</pre>
+
+<p> 
+<a name="typescs_digit"></a><a name="digit"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.16 CS_Digit</h4>
+<a name="_2015_cs_digit"></a><a name="cs_digit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Digit</font>
+</pre>
+
+<p> 
+<a name="typescs_graphic"></a><a name="graphic"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.17 CS_Graphic</h4>
+<a name="_2017_cs_graphic"></a><a name="cs_graphic"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Graphic</font>
+</pre>
+
+<p> 
+<a name="typescs_bytes"></a><a name="bytes"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.18 CS_Bytes</h4>
+<a name="_2019_cs_bytes"></a><a name="cs_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Bytes</font>
+</pre>
+
+<p> 
+<a name="typescs_specword"></a><a name="specword"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.19 CS_SpecWord</h4>
+<a name="_2021_cs_specword"></a><a name="cs_specword"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_SpecWord</font>
+</pre>
+
+<p> 
+<a name="typescs_boolean"></a><a name="boolean"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.20 CS_Boolean</h4>
+<a name="_2023_cs_boolean"></a><a name="cs_boolean"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_Boolean</font>
+</pre>
+
+<p> 
+<a name="typescs_last"></a><a name="last"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.1.21 CS_LAST</h4>
+<a name="_2025_cs_last"></a><a name="cs_last"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public enum </font><font color="#330033">CS_LAST</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h3>8.11.2 Support Functions</h3>
+<a name="_2026_supportfunctions"></a><a name="supportfunctions"></a>
+<p> 
+<a name="typeschar_test"></a><a name="test"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.2.1 char_test</h4>
+<a name="_2028_char_test"></a><a name="char_test"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public function </font><font color="#330033">char_test</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data, </font><font color="#0000FF">sequence </font><font color="#330033">char_set</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines whether one or more characters are in a given character set.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Parameters:</h5>
+<a name="_2029_parameters"></a><a name="parameters"></a><ol><li><tt>test_data</tt> : an object to test, either a character or a string
+</li><li><tt>char_set</tt> : a sequence, either a list of allowable characters, or a list of pairs representing allowable ranges.
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2030_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if all characters are allowed, else 0.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2031_comments"></a><a name="comments"></a>
+<p> <tt>pCharset</tt> is either a simple sequence of characters (such as <tt>"qwertyuiop[]\"</tt>) or a sequence of character pairs, which represent allowable ranges of characters. For example  Alphabetic is defined as <tt><img src="'a','z'}," alt="{'A', 'Z'" caption="{'A', 'Z'" /></tt>.</p>
+
+<p> To add an isolated character to a character set which is defined using ranges, present it as a range of length 1, like in <tt>{%,%}</tt>.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2032_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">char_test</font><font color="#880033">(</font><font color="#330033">"ABCD"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">'A'</font><font color="#330033">, </font><font color="#330033">'D'</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- TRUE, every char is in the range 'A' to 'D'</font>
+
+<font color="#330033">char_test</font><font color="#880033">(</font><font color="#330033">"ABCD"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">'A'</font><font color="#330033">, </font><font color="#330033">'C'</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- FALSE, not every char is in the range 'A' to 'C'</font>
+
+<font color="#330033">char_test</font><font color="#880033">(</font><font color="#330033">"Harry"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">'z'</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">'D'</font><font color="#330033">, </font><font color="#330033">'J'</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- TRUE, every char is either in the range 'a' to 'z', </font>
+<font color="#FF0055">--       or in the range 'D' to 'J'</font>
+
+<font color="#330033">char_test</font><font color="#880033">(</font><font color="#330033">"Potter"</font><font color="#330033">, </font><font color="#330033">"novel"</font><font color="#880033">)</font>
+<font color="#FF0055">-- FALSE, not every character is in the set 'n', 'o', 'v', 'e', 'l'</font>
+</pre>
+
+<p> 
+<a name="typesset_default_charsets"></a><a name="default_charsets"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.2.2 set_default_charsets</h4>
+<a name="_2034_set_default_charsets"></a><a name="set_default_charsets"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_default_charsets</font><font color="#880033">()</font>
+</pre>
+
+<p>   sets all the defined character sets to their default definitions.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2035_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_default_charsets</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="typesget_charsets"></a><a name="charsets"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.2.3 get_charsets</h4>
+<a name="_2037_get_charsets"></a><a name="get_charsets"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public function </font><font color="#330033">get_charsets</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the definition for each of the defined character sets.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2038_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of pairs. The first element of each pair is the character set id ( such as <tt>CS_Whitespace</tt> ) and the second is the definition of that character set.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2039_comments"></a><a name="comments"></a>
+<p> This is the same format required for the <a href="std_types.html#_2043_set_charsets">set_charsets</a> routine.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2040_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">sets</font>
+<font color="#330033">sets = get_charsets</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_2041_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_2043_set_charsets">set_charsets</a>, <a href="std_types.html#_2034_set_default_charsets">set_default_charsets</a></p>
+
+<p> 
+<a name="typesset_charsets"></a><a name="charsets"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.2.4 set_charsets</h4>
+<a name="_2043_set_charsets"></a><a name="set_charsets"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_charsets</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">charset_list</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the definition for one or more defined character sets.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Parameters:</h5>
+<a name="_2044_parameters"></a><a name="parameters"></a><ol><li><tt>charset_list</tt> : a sequence of zero or more character set definitions.
+</li></ol>
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2045_comments"></a><a name="comments"></a>
+<p> <tt>charset_list</tt> must be a sequence of pairs. The first element of each pair is the character set id (such as <tt>CS_Whitespace</tt>) and the second is the definition of that character set.</p>
+
+<p> This is the same format returned by the <a href="std_types.html#_2037_get_charsets">get_charsets</a> routine.</p>
+
+<p> You cannot create new character sets using this routine.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2046_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_charsets</font><font color="#880033">(</font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">CS_Whitespace, </font><font color="#330033">" \t"</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">'\n'</font><font color="#880033">) </font><font color="#FF0055">--&gt; FALSE</font>
+
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'$'</font><font color="#880033">) </font><font color="#FF0055">--&gt; FALSE</font>
+<font color="#330033">set_charsets</font><font color="#880033">(</font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">CS_SpecWord, </font><font color="#330033">"_-#$%"</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'$'</font><font color="#880033">) </font><font color="#FF0055">--&gt; TRUE</font>
+</pre>
+
+<!-- ..\include\std\types.e -->
+<h5>See Also:</h5>
+<a name="_2047_seealso"></a><a name="seealso"></a>
+<p> <a href="std_types.html#_2037_get_charsets">get_charsets</a></p>
+
+<!-- ..\include\std\types.e -->
+<h3>8.11.3 Types</h3>
+<a name="_2048_types"></a><a name="types"></a>
+<p> 
+<a name="typesboolean"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.1 boolean</h4>
+<a name="_2050_boolean"></a><a name="boolean"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">boolean</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   test for an integer boolean.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2051_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is 1 or 0</p>
+
+<p> Returns FALSE if the argument is anything else other than 1 or 0.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2052_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,</font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">)    </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">boolean</font><font color="#993333">(</font><font color="#0000FF">{}</font><font color="#993333">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_boolean"></a><a name="boolean"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.2 t_boolean</h4>
+<a name="_2054_t_boolean"></a><a name="t_boolean"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests elements for boolean.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2055_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is boolean (1 or 0) or if every element of the argument is boolean.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-boolean elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2056_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 1, 0</font><font color="#993333">}</font><font color="#880033">)     </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 1, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_boolean</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_alnum"></a><a name="alnum"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.3 t_alnum</h4>
+<a name="_2058_t_alnum"></a><a name="t_alnum"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for  alphanumeric character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2059_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an alphanumeric character or if every element of the argument is an alphanumeric character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-alphanumeric elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2060_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (every element is alphabetic or a digit)</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_alnum</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_identifier"></a><a name="identifier"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.4 t_identifier</h4>
+<a name="_2062_t_identifier"></a><a name="t_identifier"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests string if it is an valid identifier.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2063_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an alphanumeric character or if every element of the argument is an alphanumeric character and that the first character is not numeric and the whole group of characters are not all numeric.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-alphanumeric elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2064_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (every element is alphabetic or a digit)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">"ab_3"</font><font color="#880033">)        </font><font color="#FF0055">-- TRUE (underscore is allowed)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">"1abc"</font><font color="#880033">)        </font><font color="#FF0055">-- FALSE (identifier cannot start with a number)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#330033">"102"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE (identifier cannot be all numeric)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_identifier</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_alpha"></a><a name="alpha"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.5 t_alpha</h4>
+<a name="_2066_t_alpha"></a><a name="t_alpha"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for alphabetic characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2067_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an alphabetic character or if every element of the argument is an alphabetic character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-alphabetic elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2068_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (every element is alphabetic)</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_alpha</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_ascii"></a><a name="ascii"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.6 t_ascii</h4>
+<a name="_2070_t_ascii"></a><a name="t_ascii"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for ASCII characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2071_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an ASCII character or if every element of the argument is an ASCII character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-ASCII elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2072_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (every element is ascii)</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_ascii</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_cntrl"></a><a name="cntrl"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.7 t_cntrl</h4>
+<a name="_2074_t_cntrl"></a><a name="t_cntrl"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for control characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2075_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an Control character or if every element of the argument is an Control character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-Control elements</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2076_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE (every element is ascii)</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-control)</font>
+<font color="#330033">t_cntrl</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_digit"></a><a name="digit"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.8 t_digit</h4>
+<a name="_2078_t_digit"></a><a name="t_digit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_digit</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for digits.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2079_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an digit character or if every element of the argument is an digit character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-digits</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2080_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_digit</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_graph"></a><a name="graph"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.9 t_graph</h4>
+<a name="_2082_t_graph"></a><a name="t_graph"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_graph</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   test for glyphs (printable) characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2083_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a glyph character or if every element of the argument is a glyph character. (One that is visible when displayed)</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-glyph</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2084_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">' '</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (control chars (1,2) don't have glyphs)</font>
+<font color="#330033">t_graph</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_specword"></a><a name="specword"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.10 t_specword</h4>
+<a name="_2086_t_specword"></a><a name="t_specword"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_specword</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for a special word character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2087_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a special word character or if every element of the argument is a special word character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-special-word characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2088_comments"></a><a name="comments"></a>
+<p> A <em>special word character</em> is any character that is not normally part of a word but in certain cases may be considered. This is most commonly used when looking for words in programming source code which allows an underscore as a word character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2089_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">'_'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (control chars (1,2) don't have glyphs)</font>
+<font color="#330033">t_specword</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_bytearray"></a><a name="bytearray"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.11 t_bytearray</h4>
+<a name="_2091_t_bytearray"></a><a name="t_bytearray"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for bytes.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2092_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a byte or if every element of the argument is a byte. (Integers from 0 to 255)</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-byte</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2093_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (contains value less than zero)</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">10</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)          </font><font color="#FF0055">-- FALSE (greater than 255)</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE (contains a floating number)</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">' '</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_bytearray</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_lower"></a><a name="lower"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.12 t_lower</h4>
+<a name="_2095_t_lower"></a><a name="t_lower"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_lower</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for lowercase characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2096_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a lowercase character or if every element of the argument is an lowercase character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-lowercase</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2097_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_lower</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_print"></a><a name="print"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.13 t_print</h4>
+<a name="_2099_t_print"></a><a name="t_print"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_print</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for ASCII glyph characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2100_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a character that has an ASCII glyph or if every element of the argument is a character that has an ASCII glyph.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains characters that do not have an ASCII glyph.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2101_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">"123 "</font><font color="#880033">)        </font><font color="#FF0055">-- FALSE (contains a space)</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#330033">"123\n"</font><font color="#880033">)       </font><font color="#FF0055">-- FALSE (contains a new-line)</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_print</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_display"></a><a name="display"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.14 t_display</h4>
+<a name="_2103_t_display"></a><a name="t_display"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_display</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for printable characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2104_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a character that can be displayed or if every element of the argument is a character that can be displayed.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains characters that cannot be displayed.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2105_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">"ab3"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">"123 "</font><font color="#880033">)        </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#330033">"123\n"</font><font color="#880033">)       </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_display</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_punct"></a><a name="punct"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.15 t_punct</h4>
+<a name="_2107_t_punct"></a><a name="t_punct"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_punct</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for punctuation characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2108_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an punctuation character or if every element of the argument is an punctuation character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-punctuation symbols.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2109_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">"(-)"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_punct</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_space"></a><a name="space"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.16 t_space</h4>
+<a name="_2111_t_space"></a><a name="t_space"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_space</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for whitespace characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2112_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a whitespace character or if every element of the argument is an whitespace character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-whitespace character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2113_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">'\t'</font><font color="#880033">)          </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_space</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_upper"></a><a name="upper"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.17 t_upper</h4>
+<a name="_2115_t_upper"></a><a name="t_upper"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_upper</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for uppercase characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2116_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an uppercase character or if every element of the argument is an uppercase character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-uppercase characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2117_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">"ABC"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_upper</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_xdigit"></a><a name="xdigit"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.18 t_xdigit</h4>
+<a name="_2119_t_xdigit"></a><a name="t_xdigit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for hexadecimal characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2120_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is an hexadecimal digit character or if every element of the argument is an hexadecimal digit character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-hexadecimal character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2121_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">"fgh"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_xdigit</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_vowel"></a><a name="vowel"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.19 t_vowel</h4>
+<a name="_2123_t_vowel"></a><a name="t_vowel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for vowel characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2124_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a vowel or if every element of the argument is a vowel character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-vowels</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2125_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">"aiu"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_vowel</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typest_consonant"></a><a name="consonant"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.20 t_consonant</h4>
+<a name="_2127_t_consonant"></a><a name="t_consonant"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">test_data</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for consonant characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2128_returns"></a><a name="returns"></a>
+<p> Returns TRUE if argument is a consonant character or if every element of the argument is an consonant character.</p>
+
+<p> Returns FALSE if the argument is an empty sequence, or contains sequences, or contains non-consonant character.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2129_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)             </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">1.234</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">'9'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">'?'</font><font color="#880033">)           </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">"rTfM"</font><font color="#880033">)        </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#330033">"123"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-digit)</font>
+<font color="#330033">t_consonant</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (empty sequence)</font>
+</pre>
+
+<p> 
+<a name="typesinteger_array"></a><a name="array"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.21 integer_array</h4>
+<a name="_2131_integer_array"></a><a name="integer_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">integer_array</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for integer elements.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2132_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more integers.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2133_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">integer_array</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">integer_array</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (all single characters)</font>
+<font color="#330033">integer_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">integer_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">integer_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">integer_array</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typest_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.22 t_text</h4>
+<a name="_2135_t_text"></a><a name="t_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_text</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for text characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2136_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2137_comments"></a><a name="comments"></a>
+<p> A <strong>character</strong> is defined as a positive integer or zero. This is a broad definition that may be refined once proper UNICODE support is implemented.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2138_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">t_text</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (all single characters)</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, -2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE (contains a negative integer)</font>
+<font color="#330033">t_text</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typesnumber_array"></a><a name="array"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.23 number_array</h4>
+<a name="_2140_number_array"></a><a name="number_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">number_array</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for atom elements.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2141_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more numbers.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2142_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">number_array</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">number_array</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (all single characters)</font>
+<font color="#330033">number_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">number_array</font><font color="#880033">(</font><font color="#330033">1, 2, 9.7</font><font color="#880033">}</font><font color="#330033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">number_array(1, 2, </font><font color="#330033">'a'</font><font color="#330033">})    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">number_array({})            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typessequence_array"></a><a name="array"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.24 sequence_array</h4>
+<a name="_2144_sequence_array"></a><a name="sequence_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for sequence with possible nested sequences.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2145_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more sequences.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2146_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- FALSE (all single characters)</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains some atoms)</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"abc"</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">3.4, 99182.78737</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">sequence_array</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typesascii_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.25 ascii_string</h4>
+<a name="_2148_ascii_string"></a><a name="ascii_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for ASCII elements.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2149_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more ASCII characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2150_comments"></a><a name="comments"></a>
+<p> An ASCII 'character' is defined as a integer in the range [0 to 127].</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2151_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)         </font><font color="#FF0055">-- TRUE (all single ASCII characters)</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, -2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE (contains a negative integer)</font>
+<font color="#330033">ascii_string</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typesstring"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.26 string</h4>
+<a name="_2153_string"></a><a name="string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">string</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for a string sequence.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2154_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more byte characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2155_comments"></a><a name="comments"></a>
+<p> A byte 'character' is defined as a integer in the range [0 to 255].</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2156_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">string</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#330033">"abc'6"</font><font color="#880033">)       </font><font color="#FF0055">-- TRUE (all single byte characters)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc'6"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#330033">, 0</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- TRUE (even though it contains a null byte)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, -2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE (contains a negative integer)</font>
+<font color="#330033">string</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typescstring"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.27 cstring</h4>
+<a name="_2158_cstring"></a><a name="cstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">cstring</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for a string sequence (that has no null character).</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2159_returns"></a><a name="returns"></a>
+<p> TRUE if argument is a sequence that only contains zero or more non-null byte characters.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2160_comments"></a><a name="comments"></a>
+<p> A non-null byte 'character' is defined as a integer in the range [1 to 255].</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Example 1:</h5>
+<a name="_2161_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">cstring</font><font color="#880033">(</font><font color="#330033">-1</font><font color="#880033">)            </font><font color="#FF0055">-- FALSE (not a sequence)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#330033">"abc'6"</font><font color="#880033">)       </font><font color="#FF0055">-- TRUE (all single byte characters)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">"abc'6"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a sequence)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 9.7</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- FALSE (contains a non-integer)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)    </font><font color="#FF0055">-- TRUE</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, </font><font color="#330033">'a'</font><font color="#330033">, 0</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- FALSE (contains a null byte)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, -2, </font><font color="#330033">'a'</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- FALSE (contains a negative integer)</font>
+<font color="#330033">cstring</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)            </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> 
+<a name="typesinvalid_routine_id"></a><a name="routine_id"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.28 INVALID_ROUTINE_ID</h4>
+<a name="_2163_invalid_routine_id"></a><a name="invalid_routine_id"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">INVALID_ROUTINE_ID</font>
+</pre>
+
+<p>   Value returned from <a href="std_machine.html#_5855_routine_id">routine_id</a> when the routine does not exist or is out of scope. This is typically seen as -1 in legacy code.</p>
+
+<p> 
+<a name="typesno_routine_id"></a><a name="routine_id"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.29 NO_ROUTINE_ID</h4>
+<a name="_2165_no_routine_id"></a><a name="no_routine_id"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public constant </font><font color="#330033">NO_ROUTINE_ID</font>
+</pre>
+
+<p>   To be used as a flag for no <a href="std_machine.html#_5855_routine_id">routine_id</a> supplied.</p>
+
+<p> 
+<a name="typest_integer32"></a><a name="integer32"></a> </p>
+
+<!-- ..\include\std\types.e -->
+<h4>8.11.3.30 t_integer32</h4>
+<a name="_2167_t_integer32"></a><a name="t_integer32"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/types.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">types</font>
+<font color="#0000FF">public type </font><font color="#330033">t_integer32</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests for Euphoria integer.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Returns:</h5>
+<a name="_2168_returns"></a><a name="returns"></a>
+<p> TRUE if the argument is a valid 31-bit Euphoria integer.</p>
+
+<!-- ..\include\std\types.e -->
+<h5>Comments:</h5>
+<a name="_2169_comments"></a><a name="comments"></a>
+<p> This function is the same as <tt>integer(o)</tt> on 32-bit Euphoria, but is portable to 64-bit architectures.</p>
+
+<p> 
+<!-- ..\include\std\utils.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_task.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_utils.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_task.html">8.10 Multi-Tasking</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_utils.html">8.12 Utilities</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

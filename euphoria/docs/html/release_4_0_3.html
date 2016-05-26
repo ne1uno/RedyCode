@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_4.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_4.html">9.4 Version 4.0.4 April 4, 2012</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_2.html">9.6 Version 4.0.2 April 5, 2011</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.3.txt -->
+<h2>9.5 Version 4.0.3 June 23, 2011</h2>
+<a name="_6664_version403june232011"></a><a name="version403june232011"></a>
+<!-- ..\docs\release\4.0.3.txt -->
+<h3>9.5.1 Bug Fixes</h3>
+<a name="_6665_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=655">ticket:655</a> Integer values stored as doubles weren't being correctly coerced back to euphoria integers in translated code.
+</li><li><a class="external" href="/ticket/view.wc?id=656">ticket:656</a> Translated <tt><a href="std_math.html#_3762_not_bits">not_bits</a></tt> made incorrect type assumptions
+</li><li><a class="external" href="/ticket/view.wc?id=662">ticket:662</a> Switches with all integer cases, but with a range of greater than 1024 between the biggest and smallest were interpreted incorrectly.
+</li><li><a class="external" href="/ticket/view.wc?id=661">ticket:661</a> fixed translator linking to use comctl32 library on windows
+</li><li><a class="external" href="/ticket/view.wc?id=663">ticket:663</a> Translator <tt>-plat</tt> switch now uses <tt>WINDOWS</tt> instead of <tt>WIN</tt>.
+</li><li><a class="external" href="/ticket/view.wc?id=666">ticket:666</a> fixed to allow integers stored as doubles in be_sockets.c.
+</li><li><a class="external" href="/ticket/view.wc?id=654">ticket:654</a> removed internal use-only standard library routines and constants from the user documentation.
+</li><li><a class="external" href="/ticket/view.wc?id=667">ticket:667</a> Fixed optimization of translated IF when the conditions were known to be false.
+</li><li><a class="external" href="/ticket/view.wc?id=654">ticket:654</a> Removed from documentation the internal workings of Machine Level Access and reorganized Documentation.
+</li><li><a class="external" href="/ticket/view.wc?id=676">ticket:676</a> Changed search order for <a href="std_filesys.html#_1452_locate_file">locate_file</a>
+</li><li><a class="external" href="/ticket/view.wc?id=675">ticket:675</a> Fixed machine crash in <a href="std_sequence.html#_2632_splice">splice</a> when splicing an atom before beginning of sequence or after end
+</li><li><a class="external" href="/ticket/view.wc?id=665">ticket:665</a> Windows 95 and above is supported.  For using sockets you must have Windows Sockets 2.2
+</li><li><a class="external" href="/ticket/view.wc?id=680">ticket:680</a> Fixed <tt><a href="std_socket.html#_5064_socket">socket</a></tt> type checking.
+</li><li><a class="external" href="/ticket/view.wc?id=720">ticket:720</a> Fix propagation of <tt>public include</tt> among reincluded files
+</li></ul>
+<!-- ..\docs\release\4.0.3.txt -->
+<h3>9.5.2 Enhancements</h3>
+<a name="_6666_enhancements"></a><a name="enhancements"></a><ul><li>Minor changes to eutest output to read its console output
+</li><li>The interpreter and programs created with the translator (for WATCOM only) will now run on older versions of Windows that don't support sockets unless this program <em>uses</em> sockets.
+</li><li>New math functions <tt><a href="std_math.html#_3452_larger_of">larger_of</a></tt> and <tt><a href="std_math.html#_3459_smaller_of">smaller_of</a></tt>
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.2.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_4.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_4.html">9.4 Version 4.0.4 April 4, 2012</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_2.html">9.6 Version 4.0.2 April 5, 2011</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

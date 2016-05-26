@@ -1,0 +1,16 @@
+=Debug Console Dialog
+gui/debugconsole.e
+
+======The debug console is temporarily unsupported. Some changes need to be made, planned for version 1.0.
+It probably still works, but has some bugs.
+
+
+===Introduction
+The debug console helps with debugging the GUI of your application.
+===API
+====Routines
+=====gui:show_debug()
+Shows the debug console. (Note: call this //after// the main window is created, otherwise it may cause the application to have problems closing..)
+
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

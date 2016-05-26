@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_6.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_4.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_6.html">9.2 Version 4.0.6 Date TBD</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_4.html">9.4 Version 4.0.4 April 4, 2012</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.5.txt -->
+<h2>9.3 Version 4.0.5 October 19, 2012</h2>
+<a name="_6656_version405october192012"></a><a name="version405october192012"></a>
+<!-- ..\docs\release\4.0.5.txt -->
+<h3>9.3.1 Bug Fixes</h3>
+<a name="_6657_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=777">ticket:777</a> When invalid input is sent to 'match' or 'find' the error includes 'match' or 'find' in the error message repectively.
+</li><li><a class="external" href="/ticket/view.wc?id=749">ticket:749</a> Fix init checks for while-entry and goto
+</li><li><a class="external" href="/ticket/view.wc?id=563">ticket:563</a> Default values for arguments are always parsed and resolved as though they were being evaluated from the point of the routine declaration, not the point where the routine is called
+</li><li><a class="external" href="/ticket/view.wc?id=763">ticket:763</a> In some cases, the translator did not keep potential <a href="std_machine.html#_5855_routine_id">routine_id</a> targets when dynamic routine names were used
+</li><li><a class="external" href="/ticket/view.wc?id=665">ticket:665</a> documented minimal requirements for various features in EUPHORIA on various platforms.
+</li><li><a class="external" href="/ticket/view.wc?id=665">ticket:665</a> set minimal version for Windows in its installer to avoid installing on computers that it wont work on.
+</li><li><a class="external" href="/ticket/view.wc?id=767">ticket:767</a> translated <tt><a href="std_sequence.html#_2624_insert">insert</a>()</tt> could segfault when inserting an atom stored as an integer
+</li><li><a class="external" href="/ticket/view.wc?id=744">ticket:744</a> Duplicate case values in a switch block no longer result in a failed compile after being translated to C.
+</li><li><a class="external" href="/ticket/view.wc?id=775">ticket:775</a> Fixed potential memory leak when a temp is passed to one of the native type check functions: <a href="lang_decl.html#_125_integer">integer</a>(), <a href="lang_decl.html#_126_atom">atom</a>(), <a href="lang_decl.html#_128_object">object</a>() or <a href="lang_decl.html#_127_sequence">sequence</a>()
+</li><li><a class="external" href="/ticket/view.wc?id=778">ticket:778</a> Translator keeps forward referenced routine_id routines in include files
+</li><li><a class="external" href="/ticket/view.wc?id=789">ticket:789</a> Make parser read Windows eols the same as unix eols on Linux.
+</li><li><a class="external" href="/ticket/view.wc?id=795">ticket:795</a> Corrected std/serialize.e to call define_c_proc correctly
+</li><li><a class="external" href="/ticket/view.wc?id=795">ticket:795</a> Corrected std/net/http.e to call do a case insensitive search for 'content-length'
+</li><li><a class="external" href="/ticket/view.wc?id=796">ticket:796</a> when binding and translating use different EXE names
+</li><li>Fixed memory leak in translator when calls to <tt>head()</tt> result in an empty sequence
+</li></ul>
+<!-- ..\docs\release\4.0.5.txt -->
+<h3>9.3.2 Enhancements</h3>
+<a name="_6658_enhancements"></a><a name="enhancements"></a><ul><li><a class="external" href="/ticket/view.wc?id=768">ticket:768</a> Backported support for deserializing 8-byte integers and 10-byte floating point.
+</li><li>Optimization of std/map.e <tt>remove()</tt> to prevent unnecessary copy on write
+</li><li><a class="external" href="/ticket/view.wc?id=787">ticket:787</a> Document cases where you pass an empty sequence into search routines
+</li></ul>
+<p> 
+<!-- ..\docs\release\4.0.4.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_6.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_4.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_6.html">9.2 Version 4.0.6 Date TBD</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_4.html">9.4 Version 4.0.4 April 4, 2012</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

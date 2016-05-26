@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="platform.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="platform.html">6.10 Platform Specific Issues</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\perform.txt -->
+<h2>6.11 Performance Tips</h2>
+<a name="_653_performancetips"></a><a name="performancetips"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="perform.html#_653_performancetips">6.11 Performance Tips</a></div>
+<div class="toc_3"><a href="perform.html#_654_generaltips">6.11.1 General Tips</a></div>
+<div class="toc_3"><a href="perform.html#_655_measuringperformance">6.11.2 Measuring Performance</a></div>
+<div class="toc_3"><a href="perform.html#_656_howtospeeduploops">6.11.3 How to Speed-Up Loops</a></div>
+<div class="toc_3"><a href="perform.html#_657_convertingmultipliestoaddsinaloop">6.11.4 Converting Multiplies to Adds in a Loop</a></div>
+<div class="toc_3"><a href="perform.html#_658_savingresultsinvariables">6.11.5 Saving Results in Variables</a></div>
+<div class="toc_3"><a href="perform.html#_659_inliningofroutinecalls">6.11.6 In-lining of Routine Calls</a></div>
+<div class="toc_3"><a href="perform.html#_660_operationsonsequences">6.11.7 Operations on Sequences</a></div>
+<div class="toc_3"><a href="perform.html#_661_somespecialcaseoptimizations">6.11.8 Some Special Case Optimizations</a></div>
+<div class="toc_3"><a href="perform.html#_662_assignmentwithoperators">6.11.9 Assignment with Operators</a></div>
+<div class="toc_3"><a href="perform.html#_663_librarybuiltinroutines">6.11.10 Library / Built-In Routines</a></div>
+<div class="toc_4"><a href="perform.html#_664_lowlevelmemorymanipulation">6.11.10.1 Low Level Memory Manipulation</a></div>
+<div class="toc_4"><a href="perform.html#_665_sequencemanipulation">6.11.10.2 Sequence Manipulation</a></div>
+<div class="toc_4"><a href="perform.html#_666_bitwiseoperationsvsarithmetic">6.11.10.3 Bitwise operations vs Arithmetic</a></div>
+<div class="toc_3"><a href="perform.html#_667_searching">6.11.11 Searching</a></div>
+<div class="toc_3"><a href="perform.html#_668_sorting">6.11.12 Sorting</a></div>
+<div class="toc_3"><a href="perform.html#_669_takingadvantageofcachememory">6.11.13 Taking Advantage of Cache Memory</a></div>
+<div class="toc_3"><a href="perform.html#_670_usingmachinecodeandc">6.11.14 Using Machine Code and C</a></div>
+<div class="toc_3"><a href="perform.html#_671_usingtheeuphoriatoctranslator">6.11.15 Using The Euphoria To C Translator</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\perform.txt -->
+<h3>6.11.1 General Tips</h3>
+<a name="_654_generaltips"></a><a name="generaltips"></a><ul><li>If your program is fast enough, forget about speeding it up. Just make it simple and readable.
+</li><li>If your program is way too slow, the tips below will probably not solve your problem. You should find a better overall algorithm.
+</li><li>The easiest way to gain a bit of speed is to turn off run-time type-checking. Insert the line:
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">without </font><font color="#330033">type_check</font>
+</pre>
+
+<p>    at the top of your main <tt>.ex</tt> file, ahead of any <tt>include</tt> statements.    You'll typically gain between 0 and 20 percent depending on the    types you have defined, and the files that you are including.    Most of the standard include files do some user-defined type-checking.    A program that is completely without user-defined type-checking    might still be speeded up slightly. <br />
+   Also, be sure to remove, or comment-out, any </p>
+
+<pre class="examplecode"><font color="#0000FF">with trace</font>
+<font color="#0000FF">with </font><font color="#330033">profile</font>
+<font color="#0000FF">with </font><font color="#330033">profile_time</font>
+</pre>
+
+<p>    statements. <strong>with trace</strong> (even without  any calls to <a href="debug.html#trace">trace</a>), and    <strong>with profile</strong> can easily slow you down    by 10% or more. <strong>with profile_time</strong>    might slow you down by 1%. Each of these options will consume extra    memory as well. </p>
+<ul><li>Calculations using integer values are faster than calculations using floating-point numbers
+</li><li>Declare variables as integer rather than atom where possible, and as sequence rather than object where possible. This usually gains you a few percent in speed.
+</li><li>In an expression involving floating-point calculations, it's usually faster to write constant numbers in floating point form, e.g. when x has a floating-point value, say, x = 9.9<br />
+<br />
+change:
+</li></ul>
+<pre class="examplecode"><font color="#330033">x = x * 5</font>
+</pre>
+
+<p>    to: </p>
+
+<pre class="examplecode"><font color="#330033">x = x * 5.0</font>
+</pre>
+
+<p>    This saves the interpreter from having to convert integer 5 to    floating-point 5.0 each time. </p>
+<ul><li>Euphoria does <em>short-circuit</em> evaluation of <tt>if</tt>, <tt>elsif</tt>, and  <tt>while</tt> conditions involving <tt>and</tt> and <tt>or</tt>. Euphoria will stop evaluating any condition once it determines if the condition is true or not. For instance in the <em>if-statement</em>:
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">x &gt; 20 </font><font color="#0000FF">and </font><font color="#330033">y = 0 </font><font color="#0000FF">then</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p>    The "y = 0" test will only be made when "x &gt; 20" is true. <br />
+   For maximum speed, you can order your tests. Do "x &gt; 20" first if it is    more likely to be false than "y = 0". <br />
+   In general, with a condition "A and B", Euphoria will not evaluate the    expression B, when A is false (zero). Similarly, with a condition like    "A or B", B will not be evaluated when A is true (non-zero). <br />
+   Simple if-statements are highly optimized.    With the current version of the interpreter,    nested simple if's that compare integers are usually a bit faster    than a single short-circuit if-statement e.g.: </p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">x &gt; 20 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    if </font><font color="#330033">y = 0 </font><font color="#0000FF">then</font>
+<font color="#330033">       ...</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end if</font>
+</pre>
+<ul><li>The speed of access to private variables, local variables and global variables is the same.
+</li><li>There is no performance penalty for defining constants versus plugging in hard-coded literal numbers. The speed of:
+</li></ul>
+<pre class="examplecode"><font color="#330033">y = x * MAX</font>
+</pre>
+
+<p>    is exactly the same as: </p>
+
+<pre class="examplecode"><font color="#330033">y = x * 1000</font>
+</pre>
+
+<p>    where you've previously defined: </p>
+
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">MAX = 1000</font>
+</pre>
+<ul><li>There is no performance penalty for having lots of comments in your program. Comments are completely ignored. They are not executed in any way. It might take a few milliseconds longer for the initial load of your program, but that's a very small price to pay for future maintainability, and when you <strong>bind</strong> your program, or <strong>translate</strong> your program to C, all comments are stripped out, so the cost becomes absolute zero.
+</li></ul>
+<!-- ..\docs\perform.txt -->
+<h3>6.11.2 Measuring Performance</h3>
+<a name="_655_measuringperformance"></a><a name="measuringperformance"></a>
+<p>  In any programming language, and especially in Euphoria,  <strong>you really have to make measurements before  drawing conclusions about performance</strong>.</p>
+
+<p>  Euphoria provides both <strong>execution-count profiling</strong>, as well as  <strong>time profiling</strong>.  You will often be surprised by the results of these profiles. Concentrate  your efforts on the places in your program that are using a high percentage  of the total time (or at least are executed a large number of times.)  There's no point to rewriting a section of code that uses 0.01% of the total  time. Usually there will be one place, or just a few places where code  tweaking will make a significant difference.</p>
+
+<p>  You can also measure the speed of code by using the <a href="std_datetime.html#_1030_time">time</a>() function. e.g. </p>
+
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">t = </font><font color="#0000FF">time</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10000 </font><font color="#0000FF">do</font>
+<font color="#FF0055">    -- small chunk of code here</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">? </font><font color="#0000FF">time</font><font color="#880033">() </font><font color="#330033">- t</font>
+</pre>
+
+<p>  You might rewrite the small chunk of code in different ways to see which way  is faster.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.3 How to Speed-Up Loops</h3>
+<a name="_656_howtospeeduploops"></a><a name="howtospeeduploops"></a>
+<p>  <strong>Profiling</strong> will show you the <em>hot spots</em> in your program.  These are usually inside loops. Look at each calculation inside the loop  and ask yourself if it really needs to happen every time through the loop,  or could it be done just once, prior to the loop.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.4 Converting Multiplies to Adds in a Loop</h3>
+<a name="_657_convertingmultipliestoaddsinaloop"></a><a name="convertingmultipliestoaddsinaloop"></a>
+<p>  Addition is faster than multiplication. Sometimes you can replace a  multiplication by the loop variable, with an addition. Something like: </p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 0 </font><font color="#0000FF">to </font><font color="#330033">199 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    poke</font><font color="#880033">(</font><font color="#330033">screen_memory+i*320, 0</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p>   becomes: </p>
+
+<pre class="examplecode"><font color="#330033">x = screen_memory</font>
+<font color="#0000FF">for </font><font color="#330033">i = 0 </font><font color="#0000FF">to </font><font color="#330033">199 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    poke</font><font color="#880033">(</font><font color="#330033">x, 0</font><font color="#880033">)</font>
+<font color="#330033">    x = x + 320</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.5 Saving Results in Variables</h3>
+<a name="_658_savingresultsinvariables"></a><a name="savingresultsinvariables"></a><ul><li>It's faster to save the result of a calculation in a variable, than it is to recalculate it later. Even something as simple as a subscript operation, or adding <tt>1</tt> to a variable is worth saving.
+</li><li>When you have a sequence with multiple levels of subscripting, it is faster to change code like:
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">1000 </font><font color="#0000FF">do</font>
+<font color="#330033">   y</font><font color="#880033">[</font><font color="#330033">a</font><font color="#880033">][</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= y</font><font color="#880033">[</font><font color="#330033">a</font><font color="#880033">][</font><font color="#330033">i</font><font color="#880033">]</font><font color="#330033">+1</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p>    to: </p>
+
+<pre class="examplecode"><font color="#330033">ya = y</font><font color="#880033">[</font><font color="#330033">a</font><font color="#880033">]</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">1000 </font><font color="#0000FF">do</font>
+<font color="#330033">    ya</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= ya</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">+ 1</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">y</font><font color="#880033">[</font><font color="#330033">a</font><font color="#880033">] </font><font color="#330033">= ya</font>
+</pre>
+
+<p>     So you are doing two subscript operations per iteration of the loop, rather     than four. The operations, <tt>ya = y[a]</tt> and <tt>y[a] = ya</tt> are very cheap.     <strong>They just copy a pointer.</strong> They don't copy a whole sequence. </p>
+<ul><li>There is a slight cost when you create a new sequence using <strong>{a,b,c}</strong>. If possible, move this operation out of a critical loop by storing it in a variable before the loop, and referencing the variable inside the loop.
+</li></ul>
+<!-- ..\docs\perform.txt -->
+<h3>6.11.6 In-lining of Routine Calls</h3>
+<a name="_659_inliningofroutinecalls"></a><a name="inliningofroutinecalls"></a>
+<p>  If you have a routine that is rather small, the interpreter and translator  will <em>in-line</em> it for you.  Your code will remain  as readable as before.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.7 Operations on Sequences</h3>
+<a name="_660_operationsonsequences"></a><a name="operationsonsequences"></a>
+<p>  Euphoria lets you operate on a large sequence of data using a single  statement. This saves you from writing a loop where you process one element  at-a-time. e.g. </p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#880033">{</font><font color="#330033">1,3,5,7,9</font><font color="#880033">}</font>
+<font color="#330033">y = </font><font color="#880033">{</font><font color="#330033">2,4,6,8,10</font><font color="#880033">}</font>
+<font color="#330033">z = x + y</font>
+</pre>
+
+<p>  versus: </p>
+
+<pre class="examplecode"><font color="#330033">z = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 5</font><font color="#880033">)  </font><font color="#FF0055">-- if necessary</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">5 </font><font color="#0000FF">do</font>
+<font color="#330033">    z</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= x</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">+ y</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">]</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p>  In most interpreted languages, it is much faster to process a whole sequence  (array) in one statement, than it is to perform scalar operations  in a loop. This is because the interpreter has a large amount of overhead  for each statement it executes.</p>
+
+<p>  Euphoria is different. Euphoria is very lean, with little  interpretive overhead, so operations on sequences don't always win.  The only solution is to time it both ways. The per-element cost is usually  lower when you process a sequence in one statement, but there are overheads  associated with allocation and deallocation of sequences that  may tip the scale the other way.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.8 Some Special Case Optimizations</h3>
+<a name="_661_somespecialcaseoptimizations"></a><a name="somespecialcaseoptimizations"></a>
+<p>  Euphoria automatically optimizes certain special cases. <tt>x</tt> and <tt>y</tt>  below could  be variables or arbitrary expressions. </p>
+
+<pre class="examplecode"><font color="#330033">x + 1      </font><font color="#FF0055">-- faster than general x + y</font>
+<font color="#330033">1 + x      </font><font color="#FF0055">-- faster than general y + x</font>
+<font color="#330033">x * 2      </font><font color="#FF0055">-- faster than general x * y</font>
+<font color="#330033">2 * x      </font><font color="#FF0055">-- faster than general y * x</font>
+<font color="#330033">x / 2      </font><font color="#FF0055">-- faster than general x / y</font>
+<font color="#0000FF">floor</font><font color="#880033">(</font><font color="#330033">x/y</font><font color="#880033">) </font><font color="#FF0055">-- where x and y are integers, is faster than x/y</font>
+<font color="#0000FF">floor</font><font color="#880033">(</font><font color="#330033">x/2</font><font color="#880033">) </font><font color="#FF0055">-- faster than floor(x/y)</font>
+</pre>
+
+<p>  x below is a simple variable, y is any variable or expression: </p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">x, y</font><font color="#880033">)   </font><font color="#FF0055">-- faster than general z = append(x, y)</font>
+<font color="#330033">x = </font><font color="#0000FF">prepend</font><font color="#880033">(</font><font color="#330033">x, y</font><font color="#880033">)  </font><font color="#FF0055">-- faster than general z = prepend(x, y)</font>
+
+<font color="#330033">x = x &amp; y          </font><font color="#FF0055">-- where x is much larger than y,</font>
+<font color="#FF0055">                   -- is faster than general z = x &amp; y</font>
+</pre>
+
+<p> When you write a loop that "grows" a sequence, by appending or concatenating data onto it, the time will, in general, grow in proportion to the <strong>square</strong> of the number (N) of elements you are adding. However, if you can use one of the special optimized forms of <tt>append</tt>, <tt>prepend</tt> or concatenation listed above, the time will grow in proportion to just N (roughly). This could save you a <strong>huge</strong> amount of time when creating an extremely long sequence. </p>
+
+<p> (You could also use <tt>repeat</tt> to establish the maximum size of the sequence, and then fill in the elements in a loop, as discussed below.)</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.9 Assignment with Operators</h3>
+<a name="_662_assignmentwithoperators"></a><a name="assignmentwithoperators"></a>
+<p> For greater speed, convert: 
+<pre>**left-hand-side = left-hand-side op expression**
+</pre>
+ to: 
+<pre>**left-hand-side op= expression**
+</pre>
+For example: </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Instead of ...</font>
+<font color="#330033">some_val = some_val * 3</font>
+<font color="#FF0055">-- Use ...</font>
+<font color="#330033">some_val *= 3</font>
+</pre>
+
+<p>  whenever left-hand-side contains at least two subscripts, or at least  one subscript and a slice. In all simpler cases the two forms run at  the same speed (or very close to the same).</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.10 Library / Built-In Routines</h3>
+<a name="_663_librarybuiltinroutines"></a><a name="librarybuiltinroutines"></a>
+<p>  Some common routines are extremely fast. You probably couldn't do the job  faster any other way, even if you used C or assembly language. Some of these  are:</p>
+
+<!-- ..\docs\perform.txt -->
+<h4>6.11.10.1 Low Level Memory Manipulation</h4>
+<a name="_664_lowlevelmemorymanipulation"></a><a name="lowlevelmemorymanipulation"></a><ul><li><tt><a href="std_machine.html#_5785_mem_copy">mem_copy</a></tt>
+</li><li><tt><a href="std_machine.html#_5791_mem_set">mem_set</a></tt>
+</li></ul>
+<!-- ..\docs\perform.txt -->
+<h4>6.11.10.2 Sequence Manipulation</h4>
+<a name="_665_sequencemanipulation"></a><a name="sequencemanipulation"></a><ul><li><tt><a href="std_sequence.html#_2608_append">append</a></tt>
+</li><li><tt><a href="std_sequence.html#_2672_head">head</a></tt>
+</li><li><tt><a href="std_sequence.html#_2624_insert">insert</a></tt>
+</li><li><tt><a href="std_sequence.html#_2715_remove">remove</a></tt>
+</li><li><tt><a href="std_sequence.html#_2599_repeat">repeat</a></tt>
+</li><li><tt><a href="std_sequence.html#_2760_replace">replace</a></tt>
+</li><li><tt><a href="std_sequence.html#_2632_splice">splice</a></tt>
+</li><li><tt><a href="std_sequence.html#_2680_tail">tail</a></tt>
+</li></ul>
+<p>  Other routines are reasonably fast, but you might be able  to do the job faster in some cases if speed was crucial. </p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0,100</font><font color="#880033">) </font><font color="#FF0055">-- Pre-allocate all the elements first.</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">100 </font><font color="#0000FF">do</font>
+<font color="#330033">    x</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= i</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p>  is somewhat faster than: </p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#880033">{}</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">100 </font><font color="#0000FF">do</font>
+<font color="#330033">    x = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">x, i</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p>  because <tt>append</tt> has to allocate and reallocate  space as <tt>x</tt> grows in size. With <tt>repeat</tt>(), the  space for <tt>x</tt> is allocated once at the beginning. (<tt>append</tt> is smart enough  not to allocate space with <em>every</em> append to <tt>x</tt>.  It will allocate somewhat more than it needs, to reduce the number of  reallocations.)</p>
+
+<p> These built-in operations are also optimize to make changes in place (where possible), rather than creating copies of sequences via slices.</p>
+
+<!-- ..\docs\perform.txt -->
+<h4>6.11.10.3 Bitwise operations vs Arithmetic</h4>
+<a name="_666_bitwiseoperationsvsarithmetic"></a><a name="bitwiseoperationsvsarithmetic"></a>
+<p>  You can replace: </p>
+
+<pre class="examplecode"><font color="#0000FF">remainder</font><font color="#880033">(</font><font color="#330033">x, p</font><font color="#880033">)</font>
+</pre>
+
+<p>  with: </p>
+
+<pre class="examplecode"><font color="#0000FF">and_bits</font><font color="#880033">(</font><font color="#330033">x, p-1</font><font color="#880033">)</font>
+</pre>
+
+<p>  for greater speed when <tt>p</tt> is a positive power of 2. <tt>x</tt> must be a non-negative  integer that fits in 32-bits.</p>
+
+<p>  <a href="std_math.html#_3556_arctan">arctan</a> is faster than <a href="std_math.html#_3585_arccos">arccos</a> or <a href="std_math.html#_3593_arcsin">arcsin</a>.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.11 Searching</h3>
+<a name="_667_searching"></a><a name="searching"></a>
+<p>  Euphoria's <a href="std_search.html#_2334_find">find</a> is the fastest way to search for a value in a  sequence up to about 50 elements. Beyond that, you might consider a  <a href="std_map.html#_4419_map">map</a> or other implementation of a <em>hash table</em>  (<strong>demo\hash.ex</strong>) or a <em>binary tree</em> (<strong>demo\tree.ex</strong>).</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.12 Sorting</h3>
+<a name="_668_sorting"></a><a name="sorting"></a>
+<p>  In most cases you can just use the <em>shell sort</em> routine in <tt>sort.e</tt>.</p>
+
+<p>  If you have a huge amount of data to sort, you might try one of the sorts  in <strong>demo\allsorts.e</strong> (e.g.  <em>great sort</em>). If your data is too big to fit in  memory, don't rely on Euphoria's automatic memory swapping capability.  Instead, sort a few thousand records at a time, and write them out to a  series of temporary files. Then merge all the sorted temporary files into  one big sorted file.</p>
+
+<p>  If your data consists of integers only, and they are all in a fairly  narrow range, try the <em>bucket sort</em> in <strong>demo\allsorts.e</strong>.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.13 Taking Advantage of Cache Memory</h3>
+<a name="_669_takingadvantageofcachememory"></a><a name="takingadvantageofcachememory"></a>
+<p> As CPU speeds increase, the gap between the speed of the on-chip cache memory and the speed of the main memory or DRAM (dynamic random access memory) becomes ever greater. You might have 256 Mb of DRAM on your computer, but the on-chip cache is likely to be only 8K (data) plus 8K (instructions) on a Pentium, or 16K (data) plus 16K (instructions) on a Pentium with MMX or a Pentium II/III. Most machines will also have a "level-2" cache of 256K or 512K.</p>
+
+<p> An algorithm that steps through a long sequence of a couple of thousand elements or more, many times, from beginning to end, performing one small operation on each element, will not make good use of the on-chip data cache. It might be better to go through once, applying several operations to each element, before moving on to the next element. The same argument holds when your program starts swapping, and the least-recently-used data is moved out to disk.</p>
+
+<p> These cache effects aren't as noticeable in Euphoria as they are in lower-level compiled languages, but they are measurable.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.14 Using Machine Code and C</h3>
+<a name="_670_usingmachinecodeandc"></a><a name="usingmachinecodeandc"></a>
+<p> Euphoria lets you call routines written in machine code. You can call C routines in dynamically loaded library files, and these C routines can call your Euphoria routines. You might need to call C or machine code because of something that can not be done directly in Euphoria, or you might do it for improved speed.</p>
+
+<p> To boost speed, the machine code or C routine needs to do a significant amount of work on each call, otherwise the overhead of setting up the arguments and making the call will dominate the time, and it might not gain you much.</p>
+
+<p> Many programs have some inner core operation that consumes most of the CPU time. If you can code this in C or machine code, while leaving the bulk of the program in Euphoria, you might achieve a speed comparable to C, without sacrificing Euphoria's safety and flexibility.</p>
+
+<!-- ..\docs\perform.txt -->
+<h3>6.11.15 Using The Euphoria To C Translator</h3>
+<a name="_671_usingtheeuphoriatoctranslator"></a><a name="usingtheeuphoriatoctranslator"></a>
+<p> The Euphoria To C Translator is included in the installation package. It will translate any Euphoria program into a set of C source files that you can compile using a C compiler.</p>
+
+<p> The executable file that you get using the Translator should run the same, but faster than when you use the interpreter. The speed-up can be anywhere from a few percent to a factor of 5 or more. </p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="platform.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="platform.html">6.10 Platform Specific Issues</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

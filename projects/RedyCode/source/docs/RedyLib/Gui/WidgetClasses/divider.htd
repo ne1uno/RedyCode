@@ -1,0 +1,22 @@
+==Divider Widget Class
+
+Widget Class name: "divider"
+
+===API
+====Properties
+
+====="attach"
+====="adjust"
+====="orientation"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

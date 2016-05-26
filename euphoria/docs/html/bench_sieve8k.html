@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="where.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="win32_dsearch.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="where.html">6.1.23 where.ex</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="win32_dsearch.html">6.1.25 win32/dsearch.exw</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h3>6.1.24 bench/sieve8k.ex</h3>
+<a name="_421_benchsieve8kex"></a><a name="benchsieve8kex"></a>
+<p> Prime sieve benchmark "Shootout" version</p>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h4>6.1.24.1 Usage</h4>
+<a name="_422_usage"></a><a name="usage"></a>
+<p> 
+<pre>eui sieve8k &lt;iterations&gt; &lt;largest&gt;
+</pre>
+
+<p> default is 1 iteration with 8192 as largest allowable prime</p>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h4>6.1.24.2 Interpreter Benchmark Results</h4>
+<a name="_423_interpreterbenchmarkresults"></a><a name="interpreterbenchmarkresults"></a>
+<p> The Euphoria interpreter seems to be the world's fastest!</p>
+
+<p> Although it provides subscript checking, uninitialized variable checking, full dynamic storage allocation, flexible generic data types, and integer overflow checking, it still manages to "blow away" all other programming language interpreters that we know of.</p>
+
+<p> The results below are based on the prime sieve benchmark from the Great Computer Language Shootout by Doug Bagley. The numbers are taken from the WIN32 version of the Shootout at</p>
+
+<p> <a class="external" href="http://dada.perl.it/shootout">http://dada.perl.it/shootout</a></p>
+
+<p> We chose sieve because it was CPU-intensive, and less trivial than some of the other benchmarks. It's also integer-based, as most real programs are. Naturally, you should perform your own benchmarks, based on the type of programs that are important to you.</p>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h4>6.1.24.3 Our Methodology:</h4>
+<a name="_424_ourmethodology"></a><a name="ourmethodology"></a>
+<p> We measured the speed of Euphoria on the version of sieve used in the Shootout. We measured both the Euphoria interpreter, and the Euphoria To C Translator. The machine used in the WIN32 Shootout was a Pentium-4 1.6GHz running Windows XP. Our machine for the Euphoria measurements was a Pentium-4 1.8GHz, also running Windows XP. We thus adjusted our times upward by 1.8/1.6, i.e. we added 12.5%. As a check, we downloaded Python 2.1 and ran sieve with N=900 on our machine. Python was only about 3% faster on our machine, probably because CPU speed is not the only factor. Level-2 cache access time may also be important. To be fair, we nevertheless scaled up all of our Euphoria times by the full 12.5%.</p>
+
+<p> We ran the Euphoria sieves with N=90000 to get accurate timings. For comparison, we divided by 100 to match the N=900 used on the WIN32 shootout, and we added 12.5%.</p>
+
+<p> The Shootout used an external timer on the programs, that necessarily included start-up times. We used an internal timer in the Euphoria programs, because it's more accurate, and because we lacked a good external timing mechanism. To eliminate the start-up times of the other languages, we subtracted their time for N=1 from their time for N=900. In most cases the N=1 start-up time was just a tiny percentage of the full N=900 time. (So we were actually only timing 899 iterations for the other languages.)</p>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h4>6.1.24.4 The Results</h4>
+<a name="_425_theresults"></a><a name="theresults"></a>
+<p> Euphoria interpreter, eui.exe: 
+<pre>For N=90000 on 1.8GHz machine: 41.39 seconds
+
+scaled to N=900 (divide by 100): .4139 seconds
+
+adjusted +12.5% to compare with 1.6 GHz: .4656
+</pre>
+
+<p> Euphoria To C Translator (with C compilation by Watcom for WIN32): 
+<pre>For N=90000 on 1.8GHz machine: 11.28 seconds
+
+scaled to N=900 (divide by 100): .1128 seconds
+
+adjusted +12.5% to compare with 1.6 GHz: .1269
+</pre>
+
+<p> From dada.perl.it/shootout/ prime sieve benchmark (interpreted languages)</p>
+
+<p> N=900 iterations. Start-up time (N=1) was subtracted out Pentium-4 1.6 GHz</p>
+
+<p> Interpreters, sorted by seconds taken: (EtoC added for comparison)</p>
+<table><tr><th>Lang    </th>
+<th>Score </th>
+<th>Notes                                            </th>
+</tr>
+<tr><td> Euphoria</td>
+<td>  0.13 </td>
+<td> EtoC Translator / Watcom                         </td>
+</tr>
+<tr><td> Euphoria</td>
+<td>  0.47 </td>
+<td> Interpreted with eui.exe                         </td>
+</tr>
+<tr><td> pliant  </td>
+<td>  0.68 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> gforth  </td>
+<td>  0.75 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> parrot  </td>
+<td>  2.98 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> ocamlb  </td>
+<td>  3.21 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> poplisp </td>
+<td>  3.34 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> eu in eu</td>
+<td>  7.15 </td>
+<td> PD source Euphoria translated/compiled to eu.exe </td>
+</tr>
+<tr><td> erlang  </td>
+<td>  7.16 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> lua     </td>
+<td>  8.70 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> pike    </td>
+<td> 10.36 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> python  </td>
+<td> 14.33 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> icon    </td>
+<td> 15.12 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> perl    </td>
+<td> 16.36 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> elastic </td>
+<td> 16.88 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> guile   </td>
+<td> 18.64 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> cygperl </td>
+<td> 19.22 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> ruby    </td>
+<td> 27.59 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> mawk    </td>
+<td> 28.00 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> vbscript</td>
+<td> 32.02 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> php     </td>
+<td> 67.32 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> jscript </td>
+<td> 77.43 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> tcl     </td>
+<td> 83.10 </td>
+<td>                                                  </td>
+</tr>
+<tr><td> gawk    </td>
+<td> 158.49</td>
+<td>                                                  </td>
+</tr>
+<tr><td> rexx    </td>
+<td> 166.85</td>
+<td>                                                  </td>
+</tr>
+</table>
+
+<!-- ..\demo\bench\sieve8k.ex -->
+<h4>6.1.24.5 Conclusions</h4>
+<a name="_426_conclusions"></a><a name="conclusions"></a><ol><li>Euphoria (interpreted) beats all of the other interpreted languages in the Shootout. All of the well-known languages are beaten by a huge margin. For instance, Perl is 16.36/.4656 = 35 times slower than interpreted Euphoria. Python is 31 times slower.
+</li><li>If you want even greater speed, the Euphoria to C Translator can give you a factor of .4656/.1269 = 3.7 versus the already-fast interpreter. In fact, EtoC easily beats many compiled languages such as Java and C-Sharp (C#) on this benchmark, and it comes close to hand-coded, fully-optimized C. This is remarkable, since Euphoria code is *much* easier to write and debug than C. EtoC beats both Perl and Python by a factor of more than 100!
+</li><li>Observe that even the version of Euphoria written in pure Euphoria can run twice as fast as Python or Perl which are both written in C.
+</li></ol>
+<p> 
+<!-- ..\demo\win32\dsearch.exw -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="where.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="win32_dsearch.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="where.html">6.1.23 where.ex</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="win32_dsearch.html">6.1.25 win32/dsearch.exw</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

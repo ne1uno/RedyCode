@@ -1,0 +1,69 @@
+=Themes Library
+gui/themes.e : Define GUI themes
+
+===Introduction
+Themes are not implemented yet. For now, this library defines global colors used by widget classes.
+
+===API
+====global variables
+=====atom
+scrwidth, --scrollbar width
+
+--outer area
+cOuterFill,
+cOuterActive,
+cOuterHover,
+cOuterLabel,
+cOuterHighlight,
+
+--3D objects 
+cButtonDark,
+cButtonFace,
+cButtonActive,
+cButtonHover,
+cButtonHighlight,
+cButtonShadow,
+cButtonLabel,
+cButtonDisLabel,
+               
+--Inner        
+cInnerDark,
+
+cInnerShape,
+
+cInnerFill,
+cInnerText,
+
+cInnerHover,
+cInnerTextHover,
+      
+cInnerSel,
+cInnerTextSel,
+
+cInnerSelHover,
+cInnerTextSelHover,
+
+cInnerSelInact,
+cInnerTextSelInact,
+  
+--Items inside lists
+cInnerItemOdd,
+cInnerItemEven,
+cInnerItemText,
+
+cInnerItemOddHover,
+cInnerItemEvenHover,
+cInnerItemTextHover,
+
+cInnerItemOddSel,
+cInnerItemEvenSel,
+cInnerItemTextSel,
+
+cInnerItemOddSelHover,
+cInnerItemEvenSelHover,
+cInnerItemTextSelHover,
+
+cInnerItemOddSelInact,
+cInnerItemEvenSelInact,
+cInnerItemTextSelInact
+

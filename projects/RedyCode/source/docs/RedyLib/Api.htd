@@ -1,0 +1,55 @@
+=RedyLib API Reference
+
+======Any routines that are listed but have no discription are not currently supported.
+    * Unsupported features may or may not be functional, so if you choose to use them, use them at your own risk. There are many parts of RedyLib that are still under development.
+    * Many features of RedyLib are stable and work as documented. If you stick with these features, your application should be stable.
+
+    * [[Actions->RedyLib\Actions]]
+    * [[Application->RedyLib\App]]
+    * [[Configuration->RedyLib\Config]]
+    * [[Error Report->RedyLib\Err]]
+    * [[Graphical User Interface->RedyLib\Gui]]
+        * [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+            * [[Window->RedyLib\Gui\WidgetClasses\window]]
+            * [[Menu->RedyLib\Gui\WidgetClasses\menu]]
+            * [[List->RedyLib\Gui\WidgetClasses\list]]
+            * [[Container->RedyLib\Gui\WidgetClasses\container]]
+            * [[Panel->RedyLib\Gui\WidgetClasses\panel]]
+            * [[Tabs->RedyLib\Gui\WidgetClasses\tabs]]
+            * [[Divider->RedyLib\Gui\WidgetClasses\divider]]
+            * [[Menubar->RedyLib\Gui\WidgetClasses\menubar]]
+            * [[Toolbar->RedyLib\Gui\WidgetClasses\toolbar]]
+            * [[Infobar->RedyLib\Gui\WidgetClasses\infobar]]
+            * [[Scrollbar->RedyLib\Gui\WidgetClasses\scrollbar]]
+            * [[Progress->RedyLib\Gui\WidgetClasses\progress]]
+            * [[Slider->RedyLib\Gui\WidgetClasses\slider]]
+            * [[Button->RedyLib\Gui\WidgetClasses\button]]
+            * [[Toggle->RedyLib\Gui\WidgetClasses\toggle]]
+            * [[Option->RedyLib\Gui\WidgetClasses\option]]
+            * [[Treebox->RedyLib\Gui\WidgetClasses\treebox]]
+            * [[Listbox->RedyLib\Gui\WidgetClasses\listbox]]
+            * [[Fancylist->RedyLib\Gui\WidgetClasses\fancylist]]
+            * [[Textbox->RedyLib\Gui\WidgetClasses\textbox]]
+            * [[Canvas->RedyLib\Gui\WidgetClasses\canvas]]
+        * [[Themes->RedyLib\Gui\Themes]]
+        * [[Common Dialogs->RedyLib\Gui\Dialogs]]
+            * [[About->RedyLib\Gui\Dialogs\About]]
+            * [[DebugConsole->RedyLib\Gui\Dialogs\DebugConsole]]
+            * [[SelectFile->RedyLib\Gui\Dialogs\SelectFile]]
+            * [[EditToolbars->RedyLib\Gui\Dialogs\EditToolbars]]
+            * [[ErrorReport->RedyLib\Gui\Dialogs\ErrorReport]]
+            * [[MainWin->RedyLib\Gui\Dialogs\MainWin]]
+            * [[MsgBox->RedyLib\Gui\Dialogs\MsgBox]]
+        * [[Images->RedyLib\Gui\Images]]
+        * [[Canvas Objects->RedyLib\Gui\Objects]]
+            * [[Calendar->RedyLib\Gui\Objects\Calendar]]
+            * [[Graphs->RedyLib\Gui\Objects\Graphs]]
+            * [[TextDoc->RedyLib\Gui\Objects\TextDoc]]
+    * [[Msg->RedyLib\Msg]]
+    * [[OSWin->RedyLib\OsWin]]
+
+
+
+
+    
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="unsupported.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_6.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="unsupported.html">8.58 Unsupported Features</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_6.html">9.2 Version 4.0.6 Date TBD</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.1.0.txt -->
+<h2>9.1 Version 4.1.0 Date TBD</h2>
+<a name="_6648_version410datetbd"></a><a name="version410datetbd"></a>
+<!-- ..\docs\release\4.1.0.txt -->
+<h3>9.1.1 Bug Fixes</h3>
+<a name="_6649_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=665">ticket:665</a> Fixed to load socket routines from its DLL only when needed.
+</li><li><a class="external" href="/ticket/view.wc?id=744">ticket:744</a> Detect duplicate <tt>case</tt> values in a <tt><a href="lang_branch.html#_149_switchstatement">switch statement</a></tt> and throw an error at compile or parse time
+</li><li>OS X bug fixes:<ul><li>Callbacks function again, including on 64bit platforms
+</li><li>Memory maps function
+</li></ul>
+</li><li>Fix std/net/http.e that caused malformed HTTP GET requests
+</li><li>Updated demo/news.ex with up-to-date URLs for some news web sites.
+</li><li>Fix std/net/http.e so it can handle cases where the Content-Length header is not present
+</li><li>Fix std/sequence.e so store() will correctly handle the one-element index case - it was duplicating the entire sequence before.
+</li><li><a class="external" href="/ticket/view.wc?id=710">ticket:710</a> Updated tokenizer and syntax coloring to be able to preserve state between lines. The euphoria trace screen and ed.ex now properly colorize multiline strings and comments.
+</li><li><tt><a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a></tt> had an infinite loop if the string ended with a single or double quote and a backslash
+</li><li>euphoria/tokenizer.e does not add a leading zero to floating point numbers without one when  <tt><a href="euphoria_tokenize.html#_6377_string_numbers">string_numbers</a></tt> is set
+</li><li>fixed detection of hex string tokens in <tt><a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a></tt>
+</li><li>tokenizing better respects the value of <tt>stop_on_error</tt> parameter for <tt><a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a></tt>
+</li><li><a class="external" href="/ticket/view.wc?id=884">ticket:884</a> 32-bit translator crash when translating a 64-bit target
+</li><li><a class="external" href="/ticket/view.wc?id=886">ticket:886</a> system_exec with quotes on Windows failed due to quotes being removed
+</li><li><a class="external" href="/ticket/view.wc?id=887">ticket:887</a> EDS: crash if create_table and clear_table init_records parameter was less than MAX_INDEX
+</li><li><a class="external" href="/ticket/view.wc?id=898">ticket:898</a> fix <tt><a href="std_os.html#_1745_uname">uname</a></tt> to report Windows 8 correctly
+</li></ul>
+<!-- ..\docs\release\4.1.0.txt -->
+<h3>9.1.2 Enhancements</h3>
+<a name="_6650_enhancements"></a><a name="enhancements"></a><ul><li>Euphoria can be built natively as a 64-bit programming language.
+</li><li>Added 8-byte memory access: <a href="std_machine.html#_5749_poke8">poke8</a>, <a href="std_machine.html#_5680_peek8s">peek8s</a>, <a href="std_machine.html#_5696_peek8u">peek8u</a>
+</li><li>eucoverage also outputs a file "big_routines.html" that shows covered routines from all files sorted by descending routine size
+</li><li>Added <a href="std_machine.html#_5763_poke_pointer">poke_pointer</a> and <a href="std_machine.html#_5719_peek_pointer">peek_pointer</a>
+</li><li>New <a href="std_dll.html#_5438_sizeof">sizeof</a> built-in for determining size of certain data types.
+</li><li><a class="external" href="/ticket/view.wc?id=631">ticket:631</a> Scientific parsing code moved from the euphoria source directory and into the standard library.  Routines in <tt>std/get.e</tt> now return the proper precision data based on the native platform (32 or 64 bits).
+</li><li>Users can write their own debuggers and use them instead of the built in trace debugger.
+</li><li>gcc builds now include -fPIC (position independent code) runtime libraries for translating euphoria code into shared objects.
+</li><li>-lib-pic switch for translator to specify the PIC runtime library to be used
+</li><li><a class="external" href="/ticket/view.wc?id=166">ticket:166</a> get_integer{16,32} will return -1 on EOF.
+</li><li>Added <a href="lang_decl.html#deprecate">deprecate</a> keyword
+</li><li>Architecture ifdefs (X86, X86_64, ARM, BITS32, BITS64, LONG32, LONG64)
+</li><li>-arch option for translator for cross translating
+</li><li>-cc-prefix option for translator
+</li><li>Can <a href="lang_def.html#_101_multipleassignment">assign to multiple variables</a> with one statement using sequence semantics.
+</li><li>Use <tt>?</tt> to stand in for default parameters.
+</li><li>eudis now tabulates counts of forward references
+</li><li>Added <a href="std_machine.html#_5756_poke_long">poke_long</a>, <a href="std_machine.html#_5704_peek_longu">peek_longu</a> and <a href="std_machine.html#_5570_peek_longs">peek_longs</a>
+</li><li><a class="external" href="/ticket/view.wc?id=735">ticket:735</a> The number of lines to be used in ctrace.out by <tt>trace(3)</tt> can be configured using <tt>-trace-lines n</tt> command line switch. See <a href="command_switches.html#_74_commandlineswitches">Command line switches</a> for more information.
+</li><li><a class="external" href="/ticket/view.wc?id=782">ticket:782</a> When downloading http content, std/net/http.e will yield to other tasks
+</li><li><a href="t_integer32.html">t_integer32</a> type for checking to see if an object is an integer based on 32-bit Euphoria's definition
+</li><li>Improved identification of <tt>routine_id()</tt> targets by the translator
+</li><li>Smaller translated DLLs are produced by improved identification of routines that need to be exported
+</li><li>Eutest now has an eubin option for specifying all binaries in a single option.
+</li><li>Eutest has a retest option for retesting all tests that had previously failed.
+</li><li>Front end optimizations to reduce parsing time
+</li><li>Added dynamic library uninitialization to reduce memory leaks if a euphoria translated .dll or .so is unloaded
+</li><li><a class="external" href="/ticket/view.wc?id=838">ticket:838</a> Eutest now reports the date of the Interpreter, and when the test was completed.
+</li><li>Much faster and simpler implementation of maps in std/map.e inspired by the implementation of python's dictionary object. Some functions and parameters have been deprecated (such as any distinction between small and large maps), as they no longer make sense for the new implementation.
+</li><li><a class="external" href="/ticket/view.wc?id=532">ticket:532</a> extra-cflags and extra-lflags for translator (thanks to Ira Hill)
+</li><li><tt><a href="std_io.html#_1636_lock_file">lock_file</a></tt> on Windows now supports <tt>LOCK_SHARED</tt> and <tt>LOCK_EXCLUSIVE</tt>
+</li><li><tt><a href="euphoria_tokenize.html#_6391_tokenize_file">tokenize_file</a></tt> uses <tt><a href="std_io.html#iobinary_mode">io:BINARY_MODE</a></tt> by default instead of <tt><a href="std_io.html#iotext_mode">io:TEXT_MODE</a></tt>, which improves performance on large files with Windows style newlines
+</li><li><a class="external" href="/ticket/view.wc?id=883">ticket:883</a> Improved error messages on subscript / slice errors
+</li><li>ed.ex renamed edx.ex
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.6.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="unsupported.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_6.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="unsupported.html">8.58 Unsupported Features</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_6.html">9.2 Version 4.0.6 Date TBD</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

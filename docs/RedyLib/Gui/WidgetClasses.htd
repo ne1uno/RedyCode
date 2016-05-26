@@ -1,0 +1,60 @@
+=Widget Classes
+"Widget classes" define different types of widgets. All widgets have some basic common features, but each widget class defines additional features. All widget classes follow some basic API rules, so once you learn how to control widgets in general, using each widget class is a matter of looking up what additional features are defined for that class.
+
+Each Widget Class defines three categories of features: properties, events, and commands.
+
+==== Properties
+Properties are set when creating a widget with gui:wcreate().
+
+Example:
+<eucode>
+
+</eucode>
+
+====Events
+Events are sent to a widget event handler routine such as gui_event(object evwidget, object evtype, object evdata). 
+
+Example:
+<eucode>
+
+</eucode>
+
+====Routines
+Wwidget class routines are called through gui:wfunc() or gui:wproc().
+
+Example:
+<eucode>
+
+</eucode>
+
+==Widget Class Definitions
+Sorry, the following pages are very rough. You will find useful info in them, but they are not written properly yet.
+
+    * [[Window->RedyLib\Gui\WidgetClasses\window]]
+    * [[Menu->RedyLib\Gui\WidgetClasses\menu]]
+    * [[List->RedyLib\Gui\WidgetClasses\list]]
+    * [[Container->RedyLib\Gui\WidgetClasses\container]]
+    * [[Panel->RedyLib\Gui\WidgetClasses\panel]]
+    * [[Tabs->RedyLib\Gui\WidgetClasses\tabs]]
+    * [[Divider->RedyLib\Gui\WidgetClasses\divider]]
+    * [[Menubar->RedyLib\Gui\WidgetClasses\menubar]]
+    * [[Toolbar->RedyLib\Gui\WidgetClasses\toolbar]]
+    * [[Infobar->RedyLib\Gui\WidgetClasses\infobar]]
+    * [[Scrollbar->RedyLib\Gui\WidgetClasses\scrollbar]]
+    * [[Progress->RedyLib\Gui\WidgetClasses\progress]]
+    * [[Slider->RedyLib\Gui\WidgetClasses\slider]]
+    * [[Button->RedyLib\Gui\WidgetClasses\button]]
+    * [[Toggle->RedyLib\Gui\WidgetClasses\toggle]]
+    * [[Option->RedyLib\Gui\WidgetClasses\option]]
+    * [[Treebox->RedyLib\Gui\WidgetClasses\treebox]]
+    * [[Listbox->RedyLib\Gui\WidgetClasses\listbox]]
+    * [[Fancylist->RedyLib\Gui\WidgetClasses\fancylist]]
+    * [[Textbox->RedyLib\Gui\WidgetClasses\textbox]]
+    * [[Canvas->RedyLib\Gui\WidgetClasses\canvas]]
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+==MainWin Dialog
+gui/dialogs/mainwin.e 
+
+Main application window with the following features:
+    * Resizeable window that displays the app's name in the title bar
+    * Remembers window position in the default config file
+    * Asks the user to confirm closing if data is modified and not saved
+    * Built-in menu and default toolbar management
+    * Built-in optional tabs
+
+Normally, you don't access this library directly. It has public routines that are controlled by or through the [[App Library->RedyLib/App]]. 
+
+===API
+====Actions
+The following actions are defined by this library:
+
+=====action:do_proc("confirm_exit", {})
+
+====Routines
+=====procedure reload_toolbars()
+
+=====procedure start()
+
+=====function modified_count()
+
+=====procedure set_tabs_double_click_action(sequence actionname)
+
+=====procedure set_tabs_select_action(sequence actionname)
+
+=====procedure set_tab_context_menu(sequence tabname, sequence tabmenu)
+
+=====function create_tab(sequence tablabel, sequence tabtitle, atom readonly : 0)
+
+=====procedure destroy_tab(sequence tabname)
+
+=====procedure select_tab(sequence tabname)
+
+=====procedure set_tab_label(sequence tabname, sequence tablabel)
+   
+=====procedure set_tab_title(sequence tabname, sequence tabtitle)
+
+=====procedure set_tab_modified(sequence tabname, atom modified)
+
+=====procedure set_tab_readonly(sequence tabname, atom readonly)
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

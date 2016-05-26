@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="edx.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="eudist.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="edx.html">7.3 Edx Demonstration Code Editor</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="eudist.html">7.5 EuDist, Distributing Programs</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\dis.txt -->
+<h2>7.4 EuDis, Disassembling Euphoria Code</h2>
+<a name="_711_eudisdisassemblingeuphoriacode"></a><a name="eudisdisassemblingeuphoriacode"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="dis.html#_711_eudisdisassemblingeuphoriacode">7.4 EuDis, Disassembling Euphoria Code</a></div>
+<div class="toc_3"><a href="dis.html#_712_introduction">7.4.1 Introduction</a></div>
+<div class="toc_3"><a href="dis.html#_713_htmloutput">7.4.2 HTML Output</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\docs\dis.txt -->
+<h3>7.4.1 Introduction</h3>
+<a name="_712_introduction"></a><a name="introduction"></a>
+<p> In the Euphoria source directory is a program named <tt>dis.ex</tt>, which can be used for parsing Euphoria code and outputting detailed disassembly of the intermediate language (i.e., byte code) used by Euphoria, as well as the symbol table.  The purpose of this tool is for low level debugging, especially for developing Euphoria itself, or for understanding why certain code performs the way it does.</p>
+
+<p> It uses the actual Euphoria front end to parse your code.  When Euphoria is installed, there should be a shell script or batch file (depending on your operating system) called <tt>eudis</tt> or <tt>eudis.bat</tt>, respectively, that can be used to analyze your code:</p>
+
+<p> 
+<pre>$ eudis myapp.ex
+saved to [/path/to/myapp.ex.dis]
+</pre>
+
+<p> When run, <tt>eudis</tt> will say where its output was saved.  The file name, including extension, is used as the base for its output.  By default, it outputs four files:</p>
+<ul><li><tt>.dis</tt> The main disassembly file.  This shows the IL code representation both raw and symbolically.
+</li><li><tt>.sym</tt> The symbol table.  This shows details for the entire symbol table for your code.
+</li><li><tt>.hash</tt> Details about symbol hashing.
+</li><li><tt>.line</tt> Line table information.  Unless tracing is enabled, this will be blank.
+</li><li><tt>.fwd</tt> Counts, by name, of the number of forward references by symbol, along with the number of references by file.
+</li></ul>
+<!-- ..\docs\dis.txt -->
+<h3>7.4.2 HTML Output</h3>
+<a name="_713_htmloutput"></a><a name="htmloutput"></a>
+<p> <tt>eudis</tt> can output html documentation of your program somewhat similar to the output from Doxygen.  This documentation is different than <tt>eudoc</tt>.  It is meant to document the structure of your program, and to help developers understand code dependencies.  It can generate graphs showing how files include each other, as well as which routines call which others.  Note that generating graphs requires that you have <a class="external" href="http://www.graphviz.org">Graphviz</a> installed.  Note that generating call graphs can be quite time consuming for a large program.</p>
+
+<p> By default, <tt>eudis</tt> will create a subdirectory in the current directory called <tt>eudox</tt>.  This may be changed using the <tt>--dir</tt> option.</p>
+
+<!-- ..\docs\dis.txt -->
+<h4>7.4.2.1 Command Line Switches</h4>
+<a name="_714_commandlineswitches"></a><a name="commandlineswitches"></a>
+<p> You can use the standard <tt>-i</tt> and <tt>-c</tt> switches with <tt>eudis</tt>.  There are additional options:</p>
+<ul><li><tt>-b</tt> parse the code as though it were being bound
+</li><li><tt>--dir &lt;dir&gt;</tt> Specify the output directory for the html files
+</li><li><tt>-f</tt> include a particular file in the html output
+</li><li><tt></tt> output the list of files included in the <tt>.dis</tt> file at the top of the listing
+</li><li><tt>-g</tt> suppress call graphs in html output
+</li><li><tt>--html</tt> generate html documentation of your program
+</li><li><tt></tt> Suppress dependencies.  Will not generate file and routine dependency graphs.
+</li><li><tt>--std</tt> show standard library information, by default this is not shown
+</li><li><tt>-t</tt> parse the code as though it were being translated
+</li></ul>
+<p>
+<!-- ..\docs\eudist.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="edx.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="eudist.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="edx.html">7.3 Edx Demonstration Code Editor</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="eudist.html">7.5 EuDist, Distributing Programs</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

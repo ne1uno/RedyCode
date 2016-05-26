@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_toplevel.html"><img src="images/prev.png" /></a></td>
+									<td><a href="syntax_toc.html">Up</a></td>
+									<td><a href="internals.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_toplevel.html">4.8 Special Top-Level Statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										<a href="internals.html">5.2 Euphoria Internals</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="miniguide.html">6 Mini-Guides</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\syntax.txt -->
+<h2>5.1 Formal Syntax</h2>
+<a name="_192_formalsyntax"></a><a name="formalsyntax"></a>
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.1 Basics</h3>
+<a name="_193_basics"></a><a name="basics"></a>
+<p> The syntax of Euphoria is described using a form of BNF notation.</p>
+
+<p> 
+<pre>ALPHA ==: ('a' - 'z') | ('A' - 'Z')
+DIGIT ==: ('0' - '9')
+USCORE ==: '_'
+EOL ==: new line character
+
+IDENTIFIER ==: ( ALPHA | USCORE ) [(AlPHA | DIGIT | USCORE) ... ]
+
+EXPRESSION ==: NUMEXPR | STREXPR | SEQEXPR | BOOLEXPR
+
+NUMEXPR ==: (an expression that evaluates to an atom)
+
+STREXPR ==: (an expression that evaluates to a string sequence)
+
+SEQEXPR ==: (an expression that evaluates to an sequence)
+
+BOOLEXPR ==: (an expression that evaluates to an atom in which zero represents 
+              falsehood and non-zero represents truth)
+              
+BINARYEXPR ==: [ EXPRESSION BINOP EXPRESSION ]
+
+BINOP ==: 'and' | 'or' | 'xor' | '+' | '-' | '*' | '/' 
+
+UNARYEXPR ==: [ UNARYOP EXPRESSION ]
+
+UNARYOP ==: 'not' | '-'
+
+STATEMENT ==: 
+
+STMTBLK ==: STATEMENT [STATEMENT ...]
+
+LABEL       ==:  'label' STRINGLIT
+
+LISTDELIM   ==:  ','
+
+STRINGLIT   ==: SIMPLESTRINGLIT | RAWSTRINGLIT
+
+SIMPLESTRINGLIT ==: SSLITSTART [ (CHAR | ESCCHAR) ... ] SSLITEND
+SSLITSTART  ==: '"'
+SSLITEND    ==: '"'
+CHAR        ==: (any byte value)
+ESCCHAR     ==: ESCLEAD ( 't' | 'n' | 'r' | '\' | '"' \ ''')
+ESCLEAD     ==: '\'
+
+RAWSTRINGLIT ==: DQRAWSTRING | BQRAWSTRING
+DQRAWSTRING ==: '"""' [ MARGINSTR ] [CHAR ...] '"""'
+BQRAWSTRING ==: '`' [ MARGINSTR ] [CHAR ...] '`'
+MARGINSTR  ==: '_' ...
+
+SCOPETYPE ==: 'global' | 'public' | 'export' | 'override'
+
+DATATYPE ==: 'atom' | 'integer' | 'sequence' | 'object' | IDENTIFER
+</pre>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.2 Statements</h3>
+<a name="_194_statements"></a><a name="statements"></a>
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.2.1 Directives</h4>
+<a name="_195_directives"></a><a name="directives"></a>
+<p> <a href="syntax.html#includestmt">INCLUDESTMT</a><br />
+<a href="syntax.html#withstmt">WITHSTMT</a><br />
+<a href="lang_decl.html#namespace">NAMESPACE</a><br />
+
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.2.2 Variables, Constants, Enums</h4>
+<a name="_196_variablesconstantsenums"></a><a name="variablesconstantsenums"></a>
+<p> <a href="syntax.html#vardeclare">VARDECLARE</a><br />
+<a href="syntax.html#constdeclare">CONSTDECLARE</a><br />
+<a href="syntax.html#enumdeclare">ENUMDECLARE</a><br />
+<a href="syntax.html#slicing">SLICING</a><br />
+
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.2.3 Flow Control</h4>
+<a name="_197_flowcontrol"></a><a name="flowcontrol"></a>
+<p> <a href="syntax.html#ifstmt">IFSTMT</a><br />
+<a href="syntax.html#switchstmt">SWITCHSTMT</a><br />
+<a href="syntax.html#breakstmt">BREAKSTMT</a><br />
+<a href="syntax.html#continuestmt">CONTINUESTMT</a><br />
+<a href="syntax.html#retrystmt">RETRYSTMT</a><br />
+<a href="syntax.html#exitstmt">EXITSTMT</a><br />
+<a href="syntax.html#fallthrustmt">FALLTHRUSTMT</a><br />
+<a href="syntax.html#forstmt">FORSTMT</a><br />
+<a href="syntax.html#whilestmt">WHILESTMT</a><br />
+<a href="syntax.html#loopstmt">LOOPSTMT</a><br />
+<a href="syntax.html#gotostmt">GOTOSTMT</a><br />
+<a href="syntax.html#call">CALL</a><br />
+<a href="syntax.html#ifdefstmt">IFDEFSTMT</a><br />
+
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.2.4 Routines</h4>
+<a name="_198_routines"></a><a name="routines"></a>
+<p> <a href="syntax.html#procdeclare">PROCDECLARE</a><br />
+<a href="syntax.html#funcdeclare">FUNCDECLARE</a><br />
+<a href="syntax.html#typedeclare">TYPEDECLARE</a><br />
+<a href="syntax.html#return">RETURN</a><br />
+
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.2.5 include</h4>
+<a name="_199_include"></a><a name="include"></a>
+<p> 
+<a name="includestmt"></a>INCLUDESTMT 
+<pre> INCLUDESTMT  ==:  'include' FILEREF [ 'as' NAMESPACEID ] EOL
+ FILEREF  ==:  A file path that may be enclosed in double-quotes. 
+ NAMESPACEID ==: IDENTIFIER  
+</pre>
+<strong>NOTE</strong> that after the file reference, the only text allowed is the keyword 'as' or the start of a comment. Nothing else is permitted on the same text line.</p>
+
+<p>     See Also: <a href="lang_toplevel.html#_178_includestatement">include statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.3 Sequence Slice</h3>
+<a name="_201_sequenceslice"></a><a name="sequenceslice"></a>
+<p> 
+<a name="slicing"></a>SLICING</p>
+
+<p> 
+<pre>SLICE      ==: SLICESTART INTEXPRESSION SLICEDELIM INTEXPRESSION SLICEEND
+SLICESTART ==: '['
+SLICEDELIM ==: '..'
+SLICEEND   ==: ']'
+</pre>
+    See Also: <a href="lang_def.html#_96_slicingofsequences">Slicing of Sequences</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.4 if</h3>
+<a name="_203_if"></a><a name="if"></a>
+<p> 
+<a name="ifstmt"></a>IFSTMT</p>
+
+<p> 
+<pre> IFSTMT  ==:  IFTEST [ ELSIF ...] [ELSE] ENDIF 
+ IFTEST  ==:  'if' ATOMEXPR [ LABEL ] 'then' [ STMTBLOCK ] 
+ ELSIF   ==:  'elsif' ATOMEXPR 'then' [ STMTBLOCK ] 
+ ELSE    ==:  'else' [ STMTBLOCK ] 
+ ENDIF   ==:  'end' 'if' 
+</pre>
+    See Also: <a href="lang_branch.html#_146_ifstatement">if statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.5 ifdef</h3>
+<a name="_205_ifdef"></a><a name="ifdef"></a>
+<p> 
+<a name="ifdefstmt"></a>IFDEFSTMT</p>
+
+<p> 
+<pre> IFDEFSTMT  ==:  IFDEFTEST [ ELSDEFIF ...] [ELSEDEF] ENDDEFIF 
+ IFDEFTEST  ==:  'ifdef' DEFEXPR 'then' [ STMTBLOCK ] 
+ ELSDEFIF   ==:  'elsifdef' DEFEXPR 'then' [ STMTBLOCK ] 
+ ELSEDEF    ==:  'elsedef' [ STMTBLOCK ] 
+ ENDDEFIF   ==:  'end' 'ifdef' 
+ DEFEXPR    ==:  DEFTERM [ DEFOP DEFTERM ]
+ DEFTERM    ==:  [ 'not' IDENTIFIER ]
+ DEFOP      ==:  'and' | 'or'
+</pre>
+    See Also: <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h4>5.1.5.1 switch</h4>
+<a name="_207_switch"></a><a name="switch"></a>
+<p> 
+<a name="switchstmt"></a>SWITCHSTMT</p>
+
+<p> 
+<pre> SWITCHSTMT  ==:  SWITCHTEST CASE [ CASE ...] [ CASEELSE ] [ ENDSWITCH ]
+ SWITCHTEST  ==:  'switch' EXPRESSION [ WITHFALL ] [ LABEL ] 'do'
+ WITHFALL    ==:  ('with' | 'without') 'fallthru'
+ CASE        ==:  'case' CASELIST 'then' [ STMTBLOCK ]
+ CASELIST    ==:  EXPRESSION [(LISTDELIM EXPRESSION) ...]
+ CASEELSE    ==:  'case' 'else'
+ ENDSWITCH   ==:  'end' 'switch'
+</pre>
+    See Also: <a href="lang_branch.html#_149_switchstatement">switch statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.6 break</h3>
+<a name="_209_break"></a><a name="break"></a>
+<p> 
+<a name="breakstmt"></a>BREAKSTMT</p>
+
+<p> 
+<pre> BREAKSTMT       ==:  'break' [ STRINGLIT ]
+</pre>
+    See Also: <a href="lang_flow.html#_167_breakstatement">break statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.7 continue</h3>
+<a name="_211_continue"></a><a name="continue"></a>
+<p> 
+<a name="continuestmt"></a>CONTINUESTMT</p>
+
+<p> 
+<pre> CONTINUESTMT       ==:  'continue' [ STRINGLIT ]
+</pre>
+    See Also: <a href="lang_flow.html#_168_continuestatement">continue statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.8 retry</h3>
+<a name="_213_retry"></a><a name="retry"></a>
+<p> 
+<a name="retrystmt"></a>RETRYSTMT</p>
+
+<p> 
+<pre> RETRYSTMT       ==:  'retry' [ STRINGLIT ]
+</pre>
+    See Also: <a href="lang_flow.html#_169_retrystatement">retry statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.9 exit</h3>
+<a name="_215_exit"></a><a name="exit"></a>
+<p> 
+<a name="exitstmt"></a>EXITSTMT</p>
+
+<p> 
+<pre> EXITSTMT       ==:  'exit' [ STRINGLIT ]
+</pre>
+    See Also: <a href="lang_flow.html#_166_exitstatement">exit statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.10 fallthru</h3>
+<a name="_217_fallthru"></a><a name="fallthru"></a>
+<p> 
+<a name="fallthrustmt"></a>FALLTHRUSTMT</p>
+
+<p> 
+<pre> FALLTHRUSTMT       ==:  'fallthru'
+</pre>
+    See Also: <a href="lang_branch.html#_149_switchstatement">switch statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.11 for</h3>
+<a name="_219_for"></a><a name="for"></a>
+<p> 
+<a name="forstmt"></a>FORSTMT</p>
+
+<p> 
+<pre> FORSTMT ==: 'for' FORIDX [ LABEL ] 'do' [STMTBLK] 'end' 'for'
+ FORIDX  ==: IDENTIFIER '=' NUMEXPR 'to' NUMEXPR ['by' NUMEXPR]
+</pre>
+    See Also: <a href="lang_loop.html#_164_forstatement">for statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.12 while</h3>
+<a name="_221_while"></a><a name="while"></a>
+<p> 
+<a name="whilestmt"></a>WHILESTMT</p>
+
+<p> 
+<pre>WHILESTMT ==: 
+        'while' BOOLEXPR [WITHENTRY] [LABEL] 'do' STMTBLK [ENTRY] 'end' 'while'
+WITHENTRY ==: 'with' 'entry'
+ENTRY ==: 'entry' [STMTBLK]
+</pre>
+   See Also: <a href="lang_loop.html#_160_whilestatement">while statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.13 loop</h3>
+<a name="_223_loop"></a><a name="loop"></a>
+<p> 
+<a name="loopstmt"></a>LOOPSTMT</p>
+
+<p> 
+<pre>LOOPSTMT ==: 
+   'loop' [WITHENTRY] [LABEL] 'do' STMTBLK [ENTRY] 'until' BOOLEXPR 'end' 'loop'
+</pre>
+   See Also: <a href="lang_loop.html#_161_loopuntilstatement">loop until statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.14 goto</h3>
+<a name="_225_goto"></a><a name="goto"></a>
+<p> 
+<a name="gotostmt"></a>GOTOSTMT</p>
+
+<p> 
+<pre> GOTOSMT ==: 'goto' LABEL
+</pre>
+  See Also: <a href="lang_flow.html#_172_gotostatement">goto statement</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.15 declare a variable</h3>
+<a name="_227_declareavariable"></a><a name="declareavariable"></a>
+<p> 
+<a name="vardeclare"></a>VARDECLARE 
+<pre>VARDECLARE ==: [SCOPETYPE] DATATYPE IDENTLIST
+IDENTLIST ==: IDENT [',' IDENTLIST]
+IDENT ==: IDENTIFIER [ '=' EXPRESSION ]
+</pre>
+Notes: </p>
+<ul><li>The type of the <tt>EXPRESSION</tt> must be compatable with the <tt>DATATYPE</tt>.
+</li></ul>
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.16 declare a constant</h3>
+<a name="_229_declareaconstant"></a><a name="declareaconstant"></a>
+<p> 
+<a name="constdeclare"></a>CONSTDECLARE 
+<pre>CONSTDECLARE ==: [SCOPETYPE] 'constant' IDENTLIST
+</pre>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.17 declare an enumerated value</h3>
+<a name="_231_declareanenumeratedvalue"></a><a name="declareanenumeratedvalue"></a>
+<p> 
+<a name="enumdeclare"></a>ENUMDECLARE 
+<pre>ENUMDECLARE ==: [SCOPETYPE] [ ENUMVAL | ENUMTYPE ]
+ENUMVAL ==: 'enum' ['by' ENUMDELTA ] IDENTLIST
+ENUMDELTA ==: [ '+' | '-' | '*' | '/' ] NUMEXPR
+ENUMTYPE ==: 'enum' 'type' ['by' ENUMDELTA ] IDENTLIST 'end' 'type'
+</pre>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.18 call a procedure or function</h3>
+<a name="_233_callaprocedureorfunction"></a><a name="callaprocedureorfunction"></a>
+<p> 
+<a name="call"></a>CALL Used to call (invoke) either a procedure or a function. 
+<pre>CALL ==: IDENTIFIER '(' [ARGLIST] ')'
+ARGLIST ==: ARGUMENT [',' ARGLIST]
+</pre>
+  See Also: <a href="lang_decl.html#_113_procedures">procedures</a> <a href="lang_decl.html#_114_functions">functions</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.19 declare a procedure</h3>
+<a name="_235_declareaprocedure"></a><a name="declareaprocedure"></a>
+<p> 
+<a name="procdeclare"></a>PROCDECLARE 
+<pre>PROCDECLARE ==: [SCOPETYPE] 'procedure' IDENTIFIER '(' [PARMLIST] ')' [STMTBLK] 'end' 'procedure'
+PARMLIST ==: PARAMETER [',' PARMLIST]
+PARAMETER ==: DATATYPE IDENTIFER
+</pre>
+Notes: </p>
+<ul><li>The <tt>procedure</tt> statement block <strong>must not</strong> contain a <tt>return</tt> statememt.
+</li></ul>
+<p>  See Also: <a href="lang_decl.html#_113_procedures">procedures</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.20 declare a function</h3>
+<a name="_237_declareafunction"></a><a name="declareafunction"></a>
+<p> 
+<a name="funcdeclare"></a>FUNCDECLARE 
+<pre>FUNCDECLARE ==: [SCOPETYPE] 'function' IDENTIFIER '(' [PARMLIST] ')' [STMTBLK] 'end' 'function'
+PARMLIST ==: PARAMETER [',' PARMLIST]
+PARAMETER ==: DATATYPE IDENTIFER
+</pre>
+Notes: </p>
+<ul><li>The <tt>function</tt> statement block <strong>must</strong> contain a <tt>return</tt> statememt.
+</li></ul>
+<p>  See Also: <a href="lang_decl.html#_114_functions">functions</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.21 declare a user defined type</h3>
+<a name="_239_declareauserdefinedtype"></a><a name="declareauserdefinedtype"></a>
+<p> 
+<a name="typedeclare"></a>TYPEDECLARE 
+<pre>TYPEDECLARE ==: [SCOPETYPE] 'type' IDENTIFIER '(' PARAMETER ')' [STMTBLK] 'end' 'type'
+PARAMETER ==: DATATYPE IDENTIFER
+</pre>
+Notes: </p>
+<ul><li>The <tt>type</tt> statement block <strong>must</strong> contain a <tt>return</tt> statememt.
+</li><li>It must return an integer; 0 means that the supplied argument is not of the correct type.
+</li></ul>
+<p>  See Also: <a href="lang_decl.html#_116_types">types</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.22 return the result of a function</h3>
+<a name="_241_returntheresultofafunction"></a><a name="returntheresultofafunction"></a>
+<p> 
+<a name="return"></a>RETURN 
+<pre>RETURN ==: 'return' EXPRESSION
+</pre>
+
+<p>   See Also: <a href="lang_decl.html#_116_types">types</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.23 default namespace</h3>
+<a name="_243_defaultnamespace"></a><a name="defaultnamespace"></a>
+<p> 
+<pre>NAMESPACE ==: 'namespace' IDENTIFIER EOL
+</pre>
+
+<p>   See Also: <a href="lang_decl.html#_132_usingnamespaces">Using namespaces</a></p>
+
+<!-- ..\docs\syntax.txt -->
+<h3>5.1.24 with options</h3>
+<a name="_244_withoptions"></a><a name="withoptions"></a>
+<p> 
+<a name="withstmt"></a>WITHSTMT 
+<pre>WITHSTMT ==: [ "with" | "without" ] WITHOPTION
+WITHOPTION ==: [ "profile" | "profile_time" | "trace" | "batch" |
+                 "type_check" | "indirect_includes" | "inline" | WITHWARNING ]
+WITHWARNING ==: "warning" [ WARNOPT]
+WARNOPT ==: SETWARN | ADDWARN | SAVEWARN | RESTOREWARN | STRICTWARN
+SETWARN ==: ['='] '{' WARNLIST '}'
+ADDWARN ==: ['+=' | '&amp;='] '{' WARNLIST '}'
+SAVEWARN ==: 'save'
+RESTOREWARN ==: 'restore'
+STRICTWARN ==: 'strict'
+</pre>
+
+<p>   See Also: <a href="lang_toplevel.html#_180_withwithout">with / without</a></p>
+
+<p> 
+<!-- ..\docs\internals.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_toplevel.html"><img src="images/prev.png" /></a></td>
+									<td><a href="syntax_toc.html">Up</a></td>
+									<td><a href="internals.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_toplevel.html">4.8 Special Top-Level Statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										<a href="internals.html">5.2 Euphoria Internals</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="miniguide.html">6 Mini-Guides</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

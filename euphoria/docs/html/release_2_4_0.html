@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_5_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_4_0b.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_5_0b.html">9.17 Version 2.5 Beta January 14, 2005</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_4_0b.html">9.19 Version 2.4 Beta April 10, 2003</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.4.0.txt -->
+<h2>9.18 Version 2.4 July 3, 2003</h2>
+<a name="_6731_version24july32003"></a><a name="version24july32003"></a><ul><li><strong>define_c_proc()</strong> and <strong>define_c_func()</strong> have been extended, so in addition to defining C routines in external .dll's and shared libraries, you can now define the parameters and return value for a machine-code routine that your program pokes into its own memory. You can call the machine-code routine using <strong>c_proc()</strong> or  <strong>c_func()</strong>. Thanks to Daniel Kluss.
+</li></ul><ul><li>Performance Improvement: <strong>get4()</strong> and <strong>put4()</strong> in <strong>database.e</strong> have been sped up slightly. They are very important to the overall speed of <strong>EDS</strong>. Thanks to Derek Parnell.
+</li></ul><ul><li>Performance Improvement: <strong>get_bytes()</strong> is now much faster when the number of bytes requested far exceeds the number of bytes remaining in the file. Thanks to Pier Feddema.
+</li></ul><ul><li><strong>Translator</strong>: When translating a huge Euphoria routine (many hundreds of Euphoria statements), the Translator will now output calls to a dereference routine, rather than using in-lined C statements. This reduces the chance of exceeding a size limit imposed by the C compiler (especially Watcom C). It also reduces the  <strong>.exe</strong> size. Since the dereference routine is more likely than the in-lined statements to be in cache, the speed difference is not that great.
+</li></ul><ul><li><strong>Interpreter Source Code</strong>: In <strong>watexw.bat</strong>, <strong>runtime windows=4.0</strong> was added to the link command for building  <strong>exw.exe</strong>.
+</li></ul><ul><li>There are now some checks for invalid argument type and invalid return type in calls to <strong>define_c_func()</strong> and <strong>define_c_proc()</strong>.
+</li></ul><ul><li>Some syntax error messages are now more descriptive when namespace identifiers are involved.
+</li></ul><ul><li>The filesort.ex tutorial program was altered to make it more usable under Linux and FreeBSD.
+</li></ul><ul><li>By default, <strong>safe.e</strong> now does a less-strict, "edges-only" check for memory corruption, when the platform is <strong>WIN32</strong>. Windows programs often access memory that was not allocated using Euphoria's  <strong>allocate()</strong>.
+</li></ul><ul><li><strong>bug fixed</strong>: When a literal floating-point constant in the Euphoria program was larger than about 1e308, the Translator would output "inf" in <strong>init_.c</strong>. This caused the C compiler to issue an undefined symbol error. Thanks to Juergen Luethje.
+</li></ul><ul><li><strong>bug fixed</strong>: In a rare case, the Translator was failing to emit C code to make a copy of a sequence with multiple references to it, before overwriting an element of that sequence. Thanks to Juergen Luethje.
+</li></ul><ul><li><strong>bug fixed</strong>: In certain cases, when a Euphoria program exchanged Euphoria data with a <strong>.dll</strong> written in Euphoria, the data might not be freed (until the program terminated). Thanks to Wayne Overman.
+</li></ul><ul><li><strong>bug fixed</strong>: If you used "asm" in your program, as a private variable or parameter name, the Translator would use "_asm" in the C code. This was not acceptable for some C compilers. The Translator will now avoid using "_asm", as well as "_try", "_Seg16", "_stdcall" and several other single-underscore names that are reserved by various C compilers. Thanks to George Papadopoulos and Matt Lewis.
+</li></ul><ul><li><strong>bug fixed</strong>: If the HOT_KEYS parameter in <strong>ed.ex</strong> was set to FALSE, then <strong>Esc h Enter</strong> would not bring up the help prompt. Thanks to J. Brown.
+</li></ul>
+<p>
+<!-- ..\docs\release\2.4.0b.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_5_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_4_0b.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_5_0b.html">9.17 Version 2.5 Beta January 14, 2005</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_4_0b.html">9.19 Version 2.4 Beta April 10, 2003</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

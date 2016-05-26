@@ -1,0 +1,34 @@
+==Welcome to RedyPad!
+
+RedyPad is a simple text editor written in the Euphoria programing language using the Redy application environment. This application is a demo of what Redy can do, but it is also a useable generic text editor :-)
+
+There could be some bugs, so don't try to edit important files without a backup copy!
+
+====Features
+    * Opening multiple files at the same time in tabs
+    * Syntax highlighting (currently for Euphoria source only)
+    * Smart indentation when pressing Enter on an indented line
+    * Indent/unindent selected lines
+    * Word wrap
+    * Customizeable toolbars
+    * Remembers window positions
+    * Portable (no installation needed, just make sure RedyPad is able to write
+    to the folder it is in, so it can save to a config file).
+
+====Hotkeys currently implemented:
+    * Ctrl + A : Select all
+    * Ctrl + X : Cut selection to clipboard
+    * Ctrl + C : Copy selection to clipboard
+    * Ctrl + V : Paste from clipboard
+    * Tab : Indent selection or shift text to next tab stop
+    * Shift + Tab : Unindent selection
+    * Home, End, PgUp, PgDown, Arrow keys
+    
+====Features planned for future versions
+    * Undo/redo
+    * Search/replace
+    * Spell checker
+    * Block selection
+    * Syntax highlighting for other file types
+    * Customizeable hotkeys
+

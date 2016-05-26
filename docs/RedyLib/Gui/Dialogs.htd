@@ -1,0 +1,12 @@
+=Common Dialogs
+gui/dialogs
+
+===Introduction
+Commonly used dialogs included in RedyLib. More will be added in future versions.
+    * [[About->RedyLib\Gui\Dialogs\About]]
+    * [[DebugConsole->RedyLib\Gui\Dialogs\DebugConsole]]
+    * [[SelectFile->RedyLib\Gui\Dialogs\SelectFile]]
+    * [[EditToolbars->RedyLib\Gui\Dialogs\EditToolbars]]
+    * [[ErrorReport->RedyLib\Gui\Dialogs\ErrorReport]]
+    * [[MainWin->RedyLib\Gui\Dialogs\MainWin]]
+    * [[MsgBox->RedyLib\Gui\Dialogs\MsgBox]]

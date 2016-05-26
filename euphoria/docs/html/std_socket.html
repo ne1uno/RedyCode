@@ -1,0 +1,2860 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_scinot.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_common.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_scinot.html">8.35 Scientific Notation Parsing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_common.html">8.37 Common Internet Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\socket.e -->
+<h2>8.36 Core Sockets</h2>
+<a name="_4739_coresockets"></a><a name="coresockets"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_socket.html#_4739_coresockets">8.36 Core Sockets</a></div>
+<div class="toc_3"><a href="std_socket.html#_4740_errorinformation">8.36.1 Error Information</a></div>
+<div class="toc_4"><a href="std_socket.html#_4742_error_code">8.36.1.1 error_code</a></div>
+<div class="toc_4"><a href="std_socket.html#_4745_ok">8.36.1.2 OK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4747_err_access">8.36.1.3 ERR_ACCESS</a></div>
+<div class="toc_4"><a href="std_socket.html#_4749_err_addrinuse">8.36.1.4 ERR_ADDRINUSE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4751_err_addrnotavail">8.36.1.5 ERR_ADDRNOTAVAIL</a></div>
+<div class="toc_4"><a href="std_socket.html#_4753_err_afnosupport">8.36.1.6 ERR_AFNOSUPPORT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4755_err_again">8.36.1.7 ERR_AGAIN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4757_err_already">8.36.1.8 ERR_ALREADY</a></div>
+<div class="toc_4"><a href="std_socket.html#_4759_err_connaborted">8.36.1.9 ERR_CONNABORTED</a></div>
+<div class="toc_4"><a href="std_socket.html#_4761_err_connrefused">8.36.1.10 ERR_CONNREFUSED</a></div>
+<div class="toc_4"><a href="std_socket.html#_4763_err_connreset">8.36.1.11 ERR_CONNRESET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4765_err_destaddrreq">8.36.1.12 ERR_DESTADDRREQ</a></div>
+<div class="toc_4"><a href="std_socket.html#_4767_err_fault">8.36.1.13 ERR_FAULT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4769_err_hostunreach">8.36.1.14 ERR_HOSTUNREACH</a></div>
+<div class="toc_4"><a href="std_socket.html#_4771_err_inprogress">8.36.1.15 ERR_INPROGRESS</a></div>
+<div class="toc_4"><a href="std_socket.html#_4773_err_intr">8.36.1.16 ERR_INTR</a></div>
+<div class="toc_4"><a href="std_socket.html#_4775_err_inval">8.36.1.17 ERR_INVAL</a></div>
+<div class="toc_4"><a href="std_socket.html#_4777_err_io">8.36.1.18 ERR_IO</a></div>
+<div class="toc_4"><a href="std_socket.html#_4779_err_isconn">8.36.1.19 ERR_ISCONN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4781_err_isdir">8.36.1.20 ERR_ISDIR</a></div>
+<div class="toc_4"><a href="std_socket.html#_4783_err_loop">8.36.1.21 ERR_LOOP</a></div>
+<div class="toc_4"><a href="std_socket.html#_4785_err_mfile">8.36.1.22 ERR_MFILE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4787_err_msgsize">8.36.1.23 ERR_MSGSIZE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4789_err_nametoolong">8.36.1.24 ERR_NAMETOOLONG</a></div>
+<div class="toc_4"><a href="std_socket.html#_4791_err_netdown">8.36.1.25 ERR_NETDOWN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4793_err_netreset">8.36.1.26 ERR_NETRESET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4795_err_netunreach">8.36.1.27 ERR_NETUNREACH</a></div>
+<div class="toc_4"><a href="std_socket.html#_4797_err_nfile">8.36.1.28 ERR_NFILE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4799_err_nobufs">8.36.1.29 ERR_NOBUFS</a></div>
+<div class="toc_4"><a href="std_socket.html#_4801_err_noent">8.36.1.30 ERR_NOENT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4803_err_notconn">8.36.1.31 ERR_NOTCONN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4805_err_notdir">8.36.1.32 ERR_NOTDIR</a></div>
+<div class="toc_4"><a href="std_socket.html#_4807_err_notinitialised">8.36.1.33 ERR_NOTINITIALISED</a></div>
+<div class="toc_4"><a href="std_socket.html#_4809_err_notsock">8.36.1.34 ERR_NOTSOCK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4811_err_opnotsupp">8.36.1.35 ERR_OPNOTSUPP</a></div>
+<div class="toc_4"><a href="std_socket.html#_4813_err_protonosupport">8.36.1.36 ERR_PROTONOSUPPORT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4815_err_prototype">8.36.1.37 ERR_PROTOTYPE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4817_err_rofs">8.36.1.38 ERR_ROFS</a></div>
+<div class="toc_4"><a href="std_socket.html#_4819_err_shutdown">8.36.1.39 ERR_SHUTDOWN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4821_err_socktnosupport">8.36.1.40 ERR_SOCKTNOSUPPORT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4823_err_timedout">8.36.1.41 ERR_TIMEDOUT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4825_err_wouldblock">8.36.1.42 ERR_WOULDBLOCK</a></div>
+<div class="toc_3"><a href="std_socket.html#_4826_socketbackendconstants">8.36.2 Socket Backend Constants</a></div>
+<div class="toc_4"><a href="std_socket.html#_4828_esock_undefined_value">8.36.2.1 ESOCK_UNDEFINED_VALUE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4830_esock_unknown_flag">8.36.2.2 ESOCK_UNKNOWN_FLAG</a></div>
+<div class="toc_4"><a href="std_socket.html#_4832_esock_type_af">8.36.2.3 ESOCK_TYPE_AF</a></div>
+<div class="toc_4"><a href="std_socket.html#_4834_esock_type_type">8.36.2.4 ESOCK_TYPE_TYPE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4836_esock_type_option">8.36.2.5 ESOCK_TYPE_OPTION</a></div>
+<div class="toc_3"><a href="std_socket.html#_4837_sockettypeeuphoriaconstants">8.36.3 Socket Type Euphoria Constants</a></div>
+<div class="toc_4"><a href="std_socket.html#_4839_eaf_unspec">8.36.3.1 EAF_UNSPEC</a></div>
+<div class="toc_4"><a href="std_socket.html#_4841_eaf_unix">8.36.3.2 EAF_UNIX</a></div>
+<div class="toc_4"><a href="std_socket.html#_4843_eaf_inet">8.36.3.3 EAF_INET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4845_eaf_inet6">8.36.3.4 EAF_INET6</a></div>
+<div class="toc_4"><a href="std_socket.html#_4847_eaf_appletalk">8.36.3.5 EAF_APPLETALK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4849_eaf_bth">8.36.3.6 EAF_BTH</a></div>
+<div class="toc_4"><a href="std_socket.html#_4851_esock_stream">8.36.3.7 ESOCK_STREAM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4853_esock_dgram">8.36.3.8 ESOCK_DGRAM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4855_esock_raw">8.36.3.9 ESOCK_RAW</a></div>
+<div class="toc_4"><a href="std_socket.html#_4857_esock_rdm">8.36.3.10 ESOCK_RDM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4859_esock_seqpacket">8.36.3.11 ESOCK_SEQPACKET</a></div>
+<div class="toc_3"><a href="std_socket.html#_4860_sockettypeconstants">8.36.4 Socket Type Constants</a></div>
+<div class="toc_4"><a href="std_socket.html#_4862_af_unspec">8.36.4.1 AF_UNSPEC</a></div>
+<div class="toc_4"><a href="std_socket.html#_4864_af_unix">8.36.4.2 AF_UNIX</a></div>
+<div class="toc_4"><a href="std_socket.html#_4866_af_inet">8.36.4.3 AF_INET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4868_af_inet6">8.36.4.4 AF_INET6</a></div>
+<div class="toc_4"><a href="std_socket.html#_4870_af_appletalk">8.36.4.5 AF_APPLETALK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4872_af_bth">8.36.4.6 AF_BTH</a></div>
+<div class="toc_4"><a href="std_socket.html#_4874_sock_stream">8.36.4.7 SOCK_STREAM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4876_sock_dgram">8.36.4.8 SOCK_DGRAM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4878_sock_raw">8.36.4.9 SOCK_RAW</a></div>
+<div class="toc_4"><a href="std_socket.html#_4880_sock_rdm">8.36.4.10 SOCK_RDM</a></div>
+<div class="toc_4"><a href="std_socket.html#_4882_sock_seqpacket">8.36.4.11 SOCK_SEQPACKET</a></div>
+<div class="toc_3"><a href="std_socket.html#_4883_selectaccessorconstants">8.36.5 Select Accessor Constants</a></div>
+<div class="toc_4"><a href="std_socket.html#_4885_select_socket">8.36.5.1 SELECT_SOCKET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4887_select_is_readable">8.36.5.2 SELECT_IS_READABLE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4889_select_is_writable">8.36.5.3 SELECT_IS_WRITABLE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4891_select_is_error">8.36.5.4 SELECT_IS_ERROR</a></div>
+<div class="toc_3"><a href="std_socket.html#_4892_shutdownoptions">8.36.6 Shutdown Options</a></div>
+<div class="toc_4"><a href="std_socket.html#_4894_sd_send">8.36.6.1 SD_SEND</a></div>
+<div class="toc_4"><a href="std_socket.html#_4896_sd_receive">8.36.6.2 SD_RECEIVE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4898_sd_both">8.36.6.3 SD_BOTH</a></div>
+<div class="toc_3"><a href="std_socket.html#_4899_socketoptions">8.36.7 Socket Options</a></div>
+<div class="toc_4"><a href="std_socket.html#_4900_socketoptionsincommon">8.36.7.1 Socket Options In Common</a></div>
+<div class="toc_4"><a href="std_socket.html#_4902_sol_socket">8.36.7.2 SOL_SOCKET</a></div>
+<div class="toc_4"><a href="std_socket.html#_4904_so_debug">8.36.7.3 SO_DEBUG</a></div>
+<div class="toc_4"><a href="std_socket.html#_4906_so_acceptconn">8.36.7.4 SO_ACCEPTCONN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4908_so_reuseaddr">8.36.7.5 SO_REUSEADDR</a></div>
+<div class="toc_4"><a href="std_socket.html#_4910_so_keepalive">8.36.7.6 SO_KEEPALIVE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4912_so_dontroute">8.36.7.7 SO_DONTROUTE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4914_so_broadcast">8.36.7.8 SO_BROADCAST</a></div>
+<div class="toc_4"><a href="std_socket.html#_4916_so_linger">8.36.7.9 SO_LINGER</a></div>
+<div class="toc_4"><a href="std_socket.html#_4918_so_sndbuf">8.36.7.10 SO_SNDBUF</a></div>
+<div class="toc_4"><a href="std_socket.html#_4920_so_rcvbuf">8.36.7.11 SO_RCVBUF</a></div>
+<div class="toc_4"><a href="std_socket.html#_4922_so_sndlowat">8.36.7.12 SO_SNDLOWAT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4924_so_rcvlowat">8.36.7.13 SO_RCVLOWAT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4926_so_sndtimeo">8.36.7.14 SO_SNDTIMEO</a></div>
+<div class="toc_4"><a href="std_socket.html#_4928_so_rcvtimeo">8.36.7.15 SO_RCVTIMEO</a></div>
+<div class="toc_4"><a href="std_socket.html#_4930_so_error">8.36.7.16 SO_ERROR</a></div>
+<div class="toc_4"><a href="std_socket.html#_4932_so_type">8.36.7.17 SO_TYPE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4934_so_oobinline">8.36.7.18 SO_OOBINLINE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4935_windowssocketoptions">8.36.7.19 Windows Socket Options</a></div>
+<div class="toc_4"><a href="std_socket.html#_4937_so_useloopback">8.36.7.20 SO_USELOOPBACK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4939_so_dontlinger">8.36.7.21 SO_DONTLINGER</a></div>
+<div class="toc_4"><a href="std_socket.html#_4941_so_reuseport">8.36.7.22 SO_REUSEPORT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4943_so_conndata">8.36.7.23 SO_CONNDATA</a></div>
+<div class="toc_4"><a href="std_socket.html#_4945_so_connopt">8.36.7.24 SO_CONNOPT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4947_so_discdata">8.36.7.25 SO_DISCDATA</a></div>
+<div class="toc_4"><a href="std_socket.html#_4949_so_discopt">8.36.7.26 SO_DISCOPT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4951_so_conndatalen">8.36.7.27 SO_CONNDATALEN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4953_so_connoptlen">8.36.7.28 SO_CONNOPTLEN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4955_so_discdatalen">8.36.7.29 SO_DISCDATALEN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4957_so_discoptlen">8.36.7.30 SO_DISCOPTLEN</a></div>
+<div class="toc_4"><a href="std_socket.html#_4959_so_opentype">8.36.7.31 SO_OPENTYPE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4961_so_maxdg">8.36.7.32 SO_MAXDG</a></div>
+<div class="toc_4"><a href="std_socket.html#_4963_so_maxpathdg">8.36.7.33 SO_MAXPATHDG</a></div>
+<div class="toc_4"><a href="std_socket.html#_4965_so_synchronous_altert">8.36.7.34 SO_SYNCHRONOUS_ALTERT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4967_so_synchronous_nonalert">8.36.7.35 SO_SYNCHRONOUS_NONALERT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4968_linuxsocketoptions">8.36.7.36 LINUX Socket Options</a></div>
+<div class="toc_4"><a href="std_socket.html#_4970_so_sndbufforce">8.36.7.37 SO_SNDBUFFORCE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4972_so_rcvbufforce">8.36.7.38 SO_RCVBUFFORCE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4974_so_no_check">8.36.7.39 SO_NO_CHECK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4976_so_priority">8.36.7.40 SO_PRIORITY</a></div>
+<div class="toc_4"><a href="std_socket.html#_4978_so_bsdcompat">8.36.7.41 SO_BSDCOMPAT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4980_so_passcred">8.36.7.42 SO_PASSCRED</a></div>
+<div class="toc_4"><a href="std_socket.html#_4982_so_peercred">8.36.7.43 SO_PEERCRED</a></div>
+<div class="toc_4"><a href="std_socket.html#_4983_securitylevelsaspernrlipv6donotactuallydoanything">8.36.7.44 - Security levels - as per NRL IPv6 - do not actually do anything</a></div>
+<div class="toc_4"><a href="std_socket.html#_4985_so_security_authentication">8.36.7.45 SO_SECURITY_AUTHENTICATION</a></div>
+<div class="toc_4"><a href="std_socket.html#_4987_so_security_encryption_transport">8.36.7.46 SO_SECURITY_ENCRYPTION_TRANSPORT</a></div>
+<div class="toc_4"><a href="std_socket.html#_4989_so_security_encryption_network">8.36.7.47 SO_SECURITY_ENCRYPTION_NETWORK</a></div>
+<div class="toc_4"><a href="std_socket.html#_4991_so_bindtodevice">8.36.7.48 SO_BINDTODEVICE</a></div>
+<div class="toc_4"><a href="std_socket.html#_4992_linuxsocketfilteringoptions">8.36.7.49 LINUX Socket Filtering Options</a></div>
+<div class="toc_4"><a href="std_socket.html#_4994_so_attach_filter">8.36.7.50 SO_ATTACH_FILTER</a></div>
+<div class="toc_4"><a href="std_socket.html#_4996_so_detach_filter">8.36.7.51 SO_DETACH_FILTER</a></div>
+<div class="toc_4"><a href="std_socket.html#_4998_so_peername">8.36.7.52 SO_PEERNAME</a></div>
+<div class="toc_4"><a href="std_socket.html#_5000_so_timestamp">8.36.7.53 SO_TIMESTAMP</a></div>
+<div class="toc_4"><a href="std_socket.html#_5002_scm_timestamp">8.36.7.54 SCM_TIMESTAMP</a></div>
+<div class="toc_4"><a href="std_socket.html#_5004_so_peersec">8.36.7.55 SO_PEERSEC</a></div>
+<div class="toc_4"><a href="std_socket.html#_5006_so_passsec">8.36.7.56 SO_PASSSEC</a></div>
+<div class="toc_4"><a href="std_socket.html#_5008_so_timestampns">8.36.7.57 SO_TIMESTAMPNS</a></div>
+<div class="toc_4"><a href="std_socket.html#_5010_scm_timestampns">8.36.7.58 SCM_TIMESTAMPNS</a></div>
+<div class="toc_4"><a href="std_socket.html#_5012_so_mark">8.36.7.59 SO_MARK</a></div>
+<div class="toc_4"><a href="std_socket.html#_5014_so_timestamping">8.36.7.60 SO_TIMESTAMPING</a></div>
+<div class="toc_4"><a href="std_socket.html#_5016_scm_timestamping">8.36.7.61 SCM_TIMESTAMPING</a></div>
+<div class="toc_4"><a href="std_socket.html#_5018_so_protocol">8.36.7.62 SO_PROTOCOL</a></div>
+<div class="toc_4"><a href="std_socket.html#_5020_so_domain">8.36.7.63 SO_DOMAIN</a></div>
+<div class="toc_4"><a href="std_socket.html#_5022_so_rxq_ovfl">8.36.7.64 SO_RXQ_OVFL</a></div>
+<div class="toc_3"><a href="std_socket.html#_5023_sendflags">8.36.8 Send Flags</a></div>
+<div class="toc_4"><a href="std_socket.html#_5025_msg_oob">8.36.8.1 MSG_OOB</a></div>
+<div class="toc_4"><a href="std_socket.html#_5027_msg_peek">8.36.8.2 MSG_PEEK</a></div>
+<div class="toc_4"><a href="std_socket.html#_5029_msg_dontroute">8.36.8.3 MSG_DONTROUTE</a></div>
+<div class="toc_4"><a href="std_socket.html#_5031_msg_tryhard">8.36.8.4 MSG_TRYHARD</a></div>
+<div class="toc_4"><a href="std_socket.html#_5033_msg_ctrunc">8.36.8.5 MSG_CTRUNC</a></div>
+<div class="toc_4"><a href="std_socket.html#_5035_msg_proxy">8.36.8.6 MSG_PROXY</a></div>
+<div class="toc_4"><a href="std_socket.html#_5037_msg_trunc">8.36.8.7 MSG_TRUNC</a></div>
+<div class="toc_4"><a href="std_socket.html#_5039_msg_dontwait">8.36.8.8 MSG_DONTWAIT</a></div>
+<div class="toc_4"><a href="std_socket.html#_5041_msg_eor">8.36.8.9 MSG_EOR</a></div>
+<div class="toc_4"><a href="std_socket.html#_5043_msg_waitall">8.36.8.10 MSG_WAITALL</a></div>
+<div class="toc_4"><a href="std_socket.html#_5045_msg_fin">8.36.8.11 MSG_FIN</a></div>
+<div class="toc_4"><a href="std_socket.html#_5047_msg_syn">8.36.8.12 MSG_SYN</a></div>
+<div class="toc_4"><a href="std_socket.html#_5049_msg_confirm">8.36.8.13 MSG_CONFIRM</a></div>
+<div class="toc_4"><a href="std_socket.html#_5051_msg_rst">8.36.8.14 MSG_RST</a></div>
+<div class="toc_4"><a href="std_socket.html#_5053_msg_errqueue">8.36.8.15 MSG_ERRQUEUE</a></div>
+<div class="toc_4"><a href="std_socket.html#_5055_msg_nosignal">8.36.8.16 MSG_NOSIGNAL</a></div>
+<div class="toc_4"><a href="std_socket.html#_5057_msg_more">8.36.8.17 MSG_MORE</a></div>
+<div class="toc_3"><a href="std_socket.html#_5058_serverandclientsides">8.36.9 Server and Client Sides</a></div>
+<div class="toc_4"><a href="std_socket.html#_5060_socket_socket">8.36.9.1 SOCKET_SOCKET</a></div>
+<div class="toc_4"><a href="std_socket.html#_5062_socket_sockaddr_in">8.36.9.2 SOCKET_SOCKADDR_IN</a></div>
+<div class="toc_4"><a href="std_socket.html#_5064_socket">8.36.9.3 socket</a></div>
+<div class="toc_4"><a href="std_socket.html#_5066_create">8.36.9.4 create</a></div>
+<div class="toc_4"><a href="std_socket.html#_5072_close">8.36.9.5 close</a></div>
+<div class="toc_4"><a href="std_socket.html#_5077_shutdown">8.36.9.6 shutdown</a></div>
+<div class="toc_4"><a href="std_socket.html#_5082_select">8.36.9.7 select</a></div>
+<div class="toc_4"><a href="std_socket.html#_5087_send">8.36.9.8 send</a></div>
+<div class="toc_4"><a href="std_socket.html#_5091_receive">8.36.9.9 receive</a></div>
+<div class="toc_4"><a href="std_socket.html#_5096_get_option">8.36.9.10 get_option</a></div>
+<div class="toc_4"><a href="std_socket.html#_5103_set_option">8.36.9.11 set_option</a></div>
+<div class="toc_3"><a href="std_socket.html#_5108_clientsideonly">8.36.10 Client Side Only</a></div>
+<div class="toc_4"><a href="std_socket.html#_5110_connect">8.36.10.1 connect</a></div>
+<div class="toc_3"><a href="std_socket.html#_5115_serversideonly">8.36.11 Server Side Only</a></div>
+<div class="toc_4"><a href="std_socket.html#_5117_bind">8.36.11.1 bind</a></div>
+<div class="toc_4"><a href="std_socket.html#_5122_listen">8.36.11.2 listen</a></div>
+<div class="toc_4"><a href="std_socket.html#_5127_accept">8.36.11.3 accept</a></div>
+<div class="toc_3"><a href="std_socket.html#_5131_udponly">8.36.12 UDP Only</a></div>
+<div class="toc_4"><a href="std_socket.html#_5133_send_to">8.36.12.1 send_to</a></div>
+<div class="toc_4"><a href="std_socket.html#_5138_receive_from">8.36.12.2 receive_from</a></div>
+<div class="toc_3"><a href="std_socket.html#_5142_information">8.36.13 Information</a></div>
+<div class="toc_4"><a href="std_socket.html#_5144_service_by_name">8.36.13.1 service_by_name</a></div>
+<div class="toc_4"><a href="std_socket.html#_5150_service_by_port">8.36.13.2 service_by_port</a></div>
+<div class="toc_4"><a href="std_socket.html#_5156_info">8.36.13.3 info</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.1 Error Information</h3>
+<a name="_4740_errorinformation"></a><a name="errorinformation"></a>
+<p> 
+<a name="socketserror_code"></a><a name="code"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.1 error_code</h4>
+<a name="_4742_error_code"></a><a name="error_code"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">error_code</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the error code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_4743_returns"></a><a name="returns"></a>
+<p> Integer <a href="std_socket.html#_4745_ok">OK</a> on no error, otherwise any one of the <tt>ERR_</tt> constants to follow.</p>
+
+<p> 
+<a name="socketsok"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.2 OK</h4>
+<a name="_4745_ok"></a><a name="ok"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">OK</font>
+</pre>
+
+<p>   No error occurred.</p>
+
+<p> 
+<a name="socketserr_access"></a><a name="access"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.3 ERR_ACCESS</h4>
+<a name="_4747_err_access"></a><a name="err_access"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ACCESS</font>
+</pre>
+
+<p>   Permission has been denied. This can happen when using a send_to call on a broadcast address without setting the socket option SO_BROADCAST. Another, possibly more common, reason is you have tried to bind an address that is already exclusively bound by another application.</p>
+
+<p> May occur on a Unix Domain Socket when the socket directory or file could not be accessed due to security.</p>
+
+<p> 
+<a name="socketserr_addrinuse"></a><a name="addrinuse"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.4 ERR_ADDRINUSE</h4>
+<a name="_4749_err_addrinuse"></a><a name="err_addrinuse"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ADDRINUSE</font>
+</pre>
+
+<p>   Address is already in use.</p>
+
+<p> 
+<a name="socketserr_addrnotavail"></a><a name="addrnotavail"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.5 ERR_ADDRNOTAVAIL</h4>
+<a name="_4751_err_addrnotavail"></a><a name="err_addrnotavail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ADDRNOTAVAIL</font>
+</pre>
+
+<p>   The specified address is not a valid local IP address on this computer.</p>
+
+<p> 
+<a name="socketserr_afnosupport"></a><a name="afnosupport"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.6 ERR_AFNOSUPPORT</h4>
+<a name="_4753_err_afnosupport"></a><a name="err_afnosupport"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_AFNOSUPPORT</font>
+</pre>
+
+<p>   Address family not supported by the protocol family.</p>
+
+<p> 
+<a name="socketserr_again"></a><a name="again"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.7 ERR_AGAIN</h4>
+<a name="_4755_err_again"></a><a name="err_again"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_AGAIN</font>
+</pre>
+
+<p>   Kernel resources to complete the request are temporarly unavailable.</p>
+
+<p> 
+<a name="socketserr_already"></a><a name="already"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.8 ERR_ALREADY</h4>
+<a name="_4757_err_already"></a><a name="err_already"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ALREADY</font>
+</pre>
+
+<p>   Operation is already in progress.</p>
+
+<p> 
+<a name="socketserr_connaborted"></a><a name="connaborted"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.9 ERR_CONNABORTED</h4>
+<a name="_4759_err_connaborted"></a><a name="err_connaborted"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_CONNABORTED</font>
+</pre>
+
+<p>   Software has caused a connection to be aborted.</p>
+
+<p> 
+<a name="socketserr_connrefused"></a><a name="connrefused"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.10 ERR_CONNREFUSED</h4>
+<a name="_4761_err_connrefused"></a><a name="err_connrefused"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_CONNREFUSED</font>
+</pre>
+
+<p>   Connection was refused.</p>
+
+<p> 
+<a name="socketserr_connreset"></a><a name="connreset"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.11 ERR_CONNRESET</h4>
+<a name="_4763_err_connreset"></a><a name="err_connreset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_CONNRESET</font>
+</pre>
+
+<p>   An incomming connection was supplied however it was terminated by the remote peer.</p>
+
+<p> 
+<a name="socketserr_destaddrreq"></a><a name="destaddrreq"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.12 ERR_DESTADDRREQ</h4>
+<a name="_4765_err_destaddrreq"></a><a name="err_destaddrreq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_DESTADDRREQ</font>
+</pre>
+
+<p>   Destination address required.</p>
+
+<p> 
+<a name="socketserr_fault"></a><a name="fault"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.13 ERR_FAULT</h4>
+<a name="_4767_err_fault"></a><a name="err_fault"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_FAULT</font>
+</pre>
+
+<p>   Address creation has failed internally.</p>
+
+<p> 
+<a name="socketserr_hostunreach"></a><a name="hostunreach"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.14 ERR_HOSTUNREACH</h4>
+<a name="_4769_err_hostunreach"></a><a name="err_hostunreach"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_HOSTUNREACH</font>
+</pre>
+
+<p>   No route to the host specified could be found.</p>
+
+<p> 
+<a name="socketserr_inprogress"></a><a name="inprogress"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.15 ERR_INPROGRESS</h4>
+<a name="_4771_err_inprogress"></a><a name="err_inprogress"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_INPROGRESS</font>
+</pre>
+
+<p>   A blocking call is inprogress.</p>
+
+<p> 
+<a name="socketserr_intr"></a><a name="intr"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.16 ERR_INTR</h4>
+<a name="_4773_err_intr"></a><a name="err_intr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_INTR</font>
+</pre>
+
+<p>   A blocking call was cancelled or interrupted.</p>
+
+<p> 
+<a name="socketserr_inval"></a><a name="inval"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.17 ERR_INVAL</h4>
+<a name="_4775_err_inval"></a><a name="err_inval"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_INVAL</font>
+</pre>
+
+<p>   An invalid sequence of command calls were made, for instance trying to <tt>accept</tt> before an actual <tt>listen</tt> was called.</p>
+
+<p> 
+<a name="socketserr_io"></a><a name="io"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.18 ERR_IO</h4>
+<a name="_4777_err_io"></a><a name="err_io"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_IO</font>
+</pre>
+
+<p>   An I/O error occurred while making the directory entry or allocating the inode. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_isconn"></a><a name="isconn"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.19 ERR_ISCONN</h4>
+<a name="_4779_err_isconn"></a><a name="err_isconn"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ISCONN</font>
+</pre>
+
+<p>   Socket is already connected.</p>
+
+<p> 
+<a name="socketserr_isdir"></a><a name="isdir"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.20 ERR_ISDIR</h4>
+<a name="_4781_err_isdir"></a><a name="err_isdir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ISDIR</font>
+</pre>
+
+<p>   An empty pathname was specified. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_loop"></a><a name="loop"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.21 ERR_LOOP</h4>
+<a name="_4783_err_loop"></a><a name="err_loop"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_LOOP</font>
+</pre>
+
+<p>   Too many symbolic links were encountered. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_mfile"></a><a name="mfile"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.22 ERR_MFILE</h4>
+<a name="_4785_err_mfile"></a><a name="err_mfile"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_MFILE</font>
+</pre>
+
+<p>   The queue is not empty upon routine call.</p>
+
+<p> 
+<a name="socketserr_msgsize"></a><a name="msgsize"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.23 ERR_MSGSIZE</h4>
+<a name="_4787_err_msgsize"></a><a name="err_msgsize"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_MSGSIZE</font>
+</pre>
+
+<p>   Message is too long for buffer size. This would indicate an internal error to Euphoria as Euphoria sets a dynamic buffer size.</p>
+
+<p> 
+<a name="socketserr_nametoolong"></a><a name="nametoolong"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.24 ERR_NAMETOOLONG</h4>
+<a name="_4789_err_nametoolong"></a><a name="err_nametoolong"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NAMETOOLONG</font>
+</pre>
+
+<p>   Component of the path name exceeded 255 characters or the entire path exceeded 1023 characters. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_netdown"></a><a name="netdown"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.25 ERR_NETDOWN</h4>
+<a name="_4791_err_netdown"></a><a name="err_netdown"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NETDOWN</font>
+</pre>
+
+<p>   The network subsystem is down or has failed</p>
+
+<p> 
+<a name="socketserr_netreset"></a><a name="netreset"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.26 ERR_NETRESET</h4>
+<a name="_4793_err_netreset"></a><a name="err_netreset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NETRESET</font>
+</pre>
+
+<p>   Network has dropped it's connection on reset.</p>
+
+<p> 
+<a name="socketserr_netunreach"></a><a name="netunreach"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.27 ERR_NETUNREACH</h4>
+<a name="_4795_err_netunreach"></a><a name="err_netunreach"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NETUNREACH</font>
+</pre>
+
+<p>   Network is unreachable.</p>
+
+<p> 
+<a name="socketserr_nfile"></a><a name="nfile"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.28 ERR_NFILE</h4>
+<a name="_4797_err_nfile"></a><a name="err_nfile"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NFILE</font>
+</pre>
+
+<p>   Not a file. (Unix Domain Sockets).</p>
+
+<p> 
+<a name="socketserr_nobufs"></a><a name="nobufs"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.29 ERR_NOBUFS</h4>
+<a name="_4799_err_nobufs"></a><a name="err_nobufs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOBUFS</font>
+</pre>
+
+<p>   No buffer space is available.</p>
+
+<p> 
+<a name="socketserr_noent"></a><a name="noent"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.30 ERR_NOENT</h4>
+<a name="_4801_err_noent"></a><a name="err_noent"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOENT</font>
+</pre>
+
+<p>   Named socket does not exist. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_notconn"></a><a name="notconn"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.31 ERR_NOTCONN</h4>
+<a name="_4803_err_notconn"></a><a name="err_notconn"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOTCONN</font>
+</pre>
+
+<p>   Socket is not connected.</p>
+
+<p> 
+<a name="socketserr_notdir"></a><a name="notdir"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.32 ERR_NOTDIR</h4>
+<a name="_4805_err_notdir"></a><a name="err_notdir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOTDIR</font>
+</pre>
+
+<p>   Component of the path prefix is not a directory. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_notinitialised"></a><a name="notinitialised"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.33 ERR_NOTINITIALISED</h4>
+<a name="_4807_err_notinitialised"></a><a name="err_notinitialised"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOTINITIALISED</font>
+</pre>
+
+<p>   Socket system is not initialized (Windows only)</p>
+
+<p> 
+<a name="socketserr_notsock"></a><a name="notsock"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.34 ERR_NOTSOCK</h4>
+<a name="_4809_err_notsock"></a><a name="err_notsock"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_NOTSOCK</font>
+</pre>
+
+<p>   The descriptor is not a socket.</p>
+
+<p> 
+<a name="socketserr_opnotsupp"></a><a name="opnotsupp"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.35 ERR_OPNOTSUPP</h4>
+<a name="_4811_err_opnotsupp"></a><a name="err_opnotsupp"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_OPNOTSUPP</font>
+</pre>
+
+<p>   Operation is not supported on this type of socket.</p>
+
+<p> 
+<a name="socketserr_protonosupport"></a><a name="protonosupport"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.36 ERR_PROTONOSUPPORT</h4>
+<a name="_4813_err_protonosupport"></a><a name="err_protonosupport"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_PROTONOSUPPORT</font>
+</pre>
+
+<p>   Protocol not supported.</p>
+
+<p> 
+<a name="socketserr_prototype"></a><a name="prototype"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.37 ERR_PROTOTYPE</h4>
+<a name="_4815_err_prototype"></a><a name="err_prototype"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_PROTOTYPE</font>
+</pre>
+
+<p>   Protocol is the wrong type for the socket.</p>
+
+<p> 
+<a name="socketserr_rofs"></a><a name="rofs"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.38 ERR_ROFS</h4>
+<a name="_4817_err_rofs"></a><a name="err_rofs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_ROFS</font>
+</pre>
+
+<p>   The name would reside on a read-only file system. (Unix Domain Socket).</p>
+
+<p> 
+<a name="socketserr_shutdown"></a><a name="shutdown"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.39 ERR_SHUTDOWN</h4>
+<a name="_4819_err_shutdown"></a><a name="err_shutdown"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_SHUTDOWN</font>
+</pre>
+
+<p>   The socket has been shutdown. Possibly a send/receive call after a shutdown took place.</p>
+
+<p> 
+<a name="socketserr_socktnosupport"></a><a name="socktnosupport"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.40 ERR_SOCKTNOSUPPORT</h4>
+<a name="_4821_err_socktnosupport"></a><a name="err_socktnosupport"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_SOCKTNOSUPPORT</font>
+</pre>
+
+<p>   Socket type is not supported.</p>
+
+<p> 
+<a name="socketserr_timedout"></a><a name="timedout"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.41 ERR_TIMEDOUT</h4>
+<a name="_4823_err_timedout"></a><a name="err_timedout"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_TIMEDOUT</font>
+</pre>
+
+<p>   Connection has timed out.</p>
+
+<p> 
+<a name="socketserr_wouldblock"></a><a name="wouldblock"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.1.42 ERR_WOULDBLOCK</h4>
+<a name="_4825_err_wouldblock"></a><a name="err_wouldblock"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ERR_WOULDBLOCK</font>
+</pre>
+
+<p>   The operation would block on a socket marked as non-blocking.</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.2 Socket Backend Constants</h3>
+<a name="_4826_socketbackendconstants"></a><a name="socketbackendconstants"></a>
+<p> These values are used by the Euphoria backend to pass information to this library. The TYPE constants are used to identify to the <a href="std_socket.html#_5156_info">info</a> function which family of constants are being retrieved (AF protocols, socket types, and socket options, respectively).</p>
+
+<p> 
+<a name="socketsesock_undefined_value"></a><a name="undefined_value"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.2.1 ESOCK_UNDEFINED_VALUE</h4>
+<a name="_4828_esock_undefined_value"></a><a name="esock_undefined_value"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_UNDEFINED_VALUE</font>
+</pre>
+
+<p>  when a particular constant was not defined by C,the backend returns this value</p>
+
+<p> 
+<a name="socketsesock_unknown_flag"></a><a name="unknown_flag"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.2.2 ESOCK_UNKNOWN_FLAG</h4>
+<a name="_4830_esock_unknown_flag"></a><a name="esock_unknown_flag"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_UNKNOWN_FLAG</font>
+</pre>
+
+<p>  if the backend doesn't recognize the flag in question</p>
+
+<p> 
+<a name="socketsesock_type_af"></a><a name="type_af"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.2.3 ESOCK_TYPE_AF</h4>
+<a name="_4832_esock_type_af"></a><a name="esock_type_af"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_TYPE_AF</font>
+</pre>
+
+<p> 
+<a name="socketsesock_type_type"></a><a name="type_type"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.2.4 ESOCK_TYPE_TYPE</h4>
+<a name="_4834_esock_type_type"></a><a name="esock_type_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_TYPE_TYPE</font>
+</pre>
+
+<p> 
+<a name="socketsesock_type_option"></a><a name="type_option"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.2.5 ESOCK_TYPE_OPTION</h4>
+<a name="_4836_esock_type_option"></a><a name="esock_type_option"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_TYPE_OPTION</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.3 Socket Type Euphoria Constants</h3>
+<a name="_4837_sockettypeeuphoriaconstants"></a><a name="sockettypeeuphoriaconstants"></a>
+<p> These values are used to retrieve the known values for <tt>family</tt> and <tt>sock_type</tt> parameters of the <a href="std_socket.html#_5066_create">create</a> function from the Euphoria backend. (The reason for doing it this way is to retrieve the values defined in C, instead of duplicating them here.) These constants are guarranteed to never change, and to be the same value across platforms.</p>
+
+<p> 
+<a name="socketseaf_unspec"></a><a name="unspec"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.1 EAF_UNSPEC</h4>
+<a name="_4839_eaf_unspec"></a><a name="eaf_unspec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_UNSPEC</font>
+</pre>
+
+<p> Address family is unspecified</p>
+
+<p> 
+<a name="socketseaf_unix"></a><a name="unix"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.2 EAF_UNIX</h4>
+<a name="_4841_eaf_unix"></a><a name="eaf_unix"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_UNIX</font>
+</pre>
+
+<p> Local communications</p>
+
+<p> 
+<a name="socketseaf_inet"></a><a name="inet"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.3 EAF_INET</h4>
+<a name="_4843_eaf_inet"></a><a name="eaf_inet"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_INET</font>
+</pre>
+
+<p> IPv4 Internet protocols</p>
+
+<p> 
+<a name="socketseaf_inet6"></a><a name="inet6"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.4 EAF_INET6</h4>
+<a name="_4845_eaf_inet6"></a><a name="eaf_inet6"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_INET6</font>
+</pre>
+
+<p> IPv6 Internet protocols</p>
+
+<p> 
+<a name="socketseaf_appletalk"></a><a name="appletalk"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.5 EAF_APPLETALK</h4>
+<a name="_4847_eaf_appletalk"></a><a name="eaf_appletalk"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_APPLETALK</font>
+</pre>
+
+<p> Appletalk</p>
+
+<p> 
+<a name="socketseaf_bth"></a><a name="bth"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.6 EAF_BTH</h4>
+<a name="_4849_eaf_bth"></a><a name="eaf_bth"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">EAF_BTH</font>
+</pre>
+
+<p> Bluetooth (currently Windows-only)</p>
+
+<p> 
+<a name="socketsesock_stream"></a><a name="stream"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.7 ESOCK_STREAM</h4>
+<a name="_4851_esock_stream"></a><a name="esock_stream"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_STREAM</font>
+</pre>
+
+<p> Provides sequenced, reliable, two-way, connection-based byte streams. An out-of-band data transmission mechanism may be supported.</p>
+
+<p> 
+<a name="socketsesock_dgram"></a><a name="dgram"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.8 ESOCK_DGRAM</h4>
+<a name="_4853_esock_dgram"></a><a name="esock_dgram"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_DGRAM</font>
+</pre>
+
+<p> Supports datagrams (connectionless, unreliable messages of a fixed maximum length).</p>
+
+<p> 
+<a name="socketsesock_raw"></a><a name="raw"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.9 ESOCK_RAW</h4>
+<a name="_4855_esock_raw"></a><a name="esock_raw"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_RAW</font>
+</pre>
+
+<p> Provides raw network protocol access.</p>
+
+<p> 
+<a name="socketsesock_rdm"></a><a name="rdm"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.10 ESOCK_RDM</h4>
+<a name="_4857_esock_rdm"></a><a name="esock_rdm"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_RDM</font>
+</pre>
+
+<p> Provides a reliable datagram layer that does not guarantee ordering.</p>
+
+<p> 
+<a name="socketsesock_seqpacket"></a><a name="seqpacket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.3.11 ESOCK_SEQPACKET</h4>
+<a name="_4859_esock_seqpacket"></a><a name="esock_seqpacket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">ESOCK_SEQPACKET</font>
+</pre>
+
+<p> Obsolete and should not be used in new programs</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.4 Socket Type Constants</h3>
+<a name="_4860_sockettypeconstants"></a><a name="sockettypeconstants"></a>
+<p> These values are passed as the <tt>family</tt> and <tt>sock_type</tt> parameters of the <a href="std_socket.html#_5066_create">create</a> function. They are OS-dependent.</p>
+
+<p> 
+<a name="socketsaf_unspec"></a><a name="unspec"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.1 AF_UNSPEC</h4>
+<a name="_4862_af_unspec"></a><a name="af_unspec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_UNSPEC</font>
+</pre>
+
+<p> Address family is unspecified</p>
+
+<p> 
+<a name="socketsaf_unix"></a><a name="unix"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.2 AF_UNIX</h4>
+<a name="_4864_af_unix"></a><a name="af_unix"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_UNIX</font>
+</pre>
+
+<p> Local communications</p>
+
+<p> 
+<a name="socketsaf_inet"></a><a name="inet"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.3 AF_INET</h4>
+<a name="_4866_af_inet"></a><a name="af_inet"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_INET</font>
+</pre>
+
+<p> IPv4 Internet protocols</p>
+
+<p> 
+<a name="socketsaf_inet6"></a><a name="inet6"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.4 AF_INET6</h4>
+<a name="_4868_af_inet6"></a><a name="af_inet6"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_INET6</font>
+</pre>
+
+<p> IPv6 Internet protocols</p>
+
+<p> 
+<a name="socketsaf_appletalk"></a><a name="appletalk"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.5 AF_APPLETALK</h4>
+<a name="_4870_af_appletalk"></a><a name="af_appletalk"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_APPLETALK</font>
+</pre>
+
+<p> Appletalk</p>
+
+<p> 
+<a name="socketsaf_bth"></a><a name="bth"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.6 AF_BTH</h4>
+<a name="_4872_af_bth"></a><a name="af_bth"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">AF_BTH</font>
+</pre>
+
+<p> Bluetooth (currently Windows-only)</p>
+
+<p> 
+<a name="socketssock_stream"></a><a name="stream"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.7 SOCK_STREAM</h4>
+<a name="_4874_sock_stream"></a><a name="sock_stream"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOCK_STREAM</font>
+</pre>
+
+<p> Provides sequenced, reliable, two-way, connection-based byte streams. An out-of-band data transmission mechanism may be supported.</p>
+
+<p> 
+<a name="socketssock_dgram"></a><a name="dgram"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.8 SOCK_DGRAM</h4>
+<a name="_4876_sock_dgram"></a><a name="sock_dgram"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOCK_DGRAM</font>
+</pre>
+
+<p> Supports datagrams (connectionless, unreliable messages of a fixed maximum length).</p>
+
+<p> 
+<a name="socketssock_raw"></a><a name="raw"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.9 SOCK_RAW</h4>
+<a name="_4878_sock_raw"></a><a name="sock_raw"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOCK_RAW</font>
+</pre>
+
+<p> Provides raw network protocol access.</p>
+
+<p> 
+<a name="socketssock_rdm"></a><a name="rdm"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.10 SOCK_RDM</h4>
+<a name="_4880_sock_rdm"></a><a name="sock_rdm"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOCK_RDM</font>
+</pre>
+
+<p> Provides a reliable datagram layer that does not guarantee ordering.</p>
+
+<p> 
+<a name="socketssock_seqpacket"></a><a name="seqpacket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.4.11 SOCK_SEQPACKET</h4>
+<a name="_4882_sock_seqpacket"></a><a name="sock_seqpacket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOCK_SEQPACKET</font>
+</pre>
+
+<p> Obsolete and should not be used in new programs</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.5 Select Accessor Constants</h3>
+<a name="_4883_selectaccessorconstants"></a><a name="selectaccessorconstants"></a>
+<p> Use with the result of <a href="std_socket.html#_5082_select">select</a>.</p>
+
+<p> 
+<a name="socketsselect_socket"></a><a name="socket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.5.1 SELECT_SOCKET</h4>
+<a name="_4885_select_socket"></a><a name="select_socket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public enum </font><font color="#330033">SELECT_SOCKET</font>
+</pre>
+
+<p> The socket</p>
+
+<p> 
+<a name="socketsselect_is_readable"></a><a name="is_readable"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.5.2 SELECT_IS_READABLE</h4>
+<a name="_4887_select_is_readable"></a><a name="select_is_readable"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public enum </font><font color="#330033">SELECT_IS_READABLE</font>
+</pre>
+
+<p> Boolean (1/0) value indicating the readability.</p>
+
+<p> 
+<a name="socketsselect_is_writable"></a><a name="is_writable"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.5.3 SELECT_IS_WRITABLE</h4>
+<a name="_4889_select_is_writable"></a><a name="select_is_writable"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public enum </font><font color="#330033">SELECT_IS_WRITABLE</font>
+</pre>
+
+<p> Boolean (1/0) value indicating the writeability.</p>
+
+<p> 
+<a name="socketsselect_is_error"></a><a name="is_error"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.5.4 SELECT_IS_ERROR</h4>
+<a name="_4891_select_is_error"></a><a name="select_is_error"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public enum </font><font color="#330033">SELECT_IS_ERROR</font>
+</pre>
+
+<p> Boolean (1/0) value indicating the error state.</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.6 Shutdown Options</h3>
+<a name="_4892_shutdownoptions"></a><a name="shutdownoptions"></a>
+<p> Pass one of the following to the <tt>method</tt> parameter of <a href="std_socket.html#_5077_shutdown">shutdown</a>.</p>
+
+<p> 
+<a name="socketssd_send"></a><a name="send"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.6.1 SD_SEND</h4>
+<a name="_4894_sd_send"></a><a name="sd_send"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SD_SEND</font>
+</pre>
+
+<p> Shutdown the send operations.</p>
+
+<p> 
+<a name="socketssd_receive"></a><a name="receive"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.6.2 SD_RECEIVE</h4>
+<a name="_4896_sd_receive"></a><a name="sd_receive"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SD_RECEIVE</font>
+</pre>
+
+<p> Shutdown the receive operations.</p>
+
+<p> 
+<a name="socketssd_both"></a><a name="both"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.6.3 SD_BOTH</h4>
+<a name="_4898_sd_both"></a><a name="sd_both"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SD_BOTH</font>
+</pre>
+
+<p> Shutdown both send and receive operations.</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.7 Socket Options</h3>
+<a name="_4899_socketoptions"></a><a name="socketoptions"></a>
+<p> Pass to the <tt>optname</tt> parameter of the functions <a href="std_socket.html#_5096_get_option">get_option</a> and <a href="std_socket.html#_5103_set_option">set_option</a>.</p>
+
+<p> These options are highly OS specific and are normally not needed for most socket communication. They are provided here for your convenience. If you should need to set socket options, please refer to your OS reference material.</p>
+
+<p> There may be other values that your OS defines and some defined here are not supported on all operating systems.</p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.1 Socket Options In Common</h4>
+<a name="_4900_socketoptionsincommon"></a><a name="socketoptionsincommon"></a>
+<p> 
+<a name="socketssol_socket"></a><a name="socket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.2 SOL_SOCKET</h4>
+<a name="_4902_sol_socket"></a><a name="sol_socket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SOL_SOCKET</font>
+</pre>
+
+<p> 
+<a name="socketsso_debug"></a><a name="debug"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.3 SO_DEBUG</h4>
+<a name="_4904_so_debug"></a><a name="so_debug"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DEBUG</font>
+</pre>
+
+<p> 
+<a name="socketsso_acceptconn"></a><a name="acceptconn"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.4 SO_ACCEPTCONN</h4>
+<a name="_4906_so_acceptconn"></a><a name="so_acceptconn"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_ACCEPTCONN</font>
+</pre>
+
+<p> 
+<a name="socketsso_reuseaddr"></a><a name="reuseaddr"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.5 SO_REUSEADDR</h4>
+<a name="_4908_so_reuseaddr"></a><a name="so_reuseaddr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_REUSEADDR</font>
+</pre>
+
+<p> 
+<a name="socketsso_keepalive"></a><a name="keepalive"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.6 SO_KEEPALIVE</h4>
+<a name="_4910_so_keepalive"></a><a name="so_keepalive"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_KEEPALIVE</font>
+</pre>
+
+<p> 
+<a name="socketsso_dontroute"></a><a name="dontroute"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.7 SO_DONTROUTE</h4>
+<a name="_4912_so_dontroute"></a><a name="so_dontroute"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DONTROUTE</font>
+</pre>
+
+<p> 
+<a name="socketsso_broadcast"></a><a name="broadcast"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.8 SO_BROADCAST</h4>
+<a name="_4914_so_broadcast"></a><a name="so_broadcast"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_BROADCAST</font>
+</pre>
+
+<p> 
+<a name="socketsso_linger"></a><a name="linger"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.9 SO_LINGER</h4>
+<a name="_4916_so_linger"></a><a name="so_linger"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_LINGER</font>
+</pre>
+
+<p> 
+<a name="socketsso_sndbuf"></a><a name="sndbuf"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.10 SO_SNDBUF</h4>
+<a name="_4918_so_sndbuf"></a><a name="so_sndbuf"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SNDBUF</font>
+</pre>
+
+<p> 
+<a name="socketsso_rcvbuf"></a><a name="rcvbuf"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.11 SO_RCVBUF</h4>
+<a name="_4920_so_rcvbuf"></a><a name="so_rcvbuf"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_RCVBUF</font>
+</pre>
+
+<p> 
+<a name="socketsso_sndlowat"></a><a name="sndlowat"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.12 SO_SNDLOWAT</h4>
+<a name="_4922_so_sndlowat"></a><a name="so_sndlowat"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SNDLOWAT</font>
+</pre>
+
+<p> 
+<a name="socketsso_rcvlowat"></a><a name="rcvlowat"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.13 SO_RCVLOWAT</h4>
+<a name="_4924_so_rcvlowat"></a><a name="so_rcvlowat"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_RCVLOWAT</font>
+</pre>
+
+<p> 
+<a name="socketsso_sndtimeo"></a><a name="sndtimeo"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.14 SO_SNDTIMEO</h4>
+<a name="_4926_so_sndtimeo"></a><a name="so_sndtimeo"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SNDTIMEO</font>
+</pre>
+
+<p> 
+<a name="socketsso_rcvtimeo"></a><a name="rcvtimeo"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.15 SO_RCVTIMEO</h4>
+<a name="_4928_so_rcvtimeo"></a><a name="so_rcvtimeo"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_RCVTIMEO</font>
+</pre>
+
+<p> 
+<a name="socketsso_error"></a><a name="error"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.16 SO_ERROR</h4>
+<a name="_4930_so_error"></a><a name="so_error"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_ERROR</font>
+</pre>
+
+<p> 
+<a name="socketsso_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.17 SO_TYPE</h4>
+<a name="_4932_so_type"></a><a name="so_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_TYPE</font>
+</pre>
+
+<p> 
+<a name="socketsso_oobinline"></a><a name="oobinline"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.18 SO_OOBINLINE</h4>
+<a name="_4934_so_oobinline"></a><a name="so_oobinline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_OOBINLINE</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.19 Windows Socket Options</h4>
+<a name="_4935_windowssocketoptions"></a><a name="windowssocketoptions"></a>
+<p> 
+<a name="socketsso_useloopback"></a><a name="useloopback"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.20 SO_USELOOPBACK</h4>
+<a name="_4937_so_useloopback"></a><a name="so_useloopback"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_USELOOPBACK</font>
+</pre>
+
+<p> 
+<a name="socketsso_dontlinger"></a><a name="dontlinger"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.21 SO_DONTLINGER</h4>
+<a name="_4939_so_dontlinger"></a><a name="so_dontlinger"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DONTLINGER</font>
+</pre>
+
+<p> 
+<a name="socketsso_reuseport"></a><a name="reuseport"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.22 SO_REUSEPORT</h4>
+<a name="_4941_so_reuseport"></a><a name="so_reuseport"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_REUSEPORT</font>
+</pre>
+
+<p> 
+<a name="socketsso_conndata"></a><a name="conndata"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.23 SO_CONNDATA</h4>
+<a name="_4943_so_conndata"></a><a name="so_conndata"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_CONNDATA</font>
+</pre>
+
+<p> 
+<a name="socketsso_connopt"></a><a name="connopt"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.24 SO_CONNOPT</h4>
+<a name="_4945_so_connopt"></a><a name="so_connopt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_CONNOPT</font>
+</pre>
+
+<p> 
+<a name="socketsso_discdata"></a><a name="discdata"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.25 SO_DISCDATA</h4>
+<a name="_4947_so_discdata"></a><a name="so_discdata"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DISCDATA</font>
+</pre>
+
+<p> 
+<a name="socketsso_discopt"></a><a name="discopt"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.26 SO_DISCOPT</h4>
+<a name="_4949_so_discopt"></a><a name="so_discopt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DISCOPT</font>
+</pre>
+
+<p> 
+<a name="socketsso_conndatalen"></a><a name="conndatalen"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.27 SO_CONNDATALEN</h4>
+<a name="_4951_so_conndatalen"></a><a name="so_conndatalen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_CONNDATALEN</font>
+</pre>
+
+<p> 
+<a name="socketsso_connoptlen"></a><a name="connoptlen"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.28 SO_CONNOPTLEN</h4>
+<a name="_4953_so_connoptlen"></a><a name="so_connoptlen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_CONNOPTLEN</font>
+</pre>
+
+<p> 
+<a name="socketsso_discdatalen"></a><a name="discdatalen"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.29 SO_DISCDATALEN</h4>
+<a name="_4955_so_discdatalen"></a><a name="so_discdatalen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DISCDATALEN</font>
+</pre>
+
+<p> 
+<a name="socketsso_discoptlen"></a><a name="discoptlen"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.30 SO_DISCOPTLEN</h4>
+<a name="_4957_so_discoptlen"></a><a name="so_discoptlen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DISCOPTLEN</font>
+</pre>
+
+<p> 
+<a name="socketsso_opentype"></a><a name="opentype"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.31 SO_OPENTYPE</h4>
+<a name="_4959_so_opentype"></a><a name="so_opentype"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_OPENTYPE</font>
+</pre>
+
+<p> 
+<a name="socketsso_maxdg"></a><a name="maxdg"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.32 SO_MAXDG</h4>
+<a name="_4961_so_maxdg"></a><a name="so_maxdg"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_MAXDG</font>
+</pre>
+
+<p> 
+<a name="socketsso_maxpathdg"></a><a name="maxpathdg"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.33 SO_MAXPATHDG</h4>
+<a name="_4963_so_maxpathdg"></a><a name="so_maxpathdg"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_MAXPATHDG</font>
+</pre>
+
+<p> 
+<a name="socketsso_synchronous_altert"></a><a name="synchronous_altert"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.34 SO_SYNCHRONOUS_ALTERT</h4>
+<a name="_4965_so_synchronous_altert"></a><a name="so_synchronous_altert"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SYNCHRONOUS_ALTERT</font>
+</pre>
+
+<p> 
+<a name="socketsso_synchronous_nonalert"></a><a name="synchronous_nonalert"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.35 SO_SYNCHRONOUS_NONALERT</h4>
+<a name="_4967_so_synchronous_nonalert"></a><a name="so_synchronous_nonalert"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SYNCHRONOUS_NONALERT</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.36 LINUX Socket Options</h4>
+<a name="_4968_linuxsocketoptions"></a><a name="linuxsocketoptions"></a>
+<p> 
+<a name="socketsso_sndbufforce"></a><a name="sndbufforce"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.37 SO_SNDBUFFORCE</h4>
+<a name="_4970_so_sndbufforce"></a><a name="so_sndbufforce"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SNDBUFFORCE</font>
+</pre>
+
+<p> 
+<a name="socketsso_rcvbufforce"></a><a name="rcvbufforce"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.38 SO_RCVBUFFORCE</h4>
+<a name="_4972_so_rcvbufforce"></a><a name="so_rcvbufforce"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_RCVBUFFORCE</font>
+</pre>
+
+<p> 
+<a name="socketsso_no_check"></a><a name="no_check"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.39 SO_NO_CHECK</h4>
+<a name="_4974_so_no_check"></a><a name="so_no_check"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_NO_CHECK</font>
+</pre>
+
+<p> 
+<a name="socketsso_priority"></a><a name="priority"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.40 SO_PRIORITY</h4>
+<a name="_4976_so_priority"></a><a name="so_priority"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PRIORITY</font>
+</pre>
+
+<p> 
+<a name="socketsso_bsdcompat"></a><a name="bsdcompat"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.41 SO_BSDCOMPAT</h4>
+<a name="_4978_so_bsdcompat"></a><a name="so_bsdcompat"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_BSDCOMPAT</font>
+</pre>
+
+<p> 
+<a name="socketsso_passcred"></a><a name="passcred"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.42 SO_PASSCRED</h4>
+<a name="_4980_so_passcred"></a><a name="so_passcred"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PASSCRED</font>
+</pre>
+
+<p> 
+<a name="socketsso_peercred"></a><a name="peercred"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.43 SO_PEERCRED</h4>
+<a name="_4982_so_peercred"></a><a name="so_peercred"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PEERCRED</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.44 - Security levels - as per NRL IPv6 - do not actually do anything</h4>
+<a name="_4983_securitylevelsaspernrlipv6donotactuallydoanything"></a><a name="securitylevelsaspernrlipv6donotactuallydoanything"></a>
+<p> 
+<a name="socketsso_security_authentication"></a><a name="security_authentication"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.45 SO_SECURITY_AUTHENTICATION</h4>
+<a name="_4985_so_security_authentication"></a><a name="so_security_authentication"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SECURITY_AUTHENTICATION</font>
+</pre>
+
+<p> 
+<a name="socketsso_security_encryption_transport"></a><a name="security_encryption_transport"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.46 SO_SECURITY_ENCRYPTION_TRANSPORT</h4>
+<a name="_4987_so_security_encryption_transport"></a><a name="so_security_encryption_transport"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SECURITY_ENCRYPTION_TRANSPORT</font>
+</pre>
+
+<p> 
+<a name="socketsso_security_encryption_network"></a><a name="security_encryption_network"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.47 SO_SECURITY_ENCRYPTION_NETWORK</h4>
+<a name="_4989_so_security_encryption_network"></a><a name="so_security_encryption_network"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_SECURITY_ENCRYPTION_NETWORK</font>
+</pre>
+
+<p> 
+<a name="socketsso_bindtodevice"></a><a name="bindtodevice"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.48 SO_BINDTODEVICE</h4>
+<a name="_4991_so_bindtodevice"></a><a name="so_bindtodevice"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_BINDTODEVICE</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.49 LINUX Socket Filtering Options</h4>
+<a name="_4992_linuxsocketfilteringoptions"></a><a name="linuxsocketfilteringoptions"></a>
+<p> 
+<a name="socketsso_attach_filter"></a><a name="attach_filter"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.50 SO_ATTACH_FILTER</h4>
+<a name="_4994_so_attach_filter"></a><a name="so_attach_filter"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_ATTACH_FILTER</font>
+</pre>
+
+<p> 
+<a name="socketsso_detach_filter"></a><a name="detach_filter"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.51 SO_DETACH_FILTER</h4>
+<a name="_4996_so_detach_filter"></a><a name="so_detach_filter"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DETACH_FILTER</font>
+</pre>
+
+<p> 
+<a name="socketsso_peername"></a><a name="peername"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.52 SO_PEERNAME</h4>
+<a name="_4998_so_peername"></a><a name="so_peername"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PEERNAME</font>
+</pre>
+
+<p> 
+<a name="socketsso_timestamp"></a><a name="timestamp"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.53 SO_TIMESTAMP</h4>
+<a name="_5000_so_timestamp"></a><a name="so_timestamp"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_TIMESTAMP</font>
+</pre>
+
+<p> 
+<a name="socketsscm_timestamp"></a><a name="timestamp"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.54 SCM_TIMESTAMP</h4>
+<a name="_5002_scm_timestamp"></a><a name="scm_timestamp"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SCM_TIMESTAMP</font>
+</pre>
+
+<p> 
+<a name="socketsso_peersec"></a><a name="peersec"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.55 SO_PEERSEC</h4>
+<a name="_5004_so_peersec"></a><a name="so_peersec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PEERSEC</font>
+</pre>
+
+<p> 
+<a name="socketsso_passsec"></a><a name="passsec"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.56 SO_PASSSEC</h4>
+<a name="_5006_so_passsec"></a><a name="so_passsec"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PASSSEC</font>
+</pre>
+
+<p> 
+<a name="socketsso_timestampns"></a><a name="timestampns"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.57 SO_TIMESTAMPNS</h4>
+<a name="_5008_so_timestampns"></a><a name="so_timestampns"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_TIMESTAMPNS</font>
+</pre>
+
+<p> 
+<a name="socketsscm_timestampns"></a><a name="timestampns"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.58 SCM_TIMESTAMPNS</h4>
+<a name="_5010_scm_timestampns"></a><a name="scm_timestampns"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SCM_TIMESTAMPNS</font>
+</pre>
+
+<p> 
+<a name="socketsso_mark"></a><a name="mark"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.59 SO_MARK</h4>
+<a name="_5012_so_mark"></a><a name="so_mark"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_MARK</font>
+</pre>
+
+<p> 
+<a name="socketsso_timestamping"></a><a name="timestamping"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.60 SO_TIMESTAMPING</h4>
+<a name="_5014_so_timestamping"></a><a name="so_timestamping"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_TIMESTAMPING</font>
+</pre>
+
+<p> 
+<a name="socketsscm_timestamping"></a><a name="timestamping"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.61 SCM_TIMESTAMPING</h4>
+<a name="_5016_scm_timestamping"></a><a name="scm_timestamping"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SCM_TIMESTAMPING</font>
+</pre>
+
+<p> 
+<a name="socketsso_protocol"></a><a name="protocol"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.62 SO_PROTOCOL</h4>
+<a name="_5018_so_protocol"></a><a name="so_protocol"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_PROTOCOL</font>
+</pre>
+
+<p> 
+<a name="socketsso_domain"></a><a name="domain"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.63 SO_DOMAIN</h4>
+<a name="_5020_so_domain"></a><a name="so_domain"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_DOMAIN</font>
+</pre>
+
+<p> 
+<a name="socketsso_rxq_ovfl"></a><a name="rxq_ovfl"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.7.64 SO_RXQ_OVFL</h4>
+<a name="_5022_so_rxq_ovfl"></a><a name="so_rxq_ovfl"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">SO_RXQ_OVFL</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.8 Send Flags</h3>
+<a name="_5023_sendflags"></a><a name="sendflags"></a>
+<p> Pass to the <tt>flags</tt> parameter of <a href="std_socket.html#_5087_send">send</a> and <a href="std_socket.html#_5091_receive">receive</a></p>
+
+<p> 
+<a name="socketsmsg_oob"></a><a name="oob"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.1 MSG_OOB</h4>
+<a name="_5025_msg_oob"></a><a name="msg_oob"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_OOB</font>
+</pre>
+
+<p> Sends out-of-band data on sockets that support this notion (e.g., of type <a href="std_socket.html#_4874_sock_stream">SOCK_STREAM</a>); the underlying protocol must also support out-of-band data.</p>
+
+<p> 
+<a name="socketsmsg_peek"></a><a name="peek"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.2 MSG_PEEK</h4>
+<a name="_5027_msg_peek"></a><a name="msg_peek"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_PEEK</font>
+</pre>
+
+<p> This flag causes the receive operation to return data from the beginning of the receive queue without removing that data from the queue.  Thus, a subsequent receive call will return the same data.</p>
+
+<p> 
+<a name="socketsmsg_dontroute"></a><a name="dontroute"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.3 MSG_DONTROUTE</h4>
+<a name="_5029_msg_dontroute"></a><a name="msg_dontroute"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_DONTROUTE</font>
+</pre>
+
+<p> Do not use a gateway to send out the packet, only send to hosts on directly connected networks.  This is usually used only by diagnostic or routing programs.  This is only defined for protocol families that route; packet sockets do not.</p>
+
+<p> 
+<a name="socketsmsg_tryhard"></a><a name="tryhard"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.4 MSG_TRYHARD</h4>
+<a name="_5031_msg_tryhard"></a><a name="msg_tryhard"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_TRYHARD</font>
+</pre>
+
+<p> 
+<a name="socketsmsg_ctrunc"></a><a name="ctrunc"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.5 MSG_CTRUNC</h4>
+<a name="_5033_msg_ctrunc"></a><a name="msg_ctrunc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_CTRUNC</font>
+</pre>
+
+<p> Indicates that some control data were discarded due to lack of space in the buffer for ancillary data.</p>
+
+<p> 
+<a name="socketsmsg_proxy"></a><a name="proxy"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.6 MSG_PROXY</h4>
+<a name="_5035_msg_proxy"></a><a name="msg_proxy"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_PROXY</font>
+</pre>
+
+<p> 
+<a name="socketsmsg_trunc"></a><a name="trunc"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.7 MSG_TRUNC</h4>
+<a name="_5037_msg_trunc"></a><a name="msg_trunc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_TRUNC</font>
+</pre>
+
+<p> Indicates that the trailing portion of a datagram was discarded because the datagram was larger than the buffer supplied.</p>
+
+<p> 
+<a name="socketsmsg_dontwait"></a><a name="dontwait"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.8 MSG_DONTWAIT</h4>
+<a name="_5039_msg_dontwait"></a><a name="msg_dontwait"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_DONTWAIT</font>
+</pre>
+
+<p> Enables non-blocking operation; if the operation would block, EAGAIN or EWOULDBLOCK is returned.</p>
+
+<p> 
+<a name="socketsmsg_eor"></a><a name="eor"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.9 MSG_EOR</h4>
+<a name="_5041_msg_eor"></a><a name="msg_eor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_EOR</font>
+</pre>
+
+<p> Terminates a record (when this notion is supported, as for sockets of type <a href="std_socket.html#_4882_sock_seqpacket">SOCK_SEQPACKET</a>).</p>
+
+<p> 
+<a name="socketsmsg_waitall"></a><a name="waitall"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.10 MSG_WAITALL</h4>
+<a name="_5043_msg_waitall"></a><a name="msg_waitall"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_WAITALL</font>
+</pre>
+
+<p> This flag requests that the operation block until the full request is satisfied.  However, the call may still return less data than requested if a signal is caught, an error or disconnect occurs, or the next data to be received is of a different type than that returned.</p>
+
+<p> 
+<a name="socketsmsg_fin"></a><a name="fin"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.11 MSG_FIN</h4>
+<a name="_5045_msg_fin"></a><a name="msg_fin"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_FIN</font>
+</pre>
+
+<p> 
+<a name="socketsmsg_syn"></a><a name="syn"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.12 MSG_SYN</h4>
+<a name="_5047_msg_syn"></a><a name="msg_syn"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_SYN</font>
+</pre>
+
+<p> 
+<a name="socketsmsg_confirm"></a><a name="confirm"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.13 MSG_CONFIRM</h4>
+<a name="_5049_msg_confirm"></a><a name="msg_confirm"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_CONFIRM</font>
+</pre>
+
+<p> Tell the link layer that forward progress happened: you got a successful reply from the other side.  If the link layer doesn't get this it will regularly reprobe the neighbor (e.g., via a unicast ARP). Only valid on <a href="std_socket.html#_4876_sock_dgram">SOCK_DGRAM</a> and <a href="std_socket.html#_4878_sock_raw">SOCK_RAW</a> sockets and currently only implemented for IPv4 and IPv6.</p>
+
+<p> 
+<a name="socketsmsg_rst"></a><a name="rst"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.14 MSG_RST</h4>
+<a name="_5051_msg_rst"></a><a name="msg_rst"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_RST</font>
+</pre>
+
+<p> 
+<a name="socketsmsg_errqueue"></a><a name="errqueue"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.15 MSG_ERRQUEUE</h4>
+<a name="_5053_msg_errqueue"></a><a name="msg_errqueue"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_ERRQUEUE</font>
+</pre>
+
+<p> Indicates that no data was received but an extended error from the socket error queue.</p>
+
+<p> 
+<a name="socketsmsg_nosignal"></a><a name="nosignal"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.16 MSG_NOSIGNAL</h4>
+<a name="_5055_msg_nosignal"></a><a name="msg_nosignal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_NOSIGNAL</font>
+</pre>
+
+<p> Requests not to send SIGPIPE on errors on stream oriented sockets when the other end breaks the connection. The EPIPE error is still returned.</p>
+
+<p> 
+<a name="socketsmsg_more"></a><a name="more"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.8.17 MSG_MORE</h4>
+<a name="_5057_msg_more"></a><a name="msg_more"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public constant </font><font color="#330033">MSG_MORE</font>
+</pre>
+
+<p> The caller has more data to send. This flag is used with TCP sockets to obtain the same effect as the TCP_CORK socket option, with the difference that this flag can be set on a per-call basis.</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.9 Server and Client Sides</h3>
+<a name="_5058_serverandclientsides"></a><a name="serverandclientsides"></a>
+<p> 
+<a name="socketssocket_socket"></a><a name="socket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.1 SOCKET_SOCKET</h4>
+<a name="_5060_socket_socket"></a><a name="socket_socket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">export enum </font><font color="#330033">SOCKET_SOCKET</font>
+</pre>
+
+<p> Accessor index for socket handle of a socket type</p>
+
+<p> 
+<a name="socketssocket_sockaddr_in"></a><a name="sockaddr_in"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.2 SOCKET_SOCKADDR_IN</h4>
+<a name="_5062_socket_sockaddr_in"></a><a name="socket_sockaddr_in"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">export enum </font><font color="#330033">SOCKET_SOCKADDR_IN</font>
+</pre>
+
+<p> Accessor index for the sockaddr_in pointer of a socket type</p>
+
+<p> 
+<a name="socketssocket"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.3 socket</h4>
+<a name="_5064_socket"></a><a name="socket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public type </font><font color="#330033">socket</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   Socket type</p>
+
+<p> 
+<a name="socketscreate"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.4 create</h4>
+<a name="_5066_create"></a><a name="create"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">create</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">family, </font><font color="#0000FF">integer </font><font color="#330033">sock_type, </font><font color="#0000FF">integer </font><font color="#330033">protocol</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5067_parameters"></a><a name="parameters"></a><ol><li><tt>family</tt>: an integer
+</li><li><tt>sock_type</tt>: an integer, the type of socket to create
+</li><li><tt>protocol</tt>: an integer, the communication protocol being used
+</li></ol>
+<p><tt>family</tt> options: </p>
+<ul><li><a href="std_socket.html#_4864_af_unix">AF_UNIX</a>
+</li><li><a href="std_socket.html#_4866_af_inet">AF_INET</a>
+</li><li><a href="std_socket.html#_4868_af_inet6">AF_INET6</a>
+</li><li><a href="std_socket.html#_4870_af_appletalk">AF_APPLETALK</a>
+</li><li><a href="std_socket.html#_4872_af_bth">AF_BTH</a>
+</li></ul>
+<p><tt>sock_type</tt> options: </p>
+<ul><li><a href="std_socket.html#_4874_sock_stream">SOCK_STREAM</a>
+</li><li><a href="std_socket.html#_4876_sock_dgram">SOCK_DGRAM</a>
+</li><li><a href="std_socket.html#_4878_sock_raw">SOCK_RAW</a>
+</li><li><a href="std_socket.html#_4880_sock_rdm">SOCK_RDM</a>
+</li><li><a href="std_socket.html#_4882_sock_seqpacket">SOCK_SEQPACKET</a>
+</li></ul>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5068_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, an atom, representing an integer code on failure, else a sequence representing a valid socket id.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5069_comments"></a><a name="comments"></a>
+<p> On <em>Windows</em> you must have Windows Sockets version 2.2 or greater installed.  This means at least Windows 2000 Professional or Windows 2000 Server.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5070_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">socket = create</font><font color="#880033">(</font><font color="#330033">AF_INET, SOCK_STREAM, 0</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="socketsclose"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.5 close</h4>
+<a name="_5072_close"></a><a name="close"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function close</font><font color="#880033">(</font><font color="#330033">socket sock</font><font color="#880033">)</font>
+</pre>
+
+<p>   closes a socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5073_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt>: the socket to close
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5074_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success and -1 on error.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5075_comments"></a><a name="comments"></a>
+<p> It may take several minutes for the OS to declare the socket as closed.</p>
+
+<p> 
+<a name="socketsshutdown"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.6 shutdown</h4>
+<a name="_5077_shutdown"></a><a name="shutdown"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">shutdown</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">atom </font><font color="#330033">method = SD_BOTH</font><font color="#880033">)</font>
+</pre>
+
+<p>   partially or fully close a socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5078_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket to shutdown
+</li><li><tt>method</tt> : the way used to close the socket
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5079_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success and -1 on error.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5080_comments"></a><a name="comments"></a>
+<p> Three constants are defined that can be sent to <tt>method</tt>: </p>
+<ul><li><a href="std_socket.html#_4894_sd_send">SD_SEND</a> -- shutdown the send operations.
+</li><li><a href="std_socket.html#_4896_sd_receive">SD_RECEIVE</a> -- shutdown the receive operations.
+</li><li><a href="std_socket.html#_4898_sd_both">SD_BOTH</a> -- shutdown both send and receive operations.
+</li></ul>
+<p>It may take several minutes for the OS to declare the socket as closed.</p>
+
+<p> 
+<a name="socketsselect"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.7 select</h4>
+<a name="_5082_select"></a><a name="select"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">select</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">sockets_read, </font><font color="#0000FF">object </font><font color="#330033">sockets_write, </font><font color="#0000FF">object </font><font color="#330033">sockets_err,</font>
+<font color="#0000FF">        integer </font><font color="#330033">timeout = 0, </font><font color="#0000FF">integer </font><font color="#330033">timeout_micro = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines the read, write and error status of one or more sockets.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5083_parameters"></a><a name="parameters"></a><ol><li><tt>sockets_read</tt> : either one socket or a sequence of sockets to check for reading.
+</li><li><tt>sockets_write</tt> : either one socket or a sequence of sockets to check for writing.
+</li><li><tt>sockets_err</tt> : either one socket or a sequence of sockets to check for errors.
+</li><li><tt>timeout</tt> : maximum time to wait to determine a sockets status, seconds part
+</li><li><tt>timeout_micro</tt> : maximum time to wait to determine a sockets status, microsecond part
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5084_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of the same size of all unique sockets containing <tt>{ socket, read_status, write_status, error_status }</tt> for each socket passed 2 to the function. Note that the sockets returned are not guaranteed to be in any particular order.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5085_comments"></a><a name="comments"></a>
+<p> Using select, you can check to see if a socket has data waiting and is read to be read, if a socket can be written to and if a socket has an error status.</p>
+
+<p> <tt>select</tt> allows for fine-grained control over your sockets; it allows you to specify that a given socket only be checked for reading or for only reading and writing, etc.</p>
+
+<p> 
+<a name="socketssend"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.8 send</h4>
+<a name="_5087_send"></a><a name="send"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">send</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">sequence </font><font color="#330033">data, </font><font color="#0000FF">atom </font><font color="#330033">flags = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   sends TCP data to a socket connected remotely.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5088_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket to send data to
+</li><li><tt>data</tt> : a sequence of atoms, what to send
+</li><li><tt>flags</tt> : flags (see <a href="std_socket.html#_5023_sendflags">Send Flags</a>)
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5089_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the number of characters sent, or -1 for an error.</p>
+
+<p> 
+<a name="socketsreceive"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.9 receive</h4>
+<a name="_5091_receive"></a><a name="receive"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">receive</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">atom </font><font color="#330033">flags = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   receives data from a bound socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5092_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket to get data from
+</li><li><tt>flags</tt> : flags (see <a href="std_socket.html#_5023_sendflags">Send Flags</a>)
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5093_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, either a full string of data on success, or an atom indicating the error code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5094_comments"></a><a name="comments"></a>
+<p> This function will not return until data is actually received on the socket, unless the flags parameter contains <a href="std_socket.html#_5039_msg_dontwait">MSG_DONTWAIT</a>.</p>
+
+<p> <a href="std_socket.html#_5039_msg_dontwait">MSG_DONTWAIT</a> only works on Linux kernels 2.4 and above. To be cross-platform you should use <a href="std_socket.html#_5082_select">select</a> to determine if a socket is readable, i.e. has data waiting.</p>
+
+<p> 
+<a name="socketsget_option"></a><a name="option"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.10 get_option</h4>
+<a name="_5096_get_option"></a><a name="get_option"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">get_option</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">integer </font><font color="#330033">level, </font><font color="#0000FF">integer </font><font color="#330033">optname</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets options for a socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5097_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket
+</li><li><tt>level</tt> : an integer, the option level
+</li><li><tt>optname</tt> : requested option (See <a href="std_socket.html#_4899_socketoptions">Socket Options</a>)
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5098_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either: </p>
+<ul><li>On error, {"ERROR",error_code}.
+</li><li>On success, either an atom or a sequence containing the option value, depending on the option.
+</li></ul>
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5099_comments"></a><a name="comments"></a>
+<p> Primarily for use in multicast or more advanced socket applications.  <tt>Level</tt> is the option level, and <tt>option_name</tt> is the option for which values are being sought. <tt>Level</tt> is usually <a href="std_socket.html#_4902_sol_socket">SOL_SOCKET</a>.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5100_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, On error, an atom indicating the error code.<br />
+A <strong>sequence</strong> or <strong>atom</strong>,   On success, either an atom or a sequence containing the option value.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5101_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5096_get_option">get_option</a></p>
+
+<p> 
+<a name="socketsset_option"></a><a name="option"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.9.11 set_option</h4>
+<a name="_5103_set_option"></a><a name="set_option"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">set_option</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">integer </font><font color="#330033">level, </font><font color="#0000FF">integer </font><font color="#330033">optname, </font><font color="#0000FF">object </font><font color="#330033">val</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets options for a socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5104_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : an atom, the socket id
+</li><li><tt>level</tt> : an integer, the option level
+</li><li><tt>optname</tt> : requested option (See <a href="std_socket.html#_4899_socketoptions">Socket Options</a>)
+</li><li><tt>val</tt> : an object, the new value for the option
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5105_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success, -1 on error.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5106_comments"></a><a name="comments"></a>
+<p> Primarily for use in multicast or more advanced socket applications.  <tt>Level</tt> is the option level, and <tt>option_name</tt> is the option for which values are being set.  <tt>Level</tt> is usually <a href="std_socket.html#_4902_sol_socket">SOL_SOCKET</a>.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5107_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5096_get_option">get_option</a></p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.10 Client Side Only</h3>
+<a name="_5108_clientsideonly"></a><a name="clientsideonly"></a>
+<p> 
+<a name="socketsconnect"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.10.1 connect</h4>
+<a name="_5110_connect"></a><a name="connect"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">connect</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">sequence </font><font color="#330033">address, </font><font color="#0000FF">integer </font><font color="#330033">port = - 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   establishes an outgoing connection to a remote computer. Only works with TCP sockets.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5111_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket
+</li><li><tt>address</tt> : ip address to connect, optionally with :PORT at the end
+</li><li><tt>port</tt> : port number
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5112_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 for success and non-zero on failure.  See the <tt>ERR_*</tt> constants for supported values.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5113_comments"></a><a name="comments"></a>
+<p> <tt>address</tt> can contain a port number. If it does not, it has to be supplied to the <tt>port</tt> parameter.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5114_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">success = connect</font><font color="#880033">(</font><font color="#330033">sock, </font><font color="#330033">"11.1.1.1"</font><font color="#880033">) </font><font color="#FF0055">-- uses default port 80</font>
+<font color="#330033">success = connect</font><font color="#880033">(</font><font color="#330033">sock, </font><font color="#330033">"11.1.1.1:110"</font><font color="#880033">) </font><font color="#FF0055">-- uses port 110</font>
+<font color="#330033">success = connect</font><font color="#880033">(</font><font color="#330033">sock, </font><font color="#330033">"11.1.1.1"</font><font color="#330033">, 345</font><font color="#880033">) </font><font color="#FF0055">-- uses port 345</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.11 Server Side Only</h3>
+<a name="_5115_serversideonly"></a><a name="serversideonly"></a>
+<p> 
+<a name="socketsbind"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.11.1 bind</h4>
+<a name="_5117_bind"></a><a name="bind"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">bind</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">sequence </font><font color="#330033">address, </font><font color="#0000FF">integer </font><font color="#330033">port = - 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   joins a socket to a specific local internet address and port so later calls only need to provide the socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5118_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket
+</li><li><tt>address</tt> : the address to bind the socket to
+</li><li><tt>port</tt> : optional, if not specified you must include :PORT in the address parameter.
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5119_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success and -1 on failure.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5120_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Bind to all interfaces on the default port 80.</font>
+<font color="#330033">success = bind</font><font color="#880033">(</font><font color="#330033">socket, </font><font color="#330033">"0.0.0.0"</font><font color="#880033">)</font>
+<font color="#FF0055">-- Bind to all interfaces on port 8080.</font>
+<font color="#330033">success = bind</font><font color="#880033">(</font><font color="#330033">socket, </font><font color="#330033">"0.0.0.0:8080"</font><font color="#880033">)</font>
+<font color="#FF0055">-- Bind only to the 243.17.33.19 interface on port 345.</font>
+<font color="#330033">success = bind</font><font color="#880033">(</font><font color="#330033">socket, </font><font color="#330033">"243.17.33.19"</font><font color="#330033">, 345</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="socketslisten"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.11.2 listen</h4>
+<a name="_5122_listen"></a><a name="listen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">listen</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">integer </font><font color="#330033">backlog</font><font color="#880033">)</font>
+</pre>
+
+<p>   starts monitoring a connection. Only works with TCP sockets.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5123_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt> : the socket
+</li><li><tt>backlog</tt> : the number of connection requests that can be kept waiting before the OS refuses to hear any more.
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5124_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success and an error code on failure.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5125_comments"></a><a name="comments"></a>
+<p> Once the socket is created and bound, this will indicate to the operating system that you are ready to being listening for connections.</p>
+
+<p> The value of <tt>backlog</tt> is strongly dependent on both the hardware and the amount of time it takes the program to process each connection request.</p>
+
+<p> This function must be executed after <a href="std_socket.html#_5117_bind">bind</a>.</p>
+
+<p> 
+<a name="socketsaccept"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.11.3 accept</h4>
+<a name="_5127_accept"></a><a name="accept"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">accept</font><font color="#880033">(</font><font color="#330033">socket sock</font><font color="#880033">)</font>
+</pre>
+
+<p>   produces a new socket for an incoming connection.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5128_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt>: the server socket
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5129_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, on error<br />
+A <strong>sequence</strong>, <tt>{socket client, sequence client_ip_address}</tt> on success.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Comments:</h5>
+<a name="_5130_comments"></a><a name="comments"></a>
+<p> Using this function allows communication to occur on a "side channel" while the main server socket remains available for new connections.</p>
+
+<p> <tt>accept</tt> must be called after <tt>bind</tt> and <tt>listen</tt>.</p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.12 UDP Only</h3>
+<a name="_5131_udponly"></a><a name="udponly"></a>
+<p> 
+<a name="socketssend_to"></a><a name="to"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.12.1 send_to</h4>
+<a name="_5133_send_to"></a><a name="send_to"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">send_to</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">sequence </font><font color="#330033">data, </font><font color="#0000FF">sequence </font><font color="#330033">address, </font><font color="#0000FF">integer </font><font color="#330033">port = - 1,</font>
+<font color="#0000FF">        atom </font><font color="#330033">flags = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   sends a UDP packet to a given socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5134_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt>: the server socket
+</li><li><tt>data</tt>: the data to be sent
+</li><li><tt>ip</tt>: the ip where the data is to be sent to (ip:port) is acceptable
+</li><li><tt>port</tt>: the port where the data is to be sent on (if not supplied with the ip)
+</li><li><tt>flags</tt> : flags (see <a href="std_socket.html#_5023_sendflags">Send Flags</a>)
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5135_returns"></a><a name="returns"></a>
+<p> An <tt>integer</tt> status code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5136_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5138_receive_from">receive_from</a></p>
+
+<p> 
+<a name="socketsreceive_from"></a><a name="from"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.12.2 receive_from</h4>
+<a name="_5138_receive_from"></a><a name="receive_from"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">receive_from</font><font color="#880033">(</font><font color="#330033">socket sock, </font><font color="#0000FF">atom </font><font color="#330033">flags = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   receives a UDP packet from a given socket.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5139_parameters"></a><a name="parameters"></a><ol><li><tt>sock</tt>: the server socket
+</li><li><tt>flags</tt> : flags (see <a href="std_socket.html#_5023_sendflags">Send Flags</a>)
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5140_returns"></a><a name="returns"></a>
+<p> A <tt>sequence</tt> containing { client_ip, client_port, data } or an <tt>atom</tt> error code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5141_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5133_send_to">send_to</a></p>
+
+<!-- ..\include\std\socket.e -->
+<h3>8.36.13 Information</h3>
+<a name="_5142_information"></a><a name="information"></a>
+<p> 
+<a name="socketsservice_by_name"></a><a name="by_name"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.13.1 service_by_name</h4>
+<a name="_5144_service_by_name"></a><a name="service_by_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">service_by_name</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">protocol = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets service information by name.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5145_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : service name.
+</li><li><tt>protocol</tt> : protocol. Default is not to search by protocol.
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5146_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing <tt>{ official protocol name, protocol, port number }</tt> or an atom indicating the error code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5147_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">result = getservbyname</font><font color="#880033">(</font><font color="#330033">"http"</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = { "http", "tcp", 80 }</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5148_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5150_service_by_port">service_by_port</a></p>
+
+<p> 
+<a name="socketsservice_by_port"></a><a name="by_port"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.13.2 service_by_port</h4>
+<a name="_5150_service_by_port"></a><a name="service_by_port"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">service_by_port</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">port, </font><font color="#0000FF">object </font><font color="#330033">protocol = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets service information by port number.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5151_parameters"></a><a name="parameters"></a><ol><li><tt>port</tt> : port number.
+</li><li><tt>protocol</tt> : protocol. Default is not to search by protocol.
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5152_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing <tt>{ official protocol name, protocol, port number }</tt> or an atom indicating the error code.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5153_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">result = getservbyport</font><font color="#880033">(</font><font color="#330033">80</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = { "http", "tcp", 80 }</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5154_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_5144_service_by_name">service_by_name</a></p>
+
+<p> 
+<a name="socketsinfo"></a> </p>
+
+<!-- ..\include\std\socket.e -->
+<h4>8.36.13.3 info</h4>
+<a name="_5156_info"></a><a name="info"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/socket.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sockets</font>
+<font color="#0000FF">public function </font><font color="#330033">info</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">Type</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets constant definitions from the backend.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Parameters:</h5>
+<a name="_5157_parameters"></a><a name="parameters"></a><ol><li><tt>type</tt> : The type of information requested.
+</li></ol>
+<!-- ..\include\std\socket.e -->
+<h5>Returns:</h5>
+<a name="_5158_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing the list of definitions from the backend. The resulting list can be indexed into using the Euphoria constants. Or an atom indicating an error.</p>
+
+<!-- ..\include\std\socket.e -->
+<h5>Example 1:</h5>
+<a name="_5159_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">result = info</font><font color="#880033">(</font><font color="#330033">ESOCK_TYPE_AF</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = { AF_UNIX, AF_INET, AF_INET6, AF_APPLETALK, AF_BTH, AF_UNSPEC }</font>
+</pre>
+
+<!-- ..\include\std\socket.e -->
+<h5>See Also:</h5>
+<a name="_5160_seealso"></a><a name="seealso"></a>
+<p> <a href="std_socket.html#_4899_socketoptions">Socket Options</a>, <a href="std_socket.html#_4826_socketbackendconstants">Socket Backend Constants</a>, <a href="std_socket.html#_4837_sockettypeeuphoriaconstants">Socket Type Euphoria Constants</a></p>
+
+<p> 
+<!-- ..\include\std\net\common.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_scinot.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_common.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_scinot.html">8.35 Scientific Notation Parsing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_common.html">8.37 Common Internet Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

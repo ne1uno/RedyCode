@@ -1,0 +1,202 @@
+==Graphical User Interface Library
+gui.e : Provides a GUI.
+
+===Introduction
+The GUI is the most heavily used part of RedyLib. It is unique because it is written in 100% Euphoria code, providing a completely Euphoria-centric widget toolkit with no third-party libraries! Only minimal APIs provided by the OS are used, through the [[OsWin->RedyLib/OsWin]] library). 
+
+The Redy GUI relies heavily on Euphoria's cooperative multi-tasking features and "event-based programming" techniques. If you are not familiar with these concepts, it would be benificial to familiarize yourself with them.
+
+===Widget Heirarchy 
+Widgets are arranged in a heiarchy ("trees"). Therefore, they have relative relationships with one another (parent, children, siblings). Widgets that are roots of each tree are "window" widgets. Other widgets are created inside those root (window) widgets. Widgets automatically arrange themselves according to their properties inside "container" widgets. Some widgets such as scrollbars and menus are created and destroyed as needed by other widgets. Here is an example tree:
+    * winMain (window)
+        * mnuMain (menubar)
+        * cntMain (container)
+            * txtEditor (textbox)
+    * winHelp (window)
+        * cntHelp (container)
+            * cntHelpTop (container)
+                * btnIndex (button)
+                * btnTOC (button)
+            * cntHelpBottom (container)
+                * canPage (canvas)
+
+===API
+====Global declarations
+=====constant RedyAE_Version, RedyAE_Copyright, RedyAE_AboutText
+
+====Routines
+=====procedure call_task(integer rid, sequence args, object schedule)
+
+=====procedure start(atom startrid, atom eventh)
+Starts the GUI. The specified start routine is called, then background GUI tasks run in an infinite loop. When an event occurs, an event handler is called. The default event handler is used for any widgets that have not been assigned other event handlers.
+
+Example:
+<eucode>
+include redylib_0_9/app.e as app
+include redylib_0_9/gui.e as gui
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    --Handle widget events
+end procedure
+    
+procedure start()
+    app:create_main_window()
+end procedure
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+</eucode>
+
+
+=====public procedure wcreate(object cprops)
+Create a widget that has the specified properties.
+
+Every property is a two element sequence of {"propertyname", propertydata}. Properties do not have to be in any particular order, but every widget needs at least the minimal properties assigned:
+    * "name" - a unique string to identify the widget
+    * "parent" - the name of the parent widget (the widget that this widget will be created inside of.)
+    * "class" - the name of the widget class assigned to the widget
+
+Additional propreties are optional, and depend on the widget class.
+
+Example:
+<eucode>
+    gui:wcreate({
+        {"name", "winHelp"},
+        {"class", "window"},
+        {"title", app:info("name") & " Help"},
+        {"remember", 1},
+        {"handler", routine_id("gui_event")}
+    })
+    gui:wcreate({
+        {"name", "winHelp.cntHelp"},
+        {"parent", "winHelp"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.cntTop"},
+        {"parent", "winHelp.cntHelp"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "normal"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.cntTopLeft"},
+        {"parent", "winHelp.cntTop"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "left"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.btnBack"},
+        {"parent", "winHelp.cntTopLeft"},
+        {"class", "button"},
+        {"label", "Back"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.btnIndex"},
+        {"parent", "winHelp.cntTopLeft"},
+        {"class", "button"},
+        {"label", "Index"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.cntTopRight"},
+        {"parent", "winHelp.cntTop"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "normal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "right"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.btnTOC"},
+        {"parent", "winHelp.cntTopRight"},
+        {"class", "button"},
+        {"label", "TOC"}
+    })
+    gui:wcreate({
+        {"name", "winHelp.btnRedyLib"},
+        {"parent", "winHelp.cntTopRight"},
+        {"class", "button"},
+        {"label", "RedyLib API"}
+    })
+</eucode>
+
+
+=====procedure wdestroy(object wname)
+Destroy a widget.
+
+=====function wexists(object widorname)
+Return 1 if a widget exists, or 0 if it does not exist.
+
+=====function wfunc(object wname, object funcname, object params)
+Call a widget class function of the specified widget. Function names, paramaters and return values vary according to the widget's widget.
+
+=====procedure wproc(object wname, object procname, object params)
+Call a widget class procedure of the specified widget. Function names, paramaters and return values vary according to the widget's widget.
+
+=====procedure wenable(object wname, atom en 1)
+Enable a widget.
+
+=====procedure wdisable(object wname, atom en 0)
+Disable a widget.
+
+=====function widget_is_enabled(object widorname)
+Return the enabled status of aa widget (0:disabled, 1: enabled).
+
+=====function widget_is_visible(object widorname)
+Return the visible status of aa widget (0:hidden, 1: visible).
+
+=====procedure widget_show(object widorname)
+Make a widget visible.
+
+=====procedure widget_hide(object widorname)
+Make a widget hidden.
+
+=====procedure set_key_focus(object widorname)
+Set Key Focus to specified widget. Keyboard events are sent to whichever widget has Key Focus.
+
+=====procedure next_key_focus(object widorname)
+(Not implemented yet) Switch Key Focus to the next widget in the "tab order".
+
+=====procedure prev_key_focus(object widorname)
+(Not implemented yet) Switch Key Focus to the previous widget in the "tab order".
+
+=====function screen_size()
+Return the size of the primary display: {width, height}.
+
+=====function widget_get_id(object widorname)
+Return the ID number of a widget.
+
+=====function widget_get_name(object widorname)
+Return the name of a widget.
+
+=====function widget_get_class(object widorname)
+Return the widget class name of a widget.
+
+=====function widget_get_order(object widorname)
+Return the tab order index of a widget.
+
+=====function widget_get_handle(object widorname)
+Return the handle of the window that the specificed widget is in.
+
+=====function parent_of(object widorname)
+Return the ID of a widget's parent..
+
+=====function children_of(object widorname)
+Return as list of IDs of a widget's children.
+
+=====function siblings_of(object widorname)
+Return as list of IDs of a widget's siblings.
+
+=====function wdebug(object wname)
+Return sequence of property names and values of specified widget. The properties vary, depending on the widgetclass.
+
+
+
+
+Next page: [[Widget Classes->RedyLib\Gui\WidgetClasses]]

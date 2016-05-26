@@ -1,0 +1,540 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_serialize.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_locale.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_serialize.html">8.17 Serialization of Euphoria Objects</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_locale.html">8.19 Locale Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\sort.e -->
+<h2>8.18 Sorting</h2>
+<a name="_2927_sorting"></a><a name="sorting"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_sort.html#_2927_sorting">8.18 Sorting</a></div>
+<div class="toc_3"><a href="std_sort.html#_2928_constants">8.18.1 Constants</a></div>
+<div class="toc_4"><a href="std_sort.html#_2930_ascending">8.18.1.1 ASCENDING</a></div>
+<div class="toc_4"><a href="std_sort.html#_2932_normal_order">8.18.1.2 NORMAL_ORDER</a></div>
+<div class="toc_4"><a href="std_sort.html#_2934_descending">8.18.1.3 DESCENDING</a></div>
+<div class="toc_4"><a href="std_sort.html#_2936_reverse_order">8.18.1.4 REVERSE_ORDER</a></div>
+<div class="toc_3"><a href="std_sort.html#_2937_routines">8.18.2 Routines</a></div>
+<div class="toc_4"><a href="std_sort.html#_2939_sort">8.18.2.1 sort</a></div>
+<div class="toc_4"><a href="std_sort.html#_2946_custom_sort">8.18.2.2 custom_sort</a></div>
+<div class="toc_4"><a href="std_sort.html#_2955_sort_columns">8.18.2.3 sort_columns</a></div>
+<div class="toc_4"><a href="std_sort.html#_2962_merge">8.18.2.4 merge</a></div>
+<div class="toc_4"><a href="std_sort.html#_2969_insertion_sort">8.18.2.5 insertion_sort</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\sort.e -->
+<h3>8.18.1 Constants</h3>
+<a name="_2928_constants"></a><a name="constants"></a>
+<p> 
+<a name="stdsortascending"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.1.1 ASCENDING</h4>
+<a name="_2930_ascending"></a><a name="ascending"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public constant </font><font color="#330033">ASCENDING</font>
+</pre>
+
+<p> Ascending sort order, always the default.</p>
+
+<p> When a sequence is sorted in <tt>ASCENDING</tt> order, its first element is the smallest as per the sort order and its last element is the largest</p>
+
+<p> 
+<a name="stdsortnormal_order"></a><a name="order"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.1.2 NORMAL_ORDER</h4>
+<a name="_2932_normal_order"></a><a name="normal_order"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public constant </font><font color="#330033">NORMAL_ORDER</font>
+</pre>
+
+<p>  The normal sort order used by the custom comparison routine.</p>
+
+<p> 
+<a name="stdsortdescending"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.1.3 DESCENDING</h4>
+<a name="_2934_descending"></a><a name="descending"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public constant </font><font color="#330033">DESCENDING</font>
+</pre>
+
+<p> Descending sort order, which is the reverse of <tt>ASCENDING</tt>.</p>
+
+<p> 
+<a name="stdsortreverse_order"></a><a name="order"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.1.4 REVERSE_ORDER</h4>
+<a name="_2936_reverse_order"></a><a name="reverse_order"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public constant </font><font color="#330033">REVERSE_ORDER</font>
+</pre>
+
+<p>  Reverses the sense of the order returned by a custom comparison routine.</p>
+
+<!-- ..\include\std\sort.e -->
+<h3>8.18.2 Routines</h3>
+<a name="_2937_routines"></a><a name="routines"></a>
+<p> 
+<a name="stdsortsort"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.2.1 sort</h4>
+<a name="_2939_sort"></a><a name="sort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public function </font><font color="#330033">sort</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">order = ASCENDING</font><font color="#880033">)</font>
+</pre>
+
+<p>   sorts the elements of a sequence into ascending order.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Parameters:</h5>
+<a name="_2940_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : The sequence to be sorted.
+</li><li><tt>order</tt> : the sort order. Default is <tt>ASCENDING</tt>.
+</li></ol>
+<!-- ..\include\std\sort.e -->
+<h5>Returns:</h5>
+<a name="_2941_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a copy of the original sequence in ascending order</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Comments:</h5>
+<a name="_2942_comments"></a><a name="comments"></a>
+<p> The elements can be atoms or sequences.</p>
+
+<p> The standard <tt>compare</tt> routine is used to compare elements. This means that "<tt>y</tt> is greater than <tt>x</tt>" is defined by <tt>compare(y, x)=1</tt>.</p>
+
+<p> This function uses the "Shell" sort algorithm. This sort is not "stable" which means elements that are considered equal might change position relative to each other.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Example 1:</h5>
+<a name="_2943_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">student_ages = </font><font color="#880033">{</font><font color="#330033">18,21,16,23,17,16,20,20,19</font><font color="#880033">}</font>
+<font color="#0000FF">sequence </font><font color="#330033">sorted_ages</font>
+<font color="#330033">sorted_ages = sort</font><font color="#880033">( </font><font color="#330033">student_ages </font><font color="#880033">)</font>
+<font color="#FF0055">-- result is {16,16,17,18,19,20,20,21,23}</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>See Also:</h5>
+<a name="_2944_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sort.html#_2946_custom_sort">custom_sort</a></p>
+
+<p> 
+<a name="stdsortcustom_sort"></a><a name="sort"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.2.2 custom_sort</h4>
+<a name="_2946_custom_sort"></a><a name="custom_sort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public function </font><font color="#330033">custom_sort</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">custom_compare, </font><font color="#0000FF">sequence </font><font color="#330033">x, </font><font color="#0000FF">object </font><font color="#330033">data = </font><font color="#993333">{}</font><font color="#330033">,</font>
+<font color="#0000FF">        integer </font><font color="#330033">order = NORMAL_ORDER</font><font color="#880033">)</font>
+</pre>
+
+<p>   sorts the elements of a sequence according to a user-defined order.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Parameters:</h5>
+<a name="_2947_parameters"></a><a name="parameters"></a><ol><li><tt>custom_compare</tt> : an integer, the routine-id of the user defined routine that compares two items which appear in the sequence to sort.
+</li><li><tt>x</tt> : the sequence of items to be sorted.
+</li><li><tt>data</tt> : an object, either <tt>{}</tt> (no custom data, the default), an atom or a non-empty sequence.
+</li><li><tt>order</tt> : an integer, either <tt>NORMAL_ORDER</tt> (the default) or <tt>REVERSE_ORDER</tt>.
+</li></ol>
+<!-- ..\include\std\sort.e -->
+<h5>Returns:</h5>
+<a name="_2948_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a copy of the original sequence in sorted order</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Errors:</h5>
+<a name="_2949_errors"></a><a name="errors"></a>
+<p> If the user defined routine does not return according to the specifications in the <em>Comments</em> section below, an error will occur.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Comments:</h5>
+<a name="_2950_comments"></a><a name="comments"></a><ul><li>If some user data is being provided, that data must be either an atom or a sequence with at least one element. <strong>NOTE</strong> only the first element is passed to the user defined comparison routine, any other elements are just ignored. The user data is not used or inspected it in any way other than passing it to the user defined routine.
+</li></ul><ul><li>The user defined routine must return an integer <em>comparison result</em><ul><li>a <strong>negative</strong> value if object A must appear before object B
+</li><li>a <strong>positive</strong> value if object B must appear before object A
+</li><li>0 if the order does not matter
+</li></ul>
+</li></ul>
+<p><div style="margin-left:2em"> <strong>NOTE:</strong> The meaning of the value returned by the user-defined routine is reversed when <tt>order = REVERSE_ORDER</tt>. The default is <tt>order = NORMAL_ORDER</tt>, which sorts in order returned by the custom comparison routine. </div></p>
+<ul><li>When no user data is provided, the user defined routine must accept two objects (A, B) and return just the <em>comparison result</em>.
+</li></ul><ul><li>When some user data is provided, the user defined routine must take three objects (A, B , data). It must return either...<ul><li>an integer, which is a <em>comparison result</em>
+</li><li>a two-element sequence, in which the first element is a <em>comparison result</em> and the second element is the updated user data that is to be used for the next call to the user defined routine.
+</li></ul>
+</li></ul><ul><li>The elements of <tt>x</tt> can be atoms or sequences. Each time that the sort needs to compare two items in the sequence, it calls the user-defined function to determine the order.
+</li></ul><ul><li>This function uses the "Shell" sort algorithm. This sort is not "stable" which means the elements that are considered equal might change position relative to each other.
+</li></ul>
+<!-- ..\include\std\sort.e -->
+<h5>Example 1:</h5>
+<a name="_2951_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">students = </font><font color="#880033">{</font><font color="#993333">{</font><font color="#330033">"Anne"</font><font color="#330033">,18</font><font color="#993333">}</font><font color="#330033">,   </font><font color="#993333">{</font><font color="#330033">"Bob"</font><font color="#330033">,21</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Chris"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,  </font><font color="#993333">{</font><font color="#330033">"Diane"</font><font color="#330033">,23</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Eddy"</font><font color="#330033">,17</font><font color="#993333">}</font><font color="#330033">,   </font><font color="#993333">{</font><font color="#330033">"Freya"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"George"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"Heidi"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Ian"</font><font color="#330033">,19</font><font color="#993333">}</font><font color="#880033">}</font>
+<font color="#0000FF">sequence </font><font color="#330033">sorted_byage</font>
+<font color="#0000FF">function </font><font color="#330033">byage</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+<font color="#FF0055"> ----- If the ages are the same, compare the names otherwise just compare ages.</font>
+<font color="#0000FF">    if equal</font><font color="#880033">(</font><font color="#330033">a</font><font color="#993333">[</font><font color="#330033">2</font><font color="#993333">]</font><font color="#330033">, b</font><font color="#993333">[</font><font color="#330033">2</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">        return compare</font><font color="#880033">(</font><font color="#330033">upper</font><font color="#993333">(</font><font color="#330033">a</font><font color="#0000FF">[</font><font color="#330033">1</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#330033">, upper</font><font color="#993333">(</font><font color="#330033">b</font><font color="#0000FF">[</font><font color="#330033">1</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">    return compare</font><font color="#880033">(</font><font color="#330033">a</font><font color="#993333">[</font><font color="#330033">2</font><font color="#993333">]</font><font color="#330033">, b</font><font color="#993333">[</font><font color="#330033">2</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">sorted_byage = custom_sort</font><font color="#880033">( </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"byage"</font><font color="#993333">)</font><font color="#330033">, students </font><font color="#880033">)</font>
+<font color="#FF0055">-- result is {{"Chris",16}, {"Freya",16},</font>
+<font color="#FF0055">--            {"Eddy",17},  {"Anne",18},</font>
+<font color="#FF0055">--            {"Ian",19},   {"George",20},</font>
+<font color="#FF0055">--            {"Heidi",20}, {"Bob",21},</font>
+<font color="#FF0055">--            {"Diane",23}}</font>
+
+<font color="#330033">sorted_byage = custom_sort</font><font color="#880033">( </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"byage"</font><font color="#993333">)</font><font color="#330033">, students,, REVERSE_ORDER </font><font color="#880033">)</font>
+<font color="#FF0055">-- result is {{"Diane",23}, {"Bob",21},</font>
+<font color="#FF0055">--            {"Heidi",20}, {"George",20},</font>
+<font color="#FF0055">--            {"Ian",19},   {"Anne",18},</font>
+<font color="#FF0055">--            {"Eddy",17},  {"Freya",16},</font>
+<font color="#FF0055">--            {"Chris",16}}</font>
+<font color="#FF0055">--</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>Example 2:</h5>
+<a name="_2952_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">students = </font><font color="#880033">{</font><font color="#993333">{</font><font color="#330033">"Anne"</font><font color="#330033">,</font><font color="#330033">"Baxter"</font><font color="#330033">,18</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"Bob"</font><font color="#330033">,</font><font color="#330033">"Palmer"</font><font color="#330033">,21</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Chris"</font><font color="#330033">,</font><font color="#330033">"du Pont"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font><font color="#993333">{</font><font color="#330033">"Diane"</font><font color="#330033">,</font><font color="#330033">"Fry"</font><font color="#330033">,23</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Eddy"</font><font color="#330033">,</font><font color="#330033">"Ammon"</font><font color="#330033">,17</font><font color="#993333">}</font><font color="#330033">,</font><font color="#993333">{</font><font color="#330033">"Freya"</font><font color="#330033">,</font><font color="#330033">"Brash"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"George"</font><font color="#330033">,</font><font color="#330033">"Gungle"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font><font color="#993333">{</font><font color="#330033">"Heidi"</font><font color="#330033">,</font><font color="#330033">"Smith"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">                     {</font><font color="#330033">"Ian"</font><font color="#330033">,</font><font color="#330033">"Sidebottom"</font><font color="#330033">,19</font><font color="#993333">}</font><font color="#880033">}</font>
+<font color="#0000FF">sequence </font><font color="#330033">sorted</font>
+<font color="#0000FF">function </font><font color="#330033">colsort</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b, </font><font color="#0000FF">sequence </font><font color="#330033">cols</font><font color="#880033">)</font>
+<font color="#0000FF">    integer </font><font color="#330033">sign</font>
+<font color="#0000FF">    for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">cols</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">        if </font><font color="#330033">cols</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">&lt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">            sign = -1</font>
+<font color="#330033">            cols</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= -cols</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">]</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            sign = 1</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">        if not equal</font><font color="#880033">(</font><font color="#330033">a</font><font color="#993333">[</font><font color="#330033">cols</font><font color="#0000FF">[</font><font color="#330033">i</font><font color="#0000FF">]</font><font color="#993333">]</font><font color="#330033">, b</font><font color="#993333">[</font><font color="#330033">cols</font><font color="#0000FF">[</font><font color="#330033">i</font><font color="#0000FF">]</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">            return </font><font color="#330033">sign * </font><font color="#0000FF">compare</font><font color="#880033">(</font><font color="#330033">upper</font><font color="#993333">(</font><font color="#330033">a</font><font color="#0000FF">[</font><font color="#330033">cols</font><font color="#5500FF">[</font><font color="#330033">i</font><font color="#5500FF">]</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#330033">, upper</font><font color="#993333">(</font><font color="#330033">b</font><font color="#0000FF">[</font><font color="#330033">cols</font><font color="#5500FF">[</font><font color="#330033">i</font><font color="#5500FF">]</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end for</font>
+
+<font color="#0000FF">    return </font><font color="#330033">0</font>
+<font color="#0000FF">end function</font>
+
+<font color="#FF0055">-- Order is age:descending, Surname, Given Name</font>
+<font color="#0000FF">sequence </font><font color="#330033">column_order = </font><font color="#880033">{</font><font color="#330033">-3,2,1</font><font color="#880033">}</font>
+<font color="#330033">sorted = custom_sort</font><font color="#880033">( </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"colsort"</font><font color="#993333">)</font><font color="#330033">, students, </font><font color="#993333">{</font><font color="#330033">column_order</font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#FF0055">-- result is</font>
+<font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#330033">"Diane"</font><font color="#330033">,</font><font color="#330033">"Fry"</font><font color="#330033">,23</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Bob"</font><font color="#330033">,</font><font color="#330033">"Palmer"</font><font color="#330033">,21</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"George"</font><font color="#330033">,</font><font color="#330033">"Gungle"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Heidi"</font><font color="#330033">,</font><font color="#330033">"Smith"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Ian"</font><font color="#330033">,</font><font color="#330033">"Sidebottom"</font><font color="#330033">,19</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Anne"</font><font color="#330033">, </font><font color="#330033">"Baxter"</font><font color="#330033">, 18 </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Eddy"</font><font color="#330033">,</font><font color="#330033">"Ammon"</font><font color="#330033">,17</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Freya"</font><font color="#330033">,</font><font color="#330033">"Brash"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Chris"</font><font color="#330033">,</font><font color="#330033">"du Pont"</font><font color="#330033">,16</font><font color="#993333">}</font>
+<font color="#880033">}</font>
+
+<font color="#330033">sorted = custom_sort</font><font color="#880033">( </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"colsort"</font><font color="#993333">)</font><font color="#330033">, students, </font><font color="#993333">{</font><font color="#330033">column_order</font><font color="#993333">}</font><font color="#330033">, REVERSE_ORDER </font><font color="#880033">)</font>
+<font color="#FF0055">-- result is</font>
+<font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#330033">"Chris"</font><font color="#330033">,</font><font color="#330033">"du Pont"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Freya"</font><font color="#330033">,</font><font color="#330033">"Brash"</font><font color="#330033">,16</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Eddy"</font><font color="#330033">,</font><font color="#330033">"Ammon"</font><font color="#330033">,17</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Anne"</font><font color="#330033">, </font><font color="#330033">"Baxter"</font><font color="#330033">, 18 </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Ian"</font><font color="#330033">,</font><font color="#330033">"Sidebottom"</font><font color="#330033">,19</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Heidi"</font><font color="#330033">,</font><font color="#330033">"Smith"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"George"</font><font color="#330033">,</font><font color="#330033">"Gungle"</font><font color="#330033">,20</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Bob"</font><font color="#330033">,</font><font color="#330033">"Palmer"</font><font color="#330033">,21</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#330033">"Diane"</font><font color="#330033">,</font><font color="#330033">"Fry"</font><font color="#330033">,23</font><font color="#993333">}</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>See Also:</h5>
+<a name="_2953_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sort.html#_2939_sort">sort</a></p>
+
+<p> 
+<a name="stdsortsort_columns"></a><a name="columns"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.2.3 sort_columns</h4>
+<a name="_2955_sort_columns"></a><a name="sort_columns"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public function </font><font color="#330033">sort_columns</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">x, </font><font color="#0000FF">sequence </font><font color="#330033">column_list</font><font color="#880033">)</font>
+</pre>
+
+<p>   sorts the rows in a sequence according to a user-defined column order.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Parameters:</h5>
+<a name="_2956_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : a sequence, holding the sequences to be sorted.
+</li><li><tt>column_list</tt> : a list of columns indexes <tt>x</tt> is to be sorted by.
+</li></ol>
+<!-- ..\include\std\sort.e -->
+<h5>Returns:</h5>
+<a name="_2957_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a copy of the original sequence in sorted order.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Comments:</h5>
+<a name="_2958_comments"></a><a name="comments"></a>
+<p> <tt>x</tt> must be a sequence of sequences.</p>
+
+<p> A non-existent column is treated as coming before an existing column. This allows sorting of records that are shorter than the columns in the column list.</p>
+
+<p> By default columns are sorted in ascending order. To sort in descending order make the column number negative.</p>
+
+<p> This function uses the "Shell" sort algorithm. This sort is not "stable" which means elements that are considered equal might change position relative to each other.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Example 1:</h5>
+<a name="_2959_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">dirlist</font>
+<font color="#330033">dirlist = dir</font><font color="#880033">(</font><font color="#330033">"c:\\temp"</font><font color="#880033">)</font>
+<font color="#0000FF">sequence </font><font color="#330033">sorted</font>
+<font color="#FF0055">-- Order is Size:descending, Name</font>
+<font color="#330033">sorted = sort_columns</font><font color="#880033">( </font><font color="#330033">dirlist, </font><font color="#993333">{</font><font color="#330033">-D_SIZE, D_NAME</font><font color="#993333">} </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>See Also:</h5>
+<a name="_2960_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sort.html#_2939_sort">sort</a></p>
+
+<p> 
+<a name="stdsortmerge"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.2.4 merge</h4>
+<a name="_2962_merge"></a><a name="merge"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public function </font><font color="#330033">merge</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">a, </font><font color="#0000FF">sequence </font><font color="#330033">b, </font><font color="#0000FF">integer </font><font color="#330033">compfunc = - 1, </font><font color="#0000FF">object </font><font color="#330033">userdata = </font><font color="#330033">""</font><font color="#880033">)</font>
+</pre>
+
+<p>   merges two pre-sorted sequences into a single sequence.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Parameters:</h5>
+<a name="_2963_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : a sequence, holding pre-sorted data.
+</li><li><tt>b</tt> : a sequence, holding pre-sorted data.
+</li><li><tt>compfunc</tt> : an integer, either -1 or the routine id of a user-defined comparision function.
+</li></ol>
+<!-- ..\include\std\sort.e -->
+<h5>Returns:</h5>
+<a name="_2964_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, consisting of <tt>a</tt> and <tt>b</tt> merged together.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Comments:</h5>
+<a name="_2965_comments"></a><a name="comments"></a><ul><li>If <tt>a</tt> or <tt>b</tt> is not already sorted, the resulting sequence might not be sorted either.
+</li><li>The input sequences do not have to be the same size.
+</li><li>The user-defined comparision function must accept two objects and return an integer. It returns -1 if the first object must appear before the second one, and 1 if the first object must after before the second one, and 0 if the order doesn't matter.
+</li></ul>
+<!-- ..\include\std\sort.e -->
+<h5>Example 1:</h5>
+<a name="_2966_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">X,Y</font>
+<font color="#330033">X = sort</font><font color="#880033">( </font><font color="#993333">{</font><font color="#330033">5,3,7,1,9,0</font><font color="#993333">} </font><font color="#880033">) </font><font color="#FF0055">--&gt; {0,1,3,5,7,9}</font>
+<font color="#330033">Y = sort</font><font color="#880033">( </font><font color="#993333">{</font><font color="#330033">6,8,10,2</font><font color="#993333">} </font><font color="#880033">) </font><font color="#FF0055">--&gt; {2,6,8,10}</font>
+<font color="#330033">? merge</font><font color="#880033">(</font><font color="#330033">X,Y</font><font color="#880033">) </font><font color="#FF0055">--&gt; {0,1,2,3,5,6,7,8,9,10}</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>See Also:</h5>
+<a name="_2967_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sort.html#_2939_sort">sort</a></p>
+
+<p> 
+<a name="stdsortinsertion_sort"></a><a name="sort"></a> </p>
+
+<!-- ..\include\std\sort.e -->
+<h4>8.18.2.5 insertion_sort</h4>
+<a name="_2969_insertion_sort"></a><a name="insertion_sort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/sort.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stdsort</font>
+<font color="#0000FF">public function </font><font color="#330033">insertion_sort</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, </font><font color="#0000FF">object </font><font color="#330033">e = </font><font color="#330033">""</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">compfunc = - 1,</font>
+<font color="#0000FF">        object </font><font color="#330033">userdata = </font><font color="#330033">""</font><font color="#880033">)</font>
+</pre>
+
+<p>   sorts a sequence and optionally another object together.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Parameters:</h5>
+<a name="_2970_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : a sequence, holding data to be sorted.
+</li><li><tt>e</tt> : an object. If this is an atom, it is sorted in with <tt>s</tt>. If this is a non-empty sequence then <tt>s</tt> and <tt>e</tt> are both sorted independantly using this <tt>insertion_sort</tt> function and then the results are merged and returned.
+</li><li><tt>compfunc</tt> : an integer, either -1 or the routine id of a user-defined comparision function.
+</li></ol>
+<!-- ..\include\std\sort.e -->
+<h5>Returns:</h5>
+<a name="_2971_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, consisting of <tt>s</tt> and <tt>e</tt> sorted together.</p>
+
+<!-- ..\include\std\sort.e -->
+<h5>Comments:</h5>
+<a name="_2972_comments"></a><a name="comments"></a><ul><li>This routine is usually a lot faster than the standard sort when <tt>s</tt> and <tt>e</tt> are (mostly) sorted before calling the function. For example, you can use this routine to quickly add to a sorted list.
+</li><li>The input sequences do not have to be the same size.
+</li><li>The user-defined comparision function must accept two objects and return an integer. It returns -1 if the first object must appear before the second one, and 1 if the first object must after before the second one, and 0 if the order does not matter.
+</li></ul>
+<!-- ..\include\std\sort.e -->
+<h5>Example 1:</h5>
+<a name="_2973_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">X = </font><font color="#880033">{}</font>
+<font color="#0000FF">while </font><font color="#330033">true </font><font color="#0000FF">do</font>
+<font color="#330033">   newdata = get_data</font><font color="#880033">()</font>
+<font color="#0000FF">   if compare</font><font color="#880033">(</font><font color="#330033">-1, newdata</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">      exit</font>
+<font color="#0000FF">   end if</font>
+<font color="#330033">   X = insertion_sort</font><font color="#880033">(</font><font color="#330033">X, newdata</font><font color="#880033">)</font>
+<font color="#330033">   process</font><font color="#880033">(</font><font color="#330033">new_data</font><font color="#880033">)</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<!-- ..\include\std\sort.e -->
+<h5>See Also:</h5>
+<a name="_2974_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a>, <a href="std_sort.html#_2939_sort">sort</a>, <a href="std_sort.html#_2962_merge">merge</a></p>
+
+<p> 
+<!-- ..\include\std\locale.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_serialize.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_locale.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_serialize.html">8.17 Serialization of Euphoria Objects</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_locale.html">8.19 Locale Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

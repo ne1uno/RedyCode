@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_sort.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_localeconv.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_sort.html">8.18 Sorting</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_localeconv.html">8.20 Locale Names</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\locale.e -->
+<h2>8.19 Locale Routines</h2>
+<a name="_2976_localeroutines"></a><a name="localeroutines"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_locale.html#_2976_localeroutines">8.19 Locale Routines</a></div>
+<div class="toc_3"><a href="std_locale.html#_2977_messagetranslationfunctions">8.19.1 Message Translation Functions</a></div>
+<div class="toc_4"><a href="std_locale.html#_2979_set_lang_path">8.19.1.1 set_lang_path</a></div>
+<div class="toc_4"><a href="std_locale.html#_2984_get_lang_path">8.19.1.2 get_lang_path</a></div>
+<div class="toc_4"><a href="std_locale.html#_2988_lang_load">8.19.1.3 lang_load</a></div>
+<div class="toc_4"><a href="std_locale.html#_2995_set_def_lang">8.19.1.4 set_def_lang</a></div>
+<div class="toc_4"><a href="std_locale.html#_2999_get_def_lang">8.19.1.5 get_def_lang</a></div>
+<div class="toc_4"><a href="std_locale.html#_3004_translate">8.19.1.6 translate</a></div>
+<div class="toc_4"><a href="std_locale.html#_3011_trsprintf">8.19.1.7 trsprintf</a></div>
+<div class="toc_3"><a href="std_locale.html#_3016_timeandnumbertranslation">8.19.2 Time and Number Translation</a></div>
+<div class="toc_4"><a href="std_locale.html#_3018_set">8.19.2.1 set</a></div>
+<div class="toc_4"><a href="std_locale.html#_3023_get">8.19.2.2 get</a></div>
+<div class="toc_4"><a href="std_locale.html#_3027_money">8.19.2.3 money</a></div>
+<div class="toc_4"><a href="std_locale.html#_3033_number">8.19.2.4 number</a></div>
+<div class="toc_4"><a href="std_locale.html#_3039_datetime">8.19.2.5 datetime</a></div>
+<div class="toc_4"><a href="std_locale.html#_3045_get_text">8.19.2.6 get_text</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\locale.e -->
+<h3>8.19.1 Message Translation Functions</h3>
+<a name="_2977_messagetranslationfunctions"></a><a name="messagetranslationfunctions"></a>
+<p> 
+<a name="localeset_lang_path"></a><a name="lang_path"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.1 set_lang_path</h4>
+<a name="_2979_set_lang_path"></a><a name="set_lang_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_lang_path</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">pp</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the language path.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_2980_parameters"></a><a name="parameters"></a><ol><li><tt>pp</tt> : an object, either an actual path or an atom.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Comments:</h5>
+<a name="_2981_comments"></a><a name="comments"></a>
+<p> When the language path is not set, and it is unset by default, <a href="std_locale.html#_3018_set">set</a> does not load any language file.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_2982_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3018_set">set</a></p>
+
+<p> 
+<a name="localeget_lang_path"></a><a name="lang_path"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.2 get_lang_path</h4>
+<a name="_2984_get_lang_path"></a><a name="get_lang_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">get_lang_path</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the language path.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_2985_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the current language path.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_2986_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_2984_get_lang_path">get_lang_path</a></p>
+
+<p> 
+<a name="localelang_load"></a><a name="load"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.3 lang_load</h4>
+<a name="_2988_lang_load"></a><a name="lang_load"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">lang_load</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename</font><font color="#880033">)</font>
+</pre>
+
+<p>   loads a language file.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_2989_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : a sequence, the name of the file to load. If no file extension is supplied, then <tt>".lng"</tt> is used.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_2990_returns"></a><a name="returns"></a>
+<p> A language <strong>map</strong>, if successful. This is to be used when calling <a href="std_locale.html#_3004_translate">translate</a>.</p>
+
+<p> If the load fails it returns a zero.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Comments:</h5>
+<a name="_2991_comments"></a><a name="comments"></a>
+<p> The language file must be made of lines which are either comments, empty lines or translations. Note that leading whitespace is ignored on all lines except continuation lines.</p>
+<ul><li><em>Comments</em> are lines that begin with a <tt>#</tt> character and extend to the end of the line.
+</li><li><em>Empty Lines</em> are ignored.
+</li><li><em>Translations</em> have two forms.
+</li></ul>
+<p>
+<pre>keyword translation_text
+</pre>
+In which the 'keyword' is a word that must not have any spaces in it. 
+<pre>keyphrase = translation_text
+</pre>
+In which the 'keyphrase' is anything up to the first <tt>'='</tt> symbol.</p>
+
+<p> It is possible to have the translation text span multiple lines. You do this by having <tt>'&amp;'</tt> as the last character of the line. These are placed by newline characters when loading.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_2992_example1"></a><a name="example1"></a>
+<p> 
+<pre># Example translation file
+#
+
+
+hello Hola
+world Mundo
+greeting %s, %s!
+
+help text = &amp;
+This is an example of some &amp;
+translation text that spans &amp;
+multiple lines.
+
+# End of example PO #2
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_2993_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3004_translate">translate</a></p>
+
+<p> 
+<a name="localeset_def_lang"></a><a name="def_lang"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.4 set_def_lang</h4>
+<a name="_2995_set_def_lang"></a><a name="set_def_lang"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_def_lang</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">langmap</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the default language (translation) map.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_2996_parameters"></a><a name="parameters"></a><ol><li><tt>langmap</tt> : A value returned by <a href="std_locale.html#_2988_lang_load">lang_load</a>, or zero to remove any default map.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_2997_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_def_lang</font><font color="#880033">( </font><font color="#330033">lang_load</font><font color="#993333">(</font><font color="#330033">"appmsgs"</font><font color="#993333">) </font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="localeget_def_lang"></a><a name="def_lang"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.5 get_def_lang</h4>
+<a name="_2999_get_def_lang"></a><a name="get_def_lang"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">get_def_lang</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the default language (translation) map.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3000_parameters"></a><a name="parameters"></a>
+<p> none.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3001_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, a language map, or zero if there is no default language map yet.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3002_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">langmap = get_def_lang</font><font color="#880033">()</font>
+</pre>
+
+<p> 
+<a name="localetranslate"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.6 translate</h4>
+<a name="_3004_translate"></a><a name="translate"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">translate</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">word, </font><font color="#0000FF">object </font><font color="#330033">langmap = 0, </font><font color="#0000FF">object </font><font color="#330033">defval = </font><font color="#330033">""</font><font color="#330033">,</font>
+<font color="#0000FF">        integer </font><font color="#330033">mode = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   translates a word, using the current language file.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3005_parameters"></a><a name="parameters"></a><ol><li><tt>word</tt> : a sequence, the word to translate.
+</li><li><tt>langmap</tt> : Either a value returned by <a href="std_locale.html#_2988_lang_load">lang_load</a> or zero to use the default language map
+</li><li><tt>defval</tt> : a object. The value to return if the word cannot be translated. Default is "". If <tt>defval</tt> is <tt>PINF</tt> then the <tt>word</tt> is returned if it can not be translated.
+</li><li><tt>mode</tt> : an integer. If zero (the default) it uses <tt>word</tt> as the keyword and returns the translation text. If not zero it uses <tt>word</tt> as the translation and returns the keyword.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3006_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the value associated with <tt>word</tt>, or <tt>defval</tt> if there is no association.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3007_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">newword</font>
+<font color="#330033">newword = translate</font><font color="#880033">(</font><font color="#330033">msgtext</font><font color="#880033">)</font>
+<font color="#0000FF">if length</font><font color="#880033">(</font><font color="#330033">msgtext</font><font color="#880033">) </font><font color="#330033">= 0 </font><font color="#0000FF">then</font>
+<font color="#330033">   error_message</font><font color="#880033">(</font><font color="#330033">msgtext</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#330033">   error_message</font><font color="#880033">(</font><font color="#330033">newword</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 2:</h5>
+<a name="_3008_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">error_message</font><font color="#880033">(</font><font color="#330033">translate</font><font color="#993333">(</font><font color="#330033">msgtext, , PINF</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_3009_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3018_set">set</a>, <a href="std_locale.html#_2988_lang_load">lang_load</a></p>
+
+<p> 
+<a name="localetrsprintf"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.1.7 trsprintf</h4>
+<a name="_3011_trsprintf"></a><a name="trsprintf"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">trsprintf</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">fmt, </font><font color="#0000FF">sequence </font><font color="#330033">data, </font><font color="#0000FF">object </font><font color="#330033">langmap = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a formatted string with automatic translation performed on the parameters.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3012_parameters"></a><a name="parameters"></a><ol><li><tt>fmt</tt> : A sequence. Contains the formatting string. See <a href="std_io.html#_1515_printf">printf</a> for details.
+</li><li><tt>data</tt> : A sequence. Contains the data that goes into the formatted result. see <a href="std_io.html#_1515_printf">printf</a> for details.
+</li><li><tt>langmap</tt> : An object. Either 0 (the default) to use the default language maps, or the result returned from <a href="std_locale.html#_2988_lang_load">lang_load</a> to specify a particular language map.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3013_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the formatted result.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Comments:</h5>
+<a name="_3014_comments"></a><a name="comments"></a>
+<p> This works very much like the <a href="std_text.html#_3293_sprintf">sprintf</a> function. The difference is that the <tt>fmt</tt> sequence and sequences contained in the <tt>data</tt> parameter are <a href="std_locale.html#_3004_translate">translated</a> before passing them to <a href="std_text.html#_3293_sprintf">sprintf</a>. If an item has no translation, it remains unchanged.</p>
+
+<p> Further more, after the translation pass, if the result text begins with "__", the "__" is removed. This function can be used when you do not want an item to be translated.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3015_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Assuming a language has been loaded and</font>
+<font color="#FF0055">--   "greeting" translates as '%s %s, %s'</font>
+<font color="#FF0055">--   "hello"  translates as "G'day"</font>
+<font color="#FF0055">--   "how are you today" translates as "How's the family?"</font>
+<font color="#0000FF">sequence </font><font color="#330033">UserName = </font><font color="#330033">"Bob"</font>
+<font color="#0000FF">sequence </font><font color="#330033">result = trsprintf</font><font color="#880033">( </font><font color="#330033">"greeting"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"hello"</font><font color="#330033">, </font><font color="#330033">"__" </font><font color="#330033">&amp; UserName, </font><font color="#330033">"how are you today"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">   --&gt; "G'day Bob, How's the family?"</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h3>8.19.2 Time and Number Translation</h3>
+<a name="_3016_timeandnumbertranslation"></a><a name="timeandnumbertranslation"></a>
+<p> 
+<a name="localeset"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.1 set</h4>
+<a name="_3018_set"></a><a name="set"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">set</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">new_locale</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the computer locale, and possibly loads an appropriate translation file.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3019_parameters"></a><a name="parameters"></a><ol><li><tt>new_locale</tt> : a sequence representing a new locale.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3020_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either 0 on failure or 1 on success.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Comments:</h5>
+<a name="_3021_comments"></a><a name="comments"></a>
+<p> Locale strings have the following format: <tt>xx_YY</tt> or <tt>xx_YY.xyz</tt> . The <tt>xx</tt> part refers to a culture, or main language or script. For instance, <tt>"en"</tt> refers to English, <tt>"de"</tt> refers to German, and so on. For some languages, a script may be specified, like <tt>"mn_Cyrl_MN"</tt> (Mongolian in cyrillic transcription).</p>
+
+<p> The <tt>YY</tt> part refers to a subculture, or variant, of the main language. For instance, <tt>"fr_FR"</tt> refers to metropolitan France, while <tt>"fr_BE"</tt> refers to the variant spoken in Wallonie, the French speaking region of Belgium.</p>
+
+<p> The optional <tt>.xyz</tt> part specifies an encoding, like <tt>.utf8</tt> or <tt>.1252</tt> . This is required in some cases.</p>
+
+<p> 
+<a name="localeget"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.2 get</h4>
+<a name="_3023_get"></a><a name="get"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">get</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the current locale string.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3024_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a locale string.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_3025_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3018_set">set</a></p>
+
+<p> 
+<a name="localemoney"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.3 money</h4>
+<a name="_3027_money"></a><a name="money"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">money</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">amount</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an amount of currency into a string representing that amount.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3028_parameters"></a><a name="parameters"></a><ol><li><tt>amount</tt> : an atom, the value to write out.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3029_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a string that writes out <tt>amount</tt> of current currency.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3030_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Assuming an en_US locale</font>
+<font color="#330033">money</font><font color="#880033">(</font><font color="#330033">1020.5</font><font color="#880033">) </font><font color="#FF0055">-- returns"$1,020.50"</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_3031_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3018_set">set</a>, <a href="std_locale.html#_3033_number">number</a></p>
+
+<p> 
+<a name="localenumber"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.4 number</h4>
+<a name="_3033_number"></a><a name="number"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">number</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">num</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a number into a string representing that number.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3034_parameters"></a><a name="parameters"></a><ol><li><tt>num</tt> : an atom, the value to write out.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3035_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a string that writes out <tt>num</tt>.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3036_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Assuming an en_US locale</font>
+<font color="#330033">number</font><font color="#880033">(</font><font color="#330033">1020.5</font><font color="#880033">) </font><font color="#FF0055">-- returns "1,020.50"</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_3037_seealso"></a><a name="seealso"></a>
+<p> <a href="std_locale.html#_3018_set">set</a>, <a href="std_locale.html#_3027_money">money</a></p>
+
+<p> 
+<a name="localedatetime"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.5 datetime</h4>
+<a name="_3039_datetime"></a><a name="datetime"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">datetime</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">fmt, datetime :datetime dtm</font><font color="#880033">)</font>
+</pre>
+
+<p>   formats a date according to current locale.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3040_parameters"></a><a name="parameters"></a><ol><li><tt>fmt</tt> : A format string, as described in datetime:<a href="std_datetime.html#_1109_format">format</a>
+</li><li><tt>dtm</tt> : the datetime to write out.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3041_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, representing the formatted date.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Example 1:</h5>
+<a name="_3042_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+
+<font color="#330033">datetime</font><font color="#880033">(</font><font color="#330033">"Today is a %A"</font><font color="#330033">, datetime:now</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\locale.e -->
+<h5>See Also:</h5>
+<a name="_3043_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#datetimeformat">datetime:format</a></p>
+
+<p> 
+<a name="localeget_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\locale.e -->
+<h4>8.19.2.6 get_text</h4>
+<a name="_3045_get_text"></a><a name="get_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/locale.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">locale</font>
+<font color="#0000FF">public function </font><font color="#330033">get_text</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">MsgNum, </font><font color="#0000FF">sequence </font><font color="#330033">LocalQuals = </font><font color="#993333">{}</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">DBBase = </font><font color="#330033">"teksto"</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the text associated with the message number in the requested locale.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Parameters:</h5>
+<a name="_3046_parameters"></a><a name="parameters"></a><ol><li><tt>MsgNum</tt> : An integer. The message number whose text you are trying to get.
+</li><li><tt>LocalQuals</tt> : A sequence. Zero or more locale codes. Default is <tt>{}</tt>.
+</li><li><tt>DBBase</tt>: A sequence. The base name for the database files containing the locale text strings. The default is <tt>"teksto"</tt>.
+</li></ol>
+<!-- ..\include\std\locale.e -->
+<h5>Returns:</h5>
+<a name="_3047_returns"></a><a name="returns"></a>
+<p> A string <strong>sequence</strong>, the text associated with the message number and locale.<br />
+The <strong>integer</strong> zero, if associated text can not be found for any reason.</p>
+
+<!-- ..\include\std\locale.e -->
+<h5>Comments:</h5>
+<a name="_3048_comments"></a><a name="comments"></a><ul><li>This first scans the database or databases linked to the locale codes supplied.
+</li><li>The database name for each locale takes the format of <tt>"&lt;DBBase&gt;_&lt;Locale&gt;.edb"</tt> so if the default <tt>DBBase</tt> is used, and the locales supplied are <tt>{"enus", "enau"}</tt> the databases scanned are <tt>"teksto_enus.edb"</tt> and <tt>"teksto_enau.edb"</tt>. The database table name searched is <tt>"1"</tt> with the key being the message number, and the text is the record data.
+</li><li>If the message is not found in these databases (or the databases do not exist) a database called <tt>"&lt;DBBase&gt;.edb"</tt> is searched. Again the table name is <tt>"1"</tt> but it first looks for keys with the format <tt>{&lt;locale&gt;,msgnum}</tt> and failing that it looks for keys in the format <tt>{"", msgnum}</tt>, and if that fails it looks for a key of just the <tt>msgnum</tt>.
+</li></ul>
+<p> 
+<!-- ..\include\std\localeconv.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_sort.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_localeconv.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_sort.html">8.18 Sorting</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_localeconv.html">8.20 Locale Names</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

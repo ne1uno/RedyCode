@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_win32_sounds.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_win32_sounds.html">8.57 Windows Sound</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\unsupported.txt -->
+<h2>8.58 Unsupported Features</h2>
+<a name="_6644_unsupportedfeatures"></a><a name="unsupportedfeatures"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="unsupported.html#_6644_unsupportedfeatures">8.58 Unsupported Features</a></div>
+<div class="toc_3"><a href="unsupported.html#_6645_utfencodedstringliterals">8.58.1 UTF Encoded String Literals</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> These are features that have been implemented either partly or fully, but are not officially part of the Euphoria Language. They may one day be officially sanctioned and thus fully supported, but that is not certain. And even if an unsupported feature does make it way into the language, it may not be exactly what is documented in this section.</p>
+
+<p> So if you use <strong>any</strong> of these unsupported features then be aware that your code might break in future releases.</p>
+
+<!-- ..\docs\unsupported.txt -->
+<h3>8.58.1 UTF Encoded String Literals</h3>
+<a name="_6645_utfencodedstringliterals"></a><a name="utfencodedstringliterals"></a><ul><li>using word strings hexadecimal (for utf-16) and double word hexadecimal (for utf-32)  e.g.
+</li></ul>
+<pre class="examplecode"><font color="#330033">u"" </font><font color="#FF0055">-- ==&gt; {#65,#66,#67,#AE}</font>
+<font color="#330033">U"" </font><font color="#FF0055">-- ==&gt; {#65,#66,#67,#AE}</font>
+</pre>
+
+<p> The value of the strings above are equivalent.  Spaces seperate values to other elements.  When you put too many hex characters together for the kind of string they are split up appropriately for you:</p>
+
+<pre class="examplecode"><font color="#330033">x""  </font><font color="#FF0055">-- 8-bit  ==&gt; {#65,#66,#67,#AE}</font>
+<font color="#330033">u""  </font><font color="#FF0055">-- 16-bit ==&gt; {#6566,#67AE}</font>
+<font color="#330033">U""  </font><font color="#FF0055">-- 32-bit ==&gt; {#6566,#67AE}</font>
+<font color="#330033">U""  </font><font color="#FF0055">-- 32-bit ==&gt; {#656667AE} </font>
+<font color="#FF0055">              --            Uses '_' to aid readability for long values.</font>
+<font color="#330033">U""   </font><font color="#FF0055">-- 32-bit ==&gt; {#656667AE}</font>
+</pre>
+
+<p> String literals encoded as ASCII, UTF-8, UTF-16, UTF-32 or really any encoding that uses elements that are 32-bits long or shorter can be built with U"" syntax. Literals of encodings that have 16-bit long or shorter or 8-bit long or shorter elements can be built using u"" syntax or x"" syntax  respectively.  Use delimiters, such as spaces and underscores, to break the ambiguity and improve readability. </p>
+
+<p> The following is code with a vaild UTF8 encoded string:</p>
+
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">utf8_val = </font><font color="#330033">x"" </font><font color="#FF0055">-- This is "&gt;e"</font>
+</pre>
+
+<p> <strong>However,</strong> it is up to the coder to know the correct code-point values for these to make any sense in the encoding the coder is using. That is to say, it is possible for the coder to use the x"", u"", and U"" syntax to create literals that are <strong>not valid</strong> UTF strings.</p>
+
+<p> Hexadecimal strings can be used to encode UTF-8 strings, even though the resulting string does not have to be a valid UTF-8 string. </p>
+
+<p> <strong>The rules for unicode strings are...</strong></p>
+<ol><li>they begin with the pair <tt>u"</tt> for UTF-16 and <tt>U"</tt> for UTF-32 strings, and end with a double-quote (<tt>"</tt>) character
+</li><li>they can only contain hexadecimal digits (0-9 A-F a-f), and space, underscore, tab, newline, carriage-return. Anything else is invalid.
+</li><li>an underscore is simply ignored, as if it was never there. It is used to aid readability.
+</li><li>For UTF-16 strings, each set of four contiguous hex digits represent a single sequence element with a value from 0x0000 to 0xFFFF
+</li><li>For UTF-32 strings, each set of eight contiguous hex digits represent a single sequence element with a value from 0x0000 to 0xFFFFFFFF
+</li><li>they can span multiple lines
+</li><li>The non-hex digits are treated as punctuation and used to delimit individual values.
+</li><li>The resulting string does not have to be a valid UTF-16/UTF-32 string.
+</li></ol>
+<pre class="examplecode"><font color="#330033">u"" </font><font color="#330033">== </font><font color="#880033">{</font><font color="#330033">0x0001, 0x0002, 0x0034, 0x5678, 0x0ABC</font><font color="#880033">}</font>
+<font color="#330033">U"" </font><font color="#330033">== </font><font color="#880033">{</font><font color="#330033">0x0000_0001, 0x0000_0002, 0x0000_0034, 0x05678ABC</font><font color="#880033">}</font>
+<font color="#330033">U"" </font><font color="#330033">== </font><font color="#880033">{</font><font color="#330033">0x0000_0001, 0x0000_0002, 0x0000_0034, 0x0567_8ABC</font><font color="#880033">}</font>
+</pre>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_win32_sounds.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_win32_sounds.html">8.57 Windows Sound</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

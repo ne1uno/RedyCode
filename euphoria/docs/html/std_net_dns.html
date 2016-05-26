@@ -1,0 +1,676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_common.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_http.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_common.html">8.37 Common Internet Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_http.html">8.39 HTTP Client</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\net\dns.e -->
+<h2>8.38 DNS</h2>
+<a name="_5200_dns"></a><a name="dns"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_net_dns.html#_5200_dns">8.38 DNS</a></div>
+<div class="toc_3"><a href="std_net_dns.html#_5201_constants">8.38.1 Constants</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5203_addr_flags">8.38.1.1 ADDR_FLAGS</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5205_addr_family">8.38.1.2 ADDR_FAMILY</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5207_addr_type">8.38.1.3 ADDR_TYPE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5209_addr_protocol">8.38.1.4 ADDR_PROTOCOL</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5211_addr_address">8.38.1.5 ADDR_ADDRESS</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5213_host_official_name">8.38.1.6 HOST_OFFICIAL_NAME</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5215_host_aliases">8.38.1.7 HOST_ALIASES</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5217_host_ips">8.38.1.8 HOST_IPS</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5219_host_type">8.38.1.9 HOST_TYPE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5221_dns_query_standard">8.38.1.10 DNS_QUERY_STANDARD</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5223_dns_query_accept_truncated_response">8.38.1.11 DNS_QUERY_ACCEPT_TRUNCATED_RESPONSE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5225_dns_query_use_tcp_only">8.38.1.12 DNS_QUERY_USE_TCP_ONLY</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5227_dns_query_no_recursion">8.38.1.13 DNS_QUERY_NO_RECURSION</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5229_dns_query_bypass_cache">8.38.1.14 DNS_QUERY_BYPASS_CACHE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5231_dns_query_no_wire_query">8.38.1.15 DNS_QUERY_NO_WIRE_QUERY</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5233_dns_query_no_local_name">8.38.1.16 DNS_QUERY_NO_LOCAL_NAME</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5235_dns_query_no_hosts_file">8.38.1.17 DNS_QUERY_NO_HOSTS_FILE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5237_dns_query_no_netbt">8.38.1.18 DNS_QUERY_NO_NETBT</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5239_dns_query_wire_only">8.38.1.19 DNS_QUERY_WIRE_ONLY</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5241_dns_query_return_message">8.38.1.20 DNS_QUERY_RETURN_MESSAGE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5243_dns_query_treat_as_fqdn">8.38.1.21 DNS_QUERY_TREAT_AS_FQDN</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5245_dns_query_dont_reset_ttl_values">8.38.1.22 DNS_QUERY_DONT_RESET_TTL_VALUES</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5247_dns_query_reserved">8.38.1.23 DNS_QUERY_RESERVED</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5249_ns_c_in">8.38.1.24 NS_C_IN</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5251_ns_c_any">8.38.1.25 NS_C_ANY</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5253_ns_kt_rsa">8.38.1.26 NS_KT_RSA</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5255_ns_kt_dh">8.38.1.27 NS_KT_DH</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5257_ns_kt_dsa">8.38.1.28 NS_KT_DSA</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5259_ns_kt_private">8.38.1.29 NS_KT_PRIVATE</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5261_ns_t_a">8.38.1.30 NS_T_A</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5263_ns_t_ns">8.38.1.31 NS_T_NS</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5265_ns_t_ptr">8.38.1.32 NS_T_PTR</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5267_ns_t_mx">8.38.1.33 NS_T_MX</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5269_ns_t_aaaa">8.38.1.34 NS_T_AAAA</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5271_ns_t_a6">8.38.1.35 NS_T_A6</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5273_ns_t_any">8.38.1.36 NS_T_ANY</a></div>
+<div class="toc_3"><a href="std_net_dns.html#_5274_generalroutines">8.38.2 General Routines</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5276_host_by_name">8.38.2.1 host_by_name</a></div>
+<div class="toc_4"><a href="std_net_dns.html#_5281_host_by_addr">8.38.2.2 host_by_addr</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\net\dns.e -->
+<h3>8.38.1 Constants</h3>
+<a name="_5201_constants"></a><a name="constants"></a>
+<p> 
+<a name="dnsaddr_flags"></a><a name="flags"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.1 ADDR_FLAGS</h4>
+<a name="_5203_addr_flags"></a><a name="addr_flags"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADDR_FLAGS</font>
+</pre>
+
+<p> 
+<a name="dnsaddr_family"></a><a name="family"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.2 ADDR_FAMILY</h4>
+<a name="_5205_addr_family"></a><a name="addr_family"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADDR_FAMILY</font>
+</pre>
+
+<p> 
+<a name="dnsaddr_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.3 ADDR_TYPE</h4>
+<a name="_5207_addr_type"></a><a name="addr_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADDR_TYPE</font>
+</pre>
+
+<p> 
+<a name="dnsaddr_protocol"></a><a name="protocol"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.4 ADDR_PROTOCOL</h4>
+<a name="_5209_addr_protocol"></a><a name="addr_protocol"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADDR_PROTOCOL</font>
+</pre>
+
+<p> 
+<a name="dnsaddr_address"></a><a name="address"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.5 ADDR_ADDRESS</h4>
+<a name="_5211_addr_address"></a><a name="addr_address"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADDR_ADDRESS</font>
+</pre>
+
+<p> 
+<a name="dnshost_official_name"></a><a name="official_name"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.6 HOST_OFFICIAL_NAME</h4>
+<a name="_5213_host_official_name"></a><a name="host_official_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOST_OFFICIAL_NAME</font>
+</pre>
+
+<p> 
+<a name="dnshost_aliases"></a><a name="aliases"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.7 HOST_ALIASES</h4>
+<a name="_5215_host_aliases"></a><a name="host_aliases"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOST_ALIASES</font>
+</pre>
+
+<p> 
+<a name="dnshost_ips"></a><a name="ips"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.8 HOST_IPS</h4>
+<a name="_5217_host_ips"></a><a name="host_ips"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOST_IPS</font>
+</pre>
+
+<p> 
+<a name="dnshost_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.9 HOST_TYPE</h4>
+<a name="_5219_host_type"></a><a name="host_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOST_TYPE</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_standard"></a><a name="query_standard"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.10 DNS_QUERY_STANDARD</h4>
+<a name="_5221_dns_query_standard"></a><a name="dns_query_standard"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_STANDARD</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_accept_truncated_response"></a><a name="query_accept_truncated_response"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.11 DNS_QUERY_ACCEPT_TRUNCATED_RESPONSE</h4>
+<a name="_5223_dns_query_accept_truncated_response"></a><a name="dns_query_accept_truncated_response"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_ACCEPT_TRUNCATED_RESPONSE</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_use_tcp_only"></a><a name="query_use_tcp_only"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.12 DNS_QUERY_USE_TCP_ONLY</h4>
+<a name="_5225_dns_query_use_tcp_only"></a><a name="dns_query_use_tcp_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_USE_TCP_ONLY</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_no_recursion"></a><a name="query_no_recursion"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.13 DNS_QUERY_NO_RECURSION</h4>
+<a name="_5227_dns_query_no_recursion"></a><a name="dns_query_no_recursion"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_NO_RECURSION</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_bypass_cache"></a><a name="query_bypass_cache"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.14 DNS_QUERY_BYPASS_CACHE</h4>
+<a name="_5229_dns_query_bypass_cache"></a><a name="dns_query_bypass_cache"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_BYPASS_CACHE</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_no_wire_query"></a><a name="query_no_wire_query"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.15 DNS_QUERY_NO_WIRE_QUERY</h4>
+<a name="_5231_dns_query_no_wire_query"></a><a name="dns_query_no_wire_query"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_NO_WIRE_QUERY</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_no_local_name"></a><a name="query_no_local_name"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.16 DNS_QUERY_NO_LOCAL_NAME</h4>
+<a name="_5233_dns_query_no_local_name"></a><a name="dns_query_no_local_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_NO_LOCAL_NAME</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_no_hosts_file"></a><a name="query_no_hosts_file"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.17 DNS_QUERY_NO_HOSTS_FILE</h4>
+<a name="_5235_dns_query_no_hosts_file"></a><a name="dns_query_no_hosts_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_NO_HOSTS_FILE</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_no_netbt"></a><a name="query_no_netbt"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.18 DNS_QUERY_NO_NETBT</h4>
+<a name="_5237_dns_query_no_netbt"></a><a name="dns_query_no_netbt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_NO_NETBT</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_wire_only"></a><a name="query_wire_only"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.19 DNS_QUERY_WIRE_ONLY</h4>
+<a name="_5239_dns_query_wire_only"></a><a name="dns_query_wire_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_WIRE_ONLY</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_return_message"></a><a name="query_return_message"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.20 DNS_QUERY_RETURN_MESSAGE</h4>
+<a name="_5241_dns_query_return_message"></a><a name="dns_query_return_message"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_RETURN_MESSAGE</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_treat_as_fqdn"></a><a name="query_treat_as_fqdn"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.21 DNS_QUERY_TREAT_AS_FQDN</h4>
+<a name="_5243_dns_query_treat_as_fqdn"></a><a name="dns_query_treat_as_fqdn"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_TREAT_AS_FQDN</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_dont_reset_ttl_values"></a><a name="query_dont_reset_ttl_values"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.22 DNS_QUERY_DONT_RESET_TTL_VALUES</h4>
+<a name="_5245_dns_query_dont_reset_ttl_values"></a><a name="dns_query_dont_reset_ttl_values"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_DONT_RESET_TTL_VALUES</font>
+</pre>
+
+<p> 
+<a name="dnsdns_query_reserved"></a><a name="query_reserved"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.23 DNS_QUERY_RESERVED</h4>
+<a name="_5247_dns_query_reserved"></a><a name="dns_query_reserved"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">DNS_QUERY_RESERVED</font>
+</pre>
+
+<p> 
+<a name="dnsns_c_in"></a><a name="c_in"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.24 NS_C_IN</h4>
+<a name="_5249_ns_c_in"></a><a name="ns_c_in"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_C_IN</font>
+</pre>
+
+<p> 
+<a name="dnsns_c_any"></a><a name="c_any"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.25 NS_C_ANY</h4>
+<a name="_5251_ns_c_any"></a><a name="ns_c_any"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_C_ANY</font>
+</pre>
+
+<p> 
+<a name="dnsns_kt_rsa"></a><a name="kt_rsa"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.26 NS_KT_RSA</h4>
+<a name="_5253_ns_kt_rsa"></a><a name="ns_kt_rsa"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_KT_RSA</font>
+</pre>
+
+<p> 
+<a name="dnsns_kt_dh"></a><a name="kt_dh"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.27 NS_KT_DH</h4>
+<a name="_5255_ns_kt_dh"></a><a name="ns_kt_dh"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_KT_DH</font>
+</pre>
+
+<p> 
+<a name="dnsns_kt_dsa"></a><a name="kt_dsa"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.28 NS_KT_DSA</h4>
+<a name="_5257_ns_kt_dsa"></a><a name="ns_kt_dsa"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_KT_DSA</font>
+</pre>
+
+<p> 
+<a name="dnsns_kt_private"></a><a name="kt_private"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.29 NS_KT_PRIVATE</h4>
+<a name="_5259_ns_kt_private"></a><a name="ns_kt_private"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_KT_PRIVATE</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_a"></a><a name="t_a"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.30 NS_T_A</h4>
+<a name="_5261_ns_t_a"></a><a name="ns_t_a"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_A</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_ns"></a><a name="t_ns"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.31 NS_T_NS</h4>
+<a name="_5263_ns_t_ns"></a><a name="ns_t_ns"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_NS</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_ptr"></a><a name="t_ptr"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.32 NS_T_PTR</h4>
+<a name="_5265_ns_t_ptr"></a><a name="ns_t_ptr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_PTR</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_mx"></a><a name="t_mx"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.33 NS_T_MX</h4>
+<a name="_5267_ns_t_mx"></a><a name="ns_t_mx"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_MX</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_aaaa"></a><a name="t_aaaa"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.34 NS_T_AAAA</h4>
+<a name="_5269_ns_t_aaaa"></a><a name="ns_t_aaaa"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_AAAA</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_a6"></a><a name="t_a6"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.35 NS_T_A6</h4>
+<a name="_5271_ns_t_a6"></a><a name="ns_t_a6"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_A6</font>
+</pre>
+
+<p> 
+<a name="dnsns_t_any"></a><a name="t_any"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.1.36 NS_T_ANY</h4>
+<a name="_5273_ns_t_any"></a><a name="ns_t_any"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public constant </font><font color="#330033">NS_T_ANY</font>
+</pre>
+
+<!-- ..\include\std\net\dns.e -->
+<h3>8.38.2 General Routines</h3>
+<a name="_5274_generalroutines"></a><a name="generalroutines"></a>
+<p> 
+<a name="dnshost_by_name"></a><a name="by_name"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.2.1 host_by_name</h4>
+<a name="_5276_host_by_name"></a><a name="host_by_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public function </font><font color="#330033">host_by_name</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get the host information by name.</p>
+
+<!-- ..\include\std\net\dns.e -->
+<h5>Parameters:</h5>
+<a name="_5277_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : host name
+</li></ol>
+<!-- ..\include\std\net\dns.e -->
+<h5>Returns:</h5>
+<a name="_5278_returns"></a><a name="returns"></a>
+<p> A <tt>sequence</tt>, containing </p>
+
+<pre class="examplecode"><font color="#880033">{</font>
+<font color="#330033">  official name,</font>
+<font color="#993333">  { </font><font color="#330033">alias1, alias2, ... </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">  { </font><font color="#330033">ip1, ip2, ... </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">  address_type</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\net\dns.e -->
+<h5>Example 1:</h5>
+<a name="_5279_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">data = host_by_name</font><font color="#880033">(</font><font color="#330033">"www.google.com"</font><font color="#880033">)</font>
+<font color="#FF0055">-- data = {</font>
+<font color="#FF0055">--   "www.l.google.com",</font>
+<font color="#FF0055">--   {</font>
+<font color="#FF0055">--     "www.google.com"</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   {</font>
+<font color="#FF0055">--     "74.125.93.104",</font>
+<font color="#FF0055">--     "74.125.93.147",</font>
+<font color="#FF0055">--     ...</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   2</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<a name="dnshost_by_addr"></a><a name="by_addr"></a> </p>
+
+<!-- ..\include\std\net\dns.e -->
+<h4>8.38.2.2 host_by_addr</h4>
+<a name="_5281_host_by_addr"></a><a name="host_by_addr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/dns.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dns</font>
+<font color="#0000FF">public function </font><font color="#330033">host_by_addr</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">address</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get the host information by address.</p>
+
+<!-- ..\include\std\net\dns.e -->
+<h5>Parameters:</h5>
+<a name="_5282_parameters"></a><a name="parameters"></a><ol><li><tt>address</tt> : host address
+</li></ol>
+<!-- ..\include\std\net\dns.e -->
+<h5>Returns:</h5>
+<a name="_5283_returns"></a><a name="returns"></a>
+<p> A <tt>sequence</tt>, containing </p>
+
+<pre class="examplecode"><font color="#880033">{</font>
+<font color="#330033">  official name,</font>
+<font color="#993333">  { </font><font color="#330033">alias1, alias2, ... </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">  { </font><font color="#330033">ip1, ip2, ... </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">  address_type</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\net\dns.e -->
+<h5>Example 1:</h5>
+<a name="_5284_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">data = host_by_addr</font><font color="#880033">(</font><font color="#330033">"74.125.93.147"</font><font color="#880033">)</font>
+<font color="#FF0055">-- data = {</font>
+<font color="#FF0055">--   "www.l.google.com",</font>
+<font color="#FF0055">--   {</font>
+<font color="#FF0055">--     "www.google.com"</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   {</font>
+<font color="#FF0055">--     "74.125.93.104",</font>
+<font color="#FF0055">--     "74.125.93.147",</font>
+<font color="#FF0055">--     ...</font>
+<font color="#FF0055">--   },</font>
+<font color="#FF0055">--   2</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\net\http.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_common.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_http.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_common.html">8.37 Common Internet Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_http.html">8.39 HTTP Client</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

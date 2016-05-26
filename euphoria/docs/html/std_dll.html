@@ -1,0 +1,1048 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_url.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_error.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_url.html">8.40 URL handling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_error.html">8.42 Errors and Warnings</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\dll.e -->
+<h2>8.41 Dynamic Linking to External Code</h2>
+<a name="_5374_dynamiclinkingtoexternalcode"></a><a name="dynamiclinkingtoexternalcode"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_dll.html#_5374_dynamiclinkingtoexternalcode">8.41 Dynamic Linking to External Code</a></div>
+<div class="toc_3"><a href="std_dll.html#_5375_ctypeconstants">8.41.1 C Type Constants</a></div>
+<div class="toc_4"><a href="std_dll.html#_5379_c_char">8.41.1.1 C_CHAR</a></div>
+<div class="toc_4"><a href="std_dll.html#_5381_c_byte">8.41.1.2 C_BYTE</a></div>
+<div class="toc_4"><a href="std_dll.html#_5383_c_uchar">8.41.1.3 C_UCHAR</a></div>
+<div class="toc_4"><a href="std_dll.html#_5385_c_ubyte">8.41.1.4 C_UBYTE</a></div>
+<div class="toc_4"><a href="std_dll.html#_5387_c_short">8.41.1.5 C_SHORT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5389_c_word">8.41.1.6 C_WORD</a></div>
+<div class="toc_4"><a href="std_dll.html#_5391_c_ushort">8.41.1.7 C_USHORT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5393_c_int">8.41.1.8 C_INT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5395_c_bool">8.41.1.9 C_BOOL</a></div>
+<div class="toc_4"><a href="std_dll.html#_5397_c_uint">8.41.1.10 C_UINT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5399_c_long">8.41.1.11 C_LONG</a></div>
+<div class="toc_4"><a href="std_dll.html#_5401_c_ulong">8.41.1.12 C_ULONG</a></div>
+<div class="toc_4"><a href="std_dll.html#_5403_c_size_t">8.41.1.13 C_SIZE_T</a></div>
+<div class="toc_4"><a href="std_dll.html#_5405_c_pointer">8.41.1.14 C_POINTER</a></div>
+<div class="toc_4"><a href="std_dll.html#_5407_c_longlong">8.41.1.15 C_LONGLONG</a></div>
+<div class="toc_4"><a href="std_dll.html#_5409_c_long_ptr">8.41.1.16 C_LONG_PTR</a></div>
+<div class="toc_4"><a href="std_dll.html#_5411_c_handle">8.41.1.17 C_HANDLE</a></div>
+<div class="toc_4"><a href="std_dll.html#_5413_c_hwnd">8.41.1.18 C_HWND</a></div>
+<div class="toc_4"><a href="std_dll.html#_5415_c_dword">8.41.1.19 C_DWORD</a></div>
+<div class="toc_4"><a href="std_dll.html#_5417_c_wparam">8.41.1.20 C_WPARAM</a></div>
+<div class="toc_4"><a href="std_dll.html#_5419_c_lparam">8.41.1.21 C_LPARAM</a></div>
+<div class="toc_4"><a href="std_dll.html#_5421_c_hresult">8.41.1.22 C_HRESULT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5423_c_float">8.41.1.23 C_FLOAT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5425_c_double">8.41.1.24 C_DOUBLE</a></div>
+<div class="toc_4"><a href="std_dll.html#_5427_c_dwordlong">8.41.1.25 C_DWORDLONG</a></div>
+<div class="toc_3"><a href="std_dll.html#_5428_externaleuphoriatypeconstants">8.41.2 External Euphoria Type Constants</a></div>
+<div class="toc_4"><a href="std_dll.html#_5430_e_integer">8.41.2.1 E_INTEGER</a></div>
+<div class="toc_4"><a href="std_dll.html#_5432_e_atom">8.41.2.2 E_ATOM</a></div>
+<div class="toc_4"><a href="std_dll.html#_5434_e_sequence">8.41.2.3 E_SEQUENCE</a></div>
+<div class="toc_4"><a href="std_dll.html#_5436_e_object">8.41.2.4 E_OBJECT</a></div>
+<div class="toc_4"><a href="std_dll.html#_5438_sizeof">8.41.2.5 sizeof</a></div>
+<div class="toc_3"><a href="std_dll.html#_5440_constants">8.41.3 Constants</a></div>
+<div class="toc_4"><a href="std_dll.html#_5442_null">8.41.3.1 NULL</a></div>
+<div class="toc_3"><a href="std_dll.html#_5443_routines">8.41.4 Routines</a></div>
+<div class="toc_4"><a href="std_dll.html#_5445_open_dll">8.41.4.1 open_dll</a></div>
+<div class="toc_4"><a href="std_dll.html#_5454_define_c_var">8.41.4.2 define_c_var</a></div>
+<div class="toc_4"><a href="std_dll.html#_5461_define_c_proc">8.41.4.3 define_c_proc</a></div>
+<div class="toc_4"><a href="std_dll.html#_5469_define_c_func">8.41.4.4 define_c_func</a></div>
+<div class="toc_4"><a href="std_dll.html#_5477_c_func">8.41.4.5 c_func</a></div>
+<div class="toc_4"><a href="std_dll.html#_5485_c_proc">8.41.4.6 c_proc</a></div>
+<div class="toc_4"><a href="std_dll.html#_5492_call_back">8.41.4.7 call_back</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\dll.e -->
+<h3>8.41.1 C Type Constants</h3>
+<a name="_5375_ctypeconstants"></a><a name="ctypeconstants"></a>
+<p> These C type constants are used when defining external C functions in a shared library file.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5376_example1"></a><a name="example1"></a>
+<p> See <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a></p>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5377_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5454_define_c_var">define_c_var</a></p>
+
+<p> 
+<a name="dllc_char"></a><a name="char"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.1 C_CHAR</h4>
+<a name="_5379_c_char"></a><a name="c_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_CHAR</font>
+</pre>
+
+<p>  char  8-bits</p>
+
+<p> 
+<a name="dllc_byte"></a><a name="byte"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.2 C_BYTE</h4>
+<a name="_5381_c_byte"></a><a name="c_byte"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_BYTE</font>
+</pre>
+
+<p>  byte  8-bits</p>
+
+<p> 
+<a name="dllc_uchar"></a><a name="uchar"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.3 C_UCHAR</h4>
+<a name="_5383_c_uchar"></a><a name="c_uchar"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_UCHAR</font>
+</pre>
+
+<p>  unsigned char 8-bits</p>
+
+<p> 
+<a name="dllc_ubyte"></a><a name="ubyte"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.4 C_UBYTE</h4>
+<a name="_5385_c_ubyte"></a><a name="c_ubyte"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_UBYTE</font>
+</pre>
+
+<p>  ubyte 8-bits</p>
+
+<p> 
+<a name="dllc_short"></a><a name="short"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.5 C_SHORT</h4>
+<a name="_5387_c_short"></a><a name="c_short"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_SHORT</font>
+</pre>
+
+<p>  short 16-bits</p>
+
+<p> 
+<a name="dllc_word"></a><a name="word"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.6 C_WORD</h4>
+<a name="_5389_c_word"></a><a name="c_word"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_WORD</font>
+</pre>
+
+<p>  word 16-bits</p>
+
+<p> 
+<a name="dllc_ushort"></a><a name="ushort"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.7 C_USHORT</h4>
+<a name="_5391_c_ushort"></a><a name="c_ushort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_USHORT</font>
+</pre>
+
+<p>  unsigned short 16-bits</p>
+
+<p> 
+<a name="dllc_int"></a><a name="int"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.8 C_INT</h4>
+<a name="_5393_c_int"></a><a name="c_int"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_INT</font>
+</pre>
+
+<p>  int 32-bits</p>
+
+<p> 
+<a name="dllc_bool"></a><a name="bool"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.9 C_BOOL</h4>
+<a name="_5395_c_bool"></a><a name="c_bool"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_BOOL</font>
+</pre>
+
+<p>  bool 32-bits</p>
+
+<p> 
+<a name="dllc_uint"></a><a name="uint"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.10 C_UINT</h4>
+<a name="_5397_c_uint"></a><a name="c_uint"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_UINT</font>
+</pre>
+
+<p>  unsigned int 32-bits</p>
+
+<p> 
+<a name="dllc_long"></a><a name="long"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.11 C_LONG</h4>
+<a name="_5399_c_long"></a><a name="c_long"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_LONG</font>
+</pre>
+
+<p>  long 32-bits except on 64-bit <em>Unix</em>, where it is 64-bits</p>
+
+<p> 
+<a name="dllc_ulong"></a><a name="ulong"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.12 C_ULONG</h4>
+<a name="_5401_c_ulong"></a><a name="c_ulong"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_ULONG</font>
+</pre>
+
+<p>  unsigned long 32-bits except on 64-bit <em>Unix</em>, where it is 64-bits</p>
+
+<p> 
+<a name="dllc_size_t"></a><a name="size_t"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.13 C_SIZE_T</h4>
+<a name="_5403_c_size_t"></a><a name="c_size_t"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_SIZE_T</font>
+</pre>
+
+<p>  size_t unsigned long 32-bits except on 64-bit <em>Unix</em>, where it is 64-bits</p>
+
+<p> 
+<a name="dllc_pointer"></a><a name="pointer"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.14 C_POINTER</h4>
+<a name="_5405_c_pointer"></a><a name="c_pointer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_POINTER</font>
+</pre>
+
+<p>  any valid pointer</p>
+
+<p> 
+<a name="dllc_longlong"></a><a name="longlong"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.15 C_LONGLONG</h4>
+<a name="_5407_c_longlong"></a><a name="c_longlong"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_LONGLONG</font>
+</pre>
+
+<p>  longlong 64-bits</p>
+
+<p> 
+<a name="dllc_long_ptr"></a><a name="long_ptr"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.16 C_LONG_PTR</h4>
+<a name="_5409_c_long_ptr"></a><a name="c_long_ptr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_LONG_PTR</font>
+</pre>
+
+<p>  signed integer sizeof pointer</p>
+
+<p> 
+<a name="dllc_handle"></a><a name="handle"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.17 C_HANDLE</h4>
+<a name="_5411_c_handle"></a><a name="c_handle"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_HANDLE</font>
+</pre>
+
+<p>  handle sizeof pointer</p>
+
+<p> 
+<a name="dllc_hwnd"></a><a name="hwnd"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.18 C_HWND</h4>
+<a name="_5413_c_hwnd"></a><a name="c_hwnd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_HWND</font>
+</pre>
+
+<p>  hwnd sizeof pointer</p>
+
+<p> 
+<a name="dllc_dword"></a><a name="dword"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.19 C_DWORD</h4>
+<a name="_5415_c_dword"></a><a name="c_dword"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_DWORD</font>
+</pre>
+
+<p>  dword 32-bits</p>
+
+<p> 
+<a name="dllc_wparam"></a><a name="wparam"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.20 C_WPARAM</h4>
+<a name="_5417_c_wparam"></a><a name="c_wparam"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_WPARAM</font>
+</pre>
+
+<p>  wparam sizeof pointer</p>
+
+<p> 
+<a name="dllc_lparam"></a><a name="lparam"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.21 C_LPARAM</h4>
+<a name="_5419_c_lparam"></a><a name="c_lparam"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_LPARAM</font>
+</pre>
+
+<p>  lparam sizeof pointer</p>
+
+<p> 
+<a name="dllc_hresult"></a><a name="hresult"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.22 C_HRESULT</h4>
+<a name="_5421_c_hresult"></a><a name="c_hresult"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_HRESULT</font>
+</pre>
+
+<p>  hresult 32-bits</p>
+
+<p> 
+<a name="dllc_float"></a><a name="float"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.23 C_FLOAT</h4>
+<a name="_5423_c_float"></a><a name="c_float"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_FLOAT</font>
+</pre>
+
+<p>  float 32-bits</p>
+
+<p> 
+<a name="dllc_double"></a><a name="double"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.24 C_DOUBLE</h4>
+<a name="_5425_c_double"></a><a name="c_double"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_DOUBLE</font>
+</pre>
+
+<p>  double 64-bits</p>
+
+<p> 
+<a name="dllc_dwordlong"></a><a name="dwordlong"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.1.25 C_DWORDLONG</h4>
+<a name="_5427_c_dwordlong"></a><a name="c_dwordlong"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">C_DWORDLONG</font>
+</pre>
+
+<p>  dwordlong 64-bits</p>
+
+<!-- ..\include\std\dll.e -->
+<h3>8.41.2 External Euphoria Type Constants</h3>
+<a name="_5428_externaleuphoriatypeconstants"></a><a name="externaleuphoriatypeconstants"></a>
+<p> These are used for arguments to and the return value from a Euphoria shared library file (<tt>.dll</tt>, <tt>.so</tt>, or <tt>.dylib</tt>).</p>
+
+<p> 
+<a name="dlle_integer"></a><a name="integer"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.2.1 E_INTEGER</h4>
+<a name="_5430_e_integer"></a><a name="e_integer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">E_INTEGER</font>
+</pre>
+
+<p>  integer</p>
+
+<p> 
+<a name="dlle_atom"></a><a name="atom"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.2.2 E_ATOM</h4>
+<a name="_5432_e_atom"></a><a name="e_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">E_ATOM</font>
+</pre>
+
+<p>  atom</p>
+
+<p> 
+<a name="dlle_sequence"></a><a name="sequence"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.2.3 E_SEQUENCE</h4>
+<a name="_5434_e_sequence"></a><a name="e_sequence"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">E_SEQUENCE</font>
+</pre>
+
+<p>  sequence</p>
+
+<p> 
+<a name="dlle_object"></a><a name="object"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.2.4 E_OBJECT</h4>
+<a name="_5436_e_object"></a><a name="e_object"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">E_OBJECT</font>
+</pre>
+
+<p>  object</p>
+
+<p> 
+<a name="eusizeof"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.2.5 sizeof</h4>
+<a name="_5438_sizeof"></a><a name="sizeof"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function sizeof</font><font color="#880033">( </font><font color="#0000FF">atom </font><font color="#330033">data_type </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5439_parameters"></a><a name="parameters"></a><ol><li><tt>data_type</tt> A C data type constant
+</li></ol>
+<p>Returns the size, in bytes of the specified data type.</p>
+
+<!-- ..\include\std\dll.e -->
+<h3>8.41.3 Constants</h3>
+<a name="_5440_constants"></a><a name="constants"></a>
+<p> 
+<a name="dllnull"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.3.1 NULL</h4>
+<a name="_5442_null"></a><a name="null"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public constant </font><font color="#330033">NULL</font>
+</pre>
+
+<p>   C's NULL pointer</p>
+
+<!-- ..\include\std\dll.e -->
+<h3>8.41.4 Routines</h3>
+<a name="_5443_routines"></a><a name="routines"></a>
+<p> 
+<a name="dllopen_dll"></a><a name="dll"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.1 open_dll</h4>
+<a name="_5445_open_dll"></a><a name="open_dll"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public function </font><font color="#330033">open_dll</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">file_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   opens a <em>Windows</em> dynamic link library (<tt>.dll</tt>) file, or a <em>Unix</em> shared library (<tt>.so</tt>) file.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5446_parameters"></a><a name="parameters"></a><ol><li><tt>file_name</tt> : a sequence, the name of the shared library to open or a sequence of filename's to try to open.
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5447_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, actually a 32-bit address. 0 is returned if the <tt>.dll</tt> can not be found.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5448_errors"></a><a name="errors"></a>
+<p> The length of <tt>file_name</tt> (or any filename contained therein) should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5449_comments"></a><a name="comments"></a>
+<p> <tt>file_name</tt> can be a relative or an absolute file name. Most operating systems will use the normal search path for locating non-relative files.</p>
+
+<p> <tt>file_name</tt> can be a list of file names to try. On different Linux platforms especially, the filename will not always be the same. For instance, you may wish to try opening <tt>libmylib.so, libmylib.so.1, libmylib.so.1.0, libmylib.so.1.0.0.</tt> If given a sequence of file names to try, the first successful library loaded will be returned. If no library could be loaded then zero will be returned after exhausting the entire list of file names.</p>
+
+<p> The value returned by <tt>open_dll</tt> can be passed to <tt>define_c_proc</tt>, <tt>define_c_func</tt>, or <tt>define_c_var</tt>.</p>
+
+<p> You can open the same <tt>.dll</tt> or <tt>.so</tt> file multiple times. No extra memory is used and you will get the same number returned each time.</p>
+
+<p> Euphoria will close the <tt>.dll</tt> or <tt>.so</tt> for you automatically at the end of execution.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5450_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">user32</font>
+<font color="#330033">user32 = open_dll</font><font color="#880033">(</font><font color="#330033">"user32.dll"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">user32 = 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">   puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Couldn't open user32.dll!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 2:</h5>
+<a name="_5451_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">mysql_lib</font>
+<font color="#330033">mysql_lib = open_dll</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"libmysqlclient.so"</font><font color="#330033">, </font><font color="#330033">"libmysqlclient.so.15"</font><font color="#330033">, </font>
+<font color="#330033">                     "libmysqlclient.so.15.0"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">mysql_lib = 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">  puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Couldn't find the mysql client library\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5452_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <a href="std_dll.html#_5454_define_c_var">define_c_var</a>, <a href="std_dll.html#_5477_c_func">c_func</a>, <a href="std_dll.html#_5485_c_proc">c_proc</a></p>
+
+<p> 
+<a name="dlldefine_c_var"></a><a name="c_var"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.2 define_c_var</h4>
+<a name="_5454_define_c_var"></a><a name="define_c_var"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public function </font><font color="#330033">define_c_var</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">lib, </font><font color="#0000FF">sequence </font><font color="#330033">variable_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the address of a symbol in a shared library or in RAM.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5455_parameters"></a><a name="parameters"></a><ol><li><tt>lib</tt> : an atom, the address of a <em>Unix</em> <tt>.so</tt> or <em>Windows</em> <tt>.dll</tt>, as returned by <tt>open_dll</tt>.
+</li><li><tt>variable_name</tt> : a sequence, the name of a public C variable defined within the library.
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5456_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the memory address of <tt>variable_name</tt>.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5457_comments"></a><a name="comments"></a>
+<p> Once you have the address of a C variable, and you know its type, you can use <tt>peek</tt> and <tt>poke</tt> to read or write the value of the variable. You can in the same way obtain the address of a C function and pass it to any external routine that requires a callback address.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5458_example1"></a><a name="example1"></a>
+<p> see <tt>.../euphoria/demo/linux/mylib.ex</tt></p>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5459_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5485_c_proc">c_proc</a>, <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5477_c_func">c_func</a>, <a href="std_dll.html#_5445_open_dll">open_dll</a></p>
+
+<p> 
+<a name="dlldefine_c_proc"></a><a name="c_proc"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.3 define_c_proc</h4>
+<a name="_5461_define_c_proc"></a><a name="define_c_proc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public function </font><font color="#330033">define_c_proc</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">lib, </font><font color="#0000FF">object </font><font color="#330033">routine_name, </font><font color="#0000FF">sequence </font><font color="#330033">arg_types</font><font color="#880033">)</font>
+</pre>
+
+<p>   defines the characteristics of either a C function, or a machine-code routine that you wish to call as a procedure from your Euphoria program.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5462_parameters"></a><a name="parameters"></a><ol><li><tt>lib</tt> : an object, either an entry point returned as an atom by <a href="std_dll.html#_5445_open_dll">open_dll</a>, or <tt>""</tt> to denote a routine the RAM address is known.
+</li><li><tt>routine_name</tt> : an object, either the name of a procedure in a shared object or the machine address of the procedure.
+</li><li><tt>argtypes</tt> : a sequence of type constants.
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5463_returns"></a><a name="returns"></a>
+<p> A small <strong>integer</strong>, known as a routine id, will be returned.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5464_errors"></a><a name="errors"></a>
+<p> The length of <tt>name</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5465_comments"></a><a name="comments"></a>
+<p> Use the returned routine id as the first argument to <a href="std_dll.html#_5485_c_proc">c_proc</a> when you wish to call the routine from Euphoria.</p>
+
+<p> A returned value of <tt>-1</tt> indicates that the procedure could not be found or linked to.</p>
+
+<p> On <em>Windows</em> you can add a <tt>'+'</tt> character as a prefix to the procedure name. This tells Euphoria that the function uses the cdecl calling convention. By default, Euphoria assumes that C routines accept the stdcall convention.</p>
+
+<p> When defining a machine code routine, <tt>lib</tt> must be the empty sequence, <tt>""</tt> or <tt>{}</tt>, and <tt>routine_name</tt> indicates the address of the machine code routine. You can poke the bytes of machine code into a block of memory reserved using <tt>allocate</tt>. On <em>Windows</em> the machine code routine is normally expected to follow the stdcall calling convention, but if you wish to use the cdecl convention instead you can code <tt>{'+', address}</tt> instead of address.</p>
+
+<p> <tt>argtypes</tt> is made of type constants, which describe the C types of arguments to the procedure. They may be used to define machine code parameters as well.</p>
+
+<p> The C function that you define could be one created by the Euphoria To C Translator, in which case you can pass Euphoria data to it, and receive Euphoria data back. A list of Euphoria types is shown above.</p>
+
+<p> You can pass any C integer type or pointer type. You can also pass a Euphoria atom as a C double or float.</p>
+
+<p> Parameter types which use 4 bytes or less are all passed the same way, so it is not necessary to be exact.</p>
+
+<p> Currently, there is no way to pass a C structure by value. You can only pass a pointer to a structure. However, you can pass a 64 bit integer by pretending to pass two C_LONG instead. When calling the routine, pass low doubleword first, then high doubleword.</p>
+
+<p> The C function can return a value but it will be ignored. If you want to use the value returned by the C function, you must instead define it with <a href="std_dll.html#_5469_define_c_func">define_c_func</a> and call it with <a href="std_dll.html#_5477_c_func">c_func</a>.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5466_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">user32</font>
+<font color="#0000FF">integer </font><font color="#330033">ShowWindow</font>
+
+<font color="#FF0055">-- open user32.dll - it contains the ShowWindow C function</font>
+<font color="#330033">user32 = open_dll</font><font color="#880033">(</font><font color="#330033">"user32.dll"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- It has 2 parameters that are both C int.</font>
+<font color="#330033">ShowWindow = define_c_proc</font><font color="#880033">(</font><font color="#330033">user32, </font><font color="#330033">"ShowWindow"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">C_INT, C_INT</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- If ShowWindow used the cdecl convention, </font>
+<font color="#FF0055">-- we would have coded "+ShowWindow" here</font>
+
+<font color="#0000FF">if </font><font color="#330033">ShowWindow = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"ShowWindow not found!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5467_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5485_c_proc">c_proc</a>, <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5477_c_func">c_func</a>, <a href="std_dll.html#_5445_open_dll">open_dll</a></p>
+
+<p> 
+<a name="dlldefine_c_func"></a><a name="c_func"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.4 define_c_func</h4>
+<a name="_5469_define_c_func"></a><a name="define_c_func"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public function </font><font color="#330033">define_c_func</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">lib, </font><font color="#0000FF">object </font><font color="#330033">routine_name, </font><font color="#0000FF">sequence </font><font color="#330033">arg_types,</font>
+<font color="#0000FF">        atom </font><font color="#330033">return_type</font><font color="#880033">)</font>
+</pre>
+
+<p>   defines the characteristics of either a C function, or a machine-code routine that returns a value.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5470_parameters"></a><a name="parameters"></a><ol><li><tt>lib</tt> : an object, either an entry point returned as an atom by <a href="std_dll.html#_5445_open_dll">open_dll</a>, or <tt>""</tt> to denote a routine the RAM address is known.
+</li><li><tt>routine_name</tt> : an object, either the name of a procedure in a shared object or the machine address of the procedure.
+</li><li><tt>argtypes</tt> : a sequence of type constants.
+</li><li><tt>return_type</tt> : an atom, indicating what type the function will return.
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5471_returns"></a><a name="returns"></a>
+<p> A small <strong>integer</strong>, known as a routine id, will be returned.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5472_errors"></a><a name="errors"></a>
+<p> The length of <tt>name</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5473_comments"></a><a name="comments"></a>
+<p> Use the returned routine id as the first argument to <a href="std_dll.html#_5485_c_proc">c_proc</a> when you wish to call the routine from Euphoria.</p>
+
+<p> A returned value of <tt>-1</tt> indicates that the procedure could not be found or linked to.</p>
+
+<p> On <em>Windows</em> you can add a <tt>'+'</tt> character as a prefix to the function name. This indicates to Euphoria that the function uses the cdecl calling convention. By default, Euphoria assumes that C routines accept the stdcall convention.</p>
+
+<p> When defining a machine code routine, <tt>x1</tt> must be the empty sequence ( <tt>""</tt> or <tt>{}</tt>), and <tt>x2</tt> indicates the address of the machine code routine. You can poke the bytes of machine code into a block of memory reserved using <tt>allocate</tt>. On <em>Windows</em> the machine code routine is normally expected to follow the stdcall calling convention, but if you wish to use the cdecl convention instead, you can code <tt>{'+', address}</tt> instead of address for <tt>x2</tt>.</p>
+
+<p> The C function that you define could be one created by the Euphoria To C Translator, in which case you can pass Euphoria data to it, and receive Euphoria data back. A list of Euphoria types is contained in <tt>dll.e</tt>:</p>
+<ul><li>E_INTEGER = #06000004
+</li><li>E_ATOM    = #07000004
+</li><li>E_SEQUENCE= #08000004
+</li><li>E_OBJECT  = #09000004
+</li></ul>
+<p>You can pass or return any C integer type or pointer type. You can also pass a Euphoria atom as a C double or float, and get a C double or float returned to you as a Euphoria atom.</p>
+
+<p> Parameter types which use 4 bytes or less are all passed the same way, so it is not necessary to be exact when choosing a 4-byte parameter type. However the distinction between signed and unsigned may be important when you specify the return type of a function.</p>
+
+<p> Currently, there is no way to pass a C structure by value or get a C structure as a return result. You can only pass a pointer to a structure and get a pointer to a structure as a result. However, you can pass a 64 bit integer as two <tt>C_LONG</tt> instead. On calling the routine, pass low doubleword first, then high doubleword.</p>
+
+<p> If you are not interested in using the value returned by the C function, you should instead define it with <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> and call it with <a href="std_dll.html#_5485_c_proc">c_proc</a>.</p>
+
+<p> If you use euiw to call a cdecl C routine that returns a floating-point value, it might not work. This is because the Watcom C compiler (used to build <tt>euiw</tt>) has a non-standard way of handling cdecl floating-point return values.</p>
+
+<p> Passing floating-point values to a machine code routine will be faster if you use <tt>c_func</tt> rather than <tt>call</tt> to call the routine, since you will not have to use <tt>atom_to_float64</tt> and <tt>poke</tt> to get the floating-point values into memory.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5474_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">user32</font>
+<font color="#0000FF">integer </font><font color="#330033">LoadIcon</font>
+
+<font color="#FF0055">-- open user32.dll - it contains the LoadIconA C function</font>
+<font color="#330033">user32 = open_dll</font><font color="#880033">(</font><font color="#330033">"user32.dll"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- It takes a C pointer and a C int as parameters.</font>
+<font color="#FF0055">-- It returns a C int as a result.</font>
+<font color="#330033">LoadIcon = define_c_func</font><font color="#880033">(</font><font color="#330033">user32, </font><font color="#330033">"LoadIconA"</font><font color="#330033">,</font>
+<font color="#993333">                         {</font><font color="#330033">C_POINTER, C_INT</font><font color="#993333">}</font><font color="#330033">, C_INT</font><font color="#880033">)</font>
+<font color="#FF0055">-- We use "LoadIconA" here because we know that LoadIconA</font>
+<font color="#FF0055">-- needs the stdcall convention, as do</font>
+<font color="#FF0055">-- all standard .dll routines in the WINDOWS API. </font>
+<font color="#FF0055">-- To specify the cdecl convention, we would have used "+LoadIconA".</font>
+
+<font color="#0000FF">if </font><font color="#330033">LoadIcon = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"LoadIconA could not be found!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5475_seealso"></a><a name="seealso"></a>
+<p> <tt>demo\callmach.ex</tt>, <a href="std_dll.html#_5477_c_func">c_func</a>, <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <a href="std_dll.html#_5485_c_proc">c_proc</a>, <a href="std_dll.html#_5445_open_dll">open_dll</a></p>
+
+<p> 
+<a name="euc_func"></a><a name="func"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.5 c_func</h4>
+<a name="_5477_c_func"></a><a name="c_func"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function c_func</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">rid, </font><font color="#0000FF">sequence </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> calls a C function, machine code function, translated Euphoria function, or compiled Euphoria function by routine id.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5478_parameters"></a><a name="parameters"></a><ol><li><tt>rid</tt> : an integer, the routine_id of the external function being called.
+</li><li><tt>args</tt> : a sequence, the list of parameters to pass to the function
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5479_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, whose type and meaning was defined on calling <a href="std_dll.html#_5469_define_c_func">define_c_func</a>.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5480_errors"></a><a name="errors"></a>
+<p> If <tt>rid</tt> is not a valid routine id, or the arguments do not match the prototype of the routine being called, an error occurs.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5481_comments"></a><a name="comments"></a>
+<p> <tt>rid</tt> must have been returned by <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <strong>not</strong> by <a href="std_machine.html#_5855_routine_id">routine_id</a>. The type checks are different, and you would get a machine level exception in the best case.</p>
+
+<p> If the function does not take any arguments then <tt>args</tt> should be <tt>{}</tt>.</p>
+
+<p> If you pass an argument value which contains a fractional part, where the C function expects a C integer type, the argument will be rounded towards zero. For example: <tt>5.9</tt> will be passed as <tt>5</tt> and <tt>-5.9</tt> will be passed as <tt>-5</tt>.</p>
+
+<p> The function could be part of a <tt>.dll</tt> or <tt>.so</tt> created by the Euphoria To C Translator. In this case, a Euphoria atom or sequence could be returned. C and machine code functions can only return integers, or more generally, atoms (IEEE floating-point numbers).</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5482_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">user32, hwnd, ps, hdc</font>
+<font color="#0000FF">integer </font><font color="#330033">BeginPaint</font>
+
+<font color="#FF0055">-- open user32.dll - it contains the BeginPaint C function</font>
+<font color="#330033">user32 = open_dll</font><font color="#880033">(</font><font color="#330033">"user32.dll"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- the C function BeginPaint takes a C int argument and</font>
+<font color="#FF0055">-- a C pointer, and returns a C int as a result:</font>
+<font color="#330033">BeginPaint = define_c_func</font><font color="#880033">(</font><font color="#330033">user32, </font><font color="#330033">"BeginPaint"</font><font color="#330033">,</font>
+<font color="#993333">                           {</font><font color="#330033">C_INT, C_POINTER</font><font color="#993333">}</font><font color="#330033">, C_INT</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- call BeginPaint, passing hwnd and ps as the arguments,</font>
+<font color="#FF0055">-- hdc is assigned the result:</font>
+<font color="#330033">hdc = </font><font color="#0000FF">c_func</font><font color="#880033">(</font><font color="#330033">BeginPaint, </font><font color="#993333">{</font><font color="#330033">hwnd, ps</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5483_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5485_c_proc">c_proc</a>, <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <a href="std_dll.html#_5445_open_dll">open_dll</a>, <a href="platform.html#_640_platformspecificissues">Platform-Specific Issues</a></p>
+
+<p> 
+<a name="euc_proc"></a><a name="proc"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.6 c_proc</h4>
+<a name="_5485_c_proc"></a><a name="c_proc"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure c_proc</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">rid, </font><font color="#0000FF">sequence </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> calls a C void function, machine code function, translated Euphoria procedure, or compiled Euphoria procedure by routine id.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5486_parameters"></a><a name="parameters"></a><ol><li><tt>rid</tt> : an integer, the routine_id of the external function being called.
+</li><li><tt>args</tt> : a sequence, the list of parameters to pass to the function
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5487_errors"></a><a name="errors"></a>
+<p> If <tt>rid</tt> is not a valid routine id, or the arguments do not match the prototype of the routine being called, an error occurs.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5488_comments"></a><a name="comments"></a>
+<p> <tt>rid</tt> must have been returned by <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <strong>not</strong> by <a href="std_machine.html#_5855_routine_id">routine_id</a>. The type checks are different, and you would get a machine level exception in the best case.</p>
+
+<p> If the procedure does not take any arguments then <tt>args</tt> should be <tt>{}</tt>.</p>
+
+<p> If you pass an argument value which contains a fractional part, where the C void function expects a C integer type, the argument will be rounded towards zero. For example: <tt>5.9</tt> will be passed as <tt>5</tt> and <tt>-5.9</tt> will be passed as <tt>-5</tt>.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5489_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">user32, hwnd, rect</font>
+<font color="#0000FF">integer </font><font color="#330033">GetClientRect</font>
+
+<font color="#FF0055">-- open user32.dll - it contains the GetClientRect C function</font>
+<font color="#330033">user32 = open_dll</font><font color="#880033">(</font><font color="#330033">"user32.dll"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- GetClientRect is a VOID C function that takes a C int</font>
+<font color="#FF0055">-- and a C pointer as its arguments:</font>
+<font color="#330033">GetClientRect = define_c_proc</font><font color="#880033">(</font><font color="#330033">user32, </font><font color="#330033">"GetClientRect"</font><font color="#330033">,</font>
+<font color="#993333">                              {</font><font color="#330033">C_INT, C_POINTER</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- pass hwnd and rect as the arguments</font>
+<font color="#0000FF">c_proc</font><font color="#880033">(</font><font color="#330033">GetClientRect, </font><font color="#993333">{</font><font color="#330033">hwnd, rect</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5490_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5477_c_func">c_func</a>, <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5445_open_dll">open_dll</a>, <a href="platform.html#_640_platformspecificissues">Platform-Specific Issues</a></p>
+
+<p> 
+<a name="dllcall_back"></a><a name="back"></a> </p>
+
+<!-- ..\include\std\dll.e -->
+<h4>8.41.4.7 call_back</h4>
+<a name="_5492_call_back"></a><a name="call_back"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/dll.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">dll</font>
+<font color="#0000FF">public function </font><font color="#330033">call_back</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">id</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets a machine address for an Euphoria procedure.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Parameters:</h5>
+<a name="_5493_parameters"></a><a name="parameters"></a><ol><li><tt>id</tt> : an object, either the id returned by <a href="std_machine.html#_5855_routine_id">routine_id</a> (for the function or procedure), or a pair <tt>{'+', id}</tt>.
+</li></ol>
+<!-- ..\include\std\dll.e -->
+<h5>Returns:</h5>
+<a name="_5494_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the address of the machine code of the routine. It can be used by <em>Windows</em>, an external C routine in a <em>Windows</em> <tt>.dll</tt>,  or <em>Unix</em> shared library (<tt>.so</tt>), as a 32-bit "call-back" address for calling your Euphoria routine.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Errors:</h5>
+<a name="_5495_errors"></a><a name="errors"></a>
+<p> The length of <tt>name</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Comments:</h5>
+<a name="_5496_comments"></a><a name="comments"></a>
+<p> By default, your routine will work with the stdcall convention. On <em>Windows</em> you can specify its id as <tt>{'+', id}</tt>, in which case it will work with the cdecl calling convention instead. On <em>Unix</em> platforms, you should only use simple IDs, as there is just one standard cdecl calling convention.</p>
+
+<p> You can set up as many call-back functions as you like, but they must all be Euphoria functions (or types) with <tt>0</tt> to <tt>9</tt> arguments. If your routine has nothing to return (it should really be a procedure), just return <tt>0</tt> (say), and the calling C routine can ignore the result.</p>
+
+<p> When your routine is called, the argument values will all be 32-bit unsigned (positive) values. You should declare each parameter of your routine as atom, unless you want to impose tighter checking. Your routine must return a 32-bit integer value.</p>
+
+<p> You can also use a call-back address to specify a Euphoria routine as an exception handler in the Linux or FreeBSD <tt>signal</tt> function. For example, you might want to catch the SIGTERM signal, and do a graceful shutdown. Some Web hosts send a SIGTERM to a CGI process that has used too much CPU time.</p>
+
+<p> A call-back routine that uses the cdecl convention and returns a floating-point result, might not work with euiw. This is because the Watcom C compiler (used to build <tt>euiw</tt>) has a non-standard way of handling cdecl floating-point return values.</p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 1:</h5>
+<a name="_5497_example1"></a><a name="example1"></a>
+<p> See: <tt>.../euphoria/demo/win32/window.exw</tt></p>
+
+<!-- ..\include\std\dll.e -->
+<h5>Example 2:</h5>
+<a name="_5498_example2"></a><a name="example2"></a>
+<p> See: <tt>.../euphoria/demo/linux/qsort.ex</tt></p>
+
+<!-- ..\include\std\dll.e -->
+<h5>See Also:</h5>
+<a name="_5499_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5855_routine_id">routine_id</a></p>
+
+<p> 
+<!-- ..\include\std\error.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_url.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_error.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_url.html">8.40 URL handling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_error.html">8.42 Errors and Warnings</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

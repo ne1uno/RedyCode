@@ -1,0 +1,22 @@
+==List Widget Class
+
+Widget Class name: "list"
+
+This widget class is used by other widgets, not created directly by the application.
+(Not implemented yet)
+
+===API
+====Properties
+
+====="items"
+====="avoid"
+====="max_lines"
+====="attach"
+
+====Events
+
+====Commands
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eutest.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="edx.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eutest.html">7.1 eutest Unit Testing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="edx.html">7.3 Edx Demonstration Code Editor</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\eudoc.txt -->
+<h2>7.2 EuDOC Source Documentation Tool</h2>
+<a name="_689_eudocsourcedocumentationtool"></a><a name="eudocsourcedocumentationtool"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="eudoc.html#_689_eudocsourcedocumentationtool">7.2 EuDOC Source Documentation Tool</a></div>
+<div class="toc_3"><a href="eudoc.html#_690_documentationtags">7.2.1 Documentation Tags</a></div>
+<div class="toc_3"><a href="eudoc.html#_691_genericdocumentation">7.2.2 Generic Documentation</a></div>
+<div class="toc_3"><a href="eudoc.html#_692_sourcedocumentation">7.2.3 Source Documentation</a></div>
+<div class="toc_3"><a href="eudoc.html#_693_assemblyfile">7.2.4 Assembly File</a></div>
+<div class="toc_3"><a href="eudoc.html#_694_creolemarkup">7.2.5 Creole Markup</a></div>
+<div class="toc_3"><a href="eudoc.html#_695_documentationsoftware">7.2.6 Documentation Software</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> Writing and managing documentation for your programs is made easier with the <strong><tt>eudoc</tt></strong> tool. <tt>eudoc</tt>, written entirely in Euphoria, converts text comments embedded in your program, as well as information about routines and identifiers, into documentation that can be saved in a variety of formats, including plain text and HTML.</p>
+
+<p> Since Euphoria comments do not slow down the execution of programs, documentation written inside source-code introduces no speed penalty but is very convenient.</p>
+
+<p> <tt>eudoc</tt> can also incorporate documentation written externally from your source-code.</p>
+
+<p> You write your material using <em>Creole</em> style markup to format documention. This gives you creative control using elements like headers, fonts, cross-references, tables, etc. The <strong><tt>creole</tt></strong> program takes the output  of <tt>eudoc</tt> and produces HTML-formatted documentation.</p>
+
+<p> A third party program like <tt>htmldoc</tt> or <tt>wkhtmltopdf</tt> may then be used to convert HTML to PDF. <tt>creole</tt> will also output LaTeX files directly that can be used to create professional PDF files for online viewing or publishing.</p>
+
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.1 Documentation Tags</h3>
+<a name="_690_documentationtags"></a><a name="documentationtags"></a>
+<p> Documentation is embedded in source-code using the Euphoria line <em>(</em> <strong>--</strong> <em>)</em> comments. Two special tags, --**** and --** distinguish documentation from comments that will not be extracted.</p>
+
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.2 Generic Documentation</h3>
+<a name="_691_genericdocumentation"></a><a name="genericdocumentation"></a>
+<p> "Generic" documentation starts with the <em>(</em> --**** <em>)</em> tag, continues with lines starting with -- in the first column, and ends with the next blank line. The tags and -- will not appear in the documentation.</p>
+
+<pre class="examplecode"><font color="#FF0055">--****</font>
+<font color="#FF0055">-- generic text, thus tagged, will be extracted by eudoc</font>
+<font color="#FF0055">-- write your documentation here...</font>
+<font color="#FF0055">--</font>
+
+<font color="#FF0055">-- blank line is a terminator, this line is not included</font>
+</pre>
+
+<p> Produces...</p>
+
+<p> 
+<pre>generic text, thus tagged, will be extracted by eudoc
+write your documentation here...
+
+</pre>
+ </p>
+
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.3 Source Documentation</h3>
+<a name="_692_sourcedocumentation"></a><a name="sourcedocumentation"></a>
+<p> "Source" documentation starts with the <em>(</em> --** <em>)</em> tag. Locate them before a routine or identifier that you wish to be described in your documentation. The <tt>eudoc</tt> program will extract the "signature" of a routine and combines it with the comments that you write after this tag. </p>
+
+<p> Starting with the source-code file <tt>favorite.ex</tt>:</p>
+
+<pre class="examplecode"><font color="#FF0055">--**</font>
+<font color="#FF0055">-- this is my favorite routine</font>
+
+<font color="#0000FF">public procedure </font><font color="#330033">hello</font><font color="#880033">( </font><font color="#0000FF">sequence </font><font color="#330033">name </font><font color="#880033">)</font>
+<font color="#0000FF">   printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello %s!"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">name</font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> Executing <tt>eui eudoc -o foo.txt favorite.ex</tt> produces:</p>
+
+<p> 
+<pre>%%disallow={camelcase}
+
+!!CONTEXT:favorite.ex
+
+@[hello|]
+==== hello
+&lt;eucode&gt;
+include favorite.ex
+public procedure hello(sequence name)
+&lt;/eucode&gt;
+
+  This is my favorite routine.
+</pre>
+
+<p> Process with <tt>eui creole foo.txt</tt>:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">favorite.ex</font>
+<font color="#0000FF">public procedure </font><font color="#330033">hello</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   This is my favorite routine.</p>
+
+<p> If you examine the source-code included with Euphoria you will realize how these steps were used to create the documentation you are reading now. </p>
+
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.4 Assembly File</h3>
+<a name="_693_assemblyfile"></a><a name="assemblyfile"></a>
+<p> Large projects are managed using an <strong>assembly file</strong>, which is a list of files (source-code, and external) that will be incorporated into one output file. Look at <tt>euphoria/docs/manual.af</tt> for the file used to produce this documentation.</p>
+
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.5 Creole Markup</h3>
+<a name="_694_creolemarkup"></a><a name="creolemarkup"></a>
+<p> Creole is a text markup language used in wikis, such as the <a class="external" href="http://openeuphoria.org/wiki/view/home.wc">Euphoria Wiki</a>, and for documenting source-code. </p>
+<ul><li>Common Creole tags are:
+</li></ul>
+<p>
+<pre>= Title
+
+== Section
+
+//italic// **bold** ##fixed##
+
+* bullet
+* lists are
+* easy to produce
+
+
+||  tables || are |
+| easy to produce |  //with bold headers// |
+
+&lt;eucode&gt;
+-- euphoria code is colorized
+for i=1 to 5 do	 
+   ? i
+end for
+&lt;/eucode&gt;
+</pre>
+<ul><li>The previous tags will produce html that looks like...
+</li></ul><ul><li><ul><li>Title ** <br />
+
+</li><li>Section **
+</li></ul>
+</li></ul>
+<p><em>italic</em> <strong>bold</strong> <tt>fixed</tt></p>
+<ul><li>bullet
+</li><li>lists are
+</li><li>easy to produce
+</li></ul><table><tr><th>  tables        </th>
+<th> are                   </th>
+</tr>
+<tr><td> easy to produce </td>
+<td>  <em>with bold headers</em> </td>
+</tr>
+</table>
+
+<pre class="examplecode"><font color="#FF0055">-- euphoria code is colorized</font>
+<font color="#0000FF">for </font><font color="#330033">i=1 </font><font color="#0000FF">to </font><font color="#330033">5 </font><font color="#0000FF">do	 </font>
+<font color="#330033">   ? i</font>
+<font color="#0000FF">end for</font>
+</pre>
+<ul><li>More details can be found at the Euphoria Wiki under <a class="external" href="/wiki/view.wc?page=CreoleHelp">CreoleHelp</a>.
+</li></ul>
+<!-- ..\docs\eudoc.txt -->
+<h3>7.2.6 Documentation Software</h3>
+<a name="_695_documentationsoftware"></a><a name="documentationsoftware"></a>
+<p> The programs required for creating documentation are hosted on our Mercurial SCM server at <a class="external" href="http://scm.openeuphoria.org">http://scm.openeuphoria.org</a>.</p>
+
+<p> eudoc: <a class="external" href="http://scm.openeuphoria.org/hg/eudoc">http://scm.openeuphoria.org/hg/eudoc</a></p>
+
+<p> creole: <a class="external" href="http://scm.openeuphoria.org/hg/creole">http://scm.openeuphoria.org/hg/creole</a></p>
+
+<p> <a class="external" href="/wiki/view.wc?page=Documenting40">More on using eudoc</a></p>
+
+<p> <a class="external" href="/wiki/view.wc?page=CreoleHelp">More on using Creole markup</a></p>
+
+<p> The program htmldoc is found at... <a class="external" href="http://www.htmldoc.org/">http://www.htmldoc.org/</a> and <a class="external" href="http://htmldoc-binaries.org/">http://htmldoc-binaries.org/</a>.</p>
+
+<p> For LaTeX on Windows, we suggest MiKTeX found at... <a class="external" href="http://miktex.org/">http://miktex.org/</a> For those on Linux, you should be able to install via your package manager.</p>
+
+<p> 
+<!-- ..\docs\edx.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eutest.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="edx.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eutest.html">7.1 eutest Unit Testing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="edx.html">7.3 Edx Demonstration Code Editor</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

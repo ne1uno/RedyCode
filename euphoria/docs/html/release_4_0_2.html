@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_3.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_3.html">9.5 Version 4.0.3 June 23, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_1.html">9.7 Version 4.0.1 March 29, 2011</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.2.txt -->
+<h2>9.6 Version 4.0.2 April 5, 2011</h2>
+<a name="_6668_version402april52011"></a><a name="version402april52011"></a>
+<!-- ..\docs\release\4.0.2.txt -->
+<h3>9.6.1 Bug Fixes</h3>
+<a name="_6669_bugfixes"></a><a name="bugfixes"></a><ul><li>Fixed <tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a></tt> performance issues introduced in 4.0.1.
+</li><li><a class="external" href="/ticket/view.wc?id=646">ticket:646</a> <tt><a href="std_filesys.html#_1192_dir">dir</a></tt> can now handle multiple wildcards on non-Windows platforms
+</li><li><a class="external" href="/ticket/view.wc?id=647">ticket:647</a> The version detection system has been improved so that all binaries use the same C header file, which should prevent the potential of mismatched versions.
+</li><li><a class="external" href="/ticket/view.wc?id=644">ticket:644</a> <tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a></tt> leaves alone path components (and anything after them) with wildcards.
+</li><li>Fixed compiler directives about functions that don't return.  Removed some that were obsolete, and corrected for MinGW to use the GCC directives.
+</li><li><a class="external" href="/ticket/view.wc?id=648">ticket:648</a> Fix small memory leak from while loops
+</li></ul>
+<!-- ..\docs\release\4.0.2.txt -->
+<h3>9.6.2 New Functionality</h3>
+<a name="_6670_newfunctionality"></a><a name="newfunctionality"></a><ul><li>The <tt>std\rand.e function</tt>, <strong><tt>sample()</tt></strong>, now implements both <em>with replacement</em> and <em>without replacement</em> sampling methods.
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.1.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_3.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_3.html">9.5 Version 4.0.3 June 23, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_1.html">9.7 Version 4.0.1 March 29, 2011</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

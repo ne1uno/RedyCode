@@ -1,0 +1,28 @@
+==Panel Widget Class
+
+Widget Class name: "panel"
+
+===API
+====Properties
+
+====="label"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "scroll", {ScrollPosX, ScrollPosY}}
+====={widgetname, "resized", {VisibleWidth, VisibleHeight}}
+
+Example:
+<eucode>
+</eucode>
+
+
+====Commands
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

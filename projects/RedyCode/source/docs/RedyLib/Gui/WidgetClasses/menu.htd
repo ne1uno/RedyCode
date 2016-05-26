@@ -1,0 +1,28 @@
+==Menu Widget Class
+
+Widget Class name: "menu"
+
+This widget class is used by other widgets, not created directly by the application.
+
+===API
+====Properties
+
+====="items" --depreciated, use "actions" instead
+====="actions" --new api, allows generation of menu items based on action properties
+====="avoid"
+====="title"
+====="root"
+====="pin"
+====="pressed"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

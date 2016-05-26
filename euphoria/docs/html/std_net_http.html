@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_dns.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_url.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_dns.html">8.38 DNS</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_url.html">8.40 URL handling</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\net\http.e -->
+<h2>8.39 HTTP Client</h2>
+<a name="_5286_httpclient"></a><a name="httpclient"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_net_http.html#_5286_httpclient">8.39 HTTP Client</a></div>
+<div class="toc_3"><a href="std_net_http.html#_5287_errorcodes">8.39.1 Error Codes</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5289_err_malformed_url">8.39.1.1 ERR_MALFORMED_URL</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5291_err_invalid_protocol">8.39.1.2 ERR_INVALID_PROTOCOL</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5293_err_invalid_data">8.39.1.3 ERR_INVALID_DATA</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5295_err_invalid_data_encoding">8.39.1.4 ERR_INVALID_DATA_ENCODING</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5297_err_host_lookup_failed">8.39.1.5 ERR_HOST_LOOKUP_FAILED</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5299_err_connect_failed">8.39.1.6 ERR_CONNECT_FAILED</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5301_err_send_failed">8.39.1.7 ERR_SEND_FAILED</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5303_err_receive_failed">8.39.1.8 ERR_RECEIVE_FAILED</a></div>
+<div class="toc_3"><a href="std_net_http.html#_5304_constants">8.39.2 Constants</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5306_form_urlencoded">8.39.2.1 FORM_URLENCODED</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5308_multipart_form_data">8.39.2.2 MULTIPART_FORM_DATA</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5310_encode_none">8.39.2.3 ENCODE_NONE</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5312_encode_base64">8.39.2.4 ENCODE_BASE64</a></div>
+<div class="toc_3"><a href="std_net_http.html#_5313_configurationroutines">8.39.3 Configuration Routines</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5315_set_proxy_server">8.39.3.1 set_proxy_server</a></div>
+<div class="toc_3"><a href="std_net_http.html#_5317_getpostroutines">8.39.4 Get/Post Routines</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5319_http_post">8.39.4.1 http_post</a></div>
+<div class="toc_4"><a href="std_net_http.html#_5325_http_get">8.39.4.2 http_get</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\net\http.e -->
+<h3>8.39.1 Error Codes</h3>
+<a name="_5287_errorcodes"></a><a name="errorcodes"></a>
+<p> 
+<a name="httperr_malformed_url"></a><a name="malformed_url"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.1 ERR_MALFORMED_URL</h4>
+<a name="_5289_err_malformed_url"></a><a name="err_malformed_url"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_MALFORMED_URL</font>
+</pre>
+
+<p> 
+<a name="httperr_invalid_protocol"></a><a name="invalid_protocol"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.2 ERR_INVALID_PROTOCOL</h4>
+<a name="_5291_err_invalid_protocol"></a><a name="err_invalid_protocol"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_INVALID_PROTOCOL</font>
+</pre>
+
+<p> 
+<a name="httperr_invalid_data"></a><a name="invalid_data"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.3 ERR_INVALID_DATA</h4>
+<a name="_5293_err_invalid_data"></a><a name="err_invalid_data"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_INVALID_DATA</font>
+</pre>
+
+<p> 
+<a name="httperr_invalid_data_encoding"></a><a name="invalid_data_encoding"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.4 ERR_INVALID_DATA_ENCODING</h4>
+<a name="_5295_err_invalid_data_encoding"></a><a name="err_invalid_data_encoding"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_INVALID_DATA_ENCODING</font>
+</pre>
+
+<p> 
+<a name="httperr_host_lookup_failed"></a><a name="host_lookup_failed"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.5 ERR_HOST_LOOKUP_FAILED</h4>
+<a name="_5297_err_host_lookup_failed"></a><a name="err_host_lookup_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_HOST_LOOKUP_FAILED</font>
+</pre>
+
+<p> 
+<a name="httperr_connect_failed"></a><a name="connect_failed"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.6 ERR_CONNECT_FAILED</h4>
+<a name="_5299_err_connect_failed"></a><a name="err_connect_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_CONNECT_FAILED</font>
+</pre>
+
+<p> 
+<a name="httperr_send_failed"></a><a name="send_failed"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.7 ERR_SEND_FAILED</h4>
+<a name="_5301_err_send_failed"></a><a name="err_send_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_SEND_FAILED</font>
+</pre>
+
+<p> 
+<a name="httperr_receive_failed"></a><a name="receive_failed"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.1.8 ERR_RECEIVE_FAILED</h4>
+<a name="_5303_err_receive_failed"></a><a name="err_receive_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_RECEIVE_FAILED</font>
+</pre>
+
+<!-- ..\include\std\net\http.e -->
+<h3>8.39.2 Constants</h3>
+<a name="_5304_constants"></a><a name="constants"></a>
+<p> 
+<a name="httpform_urlencoded"></a><a name="urlencoded"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.2.1 FORM_URLENCODED</h4>
+<a name="_5306_form_urlencoded"></a><a name="form_urlencoded"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">FORM_URLENCODED</font>
+</pre>
+
+<p> 
+<a name="httpmultipart_form_data"></a><a name="form_data"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.2.2 MULTIPART_FORM_DATA</h4>
+<a name="_5308_multipart_form_data"></a><a name="multipart_form_data"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">MULTIPART_FORM_DATA</font>
+</pre>
+
+<p> 
+<a name="httpencode_none"></a><a name="none"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.2.3 ENCODE_NONE</h4>
+<a name="_5310_encode_none"></a><a name="encode_none"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ENCODE_NONE</font>
+</pre>
+
+<p> No encoding is necessary</p>
+
+<p> 
+<a name="httpencode_base64"></a><a name="base64"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.2.4 ENCODE_BASE64</h4>
+<a name="_5312_encode_base64"></a><a name="encode_base64"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public enum </font><font color="#330033">ENCODE_BASE64</font>
+</pre>
+
+<p> Use Base64 encoding</p>
+
+<!-- ..\include\std\net\http.e -->
+<h3>8.39.3 Configuration Routines</h3>
+<a name="_5313_configurationroutines"></a><a name="configurationroutines"></a>
+<p> 
+<a name="httpset_proxy_server"></a><a name="proxy_server"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.3.1 set_proxy_server</h4>
+<a name="_5315_set_proxy_server"></a><a name="set_proxy_server"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_proxy_server</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">ip, </font><font color="#0000FF">integer </font><font color="#330033">port</font><font color="#880033">)</font>
+</pre>
+
+<p>   Configure http client to use a proxy server</p>
+
+<!-- ..\include\std\net\http.e -->
+<h5>Parameters:</h5>
+<a name="_5316_parameters"></a><a name="parameters"></a><ul><li><tt>proxy_ip</tt> - IP address of the proxy server
+</li><li><tt>proxy_port</tt> - Port of the proxy server
+</li></ul>
+<!-- ..\include\std\net\http.e -->
+<h3>8.39.4 Get/Post Routines</h3>
+<a name="_5317_getpostroutines"></a><a name="getpostroutines"></a>
+<p> 
+<a name="httphttp_post"></a><a name="post"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.4.1 http_post</h4>
+<a name="_5319_http_post"></a><a name="http_post"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public function </font><font color="#330033">http_post</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">url, </font><font color="#0000FF">object </font><font color="#330033">data, </font><font color="#0000FF">object </font><font color="#330033">headers = 0,</font>
+<font color="#330033">        natural follow_redirects = 10, natural timeout = 15</font><font color="#880033">)</font>
+</pre>
+
+<p>   Post data to a HTTP resource.</p>
+
+<!-- ..\include\std\net\http.e -->
+<h5>Parameters:</h5>
+<a name="_5320_parameters"></a><a name="parameters"></a><ul><li><tt>url</tt>     - URL to send post request to
+</li><li><tt>data</tt>    - Form data (described later)
+</li><li><tt>headers</tt> - Additional headers added to request
+</li><li><tt>follow_redirects</tt> - Maximum redirects to follow
+</li><li><tt>timeout</tt> - Maximum number of seconds to wait for a response
+</li></ul>
+<!-- ..\include\std\net\http.e -->
+<h5>Returns:</h5>
+<a name="_5321_returns"></a><a name="returns"></a>
+<p> An integer error code or a 2 element sequence. Element 1 is a sequence of key/value pairs representing the result header information. element 2 is the body of the result.</p>
+
+<p> If result is a negative integer, that represents a local error condition.</p>
+
+<p> If result is a positive integer, that represents a HTTP error value from the server.</p>
+
+<!-- ..\include\std\net\http.e -->
+<h5>Data Sequence:</h5>
+<a name="_5322_datasequence"></a><a name="datasequence"></a>
+<p> This sequence should contain key value pairs representing the expected form elements of the called URL. For a simple url-encoded form:</p>
+
+<pre class="examplecode"><font color="#880033">{ </font><font color="#993333">{</font><font color="#330033">"name"</font><font color="#330033">, </font><font color="#330033">"John Doe"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"age"</font><font color="#330033">, </font><font color="#330033">"22"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"city"</font><font color="#330033">, </font><font color="#330033">"Small Town"</font><font color="#993333">}</font><font color="#880033">}</font>
+</pre>
+
+<p> All Keys and Values should be a sequence.</p>
+
+<p> If the post requires multipart form encoding then the sequence is a little different. The first element of the data sequence must be <a href="std_net_http.html#_5308_multipart_form_data">MULTIPART_FORM_DATA</a>. All subsequent field values should be key/value pairs as described above <strong>except</strong> for a field representing a file upload. In that case the sequence should be:</p>
+
+<p> <tt>{ FIELD-NAME, FILE-VALUE, FILE-NAME, MIME-TYPE, ENCODING-TYPE }</tt></p>
+
+<p> Encoding type can be </p>
+<ul><li><a href="std_net_http.html#_5310_encode_none">ENCODE_NONE</a>
+</li><li><a href="std_net_http.html#_5312_encode_base64">ENCODE_BASE64</a>
+</li></ul>
+<p>An example for a multipart form encoded post request data sequence</p>
+
+<pre class="examplecode"><font color="#880033">{</font>
+<font color="#993333">  { </font><font color="#330033">"name"</font><font color="#330033">, </font><font color="#330033">"John Doe" </font><font color="#993333">}</font><font color="#330033">, </font>
+<font color="#993333">  { </font><font color="#330033">"avatar"</font><font color="#330033">, file_content, </font><font color="#330033">"me.png"</font><font color="#330033">, </font><font color="#330033">"image/png"</font><font color="#330033">, ENCODE_BASE64 </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">  { </font><font color="#330033">"city"</font><font color="#330033">, </font><font color="#330033">"Small Town" </font><font color="#993333">}</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\net\http.e -->
+<h5>See Also:</h5>
+<a name="_5323_seealso"></a><a name="seealso"></a>
+<p> <a href="std_net_http.html#_5325_http_get">http_get</a></p>
+
+<p> 
+<a name="httphttp_get"></a><a name="get"></a> </p>
+
+<!-- ..\include\std\net\http.e -->
+<h4>8.39.4.2 http_get</h4>
+<a name="_5325_http_get"></a><a name="http_get"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">http</font>
+<font color="#0000FF">public function </font><font color="#330033">http_get</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">url, </font><font color="#0000FF">object </font><font color="#330033">headers = 0, natural follow_redirects = 10,</font>
+<font color="#330033">        natural timeout = 15</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get a HTTP resource.</p>
+
+<!-- ..\include\std\net\http.e -->
+<h5>Returns:</h5>
+<a name="_5326_returns"></a><a name="returns"></a>
+<p> An integer error code or a 2 element sequence. Element 1 is a sequence of key/value pairs representing the result header information. Element 2 is the body of the result.</p>
+
+<p> If result is a negative integer, that represents a local error condition.</p>
+
+<p> If result is a positive integer, that represents a HTTP error value from the server.</p>
+
+<!-- ..\include\std\net\http.e -->
+<h5>Example:</h5>
+<a name="_5327_example"></a><a name="example"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e </font><font color="#FF0055">-- for display()</font>
+<font color="#0000FF">include </font><font color="#330033">std/net/http.e</font>
+
+<font color="#0000FF">object </font><font color="#330033">result = http_get</font><font color="#880033">(</font><font color="#330033">"http://example.com"</font><font color="#880033">) </font>
+<font color="#0000FF">if atom</font><font color="#880033">(</font><font color="#330033">result</font><font color="#880033">) </font><font color="#0000FF">then </font>
+<font color="#0000FF">   printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Web error: %d\n"</font><font color="#330033">, result</font><font color="#880033">) </font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font>
+<font color="#0000FF">end if </font>
+
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">result</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">) </font><font color="#FF0055">-- header key/value pairs</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Content: %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">result</font><font color="#0000FF">[</font><font color="#330033">2</font><font color="#0000FF">] </font><font color="#993333">}</font><font color="#880033">) </font>
+</pre>
+
+<!-- ..\include\std\net\http.e -->
+<h5>See Also:</h5>
+<a name="_5328_seealso"></a><a name="seealso"></a>
+<p> <a href="std_net_http.html#_5319_http_post">http_post</a></p>
+
+<p> 
+<!-- ..\include\std\net\url.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_net_dns.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_net_url.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_net_dns.html">8.38 DNS</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_net_url.html">8.40 URL handling</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

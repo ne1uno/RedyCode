@@ -1,0 +1,979 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_map.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_scinot.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_map.html">8.33 Map (Hash Table)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_scinot.html">8.35 Scientific Notation Parsing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\stack.e -->
+<h2>8.34 Stack</h2>
+<a name="_4595_stack"></a><a name="stack"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_stack.html#_4595_stack">8.34 Stack</a></div>
+<div class="toc_3"><a href="std_stack.html#_4596_constants">8.34.1 Constants</a></div>
+<div class="toc_3"><a href="std_stack.html#_4597_stacktypes">8.34.2 Stack types</a></div>
+<div class="toc_4"><a href="std_stack.html#_4599_fifo">8.34.2.1 FIFO</a></div>
+<div class="toc_4"><a href="std_stack.html#_4601_filo">8.34.2.2 FILO</a></div>
+<div class="toc_3"><a href="std_stack.html#_4602_types">8.34.3 Types</a></div>
+<div class="toc_4"><a href="std_stack.html#_4604_stack">8.34.3.1 stack</a></div>
+<div class="toc_3"><a href="std_stack.html#_4605_routines">8.34.4 Routines</a></div>
+<div class="toc_4"><a href="std_stack.html#_4607_new">8.34.4.1 new</a></div>
+<div class="toc_4"><a href="std_stack.html#_4613_is_empty">8.34.4.2 is_empty</a></div>
+<div class="toc_4"><a href="std_stack.html#_4618_size">8.34.4.3 size</a></div>
+<div class="toc_4"><a href="std_stack.html#_4622_at">8.34.4.4 at</a></div>
+<div class="toc_4"><a href="std_stack.html#_4631_push">8.34.4.5 push</a></div>
+<div class="toc_4"><a href="std_stack.html#_4638_top">8.34.4.6 top</a></div>
+<div class="toc_4"><a href="std_stack.html#_4646_last">8.34.4.7 last</a></div>
+<div class="toc_4"><a href="std_stack.html#_4654_pop">8.34.4.8 pop</a></div>
+<div class="toc_4"><a href="std_stack.html#_4665_peek_top">8.34.4.9 peek_top</a></div>
+<div class="toc_4"><a href="std_stack.html#_4674_peek_end">8.34.4.10 peek_end</a></div>
+<div class="toc_4"><a href="std_stack.html#_4683_swap">8.34.4.11 swap</a></div>
+<div class="toc_4"><a href="std_stack.html#_4691_dup">8.34.4.12 dup</a></div>
+<div class="toc_4"><a href="std_stack.html#_4699_set">8.34.4.13 set</a></div>
+<div class="toc_4"><a href="std_stack.html#_4705_clear">8.34.4.14 clear</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\stack.e -->
+<h3>8.34.1 Constants</h3>
+<a name="_4596_constants"></a><a name="constants"></a>
+<!-- ..\include\std\stack.e -->
+<h3>8.34.2 Stack types</h3>
+<a name="_4597_stacktypes"></a><a name="stacktypes"></a>
+<p> 
+<a name="stackfifo"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.2.1 FIFO</h4>
+<a name="_4599_fifo"></a><a name="fifo"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public constant </font><font color="#330033">FIFO</font>
+</pre>
+
+<p>   FIFO: like people standing in line: first item in is first item out</p>
+
+<p> 
+<a name="stackfilo"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.2.2 FILO</h4>
+<a name="_4601_filo"></a><a name="filo"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public constant </font><font color="#330033">FILO</font>
+</pre>
+
+<p>   FILO: like for a stack of plates  : first item in is last item out</p>
+
+<!-- ..\include\std\stack.e -->
+<h3>8.34.3 Types</h3>
+<a name="_4602_types"></a><a name="types"></a>
+<p> 
+<a name="stackstack"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.3.1 stack</h4>
+<a name="_4604_stack"></a><a name="stack"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public type </font><font color="#330033">stack</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">obj_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   A stack is a sequence of objects with some internal data.</p>
+
+<!-- ..\include\std\stack.e -->
+<h3>8.34.4 Routines</h3>
+<a name="_4605_routines"></a><a name="routines"></a>
+<p> 
+<a name="stacknew"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.1 new</h4>
+<a name="_4607_new"></a><a name="new"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">new</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">typ = FILO</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4608_parameters"></a><a name="parameters"></a><ol><li><tt>stack_type</tt> : an integer, defining the semantics of the stack. The default is <tt>FILO</tt>.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4609_returns"></a><a name="returns"></a>
+<p> An empty <strong>stack</strong>, note that the variable storing the stack must not be an integer.  The resources allocated for the stack will be automatically cleaned up if the reference count of the returned value drops to zero, or if passed in a call to <a href="std_machine.html#_5837_delete">delete</a>.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4610_comments"></a><a name="comments"></a>
+<p> There are two sorts of stacks, designated by the types <tt>FIFO</tt> and <tt>FILO</tt>: </p>
+<ul><li>A <tt>FIFO</tt> stack is one where the first item to be pushed is popped first. People standing in queue form a <tt>FIFO</tt> stack.
+</li><li>A <tt>FILO</tt> stack is one where the item pushed last is popped first. A column of coins is of the <tt>FILO</tt> kind.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4611_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4613_is_empty">is_empty</a></p>
+
+<p> 
+<a name="stackis_empty"></a><a name="empty"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.2 is_empty</h4>
+<a name="_4613_is_empty"></a><a name="is_empty"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">is_empty</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines whether a stack is empty.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4614_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack being queried.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4615_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if the stack is empty, else 0.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4616_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4618_size">size</a></p>
+
+<p> 
+<a name="stacksize"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.3 size</h4>
+<a name="_4618_size"></a><a name="size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">size</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns how many elements a stack has.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4619_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack being queried.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4620_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the number of elements in <tt>sk</tt>.</p>
+
+<p> 
+<a name="stackat"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.4 at</h4>
+<a name="_4622_at"></a><a name="at"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">at</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">integer </font><font color="#330033">idx = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   fetches a value from the stack without removing it from the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4623_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack being queried
+</li><li><tt>idx</tt> : an integer, the place to inspect. The default is 1 (top item).
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4624_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the <tt>idx</tt>-th item of the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4625_errors"></a><a name="errors"></a>
+<p> If the supplied value of <tt>idx</tt> does not correspond to an existing element, an error occurs.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4626_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<p><tt>idx</tt> can be less than 1, in which case it refers relative to the end item. Thus, 0 stands for the end element.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4627_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 0</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, -1</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 2.3</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)  </font><font color="#FF0055">--&gt; "abc"</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4628_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 0</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 2.3</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, -1</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">at</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)  </font><font color="#FF0055">--&gt; "abc"</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4629_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4618_size">size</a>, <a href="std_stack.html#_4638_top">top</a>, <a href="std_stack.html#_4665_peek_top">peek_top</a>, <a href="std_stack.html#_4674_peek_end">peek_end</a></p>
+
+<p> 
+<a name="stackpush"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.5 push</h4>
+<a name="_4631_push"></a><a name="push"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public procedure </font><font color="#330033">push</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">object </font><font color="#330033">value</font><font color="#880033">)</font>
+</pre>
+
+<p>   adds something to a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4632_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to augment
+</li><li><tt>value</tt> : an object, the value to push.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4633_comments"></a><a name="comments"></a>
+<p> <tt>value</tt> appears at the end of <tt>FIFO</tt> stacks and the top of <tt>FILO</tt> stacks. The size of the stack increases by one.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4634_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,</font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+<font color="#330033">top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">last</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2.3</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4635_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,</font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+<font color="#330033">top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 2.3</font>
+<font color="#330033">last</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4636_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4654_pop">pop</a>, <a href="std_stack.html#_4638_top">top</a></p>
+
+<p> 
+<a name="stacktop"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.6 top</h4>
+<a name="_4638_top"></a><a name="top"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">top</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   retrieve the top element on a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4639_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to inspect.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4640_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the top element on a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4641_comments"></a><a name="comments"></a>
+<p> This call is equivalent to <tt>at(sk,1)</tt>.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4642_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+
+<font color="#330033">top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2.3</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4643_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+
+<font color="#330033">top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4644_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4622_at">at</a>, <a href="std_stack.html#_4654_pop">pop</a>, <a href="std_stack.html#_4665_peek_top">peek_top</a>, <a href="std_stack.html#_4646_last">last</a></p>
+
+<p> 
+<a name="stacklast"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.7 last</h4>
+<a name="_4646_last"></a><a name="last"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">last</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   retrieves the end element on a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4647_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to inspect.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4648_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the end element on a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4649_comments"></a><a name="comments"></a>
+<p> This call is equivalent to <tt>at(sk,0)</tt>.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4650_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,</font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+
+<font color="#330033">last</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4651_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,</font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+
+<font color="#330033">last</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2.3</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4652_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4622_at">at</a>, <a href="std_stack.html#_4654_pop">pop</a>, <a href="std_stack.html#_4674_peek_end">peek_end</a>, <a href="std_stack.html#_4638_top">top</a></p>
+
+<p> 
+<a name="stackpop"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.8 pop</h4>
+<a name="_4654_pop"></a><a name="pop"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">pop</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">integer </font><font color="#330033">idx = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   removes an object from a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4655_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to pop
+</li><li><tt>idx</tt> : integer. The n-th item to pick from the stack. The default is 1.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4656_returns"></a><a name="returns"></a>
+<p> An <strong>item</strong>, from the stack, which is also removed from the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4657_errors"></a><a name="errors"></a><ul><li>If the stack is empty, an error occurs.
+</li><li>If the <tt>idx</tt> is greater than the number of items in the stack, an error occurs.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4658_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<p>When <tt>idx</tt> is omitted the 'top' of the stack is removed and returned. When <tt>idx</tt> is supplied, it represents the n-th item from the top to be removed and returned. Thus an <tt>idx</tt> of <tt>2</tt> returns the 2nd item from the top, a value of <tt>3</tt> returns the 3rd item from the top, and so on.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4659_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 0</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4660_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 0</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 3:</h5>
+<a name="_4661_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 4</font><font color="#880033">)</font>
+<font color="#FF0055">-- stack contains {1,2,3,4} (oldest to newest)</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 4</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">-- Pluck out the 2nd newest item .. 3</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3 </font>
+<font color="#FF0055">-- stack now contains {1,2,4}</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 4:</h5>
+<a name="_4662_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 4</font><font color="#880033">)</font>
+<font color="#FF0055">-- stack contains {1,2,3,4} (oldest to newest)</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 4</font>
+<font color="#330033">? pop</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">-- Pluck out the 2nd oldest item .. 2</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3 </font>
+<font color="#FF0055">-- stack now contains {1,3,4}</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4663_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4631_push">push</a>, <a href="std_stack.html#_4638_top">top</a>, <a href="std_stack.html#_4613_is_empty">is_empty</a></p>
+
+<p> 
+<a name="stackpeek_top"></a><a name="top"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.9 peek_top</h4>
+<a name="_4665_peek_top"></a><a name="peek_top"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">integer </font><font color="#330033">idx = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets an object, relative to the top, from a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4666_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to get from.
+</li><li><tt>idx</tt> : integer. The n-th item to get from the stack. The default is 1.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4667_returns"></a><a name="returns"></a>
+<p> An <strong>item</strong>, from the stack, which is <strong>not</strong> removed from the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4668_errors"></a><a name="errors"></a><ul><li>If the stack is empty, an error occurs.
+</li><li>If the <tt>idx</tt> is greater than the number of items in the stack, an error occurs.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4669_comments"></a><a name="comments"></a>
+<p> This is identical to <a href="std_stack.html#_4654_pop">pop</a> except that it does not remove the item.</p>
+<ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<p>When <tt>idx</tt> is omitted the 'top' of the stack is returned. When <tt>idx</tt> is supplied, it represents the n-th item from the top to be returned. Thus an <tt>idx</tt> of <tt>2</tt> returns the 2nd item from the top, a value of <tt>3</tt> returns the 3rd item from the top, and so on.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4670_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,3</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,4</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, size</font><font color="#993333">(</font><font color="#330033">sk</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- 3 (end item)</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4671_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,3</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk,4</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, size</font><font color="#993333">(</font><font color="#330033">sk</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- 1 (end item)</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4672_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4654_pop">pop</a>, <a href="std_stack.html#_4638_top">top</a>, <a href="std_stack.html#_4613_is_empty">is_empty</a>, <a href="std_stack.html#_4618_size">size</a>, <a href="std_stack.html#_4674_peek_end">peek_end</a></p>
+
+<p> 
+<a name="stackpeek_end"></a><a name="end"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.10 peek_end</h4>
+<a name="_4674_peek_end"></a><a name="peek_end"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public function </font><font color="#330033">peek_end</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">integer </font><font color="#330033">idx = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets an object, relative to the end, from a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4675_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to get from.
+</li><li><tt>idx</tt> : integer. The n-th item from the end to get from the stack. The default is 1.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4676_returns"></a><a name="returns"></a>
+<p> An <strong>item</strong>, from the stack, which is <strong>not</strong> removed from the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4677_errors"></a><a name="errors"></a><ul><li>If the stack is empty, an error occurs.
+</li><li>If the <tt>idx</tt> is greater than the number of items in the stack, an error occurs.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4678_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the end item is the newest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the end item is the oldest item in the stack.
+</li></ul>
+<p>When <tt>idx</tt> is omitted the 'end' of the stack is returned. When <tt>idx</tt> is supplied, it represents the n-th item from the end to be returned. Thus an <tt>idx</tt> of <tt>2</tt> returns the 2nd item from the end, a value of <tt>3</tt> returns the 3rd item from the end, and so on.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4679_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,3</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,4</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk, size</font><font color="#993333">(</font><font color="#330033">sk</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- 3 (top item)</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4680_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">)</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">-- 2</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,3</font><font color="#880033">) </font><font color="#FF0055">-- 3</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk,4</font><font color="#880033">) </font><font color="#FF0055">-- *error*</font>
+<font color="#330033">? peek_end</font><font color="#880033">(</font><font color="#330033">sk, size</font><font color="#993333">(</font><font color="#330033">sk</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- 3 (top item)</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4681_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4654_pop">pop</a>, <a href="std_stack.html#_4638_top">top</a>, <a href="std_stack.html#_4613_is_empty">is_empty</a>, <a href="std_stack.html#_4618_size">size</a>, <a href="std_stack.html#_4665_peek_top">peek_top</a></p>
+
+<p> 
+<a name="stackswap"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.11 swap</h4>
+<a name="_4683_swap"></a><a name="swap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public procedure </font><font color="#330033">swap</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   swaps the top two elements of a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4684_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to swap.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Returns:</h5>
+<a name="_4685_returns"></a><a name="returns"></a>
+<p> A <strong>copy</strong>, of the original <strong>stack</strong>, with the top two elements swapped.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4686_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4687_errors"></a><a name="errors"></a>
+<p> If the stack has less than two elements, an error occurs.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4688_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">""</font><font color="#880033">)</font>
+
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; ""</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2.3</font>
+
+<font color="#330033">swap</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2.3</font>
+<font color="#330033">? peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; ""</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 2:</h5>
+<a name="_4689_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 2.3</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">""</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+
+<font color="#330033">swap</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+</pre>
+
+<p> 
+<a name="stackdup"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.12 dup</h4>
+<a name="_4691_dup"></a><a name="dup"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public procedure </font><font color="#330033">dup</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   repeats the top element of a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4692_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4693_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<!-- ..\include\std\stack.e -->
+<h5>Side Effect:</h5>
+<a name="_4694_sideeffect"></a><a name="sideeffect"></a>
+<p> The value of <tt>top</tt> is pushed onto the stack, thus the stack size grows by one.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4695_errors"></a><a name="errors"></a>
+<p> If the stack has no elements, an error occurs.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4696_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FILO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk,</font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">""</font><font color="#880033">)</font>
+
+<font color="#330033">dup</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk,1</font><font color="#880033">) </font><font color="#FF0055">--&gt; ""</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)       </font><font color="#FF0055">--&gt; 3</font>
+
+<font color="#330033">dup</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk,1</font><font color="#880033">) </font><font color="#FF0055">--&gt; ""</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk,2</font><font color="#880033">) </font><font color="#FF0055">--&gt; ""</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk,3</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)       </font><font color="#FF0055">--&gt; 4</font>
+</pre>
+
+<!-- ..\include\std\stack.e -->
+<h5>Example 1:</h5>
+<a name="_4697_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">stack sk = new</font><font color="#880033">(</font><font color="#330033">FIFO</font><font color="#880033">)</font>
+
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, 5</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">"abc"</font><font color="#880033">)</font>
+<font color="#330033">push</font><font color="#880033">(</font><font color="#330033">sk, </font><font color="#330033">""</font><font color="#880033">)</font>
+
+<font color="#330033">dup</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 3</font>
+
+<font color="#330033">dup</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)</font>
+
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 2</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+<font color="#330033">peek_top</font><font color="#880033">(</font><font color="#330033">sk, 3</font><font color="#880033">) </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">size</font><font color="#880033">(</font><font color="#330033">sk</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 4</font>
+</pre>
+
+<p> 
+<a name="stackset"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.13 set</h4>
+<a name="_4699_set"></a><a name="set"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set</font><font color="#880033">(</font><font color="#330033">stack sk, </font><font color="#0000FF">object </font><font color="#330033">val, </font><font color="#0000FF">integer </font><font color="#330033">idx = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   updates a value on the stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4700_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack being queried
+</li><li><tt>val</tt> : an object, the value to place on the stack
+</li><li><tt>idx</tt> : an integer, the place to inspect. The default is 1 (the top item)
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Errors:</h5>
+<a name="_4701_errors"></a><a name="errors"></a>
+<p> If the supplied value of <tt>idx</tt> does not correspond to an existing element, an error occurs.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Comments:</h5>
+<a name="_4702_comments"></a><a name="comments"></a><ul><li>For <tt>FIFO</tt> stacks (queues), the top item is the oldest item in the stack.
+</li><li>For <tt>FILO</tt> stacks, the top item is the newest item in the stack.
+</li></ul>
+<p><tt>idx</tt> can be less than one, in which case it refers to an element relative to the end of the stack. Thus  <tt>0</tt> stands for the end element.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4703_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4618_size">size</a>, <a href="std_stack.html#_4638_top">top</a></p>
+
+<p> 
+<a name="stackclear"></a> </p>
+
+<!-- ..\include\std\stack.e -->
+<h4>8.34.4.14 clear</h4>
+<a name="_4705_clear"></a><a name="clear"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/stack.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">stack</font>
+<font color="#0000FF">public procedure </font><font color="#330033">clear</font><font color="#880033">(</font><font color="#330033">stack sk</font><font color="#880033">)</font>
+</pre>
+
+<p>   wipes out a stack.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>Parameters:</h5>
+<a name="_4706_parameters"></a><a name="parameters"></a><ol><li><tt>sk</tt> : the stack to clear.
+</li></ol>
+<!-- ..\include\std\stack.e -->
+<h5>Side Effect:</h5>
+<a name="_4707_sideeffect"></a><a name="sideeffect"></a>
+<p> The stack contents is emptied.</p>
+
+<!-- ..\include\std\stack.e -->
+<h5>See Also:</h5>
+<a name="_4708_seealso"></a><a name="seealso"></a>
+<p> <a href="std_stack.html#_4607_new">new</a>, <a href="std_stack.html#_4613_is_empty">is_empty</a></p>
+
+<p> 
+<!-- ..\include\std\scinot.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_map.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_scinot.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_map.html">8.33 Map (Hash Table)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_scinot.html">8.35 Scientific Notation Parsing</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

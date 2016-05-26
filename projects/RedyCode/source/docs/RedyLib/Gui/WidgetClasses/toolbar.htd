@@ -1,0 +1,19 @@
+==Toolbar Widget Class
+
+Widget Class name: "toolbar"
+
+This widget class is used by other widgets, not created directly by the application.
+
+===API
+====Properties
+
+====="tools"
+====="title"
+
+====Events
+
+====Commands
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_win32_msgbox.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="unsupported.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_win32_msgbox.html">8.56 Windows Message Box</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="unsupported.html">8.58 Unsupported Features</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h2>8.57 Windows Sound</h2>
+<a name="_6627_windowssound"></a><a name="windowssound"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_win32_sounds.html#_6627_windowssound">8.57 Windows Sound</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6629_snd_default">8.57.0.1 SND_DEFAULT</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6631_snd_stop">8.57.0.2 SND_STOP</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6633_snd_question">8.57.0.3 SND_QUESTION</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6635_snd_exclamation">8.57.0.4 SND_EXCLAMATION</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6637_snd_asterisk">8.57.0.5 SND_ASTERISK</a></div>
+<div class="toc_4"><a href="std_win32_sounds.html#_6639_sound">8.57.0.6 sound</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="soundsnd_default"></a><a name="default"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.1 SND_DEFAULT</h4>
+<a name="_6629_snd_default"></a><a name="snd_default"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public constant </font><font color="#330033">SND_DEFAULT</font>
+</pre>
+
+<p> 
+<a name="soundsnd_stop"></a><a name="stop"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.2 SND_STOP</h4>
+<a name="_6631_snd_stop"></a><a name="snd_stop"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public constant </font><font color="#330033">SND_STOP</font>
+</pre>
+
+<p> 
+<a name="soundsnd_question"></a><a name="question"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.3 SND_QUESTION</h4>
+<a name="_6633_snd_question"></a><a name="snd_question"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public constant </font><font color="#330033">SND_QUESTION</font>
+</pre>
+
+<p> 
+<a name="soundsnd_exclamation"></a><a name="exclamation"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.4 SND_EXCLAMATION</h4>
+<a name="_6635_snd_exclamation"></a><a name="snd_exclamation"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public constant </font><font color="#330033">SND_EXCLAMATION</font>
+</pre>
+
+<p> 
+<a name="soundsnd_asterisk"></a><a name="asterisk"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.5 SND_ASTERISK</h4>
+<a name="_6637_snd_asterisk"></a><a name="snd_asterisk"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public constant </font><font color="#330033">SND_ASTERISK</font>
+</pre>
+
+<p> 
+<a name="soundsound"></a> </p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h4>8.57.0.6 sound</h4>
+<a name="_6639_sound"></a><a name="sound"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/sounds.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">sound</font>
+<font color="#0000FF">public procedure </font><font color="#330033">sound</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">sound_type = SND_DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   Makes a sound.</p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h5>Parameters:</h5>
+<a name="_6640_parameters"></a><a name="parameters"></a><ol><li>sound_type: An atom. The type of sound to make. The default is SND_DEFAULT.
+</li></ol>
+<!-- ..\include\std\win32\sounds.e -->
+<h5>Comments:</h5>
+<a name="_6641_comments"></a><a name="comments"></a>
+<p> The <tt>sound_type</tt> value can be one of ... </p>
+<ul><li><tt>SND_ASTERISK</tt>
+</li><li><tt>SND_EXCLAMATION</tt>
+</li><li><tt>SND_STOP</tt>
+</li><li><tt>SND_QUESTION</tt>
+</li><li><tt>SND_DEFAULT</tt>
+</li></ul>
+<p>These are sounds associated with the same Windows events via the Control Panel.</p>
+
+<!-- ..\include\std\win32\sounds.e -->
+<h5>Example:</h5>
+<a name="_6642_example"></a><a name="example"></a>
+<pre class="examplecode"><font color="#330033">sound</font><font color="#880033">( </font><font color="#330033">SND_EXCLAMATION </font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<!-- ..\docs\unsupported.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_win32_msgbox.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="unsupported.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_win32_msgbox.html">8.56 Windows Message Box</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="unsupported.html">8.58 Unsupported Features</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

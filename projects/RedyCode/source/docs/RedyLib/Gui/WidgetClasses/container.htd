@@ -1,0 +1,54 @@
+==Container Widget Class
+
+Widget Class name: "container"
+
+===API
+====Properties
+
+====="orientation"
+    "horizontal"
+
+====="sizemode_x"
+    "normal"
+    "equal"
+    "expand"
+
+====="sizemode_y"
+    "normal"
+    "equal"
+    "expand"
+
+====="justify_x"
+    "left"
+    "center"
+    "right"
+
+====="justify_y"
+    "top"
+    "center"
+    "bottom"
+
+====="adjust"
+====="box_align"
+====="label"
+====="margin"
+====="spacing"
+
+Example:
+<eucode>
+</eucode>
+====Events
+
+====Commands
+
+=====procedure cmd_set_props(atom wid, object wprops)
+=====function cmd_get_box_width(atom wid)
+=====function cmd_get_orientation(atom wid)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="dynamic.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="database.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="dynamic.html">6.5 Indirect Routine Calling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="database.html">6.7 Euphoria Database System (EDS)</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\tasking.txt -->
+<h2>6.6 Multitasking in Euphoria</h2>
+<a name="_583_multitaskingineuphoria"></a><a name="multitaskingineuphoria"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="tasking.html#_583_multitaskingineuphoria">6.6 Multitasking in Euphoria</a></div>
+<div class="toc_3"><a href="tasking.html#_584_introduction">6.6.1 Introduction</a></div>
+<div class="toc_3"><a href="tasking.html#_585_whymultitask">6.6.2 Why Multitask?</a></div>
+<div class="toc_3"><a href="tasking.html#_586_typesoftasks">6.6.3 Types of Tasks</a></div>
+<div class="toc_3"><a href="tasking.html#_587_asmallexample">6.6.4 A Small Example</a></div>
+<div class="toc_3"><a href="tasking.html#_588_comparisonwithearliermultitaskingschemes">6.6.5 Comparison with earlier multitasking schemes</a></div>
+<div class="toc_3"><a href="tasking.html#_589_comparisonwithmultithreading">6.6.6 Comparison with multithreading</a></div>
+<div class="toc_3"><a href="tasking.html#_590_summary">6.6.7 Summary</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.1 Introduction</h3>
+<a name="_584_introduction"></a><a name="introduction"></a>
+<p> Euphoria allows you to set up multiple, independent tasks.  Each task has its own current statement that it is executing, its own call stack, and its own set of private variables.  Tasks run in parallel with each other. That is, before any given task completes its work, other tasks can be given a chance to execute.  Euphoria's task scheduler decides which task should be active at any given time.</p>
+
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.2 Why Multitask?</h3>
+<a name="_585_whymultitask"></a><a name="whymultitask"></a>
+<p> Most programs do not need to use multitasking and would not benefit from it. However it is very useful in some cases:</p>
+<ul><li>Action games where numerous characters, projectiles etc. need to be displayed in a realistic way, as if they are all independent of one another. Language War is a good example.
+</li><li>Situations where your program must sometimes wait for input from a human or other computer. While one task in your program is waiting, another separate task could be doing some computation, disk search, etc.
+</li><li>All operating systems today have special API routines that let you initiate some I/O, and then proceed without waiting for it to finish. A task could check periodically to see if the I/O is finished, while another task is performing some useful computation, or is perhaps starting another I/O operation.
+</li><li>Situations where your program might be called upon to serve many users simultaneously. With multiple tasks, it's easy to keep track of the state of your interaction with all these separate users.
+</li><li>Perhaps you can divide your program into two logical processes, and have a task for each. One produces data and stores it, while the other reads the data and processes it. Maybe the first process is time-critical, since it interacts with the user, while the second process can be executed during lulls in the action, where the user is thinking or doing something that doesn't require quick response.
+</li></ul>
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.3 Types of Tasks</h3>
+<a name="_586_typesoftasks"></a><a name="typesoftasks"></a>
+<p> Euphoria supports two types of tasks: real-time tasks, and time-share tasks.</p>
+
+<p> <strong>Real-time tasks</strong> are scheduled at intervals, specified by a number of seconds or fractions of a second. You might schedule one real-time task to be activated every 3 seconds, while another is activated every 0.1 seconds.  In Language War, when the Euphoria ship moves at warp 4, or a torpedo flies across the screen, it's important that they move at a steady, timed pace.</p>
+
+<p> <strong>Time-share tasks</strong> need a share of the CPU but they needn't be rigidly scheduled according to any clock.</p>
+
+<p> It's possible to reschedule a task at any time, changing its timing or its slice of the CPU. You can even convert a task from one type to the other dynamically.</p>
+
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.4 A Small Example</h3>
+<a name="_587_asmallexample"></a><a name="asmallexample"></a>
+<p> This example shows the main task (which all Euphoria programs start off with) creating two additional real-time tasks. We call them real-time because they are scheduled to get control every few seconds.</p>
+
+<p> You should try copy/pasting and running this example.  You'll see that task 1 gets control every 2.5 to 3 seconds, while task 2 gets control every 5 to 5.1 seconds.  In between, the main task (task 0), has control as it checks for a 'q' character to abort execution.</p>
+
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">TRUE = 1, FALSE = 0</font>
+
+<font color="#0000FF">type </font><font color="#330033">boolean</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">	return </font><font color="#330033">x = 0 </font><font color="#0000FF">or </font><font color="#330033">x = 1</font>
+<font color="#0000FF">end type</font>
+
+<font color="#330033">boolean t1_running, t2_running</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">task1</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">message</font><font color="#880033">)</font>
+<font color="#0000FF">	for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">do</font>
+<font color="#0000FF">		printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"task1 (%d) %s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">i, message</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">		task_yield</font><font color="#880033">()</font>
+<font color="#0000FF">	end for</font>
+<font color="#330033">	t1_running = FALSE</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">task2</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">message</font><font color="#880033">)</font>
+<font color="#0000FF">	for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">10 </font><font color="#0000FF">do</font>
+<font color="#0000FF">		printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"task2 (%d) %s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">i, message</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">		task_yield</font><font color="#880033">()</font>
+<font color="#0000FF">	end for</font>
+<font color="#330033">	t2_running = FALSE</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"main task: start\n"</font><font color="#880033">)</font>
+
+<font color="#0000FF">atom </font><font color="#330033">t1, t2</font>
+
+<font color="#330033">t1 = </font><font color="#0000FF">task_create</font><font color="#880033">(</font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"task1"</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"Hello"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033">t2 = </font><font color="#0000FF">task_create</font><font color="#880033">(</font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"task2"</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"Goodbye"</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#0000FF">task_schedule</font><font color="#880033">(</font><font color="#330033">t1, </font><font color="#993333">{</font><font color="#330033">2.5, 3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">task_schedule</font><font color="#880033">(</font><font color="#330033">t2, </font><font color="#993333">{</font><font color="#330033">5, 5.1</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#330033">t1_running = TRUE</font>
+<font color="#330033">t2_running = TRUE</font>
+
+<font color="#0000FF">while </font><font color="#330033">t1_running </font><font color="#0000FF">or </font><font color="#330033">t2_running </font><font color="#0000FF">do</font>
+<font color="#0000FF">	if get_key</font><font color="#880033">() </font><font color="#330033">= </font><font color="#330033">'q' </font><font color="#0000FF">then</font>
+<font color="#0000FF">		exit</font>
+<font color="#0000FF">	end if</font>
+<font color="#0000FF">	task_yield</font><font color="#880033">()</font>
+<font color="#0000FF">end while</font>
+
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"main task: stop\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- program ends when main task is finished</font>
+</pre>
+
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.5 Comparison with earlier multitasking schemes</h3>
+<a name="_588_comparisonwithearliermultitaskingschemes"></a><a name="comparisonwithearliermultitaskingschemes"></a>
+<p> In earlier releases of Euphoria, Language War already had a mechanism for multitasking, and some people submitted to User Contributions their own multitasking schemes. These were all implemented using plain Euphoria code, whereas this new multitasking feature is built into the interpreter. Under the old Language War tasking scheme a scheduler would *call* a task, which would eventually have to *return* to the scheduler, so it could then dispatch the next task.</p>
+
+<p> In the new system, a task can call the built-in procedure <tt>task_yield</tt> at any point, perhaps many levels deep in subroutine calls, and the scheduler, which is now part of the interpreter, will be able to transfer control to any other task. When control comes back to the original task, it will resume execution at the statement after <tt>task_yield</tt>, with its call stack and all private variables intact. Each task has its own call stack, program counter (i.e. current statement being executed), and private variables.  You might have several tasks all executing a routine at the same time, and each task will have its own set of private variable values for that routine. Global and local variables are shared between tasks.</p>
+
+<p> It's fairly easy to take any piece of code and run it as a task.  Just insert a few <tt>task_yield</tt> statements so it will not hog the CPU.</p>
+
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.6 Comparison with multithreading</h3>
+<a name="_589_comparisonwithmultithreading"></a><a name="comparisonwithmultithreading"></a>
+<p> When people talk about threads, they are usually referring to a mechanism provided by the operating system. That's why we prefer to use the term "multitasking".  Threads are generally "preemptive", whereas Euphoria multitasking is "cooperative". With preemptive threads, the operating system can force a switch from one thread to another at virtually any time.  With cooperative multitasking, each task decides when to give up the CPU and let another task get control. If a task were "greedy" it could keep the CPU for itself for long intervals. However since a program is written by one person or group that wants the program to behave well, it would be silly for them to favor one task like that.  They will try to balance things in a way that works well for the user.  An operating system might be running many threads, and many programs, that were written by different people, and it would be useful to enforce a reasonable degree of sharing on these programs.  Preemption makes sense across the whole operating system. It makes far less sense within one program.</p>
+
+<p> Furthermore, threading is notorious for causing subtle bugs.  Nasty things can happen when a task loses control at just the wrong moment. It may have been updating a global variable when it loses control and leaves that variable in an inconsistent state.  Something as trivial as incrementing a variable can go awry if a thread-switch happens at the wrong moment. e.g. consider two threads. One has:</p>
+
+<pre class="examplecode"><font color="#330033">x = x + 1</font>
+</pre>
+
+<p> and the other also has:</p>
+
+<pre class="examplecode"><font color="#330033">x = x + 1</font>
+</pre>
+
+<p> At the machine level, the first task loads the value of x into a register, then loses control to the second task which increments x and stores the result back into x in memory. Eventually control goes back to the first task which also increments x *using the value of x in the register*, and then stores it into x in memory. So x has only been incremented once instead of twice as was intended. To avoid this problem, each thread would need something like:</p>
+
+<pre class="examplecode"><font color="#330033">lock x</font>
+<font color="#330033">x = x + 1</font>
+<font color="#330033">unlock x</font>
+</pre>
+
+<p> where lock and unlock would be special primitives that are safe for threading. It's often the case that programmers forget to lock data, but their program seems to run ok. Then one day, many months after they've written the code, the program crashes mysteriously.</p>
+
+<p> Cooperative multitasking is much safer, and requires far fewer expensive locking operations. Tasks relinquish control at safe points once they have completed a logical operation.</p>
+
+<!-- ..\docs\tasking.txt -->
+<h3>6.6.7 Summary</h3>
+<a name="_590_summary"></a><a name="summary"></a>
+<p> For a complete function reference, refer to the Library Documentation <a href="std_task.html#_1888_multitasking">Multitasking</a>.</p>
+
+<p> 
+<!-- ..\docs\database.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="dynamic.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="database.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="dynamic.html">6.5 Indirect Routine Calling</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="database.html">6.7 Euphoria Database System (EDS)</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

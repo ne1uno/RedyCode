@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_2_0b-linux.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_2_0pa4.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_2_0b-linux.html">9.34 Version 2.2 Beta Linux October 22, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_2_0pa4.html">9.36 Version 2.2 Pre Alpha #4 Linux July 15, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.2.0a-linux.txt -->
+<h2>9.35 Version 2.2 Alpha Linux August 24, 1999</h2>
+<a name="_6782_version22alphalinuxaugust241999"></a><a name="version22alphalinuxaugust241999"></a>
+<p> <em>Many of these features and bug fixes will also be made available in Version 2.2 for <strong>WIN32 + DOS32</strong></em>.</p>
+<ul><li>The documentation has been brought up-to-date to include  <strong>Linux</strong>-specific information for library routines and Euphoria in general.
+</li><li>There is now a Complete Edition for  <strong>Linux</strong>, including  <strong>binding</strong> and  <strong>shrouding</strong>. See  <strong>register\register.doc</strong>.
+</li><li>There is now <strong>text mode</strong> mouse support using  <strong>get_mouse()</strong>. You must have <strong>GPM server</strong> running. It works in a text console or an <strong>xterm</strong> window.
+</li><li><strong>Linux:</strong>  <strong>define_c_var(name)</strong> will return the address of a global C variable in a shared library.
+</li><li>It was confirmed that you can call Euphoria routines from  <strong>Linux</strong> C routines using exactly the same mechanism as in <strong>WIN32</strong> Euphoria. See <strong>euphoria/demo/linux</strong>.
+</li><li>An example of creating your own shared library routines and calling them from Euphoria was added. See  <strong>euphoria/demo/linux</strong>.
+</li><li><strong>All platforms: crash_file(file_name)</strong> will cause diagnostic messages to be written to <strong>file_name</strong> instead of  <strong>ex.err</strong>. You can use  <strong>crash_file("/dev/null")</strong> to get diagnostics on screen but not in a file.&lt;br&gt;  <strong>crash_file("")</strong> means "no diagnostics" (to screen or ex.err).
+</li><li><strong>Trace</strong> mode in <strong>xterm</strong> now detects the <strong>F1/F2</strong> keys.
+</li><li><strong>time()</strong> now reports real "wall-clock" time, not CPU time.
+</li><li><strong>search</strong>,  <strong>guru</strong> and  <strong>cdguru</strong> now place their output in your $HOME directory instead of the current directory.
+</li><li><strong>#!</strong> is now restricted to just the first line of a file.
+</li><li><strong>All platforms:</strong> In <strong>ed</strong>, the  <strong>Esc n</strong>, <strong>Esc d</strong>, <strong>Esc f</strong> and <strong>Esc r</strong> commands will immediately redisplay your last choice. You can press  <strong>up-arrow/down-arrow</strong> to see other choices, or clear the choice. If you start typing without editing, it will clear the choice and take your new input.
+</li><li><strong>free_console()</strong> will set the terminal parameters back to normal. Normally, when running a Euphoria program the parameters are set the way that <strong>curses</strong> wants them and they are set back to normal when the program terminates. If your program needs to terminate in a strange way (other than calling abort()),  <strong>free_console()</strong> should be called first.
+</li><li>**bug fixed: &lt;font color="#006699"&gt;get()&lt;/font&gt;<ul><li>now considers '\r' to be a whitespace character. This is important when reading DOS files.
+</li></ul>
+</li><li><strong>All platforms: bug fixed:</strong> It was not immediately issuing a <strong>type_check</strong> failure when 1 was added to an integer variable that was set to the maximum value for an integer (1.07 billion). Thanks to Jeff Fielding.
+</li><li><strong>All platforms: bug fixed:</strong> It was not always detecting an improperly-formed exponent on a floating-point number. Thanks to Lionel Wong.
+</li><li><strong>All platforms:</strong> The performance of the storage allocator has been improved in certain cases. A bug that could cause the interpreter to crash when you are almost out of memory has been fixed.
+</li></ul>
+<p>
+<!-- ..\docs\release\2.2.0pa4.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_2_0b-linux.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_2_0pa4.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_2_0b-linux.html">9.34 Version 2.2 Beta Linux October 22, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_2_0pa4.html">9.36 Version 2.2 Pre Alpha #4 Linux July 15, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

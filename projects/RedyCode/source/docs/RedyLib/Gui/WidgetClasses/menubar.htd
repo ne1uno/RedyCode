@@ -1,0 +1,27 @@
+==Menubar Widget Class
+
+Widget Class name: "menubar"
+
+===API
+====Properties
+
+====="menus"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+=====procedure cmd_set_menus(atom wid, sequence wsubmenus)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+
+
