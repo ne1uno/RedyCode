@@ -1,0 +1,289 @@
+=Introduction to RedyLib
+
+RedyLib is the standard library that provides an Application Programming Interface (API) for the Redy environment. This document gives you an overview of how to create applications using RedyLib. A basic knowledge of the [[Euphoria]] programming language is assumed.
+
+==Basic Application Design
+Every application in the Redy environment must follow some basic design rules. Here is an example of a simple application.
+
+<eucode>
+--SimpleApp.exw
+without warning
+
+include redylib_0_9/app.e as app
+include redylib_0_9/gui.e as gui
+
+--Define information about this application
+app:define({
+    {"title", "SimpleApp"},
+    {"version", "0.9.0"},
+    {"author", "You"},
+    {"copyright", "2016 You"},
+    {"license", {
+        "Your license...",
+        "...continued."
+    }},
+    {"about", "Simple application example."}
+})
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    --Process widget events here
+end procedure
+
+procedure start()
+    app:create_main_window()
+    
+    --Create widgets here
+    gui:wcreate({
+        {"name", "txtExample"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "text"},
+        {"text", "This is an example of a simple application."}
+    })
+end procedure
+gui:start(routine_id("start"), routine_id("gui_event"))
+
+</eucode>
+
+From this example, you can see some basic elements:
+    * Include required RedyLib files
+    * Define information about the application
+    * Handle GUI events
+    * Start the application by creating a main window and widgets inside the main window.
+
+When you run this program, a main window "winMain" is created. The main window has a container widget called "cntMain". A textbox "txtExample" is created inside the main window's container widget. The container widget automatically expands the textbox widget to the size of the main window. The main window assumes default menus (File->Exit and Help->About). If you click on File->Exit, obviously, it will close the window and end the program. If you click on Help->About, it will display a defaulte About Dialog, which displays application information defined by the app:define() procedure. The main window will automatically store it's position information in the default config file "SimpleApp.cfg", so the next time your run the program, it will automatically recall the window's previous position.
+
+RedyLib provides many useful features for GUI applications that greatly reduce your development time. There are features that you probably appreciate in commercial programs without even thinking about, such as remembering window positions, customizeable toolbars, and so on. Typically, programmers don't have time to mess with details like that. RedyLib takes care of many common features, so you can focus on the heart of your application.
+
+==Actions
+One of the most important elements of a GUI application is how to respond to user input to modify data. The user performs "actions" that command the program to change data. Many Redy GUI features are designed around this concept.
+
+Actions are triggered by several methods, such as:
+    * Clicking on menu items
+    * Clicking on tools in toolbars
+    * Pressing key combos
+
+Actions have various propreties that affect how they behave and how they appear in menus and toolbars. Every action must be linking to a Routine ID, so when it is triggered, it calles that routine to cause some change in data. Actions can also be undone if they have an undo routine.  Here is a simple exmaple of defining an action:
+
+<eucode>
+include redylib_0_9/actions.e as action
+
+action:define({
+    {"name", "file_new"},
+    {"do_proc", routine_id("do_file_new")},
+    {"label", "New"},
+    {"icon", "document-new"},
+    {"hotkey", "Ctrl+N"},
+    {"description", "Create new file"},
+    {"enabled", 0}
+})
+
+procedure do_file_new()
+    create_tab("Untitled", NullFileName, "")
+end procedure
+</eucode>
+
+==Menus
+Creating menus in Redy is very easy. You simply create a sequence of menus and submenus with strings that match action names. The properties of each  action determine what each menu item will actually look like. The label, icon, hotkey, and whether or not the menu item is enabled is determined by the action properties. There is no event handling code needed. As long as the strings match defined action names, they will just work. Here's an example of setting menus:
+<eucode>
+app:set_menus({
+    {"File", {
+        "file_new",
+        "-",
+        "file_open",
+        "file_close",
+        "file_close_all",
+        "-",
+        "file_save",
+        "file_save_as",
+        "file_save_all",
+        "-",
+        "confirm_exit"}
+    },
+    {"Edit", {
+        "undo",
+        "redo",
+        "-",
+        "select_all",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "-",
+        "delete",
+        "-",
+        "format_indent_less",
+        "format_indent_more"
+        }
+    },
+    {"Options", {
+        "show_preferences",
+        "show_edit_toolbars"}
+    },
+    {"Help", {
+        "show_help",
+        "-",
+        "show_about"}
+    }
+})
+</eucode>
+
+==Toolbars
+Defining toolbars is very similar to defining menus. However, toolbars can be customized by the user. By putting the "show_edit_toolbars" action in a menu, a user can click on it to open the toolbar editor dialog. Any actions that have been defined within the application that have icons and labels can be assigned to toolbars. It is a good practice for an application to define a default toolbar layout. Here is an example:
+
+<eucode>
+app:set_default_toolbars({
+    {"File", "top", {
+        "file_new",
+        "file_open",
+        "file_close",
+        "-",
+        "file_save",
+        "file_save_as"}
+    },
+    {"Edit", "top", {
+        "undo",
+        "redo",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "delete",
+        "-",
+        "format_indent_less",
+        "format_indent_more"}
+    }
+})
+</eucode>
+
+==Widgets
+The main focus of designing a GUI app is creating and managing widgets. Widgets are GUI objects that a user can interact with. There are different types of widgets called "widget classes". Widgets produce events, which your application can process (event-based programming). Redy's widget system has very few routines to learn but depends heavily on euphoria sequences to conain widget properties or data in various forms. Here is a sample of code using widgets:
+
+<eucode>
+export procedure gui_event(object evwidget, object evtype, object evdata)
+    switch evwidget do
+        case "winPreferences.txtTemplatePath" then
+        case "winPreferences.btnTemplatePath" then
+            object selfiles = dlgfile:os_select_open_file("winPreferences", {{"RedyCode Template", "TempMain.exw"}}, 0)
+            if sequence(selfiles) then
+                object flist = split_path(pathname(selfiles))
+                for f = length(flist) to 1 by -1 do
+                    if equal(lower(flist[f]), "templates") then
+                        gui:wproc("winPreferences.txtTemplatePath", "set_text", {join_path(flist[1..f])})
+                        exit
+                    end if
+                end for
+            end if
+        case "winPreferences.btnOk" then
+            save_prefs()
+            gui:wdestroy("winPreferences")
+        case "winPreferences.btnCancel" then
+            gui:wdestroy("winPreferences")
+        case "winPreferences" then
+            if equal(evtype, "closed") then
+                gui:wdestroy("winPreferences")
+            end if
+    end switch
+end procedure
+
+procedure do_show_preferences()
+    if gui:wexists("winPreferences") then
+         return
+    end if
+    gui:wcreate({
+        {"name", "winPreferences"},
+        {"class", "window"},
+        {"mode", "window"},
+        {"handler", routine_id("gui_event")},
+        {"title", "Preferences"},
+        {"size", {550, 450}}
+    })
+    gui:wcreate({
+        {"name", "winPreferences.cntMain"},
+        {"parent", "winPreferences"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "winPreferences.tabCategories"},
+        {"parent", "winPreferences.cntMain"},
+        {"class", "tabs"}
+    })
+    gui:wcreate({
+        {"name", "winPreferences.cntPathsTab"},
+        {"parent", "winPreferences.tabCategories"},
+        {"class", "container"},
+        {"label", "Paths"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name",  "winPreferences.txtTemplatePath"},
+        {"parent",  "winPreferences.cntPathsTab"},
+        {"class", "textbox"},
+        {"label", "Default Template Path"},
+        {"text", TemplatePath}
+    })
+    .
+    .
+    .
+    gui:wcreate({
+        {"name", "winPreferences.cntBottom"},
+        {"parent", "winPreferences.cntMain"},
+        {"class", "container"},
+        {"orientation", "horizontal"},
+        {"sizemode_x", "equal"},
+        {"sizemode_y", "normal"},
+        {"justify_x", "right"}
+    })
+    gui:wcreate({
+        {"name", "winPreferences.btnOk"},
+        {"parent", "winPreferences.cntBottom"},
+        {"class", "button"},
+        {"label", "OK"}
+    })
+    gui:wcreate({
+        {"name", "winPreferences.btnCancel"},
+        {"parent", "winPreferences.cntBottom"},
+        {"class", "button"},
+        {"label", "Cancel"}
+    })
+    gui:wproc("winPreferences.tabCategories", "select_tab", {1})
+end procedure
+</eucode>
+
+==Configuration File
+Every application has a default configuration file. By default, the config file is created in the same folder as the app's exe file. It has the same name as the exe file with a .cfg extention. A Redy config file uses the INI file format for simplicity.
+
+Window positions and toolbar layouts are automatically stored in this file. In addition, your application may store whatever other data it needs to, such as user preferences. Keep in mind that a config file may not always exist or have valid data, so you need to design your app to be able to handle invalid values or fall back to default values when necessary, especially when the app is run for the first time and needs to create the config file. Here's a simple example of storing the value of a checkbox in the config file:
+
+<eucode>
+procedure do_show_tips()
+    object prefDisableTips = cfg:get_var("", "Startup", "Disable tips")
+    if not atom(prefDisableTips) then
+        prefDisableTips = 0
+        save_prefs()
+    end if
+    ...
+    gui:wcreate({
+     {"name",  "winTips.chkDisableStartup"},
+        {"parent",  "winTips.cntTop"},
+        {"class", "toggle"},
+        {"label", "Do not show tips on startup"},
+        {"value", prefDisableTips}
+    })
+end procedure
+    
+procedure save_prefs()
+    cfg:set_var("", "Startup", "Disable tips", gui:wfunc("winTips.chkDisableStartup", "get_value", {}))
+    cfg:save_config("")
+end procedure
+</eucode>
+
+----
+
+Next: [[RedyLib API Reference->RedyLib/Api]]
+

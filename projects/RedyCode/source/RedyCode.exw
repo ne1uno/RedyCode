@@ -1,0 +1,958 @@
+-- This file is part of RedyCode™ Integrated Development Environment
+-- <http://redy-project.org/>
+-- 
+-- Copyright 2016 Ryan W. Johnson
+-- 
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- 
+--   http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-------------------------------------------------------------------------------
+
+
+without warning
+--with define debug
+
+
+include redylib_0_9/app.e as app
+include redylib_0_9/actions.e as action
+include redylib_0_9/gui.e as gui
+
+include redylib_0_9/gui/dialogs/dialog_file.e as dlgfile
+include redylib_0_9/gui/dialogs/msgbox.e as msgbox
+
+include redylib_0_9/err.e as err
+
+include redylib_0_9/gui/objects/textdoc.e as txtdoc
+
+include project.e
+include search.e
+include help.e
+include preferences.e
+include tips.e as tips
+include splash.e
+
+include std/task.e
+include std/text.e
+include std/pretty.e
+include std/utils.e
+include std/sequence.e
+include std/filesys.e
+
+
+--Define Application Info
+app:define({
+    {"title", "RedyCode"},
+    {"version", "0.9.0"},
+    {"website", "http://redy-project.org/"},
+    {"author", "Ryan W. Johnson"},
+    {"copyright", "2016 Ryan W. Johnson"},
+    {"license", {
+        "Licensed under the Apache License, Version 2.0 (the \"License\");",
+        "you may not use this file except in compliance with the License.",
+        "You may obtain a copy of the License at",
+        "",
+          "http://www.apache.org/licenses/LICENSE-2.0",
+        "",
+        "Unless required by applicable law or agreed to in writing, software",
+        "distributed under the License is distributed on an \"AS IS\" BASIS,",
+        "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
+        "See the License for the specific language governing permissions and",
+        "limitations under the License."
+    }},
+    {"about", "An open source Integrated Development Environment, which is written in the Euphoria programming language, " 
+    & "to help you write graphical user interface applications in pure Euphoria code without using third-party widget toolkits."
+    }
+})
+
+-- Edit Files ----------------------------------------------------------------
+
+sequence
+FileTypeDescriptions = {
+    "Euphoria Source Code",
+    "Hypertext Documentation",
+    "Bitmap Image"
+},
+FileTypeNames = {
+    "source",
+    "doc",
+    "image"
+},
+FileTypeExts = {
+    {"e", "eu", "ew", "ex", "exw"},
+    {"htd"},
+    {"bmp", "jpg", "jpeg", "png", "ico", "gif"}
+},
+RecentFiles = {},
+CurrentTab = ""
+
+
+action:define({
+    {"name", "file_new"},
+    {"do_proc", routine_id("do_file_new")},
+    {"label", "New"},
+    {"icon", "document-new"},
+    {"hotkey", "Ctrl+N"},
+    {"description", "Create new file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_open"},
+    {"do_proc", routine_id("do_file_open")},
+    {"label", "Open..."},
+    {"icon", "document-open"},
+    {"hotkey", "Ctrl+O"},
+    {"description", "Open a file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_load"},
+    {"do_proc", routine_id("do_file_load")},
+    {"label", "Load Files"},
+    --{"icon", "document-open"},
+    --{"hotkey", "Ctrl+O"},
+    {"description", "Load 1 or more specified files"}
+})
+
+action:define({
+    {"name", "file_switch_to"},
+    {"do_proc", routine_id("do_file_switch_to")},
+    {"label", "Switch to File"},
+    --{"list", {}},
+    {"description", "Switch to specified open file"}
+})
+
+action:define({
+    {"name", "file_open_recent"},
+    {"do_proc", routine_id("do_file_open_recent")},
+    {"label", "Open Recent"},
+    {"list", {
+        {"", "(no recent files)", ""} --{icon, label, data}
+        --{"", "1 file2.txt", "file2.txt"},
+        --{"", "2 file3.txt", "file3.txt"}
+    }},
+    {"description", "Open a recent file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_cleanup_recent"},
+    {"do_proc", routine_id("do_file_cleanup_recent")},
+    {"label", "Remove nonexistant recent files"},
+    {"icon", ""},
+    {"description", "Remove nonexistant files from recent files list"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_clear_recent"},
+    {"do_proc", routine_id("do_file_clear_recent")},
+    {"label", "Clear recent files"},
+    {"icon", ""},
+    {"description", "Clear recent files list"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_save"},
+    {"do_proc", routine_id("do_file_save")},
+    {"label", "Save"},
+    {"icon", "document-save"},
+    {"hotkey", "Ctrl+S"},
+    {"description", "Save current file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_save_as"},
+    {"do_proc", routine_id("do_file_save_as")},
+    {"label", "Save As..."},
+    {"icon", "document-save-as"},
+    {"description", "Save current file to a different file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_save_all"},
+    {"do_proc", routine_id("do_file_save_all")},
+    {"label", "Save All"},
+    {"icon", ""},
+    {"hotkey", "Shift+Ctrl+S"},
+    {"description", "Save all open files"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_close"},
+    {"do_proc", routine_id("do_file_close")},
+    {"label", "Close"},
+    {"icon", "process-stop"},
+    {"hotkey", "Ctrl+F4"},
+    {"description", "Close current file"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "file_close_all"},
+    {"do_proc", routine_id("do_file_close_all")},
+    {"label", "Close All"},
+    {"icon", ""},
+    {"description", "Close all open files"},
+    {"enabled", 0}
+})
+
+app:set_menus({
+    {"Project", {
+        "project_new",
+        "project_open",
+        "project_close",
+        "-",
+        "project_save",
+        "project_save_as",
+        "-",
+        "project_explore_folder",
+        "project_refresh",
+        "-",
+        "project_settings",
+        "-",
+        "confirm_exit"}
+    },
+    {"File", {
+        "file_new",
+        "-",
+        "file_open",
+        /*{"Open Recent", {
+            "file_open_recent",     --this will use list_func to automatically generate menu items
+            "-",
+            "file_cleanup_recent",
+            "file_clear_recent"}
+        },*/
+        "file_close",
+        "file_close_all",
+        "-",
+        "file_save",
+        "file_save_as",
+        "file_save_all"}
+    },
+    {"Edit", {
+        "undo",
+        "redo",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "-",
+        "delete",
+        "-",
+        "select_all",
+        "-",
+        "format_indent_less",
+        "format_indent_more",
+        "-",
+        "comment",
+        "uncomment",
+        "-",
+        "beautify"}
+    },
+    {"Search", {
+        "find",
+        "find_replace",
+        "find_next",
+        "find_prev",
+        "-",
+        "goto_line",
+        "goto_routine",
+        "-",
+        "goto_bookmark"}
+    },
+    {"Tools", {
+        "show_preferences",
+        "show_edit_toolbars",
+        "-",
+        "show_ascii_chart",
+        "show_color_selector"}
+    },
+    {"Application", {
+        "app_run_default",
+        --"app_run",     --this will use list_func to automatically generate menu items for each .ex or .exw file in the project
+        "-",
+        "app_bind",
+        "app_build"}
+    },
+    {"Help", {
+        "show_help",
+        "show_tips",
+        "-",
+        "show_about"}
+    }
+})
+
+app:set_default_toolbars({
+--    {"Project", "top", {
+        /*"project_new",
+        "project_open",
+        "project_close",
+        "-",
+        "project_save",
+        "project_save_as",
+        "-",*/
+--        "project_run"
+        --"project_bind",
+        --"project_build"}
+--    },
+    {"File", "top", {
+        "file_new",
+        "file_open",
+        "file_close",
+        "-",
+        "file_save",
+        "file_save_as"}
+    },
+    {"Edit", "top", {
+        "undo",
+        "redo",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "delete",
+        "-",
+        "find",
+        "find_replace",
+        "-",
+        "format_indent_less",
+        "format_indent_more"}
+    }
+    /*{"Syntax", "top", {
+        "syntax_comment",
+        "syntax_uncomment",
+        "-",
+        "syntax_beautify",
+        "-",
+        "syntax_build_gui",
+        "syntax_build_actions",
+        "syntax_build_app"}
+    }*/
+    /*{"Format", "top", {
+        "text_style_select",
+        "-",
+        "format_text_normal",
+        "format_text_bold",
+        "format_text_italic",
+        "format_text_underline",
+        "format_text_strikethrough",
+        "-",
+        "format_justify_center",
+        "format_justify_fill",
+        "format-justify-left",
+        "format_justify_right",
+        "-",
+        "insert_link",
+        "insert_image"}
+    }*/
+})
+
+
+-- Tab/File Management -----------------------------------------------------------------------------
+
+constant NullFileName = "(Untitled)"
+
+sequence
+fTabNames = {},
+fTabFileNames = {},
+fTabFileTypes = {},
+fTabFileReadOnlys = {}
+
+procedure select_file_tab(sequence filename)
+    atom tabidx = find(filename, fTabFileNames)
+    if tabidx > 0 then
+        app:select_tab(fTabNames[tabidx])
+    end if
+end procedure
+
+
+--todo: use tablist instead
+procedure create_tab(sequence tablabel, sequence filename, sequence txt, atom readonly = 0)
+    sequence tabname = app:create_tab(tablabel, filename, readonly)
+    sequence ext = filesys:fileext(filename)
+    sequence SyntaxMode, filetype = "text", cmds
+    atom ViewMode
+    
+    --sequence flist = {}
+    --for f = 1 to length(fTabNames) do
+    --    flist &= {{"document", fTabFileNames[f], fTabNames[f]}}
+    --end for
+    --set_list("file_switch_to", flist)
+    
+    if length(fTabNames) = 1 and equal(fTabFileNames[1], NullFileName) and not equal(filename, NullFileName) then
+        destroy_tab(fTabNames[1])
+    end if
+    
+    if equal(filename, NullFileName) then
+        filetype = "source"
+        
+    else
+        for st = 1 to length(FileTypeNames) do
+            if find(ext, FileTypeExts[st]) then
+                switch FileTypeNames[st] do
+                case "source" then
+                    filetype = "source"
+                case "doc" then
+                    filetype = "doc"
+                case "image" then
+                    filetype = "image"
+                case else
+                    filetype = "text"
+                end switch
+            end if
+        end for
+    end if
+    
+    fTabNames &= {tabname}
+    fTabFileNames &= {filename}
+    fTabFileTypes &= {filetype}
+    fTabFileReadOnlys &= {readonly}
+    
+    app:set_tab_context_menu(tabname, {
+        "file_close",
+        "file_close_all",
+        "-",
+        "file_save",
+        "file_save_as",
+        "-",
+        "file_reopen"
+    })
+    
+    switch filetype do
+    case "source" then
+        txtdoc:create({
+            {"name", tabname & ".filepage"},
+            {"text", txt},
+            {"view_mode", 0},
+            {"syntax_mode", "euphoria"},
+            {"show_hidden", 0},
+            {"locked", readonly},
+            {"autofocus", 1},
+            {"handler", routine_id("gui_event")}
+        })
+        txtdoc:show(tabname & ".filepage", tabname)
+        
+    case "doc" then
+        txtdoc:create({
+            {"name", tabname & ".filepage"},
+            {"text", txt},
+            {"view_mode", 1},
+            {"syntax_mode", "creole"},
+            {"show_hidden", 1},
+            {"locked", readonly},
+            {"autofocus", 1},
+            {"handler", routine_id("gui_event")}
+        })
+        txtdoc:show(tabname & ".filepage", tabname)
+        
+    case "image" then
+        --todo: display image editor
+        gui:wcreate({
+            {"name", tabname & ".filepage"},
+            {"parent", tabname},
+            {"class", "canvas"},
+            {"handler", routine_id("gui_event")}
+        })
+        if equal(filesys:fileext(filename), "bmp") then
+            gui:load_bitmap(filename, filename)
+            cmds = {
+                {DR_Image, filename, 2, 2}
+            }
+        else
+            cmds = {
+                {DR_Font, "Tahoma", 12, Bold},
+                {DR_TextColor, rgb(110, 40, 40)},
+                {DR_PenPos, 2, 2},
+                {DR_Puts, "Sorry, this image format is not currently supported."}
+            }
+        end if
+        gui:wproc(tabname & ".filepage", "draw_background", {cmds})
+        
+    case else
+        txtdoc:create({
+            {"name", tabname & ".filepage"},
+            {"text", txt},
+            {"view_mode", 0},
+            {"syntax_mode", "plain"},
+            {"show_hidden", 0},
+            {"locked", readonly},
+            {"autofocus", 1},
+            {"handler", routine_id("gui_event")}
+        })
+        txtdoc:show(tabname & ".filepage", tabname)
+        
+    end switch
+end procedure
+
+
+procedure destroy_tab(sequence tabname)
+    atom idx = find(tabname, fTabNames)
+    if idx > 0 then
+        fTabNames = remove(fTabNames, idx)
+        fTabFileNames = remove(fTabFileNames, idx)
+        fTabFileTypes = remove(fTabFileTypes, idx)
+        fTabFileReadOnlys = remove(fTabFileReadOnlys, idx)
+        
+        app:destroy_tab(tabname)
+        txtdoc:destroy(tabname & ".filepage")
+        
+        if length(fTabNames) = 0 then
+            action:set_enabled("file_close", 0)
+            action:set_enabled("file_close_all", 0)
+            action:set_enabled("file_save", 0)
+            action:set_enabled("file_save_as", 0)
+            action:set_enabled("file_save_all", 0)
+            
+            action:set_enabled("undo", 0)
+            action:set_enabled("redo", 0)
+            action:set_enabled("cut", 0)
+            action:set_enabled("copy", 0)
+            action:set_enabled("paste", 0)
+            action:set_enabled("delete", 0)
+            action:set_enabled("select_all", 0)
+            action:set_enabled("comment", 0)
+            action:set_enabled("uncomment", 0)
+            action:set_enabled("beautify", 0)
+            action:set_enabled("format_indent_less", 0)
+            action:set_enabled("format_indent_more", 0)
+        end if
+        
+        --sequence flist = {}
+        --for f = 1 to length(fTabNames) do
+        --    flist &= {{"document", fTabFileNames[f], fTabNames[f]}}
+        --end for
+        --set_list("file_switch_to", flist)
+    end if
+end procedure
+
+
+-- Action Procs -----------------------------------------------------------------------------
+
+
+procedure do_file_new()
+    create_tab("Untitled", NullFileName, "")
+end procedure
+
+
+procedure do_file_open()
+    object selfiles
+    sequence ftypes = {}, exts, filelist = {}
+    
+    for ft = 1 to length(FileTypeDescriptions) do
+        exts = {}
+        for et = 1 to length(FileTypeExts[ft]) do
+            if et > 1 then
+                exts &= ";"
+            end if 
+            exts &= "*." & FileTypeExts[ft][et]
+        end for
+        ftypes &= {{FileTypeDescriptions[ft], exts}}
+    end for
+    ftypes &= {{"all", "*.*"}}
+    
+    selfiles = dlgfile:os_select_open_file("winMain", ftypes, 1)
+    
+    if sequence(selfiles) then
+        if length(selfiles) = 1 then
+            filelist &= {{filesys:pathname(selfiles[1]) & "\\", filesys:filename(selfiles[1]), 0}} --{filepath, filename, readonly}
+            
+        elsif length(selfiles) > 1 then
+            for f = 2 to length(selfiles) do
+                filelist &= {{selfiles[1] & "\\", selfiles[f], 0}} --{filepath, filename, readonly}
+            end for
+        end if
+    else
+        --no file selected
+    end if
+    
+    if length(filelist) > 0 then
+        action:do_proc("file_load", {filelist})
+    end if
+end procedure
+
+
+procedure do_file_load(sequence filelist)
+    atom fn
+    object ln, tablabel, txt
+    sequence filename
+    
+    for f = 1 to length(filelist) do
+        tablabel = filelist[f][2]
+        filename = filelist[f][1] & filelist[f][2]
+        txt = ""
+        
+        if find(filename, fTabFileNames) then
+            select_file_tab(filename)
+        else
+            fn = open(filename, "r")
+            if fn = -1 then
+                -- "read_file() error!"
+                create_tab(tablabel, "File read error", "The file \"" & filename & "\" does not exist.", filelist[f][3])
+            else
+                while 1 do
+                    ln = gets(fn)
+                    if sequence(ln) then
+                        --ln = remove_all(10, ln)
+                        --ln = remove_all(13, ln)
+                        txt &= ln
+                    else
+                        exit
+                    end if
+                end while
+                close(fn)
+                
+                create_tab(tablabel, filename, txt, filelist[f][3])
+            end if
+        end if
+    end for
+end procedure
+
+
+procedure do_file_open_recent()
+end procedure
+
+
+procedure do_file_cleanup_recent()
+end procedure
+
+
+procedure do_file_clear_recent()
+end procedure
+
+
+procedure do_file_save()
+    atom fidx = find(CurrentTab, fTabNames)
+    if fidx > 0 then
+        if txtdoc:is_modified(CurrentTab & ".filepage") then
+            if equal(fTabFileNames[fidx], NullFileName) or not file_exists(fTabFileNames[fidx]) then
+                action:do_proc("file_save_as", {})
+            else
+                --pretty_print(1, {"Save", CurrentTab & ".filepage", fTabFileNames[fidx]}, {2})
+                txtdoc:save_to_file(CurrentTab & ".filepage", fTabFileNames[fidx])
+                txtdoc:set_modified(CurrentTab & ".filepage", 0) 
+            end if
+        end if
+    end if
+end procedure
+
+
+procedure do_file_save_all()
+    sequence ftabs = fTabNames
+    for f = 1 to length(ftabs) do
+        action:do_proc("file_switch_to", {ftabs[f]})
+        action:do_proc("file_save", {})
+    end for
+end procedure
+
+
+procedure do_file_save_as()
+    atom fidx = find(CurrentTab, fTabNames)
+    if fidx > 0 then
+        object newname
+        
+        if equal(fTabFileNames[fidx], NullFileName) then
+            newname = dlgfile:os_select_save_file("winMain", pPath & "\\source\\untitled.e")
+        else
+            newname = dlgfile:os_select_save_file("winMain", fTabFileNames[fidx])
+        end if
+        if sequence(newname) then
+            --pretty_print(1, newname, {2})
+            sequence ans = "Overwrite"
+            if file_exists(newname) then
+                ans = msgbox:waitmsg(
+                    "The file \"" & fTabFileNames[fidx] & "\" already exists. Do you want to overwrite it?",
+                    "Question",
+                    {"Overwrite", "Cancel"}
+                )
+            end if
+            if equal(ans, "Overwrite") then
+                fTabFileNames[fidx] = newname
+                set_tab_label(CurrentTab, filesys:filename(newname))
+                set_tab_title(CurrentTab, newname)
+                --pretty_print(1, {"Save As", CurrentTab & ".filepage", fTabFileNames[fidx]}, {2})
+                txtdoc:save_to_file(CurrentTab & ".filepage", fTabFileNames[fidx])
+                txtdoc:set_modified(CurrentTab & ".filepage", 0)
+                action:do_proc("project_refresh", {})
+            end if
+        end if
+    end if
+end procedure
+
+
+procedure do_file_switch_to(object selectedtab)
+    atom tidx
+    CurrentTab = selectedtab
+    if length(selectedtab) > 0 then
+        tidx = find(CurrentTab, fTabNames)
+        if tidx > 0 then
+            if fTabFileReadOnlys[tidx] then
+                action:set_enabled("file_close", 1)
+                action:set_enabled("file_close_all", 1)
+                action:set_enabled("file_save", 0)
+                action:set_enabled("file_save", txtdoc:is_modified(CurrentTab & ".filepage"))
+                action:set_enabled("file_save_as", 1)
+                action:set_enabled("file_save_all", 1)
+            
+                action:set_enabled("undo", 0)
+                action:set_enabled("redo", 0)
+                action:set_enabled("cut", 0)
+                action:set_enabled("copy", 1)
+                action:set_enabled("paste", 0)
+                action:set_enabled("delete", 0)
+                action:set_enabled("select_all", 1)
+                action:set_enabled("comment", 0)
+                action:set_enabled("uncomment", 0)
+                action:set_enabled("beautify", 0)
+                action:set_enabled("format_indent_less", 0)
+                action:set_enabled("format_indent_more", 0)
+                
+                if equal(fTabFileTypes[tidx], "source") then
+                    action:set_enabled("goto_line", 1)
+                    action:set_enabled("goto_routine", 1)
+                    action:set_enabled("goto_bookmark", 1)
+                else
+                    action:set_enabled("goto_line", 0)
+                    action:set_enabled("goto_routine", 0)
+                    action:set_enabled("goto_bookmark", 0)
+                end if
+                
+            else
+                action:set_enabled("file_close", 1)
+                action:set_enabled("file_close_all", 1)
+                action:set_enabled("file_save", 1)
+                action:set_enabled("file_save", txtdoc:is_modified(CurrentTab & ".filepage"))
+                action:set_enabled("file_save_as", 1)
+                action:set_enabled("file_save_all", 1)
+                
+                switch fTabFileTypes[tidx] do
+                case "source" then
+                    action:set_enabled("undo", 0)
+                    action:set_enabled("redo", 0)
+                    action:set_enabled("cut", 1)
+                    action:set_enabled("copy", 1)
+                    action:set_enabled("paste", 1)
+                    action:set_enabled("delete", 1)
+                    action:set_enabled("select_all", 1)
+                    action:set_enabled("comment", 0) --1)
+                    action:set_enabled("uncomment", 0) --1)
+                    action:set_enabled("beautify", 0) --1)
+                    action:set_enabled("format_indent_less", 1)
+                    action:set_enabled("format_indent_more", 1)
+                    
+                    action:set_enabled("goto_line", 0) --1)
+                    action:set_enabled("goto_routine", 0) --1)
+                    action:set_enabled("goto_bookmark", 0) --1)
+                case "doc" then
+                    action:set_enabled("undo", 0)
+                    action:set_enabled("redo", 0)
+                    action:set_enabled("cut", 1)
+                    action:set_enabled("copy", 1)
+                    action:set_enabled("paste", 1)
+                    action:set_enabled("delete", 1)
+                    action:set_enabled("select_all", 1)
+                    action:set_enabled("comment", 0) --1)
+                    action:set_enabled("uncomment", 0) --1)
+                    action:set_enabled("beautify", 0) --1)
+                    action:set_enabled("format_indent_less", 1)
+                    action:set_enabled("format_indent_more", 1)
+                    
+                    action:set_enabled("goto_line", 0)
+                    action:set_enabled("goto_routine", 0)
+                    action:set_enabled("goto_bookmark", 0)
+                    
+                    /* --possibly implement format actions:
+                    "text_style_select"
+                    "format_text_normal"
+                    "format_text_bold"
+                    "format_text_italic"
+                    "format_text_underline"
+                    "format_text_strikethrough"
+                    "format_justify_center"
+                    "format_justify_fill"
+                    "format-justify-left"
+                    "format_justify_right"
+                    "insert_link"
+                    "insert_image"
+                    */
+                    
+                case "image" then
+                    action:set_enabled("undo", 0)
+                    action:set_enabled("redo", 0)
+                    action:set_enabled("cut", 0)
+                    action:set_enabled("copy", 1)
+                    action:set_enabled("paste", 0)
+                    action:set_enabled("delete", 0)
+                    action:set_enabled("select_all", 1)
+                    action:set_enabled("comment", 0)
+                    action:set_enabled("uncomment", 0)
+                    action:set_enabled("beautify", 0)
+                    action:set_enabled("format_indent_less", 0)
+                    action:set_enabled("format_indent_more", 0)
+                    
+                    action:set_enabled("goto_line", 0)
+                    action:set_enabled("goto_routine", 0)
+                    action:set_enabled("goto_bookmark", 0)
+                case else
+                    action:set_enabled("undo", 0)
+                    action:set_enabled("redo", 0)
+                    action:set_enabled("cut", 1)
+                    action:set_enabled("copy", 1)
+                    action:set_enabled("paste", 1)
+                    action:set_enabled("delete", 1)
+                    action:set_enabled("select_all", 1)
+                    action:set_enabled("comment", 0)
+                    action:set_enabled("uncomment", 0)
+                    action:set_enabled("beautify", 0)
+                    action:set_enabled("format_indent_less", 1)
+                    action:set_enabled("format_indent_more", 1)
+                    
+                    action:set_enabled("goto_line", 0)
+                    action:set_enabled("goto_routine", 0)
+                    action:set_enabled("goto_bookmark", 0)
+                end switch
+            end if
+        end if
+        
+    else
+        action:set_enabled("file_close", 0)
+        action:set_enabled("file_close_all", 0)
+        action:set_enabled("file_save", 0)
+        action:set_enabled("file_save_as", 0)
+        action:set_enabled("file_save_all", 0)
+        
+        action:set_enabled("undo", 0)
+        action:set_enabled("redo", 0)
+        action:set_enabled("cut", 0)
+        action:set_enabled("copy", 0)
+        action:set_enabled("paste", 0)
+        action:set_enabled("delete", 0)
+        action:set_enabled("select_all", 0)
+        action:set_enabled("comment", 0)
+        action:set_enabled("uncomment", 0)
+        action:set_enabled("beautify", 0)
+        action:set_enabled("format_indent_less", 0)
+        action:set_enabled("format_indent_more", 0)
+        
+        action:set_enabled("goto_line", 0)
+        action:set_enabled("goto_routine", 0)
+        action:set_enabled("goto_bookmark", 0)
+    end if
+end procedure
+
+
+procedure do_file_close()
+    sequence ans = "Discard"
+    atom fidx = find(CurrentTab, fTabNames)
+    if fidx > 0 then
+        if txtdoc:is_modified(CurrentTab & ".filepage") then
+            ans = msgbox:waitmsg("Do you want to save the file \"" & fTabFileNames[fidx] & "\" before closing it?", "Question",
+            {"Save", "Discard", "Cancel"})
+        end if
+        if equal(ans, "Save") then
+            action:do_proc("file_save", {})
+            destroy_tab(CurrentTab)
+        elsif equal(ans, "Discard") then
+            destroy_tab(CurrentTab)
+        end if
+    end if
+end procedure
+
+
+procedure do_file_close_all()
+    sequence ftabs = fTabNames
+    for f = 1 to length(ftabs) do
+        action:do_proc("file_switch_to", {ftabs[f]})
+        action:do_proc("file_close", {})
+    end for
+end procedure
+
+
+
+-------------------------------------------------------------------------------
+
+
+
+procedure gui_event(object evwidget, object evtype, object evdata)
+    --pretty_print(1, {evwidget, evtype, evdata}, {2})
+    for fidx = 1 to length(fTabNames) do
+        if equal(evwidget, fTabNames[fidx] & ".filepage") then
+            if equal(evtype, "modified") then
+                app:set_tab_modified(fTabNames[fidx], evdata)
+                if equal(CurrentTab, fTabNames[fidx]) then
+                    action:set_enabled("file_save", evdata)
+                end if
+            end if
+            exit
+        end if
+    end for
+end procedure
+    
+
+procedure start()
+    sequence cmdline = command_line()
+    object CmdFile = 0, CmdAction = "edit"
+    
+    app:create_main_window()
+    
+    sequence ImgPath = ExePath & "\\images\\"
+    gui:load_bitmap("folder_open_16", ImgPath & "folder_open_16.bmp")
+    gui:load_bitmap("redy16", ImgPath & "redy16.bmp")
+    gui:load_bitmap("e16", ImgPath & "e16.bmp")
+    gui:load_bitmap("ex16", ImgPath & "ex16.bmp")
+    gui:load_bitmap("err16", ImgPath & "err16.bmp")
+    gui:load_bitmap("txt16", ImgPath & "txt16.bmp")
+    gui:load_bitmap("img16", ImgPath & "img16.bmp")
+    
+    action:do_proc("show_splash")
+    
+    --set_tabs_double_click_action("file_close") --these are not necessary, defaults are already the same as this 
+    --set_tabs_select_action("file_switch_to")
+    
+    --todo: show crash message if previously crashed
+    
+    if length(cmdline) > 2 then
+        for c = 3 to length(cmdline) do
+            if match(cmdline, "--") = 1 then
+                CmdAction = lower(cmdline[3..$])
+            else
+                if equal(filesys:fileext(cmdline[c]), "redy") and file_exists(cmdline[c]) then
+                    CmdFile = cmdline[c]
+                end if
+            end if
+        end for
+    end if
+    
+    if sequence(CmdFile) then
+        switch CmdAction do
+        case "edit" then
+            action:do_proc("open_project", {CmdFile})
+        case "run" then
+            action:do_proc("run_project", {CmdFile})
+        case "build" then
+            action:do_proc("build_project", {CmdFile})
+        end switch
+    else
+        tips:start()
+        action:do_proc("list_projects", {})
+    end if
+end procedure
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+
+
+

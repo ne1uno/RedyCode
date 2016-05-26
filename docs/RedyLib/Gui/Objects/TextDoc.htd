@@ -1,0 +1,106 @@
+=Text Document Canvas Object Library
+gui/objects/textdoc.e 
+
+Sorry, this page is incomplete.
+
+===API
+====Actions
+The following actions are defined by this library:
+
+=====action:do_proc("cut", {})
+Cut selection to clipboard
+
+=====action:do_proc("copy", {})
+Copy selection to clipboard
+
+=====action:do_proc("goto_section", {})
+Go to Section
+
+=====action:do_proc("paste", {})
+Paste from clipboard
+
+=====action:do_proc("select_all", {})
+Select everything
+
+=====action:do_proc("delete", {})
+Delete selection
+
+=====action:do_proc("format_indent_less", {})
+format-indent-less
+
+=====action:do_proc("format_indent_more", {})
+format-indent-more
+
+
+====Routines
+=====procedure set_default_monofont(atom hWnd, sequence monofonts, atom monofontsize)
+
+=====procedure create(sequence wprops)
+Create a text editor instance. Instances are first created, then can be shown or hidden later in a canvas widget. This allows the application to keep potentially large data in memory even if the canvas widget that shows it needs to be destroyed.
+<eucode>
+    txtdoc:create({
+        {"name", "winHelp.txtHelp"},
+        {"text", txt},
+        {"view_mode", 1},
+        {"syntax_mode", "creole"},
+        {"show_hidden", 0},
+        {"locked", 1},
+        {"autofocus", 1},
+        {"handler", routine_id("gui_event")}
+    })
+</eucode>
+
+=====procedure destroy(sequence iname)
+Destroy a text editor instance (after hiding it if currently shown).
+<eucode>
+    txtdoc:destroy("winHelp.txtHelp")
+</eucode>
+
+=====procedure show(sequence iname, sequence cparent)
+Create a canvas widget with the same name as the specified text editor instance in the specified container widget. The instance must already exist.
+
+<eucode>
+    gui:wcreate({
+        {"name", "winHelp.cntHelp"},
+        {"parent", "winHelp"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    txtdoc:create({
+        {"name", "winHelp.txtHelp"},
+        {"text", txt},
+        {"view_mode", 1},
+        {"syntax_mode", "creole"},
+        {"show_hidden", 0},
+        {"locked", 1},
+        {"autofocus", 1},
+        {"handler", routine_id("gui_event")}
+    })
+    txtdoc:show("winHelp.txtHelp", "winHelp.cntHelp")
+</eucode>
+
+=====procedure hide(sequence iname)
+Hide a text editor instance (and recreate empty canvas widget with the same name).
+
+=====procedure set_modified(object inameoridx, atom ismodified)
+Set modified flag of specified text editor instance.
+
+=====function is_modified(sequence iname)
+Return the modified flag of specified text editor instance.
+
+=====procedure save_to_file(sequence iname, sequence filename)
+Save all text in specified text editor instance to a file.
+
+=====procedure set_current_editor(atom nameoridx)
+Set specified text editor instance to be the recipient of actions. Any relevant actions triggered by the user will act upon the current editor.
+
+=====procedure set_prop(object inameoridx, sequence opt, object val)
+Set a property of specified text editor instance.
+
+=====function get_prop(object inameoridx, sequence opt, object val)
+Return a property of specified text editor instance.
+
+
+See also [[Canvas Objects->RedyLib\Gui\Objects]]

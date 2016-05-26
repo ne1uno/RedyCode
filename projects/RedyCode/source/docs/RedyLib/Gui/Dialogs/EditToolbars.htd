@@ -1,0 +1,10 @@
+==Edit Toolbars Dialog
+gui/dialogs/edit_toolbars.e
+
+This dialog allows the user to customize toolbars.
+
+===API
+====Actions
+=====action:do_proc("show_edit_toolbars", {})
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

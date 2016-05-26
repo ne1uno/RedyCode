@@ -1,0 +1,1287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_get.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_sequence.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_get.html">8.14 Input Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_sequence.html">8.16 Sequence Manipulation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\search.e -->
+<h2>8.15 Searching</h2>
+<a name="_2313_searching"></a><a name="searching"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_search.html#_2313_searching">8.15 Searching</a></div>
+<div class="toc_3"><a href="std_search.html#_2314_equality">8.15.1 Equality</a></div>
+<div class="toc_4"><a href="std_search.html#_2316_compare">8.15.1.1 compare</a></div>
+<div class="toc_4"><a href="std_search.html#_2325_equal">8.15.1.2 equal</a></div>
+<div class="toc_3"><a href="std_search.html#_2332_finding">8.15.2 Finding</a></div>
+<div class="toc_4"><a href="std_search.html#_2334_find">8.15.2.1 find</a></div>
+<div class="toc_4"><a href="std_search.html#_2341_find_from">8.15.2.2 find_from</a></div>
+<div class="toc_4"><a href="std_search.html#_2344_find_any">8.15.2.3 find_any</a></div>
+<div class="toc_4"><a href="std_search.html#_2352_match_any">8.15.2.4 match_any</a></div>
+<div class="toc_4"><a href="std_search.html#_2359_find_each">8.15.2.5 find_each</a></div>
+<div class="toc_4"><a href="std_search.html#_2367_find_all">8.15.2.6 find_all</a></div>
+<div class="toc_4"><a href="std_search.html#_2373_find_all_but">8.15.2.7 find_all_but</a></div>
+<div class="toc_4"><a href="std_search.html#_2379_nested_any">8.15.2.8 NESTED_ANY</a></div>
+<div class="toc_4"><a href="std_search.html#_2381_nested_all">8.15.2.9 NESTED_ALL</a></div>
+<div class="toc_4"><a href="std_search.html#_2383_nested_index">8.15.2.10 NESTED_INDEX</a></div>
+<div class="toc_4"><a href="std_search.html#_2385_nested_backward">8.15.2.11 NESTED_BACKWARD</a></div>
+<div class="toc_4"><a href="std_search.html#_2387_find_nested">8.15.2.12 find_nested</a></div>
+<div class="toc_4"><a href="std_search.html#_2396_rfind">8.15.2.13 rfind</a></div>
+<div class="toc_4"><a href="std_search.html#_2404_find_replace">8.15.2.14 find_replace</a></div>
+<div class="toc_4"><a href="std_search.html#_2413_match_replace">8.15.2.15 match_replace</a></div>
+<div class="toc_4"><a href="std_search.html#_2423_binary_search">8.15.2.16 binary_search</a></div>
+<div class="toc_3"><a href="std_search.html#_2428_matching">8.15.3 Matching</a></div>
+<div class="toc_4"><a href="std_search.html#_2430_match">8.15.3.1 match</a></div>
+<div class="toc_4"><a href="std_search.html#_2437_match_from">8.15.3.2 match_from</a></div>
+<div class="toc_4"><a href="std_search.html#_2441_match_all">8.15.3.3 match_all</a></div>
+<div class="toc_4"><a href="std_search.html#_2448_rmatch">8.15.3.4 rmatch</a></div>
+<div class="toc_4"><a href="std_search.html#_2455_begins">8.15.3.5 begins</a></div>
+<div class="toc_4"><a href="std_search.html#_2462_ends">8.15.3.6 ends</a></div>
+<div class="toc_4"><a href="std_search.html#_2469_is_in_range">8.15.3.7 is_in_range</a></div>
+<div class="toc_4"><a href="std_search.html#_2475_is_in_list">8.15.3.8 is_in_list</a></div>
+<div class="toc_4"><a href="std_search.html#_2480_lookup">8.15.3.9 lookup</a></div>
+<div class="toc_4"><a href="std_search.html#_2485_vlookup">8.15.3.10 vlookup</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\search.e -->
+<h3>8.15.1 Equality</h3>
+<a name="_2314_equality"></a><a name="equality"></a>
+<p> 
+<a name="eucompare"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.1.1 compare</h4>
+<a name="_2316_compare"></a><a name="compare"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function compare</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">compared, </font><font color="#0000FF">object </font><font color="#330033">reference</font><font color="#880033">)</font>
+</pre>
+
+<p> compares two items returning less than, equal or greater than.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2317_parameters"></a><a name="parameters"></a><ol><li><tt>compared</tt> : the compared object
+</li><li><tt>reference</tt> : the reference object
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2318_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>0 -- if objects are identical
+</li><li>1 -- if <tt>compared</tt> is greater than <tt>reference</tt>
+</li><li>-1 -- if <tt>compared</tt> is less than <tt>reference</tt>
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2319_comments"></a><a name="comments"></a>
+<p> Atoms are considered to be less than sequences. Sequences are compared alphabetically starting with the first element until a difference is found or one of the sequences is exhausted. Atoms are compared as ordinary reals.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2320_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = </font><font color="#0000FF">compare</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,</font><font color="#0000FF">{</font><font color="#330033">3,</font><font color="#5500FF">{</font><font color="#330033">4</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#330033">,5</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">2-1,1+1,</font><font color="#0000FF">{</font><font color="#330033">3,</font><font color="#5500FF">{</font><font color="#330033">4</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#330033">,6-1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- identical, x is 0</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2321_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">if compare</font><font color="#880033">(</font><font color="#330033">"ABC"</font><font color="#330033">, </font><font color="#330033">"ABCD"</font><font color="#880033">) </font><font color="#330033">&lt; 0 </font><font color="#0000FF">then   </font><font color="#FF0055">-- -1</font>
+<font color="#FF0055">    -- will be true: ABC is "less" because it is shorter</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 3:</h5>
+<a name="_2322_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">x = </font><font color="#0000FF">compare</font><font color="#880033">(</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">"a"</font><font color="#880033">)</font>
+<font color="#FF0055">-- x will be -1 because 'a' is an atom</font>
+<font color="#FF0055">-- while "a" is a sequence</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2323_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2325_equal">equal</a>, <a href="lang_def.html#_91_relationaloperators">relational operators</a>, <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a>, <a href="std_sort.html#_2939_sort">sort</a></p>
+
+<p> 
+<a name="euequal"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.1.2 equal</h4>
+<a name="_2325_equal"></a><a name="equal"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function equal</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">left, </font><font color="#0000FF">object </font><font color="#330033">right</font><font color="#880033">)</font>
+</pre>
+
+<p> compares two Euphoria objects to see if they are the same.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2326_parameters"></a><a name="parameters"></a><ol><li><tt>left</tt> : one of the objects to test
+</li><li><tt>right</tt> : the other object
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2327_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if the two objects are identical, else 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2328_comments"></a><a name="comments"></a>
+<p> This is equivalent to the expression: <tt>compare(left, right) = 0</tt>.</p>
+
+<p> This routine, like most other built-in routines, is very fast. It does not have any subroutine call overhead.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2329_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if equal</font><font color="#880033">(</font><font color="#330033">PI, 3.14</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"give me a better value for PI!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2330_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">if equal</font><font color="#880033">(</font><font color="#330033">name, </font><font color="#330033">"George"</font><font color="#880033">) </font><font color="#0000FF">or equal</font><font color="#880033">(</font><font color="#330033">name, </font><font color="#330033">"GEORGE"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">   puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"name is George\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2331_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2316_compare">compare</a></p>
+
+<!-- ..\include\std\search.e -->
+<h3>8.15.2 Finding</h3>
+<a name="_2332_finding"></a><a name="finding"></a>
+<p> 
+<a name="eufind"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.1 find</h4>
+<a name="_2334_find"></a><a name="find"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function find</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start</font><font color="#880033">)</font>
+</pre>
+
+<p> finds the first occurrence of a "needle" as an element of a "haystack", starting from position "start".</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2335_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object whose presence is being queried
+</li><li><tt>haystack</tt> : a sequence, which is being looked up for <tt>needle</tt>
+</li><li><tt>start</tt> : an integer, the position at which to start searching. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2336_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if <tt>needle</tt> is not on <tt>haystack</tt>, else the smallest index of an element of <tt>haystack</tt> that equals <tt>needle</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2337_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = </font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">11, </font><font color="#993333">{</font><font color="#330033">5, 8, 11, 2, 3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 3</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2338_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">names = </font><font color="#880033">{</font><font color="#330033">"fred"</font><font color="#330033">, </font><font color="#330033">"rob"</font><font color="#330033">, </font><font color="#330033">"george"</font><font color="#330033">, </font><font color="#330033">"mary"</font><font color="#330033">, </font><font color="#330033">""</font><font color="#880033">}</font>
+<font color="#330033">location = </font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">"mary"</font><font color="#330033">, names</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 4</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2339_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2430_match">match</a>, <a href="std_search.html#_2316_compare">compare</a></p>
+
+<p> 
+<a name="eufind_from"></a><a name="from"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.2 find_from</h4>
+<a name="_2341_find_from"></a><a name="find_from"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function </font><font color="#330033">find_from</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">object </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Deprecated:</h5>
+<a name="_2342_deprecated"></a><a name="deprecated"></a>
+<p> Deprecated since version 4.0.0</p>
+
+<p> In Euphoria 4.0.0 we have the ability to default parameters to procedures and functions. The built-in <a href="std_search.html#_2334_find">find</a> therefore now has a <tt>start</tt> parameter that is defaulted to the beginning of the sequence. Thus, <a href="std_search.html#_2334_find">find</a> can perform the identical functionality provided by <tt>find_from</tt>. In an undetermined future release of Euphoria, <tt>find_from</tt> will be removed.</p>
+
+<p> 
+<a name="searchfind_any"></a><a name="any"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.3 find_any</h4>
+<a name="_2344_find_any"></a><a name="find_any"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_any</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needles, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds any element from a list inside a sequence. Returns the location of the first hit.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2345_parameters"></a><a name="parameters"></a><ol><li><tt>needles</tt> : a sequence, the list of items to look for
+</li><li><tt>haystack</tt> : a sequence, in which "needles" are looked for
+</li><li><tt>start</tt> : an integer, the starting point of the search. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2346_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the smallest index in <tt>haystack</tt> of an element of <tt>needles</tt>, or 0 if no needle is found.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2347_comments"></a><a name="comments"></a>
+<p> This function may be applied to a string sequence or a complex sequence.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2348_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = find_any</font><font color="#880033">(</font><font color="#330033">"aeiou"</font><font color="#330033">, </font><font color="#330033">"John Smith"</font><font color="#330033">, 3</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is 8</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2349_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">location = find_any</font><font color="#880033">(</font><font color="#330033">"aeiou"</font><font color="#330033">, </font><font color="#330033">"John Doe"</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is 2</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2350_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a></p>
+
+<p> 
+<a name="searchmatch_any"></a><a name="any"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.4 match_any</h4>
+<a name="_2352_match_any"></a><a name="match_any"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">match_any</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needles, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines if any element from <tt>needles</tt> is in <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2353_parameters"></a><a name="parameters"></a><ol><li><tt>needles</tt> : a sequence, the list of items to look for
+</li><li><tt>haystack</tt> : a sequence, in which "needles" are looked for
+</li><li><tt>start</tt> : an integer, the starting point of the search. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2354_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if no matches, 1 if any matches.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2355_comments"></a><a name="comments"></a>
+<p> This function may be applied to a string sequence or a complex sequence. An empty needles sequence will always result in 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2356_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">ok = match_any</font><font color="#880033">(</font><font color="#330033">"aeiou"</font><font color="#330033">, </font><font color="#330033">"John Smith"</font><font color="#880033">)</font>
+<font color="#FF0055">-- okay is 1</font>
+<font color="#330033">ok = match_any</font><font color="#880033">(</font><font color="#330033">"xyz"</font><font color="#330033">, </font><font color="#330033">"John Smith" </font><font color="#880033">)</font>
+<font color="#FF0055">-- okay is 0</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2357_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2344_find_any">find_any</a></p>
+
+<p> 
+<a name="searchfind_each"></a><a name="each"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.5 find_each</h4>
+<a name="_2359_find_each"></a><a name="find_each"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_each</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needles, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds all instances of any element from the needle sequence that occur in the haystack sequence. Returns a list of indexes.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2360_parameters"></a><a name="parameters"></a><ol><li><tt>needles</tt> : a sequence, the list of items to look for
+</li><li><tt>haystack</tt> : a sequence, in which "needles" are looked for
+</li><li><tt>start</tt> : an integer, the starting point of the search. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2361_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the list of indexes into <tt>haystack</tt> that point to an element that is also in <tt>needles</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2362_comments"></a><a name="comments"></a>
+<p> This function may be applied to a string sequence or a complex sequence.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2363_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = find_each</font><font color="#880033">(</font><font color="#330033">"aeiou"</font><font color="#330033">, </font><font color="#330033">"John Smith"</font><font color="#330033">, 3</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is {8}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2364_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">location = find_each</font><font color="#880033">(</font><font color="#330033">"aeiou"</font><font color="#330033">, </font><font color="#330033">"John Doe"</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is {2,7,8}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2365_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2344_find_any">find_any</a></p>
+
+<p> 
+<a name="searchfind_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.6 find_all</h4>
+<a name="_2367_find_all"></a><a name="find_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_all</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds all occurrences of an object inside a sequence, starting at some specified point.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2368_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object, what to look for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start</tt> : an integer, the starting index position (defaults to 1)
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2369_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the list of all indexes no less than <tt>start</tt> of elements of <tt>haystack</tt> that equal <tt>needle</tt>. This sequence is empty if no match found.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2370_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = find_all</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#330033">, </font><font color="#330033">"ABCABAB"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1,4,6}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2371_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2430_match">match</a>, <a href="std_search.html#_2441_match_all">match_all</a></p>
+
+<p> 
+<a name="searchfind_all_but"></a><a name="all_but"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.7 find_all_but</h4>
+<a name="_2373_find_all_but"></a><a name="find_all_but"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_all_but</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds all non-occurrences of an object inside a sequence, starting at some specified point.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2374_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object, what to look for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start</tt> : an integer, the starting index position (defaults to 1)
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2375_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the list of all indexes no less than <tt>start</tt> of elements of <tt>haystack</tt> that not equal to <tt>needle</tt>. This sequence is empty if <tt>haystack</tt> only consists of <tt>needle</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2376_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = find_all_but</font><font color="#880033">(</font><font color="#330033">'A'</font><font color="#330033">, </font><font color="#330033">"ABCABAB"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {2,3,5,7}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2377_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2367_find_all">find_all</a>, <a href="std_search.html#_2430_match">match</a>, <a href="std_search.html#_2441_match_all">match_all</a></p>
+
+<p> 
+<a name="searchnested_any"></a><a name="any"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.8 NESTED_ANY</h4>
+<a name="_2379_nested_any"></a><a name="nested_any"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public constant </font><font color="#330033">NESTED_ANY</font>
+</pre>
+
+<p> 
+<a name="searchnested_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.9 NESTED_ALL</h4>
+<a name="_2381_nested_all"></a><a name="nested_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public constant </font><font color="#330033">NESTED_ALL</font>
+</pre>
+
+<p> 
+<a name="searchnested_index"></a><a name="index"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.10 NESTED_INDEX</h4>
+<a name="_2383_nested_index"></a><a name="nested_index"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public constant </font><font color="#330033">NESTED_INDEX</font>
+</pre>
+
+<p> 
+<a name="searchnested_backward"></a><a name="backward"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.11 NESTED_BACKWARD</h4>
+<a name="_2385_nested_backward"></a><a name="nested_backward"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public constant </font><font color="#330033">NESTED_BACKWARD</font>
+</pre>
+
+<p> 
+<a name="searchfind_nested"></a><a name="nested"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.12 find_nested</h4>
+<a name="_2387_find_nested"></a><a name="find_nested"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_nested</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">flags = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">rtn_id = types :NO_ROUTINE_ID</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds any object (among a list) in a sequence of arbitrary shape at arbitrary nesting.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2388_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object, either what to look up, or a list of items to look up
+</li><li><tt>haystack</tt> : a sequence, where to look up
+</li><li><tt>flags</tt> : options to the function, see Comments section.  Defaults to 0.
+</li><li><tt>routine</tt> : an integer, the routine_id of an user supplied equal/find function. Defaults to  <a href="std_types.html#typesno_routine_id">types:NO_ROUTINE_ID</a>.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2389_returns"></a><a name="returns"></a>
+<p> A possibly empty <strong>sequence</strong>, of results, one for each hit.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2390_comments"></a><a name="comments"></a>
+<p> Each item in the returned sequence is either a sequence of indexes, or a pair {sequence of indexes, index in <tt>needle</tt>}.</p>
+
+<p> The following flags are available to fine tune the search: </p>
+<ul><li><tt>NESTED_BACKWARD</tt> --  if on <tt>flags</tt>, search is performed backward. Default is forward.
+</li><li><tt>NESTED_ALL</tt> -- if on <tt>flags</tt>, all occurrences are looked for. Default is one hit only.
+</li><li><tt>NESTED_ANY</tt> -- if present on <tt>flags</tt>, <tt>needle</tt> is a list of items to look for. Not the default.
+</li><li><tt>NESTED_INDEXES</tt> -- if present on <tt>flags</tt>, an individual result is a pair {position, index in <tt>needle</tt>}. Default is just return the position.
+</li></ul>
+<p>If <tt>s</tt> is a single index list, or position, from the returned sequence, then <tt>fetch(haystack, s) = needle</tt>.</p>
+
+<p> If a routine id is supplied, the routine must behave like <a href="std_search.html#_2325_equal">equal</a> if the <tt>NESTED_ANY</tt> flag is not supplied, and like <a href="std_search.html#_2334_find">find</a> if it is. The routine is being passed the current <tt>haystack</tt> item and <tt>needle</tt>. The returned integer is interpreted as if returned by <a href="std_search.html#_2325_equal">equal</a> or <a href="std_search.html#_2334_find">find</a>.</p>
+
+<p> If the <tt>NESTED_ANY</tt> flag is specified, and <tt>needle</tt> is an atom, then the flag is removed.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2391_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = find_nested</font><font color="#880033">(</font><font color="#330033">3, </font><font color="#993333">{</font><font color="#330033">5, </font><font color="#0000FF">{</font><font color="#330033">4, </font><font color="#5500FF">{</font><font color="#330033">3, </font><font color="#00FF00">{</font><font color="#330033">2</font><font color="#00FF00">}</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {2 ,2 ,1}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2392_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = find_nested</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">3, 2</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1, 3, </font><font color="#0000FF">{</font><font color="#330033">2,3</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">                                   NESTED_ANY + NESTED_BACKWARD + NESTED_ALL</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {{3,2}, {3,1}, {2}}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 3:</h5>
+<a name="_2393_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = find_nested</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">3, 2</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1, 3, </font><font color="#0000FF">{</font><font color="#330033">2,3</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">                                    NESTED_ANY + NESTED_INDEXES + NESTED_ALL</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {{{2}, 1}, {{3, 1}, 2}, {{3, 2}, 1}}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2394_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2396_rfind">rfind</a>, <a href="std_search.html#_2344_find_any">find_any</a>, <a href="std_sequence.html#_2513_fetch">fetch</a></p>
+
+<p> 
+<a name="searchrfind"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.13 rfind</h4>
+<a name="_2396_rfind"></a><a name="rfind"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">rfind</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = </font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">haystack</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds a needle in a haystack in reverse order.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2397_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object to search for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start</tt> : an integer, the starting index position (defaults to length(<tt>haystack</tt>))
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2398_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if no instance of <tt>needle</tt> can be found on <tt>haystack</tt> before index <tt>start</tt>, or the highest such index otherwise.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2399_comments"></a><a name="comments"></a>
+<p> If <tt>start</tt> is less than 1, it will be added once to length(<tt>haystack</tt>) to designate a position counted backwards. Thus, if <tt>start</tt> is -1, the first element to be queried in <tt>haystack</tt> will be <tt>haystack[$-1]</tt>, then <tt>haystack[$-2]</tt> and so on.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2400_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = rfind</font><font color="#880033">(</font><font color="#330033">11, </font><font color="#993333">{</font><font color="#330033">5, 8, 11, 2, 11, 3</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 5</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2401_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">names = </font><font color="#880033">{</font><font color="#330033">"fred"</font><font color="#330033">, </font><font color="#330033">"rob"</font><font color="#330033">, </font><font color="#330033">"rob"</font><font color="#330033">, </font><font color="#330033">"george"</font><font color="#330033">, </font><font color="#330033">"mary"</font><font color="#880033">}</font>
+<font color="#330033">location = rfind</font><font color="#880033">(</font><font color="#330033">"rob"</font><font color="#330033">, names</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 3</font>
+<font color="#330033">location = rfind</font><font color="#880033">(</font><font color="#330033">"rob"</font><font color="#330033">, names, -4</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 2</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2402_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2448_rmatch">rmatch</a></p>
+
+<p> 
+<a name="searchfind_replace"></a><a name="replace"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.14 find_replace</h4>
+<a name="_2404_find_replace"></a><a name="find_replace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">find_replace</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">object </font><font color="#330033">replacement,</font>
+<font color="#0000FF">        integer </font><font color="#330033">max = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds a <tt>needle</tt> in the <tt>haystack</tt>, and replaces all or upto <tt>max</tt> occurrences with <tt>replacement</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2405_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object to search and perhaps replace
+</li><li><tt>haystack</tt> : a sequence to be inspected
+</li><li><tt>replacement</tt> : an object to substitute for any (first) instance of <tt>needle</tt>
+</li><li><tt>max</tt> : an integer, 0 to replace all occurrences
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2406_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the modified <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2407_comments"></a><a name="comments"></a>
+<p> Replacements will not be made recursively on the part of <tt>haystack</tt> that was already changed.</p>
+
+<p> If <tt>max</tt> is 0 or less, any occurrence of <tt>needle</tt> in <tt>haystack</tt> will be replaced by <tt>replacement</tt>. Otherwise, only the first <tt>max</tt> occurrences are.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2408_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = find_replace</font><font color="#880033">(</font><font color="#330033">'b'</font><font color="#330033">, </font><font color="#330033">"The batty book was all but in Canada."</font><font color="#330033">, </font><font color="#330033">'c'</font><font color="#330033">, 0</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "The catty cook was all cut in Canada."</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2409_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = find_replace</font><font color="#880033">(</font><font color="#330033">'/'</font><font color="#330033">, </font><font color="#330033">"/euphoria/demo/unix"</font><font color="#330033">, </font><font color="#330033">'\\'</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "\\euphoria\\demo/unix"</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 3:</h5>
+<a name="_2410_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = find_replace</font><font color="#880033">(</font><font color="#330033">"theater"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"theater"</font><font color="#330033">, </font><font color="#330033">"theif" </font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">"theatre"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { "the", "theatre", "theif" }</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2411_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_sequence.html#_2760_replace">replace</a>, <a href="std_search.html#_2413_match_replace">match_replace</a></p>
+
+<p> 
+<a name="searchmatch_replace"></a><a name="replace"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.15 match_replace</h4>
+<a name="_2413_match_replace"></a><a name="match_replace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">match_replace</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">object </font><font color="#330033">replacement,</font>
+<font color="#0000FF">        integer </font><font color="#330033">max = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds a "needle" in a "haystack", and replace any, or only the first few, occurrences with a replacement.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2414_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an non-empty sequence or atom to search and perhaps replace
+</li><li><tt>haystack</tt> : a sequence to be inspected
+</li><li><tt>replacement</tt> : an object to substitute for any (first) instance of <tt>needle</tt>
+</li><li><tt>max</tt> : an integer, 0 to replace all occurrences
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2415_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the modified <tt>haystack</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2416_comments"></a><a name="comments"></a>
+<p> Replacements will not be made recursively on the part of <tt>haystack</tt> that was already changed.</p>
+
+<p> If <tt>max</tt> is 0 or less, any occurrence of <tt>needle</tt> in <tt>haystack</tt> will be replaced by <tt>replacement</tt>. Otherwise, only the first <tt>max</tt> occurrences are.</p>
+
+<p> If either <tt>needle</tt> or <tt>replacement</tt> are atoms they will be treated as if you had passed in a length-1 sequence containing the said atom.</p>
+
+<p> If <tt>needle</tt> is an empty sequence, an error will be raised and your program will exit.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2417_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"the cat ate the food under the table"</font><font color="#330033">, </font><font color="#330033">"THE"</font><font color="#330033">, 0</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "THE cat ate THE food under THE table"</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 2:</h5>
+<a name="_2418_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"the cat ate the food under the table"</font><font color="#330033">, </font><font color="#330033">"THE"</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "THE cat ate THE food under the table"</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 3:</h5>
+<a name="_2419_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">'/'</font><font color="#330033">, </font><font color="#330033">"/euphoria/demo/unix"</font><font color="#330033">, </font><font color="#330033">'\\'</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "\\euphoria\\demo/unix"</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 4:</h5>
+<a name="_2420_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">"abracadabra"</font><font color="#330033">, </font><font color="#330033">'X'</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is now "XbrXcXdXbrX"</font>
+<font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">"ra"</font><font color="#330033">, </font><font color="#330033">"abracadabra"</font><font color="#330033">, </font><font color="#330033">'X'</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is now "abXcadabX"</font>
+<font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">"a"</font><font color="#330033">, </font><font color="#330033">"abracadabra"</font><font color="#330033">, </font><font color="#330033">"aa"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is now "aabraacaadaabraa"</font>
+<font color="#330033">s = match_replace</font><font color="#880033">(</font><font color="#330033">"a"</font><font color="#330033">, </font><font color="#330033">"abracadabra"</font><font color="#330033">, </font><font color="#330033">""</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is now "brcdbr"</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2421_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_sequence.html#_2760_replace">replace</a>, <a href="std_regex.html#regexfind_replace">regex:find_replace</a>, <a href="std_search.html#_2404_find_replace">find_replace</a></p>
+
+<p> 
+<a name="searchbinary_search"></a><a name="search"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.2.16 binary_search</h4>
+<a name="_2423_binary_search"></a><a name="binary_search"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">binary_search</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start_point = 1,</font>
+<font color="#0000FF">        integer </font><font color="#330033">end_point = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   finds a "needle" in an ordered "haystack". Start and end point can be given for the search.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2424_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : an object to look for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start_point</tt> : an integer, the index at which to start searching. Defaults to 1.
+</li><li><tt>end_point</tt> : an integer, the end point of the search. Defaults to 0, ie search to end.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2425_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either: </p>
+<ol><li>a positive integer <tt>i</tt>, which means <tt>haystack[i]</tt> equals <tt>needle</tt>.
+</li><li>a negative integer, <tt>-i</tt>, with <tt>i</tt> between adjusted start and end points. This means that <tt>needle</tt> is not in the searched slice of  <tt>haystack</tt>, but would be at index <tt>i</tt> if it were there.
+</li><li>a negative integer <tt>-i</tt> with <tt>i</tt> out of the searched range. This means than <tt>needle</tt>might be either below the start point if <tt>i</tt> is below the start point, or above the end point if <tt>i</tt> is.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2426_comments"></a><a name="comments"></a><ul><li>If <tt>end_point</tt> is not greater than zero, it is added to  <tt>length(haystack)</tt> once only. Then, the end point of the search is adjusted to <tt>length(haystack)</tt> if out of bounds.
+</li><li>The start point is adjusted to 1 if below 1.
+</li><li>The way this function returns is very similar to what <a href="std_eds.html#_4237_db_find_key">db_find_key</a> does. They use variants of the same algorithm. The latter is all the more efficient as <tt>haystack</tt> is long.
+</li><li><tt>haystack</tt> is assumed to be in ascending order. Results are undefined if it is not.
+</li><li>If duplicate copies of <tt>needle</tt> exist in the range searched on  <tt>haystack</tt>, any of the possible contiguous indexes may be returned.
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2427_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_eds.html#_4237_db_find_key">db_find_key</a></p>
+
+<!-- ..\include\std\search.e -->
+<h3>8.15.3 Matching</h3>
+<a name="_2428_matching"></a><a name="matching"></a>
+<p> 
+<a name="eumatch"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.1 match</h4>
+<a name="_2430_match"></a><a name="match"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function match</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start</font><font color="#880033">)</font>
+</pre>
+
+<p> tries to match a "needle" against some slice of a "haystack", starting at position "start".</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2431_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : a sequence whose presence as a "substring" is being queried
+</li><li><tt>haystack</tt> : a sequence, which is being looked up for <tt>needle</tt> as a sub-sequence
+</li><li><tt>start</tt> : an integer, the point from which matching is attempted. Defaults to 1.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2432_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if no slice of <tt>haystack</tt> is <tt>needle</tt>, else the smallest index at which such a slice starts.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2433_comments"></a><a name="comments"></a>
+<p> If <tt>needle</tt> is an empty sequence, an error is raised and your program will exit.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2434_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = </font><font color="#0000FF">match</font><font color="#880033">(</font><font color="#330033">"pho"</font><font color="#330033">, </font><font color="#330033">"Euphoria"</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 3</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2435_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2316_compare">compare</a>, <a href="std_wildcard.html#wildcardis_match">wildcard:is_match</a></p>
+
+<p> 
+<a name="eumatch_from"></a><a name="from"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.2 match_from</h4>
+<a name="_2437_match_from"></a><a name="match_from"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function </font><font color="#330033">match_from</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>Deprecated:</h5>
+<a name="_2438_deprecated"></a><a name="deprecated"></a>
+<p> Deprecated since version 4.0.0</p>
+
+<p> In Euphoria 4.0.0 we have the ability to default parameters to procedures and functions. The built-in <a href="std_search.html#_2430_match">match</a> therefore now has a <tt>start</tt> parameter that is defaulted to the beginning of the sequence. Thus, <a href="std_search.html#_2430_match">match</a> can perform the identical functionality provided by <tt>match_from</tt>. In an undetermined future release of Euphoria, <tt>match_from</tt> will be removed.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2439_comments"></a><a name="comments"></a>
+<p> If <tt>needle</tt> is an empty sequence, an error is raised and your program will exit.</p>
+
+<p> 
+<a name="searchmatch_all"></a><a name="all"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.3 match_all</h4>
+<a name="_2441_match_all"></a><a name="match_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">match_all</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   matches all items of haystack in needle.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2442_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : a non-empty sequence, what to look for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start</tt> : an integer, the starting index position (defaults to 1)
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2443_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of integers, the list of all lower indexes, not less than <tt>start</tt>, of all slices in <tt>haystack</tt> that equal <tt>needle</tt>. The list may be empty.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2444_comments"></a><a name="comments"></a>
+<p> If <tt>needle</tt> is an empty sequence, an error will be raised and your program will exit.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2445_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = match_all</font><font color="#880033">(</font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"the dog chased the cat under the table."</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1,16,30}</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2446_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2430_match">match</a>, <a href="std_regex.html#regexfind_all">regex:find_all</a> <a href="std_search.html#_2334_find">find</a>, <a href="std_search.html#_2367_find_all">find_all</a></p>
+
+<p> 
+<a name="searchrmatch"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.4 rmatch</h4>
+<a name="_2448_rmatch"></a><a name="rmatch"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">rmatch</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">needle, </font><font color="#0000FF">sequence </font><font color="#330033">haystack, </font><font color="#0000FF">integer </font><font color="#330033">start = </font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">haystack</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<p>   tries to match a needle against some slice of a haystack in reverse order.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2449_parameters"></a><a name="parameters"></a><ol><li><tt>needle</tt> : a sequence to search for
+</li><li><tt>haystack</tt> : a sequence to search in
+</li><li><tt>start</tt> : an integer, the starting index position (defaults to length(<tt>haystack</tt>))
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2450_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either 0 if no slice of <tt>haystack</tt> starting before <tt>start</tt> equals <tt>needle</tt>, else the highest lower index of such a slice.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2451_comments"></a><a name="comments"></a>
+<p> If <tt>start</tt> is less than 1, it will be added once to <tt>length(haystack)</tt> to designate a position counted backwards. Thus, if <tt>start</tt> is -1, the first element to be queried in <tt>haystack</tt> will be <tt>haystack[$-1]</tt>, then <tt>haystack[$-2]</tt> and so on.</p>
+
+<p> If a <tt>needle</tt> is an empty sequence this will return 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2452_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">location = rmatch</font><font color="#880033">(</font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"the dog ate the steak from the table."</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 28 (3rd 'the')</font>
+<font color="#330033">location = rmatch</font><font color="#880033">(</font><font color="#330033">"the"</font><font color="#330033">, </font><font color="#330033">"the dog ate the steak from the table."</font><font color="#330033">, -11</font><font color="#880033">)</font>
+<font color="#FF0055">-- location is set to 13 (2nd 'the')</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2453_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2396_rfind">rfind</a>, <a href="std_search.html#_2430_match">match</a></p>
+
+<p> 
+<a name="searchbegins"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.5 begins</h4>
+<a name="_2455_begins"></a><a name="begins"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">begins</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">sub_text, </font><font color="#0000FF">sequence </font><font color="#330033">full_text</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests whether a sequence is the head of another one.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2456_parameters"></a><a name="parameters"></a><ol><li><tt>sub_text</tt> : an object to be looked for
+</li><li><tt>full_text</tt> : a sequence, the head of which is being inspected.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2457_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if <tt>sub_text</tt> begins <tt>full_text</tt>, else 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2458_comments"></a><a name="comments"></a>
+<p> If <tt>sub_text</tt> is an empty sequence, this returns 1 unless <tt>full_text</tt> is also an empty sequence.  When they are both empty sequences this returns 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2459_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = begins</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#330033">, </font><font color="#330033">"abcdef"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 1</font>
+<font color="#330033">s = begins</font><font color="#880033">(</font><font color="#330033">"bcd"</font><font color="#330033">, </font><font color="#330033">"abcdef"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 0</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2460_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2462_ends">ends</a>, <a href="std_sequence.html#_2672_head">head</a></p>
+
+<p> 
+<a name="searchends"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.6 ends</h4>
+<a name="_2462_ends"></a><a name="ends"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">ends</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">sub_text, </font><font color="#0000FF">sequence </font><font color="#330033">full_text</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests whether a sequence ends another one.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2463_parameters"></a><a name="parameters"></a><ol><li><tt>sub_text</tt> : an object to be looked for
+</li><li><tt>full_text</tt> : a sequence, the tail of which is being inspected.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2464_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 if <tt>sub_text</tt> ends <tt>full_text</tt>, else 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2465_comments"></a><a name="comments"></a>
+<p> If <tt>sub_text</tt> is an empty sequence, this returns 1 unless <tt>full_text</tt> is also an empty sequence.  When they are both empty sequences this returns 0.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2466_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = ends</font><font color="#880033">(</font><font color="#330033">"def"</font><font color="#330033">, </font><font color="#330033">"abcdef"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 1</font>
+<font color="#330033">s = begins</font><font color="#880033">(</font><font color="#330033">"bcd"</font><font color="#330033">, </font><font color="#330033">"abcdef"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 0</font>
+</pre>
+
+<!-- ..\include\std\search.e -->
+<h5>See Also:</h5>
+<a name="_2467_seealso"></a><a name="seealso"></a>
+<p> <a href="std_search.html#_2455_begins">begins</a>, <a href="std_sequence.html#_2680_tail">tail</a></p>
+
+<p> 
+<a name="searchis_in_range"></a><a name="in_range"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.7 is_in_range</h4>
+<a name="_2469_is_in_range"></a><a name="is_in_range"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">is_in_range</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">item, </font><font color="#0000FF">sequence </font><font color="#330033">range_limits, </font><font color="#0000FF">sequence </font><font color="#330033">boundries = </font><font color="#330033">"[]"</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests to see if the <tt>item</tt> is in a range of values supplied by <tt>range_limits</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2470_parameters"></a><a name="parameters"></a><ol><li><tt>item</tt> : The object to test for.
+</li><li><tt>range_limits</tt> : A sequence of two or more elements. The first is assumed to be the smallest value and the last is assumed to be the highest value.
+</li><li><tt>boundries</tt>: a sequence. This determines if the range limits are inclusive or not. Must be one of <tt>"[]"</tt> (the default), <tt>"[)"</tt>, <tt>"(]"</tt>, or  <tt>"()"</tt>.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2471_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if <tt>item</tt> is not in the <tt>range_limits</tt> otherwise it returns 1.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2472_comments"></a><a name="comments"></a><ul><li>In <tt>boundries</tt>, square brackets mean <em>inclusive</em> and round brackets mean <em>exclusive</em>. Thus <tt>"[]"</tt> includes both limits in the range, while  <tt>"()"</tt> excludes both limits. And, <tt>"[)"</tt> includes the lower limit and excludes the upper limits while <tt>"(]"</tt> does the reverse.
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2473_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">is_in_range</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#993333">{</font><font color="#330033">2, 75</font><font color="#993333">}</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    procA</font><font color="#880033">(</font><font color="#330033">user_data</font><font color="#880033">) </font><font color="#FF0055">-- Gets run (both limits included)</font>
+<font color="#0000FF">end if</font>
+<font color="#0000FF">if </font><font color="#330033">is_in_range</font><font color="#880033">(</font><font color="#330033">2, </font><font color="#993333">{</font><font color="#330033">2, 75</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">"(]"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    procA</font><font color="#880033">(</font><font color="#330033">user_data</font><font color="#880033">) </font><font color="#FF0055">-- Does not get run</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="searchis_in_list"></a><a name="in_list"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.8 is_in_list</h4>
+<a name="_2475_is_in_list"></a><a name="is_in_list"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">is_in_list</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">item, </font><font color="#0000FF">sequence </font><font color="#330033">list</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests to see if the <tt>item</tt> is in a list of values supplied by <tt>list</tt>.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2476_parameters"></a><a name="parameters"></a><ol><li><tt>item</tt> : The object to test for.
+</li><li><tt>list</tt> : A sequence of elements that <tt>item</tt> could be a member of.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2477_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>,  0 if <tt>item</tt> is not in the <tt>list</tt>, otherwise it returns 1.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2478_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">is_in_list</font><font color="#880033">(</font><font color="#330033">user_data, </font><font color="#993333">{</font><font color="#330033">100, 45, 2, 75, 121</font><font color="#993333">}</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    procA</font><font color="#880033">(</font><font color="#330033">user_data</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="searchlookup"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.9 lookup</h4>
+<a name="_2480_lookup"></a><a name="lookup"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">lookup</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">find_item, </font><font color="#0000FF">sequence </font><font color="#330033">source_list, </font><font color="#0000FF">sequence </font><font color="#330033">target_list,</font>
+<font color="#0000FF">        object </font><font color="#330033">def_value = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the corresponding element from the target list if the supplied item is in the source list.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2481_parameters"></a><a name="parameters"></a><ol><li><tt>find_item</tt>: an object that might exist in <tt>source_list</tt>.
+</li><li><tt>source_list</tt>: a sequence that might contain <tt>pITem</tt>.
+</li><li><tt>target_list</tt>: a sequence from which the corresponding item will be returned.
+</li><li><tt>def_value</tt>: an object (defaults to zero). This is returned when <tt>find_item</tt> is not in <tt>source_list</tt> <strong>and</strong> <tt>target_list</tt> is not longer than <tt>source_list</tt>.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2482_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong> </p>
+<ul><li>If <tt>find_item</tt> is found in <tt>source_list</tt> then this is the corresponding element from <tt>target_list</tt>
+</li><li>If <tt>find_item</tt> is not in <tt>source_list</tt> then if <tt>target_list</tt> is longer than <tt>source_list</tt> then the last item in <tt>target_list</tt> is returned otherwise <tt>def_value</tt> is returned.
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2483_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 'o'</font>
+<font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">'d'</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dogx"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 'x'</font>
+<font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">'d'</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">'d'</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#330033">, -1</font><font color="#880033">) </font><font color="#FF0055">--&gt; -1</font>
+<font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">"ant"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"ant"</font><font color="#330033">,</font><font color="#330033">"bear"</font><font color="#330033">,</font><font color="#330033">"cat"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"spider"</font><font color="#330033">,</font><font color="#330033">"seal"</font><font color="#330033">,</font><font color="#330033">"dog"</font><font color="#330033">,</font><font color="#330033">"unknown"</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">            --&gt; "spider"</font>
+<font color="#330033">lookup</font><font color="#880033">(</font><font color="#330033">"dog"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"ant"</font><font color="#330033">,</font><font color="#330033">"bear"</font><font color="#330033">,</font><font color="#330033">"cat"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"spider"</font><font color="#330033">,</font><font color="#330033">"seal"</font><font color="#330033">,</font><font color="#330033">"dog"</font><font color="#330033">,</font><font color="#330033">"unknown"</font><font color="#993333">}</font><font color="#880033">)     </font>
+<font color="#FF0055">            --&gt; "unknown"</font>
+</pre>
+
+<p> 
+<a name="searchvlookup"></a> </p>
+
+<!-- ..\include\std\search.e -->
+<h4>8.15.3.10 vlookup</h4>
+<a name="_2485_vlookup"></a><a name="vlookup"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/search.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">search</font>
+<font color="#0000FF">public function </font><font color="#330033">vlookup</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">find_item, </font><font color="#0000FF">sequence </font><font color="#330033">grid_data, </font><font color="#0000FF">integer </font><font color="#330033">source_col,</font>
+<font color="#0000FF">        integer </font><font color="#330033">target_col, </font><font color="#0000FF">object </font><font color="#330033">def_value = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the corresponding element from the target column if the supplied item is in a source grid column.</p>
+
+<!-- ..\include\std\search.e -->
+<h5>Parameters:</h5>
+<a name="_2486_parameters"></a><a name="parameters"></a><ol><li><tt>find_item</tt>: an object that might exist in <tt>source_col</tt>.
+</li><li><tt>grid_data</tt>: a 2D grid sequence that might contain <tt>pITem</tt>.
+</li><li><tt>source_col</tt>: an integer. The column number to look for <tt>find_item</tt>.
+</li><li><tt>target_col</tt>: an integer. The column number from which the corresponding item will be returned.
+</li><li><tt>def_value</tt>: an object (defaults to zero). This is returned when <tt>find_item</tt> is not found in the <tt>source_col</tt> column, or if found but the target column does not exist.
+</li></ol>
+<!-- ..\include\std\search.e -->
+<h5>Comments:</h5>
+<a name="_2487_comments"></a><a name="comments"></a><ul><li>If a row in the grid is actually a single atom, the row is ignored.
+</li><li>If a row's length is less than the <tt>source_col</tt>, the row is ignored.
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>Returns:</h5>
+<a name="_2488_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, </p>
+<ul><li>If <tt>find_item</tt> is found in the <tt>source_col</tt> column then this is the corresponding element from the <tt>target_col</tt> column.
+</li></ul>
+<!-- ..\include\std\search.e -->
+<h5>Example 1:</h5>
+<a name="_2489_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">grid</font>
+<font color="#330033">grid = </font><font color="#880033">{</font>
+<font color="#993333">       {</font><font color="#330033">"ant"</font><font color="#330033">, </font><font color="#330033">"spider"</font><font color="#330033">, </font><font color="#330033">"mortein"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">       {</font><font color="#330033">"bear"</font><font color="#330033">, </font><font color="#330033">"seal"</font><font color="#330033">, </font><font color="#330033">"gun"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">       {</font><font color="#330033">"cat"</font><font color="#330033">, </font><font color="#330033">"dog"</font><font color="#330033">, </font><font color="#330033">"ranger"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">       $</font>
+<font color="#880033"> }</font>
+<font color="#330033">vlookup</font><font color="#880033">(</font><font color="#330033">"ant"</font><font color="#330033">, grid, 1, 2, </font><font color="#330033">"?"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "spider"</font>
+<font color="#330033">vlookup</font><font color="#880033">(</font><font color="#330033">"ant"</font><font color="#330033">, grid, 1, 3, </font><font color="#330033">"?"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "mortein"</font>
+<font color="#330033">vlookup</font><font color="#880033">(</font><font color="#330033">"seal"</font><font color="#330033">, grid, 2, 3, </font><font color="#330033">"?"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "gun"</font>
+<font color="#330033">vlookup</font><font color="#880033">(</font><font color="#330033">"seal"</font><font color="#330033">, grid, 2, 1, </font><font color="#330033">"?"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "bear"</font>
+<font color="#330033">vlookup</font><font color="#880033">(</font><font color="#330033">"mouse"</font><font color="#330033">, grid, 2, 3, </font><font color="#330033">"?"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "?"</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\sequence.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_get.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_sequence.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_get.html">8.14 Input Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_sequence.html">8.16 Sequence Manipulation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

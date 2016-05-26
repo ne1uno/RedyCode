@@ -1,0 +1,42 @@
+==Tabs Widget Class
+
+Widget Class name: "tabs"
+
+===API
+====Properties
+
+====="label"
+====="border"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "selection", TabId}
+====={widgetname, "LeftUp", TabId}
+====={widgetname, "LeftDoubleClick", TabId}
+====={widgetname, "RightDown", TabId}
+====={widgetname, "RightUp", TabId}
+====={widgetname, "RightDoubleClick", TabId}
+====={widgetname, "scroll", {ScrollPosX, ScrollPosY}}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====procedure cmd_select_tab_by_widget(atom wid, object tabwidget)
+=====procedure cmd_select_tab(atom wid, object tabidx_or_label)
+=====procedure cmd_set_tab_label(atom wid, object tabwidget, object lbl)
+=====procedure cmd_set_tab_flag(atom wid, object tabwidget, object flagcolor)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

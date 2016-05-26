@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="examples.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="editing_source.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="examples.html">3.1 Example Programs</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="editing_source.html">3.3 Editing a Program</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h2>3.2 Creating Euphoria programs</h2>
+<a name="_69_creatingeuphoriaprograms"></a><a name="creatingeuphoriaprograms"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="creating_eu_progs.html#_69_creatingeuphoriaprograms">3.2 Creating Euphoria programs</a></div>
+<div class="toc_3"><a href="creating_eu_progs.html#_70_runningaprogram">3.2.1 Running a Program</a></div>
+<div class="toc_3"><a href="creating_eu_progs.html#_71_runningunderwindows">3.2.2 Running under Windows</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> Euphoria programs can be written with <em>any</em> plain text editor. As a convenience Euphoria comes with <tt>edx</tt>, an editor written in Euphoria, that is handy for editing and executing Euphoria programs. Take a look at <tt>\euphoria\demo</tt> and <tt>euphoria\tutorial</tt> to see many example programs.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.2.1 Running a Program</h3>
+<a name="_70_runningaprogram"></a><a name="runningaprogram"></a>
+<p> To run a Euphoria program you type the name of the interpreter followed by the filename of the program you want to run. Such as:</p>
+
+<pre class="examplecode"><font color="#330033">eui example.ex</font>
+</pre>
+
+<p> What you just typed is known as the <em>command-line</em>.</p>
+
+<p> Depending on the platform you are using the interpreter could be called:</p>
+<table><tr><th> Executable </th>
+<th> Purpose                                        </th>
+</tr>
+<tr><td> <tt>eui</tt>     </td>
+<td> General interpreter on <em>Windows</em> and <em>Unix</em> variants </td>
+</tr>
+<tr><td> <tt>euiw</tt>    </td>
+<td> Console-less <em>Windows</em> interpreter                 </td>
+</tr>
+</table>
+
+<p> The command-line may contain extra information. Following your program filename you may add extra words (known as <em>arguments</em>) that can used in your program to customize its behavior. These arguments are read within your program by the built-in function <a href="std_cmdline.html#_779_command_line">command_line</a>.</p>
+
+<p> Optionally, you may also use <a href="command_switches.html#_74_commandlineswitches">command line switches</a> that are typed between the interpreter name and the program name. Command line switches customize  how the interpreter itself behaves.</p>
+
+<p> Unlike many other compilers and interpreters, there is no obligation for any special command-line options for <tt>eui</tt> or <tt>euiw</tt>. Only the name of you Euphoria file is expected, and if you do not supply it, Euphoria will display all the command line options available.</p>
+
+<p> Euphoria doesn't care about your choice of file extensions. By convention, however, console-based applications have an extension of <tt>.ex</tt>, GUI-based applications have an extension of <tt>.exw</tt> and include files have an extension of <tt>.e</tt>. Note that a GUI application is not necessarily a <em>Windows</em> program. A GUI application can exist on Linux, OS X, FreeBSD, and so on.</p>
+
+<p> You can redirect standard input and standard output when you run a Euphoria  program, for example: </p>
+
+<pre class="examplecode"><font color="#330033">eui filesort.ex &lt; raw.txt &gt; sorted.txt</font>
+</pre>
+
+<p> or simply, </p>
+
+<pre class="examplecode"><font color="#330033">eui filesort &lt; raw.txt &gt; sorted.txt</font>
+</pre>
+
+<p> For frequently-used programs under <em>Windows</em> you might want to make a small <tt>.bat</tt> (batch) file, perhaps called <tt>myprog.bat</tt>, containing two statements like: </p>
+
+<pre class="examplecode"><font color="#330033">@echo off</font>
+<font color="#330033">eui myprog.ex %1 %2 %3 %4 %5 %6 %7 %8 %9</font>
+</pre>
+
+<p> The first statement turns off echoing of commands to the screen. The second runs <tt>eui myprog.ex</tt> with up to 9 command-line arguments. See <a href="std_cmdline.html#_779_command_line">command_line</a> for an example of how to read these arguments. Having a .bat file will save you the minor inconvenience of typing <tt>eui</tt> all the time; for example you can just type: </p>
+
+<pre class="examplecode"><font color="#330033">myprog</font>
+</pre>
+
+<p> instead of: </p>
+
+<pre class="examplecode"><font color="#330033">eui myprog</font>
+</pre>
+
+<p> Under modern <em>Unix</em> variants, you can use <tt>#!/usr/bin/env eui</tt> as the first line of your script file. On older <em>Unix</em> variants, you may need to use the full path to <tt>eui</tt>, <tt>#!/usr/local/bin/eui</tt>.</p>
+
+<p> If your program is called <tt>foo.ex</tt>: </p>
+
+<pre class="examplecode"><font color="#330033">#!/usr/bin/env eui</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">()</font>
+<font color="#330033">   ? 2+2</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">foo</font><font color="#880033">()</font>
+</pre>
+
+<p> Then if you make your file executable:</p>
+
+<pre class="examplecode"><font color="#330033">chmod +x foo.ex</font>
+</pre>
+
+<p> You can just type:</p>
+
+<pre class="examplecode"><font color="#330033">foo.ex</font>
+</pre>
+
+<p> to run your program. You could even shorten the name to simply "foo". Euphoria ignores the first line when it starts with <strong>#!</strong>.  Be careful though that your first line ends with the <em>Unix</em>-style <tt>\n</tt>, and not the <em>Windows</em>-style <tt>\r\n</tt>, or the unix shell might get confused. If your file is shrouded, you must give the path to <tt>eub</tt>, not <tt>eui</tt>.</p>
+
+<p> You can also run <tt>bind</tt> to combine your Euphoria program with the <tt>eui</tt> interpreter, to make a stand-alone executable file. With a stand-alone executable, you <em>can</em> redirect standard input and output. Binding is discussed further in <a href="distributing.html#_73_distributingaprogram">Distributing a Program</a>.</p>
+
+<p> Using the <a href="e2c.html#_533_euphoriatoctranslator">Euphoria To C Translator</a>, you can also make a stand-alone executable file, and it will normally run much faster than a bound program.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.2.2 Running under Windows</h3>
+<a name="_71_runningunderwindows"></a><a name="runningunderwindows"></a>
+<p> You can run Euphoria programs directly from the <em>Windows</em> environment, or from a console shell that you have opened from <em>Windows</em>. By "associating" <tt>.ex</tt> files with <tt>eui.exe</tt> and <tt>.exw</tt> files with <tt>euiw.exe</tt>. You will then be able to double click a Euphoria source file to run it. The installer will perform this operation for you, if you wish.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="examples.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="editing_source.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="examples.html">3.1 Example Programs</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="editing_source.html">3.3 Editing a Program</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

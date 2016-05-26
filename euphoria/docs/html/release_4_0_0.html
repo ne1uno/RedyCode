@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_1.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0_rc2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_1.html">9.7 Version 4.0.1 March 29, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0_rc2.html">9.9 Version 4.0.0 Release Candidate 2 December 8, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.0.txt -->
+<h2>9.8 Version 4.0.0 December 22, 2010</h2>
+<a name="_6676_version400december222010"></a><a name="version400december222010"></a>
+<p> 4.0.0 was released on December 22, 2010.</p>
+
+<p> For a concise list of what has changed from 3.1.1 to 4.0.0 final, please see <a href="whatsnew4_0.html#_17_whatsnewin40">What's new in 4.0?</a> section of this manual.</p>
+
+<!-- ..\docs\release\4.0.0.txt -->
+<h3>9.8.1 Deprecation</h3>
+<a name="_6677_deprecation"></a><a name="deprecation"></a><ul><li>with/without warning lists have changed from <tt>( name1, name2 )</tt> to  <tt>{ name1, name2 }</tt> as to be more like Euphoria sequences. In the future the old <tt>( name1, name2 )</tt> syntax will be removed.
+</li></ul>
+<!-- ..\docs\release\4.0.0.txt -->
+<h3>9.8.2 Possible Breaking Changes</h3>
+<a name="_6678_possiblebreakingchanges"></a><a name="possiblebreakingchanges"></a><ul><li><tt>std/sequence.e</tt>/<tt><a href="std_sequence.html#_2586_series">series</a></tt> has changed the functionality of the last parameter. Previously <tt>series(1,1,5)</tt> would produce <tt>{1,2,3,4,5,6}</tt>. i.e. 5 was the number of items to add onto the starting 1. The last parameter has been changed to be the number of items in the resulting list. Thus, <tt>series(1,1,5)</tt> will now produce  <tt>{1,2,3,4,5}</tt>, i.e. a sequence of 5 items. <tt>series(1,1,0)</tt> before would produce  <tt>{1}</tt>. Now it produces <tt>{}</tt>, i.e. an empty series.
+</li><li><a class="external" href="/ticket/view.wc?id=551">ticket:551</a>: <tt>WIN32_GUI</tt>, <tt>WIN32_CONSOLE</tt>, <tt>EUB_CONSOLE</tt>, <tt>EUC_CONSOLE</tt> have been changed to simply refer to <tt>GUI</tt> or <tt>CONSOLE</tt>.  On non-Windows platforms, <tt>CONSOLE</tt> will be defined.
+</li></ul>
+<!-- ..\docs\release\4.0.0.txt -->
+<h3>9.8.3 Removed</h3>
+<a name="_6679_removed"></a><a name="removed"></a><ul><li><tt>creolehtml</tt> is no longer shipped with Euphoria. It has been enhanced to support multiple output formats and thus its name has been changed to simply <tt>creole</tt>. HTML remains the default output. Usage remains the same thus simply renaming build systems to use <tt>creole</tt> instead of <tt>creolehtml</tt> will work.
+</li></ul>
+<!-- ..\docs\release\4.0.0.txt -->
+<h3>9.8.4 Bug Fixes</h3>
+<a name="_6680_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=438">ticket:438</a>, removed path test in <tt>demos/santiy.ex</tt> as it does not function correctly with bound, translated or even a non-standard eui location and actually cannot, thus it was removed.
+</li><li><a class="external" href="/ticket/view.wc?id=514">ticket:514</a>, Fixed bug with internal <tt>dir</tt> implementation that would prevent displaying the content of a directory if given without a trailing slash on Windows.
+</li><li><a class="external" href="/ticket/view.wc?id=517">ticket:517</a>, Added a bounds check that could cause the translator or binder to crash.
+</li><li><a class="external" href="/ticket/view.wc?id=518">ticket:518</a>, Prevented write_coverage from being called twice on CTRL+C/error condition.
+</li><li><a class="external" href="/ticket/view.wc?id=519">ticket:519</a>, preproc and net demos are now in the debian package.
+</li><li><a class="external" href="/ticket/view.wc?id=530">ticket:530</a>, <tt>t_command_line_quote</tt> test fixed on Windows.
+</li><li><a class="external" href="/ticket/view.wc?id=533">ticket:533</a>, Debian package copyright was updated in accordance to Debian policy.
+</li><li><a class="external" href="/ticket/view.wc?id=540">ticket:540</a>, <tt><a href="std_console.html#_857_get_key">get_key</a></tt> was described in both <tt>io.e</tt> and <tt>console.e</tt>, removed from <tt>io.e</tt>
+</li><li><a class="external" href="/ticket/view.wc?id=545">ticket:545</a>, <tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a></tt> did not properly insert the drive letter on Windows when the path began with a forward slash <tt>/</tt>.
+</li><li><a class="external" href="/ticket/view.wc?id=548">ticket:548</a>, Fixed error in emitted C in some translated <tt>for</tt> loops.
+</li><li><a class="external" href="/ticket/view.wc?id=550">ticket:550</a>, Examples for regex <tt><a href="std_regex.html#_3251_matches">matches</a></tt> and <tt><a href="std_regex.html#_3257_all_matches">all_matches</a></tt> now properly either supply or use the default <tt>from</tt> parameter.
+</li><li><a class="external" href="/ticket/view.wc?id=555">ticket:555</a>, Fixed parsing of constants when first statement is a constant assigned by a built-in function.
+</li><li><a class="external" href="/ticket/view.wc?id=556">ticket:556</a>, Fixed type inference for return value from <tt><a href="std_rand.html#_3861_rand">rand</a></tt> in translator.
+</li><li><a class="external" href="/ticket/view.wc?id=557">ticket:557</a>, <tt>euphoria.h</tt> had gotten out of sync when some OPs were removed.
+</li><li><a class="external" href="/ticket/view.wc?id=558">ticket:558</a>, Fixed crash caused by undeclared variable assignment by properly subscripting [i] when looking up forward references in the toplevel subroutine
+</li><li><a class="external" href="/ticket/view.wc?id=560">ticket:560</a>, Functions that started with an unqualified variable from another file being assigned by the return value of an unqualified function from another file could result in a crash.
+</li><li><a class="external" href="/ticket/view.wc?id=564">ticket:564</a>, Documentation fix on parameter name for <tt><a href="std_map.html#_4424_calc_hash">calc_hash</a></tt>.
+</li><li>Fix backend and interpreter to avoid "press any key" prompts when running as a console from a shared console window.
+</li><li>Ensure forward type checks aren't resolved until after the variable being type checked has been resolved.
+</li></ul>
+<!-- ..\docs\release\4.0.0.txt -->
+<h3>9.8.5 Enhancements/Changes</h3>
+<a name="_6681_enhancementschanges"></a><a name="enhancementschanges"></a><ul><li>Made previously private method <tt>iscon</tt> in <tt>std/console.e</tt> a public method named  <tt><a href="std_console.html#_822_has_console">has_console</a></tt> which will return TRUE/FALSE if the current application has a console window attached.
+</li><li><tt><a href="std_cmdline.html#_797_cmd_parse">cmd_parse</a></tt> now splits onto two lines an option whose command is longer than the maximum pad size and its description.
+</li><li>PDF documentation is now much better, generated from LaTeX sources.
+</li><li>Bundled <tt>creole</tt> program supports multiple output formats now, the addition of LaTeX for great printed or PDF documentation from your creole sources.
+</li><li>Bundled utility <tt>bench.ex</tt> now outputs timing information to STDERR by default. <tt>--stdout</tt> can be supplied if output to STDOUT is desired. It now also displays the min and max iteration times in addition to the already average and total.
+</li><li><tt>demo/net/pastey.ex</tt> demo has been updated to function with OpenEuphoria's pastey service. It can also now accept file input via stdin.
+</li><li><tt>-version</tt> on main products now reports build date in addition to previous information.
+</li><li><tt>euphoria/info.e</tt> version methods <tt><a href="euphoria_info.html#_6133_version_string">version_string</a></tt> and <tt><a href="euphoria_info.html#_6141_version_string_long">version_string_long</a></tt> now have the ability to report the enhanced version information.
+</li><li>Optimized for loops to check for integer initial value and limits.
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_1.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0_rc2.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_1.html">9.7 Version 4.0.1 March 29, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0_rc2.html">9.9 Version 4.0.0 Release Candidate 2 December 8, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="bind.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="dynamic.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="bind.html">6.3 Shrouding and Binding</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="dynamic.html">6.5 Indirect Routine Calling</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\e2c.txt -->
+<h2>6.4 Euphoria To C Translator</h2>
+<a name="_533_euphoriatoctranslator"></a><a name="euphoriatoctranslator"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="e2c.html#_533_euphoriatoctranslator">6.4 Euphoria To C Translator</a></div>
+<div class="toc_3"><a href="e2c.html#_534_introduction">6.4.1 Introduction</a></div>
+<div class="toc_3"><a href="e2c.html#_535_supportedcompilers">6.4.2 Supported Compilers</a></div>
+<div class="toc_4"><a href="e2c.html#_536_notes">6.4.2.1 Notes:</a></div>
+<div class="toc_3"><a href="e2c.html#_537_runthetranslator">6.4.3 Run the Translator</a></div>
+<div class="toc_3"><a href="e2c.html#_538_commandlineoptions">6.4.4 Command-Line Options</a></div>
+<div class="toc_4"><a href="e2c.html#_539_archsetarchitecture">6.4.4.1 -arch - Set architecture</a></div>
+<div class="toc_4"><a href="e2c.html#_540_builddirdir">6.4.4.2 -build-dir dir</a></div>
+<div class="toc_4"><a href="e2c.html#_541_ccprefixcompilerprefix">6.4.4.3 -cc-prefix - Compiler prefix</a></div>
+<div class="toc_4"><a href="e2c.html#_542_cflagsflagscompilerflags">6.4.4.4 -cflags FLAGS - Compiler Flags</a></div>
+<div class="toc_4"><a href="e2c.html#_543_comdircompilerdirectory">6.4.4.5 -com DIR - Compiler directory</a></div>
+<div class="toc_4"><a href="e2c.html#_544_conconsolebasedprogram">6.4.4.6 -con - Console based program</a></div>
+<div class="toc_4"><a href="e2c.html#_545_debugdebugmode">6.4.4.7 -debug - Debug mode</a></div>
+<div class="toc_4"><a href="e2c.html#_546_dllsosharedlibrary">6.4.4.8 -dll / -so - Shared Library</a></div>
+<div class="toc_4"><a href="e2c.html#_547_extracflagsextracompilerflags">6.4.4.9 -extra-cflags - Extra Compiler Flags</a></div>
+<div class="toc_4"><a href="e2c.html#_548_extralflagsextralinkerflags">6.4.4.10 -extra-lflags - Extra Linker Flags</a></div>
+<div class="toc_4"><a href="e2c.html#_549_gccwat">6.4.4.11 -gcc, -wat</a></div>
+<div class="toc_4"><a href="e2c.html#_550_keep">6.4.4.12 -keep</a></div>
+<div class="toc_4"><a href="e2c.html#_551_lflagsflagslinkerflags">6.4.4.13 -lflags FLAGS - Linker Flags</a></div>
+<div class="toc_4"><a href="e2c.html#_552_libuserdefinedlibrary">6.4.4.14 -lib - User defined library</a></div>
+<div class="toc_4"><a href="e2c.html#_553_libpicuserdefinedlibraryforpicmode">6.4.4.15 -lib-pic - User defined library for PIC mode</a></div>
+<div class="toc_4"><a href="e2c.html#_554_makefilemakefilepartialusingmakefiles">6.4.4.16 -makefile / -makefile-partial - Using makefiles</a></div>
+<div class="toc_4"><a href="e2c.html#_555_maxsizenumber">6.4.4.17 -maxsize NUMBER</a></div>
+<div class="toc_4"><a href="e2c.html#_556_platsetplatform">6.4.4.18 -plat - Set platform</a></div>
+<div class="toc_4"><a href="e2c.html#_557_rcfileresourcefile">6.4.4.19 -rc-file - Resource File</a></div>
+<div class="toc_4"><a href="e2c.html#_558_silent">6.4.4.20 -silent</a></div>
+<div class="toc_4"><a href="e2c.html#_559_stackstacksize">6.4.4.21 -stack - Stack size</a></div>
+<div class="toc_3"><a href="e2c.html#_560_dynamiclinklibraries">6.4.5 Dynamic Link Libraries</a></div>
+<div class="toc_3"><a href="e2c.html#_561_usingresourcefiles">6.4.6 Using Resource Files</a></div>
+<div class="toc_3"><a href="e2c.html#_562_executablesizeandcompression">6.4.7 Executable Size and Compression</a></div>
+<div class="toc_3"><a href="e2c.html#_563_interpreterversustranslator">6.4.8 Interpreter versus Translator</a></div>
+<div class="toc_4"><a href="e2c.html#_564_note">6.4.8.1 Note:</a></div>
+<div class="toc_3"><a href="e2c.html#_565_legalrestrictions">6.4.9 Legal Restrictions</a></div>
+<div class="toc_3"><a href="e2c.html#_566_disclaimer">6.4.10 Disclaimer:</a></div>
+<div class="toc_3"><a href="e2c.html#_567_frequentlyaskedquestions">6.4.11 Frequently Asked Questions</a></div>
+<div class="toc_4"><a href="e2c.html#_568_howmuchofaspeedupshouldiexpect">6.4.11.1 How much of a speed-up should I expect?</a></div>
+<div class="toc_4"><a href="e2c.html#_569_whatifiwanttochangethecompileorlinkoptionsinmygeneratedmakefile">6.4.11.2 What if I want to change the compile or link options in my generated makefile?</a></div>
+<div class="toc_4"><a href="e2c.html#_570_howcanimakemyprogramrunevenfaster">6.4.11.3 How can I make my program run even faster?</a></div>
+<div class="toc_3"><a href="e2c.html#_571_commonproblems">6.4.12 Common Problems</a></div>
+<div class="toc_4"><a href="e2c.html#_572_note">6.4.12.1 Note:</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.1 Introduction</h3>
+<a name="_534_introduction"></a><a name="introduction"></a>
+<p> The <strong>Euphoria to C Translator</strong> (translator) will translate any Euphoria program into equivalent C source code.</p>
+
+<p> There are versions of the translator for <em>Windows</em> and <em>Unix</em> operating Systems. After translating a Euphoria program to C, you can compile and link using one of the supported C compilers. This will give you an executable file that will typically run much faster than if you used the Euphoria interpreter.</p>
+
+<p> The translator can translate and then compile <em>itself</em> into an executable file for each platform. The translator is also used in translating/compiling the front-end portion of the interpreter. The source code for the translator is in <tt>euphoria\source</tt>. It is written 100% in Euphoria.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.2 Supported Compilers</h3>
+<a name="_535_supportedcompilers"></a><a name="supportedcompilers"></a>
+<p> The <strong>Translator</strong> currently works with GNU C on <em>Unix</em> OSes, GNU C on <em>Windows</em> from  <a class="external" href="http://www.mingw.org">MinGW</a>  or <a class="external" href="http://en.wikipedia.org/wiki/Cygwin">Cygwin</a> using the <tt>-gcc</tt> option and with <a class="external" href="http://www.openwatcom.org">Watcom C</a> (the default) on <em>Windows</em>. These are all <strong>free</strong> compilers.</p>
+
+<p> GNU C will exist already on your <em>Unix</em> system. The others can be downloaded from their respective Web sites.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.2.1 Notes:</h4>
+<a name="_536_notes"></a><a name="notes"></a><ul><li>Warnings are turned off when compiling directly or with makefiles. If you turn them on, you may see some harmless messages about variables declared but not used, labels defined but not used, function prototypes not declared etc.
+</li><li>For the <tt>-gcc</tt> option on <em>Windows</em> you will need a <tt>eu.a</tt> compiled with <em>MinGW</em> or <em>Cygwin</em>. The official distribution may only contain  <tt>eu.lib</tt> compiled with <em>Watcom</em>. Also, the <tt>-stack</tt> and <tt>-con</tt> options may not produce the expected result with <em>GCC C</em>.
+</li><li>Currently, only 32-bit compilers are supported on 64-bit platforms.
+</li></ul>
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.3 Run the Translator</h3>
+<a name="_537_runthetranslator"></a><a name="runthetranslator"></a>
+<p> Running the <strong>Translator</strong> is similar to running the <strong>Interpreter</strong>:</p>
+
+<p> 
+<pre>euc -con allsorts.ex
+</pre>
+
+<p> Note: that on <em>Unix</em> the demos might be installed to <tt>/usr/share/euphoria/demo</tt></p>
+
+<p> Instead of running the <tt>allsorts.ex</tt> program, the <strong>Translator</strong> will create several C source files in a temporary build directory, compile them and result in a native executable file. For this to work, you have to have a supporting compiler installed (mentioned above). The optional parameter used in this example, <tt>-con</tt>, will be explained in full detail below.</p>
+
+<p> When the C compiling and linking is finished, you will have a file called <tt>allsorts.exe</tt> or simply <tt>allsorts</tt> on *nix systems. The C source files will have been removed to avoid clutter.</p>
+
+<p> When you run the <tt>allsorts</tt> executable, it should run the same as if you had typed:</p>
+
+<p> 
+<pre>eui allsorts
+</pre>
+
+<p> to run it with the <strong>Interpreter</strong>, except that it should run faster, showing reduced times for the various sorting algorithms in <tt>euphoria\demo\allsorts.ex</tt>.</p>
+
+<p> After creating your executable file, the translator removes all the C files that were created. If you want to look at these files, you'll need to run the translator again, using either the <tt>-keep</tt> or <tt>-makefile</tt> options.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.4 Command-Line Options</h3>
+<a name="_538_commandlineoptions"></a><a name="commandlineoptions"></a>
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.1 -arch - Set architecture</h4>
+<a name="_539_archsetarchitecture"></a><a name="archsetarchitecture"></a>
+<p> The translator generally produces cross platform code.  However, the euphoria source code may have different code for different architectures.  The default is to use the architecture of the translator binary that is being used.  To target a different architecture, you can use one of three supported architectures:</p>
+<ul><li>X86
+</li><li>X86_64
+</li><li>ARM
+</li></ul>
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.2 -build-dir dir</h4>
+<a name="_540_builddirdir"></a><a name="builddirdir"></a>
+<p> Use the specified directory to write translated C files and compiled objects. The final executable is still output by default to the current directory (or however the <tt>-o</tt> flag specifies). When not specified, euphoria will create a temporary, randomly named build directory.</p>
+
+<p> The specified directory cannot contain any wildcards ('*', '?') or be an existing file.</p>
+
+<p> 
+<pre>$ euc -build-dir temp_dir myapp.ex
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.3 -cc-prefix - Compiler prefix</h4>
+<a name="_541_ccprefixcompilerprefix"></a><a name="ccprefixcompilerprefix"></a>
+<p> Some compilers, especially MinGW (the Windows version of gcc) may prefix their normal names with platform prefixes.  The -cc-prefix switch allows the developer to specify this special prefix.  This can also be useful for having a system with both the 32bit and 64bit versions installed.  Cross compilers generally require this.</p>
+
+<p> For example, on Windows, to build with MinGW installed as i6856-w64-mingw32:</p>
+
+<p> 
+<pre>euc -gcc -cc-prefix i686-w64-mingw32- pretend.exw
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.4 -cflags FLAGS - Compiler Flags</h4>
+<a name="_542_cflagsflagscompilerflags"></a><a name="cflagsflagscompilerflags"></a>
+<p> Specifies the flags to pass to the compiler.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.5 -com DIR - Compiler directory</h4>
+<a name="_543_comdircompilerdirectory"></a><a name="comdircompilerdirectory"></a>
+<p> Tells the translator where to find include/euphoria.h, which is the header file required when translating code.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.6 -con - Console based program</h4>
+<a name="_544_conconsolebasedprogram"></a><a name="conconsolebasedprogram"></a>
+<p> To make a <em>Windows</em> console program instead of a <em>Windows</em> GUI program, add <tt>-con</tt> to the command line. e.g.</p>
+
+<p> 
+<pre>euc -con myprog.exw
+</pre>
+
+<p> When creating a Windows GUI program, if the <tt>-con</tt> option is used, when running your Windows program, you will have a blank console window appear and remain the duration of your application. By default, a GUI program is assumed.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.7 -debug - Debug mode</h4>
+<a name="_545_debugdebugmode"></a><a name="debugdebugmode"></a>
+<p> To compile your program with debugging information, usable with a debugger compatible with your compiler, use the <tt>-debug</tt> option:</p>
+
+<p> 
+<pre>euc -debug myapp.ex
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.8 -dll / -so - Shared Library</h4>
+<a name="_546_dllsosharedlibrary"></a><a name="dllsosharedlibrary"></a>
+<p> To make a shared dynamically loading library, just add <tt>-dll</tt> to the command line. e.g.</p>
+
+<p> 
+<pre>euc -dll mylib.ew
+</pre>
+
+<p> Note: On *nix systems, you can also use <tt>-so</tt>. Both will produce a *nix shared library.</p>
+
+<p> Please see <a href="e2c.html#_560_dynamiclinklibraries">Dynamic Link Libraries</a></p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.9 -extra-cflags - Extra Compiler Flags</h4>
+<a name="_547_extracflagsextracompilerflags"></a><a name="extracflagsextracompilerflags"></a>
+<p> Supply extra compiler flags to suplement the flags used automatically by the translator or supplied via the -cflags option.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.10 -extra-lflags - Extra Linker Flags</h4>
+<a name="_548_extralflagsextralinkerflags"></a><a name="extralflagsextralinkerflags"></a>
+<p> Supply extra linker flags to suplement the flags used automatically by the translator or supplied via the -lflags option.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.11 -gcc, -wat</h4>
+<a name="_549_gccwat"></a><a name="gccwat"></a>
+<p> If you happen to have more than one C compiler for a given platform, you can select the one you want to use with a command-line option:</p>
+
+<p> 
+<pre>-wat  -- Watcom compiler
+-gcc  -- GCC compiler (MinGW on Windows)
+</pre>
+
+<p> For example, to compile with GCC (or MinGW on Windows):</p>
+
+<p> 
+<pre>euc -gcc pretend.exw
+</pre>
+
+<p> Note: <em>Watcom</em> is the default on <em>Windows</em> and -wat is assumed.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.12 -keep</h4>
+<a name="_550_keep"></a><a name="keep"></a>
+<p> Normally, after building your <tt>.exe</tt> file, the translator will delete all C files and object files produced by the Translator. If you want it to keep these files, add the <tt>-keep</tt> option to the Translator command-line. e.g.</p>
+
+<p> 
+<pre>euc -keep sanity.ex
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.13 -lflags FLAGS - Linker Flags</h4>
+<a name="_551_lflagsflagslinkerflags"></a><a name="lflagsflagslinkerflags"></a>
+<p> Specifies the flags to pass to the linker.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.14 -lib - User defined library</h4>
+<a name="_552_libuserdefinedlibrary"></a><a name="libuserdefinedlibrary"></a>
+<p> It is sometimes useful to link your translated code to a Euphoria runtime library other than the default supplied library. This ability is probably mostly useful for testing and debugging the runtime library itself, or to give additional debugging information when debugging translated Euphoria code. Note that only the default library is supplied. Use the <tt>-lib {library}</tt> option:</p>
+
+<p> 
+<pre>euc -lib decu.a myapp.ex
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.15 -lib-pic - User defined library for PIC mode</h4>
+<a name="_553_libpicuserdefinedlibraryforpicmode"></a><a name="libpicuserdefinedlibraryforpicmode"></a>
+<p> Some platforms and architectures (e.g., x86-64) require that shared libraries be built in Position Independent Code mode, which requires that the euphoria run time library also be built with PIC. This option is similar to the <a href="e2c.html#_552_libuserdefinedlibrary">-lib - User defined library</a> option, except that it specifies the library to use for PIC code:</p>
+
+<p> 
+<pre>euc -lib-pic euso.a myapp.ex
+</pre>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.16 -makefile / -makefile-partial - Using makefiles</h4>
+<a name="_554_makefilemakefilepartialusingmakefiles"></a><a name="makefilemakefilepartialusingmakefiles"></a>
+<p> You can optionally have the translator create a makefile that you can use to build your program instead of building directly.  Using a makefile like this can be convenient if you want or need to alter the translated C code, or change compiling or linking options before building your program.  To do so:</p>
+
+<p> 
+<pre>$ euc -makefile myapp.ex
+Translating code, pass: 1 2 3 4  generating
+
+3.c files were created.
+To build your project, type make -f myapp.mak
+</pre>
+
+<p> Then, as the message indicates, simply type: 
+<pre>$ make -f myapp.mak
+</pre>
+
+<p> On Windows, when using Watcom, the message will refer to wmake, the Watcom version of make.  On BSD platforms, you may need to use <tt>gmake</tt>, as the generated makefiles are in GNU format, not BSD.</p>
+
+<p> You can also get a partial makefile using the <tt>-makefile-partial</tt> switch. This generates a makefile that you can use to include into another makefile for a larger project.  This is useful for including the file dependencies for your code into the larger project.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.17 -maxsize NUMBER</h4>
+<a name="_555_maxsizenumber"></a><a name="maxsizenumber"></a>
+<p> Specifies the maximum number of C statements to go into a single file before the translated file is split into multiple C files.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.18 -plat - Set platform</h4>
+<a name="_556_platsetplatform"></a><a name="platsetplatform"></a>
+<p> The translator has the capability of translating Euphoria code to C code for a platform other than the host platform. This can be done with the <tt>-plat</tt> option. It takes one parameter, the platform code: </p>
+<ul><li>FREEBSD
+</li><li>LINUX
+</li><li>OSX
+</li><li>WINDOWS
+</li><li>NETBSD
+</li><li>OPENBSD
+</li></ul>
+<p>Use one of these options to translate code into C for the specified platform. The default will always be the host platform of the translator that is executed, so <tt>euc.exe</tt> will default to <em>Windows</em>, and <tt>euc</tt> will default to the platform upon which it was built.</p>
+
+<p> The resulting output can be compiled by the appropriate compiler on the specified platform, or, possibly a cross platform compiler, if you have one configured.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.19 -rc-file - Resource File</h4>
+<a name="_557_rcfileresourcefile"></a><a name="rcfileresourcefile"></a>
+<p> On Windows, <tt>euc</tt> can automatically compile and link in an application specific resource file. This resource file can contain product and version information, an application icon or any other valid resource data.</p>
+
+<p> 
+<pre>euc -rc-file myapp.rc myapp.ex
+</pre>
+
+<p> The resulting executable will contain all the resources from <tt>myapp.rc</tt> compiled into the executable. Please see <a href="e2c.html#_561_usingresourcefiles">Using Resource Files</a>.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.20 -silent</h4>
+<a name="_558_silent"></a><a name="silent"></a>
+<p> Do not display status messages.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.4.21 -stack - Stack size</h4>
+<a name="_559_stackstacksize"></a><a name="stackstacksize"></a>
+<p> To increase or decrease the total amount of stack space reserved for your program, add <tt>-stack nnnn</tt> to the command line. e.g.</p>
+
+<p> 
+<pre>euc -stack 100000 myprog.ex
+</pre>
+
+<p> The total stack space (in bytes) that you specify will be divided up among all the tasks that you have running (assuming you have more than one). Each task has it's own private stack space. If it exceeds its allotment, you'll get a run-time error message identifying the task and giving the size of its stack space. Most non-recursive tasks can run with call stacks as small as 2000 bytes, but to be safe, you should allow more than this. A deeply-recursive task could use a great deal of space. It all depends on the maximum levels of calls that a task might need. At run-time, as your program creates more simultaneously-active tasks, the stack space allotted to each task will tend to decrease.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.5 Dynamic Link Libraries</h3>
+<a name="_560_dynamiclinklibraries"></a><a name="dynamiclinklibraries"></a>
+<p> Simply by adding <tt>-dll</tt> (or <tt>-so</tt>) to the command line, the <strong>Translator</strong> will build a shared dynamically loading library instead of an executable program.</p>
+
+<p> You can translate and compile a set of useful Euphoria routines, and share them with other people, without giving them your source. Furthermore, your routines will likely run much faster when translated and compiled. Both translated/compiled and interpreted programs will be able to use your library.</p>
+
+<p> Only the global Euphoria procedures and functions, i.e. those declared with the "<tt>global</tt>", "<tt>public</tt>" or "<tt>export</tt>" keyword, will be exported from the shared dynamically loaded library.</p>
+
+<p> Any Euphoria program, whether translated or compiled or interpreted, can link with a Euphoria shared dynamically loading library using the same mechanism that lets you link with a shared dynamically loading library written in C. The program first calls <a href="std_dll.html#_5445_open_dll">open_dll</a> to open the file, then it calls <a href="std_dll.html#_5469_define_c_func">define_c_func</a> or <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> for any routines that it wants to call. It calls these routines using <a href="std_dll.html#_5477_c_func">c_func</a> and <a href="std_dll.html#_5485_c_proc">c_proc</a>.</p>
+
+<p> The routine names exported from a Euphoria shared dynamically loading library will vary depending on which C compiler you use.</p>
+
+<p> GNU C on <em>Unix</em> exports the names exactly as they appear in the C code produced by the <strong>Translator</strong>, e.g. a Euphoria routine</p>
+
+<p> 
+<pre>global procedure foo(integer x, integer y)
+</pre>
+
+<p> would be exported as "<tt>_0foo</tt>" or maybe "<tt>_1foo</tt>" etc. The underscore and digit are added to prevent naming conflicts. The digit refers to the Euphoria file where the identifier is defined. The main file is numbered as 0. The include files are numbered in the order they are encountered by the compiler. You should check the C source to be sure.</p>
+
+<p> For Watcom, the <strong>Translator</strong> also creates an EXPORT command, added to <tt>objfiles.lnk</tt> for each exported identifier, so <tt>foo</tt> would be exported as "<tt>foo</tt>".</p>
+
+<p> With Watcom, if you specify the <tt>-makefile</tt> option, you can edit the <tt>objfiles.lnk</tt> file to rename the exported identifiers, or remove ones that you do not want to export.  Then build with the generated makefile.</p>
+
+<p> Having nice exported names is not critical, since the name need only appear once in each Euphoria program that uses the shared dynamically loading library, i.e. in a single <a href="std_dll.html#_5469_define_c_func">define_c_func</a> or <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> statement. The author of a shared dynamically loading library should probably provide his users with a Euphoria include file containing the necessary <a href="std_dll.html#_5469_define_c_func">define_c_func</a> and <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> statements, and he might even provide a set of Euphoria "wrapper" routines to call the routines in the shared dynamically loading library.</p>
+
+<p> When you call <a href="std_dll.html#_5445_open_dll">open_dll</a>, any top-level Euphoria statements in the shared dynamically loading library will be executed automatically, just like a normal program. This gives the library a chance to initialize its data structures prior to the first call to a library routine. For many libraries no initialization is required.</p>
+
+<p> To pass Euphoria data (atoms and sequences) as arguments, or to receive a Euphoria object as a result, you will need to use the following constants in <tt>euphoria\include\dll.e</tt>:</p>
+
+<pre class="examplecode"><font color="#FF0055">-- Euphoria types for shared dynamically loading library arguments</font>
+<font color="#FF0055">-- and return values:</font>
+
+<font color="#0000FF">global constant</font>
+<font color="#330033">    E_INTEGER = #06000004,</font>
+<font color="#330033">    E_ATOM    = #07000004,</font>
+<font color="#330033">    E_SEQUENCE= #08000004,</font>
+<font color="#330033">    E_OBJECT  = #09000004</font>
+</pre>
+
+<p> Use these in <tt>define_c_proc</tt> and <tt>define_c_func</tt> just as you currently use <tt>C_INT</tt>, <tt>C_UINT</tt> etc. to call C shared dynamically loading libraries.</p>
+
+<p> Currently, file numbers returned by <a href="std_io.html#_1603_open">open</a>, and routine id's returned by <a href="std_machine.html#_5855_routine_id">routine_id</a>, can be passed and returned, but the library and the main program each have their own separate ideas of what these numbers mean. Instead of passing the file number of an open file, you could instead pass the file name and let the shared dynamically loading library open it. Unfortunately there is no simple solution for passing routine id's. This might be fixed in the future.</p>
+
+<p> A Euphoria shared dynamically loading library currently may not execute any multitasking operations. The Translator will give you an error message about this.</p>
+
+<p> Euphoria shared dynamically loading library can also be used by C programs as long as only 31-bit integer values are exchanged. If a 32-bit pointer or integer must be passed, and you have the source to the C program, you could pass the value in two separate 16-bit integer arguments (upper 16 bits and lower 16 bits), and then combine the values in the Euphoria routine into the desired 32-bit atom.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.6 Using Resource Files</h3>
+<a name="_561_usingresourcefiles"></a><a name="usingresourcefiles"></a>
+<p> When creating an executable file to deliver to your users on Windows, its best to link in a resource file that at minimum sets your application icon but better if it sets product and version information.</p>
+
+<p> When the resource compiler is launched by <tt>euc</tt>, a single macro is defined named <tt>SRCDIR</tt>. This can be used in your resource files to reference your application source path for including other resource files, icon files, etc...</p>
+
+<p> A simple resource file to attach an icon to your executable file is as simple as:</p>
+
+<p> 
+<pre>myapp ICON SRCDIR\myapp.ico
+</pre>
+
+<p> Remember that SRCDIR will be expanded to your application source path.</p>
+
+<p> A more complex resource file containing an icon and product/version information may look like:</p>
+
+<p> 
+<pre>1 VERSIONINFO
+
+FILEVERSION 4,0,0,9
+PRODUCTVERSION 4,0,0,9
+
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x4L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+
+BEGIN
+  BLOCK "StringFileInfo"
+    BEGIN
+      BLOCK "040904B0"
+        BEGIN
+          VALUE "Comments",         "http://myapplication.com\0"
+          VALUE "CompanyName",      "John Doe Computing\0"
+          VALUE "FileDescription",  "Cool App\0
+          VALUE "FileVersion",      "4.0.0\0"
+          VALUE "InternalName",     "coolapp.exe\0"
+          VALUE "LegalCopyright",   "Copyright (c) 2022 by John Doe Computing\0"
+          VALUE "LegalTrademarks1", "Trademark Pending\0"
+          VALUE "LegalTrademarks2", "\0"
+          VALUE "OriginalFilename", "coolapp.exe\0"
+          VALUE "ProductName",      "Cool Application\0"
+          VALUE "ProductVersion",   "4.0.0\0"
+        END
+    END
+  BLOCK "VarFileInfo"
+    BEGIN
+      VALUE "Translation", 0x409, 1200
+    END
+END
+
+coolapp ICON SRCDIR\coolapp.ico
+</pre>
+
+<p> One other item you may wish to include is a manifest file which lets Windows know that controls should use the new theming engines available in &gt;= Windows XP. Simply append:</p>
+
+<p> 
+<pre>1 24 "coolapp.manifest"
+</pre>
+
+<p> to the end of your resource file. The <tt>coolapp.manifest</tt> file is:</p>
+
+<p> 
+<pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"&gt;
+&lt;assemblyIdentity
+    version="0.64.1.0"
+    processorArchitecture="x86"
+    name="euphoria"
+    type="win32"
+/&gt;
+&lt;dependency&gt;
+    &lt;dependentAssembly&gt;
+        &lt;assemblyIdentity
+            type="win32"
+            name="Microsoft.Windows.Common-Controls"
+            version="6.0.0.0"
+            processorArchitecture="X86"
+            publicKeyToken="6595b64144ccf1df"
+            language="*"
+        /&gt;
+    &lt;/dependentAssembly&gt;
+&lt;/dependency&gt;
+&lt;/assembly&gt;
+</pre>
+
+<p> Version, Product and Manfiest information may change with new releases of Microsoft Windows. You should consult MSDN for up to date information about using resource files with your application. <a class="external" href="http://msdn.microsoft.com/en-us/library/aa380599(VS.85).aspx">MSDN About Resource Files</a>.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.7 Executable Size and Compression</h3>
+<a name="_562_executablesizeandcompression"></a><a name="executablesizeandcompression"></a>
+<p> The translator does not compress your executable file. If you want to do this we suggest you try the free <a class="external" href="http://upx.sourceforge.net">UPX</a> compressor.</p>
+
+<p> Large Win32Lib-based .exe's produced by the Translator can be compressed by UPX to about 15% of their original size, and you won't notice any difference in start-up time.</p>
+
+<p> The <strong>Translator</strong> deletes routines that are not used, including those from the standard Euphoria include files. After deleting unused routines, it checks again for more routines that have now become unused, and so on. This can make a big difference, especially with Win32Lib-based programs where a large file is included, but many of the included routines are not used in a given program.</p>
+
+<p> Nevertheless, your compiled executable file will likely be larger than the same Euphoria program bound with the interpreter <strong>back-end</strong>. This is partly due to the <strong>back-end</strong> being a compressed executable. Also, Euphoria statements are extremely compact when stored in a bound file. They need more space after being translated to C, and compiled into machine code. Future versions of the <strong>Translator</strong> will produce faster and smaller executables.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.8 Interpreter versus Translator</h3>
+<a name="_563_interpreterversustranslator"></a><a name="interpreterversustranslator"></a>
+<p> All Euphoria programs can be translated to C, and with just a few exceptions noted below, will run the same as with the <strong>Interpreter</strong> (but hopefully faster).</p>
+
+<p> The <strong>Interpreter</strong> and <strong>Translator</strong> share the same parser, so you will get the same syntax errors, variable not declared errors etc. with either one.</p>
+
+<p> The <strong>Interpreter</strong> automatically expands the call stack (until memory is exhausted), so you can have a huge number of levels of nested calls. Most C compilers, on most systems, have a pre-set limit on the size of the stack. Consult your compiler or linker manual if you want to increase the limit, for example if you have a recursive routine that might need thousands of levels of recursion. Modify the link command in your makefile, or use the <tt>-lflags</tt> option when calling the translator. For Watcom C, use <tt>OPTION STACK=nnnn</tt>, where nnnn is the number of bytes of stack space.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.8.1 Note:</h4>
+<a name="_564_note"></a><a name="note"></a>
+<p> The <strong>Translator</strong> assumes that your program has no run-time errors in it that would be caught by the <strong>Interpreter</strong>. The <strong>Translator</strong> does not check for: subscript out of bounds, variable not initialized, assigning the wrong type of data to a variable, etc.</p>
+
+<p> You should <strong>debug</strong> your program with the <strong>Interpreter</strong>. The Translator checks for certain run-time errors, but in the interest of speed, most are not checked. When translated C code crashes you'll typically get a very cryptic machine exception. In most cases, the first thing you should do is run your program with the <strong>Interpreter</strong>, using the same inputs, and preferably with <tt>type_check</tt> turned on. If the error only shows up in translated code, you can use <tt>with trace</tt> and <tt>trace(3)</tt> to get a <tt>ctrace.out</tt> file showing a circular buffer of the last 500 Euphoria statements executed. If a translator-detected error message is displayed (and stored in <tt>ex.err</tt>), you will also see the offending line of Euphoria source whenever <tt>with trace</tt> is in effect. <tt>with trace</tt> will slow your program down, and the slowdown can be extreme when <tt>trace(3)</tt> is also in effect.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.9 Legal Restrictions</h3>
+<a name="_565_legalrestrictions"></a><a name="legalrestrictions"></a>
+<p> As far as RDS is concerned, any executable programs or shared dynamically loading libraries that you create with this <strong>Translator</strong> without modifying an RDS translator library file, may be distributed royalty-free. You are free to incorporate any Euphoria files provided by RDS into your application.</p>
+
+<p> In general, if you wish to use Euphoria code written by 3rd parties, please honor any restrictions that apply. If in doubt, you should ask for permission.</p>
+
+<p> On <em>Linux</em>, <em>FreeBSD</em>, the GNU Library licence will normally not affect programs created with this <strong>Translator</strong>. Simply compiling with GNU C does not give the Free Software Foundation any jurisdiction over your program. If you statically link their libraries you will be subject to their Library licence, but the standard compile/link procedure does not statically link any FSF libraries, so there should be no problem.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.10 Disclaimer:</h3>
+<a name="_566_disclaimer"></a><a name="disclaimer"></a>
+<p> This is what we believe to be the case. We are not lawyers. If it's important to you, you should read <strong>all</strong> licences and the legal comments in them, to form your own judgment. You may need to get professional legal opinion as well.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.11 Frequently Asked Questions</h3>
+<a name="_567_frequentlyaskedquestions"></a><a name="frequentlyaskedquestions"></a>
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.11.1 How much of a speed-up should I expect?</h4>
+<a name="_568_howmuchofaspeedupshouldiexpect"></a><a name="howmuchofaspeedupshouldiexpect"></a>
+<p> It all depends on what your program spends its time doing. Programs that use mainly integer calculations, don't call run-time routines very often, and don't do much I/O will see the greatest improvement, currently up to about 5x faster. Other programs may see only a few percent improvement.</p>
+
+<p> The various C compilers are not equal in optimization ability.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.11.2 What if I want to change the compile or link options in my generated makefile?</h4>
+<a name="_569_whatifiwanttochangethecompileorlinkoptionsinmygeneratedmakefile"></a><a name="whatifiwanttochangethecompileorlinkoptionsinmygeneratedmakefile"></a>
+<p> Feel free to do so, that's one reason for producing a makefile.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.11.3 How can I make my program run even faster?</h4>
+<a name="_570_howcanimakemyprogramrunevenfaster"></a><a name="howcanimakemyprogramrunevenfaster"></a>
+<p> It's important to declare variables as integer where possible. In general, it helps if you choose the most restrictive type possible when declaring a variable.</p>
+
+<p> Typical user-defined types will not slow you down. Since your program is supposed to be free of type_check errors, types are ignored by the Translator, unless you call them directly with normal function calls. The one exception is when a user-defined type routine has side-effects (i.e. it sets a global variable, performs pokes into memory, I/O etc.). In that case, if <tt>with type_check</tt> is in effect, the Translator will issue code to call the type routine and report any type_check failure that results.</p>
+
+<p> On <em>Windows</em> we have left out the <tt>/ol</tt> loop optimization for Watcom's <tt>wcc386</tt>. We found in a couple of rare cases that this option led to incorrect machine code being emitted by the Watcom C compiler. If you add it back in to your own makefile you might get a slight improvement in speed, with a slight risk of buggy code.</p>
+
+<p> On <em>Linux</em> or <em>FreeBSD</em> you could try the <tt>-O3</tt> option of gcc instead of <tt>-O2</tt>. It will "in-line" small routines, improving speed slightly, but creating a larger executable. You could also try the <a class="external" href="http://www.intel.com/cd/software/products/asmo-na/eng/compilers/clin/index.htm">Intel C++ Compiler for Linux</a>. It's compatible with GNU C, but some adjustments to your makefile might be required.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h3>6.4.12 Common Problems</h3>
+<a name="_571_commonproblems"></a><a name="commonproblems"></a>
+<p> Many large programs have been successfully translated and compiled using each of the supported C compilers, and the Translator is now quite stable.</p>
+
+<!-- ..\docs\e2c.txt -->
+<h4>6.4.12.1 Note:</h4>
+<a name="_572_note"></a><a name="note"></a>
+<p> On <em>Windows</em>, if you call a C routine that uses the cdecl calling convention (instead of stdcall), you must specify a '<tt>+</tt>' character at the start of the routine's name in <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> and <a href="std_dll.html#_5469_define_c_func">define_c_func</a>. If you don't, the call may not work when running the <tt>eui</tt> Interpreter.</p>
+
+<p> In some cases a huge Euphoria routine is translated to C, and it proves to be too large for the C compiler to process. If you run into this problem, make your Euphoria routine smaller and simpler. You can also try turning off C optimization in your makefile for just the <tt>.c</tt> file that fails. Breaking up a single constant declaration of many variables into separate constant declarations of a single variable each, may also help. Euphoria has no limits on the size of a routine, or the size of a file, but most C compilers do. The Translator will automatically produce multiple small .c files from a large Euphoria file to avoid stressing the C compiler. It won't however, break a large routine into smaller routines.</p>
+
+<p> 
+<!-- ..\docs\dynamic.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="bind.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="dynamic.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="bind.html">6.3 Shrouding and Binding</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="dynamic.html">6.5 Indirect Routine Calling</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

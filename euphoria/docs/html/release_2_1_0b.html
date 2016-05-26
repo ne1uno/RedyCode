@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_1_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_1_0.html">9.40 Version 2.1 WIN32 + DOS32 March 29, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_1_0a.html">9.42 Version 2.1 Alpha January 15, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.1.0b.txt -->
+<h2>9.41 Version 2.1 Beta March 5, 1999</h2>
+<a name="_6794_version21betamarch51999"></a><a name="version21betamarch51999"></a><ul><li>The rest of the files in the <strong>euphoria\doc</strong> directory have now been converted to HTML. Every <strong>.doc</strong> file in the <strong>doc</strong> directory now has a corresponding  <strong>.htm</strong> file in the <strong>euphoria\html</strong> directory. Many improvements and clarifications were made to the documentation.
+</li><li>You will now be warned when you have code that comes immediately after an  <strong>exit</strong>, <strong>return</strong> or <strong>abort()</strong> statement. This code can never be executed. Suggested by Gabriel Boehme.
+</li><li><strong>safe.e</strong> no longer includes <strong>graphics.e</strong>. This eliminates possible naming conflicts when <strong>safe.e</strong> is substituted for <strong>machine.e</strong>.
+</li><li>Using code supplied by David Guy, <strong>safe.e</strong> will now let you add or remove externally-allocated blocks of memory on the "safe address list". <strong>See the new library routines:</strong> <strong>register_block()</strong> and <strong>unregister_block()</strong>.
+</li><li><strong>message_box()</strong> now uses the <strong>handle of the active window</strong> rather than NULL. This forces the user to reply to your message before he can continue to interact with your program.  He won't be prevented from interacting with other programs. Thanks to Austin C.
+</li><li><strong>get()</strong> and <strong>value()</strong> have been sped up by a further 5% thanks to Gabriel Boehme.
+</li><li><strong>exw.exe</strong> has been made less likely to crash mysteriously when attacked by a virus.
+</li><li><strong>sanity.ex</strong> now checks your installation of Euphoria. You'll be warned if your PATH or EUDIR variables are not set, or your <strong>ex.exe</strong>, <strong>exw.exe</strong>,  <strong>pdex.exe</strong>, or <strong>pdexw.exe</strong> files have been corrupted or not installed correctly in <strong>euphoria\bin</strong>.
+</li><li>The security of <strong>bound</strong> and <strong>scrambled</strong> programs has been tightened some more. Thanks to Rusty Davis.
+</li><li>To save space in <strong>euphor21.zip</strong>, the <strong>install</strong> program now <em>generates</em> the HTML and DOC files from a common source, using Junko Miura's  <strong>documentation generator</strong>. In the process, the generator is deleted, but you can download it from the RDS site.
+</li><li>When a <strong>type_check</strong> failure occurs you'll be warned if the type erroneously returned a <em>sequence</em> for it's "true/false" result. Previously, a sequence result was simply reported as a type_check failure. Suggested by Ralf Nieuwenhuijsen.
+</li><li>The code for <strong>demo\win32\winwire.exw</strong> was cleaned up considerably.
+</li><li>The <strong>install</strong> program will warn you to change your <strong>autoexec.bat</strong> file when you install a new release of Euphoria onto a <em>different</em> drive.
+</li></ul>
+<p> 
+<!-- ..\docs\release\2.1.0a.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_1_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_1_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_1_0.html">9.40 Version 2.1 WIN32 + DOS32 March 29, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_1_0a.html">9.42 Version 2.1 Alpha January 15, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

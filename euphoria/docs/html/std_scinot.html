@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_stack.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_socket.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_stack.html">8.34 Stack</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_socket.html">8.36 Core Sockets</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\scinot.e -->
+<h2>8.35 Scientific Notation Parsing</h2>
+<a name="_4710_scientificnotationparsing"></a><a name="scientificnotationparsing"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_scinot.html#_4710_scientificnotationparsing">8.35 Scientific Notation Parsing</a></div>
+<div class="toc_3"><a href="std_scinot.html#_4711_parsingroutines">8.35.1 Parsing routines</a></div>
+<div class="toc_3"><a href="std_scinot.html#_4712_floatingpointtypes">8.35.2 Floating Point Types</a></div>
+<div class="toc_4"><a href="std_scinot.html#_4714_type">8.35.2.1 type</a></div>
+<div class="toc_4"><a href="std_scinot.html#_4716_badsigeucode">8.35.2.2 BadSig: <eucode></a></div>
+<div class="toc_4"><a href="std_scinot.html#_4718_badsigeucode">8.35.2.3 BadSig: <eucode></a></div>
+<div class="toc_4"><a href="std_scinot.html#_4721_badsigeucode">8.35.2.4 BadSig: <eucode></a></div>
+<div class="toc_4"><a href="std_scinot.html#_4723_bits_to_bytes">8.35.2.5 bits_to_bytes</a></div>
+<div class="toc_4"><a href="std_scinot.html#_4726_bytes_to_bits">8.35.2.6 bytes_to_bits</a></div>
+<div class="toc_4"><a href="std_scinot.html#_4730_scientific_to_float">8.35.2.7 scientific_to_float</a></div>
+<div class="toc_4"><a href="std_scinot.html#_4735_scientific_to_atom">8.35.2.8 scientific_to_atom</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\scinot.e -->
+<h3>8.35.1 Parsing routines</h3>
+<a name="_4711_parsingroutines"></a><a name="parsingroutines"></a>
+<p> The parsing functions require a sequence containing a correctly formed scientific notation representation of a number.  The general pattern is an optional negative sign (-), a number, usually with a decimal point, followed by an upper case or lower case 'e', then optionally a plus (+) or a minus (-) sign, and an integer.  There should be no spaces or other characters. The following are valid numbers: 
+<pre>1e0
+3.1415e-2
+-9.0E+3
+</pre>
+This library evaluates scientific notation to the highest level of precision possible using Euphoria atoms.  An atom in 32-bit euphoria can have up to 16 digits of precision (19 in 64-bit euphoria).  A number represented by scientific notation could contain up to 17 (or 20) digits.  The 17th (or 20th) supplied digit may have an effect upon the value of the atom due to rounding errors in the calculations.</p>
+
+<p> This does not mean that if the 17th (or 20th) digit is 5 or higher, you should include it.  The calculations are much more complicated, because a decimal fraction has to be converted to a binary fraction, and there is not really a one-to-one correspondence between the decimal digits and the bits in the resulting atom.  The 18th or higher digit, however, will never have an effect on the resulting atom.</p>
+
+<p> The biggest and smallest (magnitude) atoms possible are: 
+<pre>32-bit:
+1.7976931348623157e+308
+4.9406564584124654e-324
+</pre>
+
+<!-- ..\include\std\scinot.e -->
+<h3>8.35.2 Floating Point Types</h3>
+<a name="_4712_floatingpointtypes"></a><a name="floatingpointtypes"></a>
+<p> 
+<a name="type"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.1 type</h4>
+<a name="_4714_type"></a><a name="type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#0000FF">public enum type </font><font color="#330033">floating_point</font>
+</pre>
+
+<p> 
+<a name="badsigeucode"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.2 BadSig: <eucode></h4>
+<a name="_4716_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#330033">NATIVE</font>
+</pre>
+
+<p>   NATIVE Use whatever is the appropriate format based upon the version of euphoria being used (DOUBLE for 32-bit, EXTENDED for 64-bit)</p>
+
+<p> 
+<a name="badsigeucode"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.3 BadSig: <eucode></h4>
+<a name="_4718_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#330033">DOUBLE</font>
+</pre>
+
+<!-- ..\include\std\scinot.e -->
+<h5>DOUBLE:</h5>
+<a name="_4719_double"></a><a name="double"></a>
+<p> Description IEEE 754 double (64-bit) floating point format. The native 32-bit euphoria floating point representation.</p>
+
+<p> 
+<a name="badsigeucode"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.4 BadSig: <eucode></h4>
+<a name="_4721_badsigeucode"></a><a name="badsigeucode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#330033">EXTENDED</font>
+</pre>
+
+<p>   The native 64-bit euphoria floating point reprepresentation.</p>
+
+<p> 
+<a name="bits_to_bytes"></a><a name="to_bytes"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.5 bits_to_bytes</h4>
+<a name="_4723_bits_to_bytes"></a><a name="bits_to_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#0000FF">public function </font><font color="#330033">bits_to_bytes</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">bits</font><font color="#880033">)</font>
+</pre>
+
+<p> Takes a sequence of bits (all elements either 0 or 1) and converts it into a sequence of bytes.</p>
+
+<!-- ..\include\std\scinot.e -->
+<h5>Parameters:</h5>
+<a name="_4724_parameters"></a><a name="parameters"></a><ol><li><tt>bits</tt> : sequence of ones and zeroes
+</li></ol>
+<p>Returns a sequence of 8-bit integers</p>
+
+<p> 
+<a name="bytes_to_bits"></a><a name="to_bits"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.6 bytes_to_bits</h4>
+<a name="_4726_bytes_to_bits"></a><a name="bytes_to_bits"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#0000FF">public function </font><font color="#330033">bytes_to_bits</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">bytes</font><font color="#880033">)</font>
+</pre>
+
+<p> Converts a sequence of bytes (all elements integers between 0 and 255) and converts it into a sequence of bits.</p>
+
+<!-- ..\include\std\scinot.e -->
+<h5>Parameters:</h5>
+<a name="_4727_parameters"></a><a name="parameters"></a><ol><li><tt>bytes</tt> : sequence of values from 0-255
+</li></ol>
+<!-- ..\include\std\scinot.e -->
+<h5>Returns:</h5>
+<a name="_4728_returns"></a><a name="returns"></a>
+<p> Sequence of bits (ones and zeroes)</p>
+
+<p> 
+<a name="scientific_to_float"></a><a name="to_float"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.7 scientific_to_float</h4>
+<a name="_4730_scientific_to_float"></a><a name="scientific_to_float"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#0000FF">public function </font><font color="#330033">scientific_to_float</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, floating_point fp = NATIVE</font><font color="#880033">)</font>
+</pre>
+
+<p> Takes a string reprepresentation of a number in scientific notation and the requested precision (DOUBLE or EXTENDED) and returns a sequence of bytes in the raw format of an IEEE 754 double or extended precision floating point number.  This value can be passed to the euphoria library function, <tt><a href="std_convert.html#_2229_float64_to_atom">float64_to_atom</a></tt> or <tt><a href="std_convert.html#_2220_float80_to_atom">float80_to_atom</a></tt>, respectively.</p>
+
+<!-- ..\include\std\scinot.e -->
+<h5>Parameters:</h5>
+<a name="_4731_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : string representation of a number, e.g., "1.23E4"
+</li><li><tt>fp</tt> : the required precision for the ultimate representation<ol><li><tt>DOUBLE</tt> Use IEEE 754, the euphoria representation used in 32-bit euphoria
+</li><li><tt>EXTENDED</tt> Use Extended Floating Point, the euphoria representation in 64-bit euphoria
+</li></ol>
+</li></ol>
+<!-- ..\include\std\scinot.e -->
+<h5>Returns:</h5>
+<a name="_4732_returns"></a><a name="returns"></a>
+<p> Sequence of bytes that represents the physical form of the converted floating point number.</p>
+
+<!-- ..\include\std\scinot.e -->
+<h5>Note:</h5>
+<a name="_4733_note"></a><a name="note"></a>
+<p> Does not check if the string exceeds IEEE 754 double precision limits.</p>
+
+<p> 
+<a name="scientific_to_atom"></a><a name="to_atom"></a> </p>
+
+<!-- ..\include\std\scinot.e -->
+<h4>8.35.2.8 scientific_to_atom</h4>
+<a name="_4735_scientific_to_atom"></a><a name="scientific_to_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/scinot.e</font>
+<font color="#0000FF">public function </font><font color="#330033">scientific_to_atom</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, floating_point fp = NATIVE</font><font color="#880033">)</font>
+</pre>
+
+<p> Takes a string reprepresentation of a number in scientific notation and returns an atom.</p>
+
+<!-- ..\include\std\scinot.e -->
+<h5>Parameters:</h5>
+<a name="_4736_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : string representation of a number (such as "1.23E4" ).
+</li><li><tt>fp</tt> : the required precision for the ultimate representation.<ol><li><tt>DOUBLE</tt> Use IEEE 754, the euphoria representation used in 32-bit Euphoria.
+</li><li><tt>EXTENDED</tt> Use Extended Floating Point, the euphoria representation in 64-bit Euphoria.
+</li></ol>
+</li></ol>
+<!-- ..\include\std\scinot.e -->
+<h5>Returns:</h5>
+<a name="_4737_returns"></a><a name="returns"></a>
+<p> Euphoria atom floating point number.</p>
+
+<p> 
+<!-- ..\include\std\socket.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_stack.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_socket.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_stack.html">8.34 Stack</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_socket.html">8.36 Core Sockets</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

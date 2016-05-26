@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_mathcons.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_stats.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_mathcons.html">8.26 Math Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_stats.html">8.28 Statistics</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\rand.e -->
+<h2>8.27 Random Numbers</h2>
+<a name="_3859_randomnumbers"></a><a name="randomnumbers"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_rand.html#_3859_randomnumbers">8.27 Random Numbers</a></div>
+<div class="toc_4"><a href="std_rand.html#_3861_rand">8.27.0.1 rand</a></div>
+<div class="toc_4"><a href="std_rand.html#_3868_rand_range">8.27.0.2 rand_range</a></div>
+<div class="toc_4"><a href="std_rand.html#_3875_rnd">8.27.0.3 rnd</a></div>
+<div class="toc_4"><a href="std_rand.html#_3882_rnd_1">8.27.0.4 rnd_1</a></div>
+<div class="toc_4"><a href="std_rand.html#_3889_set_rand">8.27.0.5 set_rand</a></div>
+<div class="toc_4"><a href="std_rand.html#_3895_get_rand">8.27.0.6 get_rand</a></div>
+<div class="toc_4"><a href="std_rand.html#_3901_chance">8.27.0.7 chance</a></div>
+<div class="toc_4"><a href="std_rand.html#_3908_roll">8.27.0.8 roll</a></div>
+<div class="toc_4"><a href="std_rand.html#_3915_sample">8.27.0.9 sample</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="eurand"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.1 rand</h4>
+<a name="_3861_rand"></a><a name="rand"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function rand</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">maximum</font><font color="#880033">)</font>
+</pre>
+
+<p> returns a random integral value.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3862_parameters"></a><a name="parameters"></a><ol><li><tt>maximum</tt> : an atom, a cap on the value to return.
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3863_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, from 1 to <tt>maximum</tt>.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3864_comments"></a><a name="comments"></a><ul><li>The minimum value of <tt>maximum</tt> is 1.
+</li><li>The maximum value that can possibly be returned is <tt>#FFFFFFFF</tt> (<tt>4_294_967_295</tt>)
+</li><li>This function may be applied to an atom or to all elements of a sequence.
+</li><li>In order to get reproducible results from this function, you should call <a href="std_rand.html#_3889_set_rand">set_rand</a> with a reproducible value prior.
+</li></ul>
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3865_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10, 20, 30</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s might be: {5, 17, 23} or {9, 3, 12} etc.</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3866_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3889_set_rand">set_rand</a>, <a href="std_math.html#_3541_ceil">ceil</a></p>
+
+<p> 
+<a name="randomrand_range"></a><a name="range"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.2 rand_range</h4>
+<a name="_3868_rand_range"></a><a name="rand_range"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">rand_range</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">lo, </font><font color="#0000FF">atom </font><font color="#330033">hi</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a random integer from a specified inclusive integer range.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3869_parameters"></a><a name="parameters"></a><ol><li><tt>lo</tt> : an atom, the lower bound of the range
+</li><li><tt>hi</tt> : an atom, the upper bound of the range.
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3870_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, randomly drawn between <tt>lo</tt> and <tt>hi</tt> inclusive.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3871_comments"></a><a name="comments"></a>
+<p> This function may be applied to an atom or to all elements of a sequence. In order to get reproducible results from this function, you should call <tt>set_rand</tt> with a reproducible value prior.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3872_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = rand_range</font><font color="#880033">(</font><font color="#330033">18, 24</font><font color="#880033">)</font>
+<font color="#FF0055">-- s could be any of: 18, 19, 20, 21, 22, 23 or 24</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3873_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3861_rand">rand</a>, <a href="std_rand.html#_3889_set_rand">set_rand</a>, <a href="std_rand.html#_3875_rnd">rnd</a></p>
+
+<p> 
+<a name="randomrnd"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.3 rnd</h4>
+<a name="_3875_rnd"></a><a name="rnd"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">rnd</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns a random floating point number in the range 0 to 1.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3876_parameters"></a><a name="parameters"></a>
+<p> None.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3877_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, randomly drawn between 0.0 and 1.0 inclusive.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3878_comments"></a><a name="comments"></a>
+<p> In order to get reproducible results from this function, you should call <tt>set_rand</tt> with a reproducible value prior to calling this.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3879_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">1001</font><font color="#880033">)</font>
+<font color="#330033">s = rnd</font><font color="#880033">()</font>
+<font color="#FF0055">  -- s is 0.6277338201</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3880_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3861_rand">rand</a>, <a href="std_rand.html#_3889_set_rand">set_rand</a>, <a href="std_rand.html#_3868_rand_range">rand_range</a></p>
+
+<p> 
+<a name="randomrnd_1"></a><a name="1"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.4 rnd_1</h4>
+<a name="_3882_rnd_1"></a><a name="rnd_1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">rnd_1</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns a random floating point number in the range 0 to less than 1.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3883_parameters"></a><a name="parameters"></a>
+<p> None.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3884_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, randomly drawn between 0.0 and a number less than 1.0</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3885_comments"></a><a name="comments"></a>
+<p> In order to get reproducible results from this function, you should call <tt>set_rand</tt> with a reproducible value prior to calling this.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3886_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">1001</font><font color="#880033">)</font>
+<font color="#330033">s = rnd_1</font><font color="#880033">()</font>
+<font color="#FF0055">  -- s is 0.6277338201</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3887_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3861_rand">rand</a>, <a href="std_rand.html#_3889_set_rand">set_rand</a>, <a href="std_rand.html#_3868_rand_range">rand_range</a></p>
+
+<p> 
+<a name="randomset_rand"></a><a name="rand"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.5 set_rand</h4>
+<a name="_3889_set_rand"></a><a name="set_rand"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_rand</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">seed</font><font color="#880033">)</font>
+</pre>
+
+<p>   resets the random number generator.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3890_parameters"></a><a name="parameters"></a><ol><li><tt>seed</tt> : an object. The generator uses this initialize itself for the next random number generated. This can be a single integer or atom, or a sequence of two integers, or an empty sequence or any other sort of sequence.
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3891_comments"></a><a name="comments"></a><ul><li>Starting from a <tt>seed</tt>, the values returned by <tt>rand</tt> are reproducible. This is useful for demos and stress tests based on random data. Normally the numbers returned by the <tt>rand</tt> function are totally unpredictable, and will be different each time you run your program. Sometimes however you may wish to repeat the same series of numbers, perhaps because you are trying to debug your program, or maybe you want the ability to generate the same output (for example random picture) for your user upon request.
+</li><li>Internally there are actually two seed values.<ul><li>When <tt>set_rand</tt> is called with a single integer or atom, the two internal seeds are derived from the parameter.
+</li><li>When <tt>set_rand</tt> is called with a sequence of exactly two integers or atoms the internal seeds are set to the parameter values.
+</li><li>When <tt>set_rand</tt> is called with an empty sequence, the internal seeds are set to random values and are unpredictable. This is how to reset the generator.
+</li><li>When <tt>set_rand</tt> is called with any other sequence, the internal seeds are set based on the length of the sequence and the hashed value of the sequence.
+</li></ul>
+</li><li>Aside from an empty <tt>seed</tt> parameter, this sets the generator to a known state and the random numbers generated after come in a predicable order, though they still appear to be random.
+</li></ul>
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3892_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s, t</font>
+<font color="#330033">s = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 3</font><font color="#880033">)</font>
+<font color="#330033">t = s</font>
+
+<font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">12345</font><font color="#880033">)</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">10</font><font color="#880033">)</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">3</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+
+<font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">12345</font><font color="#880033">)  </font><font color="#FF0055">-- same value for set_rand()</font>
+<font color="#330033">t</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">10</font><font color="#880033">)  </font><font color="#FF0055">-- same arguments to rand() as before</font>
+<font color="#330033">t</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)</font>
+<font color="#330033">t</font><font color="#880033">[</font><font color="#330033">3</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+<font color="#FF0055">-- at this point s and t will be identical</font>
+<font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">""</font><font color="#880033">) </font><font color="#FF0055">-- Reset the generator to an unknown seed.</font>
+<font color="#330033">t</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">rand</font><font color="#880033">(</font><font color="#330033">10</font><font color="#880033">)  </font><font color="#FF0055">-- Could be anything now, no way to predict it.</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3893_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3861_rand">rand</a></p>
+
+<p> 
+<a name="randomget_rand"></a><a name="rand"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.6 get_rand</h4>
+<a name="_3895_get_rand"></a><a name="get_rand"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">get_rand</font><font color="#880033">()</font>
+</pre>
+
+<p>   retrieves the current values of the random generator's seeds.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3896_returns"></a><a name="returns"></a>
+<p> a sequence. A 2-element sequence containing the values of the two internal seeds.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3897_comments"></a><a name="comments"></a>
+<p> You can use this to save the current seed values so that you can later reset them back to a known state.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3898_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">seeds</font>
+<font color="#330033"> seeds = get_rand</font><font color="#880033">()</font>
+<font color="#330033"> some_func</font><font color="#880033">() </font><font color="#FF0055">-- Which might set the seeds to anything.</font>
+<font color="#330033"> set_rand</font><font color="#880033">(</font><font color="#330033">seeds</font><font color="#880033">) </font><font color="#FF0055">-- reset them back to whatever they were</font>
+<font color="#FF0055">                 -- before calling 'some_func()'.</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3899_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3889_set_rand">set_rand</a></p>
+
+<p> 
+<a name="randomchance"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.7 chance</h4>
+<a name="_3901_chance"></a><a name="chance"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">chance</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">my_limit, </font><font color="#0000FF">atom </font><font color="#330033">top_limit = 100</font><font color="#880033">)</font>
+</pre>
+
+<p>   simulates the probability of a desired outcome.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3902_parameters"></a><a name="parameters"></a><ol><li><tt>my_limit</tt> : an atom. The desired chance of something happening.
+</li><li><tt>top_limit</tt>: an atom. The maximum chance of something happening. The default is 100.
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3903_returns"></a><a name="returns"></a>
+<p> an integer. 1 if the desired chance happened otherwise 0.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3904_comments"></a><a name="comments"></a>
+<p> This simulates the chance of something happening. For example, if you wnat something to happen with a probablity of 25 times out of 100 times then you code <tt>chance(25)</tt> and if you want something to (most likely) occur 345 times out of 999 times, you code <tt>chance(345, 999)</tt>.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3905_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- 65% of the days are sunny, so ...</font>
+<font color="#0000FF"> if </font><font color="#330033">chance</font><font color="#880033">(</font><font color="#330033">65</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">     puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Today will be a sunny day"</font><font color="#880033">)</font>
+<font color="#0000FF"> elsif </font><font color="#330033">chance</font><font color="#880033">(</font><font color="#330033">40</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">     -- And 40% of non-sunny days it will rain.</font>
+<font color="#0000FF">     puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"It will rain today"</font><font color="#880033">)</font>
+<font color="#0000FF"> else</font>
+<font color="#0000FF">     puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Today will be a overcast day"</font><font color="#880033">)</font>
+<font color="#0000FF"> end if</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3906_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3875_rnd">rnd</a>, <a href="std_rand.html#_3908_roll">roll</a></p>
+
+<p> 
+<a name="randomroll"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.8 roll</h4>
+<a name="_3908_roll"></a><a name="roll"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">roll</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">desired, </font><font color="#0000FF">integer </font><font color="#330033">sides = 6</font><font color="#880033">)</font>
+</pre>
+
+<p>   simulates the probability of a dice throw.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3909_parameters"></a><a name="parameters"></a><ol><li><tt>desired</tt> : an object. One or more desired outcomes.
+</li><li><tt>sides</tt>: an integer. The number of sides on the dice. Default is 6.
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3910_returns"></a><a name="returns"></a>
+<p> an integer. 0 if none of the desired outcomes occured, otherwise the face number that was rolled.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3911_comments"></a><a name="comments"></a>
+<p> The minimum number of sides is two and there is no maximum.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3912_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = roll</font><font color="#880033">(</font><font color="#330033">1, 2</font><font color="#880033">)</font>
+<font color="#FF0055">      --&gt; Simulate a coin toss.</font>
+<font color="#330033">res = roll</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,6</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">      --&gt; Try for a 1 or a 6 from a standard die toss.</font>
+<font color="#330033">res = roll</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3,4</font><font color="#993333">}</font><font color="#330033">, 20</font><font color="#880033">) </font>
+<font color="#FF0055">      --&gt; Looking for any number under 5 from a 20-sided die.</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>See Also:</h5>
+<a name="_3913_seealso"></a><a name="seealso"></a>
+<p> <a href="std_rand.html#_3875_rnd">rnd</a>, <a href="std_rand.html#_3901_chance">chance</a></p>
+
+<p> 
+<a name="randomsample"></a> </p>
+
+<!-- ..\include\std\rand.e -->
+<h4>8.27.0.9 sample</h4>
+<a name="_3915_sample"></a><a name="sample"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/rand.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">random</font>
+<font color="#0000FF">public function </font><font color="#330033">sample</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">population, </font><font color="#0000FF">integer </font><font color="#330033">sample_size, </font><font color="#0000FF">integer </font><font color="#330033">sampling_method = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   selects a set of random samples from a population set.</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Parameters:</h5>
+<a name="_3916_parameters"></a><a name="parameters"></a><ol><li><tt>population</tt> : a sequence. The set of items from which to take a sample.
+</li><li><tt>sample_size</tt>: an integer. The number of samples to take.
+</li><li><tt>sampling_method</tt>: an integer.<ol><li>When &lt; 0, "with-replacement" method used.
+</li><li>When = 0, "without-replacement" method used and a single set of samples returned.
+</li><li>When &gt; 0, "without-replacement" method used and a sequence containing the set of samples (chosen items) and the set unchosen items, is returned.
+</li></ol>
+</li></ol>
+<!-- ..\include\std\rand.e -->
+<h5>Returns:</h5>
+<a name="_3917_returns"></a><a name="returns"></a>
+<p> A sequence. When <tt>sampling_method</tt> less than or equal to 0 then this is the set of samples, otherwise it returns a two-element sequence; the first is the samples, and the second is the remainder of the population (in the original order).</p>
+
+<!-- ..\include\std\rand.e -->
+<h5>Comments:</h5>
+<a name="_3918_comments"></a><a name="comments"></a>
+<p> Selects a set of random samples from a population set. This can be done with either the "with-replacement" or "without-replacement" methods. When using the "with-replacement" method, after each sample is taken it is returned to the population set so that it could possible be taken again. The "without-replacement" method does not return the sample so these items can only ever be chosen once.</p>
+<ul><li>If <tt>sample_size</tt> is less than <tt>1</tt> , an empty set is returned.
+</li><li>When using "without-replacement" method, if <tt>sample_size</tt> is greater than or equal to the population count, the entire population set is returned, but in a random order.
+</li><li>When using "with-replacement" method, if <tt>sample_size</tt> can be any positive integer, thus it is possible to return more samples than there are items in the population set as items can be chosen more than once.
+</li></ul>
+<!-- ..\include\std\rand.e -->
+<h5>Example 1:</h5>
+<a name="_3919_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- without replacement</font>
+
+<font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">"example"</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)  </font>
+<font color="#FF0055">     --&gt; "t"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 5</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)  </font>
+<font color="#FF0055">     --&gt; "flukq"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">     --&gt; ""</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 26</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">     --&gt; "kghrsxmjoeubaywlzftcpivqnd"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 25</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">    --&gt; "omntrqsbjguaikzywvxflpedc"</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 2:</h5>
+<a name="_3920_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- with replacement</font>
+
+<font color="#330033">set_rand</font><font color="#880033">(</font><font color="#330033">"example"</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 1, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)  </font>
+<font color="#FF0055">     --&gt; "t"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 5, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)  </font>
+<font color="#FF0055">     --&gt; "fzycn"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, -1, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">     --&gt; ""</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 26, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">     --&gt; "keeamenuvvfyelqapucerghgfa"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">sample</font><font color="#0000FF">(</font><font color="#330033">"abcdefghijklmnopqrstuvwxyz"</font><font color="#330033">, 45, -1</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font>
+<font color="#FF0055">    --&gt; "orwpsaxuwuyrbstqqwfkykujukuzkkuxvzvzniinnpnxm"</font>
+</pre>
+
+<!-- ..\include\std\rand.e -->
+<h5>Example 3:</h5>
+<a name="_3921_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#FF0055">-- Deal 4 hands of 5 cards from a standard deck of cards.</font>
+<font color="#0000FF">sequence </font><font color="#330033">theDeck</font>
+<font color="#0000FF">sequence </font><font color="#330033">hands = </font><font color="#880033">{}</font>
+<font color="#0000FF">sequence </font><font color="#330033">rt</font>
+<font color="#0000FF">function </font><font color="#330033">new_deck</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">suits = 4, </font><font color="#0000FF">integer </font><font color="#330033">cards_per_suit = 13, </font><font color="#0000FF">integer </font><font color="#330033">wilds = 0</font><font color="#880033">)</font>
+<font color="#0000FF">	sequence </font><font color="#330033">nd = </font><font color="#880033">{}</font>
+<font color="#0000FF">	for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">suits </font><font color="#0000FF">do</font>
+<font color="#0000FF">		for </font><font color="#330033">j = 1 </font><font color="#0000FF">to </font><font color="#330033">cards_per_suit </font><font color="#0000FF">do</font>
+<font color="#330033">			nd = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">nd, </font><font color="#993333">{</font><font color="#330033">i,j</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">		end for</font>
+<font color="#0000FF">	end for</font>
+<font color="#0000FF"> for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">wilds </font><font color="#0000FF">do</font>
+<font color="#330033">     nd = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">nd, </font><font color="#993333">{</font><font color="#330033">suits+1 , i</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF"> end for</font>
+<font color="#0000FF">	return </font><font color="#330033">nd</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">theDeck = new_deck</font><font color="#880033">(</font><font color="#330033">4, 13, 2</font><font color="#880033">) </font><font color="#FF0055">-- Build the initial deck of cards</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">4 </font><font color="#0000FF">do</font>
+<font color="#FF0055"> -- Pick out 5 cards and also return the remaining cards.</font>
+<font color="#330033">	rt = sample</font><font color="#880033">(</font><font color="#330033">theDeck, 5, 1</font><font color="#880033">)</font>
+<font color="#330033">	theDeck = rt</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#FF0055">-- replace the 'deck' with the remaining cards.</font>
+<font color="#330033">	hands = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">hands, rt</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+
+</pre>
+
+<p> 
+<!-- ..\include\std\stats.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_mathcons.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_stats.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_mathcons.html">8.26 Math Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_stats.html">8.28 Statistics</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

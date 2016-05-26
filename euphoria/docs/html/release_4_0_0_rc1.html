@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_0_rc2.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_1_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_0_rc2.html">9.9 Version 4.0.0 Release Candidate 2 December 8, 2010</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_1_1.html">9.11 Version 3.1.1 August 2007</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h2>9.10 Version 4.0.0 Release Candidate 1 November 8, 2010</h2>
+<a name="_6689_version400releasecandidate1november82010"></a><a name="version400releasecandidate1november82010"></a>
+<p> The release of Euphoria 4.0 is like no other. It's updates are massive. The change log here is not designed to detail every minor change that has taken place during the 4.0 development cycle. Included in this release note are the language changes only.</p>
+
+<p> The entire standard library is brand new. The manual should be consulted to learn about the new standard library, it's changes are not documented here as it would just be a duplicate of the manual API sections. We will, however, mention a few major additions to the API library that has required binary changes in the backend:</p>
+
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h4>9.10.0.1 Major Library Additions</h4>
+<a name="_6690_majorlibraryadditions"></a><a name="majorlibraryadditions"></a><ul><li>Dictionary Type
+</li><li>Regular Expressions
+</li><li>Sockets
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h3>9.10.1 Contributors</h3>
+<a name="_6691_contributors"></a><a name="contributors"></a>
+<p> Another thing you will notice that is slightly different about this release note is that we are not attributing "Change ABC" to person "DEF." Many of the changes made have been an iterative process involving many people. Euphoria 4.0 has had a large number of contributors. We will, however, list all those that have contributed, the list is in last name alphabetical order:</p>
+<ul><li>Jiri Babor
+</li><li>Chris Bensler
+</li><li>Jim C. Brown
+</li><li>CoJaBo
+</li><li>Jeremy Cowgar
+</li><li>Robert Craig
+</li><li>Chris Cuvier
+</li><li>Jason Glade
+</li><li>Ryan W. Johnson
+</li><li>C.K. Lester
+</li><li>Matthew Lewis
+</li><li>Junko Miura
+</li><li>Marco Antonio Achury Palma
+</li><li>Derek Parnell
+</li><li>Shawn Pringle
+</li><li>Michael Sabal
+</li><li>Kathy Smith
+</li><li>Yuku (Aku)
+</li></ul>
+<p>If we have forgotten your name, please forgive us and bring it to our attention, the addition will be made promptly.</p>
+
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h3>9.10.2 Bug Fixes</h3>
+<a name="_6692_bugfixes"></a><a name="bugfixes"></a><ul><li>1855414. <tt>open()</tt> max path length is now determined by the underlying operating system and not a generic default. <tt>open()</tt> also now returns -1 when the filename is too long instead of causing a fatal error.
+</li><li>1608870. <tt>dir()</tt> now handles *.abc correctly, not showing a file ending with .abcd. <tt>dir()</tt> also now supports wildcard characters (* and ?) on all platforms.
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h3>9.10.3 Changes</h3>
+<a name="_6693_changes"></a><a name="changes"></a><ul><li>DOS support has been withdrawn. OpenEuphoria from version 4 onwards will not be specifically supporting DOS editions of the language.
+</li><li>Comments may now be embedded in data passed to <strong>value()</strong> in <strong>get.e</strong>.
+</li><li>Documentation moved to a new format.
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h3>9.10.4 New Programs</h3>
+<a name="_6694_newprograms"></a><a name="newprograms"></a><ul><li><tt>eutest</tt> - Unit testing system for Euphoria
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+<h3>9.10.5 New Features</h3>
+<a name="_6695_newfeatures"></a><a name="newfeatures"></a><ul><li>New standard include files are in <tt>include/std</tt> to resolve many conflicts.
+</li><li>Include file names with accent characters now supported.
+</li><li>Enhanced symbol resolution to take into account information regarding which files were included by which files.
+</li><li>Namespaces for a source file now can be used for identifiers in the specified file and for global identifiers in all files included by the specified file.
+</li><li>Command line arguments for the translator allow for creating binaries with debugging symbols, and to specify a different runtime library.
+</li><li>In trace mode, '?' will show the last defined variable of the requested name.
+</li><li>Include directories can now be specified based on command line arguments and config files in addition to environment variables.
+</li><li>Improved accuracy in scanning numbers in scientific notation. Scanned numbers are accurate to the full precision of the IEEE 754 floating point standard.
+</li><li>New <strong>loop do</strong> ... <strong>until</strong> <em>condition</em> end loop construct, which differs from a while loop in that it performs its test at the end of the block, rather than at the start.
+</li><li>New keywords to give greater control over the instruction flow:<ul><li><strong>continue</strong>: start next iteration of a loop;
+</li><li><strong>retry</strong>: restarts the current iteration of a loop
+</li><li><strong>entry</strong>: marks the entry point into a loop, skipping initial test
+</li><li><strong>break</strong>: exit an if block or switch block
+</li><li><strong>goto</strong>: jump to a label that is in the same scope
+</li></ul>
+</li><li>The <strong>exit</strong>, <strong>break</strong>, <strong>continue</strong> and <strong>retry</strong> keywords now can take an optional parameter, which enables to exit several blocks at a time, or (re)starting an iteration of a loop which is not the innermost one.
+</li><li>Block headers now may mention a label. This label can be used as the optional parameter of flow control keywords.
+</li><li>Variables can now be initialized right on the spot at which they are declared, just like constants.
+</li><li>Any routine parameter can be defaulted, i.e. given a default value that is plugged in if omitted on a call. Any expression can be used, and parameters of the same call can even be used.
+</li><li>New <strong>switch</strong> ... <strong>end switch</strong> construct, which more efficiently implements a series of <strong>elsif</strong>, using the compact <strong>case</strong> statement.
+</li><li><strong>Unit testing added to Euphoria</strong>.
+</li><li>Condition compiling keywords (<strong>ifdef</strong>, <strong>elsifdef</strong>, <strong>end ifdef</strong>) and <strong>with define=xyz</strong> or command line <strong>-D XYZ</strong> to insert/omit code in interpreter IL code and in translated C code.
+</li><li>New enum keyword that allows for <em>parse time</em> sequential constant creation.
+</li><li>The namespace <strong>eu</strong> is predefined, and can be used to fully qualify built-in routines.
+</li><li><tt>with warning</tt> has been enhanced in order to individually turn warnings on or off.
+</li><li>New scope: <strong>export</strong>.  Identifiers with the export scope can only be seen from files that:<ol><li>directly include the file where the identifiers are defined
+</li></ol>
+</li><li>New scope: <strong>public</strong>.  Identifiers with the public scope can only be seen from files that:<ol><li>directly include the file where the identifiers are defined
+</li><li>directly include a file that uses the "public include file.e" construct to pass public identifiers
+</li></ol>
+</li><li>Routine resolution changes<ol><li>Routines the same name as an internal no longer override the internal by default. You must use the keyword <strong>override</strong>.
+</li><li>An unqualified call to routine that exists as an internal calls the internal unless overridden with the override keyword. global, public and export functions are not called. A namespace must be used.
+</li></ol>
+</li><li><tt>-STRICT</tt> option added that will display <strong>all</strong> warnings regardless of the file's  <tt>with/without warning</tt> setting.
+</li><li><tt>-BATCH</tt> option designed to run in an automated environment. Causes any "Press Enter" type prompt due to error to be suppressed. Exit code will be 1 on success, 0 on failure as normal.
+</li><li><tt>-TEST</tt> option allows for editing/IDE environments to perform a syntax check on the euphoria code in question. Causes euphoria interpreter to do all parsing, syntax checking, etc... but does not execute the code. Exit code will be 1 on success, 0 on failure as normal. Editors/IDE's may need both -test and -batch.
+</li><li>dis.ex (in the source directory) will parse a euphoria program and output the symbol table and the IL code in a readable format.
+</li><li>Variables may be in any part of a routine, or in <strong>for</strong>, <strong>while</strong>, <strong>if</strong>, <strong>loop</strong> and  <strong>switch</strong> blocks, in which case the scope of the variable ends when its block ends.
+</li></ul>
+<p> 
+<!-- ..\docs\release\3.1.1.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_0_rc2.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_3_1_1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_0_rc2.html">9.9 Version 4.0.0 Release Candidate 2 December 8, 2010</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_3_1_1.html">9.11 Version 3.1.1 August 2007</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

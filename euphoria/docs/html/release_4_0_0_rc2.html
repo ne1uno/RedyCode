@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0_rc1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_0.html">9.8 Version 4.0.0 December 22, 2010</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0_rc1.html">9.10 Version 4.0.0 Release Candidate 1 November 8, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+<h2>9.9 Version 4.0.0 Release Candidate 2 December 8, 2010</h2>
+<a name="_6683_version400releasecandidate2december82010"></a><a name="version400releasecandidate2december82010"></a>
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+<h3>9.9.1 Deprecation</h3>
+<a name="_6684_deprecation"></a><a name="deprecation"></a><ul><li><tt><a href="std_search.html#_2341_find_from">find_from</a></tt> and <tt><a href="std_search.html#_2437_match_from">match_from</a></tt> have been deprecated. <tt><a href="std_search.html#_2334_find">find</a></tt> and  <tt><a href="std_search.html#_2430_match">match</a></tt> accept an optional argument (<tt>start</tt>) allowing these functions to be a 100% drop in replacement.
+</li><li><tt>OPT_EXTRAS</tt> in <tt>std/cmdline.e</tt> has been replaced by a more favored name <tt>EXTRAS</tt>.
+</li><li><tt>iff</tt> from <tt>std/utils.e</tt> has been replaced by a more favored name <tt><a href="std_utils.html#_2174_iif">iif</a></tt>.
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+<h3>9.9.2 Removed</h3>
+<a name="_6685_removed"></a><a name="removed"></a><ul><li><a class="external" href="/ticket/view.wc?id=371">ticket:371</a>, <tt>replace_all</tt> has been removed as it was a duplicate of the more powerful <a href="std_search.html#_2413_match_replace">match_replace</a> routine.
+</li><li><a class="external" href="/ticket/view.wc?id=376">ticket:376</a>, <tt>mouse.e</tt> and <tt>std/mouse.e</tt>
+</li><li><a class="external" href="/ticket/view.wc?id=484">ticket:484</a>, <tt>wildcard_file</tt> is very DOS centric, doesn't act right at all on modern consoles. It has been removed.
+</li><li><a class="external" href="/ticket/view.wc?id=486">ticket:486</a>, <tt>can_add</tt> docs have been removed, they pointed to the name change of <tt>can_add</tt> to <tt>binop_ok</tt>, changed during beta stage.
+</li><li><a class="external" href="/ticket/view.wc?id=487">ticket:487</a>, <tt>wildcard:new()</tt>, method really didn't make sense as a planning stage for regex usage as too much would have to change, a simply call to new did not save much and possibly just caused bad programming methods to be used.
+</li><li>Support for alternate style eu.cfg sections, i.e. bind:unix and unix:bind were previously supported, now only the documented method: bind:unix is accepted.
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+<h3>9.9.3 Bug Fixes</h3>
+<a name="_6686_bugfixes"></a><a name="bugfixes"></a><ul><li><a class="external" href="/ticket/view.wc?id=118">ticket:118</a>, <tt>object()</tt> tests now function properly when translated.
+</li><li><a class="external" href="/ticket/view.wc?id=169">ticket:169</a>, <tt><a href="std_search.html#_2387_find_nested">find_nested</a></tt> no longer defaults the <tt>rtn_id</tt> parameter to <tt>-1</tt> as that is the "invalid" return value of <a href="std_machine.html#_5855_routine_id">routine_id</a> in which case a typo in your routine id would be silently ignored
+</li><li><a class="external" href="/ticket/view.wc?id=335">ticket:335</a>, <tt>eui</tt> now only accepts -v, --version as parameters to display the version number instead of -v, --v, -version and --version.
+</li><li><a class="external" href="/ticket/view.wc?id=338">ticket:338</a>, Fixed <em>Data Execution Prevention</em> for FreeBSD systems.
+</li><li><a class="external" href="/ticket/view.wc?id=339">ticket:339</a>, Fixed locale for FreeBSD systems.
+</li><li><a class="external" href="/ticket/view.wc?id=341">ticket:341</a>, Removed unused variables in the standard library.
+</li><li><a class="external" href="/ticket/view.wc?id=343">ticket:343</a>, Resolution of unqualified symbols from other files is deferred until all files that could cause symbol resolution conflicts have been read.
+</li><li><a class="external" href="/ticket/view.wc?id=345">ticket:345</a>, Forward patches now update the stack space for a routine when they create temps.
+</li><li><a class="external" href="/ticket/view.wc?id=349">ticket:349</a>, Fixed resolution of qualified public symbols when the namespace points to the wrong file, but the namespace file directly includes the file with the actual routine
+</li><li><a class="external" href="/ticket/view.wc?id=352">ticket:352</a>, A function with a defaulted parameter that is both forward referenced and inlined no longer crashes.
+</li><li><a class="external" href="/ticket/view.wc?id=358">ticket:358</a>, The programs eutest, creolehtml, and eudoc now all support a command line option to display their version number.
+</li><li><a class="external" href="/ticket/view.wc?id=362">ticket:362</a>, The handing of regular expressions which match the text but didn't have any matching sub-groups was not correct nor documented.
+</li><li><a class="external" href="/ticket/view.wc?id=366">ticket:366</a>, Created a new module, base64, to implement the standard Base-64 encoding algorithms.
+</li><li><a class="external" href="/ticket/view.wc?id=367">ticket:367</a>, <tt><a href="std_net_http.html#_5319_http_post">http_post</a></tt> properly handles multi-part form data.
+</li><li><a class="external" href="/ticket/view.wc?id=372">ticket:372</a>, When an application ends, it closes all the opened files. However if it was ending due to an syntax error, it was closing those files before trying to access the message text database that had been opened, thus causing a seek() to fail and crash the application.
+</li><li><a class="external" href="/ticket/view.wc?id=378">ticket:378</a>, On Linux and FreeBSD, the socket tests failed to detect the correct error code.
+</li><li><a class="external" href="/ticket/view.wc?id=392">ticket:392</a>, <tt><a href="std_io.html#_1615_seek">seek</a></tt> was not returning the correct failure code on some errors.
+</li><li><a class="external" href="/ticket/view.wc?id=396">ticket:396</a>, Continue operations are now properly back patched.
+</li><li><a class="external" href="/ticket/view.wc?id=391">ticket:391</a>, Watcom build system was lacking the ability to build the manual.
+</li><li><a class="external" href="/ticket/view.wc?id=402">ticket:402</a>, <tt><a href="std_console.html#_886_maybe_any_key">maybe_any_key</a></tt> now works when run from the command line version of EUPHORIA even when run without a command-line shell.
+</li><li><a class="external" href="/ticket/view.wc?id=403">ticket:403</a>, Many documentation examples used ? func() and showed the output in string format which ? does not do. It was misleading to the new person to Euphoria. Found instances have been updated.
+</li><li><a class="external" href="/ticket/view.wc?id=405">ticket:405</a>, <tt>dis.ex</tt> no longer creates a build directory for no reason.
+</li><li><a class="external" href="/ticket/view.wc?id=409">ticket:409</a>, Calls to <tt>Head()</tt> that should have altered the sequence in place did not, resulting in slower code.
+</li><li><a class="external" href="/ticket/view.wc?id=417">ticket:417</a>, Accidental inclusion of TOC was removed
+</li><li><a class="external" href="/ticket/view.wc?id=418">ticket:418</a>, <tt>-debug</tt> <tt>eu.cfg</tt> switch text was corrected
+</li><li><a class="external" href="/ticket/view.wc?id=418">ticket:418</a>, Clarified what (all) and (translator) means
+</li><li><a class="external" href="/ticket/view.wc?id=425">ticket:425</a>, Fixed crash when branches were inlined into the top level
+</li><li><a class="external" href="/ticket/view.wc?id=426">ticket:426</a>, Eutest uses binary binder
+</li><li><a class="external" href="/ticket/view.wc?id=429">ticket:429</a>, <tt>tokenize.e</tt> no longer drops the first character of a backtick string
+</li><li><a class="external" href="/ticket/view.wc?id=431">ticket:431</a>, <tt>tokenize.e</tt> properly parses \xXX escapes
+</li><li><a class="external" href="/ticket/view.wc?id=434">ticket:434</a>, <tt>tokenize.e</tt> no longer strips leading zeros on numbers when using the <tt><a href="euphoria_tokenize.html#_6377_string_numbers">string_numbers</a></tt> option.
+</li><li><a class="external" href="/ticket/view.wc?id=435">ticket:435</a>, <tt>tokenize.e</tt> handles 0?NN numbers properly now. Returns  <tt><a href="euphoria_tokenize.html#_6219_t_number">T_NUMBER</a></tt> as the token type and either <tt><a href="euphoria_tokenize.html#_6302_tf_int">TF_INT</a></tt> or <tt><a href="euphoria_tokenize.html#_6299_tf_hex">TF_HEX</a></tt> as the form. If <tt><a href="euphoria_tokenize.html#_6377_string_numbers">string_numbers</a></tt> is enabled, the prefix is returned as part of the string, i.e.  <tt>integer a = 0b0101</tt> will return <tt>"0b0101"</tt>.
+</li><li><a class="external" href="/ticket/view.wc?id=439">ticket:439</a>, <tt>tokenize.e</tt> fixed breakage with slice operator due to new string number parsing.
+</li><li><a class="external" href="/ticket/view.wc?id=448">ticket:448</a>, Fixed <tt>splice()</tt> translation.
+</li><li><a class="external" href="/ticket/view.wc?id=453">ticket:453</a>, Reworked the way open files are cleaned up so that coverage works properly
+</li><li><a class="external" href="/ticket/view.wc?id=457">ticket:457</a>, cmd_parse() now correctly honors the NO_HELP option and allows the coder to override the default help switches.
+</li><li><a class="external" href="/ticket/view.wc?id=461">ticket:461</a>, Fixed error checking for invalid C routines for c_func / c_proc.
+</li><li><a class="external" href="/ticket/view.wc?id=463">ticket:463</a>, Fixed large file support for MinGW
+</li><li><a class="external" href="/ticket/view.wc?id=464">ticket:464</a>, Fixed translated for loops that could result in incorrectly emitted brackets
+</li><li><a class="external" href="/ticket/view.wc?id=465">ticket:465</a>, Fixed stack space calculations for forward proc to func conversion and type checks.
+</li><li><a class="external" href="/ticket/view.wc?id=466">ticket:466</a>, Fixed line reporting on compile time type check error.
+</li><li><a class="external" href="/ticket/view.wc?id=467">ticket:467</a>, Fixed interpreter, translator and binder for handling multiple parameters when one comes from a eu.cfg file and the other from the command line, but the given option was designed to only be used ONCE, such as -batch
+</li><li><a class="external" href="/ticket/view.wc?id=469">ticket:469</a>, Fixed translated block comments
+</li><li><a class="external" href="/ticket/view.wc?id=471">ticket:471</a>, When using the <tt>-lib</tt> parameter to <tt>euc</tt>, it's canoncial path is used and it's existance is checked before translation has begun to prevent wasting time only to find the linker fails.
+</li><li><a class="external" href="/ticket/view.wc?id=472">ticket:472</a>, eui --help display is now in a logical display order.
+</li><li><a class="external" href="/ticket/view.wc?id=473">ticket:473</a>, euc --help display is now in a logical display order.
+</li><li><a class="external" href="/ticket/view.wc?id=475">ticket:475</a>, Fixed memory leak with interpreted <a href="std_rand.html#_3861_rand">rand</a>
+</li><li><a class="external" href="/ticket/view.wc?id=476">ticket:476</a>, <tt>euc</tt> can now translated single character base filenames, i.e. h.ex
+</li><li><a class="external" href="/ticket/view.wc?id=477">ticket:477</a>, <tt>canonical_path</tt> expansion of ~ now works in MSYS and CMD.exe with the MinGW build.
+</li><li><a class="external" href="/ticket/view.wc?id=479">ticket:479</a>, Installer now writes a eu.cfg, appends at the confirmation of the user.
+</li><li><a class="external" href="/ticket/view.wc?id=481">ticket:481</a>, RD_INPLACE, RD_PRESORTED, RD_SORT are now documented individually.
+</li><li><a class="external" href="/ticket/view.wc?id=485">ticket:485</a>, Fixed scanner initialization to prevent invalid accesses.
+</li><li><a class="external" href="/ticket/view.wc?id=490">ticket:490</a>, Fixed large file support for Watcom
+</li><li><a class="external" href="/ticket/view.wc?id=491">ticket:491</a>, <tt>cmd_parse</tt> now appends everything after the first extra to the  <tt>OPT_EXTRAS</tt> entry when <tt>NO_VALIDATION_AFTER_FIRST_EXTRA</tt> is supplied as a parsing option.
+</li><li><a class="external" href="/ticket/view.wc?id=501">ticket:501</a>, rand_range(hi,lo) now works with lo &gt; 30-bits.
+</li><li><a class="external" href="/ticket/view.wc?id=505">ticket:505</a>, Fixed front-end command line processing
+</li><li><a class="external" href="/ticket/view.wc?id=509">ticket:509</a>, fix pointer handling in regex back end code
+</li><li><a class="external" href="/ticket/view.wc?id=503">ticket:503</a>, When translating, temps that were thought to be either sequences or objects, but were ultimately atoms were not having their possible min / max values reset, leading to incorrect C code being emitted.
+</li><li>Fixed <a href="std_io.html#_1615_seek">seek</a> return value for large files on Linux.
+</li><li><a href="std_socket.html#_5110_connect">connect</a> return value was documented incorrectly.
+</li><li><tt>std/cmdline.e</tt>, <tt>cmd_parse</tt> sets the NO_CASE option when option does not have HAS_CASE.
+</li><li><tt>std/cmdline.e</tt>, <tt>cmd_parse</tt> sets the NO_PARAMETER option when option does not have HAS_PARAMETER.
+</li><li><tt>std/cmdline.e</tt>, <tt>cmd_parse</tt> sets the ONCE option when option does not have MULTIPLE.
+</li><li>The euphoria coded backend (eu.ex) in some cases did not handle recursive calls correctly.
+</li><li>Too numerous to list: Many documentation typo, spelling mistakes and formatting errors have been corrected.
+</li><li>Removed many unnecessary <tt><a href="std_console.html#_886_maybe_any_key">maybe_any_key</a></tt> uses from the general demos
+</li><li><tt>net/http.e</tt> now properly handles <tt>{ {key,value}, ...}</tt>, <tt>{ encoding_type, {key,val}, ...}</tt> and already encoded string data, <tt>"name=John%20Doe"</tt>.
+</li><li>Fixed eutext.ex and std/unittest.e. Under some circumstances, they would report 100% success even though there were some failures.
+</li><li>Fixed <tt>std/filesys.e</tt> and <tt>std/locale.e</tt> for use on OpenBSD and NetBSD.
+</li><li>Use POSIX random() to initialize random seed1 on non-Windows platforms.
+</li><li>Updated <tt>t_io.e</tt> as OpenBSD and NetBSD allows seeking on STDIN, STDOUT and STDERR.
+</li><li>Now ensure internal C strings in be_pcre are properly null terminated.
+</li><li>Fixed version display information for NetBSD
+</li></ul>
+<!-- ..\docs\release\4.0.0.rc2.txt -->
+<h3>9.9.4 Enhancements/Changes</h3>
+<a name="_6687_enhancementschanges"></a><a name="enhancementschanges"></a><ul><li><a class="external" href="/ticket/view.wc?id=334">ticket:334</a>, *nix generic distribution build scripts are now combined for easier maintenance.
+</li><li><a class="external" href="/ticket/view.wc?id=341">ticket:341</a>, <a class="external" href="/ticket/view.wc?id=344">ticket:344</a>, Many unused variables have been cleaned up in the standard library.
+</li><li><a class="external" href="/ticket/view.wc?id=363">ticket:363</a>, <tt>euc</tt> now has an optional parameter <tt>-rc-file</tt> that will compile and bind the resource file to windows executables.
+</li><li><a class="external" href="/ticket/view.wc?id=411">ticket:411</a>, documented the <tt>$</tt> character as applied to a sequence terminator.
+</li><li><a class="external" href="/ticket/view.wc?id=413">ticket:413</a>, Qualified the standard library. With so many forward lookups this allows for a pretty large speedup when using multiple standard library includes.
+</li><li><a class="external" href="/ticket/view.wc?id=499">ticket:499</a>, Add support for using '1', '2', and 'j' in place of F1, F2, and the DOWN_ARROW key in the Trace screen. This allows Unix users to use trace(1) even if we don't recognize escape sequences for their particular $TERM
+</li><li><a class="external" href="/ticket/view.wc?id=513">ticket:513</a>, Moved <a href="std_locale.html#_3045_get_text">get_text</a> from <tt>std/text</tt>.e to <tt>std/locale.e</tt>
+</li><li><tt>manual-upload</tt> target was added to GNU and Watcom makefiles
+</li><li>Formatted <tt>buzz.ex</tt> example
+</li><li><tt>euc</tt> will always remove it's temporary build directory unless the <tt>-keep</tt> option is supplied. If one wants to keep the build directory for some reason, they sould probably use <tt>-build-dir</tt> as well, for example: <tt>euc -build-dir my-build hello.ex</tt> which will automatically keep the build directory since it was user specified.
+</li><li>Converted <tt>bin/lines.ex</tt> to use new language constructs and the standard library as an example of how an application take advantage of 4.0. Code base went from 591 lines of code to 195 lines of code. Bugs were fixed, comment percentage calculations and header/footer lines were added in the new, smaller version as well.<br />
+<br />
+This program also now has the ability to sort results by numerous options in normal or reverse order.
+</li><li>Moved network demos from <tt>demos/</tt> to <tt>demos/net</tt> for better organization.
+</li><li><tt>euphoria/tokenize.e</tt> BLANK concept has changed. tokenize use to consume all newlines and only report double blanks. It now simply tokenizes the data and returns a newline if requested. <tt>keep_blanks</tt> has been renamed to <tt><a href="euphoria_syncolor.html#_6189_keep_newlines">keep_newlines</a></tt> and  <tt>T_BLANK</tt> has been renamed to <tt><a href="euphoria_tokenize.html#_6215_t_newline">T_NEWLINE</a></tt>. Thus the tokenizer doesn't perform any 'parser' functions, it simply tokenizes the source.
+</li><li>Added <tt>show_tokens</tt>, <tt>token_names</tt> and <tt>token_forms</tt> to <tt>euphoria/tokenize.e</tt> to help in debugging both tokenize internal routines and applications that make use of  <tt>euphoria/tokenize.e</tt>
+</li><li>Installer now creates a eu.cfg directory in EUDIR/bin
+</li><li>Speed improvements to map:put()
+</li><li>Demoted several "bin" programs to demos including:<ul><li><tt>ascii.ex</tt>
+</li><li><tt>eprint.ex</tt>
+</li><li><tt>eused.ex</tt>
+</li><li><tt>guru.ex</tt>
+</li><li><tt>key.ex</tt>
+</li><li><tt>search.ex</tt>
+</li><li><tt>where.ex</tt>
+</li></ul>
+</li><li>All demos and bundled bin programs are unit tested to ensure at least eui -test passes
+</li><li>Removed <tt>analyze.ex</tt> as it never was a finished, deployable product
+</li><li>eu.cfg "win32" sections ([win32], [bind:win32], [translate:win32], [bind:win32]) have now all been changed to "windows", not "win32"
+</li><li>Removed demo/demo.doc and instead included in the header of each demo program what they do and included them into a section in the manual about demos.
+</li><li><tt>-test</tt> parameter now displays warnings as well as errors
+</li><li>Translator speed optimizations.
+</li><li>Improved logging and error checking for sock_server.ex demo
+</li><li>Renamed <tt>bin/lines.ex</tt> to <tt>bin/euloc.ex</tt> since it's more Euphoria centric now.
+</li><li>Removed left-over translator command line parameter <tt>-fastfp</tt> which was for DOS only.
+</li><li>Reuse memory buffer in HSIEH32 hash implementation
+</li><li><tt>abbreviate_path</tt> is used to cleanup the display from <tt>euc</tt> regarding the Build Directory.
+</li><li><tt>printf</tt>s third argument is now optional. <tt>printf(1, "Hello\n", {})</tt> is no longer needed, it can be shortened to <tt>printf(1, "Hello\n")</tt>
+</li><li>Added another hashing algorithm. HSIEH30 is identical to HSIEH32 but will only ever return a 30-bit integer (a Euphoria integer).
+</li><li>Removed hash elements from map.e and placed them in a new standard library module, hash.e
+</li><li>Performance tweaks to maps.
+</li><li>Removed support for <tt>emake.bat</tt> build scripts, please use direct build or makefiles, both of which <tt>euc</tt> supports directly.
+</li></ul>
+<p>
+<!-- ..\docs\release\4.0.0.rc1.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0_rc1.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_0.html">9.8 Version 4.0.0 December 22, 2010</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0_rc1.html">9.10 Version 4.0.0 Release Candidate 1 November 8, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

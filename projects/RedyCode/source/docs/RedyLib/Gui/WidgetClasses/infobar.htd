@@ -1,0 +1,26 @@
+==Infobar Widget Class
+
+Widget Class name: "infobar"
+(Not implemented yet)
+
+===API
+====Properties
+====="infos"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+=====procedure cmd_set_infos(atom wid, sequence wsubinfos)
+    
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

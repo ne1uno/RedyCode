@@ -1,0 +1,90 @@
+==Configuration Library
+config.e : Configuration file system
+
+===Introduction
+The config library standardizes storing and recalling application configuration. Window position, user preferences, and other data can be stored in "Variables". Variables are categorized in "Sections". Sections and Variables are stored in config files in the INI format. Normally, data is stored default config file, defined as:
+<eucode>
+sequence cmdline = command_line()
+sequence DefaultConfigFile = pathname(cmdline[2]) & "\\" & filebase(cmdline[2]) & ".cfg"
+</eucode>
+ 
+Here's an example config file for the application "C:\RedyCode\RedyCode.exe". The default config file is "C:\RedyCode\RedyCode.cfg", and looks something like this:
+<eucode>
+[Projects]
+TemplatePath = "C:\RedyCode\templates"
+ProjectPath = "C:\RedyCode\projects"
+EuiPath = "C:\RedyCode\euphoria\bin\euiw.exe"
+EubindPath = "C:\RedyCode\euphoria\bin\eubind.exe"
+IncludePath = "C:\RedyCode\euphoria\include"
+[Startup]
+Disable tips = 1
+[GUI]
+winMain.left = 935
+winMain.top = 299
+winMain.width = 960
+winMain.height = 720
+winMain.maximized = 0
+winHelp.left = 385
+winHelp.top = 117
+winHelp.width = 640
+winHelp.height = 540
+winHelp.maximized = 0
+</eucode>
+
+Multiple config files can be loaded at the same time. Config values are always accessed by file name, section name, and variable name. Currently, values must be one of the following formats:
+    * Single-line strings (with no \n character)
+    * Numbers
+
+
+===API
+====global variables 
+
+=====sequence ExePath
+This is the path to the application's exe file (or exw file when run by the euiw.exe interpretor), defined as:
+<eucode>
+sequence cmdline = command_line()
+global sequence ExePath = pathname(cmdline[2])
+</eucode>
+
+====Routines
+=====function get_var(sequence fname, sequence sectionname, sequence varname)
+Returns value of specified variable in specified section of a config file. If the variable doesn't exist, 0 is returned. If fname is an empty string, then DefaultConfigFile is assumed.
+<eucode>
+object TemplatePath = cfg:get_var("", "Projects", "TemplatePath")
+</eucode>
+
+=====procedure set_var(sequence fname, sequence sectionname, sequence varname, object vardata)
+Sets value of specified variable in specified section of a config file. If the variable doesn't exist, the variable is created. Vardata can be a string or an atom. If fname is an empty string, then DefaultConfigFile is assumed.
+<eucode>
+cfg:set_var("", "Projects", "TemplatePath", TemplatePath)
+</eucode>
+
+=====procedure delete_var(sequence fname, sequence sectionname, sequence varname)
+Deletes specified variable in specified section of a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====procedure set_default_file(sequence fname)
+Sets the path and file name for the default config file. Typically, you will not call this.
+
+=====procedure load_config(sequence fname)
+Loads a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====procedure save_config(sequence fname)
+Saves a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====procedure close_config(sequence fname)
+Closes a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====procedure clear_config(sequence fname)
+Clears a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====procedure delete_section(sequence fname, sequence sectionname)
+Deletes specified section from a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====function list_sections(sequence fname)
+Returns a list of sections in a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+=====function list_vars(sequence fname, sequence sectionname)
+Returns a list of variables in specified section in a config file. If fname is an empty string, then DefaultConfigFile is assumed.
+
+
+Next page: [[Error Report->RedyLib\Err]]

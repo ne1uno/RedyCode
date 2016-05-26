@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_graphcst.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_image.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_graphcst.html">8.47 Graphics Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_image.html">8.49 Graphics - Image Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\graphics.e -->
+<h2>8.48 Graphics - Cross Platform</h2>
+<a name="_6018_graphicscrossplatform"></a><a name="graphicscrossplatform"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_graphics.html#_6018_graphicscrossplatform">8.48 Graphics - Cross Platform</a></div>
+<div class="toc_3"><a href="std_graphics.html#_6019_routines">8.48.1 Routines</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6021_position">8.48.1.1 position</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6027_get_position">8.48.1.2 get_position</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6032_text_color">8.48.1.3 text_color</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6038_bk_color">8.48.1.4 bk_color</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6044_console_colors">8.48.1.5 console_colors</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6052_wrap">8.48.1.6 wrap</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6058_scroll">8.48.1.7 scroll</a></div>
+<div class="toc_3"><a href="std_graphics.html#_6063_graphicsmodes">8.48.2 Graphics Modes</a></div>
+<div class="toc_4"><a href="std_graphics.html#_6065_graphics_mode">8.48.2.1 graphics_mode</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\graphics.e -->
+<h3>8.48.1 Routines</h3>
+<a name="_6019_routines"></a><a name="routines"></a>
+<p> 
+<a name="euposition"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.1 position</h4>
+<a name="_6021_position"></a><a name="position"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure position</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">row, </font><font color="#0000FF">integer </font><font color="#330033">column</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6022_parameters"></a><a name="parameters"></a><ol><li><tt>row</tt> : an integer, the index of the row to position the cursor on.
+</li><li><tt>column</tt> : an integer, the index of the column to position the cursor on.
+</li></ol>
+<p>sets the cursor to where the next character will be output.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6023_comments"></a><a name="comments"></a>
+<p> Set the cursor to line <tt>row</tt>, column <tt>column</tt>, where the top left corner of the screen is line 1, column 1. The next character displayed on the screen will be printed at this location. <tt>position</tt> will report an error if the location is off the screen. The <em>Windows</em> console does not check for rows, as the physical height of the console may be vastly less than its logical height.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6024_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">position</font><font color="#880033">(</font><font color="#330033">2,1</font><font color="#880033">)</font>
+<font color="#FF0055">-- the cursor moves to the beginning of the second line from the top</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6025_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6027_get_position">get_position</a></p>
+
+<p> 
+<a name="graphicsget_position"></a><a name="position"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.2 get_position</h4>
+<a name="_6027_get_position"></a><a name="get_position"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public function </font><font color="#330033">get_position</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns the current line and column position of the cursor.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Returns:</h5>
+<a name="_6028_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, <tt>{line, column}</tt>, the current position of the text mode cursor.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6029_comments"></a><a name="comments"></a>
+<p> The coordinate system for displaying text is different from the one for displaying pixels. Pixels are displayed such that the top-left is <tt>(x=0,y=0)</tt> and the first coordinate controls the horizontal, left-right location. In pixel-graphics modes you can display both text and pixels. <tt>get_position</tt> returns the current line and column for the text that you are displaying, not the pixels that you may be plotting. There is no corresponding routine for getting the current pixel position, because there is no such thing.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6030_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6021_position">position</a></p>
+
+<p> 
+<a name="graphicstext_color"></a><a name="color"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.3 text_color</h4>
+<a name="_6032_text_color"></a><a name="text_color"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public procedure </font><font color="#330033">text_color</font><font color="#880033">(</font><font color="#330033">color c</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the foreground text color.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6033_parameters"></a><a name="parameters"></a><ol><li><tt>c</tt> : the new text color. Add <tt>BLINKING</tt> to get blinking text in some modes.
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6034_comments"></a><a name="comments"></a>
+<p> Text that you print after calling <tt><a href="std_graphics.html#_6032_text_color">text_color</a></tt> will have the desired color.</p>
+
+<p> When your program terminates, the last color that you selected and actually printed on the screen will remain in effect. Thus you may have to print something, maybe just <tt>'\n'</tt>, in <tt>WHITE</tt> to restore white text, especially if you are at the bottom line of the screen, ready to scroll up.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6035_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">text_color</font><font color="#880033">(</font><font color="#330033">BRIGHT_BLUE</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6036_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6038_bk_color">bk_color</a> , <a href="std_console.html#_912_clear_screen">clear_screen</a></p>
+
+<p> 
+<a name="graphicsbk_color"></a><a name="color"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.4 bk_color</h4>
+<a name="_6038_bk_color"></a><a name="bk_color"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public procedure </font><font color="#330033">bk_color</font><font color="#880033">(</font><font color="#330033">color c</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the background color to one of the sixteen standard colors.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6039_parameters"></a><a name="parameters"></a><ol><li><tt>c</tt> : the new text color. Add <tt>BLINKING</tt> to get blinking text in some modes.
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6040_comments"></a><a name="comments"></a>
+<p> To restore the original background color when your program finishes, ( often <tt>0 - BLACK</tt>), you must call <tt><a href="std_graphics.html#_6038_bk_color">bk_color</a>(0)</tt>. If the cursor is at the bottom line of the screen, you may have to actually print something before terminating your program; printing <tt>'\n'</tt> may be enough.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6041_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">bk_color</font><font color="#880033">(</font><font color="#330033">BLACK</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6042_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6032_text_color">text_color</a></p>
+
+<p> 
+<a name="graphicsconsole_colors"></a><a name="colors"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.5 console_colors</h4>
+<a name="_6044_console_colors"></a><a name="console_colors"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public function </font><font color="#330033">console_colors</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">colorset = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the codes for the colors used in <tt>text_color</tt> and <tt>bk_color</tt>.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6045_parameters"></a><a name="parameters"></a><ol><li><tt>colorset</tt> : A sequence in one of two formats.<ol><li>Containing two sets of exactly sixteen color numbers in which the first set are foreground (text) colors and the other set are background colors.
+</li><li>Containing a set of exactly sixteen color numbers. These are to be applied to both foreground and background.
+</li></ol>
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Returns:</h5>
+<a name="_6046_returns"></a><a name="returns"></a>
+<p> A sequence: This contains two sets of sixteen color values currently in use for foreground and background respectively.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6047_comments"></a><a name="comments"></a><ul><li>If the <tt>colorset</tt> is omitted then this just returns the current values without changing anything.
+</li><li>A color set contains sixteen values. You can access the color value for a specific color by using <tt>[X + 1]</tt> where <tt>'X'</tt> is one of the Euphoria color constants such as <tt>RED</tt> or  <tt>BLUE</tt>.
+</li><li>This can be used to change the meaning of the standard color codes for some consoles that are not using standard values. For example, the <em>Unix</em> default color value for RED is 1 and BLUE is 4, but you might need this to swapped. See code Example 1. Another use might be to suppress highlighted (bold) colors. See code Example 2.
+</li></ul>
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6048_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">cs</font>
+<font color="#330033">cs = console_colors</font><font color="#880033">() </font><font color="#FF0055">-- Get the current FG and BG color values.</font>
+<font color="#330033">cs</font><font color="#880033">[</font><font color="#330033">FGSET</font><font color="#880033">][</font><font color="#330033">RED + 1</font><font color="#880033">] </font><font color="#330033">= 4 </font><font color="#FF0055">-- set RED to 4</font>
+<font color="#330033">cs</font><font color="#880033">[</font><font color="#330033">FGSET</font><font color="#880033">][</font><font color="#330033">BLUE + 1</font><font color="#880033">] </font><font color="#330033">= 1 </font><font color="#FF0055">-- set BLUE to 1</font>
+<font color="#330033">cs</font><font color="#880033">[</font><font color="#330033">BGSET</font><font color="#880033">][</font><font color="#330033">RED + 1</font><font color="#880033">] </font><font color="#330033">= 4 </font><font color="#FF0055">-- set RED to 4</font>
+<font color="#330033">cs</font><font color="#880033">[</font><font color="#330033">BGSET</font><font color="#880033">][</font><font color="#330033">BLUE + 1</font><font color="#880033">] </font><font color="#330033">= 1 </font><font color="#FF0055">-- set BLUE to 1</font>
+<font color="#330033">console_colors</font><font color="#880033">(</font><font color="#330033">cs</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Example 2:</h5>
+<a name="_6049_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- Prevent highlighted background colors</font>
+<font color="#0000FF">sequence </font><font color="#330033">cs</font>
+<font color="#330033">cs = console_colors</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = GRAY + 1 </font><font color="#0000FF">to </font><font color="#330033">BRIGHT_WHITE + 1 </font><font color="#0000FF">do</font>
+<font color="#330033">   cs</font><font color="#880033">[</font><font color="#330033">BGSET</font><font color="#880033">][</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= cs</font><font color="#880033">[</font><font color="#330033">BGSET</font><font color="#880033">][</font><font color="#330033">i - 8</font><font color="#880033">]</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">console_colors</font><font color="#880033">(</font><font color="#330033">cs</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6050_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphics.html#_6032_text_color">text_color</a> <a href="std_graphics.html#_6038_bk_color">bk_color</a></p>
+
+<p> 
+<a name="graphicswrap"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.6 wrap</h4>
+<a name="_6052_wrap"></a><a name="wrap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public procedure </font><font color="#330033">wrap</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">on = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines whether text will wrap when hitting the rightmost column.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6053_parameters"></a><a name="parameters"></a><ol><li><tt>on</tt> : an object, 0 to truncate text, anything else to wrap.
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6054_comments"></a><a name="comments"></a>
+<p> By default text will wrap.</p>
+
+<p> Use <tt>wrap</tt> in text modes or pixel-graphics modes when you are displaying long lines of text.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6055_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#0000FF">repeat</font><font color="#993333">(</font><font color="#330033">'x'</font><font color="#330033">, 100</font><font color="#993333">) </font><font color="#330033">&amp; </font><font color="#330033">"\n\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- now have a line of 80 'x' followed a line of 20 more 'x'</font>
+<font color="#330033">wrap</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#0000FF">repeat</font><font color="#993333">(</font><font color="#330033">'x'</font><font color="#330033">, 100</font><font color="#993333">) </font><font color="#330033">&amp; </font><font color="#330033">"\n\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- creates just one line of 80 'x'</font>
+</pre>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6056_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1526_puts">puts</a>, <a href="std_graphics.html#_6021_position">position</a></p>
+
+<p> 
+<a name="graphicsscroll"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.1.7 scroll</h4>
+<a name="_6058_scroll"></a><a name="scroll"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public procedure </font><font color="#330033">scroll</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">amount, console :positive_int top_line,</font>
+<font color="#330033">        console :positive_int bottom_line</font><font color="#880033">)</font>
+</pre>
+
+<p>   scrolls a region of text on the screen.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6059_parameters"></a><a name="parameters"></a><ol><li><tt>amount</tt> : an integer, the number of lines by which to scroll. This is <tt>&gt;0</tt> to scroll up and <tt>&lt;0</tt> to scroll down.
+</li><li><tt>top_line</tt> : the 1-based number of the topmost line to scroll.
+</li><li><tt>bottom_line</tt> : the 1-based number of the bottom-most line to scroll.
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6060_comments"></a><a name="comments"></a><ul><li>New blank lines will appear at the vacated lines.
+</li><li>You could perform the scrolling operation using a series of calls to <tt><a href="std_io.html#_1526_puts">puts</a></tt>, but <tt>scroll</tt> is much faster.
+</li><li>The position of the cursor after scrolling is not defined.
+</li></ul>
+<!-- ..\include\std\graphics.e -->
+<h5>Example 1:</h5>
+<a name="_6061_example1"></a><a name="example1"></a>
+<p> <tt>.../euphoria/bin/ed.ex</tt></p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6062_seealso"></a><a name="seealso"></a>
+<p> <a href="std_console.html#_912_clear_screen">clear_screen</a>, <a href="std_console.html#_957_text_rows">text_rows</a></p>
+
+<!-- ..\include\std\graphics.e -->
+<h3>8.48.2 Graphics Modes</h3>
+<a name="_6063_graphicsmodes"></a><a name="graphicsmodes"></a>
+<p> 
+<a name="graphicsgraphics_mode"></a><a name="mode"></a> </p>
+
+<!-- ..\include\std\graphics.e -->
+<h4>8.48.2.1 graphics_mode</h4>
+<a name="_6065_graphics_mode"></a><a name="graphics_mode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">graphics</font>
+<font color="#0000FF">public function </font><font color="#330033">graphics_mode</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">m = - 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   attempts to set up a new graphics mode.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Parameters:</h5>
+<a name="_6066_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : an object, but it will be ignored.
+</li></ol>
+<!-- ..\include\std\graphics.e -->
+<h5>Returns:</h5>
+<a name="_6067_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, always returns zero.</p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Platform:</h5>
+<a name="_6068_platform"></a><a name="platform"></a>
+<p> <em>Windows</em></p>
+
+<!-- ..\include\std\graphics.e -->
+<h5>Comments:</h5>
+<a name="_6069_comments"></a><a name="comments"></a><ul><li>This has no effect on <em>Unix</em> platforms.
+</li><li>On <em>Windows</em> it causes a console to be shown if one has not already been created.
+</li></ul>
+<!-- ..\include\std\graphics.e -->
+<h5>See Also:</h5>
+<a name="_6070_seealso"></a><a name="seealso"></a>
+<p> <a href="std_graphcst.html#_6007_video_config">video_config</a></p>
+
+<p> 
+<!-- ..\include\std\image.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_graphcst.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_image.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_graphcst.html">8.47 Graphics Constants</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_image.html">8.49 Graphics - Image Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

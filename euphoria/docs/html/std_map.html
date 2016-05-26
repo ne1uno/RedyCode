@@ -1,0 +1,1609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_hash.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_stack.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_hash.html">8.32 Hashing Algorithms</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_stack.html">8.34 Stack</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\map.e -->
+<h2>8.33 Map (Hash Table)</h2>
+<a name="_4399_maphashtable"></a><a name="maphashtable"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_map.html#_4399_maphashtable">8.33 Map (Hash Table)</a></div>
+<div class="toc_3"><a href="std_map.html#_4400_operationcodesforput">8.33.1 Operation Codes for Put</a></div>
+<div class="toc_4"><a href="std_map.html#_4402_put">8.33.1.1 PUT</a></div>
+<div class="toc_4"><a href="std_map.html#_4404_add">8.33.1.2 ADD</a></div>
+<div class="toc_4"><a href="std_map.html#_4406_subtract">8.33.1.3 SUBTRACT</a></div>
+<div class="toc_4"><a href="std_map.html#_4408_multiply">8.33.1.4 MULTIPLY</a></div>
+<div class="toc_4"><a href="std_map.html#_4410_divide">8.33.1.5 DIVIDE</a></div>
+<div class="toc_4"><a href="std_map.html#_4412_append">8.33.1.6 APPEND</a></div>
+<div class="toc_4"><a href="std_map.html#_4414_concat">8.33.1.7 CONCAT</a></div>
+<div class="toc_4"><a href="std_map.html#_4416_leave">8.33.1.8 LEAVE</a></div>
+<div class="toc_3"><a href="std_map.html#_4417_types">8.33.2 Types</a></div>
+<div class="toc_4"><a href="std_map.html#_4419_map">8.33.2.1 map</a></div>
+<div class="toc_3"><a href="std_map.html#_4422_routines">8.33.3 Routines</a></div>
+<div class="toc_4"><a href="std_map.html#_4424_calc_hash">8.33.3.1 calc_hash</a></div>
+<div class="toc_4"><a href="std_map.html#_4430_threshold">8.33.3.2 threshold</a></div>
+<div class="toc_4"><a href="std_map.html#_4434_type_of">8.33.3.3 type_of</a></div>
+<div class="toc_4"><a href="std_map.html#_4438_rehash">8.33.3.4 rehash</a></div>
+<div class="toc_4"><a href="std_map.html#_4443_new">8.33.3.5 new</a></div>
+<div class="toc_4"><a href="std_map.html#_4449_new_extra">8.33.3.6 new_extra</a></div>
+<div class="toc_4"><a href="std_map.html#_4455_compare">8.33.3.7 compare</a></div>
+<div class="toc_4"><a href="std_map.html#_4460_has">8.33.3.8 has</a></div>
+<div class="toc_4"><a href="std_map.html#_4466_get">8.33.3.9 get</a></div>
+<div class="toc_4"><a href="std_map.html#_4472_nested_get">8.33.3.10 nested_get</a></div>
+<div class="toc_4"><a href="std_map.html#_4475_put">8.33.3.11 put</a></div>
+<div class="toc_4"><a href="std_map.html#_4481_nested_put">8.33.3.12 nested_put</a></div>
+<div class="toc_4"><a href="std_map.html#_4487_remove">8.33.3.13 remove</a></div>
+<div class="toc_4"><a href="std_map.html#_4493_clear">8.33.3.14 clear</a></div>
+<div class="toc_4"><a href="std_map.html#_4499_size">8.33.3.15 size</a></div>
+<div class="toc_4"><a href="std_map.html#_4506_num_entries">8.33.3.16 NUM_ENTRIES</a></div>
+<div class="toc_4"><a href="std_map.html#_4508_num_in_use">8.33.3.17 NUM_IN_USE</a></div>
+<div class="toc_4"><a href="std_map.html#_4510_num_buckets">8.33.3.18 NUM_BUCKETS</a></div>
+<div class="toc_4"><a href="std_map.html#_4512_largest_bucket">8.33.3.19 LARGEST_BUCKET</a></div>
+<div class="toc_4"><a href="std_map.html#_4514_smallest_bucket">8.33.3.20 SMALLEST_BUCKET</a></div>
+<div class="toc_4"><a href="std_map.html#_4516_average_bucket">8.33.3.21 AVERAGE_BUCKET</a></div>
+<div class="toc_4"><a href="std_map.html#_4518_stdev_bucket">8.33.3.22 STDEV_BUCKET</a></div>
+<div class="toc_4"><a href="std_map.html#_4520_statistics">8.33.3.23 statistics</a></div>
+<div class="toc_4"><a href="std_map.html#_4525_keys">8.33.3.24 keys</a></div>
+<div class="toc_4"><a href="std_map.html#_4532_values">8.33.3.25 values</a></div>
+<div class="toc_4"><a href="std_map.html#_4540_pairs">8.33.3.26 pairs</a></div>
+<div class="toc_4"><a href="std_map.html#_4547_optimize">8.33.3.27 optimize</a></div>
+<div class="toc_4"><a href="std_map.html#_4552_load_map">8.33.3.28 load_map</a></div>
+<div class="toc_4"><a href="std_map.html#_4559_sm_text">8.33.3.29 SM_TEXT</a></div>
+<div class="toc_4"><a href="std_map.html#_4561_sm_raw">8.33.3.30 SM_RAW</a></div>
+<div class="toc_4"><a href="std_map.html#_4563_save_map">8.33.3.31 save_map</a></div>
+<div class="toc_4"><a href="std_map.html#_4570_copy">8.33.3.32 copy</a></div>
+<div class="toc_4"><a href="std_map.html#_4578_new_from_kvpairs">8.33.3.33 new_from_kvpairs</a></div>
+<div class="toc_4"><a href="std_map.html#_4583_new_from_string">8.33.3.34 new_from_string</a></div>
+<div class="toc_4"><a href="std_map.html#_4589_for_each">8.33.3.35 for_each</a></div>
+</div>
+</div>
+</p>
+
+<p> A <strong>map</strong> is a special array, often called an associative array or dictionary; in a map the data <strong>values</strong> (any Euphoria object) are indexed by <strong>keys</strong> (also any Euphoria object).</p>
+
+<p> When programming think in terms of <em>key:value</em> pairs. For example we can code things like this: </p>
+
+<pre class="examplecode"><font color="#330033">custrec = new</font><font color="#880033">() </font><font color="#FF0055">-- Create a new map</font>
+<font color="#330033">   put</font><font color="#880033">(</font><font color="#330033">custrec, </font><font color="#330033">"Name"</font><font color="#330033">, </font><font color="#330033">"Joe Blow"</font><font color="#880033">)</font>
+<font color="#330033">   put</font><font color="#880033">(</font><font color="#330033">custrec, </font><font color="#330033">"Address"</font><font color="#330033">, </font><font color="#330033">"555 High Street"</font><font color="#880033">)</font>
+<font color="#330033">   put</font><font color="#880033">(</font><font color="#330033">custrec, </font><font color="#330033">"Phone"</font><font color="#330033">, 555675632</font><font color="#880033">)</font>
+</pre>
+
+<p> This creates three elements in the map, and they are indexed by <tt>"Name"</tt>, <tt>"Address"</tt> and <tt>"Phone"</tt>, meaning that to get the data associated with those keys we can code: </p>
+
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">data = get</font><font color="#880033">(</font><font color="#330033">custrec, </font><font color="#330033">"Phone"</font><font color="#880033">)</font>
+<font color="#FF0055">   -- data now set to 555675632</font>
+</pre>
+
+<p> Note that <em>only one instance of a given key</em> can exist in a given map, meaning for example, we could not have two separate <tt>"Name"</tt> values in the above <tt>custrec</tt> map.</p>
+
+<p> Maps automatically grow to accommodate all the elements placed into it.</p>
+
+<p> Associative arrays can be implemented in many different ways, depending on what efficiency trade-offs have been made. This implementation allows you to specify how many items you expect the map to hold, or simply start with the default size.</p>
+
+<p> As the number of items in the map grows, the map may increase its size to accommodate larger numbers of items.</p>
+
+<!-- ..\include\std\map.e -->
+<h3>8.33.1 Operation Codes for Put</h3>
+<a name="_4400_operationcodesforput"></a><a name="operationcodesforput"></a>
+<p> 
+<a name="mapput"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.1 PUT</h4>
+<a name="_4402_put"></a><a name="put"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">PUT</font>
+</pre>
+
+<p> 
+<a name="mapadd"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.2 ADD</h4>
+<a name="_4404_add"></a><a name="add"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">ADD</font>
+</pre>
+
+<p> 
+<a name="mapsubtract"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.3 SUBTRACT</h4>
+<a name="_4406_subtract"></a><a name="subtract"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">SUBTRACT</font>
+</pre>
+
+<p> 
+<a name="mapmultiply"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.4 MULTIPLY</h4>
+<a name="_4408_multiply"></a><a name="multiply"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">MULTIPLY</font>
+</pre>
+
+<p> 
+<a name="mapdivide"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.5 DIVIDE</h4>
+<a name="_4410_divide"></a><a name="divide"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">DIVIDE</font>
+</pre>
+
+<p> 
+<a name="mapappend"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.6 APPEND</h4>
+<a name="_4412_append"></a><a name="append"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">APPEND</font>
+</pre>
+
+<p> 
+<a name="mapconcat"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.7 CONCAT</h4>
+<a name="_4414_concat"></a><a name="concat"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">CONCAT</font>
+</pre>
+
+<p> 
+<a name="mapleave"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.1.8 LEAVE</h4>
+<a name="_4416_leave"></a><a name="leave"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">LEAVE</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h3>8.33.2 Types</h3>
+<a name="_4417_types"></a><a name="types"></a>
+<p> 
+<a name="mapmap"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.2.1 map</h4>
+<a name="_4419_map"></a><a name="map"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public type </font><font color="#330033">map</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">m</font><font color="#880033">)</font>
+</pre>
+
+<p>   defines the datatype 'map'.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4420_comments"></a><a name="comments"></a>
+<p> Used when declaring a map variable.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4421_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map SymbolTable = new</font><font color="#880033">() </font><font color="#FF0055">-- Create a new map to hold the symbol table.</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h3>8.33.3 Routines</h3>
+<a name="_4422_routines"></a><a name="routines"></a>
+<p> 
+<a name="mapcalc_hash"></a><a name="hash"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.1 calc_hash</h4>
+<a name="_4424_calc_hash"></a><a name="calc_hash"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">calc_hash</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">key_p, </font><font color="#0000FF">integer </font><font color="#330033">max_hash_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   calculates a Hashing value from the supplied data.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4425_parameters"></a><a name="parameters"></a><ol><li><tt>key_p</tt> : The data for which you want a hash value calculated.
+</li><li><tt>max_hash_p</tt> :  The returned value will be no larger than this value.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4426_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the value of which depends only on the supplied data.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4427_comments"></a><a name="comments"></a>
+<p> This is used whenever you need a single number to represent the data you supply. It can calculate the number based on all the data you give it, which can be an atom or sequence of any value.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4428_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">h1</font>
+<font color="#FF0055">-- calculate a hash value and ensure it will be a value from 1 to 4097.</font>
+<font color="#330033">h1 = calc_hash</font><font color="#880033">( </font><font color="#330033">symbol_name, 4097 </font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="mapthreshold"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.2 threshold</h4>
+<a name="_4430_threshold"></a><a name="threshold"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">threshold</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">new_value_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   deprecated.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4431_parameters"></a><a name="parameters"></a><ol><li><tt>new_value_p</tt> : unused value.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4432_returns"></a><a name="returns"></a>
+<p> Zero..</p>
+
+<p> 
+<a name="maptype_of"></a><a name="of"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.3 type_of</h4>
+<a name="_4434_type_of"></a><a name="type_of"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">type_of</font><font color="#880033">(</font><font color="#330033">map the_map_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   deprecated</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4435_parameters"></a><a name="parameters"></a><ol><li><tt>m</tt> : A map
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4436_returns"></a><a name="returns"></a>
+<p> Zero.</p>
+
+<p> 
+<a name="maprehash"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.4 rehash</h4>
+<a name="_4438_rehash"></a><a name="rehash"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure </font><font color="#330033">rehash</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">integer </font><font color="#330033">requested_size_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   changes the width (that is the number of buckets) of a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4439_parameters"></a><a name="parameters"></a><ol><li><tt>m</tt> : the map to resize
+</li><li><tt>requested_size_p</tt> : a lower limit for the new size.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4440_comments"></a><a name="comments"></a>
+<p> If <tt>requested_size_p</tt> is not greater than zero, a new width is automatically derived from the current one.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4441_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4520_statistics">statistics</a>, <a href="std_map.html#_4547_optimize">optimize</a></p>
+
+<p> 
+<a name="mapnew"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.5 new</h4>
+<a name="_4443_new"></a><a name="new"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">new</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">initial_size_p = DEFAULT_SIZE</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new map data structure.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4444_parameters"></a><a name="parameters"></a><ol><li><tt>initial_size_p</tt> : An estimate of how many initial elements will be stored in the map.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4445_returns"></a><a name="returns"></a>
+<p> An empty <strong>map</strong>.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4446_comments"></a><a name="comments"></a>
+<p> A new object of type map is created.  The resources allocated for the map will be automatically cleaned up if the reference count of the returned value drops to zero, or if passed in a call to <a href="std_machine.html#_5837_delete">delete</a>.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4447_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map m = new</font><font color="#880033">()  </font><font color="#FF0055">-- m is now an empty map</font>
+<font color="#330033">x = new</font><font color="#880033">()    </font><font color="#FF0055">-- the resources for the map previously stored in x are released automatically</font>
+<font color="#0000FF">delete</font><font color="#880033">( </font><font color="#330033">m </font><font color="#880033">)  </font><font color="#FF0055">-- the resources for the map are released</font>
+</pre>
+
+<p> 
+<a name="mapnew_extra"></a><a name="extra"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.6 new_extra</h4>
+<a name="_4449_new_extra"></a><a name="new_extra"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">new_extra</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">the_map_p, </font><font color="#0000FF">integer </font><font color="#330033">initial_size_p = 8</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns either the supplied map or a new map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4450_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : An object, that could be an existing map
+</li><li><tt>initial_size_p</tt> : An estimate of how many initial elements will be stored in a new map.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4451_returns"></a><a name="returns"></a>
+<p> A <strong>map</strong>, If <tt>m</tt> is an existing map then it is returned otherwise this returns a new empty <strong>map</strong>.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4452_comments"></a><a name="comments"></a>
+<p> This is used to return a new map if the supplied variable isn't already a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4453_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map m = new_extra</font><font color="#880033">( </font><font color="#330033">foo</font><font color="#993333">() </font><font color="#880033">) </font><font color="#FF0055">-- If foo() returns a map it is used, otherwise</font>
+<font color="#FF0055">                           --  a new map is created.</font>
+</pre>
+
+<p> 
+<a name="mapcompare"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.7 compare</h4>
+<a name="_4455_compare"></a><a name="compare"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function compare</font><font color="#880033">(</font><font color="#330033">map map_1_p, map map_2_p, </font><font color="#0000FF">integer </font><font color="#330033">scope_p = </font><font color="#330033">'d'</font><font color="#880033">)</font>
+</pre>
+
+<p>   compares two maps to test equality.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4456_parameters"></a><a name="parameters"></a><ol><li><tt>map_1_p</tt> : A map
+</li><li><tt>map_2_p</tt> : A map
+</li><li><tt>scope_p</tt> : An integer that specifies what to compare.<ul><li>'k' or 'K' to only compare keys.
+</li><li>'v' or 'V' to only compare values.
+</li><li>'d' or 'D' to compare both keys and values. This is the default.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4457_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>-1 if they are not equal.
+</li><li>0 if they are literally the same map.
+</li><li>1 if they contain the same keys and/or values.
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4458_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map map_1_p = foo</font><font color="#880033">()</font>
+<font color="#330033">map map_2_p = bar</font><font color="#880033">()</font>
+<font color="#0000FF">if compare</font><font color="#880033">(</font><font color="#330033">map_1_p, map_2_p, </font><font color="#330033">'k'</font><font color="#880033">) </font><font color="#330033">&gt;= 0 </font><font color="#0000FF">then</font>
+<font color="#330033">     ... </font><font color="#FF0055">-- two maps have the same keys</font>
+</pre>
+
+<p> 
+<a name="maphas"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.8 has</h4>
+<a name="_4460_has"></a><a name="has"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">has</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">object </font><font color="#330033">key</font><font color="#880033">)</font>
+</pre>
+
+<p>   checks whether map has a given key.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4461_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map to inspect
+</li><li><tt>the_key_p</tt> : an object to be looked up
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4462_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 if not present, 1 if present.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4463_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"name"</font><font color="#330033">, </font><font color="#330033">"John"</font><font color="#880033">)</font>
+<font color="#330033">? has</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"name"</font><font color="#880033">) </font><font color="#FF0055">-- 1</font>
+<font color="#330033">? has</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"age"</font><font color="#880033">)  </font><font color="#FF0055">-- 0</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4464_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4466_get">get</a></p>
+
+<p> 
+<a name="mapget"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.9 get</h4>
+<a name="_4466_get"></a><a name="get"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">get</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">default = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   retrieves the value associated to a key in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4467_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map to inspect
+</li><li><tt>the_key_p</tt> : an object, the the_key_p being looked tp
+</li><li><tt>default_value_p</tt> : an object, a default value returned if <tt>the_key_p</tt> not found. The default is 0.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4468_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, the value that corresponds to <tt>the_key_p</tt> in <tt>the_map_p</tt>. If <tt>the_key_p</tt> is not in <tt>the_map_p</tt>, <tt>default_value_p</tt> is returned instead.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4469_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map ages</font>
+<font color="#330033">ages = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Andy"</font><font color="#330033">, 12</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Budi"</font><font color="#330033">, 13</font><font color="#880033">)</font>
+
+<font color="#0000FF">integer </font><font color="#330033">age</font>
+<font color="#330033">age = get</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Budi"</font><font color="#330033">, -1</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">age = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Age unknown"</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The age is %d"</font><font color="#330033">, age</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4470_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4460_has">has</a></p>
+
+<p> 
+<a name="mapnested_get"></a><a name="get"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.10 nested_get</h4>
+<a name="_4472_nested_get"></a><a name="nested_get"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">nested_get</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">sequence </font><font color="#330033">the_keys_p, </font><font color="#0000FF">object </font><font color="#330033">default_value_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the value given a nested key.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4473_comments"></a><a name="comments"></a>
+<p> Returns the value that corresponds to the object <tt>the_keys_p</tt> in the nested map the_map_p.  <tt>the_keys_p</tt> is a sequence of keys.  If any key is not in the map, the object default_value_p is returned instead.</p>
+
+<p> 
+<a name="mapput"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.11 put</h4>
+<a name="_4475_put"></a><a name="put"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure </font><font color="#330033">put</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">object </font><font color="#330033">key, </font><font color="#0000FF">object </font><font color="#330033">val, </font><font color="#0000FF">object </font><font color="#330033">op = PUT,</font>
+<font color="#0000FF">        object </font><font color="#330033">deprecated = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   adds or updates an entry on a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4476_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map where an entry is being added or updated
+</li><li><tt>the_key_p</tt> : an object, the the_key_p to look up
+</li><li><tt>the_value_p</tt> : an object, the value to add, or to use for updating.
+</li><li><tt>operation</tt> : an integer, indicating what is to be done with <tt>the_value_p</tt>. Defaults to PUT.
+</li><li><tt>trigger_p</tt> : Deprecated. This parameter defaults to zero and is not used.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4477_comments"></a><a name="comments"></a><ul><li>The operation parameter can be used to modify the existing value.  Valid operations are:
+</li></ul><ul><li><ul><li><tt>PUT</tt> --  This is the default, and it replaces any value in there already
+</li><li><tt>ADD</tt> --  Equivalent to using the += operator
+</li><li><tt>SUBTRACT</tt> --  Equivalent to using the -= operator
+</li><li><tt>MULTIPLY</tt> --  Equivalent to using the *= operator
+</li><li><tt>DIVIDE</tt> -- Equivalent to using the /= operator
+</li><li><tt>APPEND</tt> -- Appends the value to the existing data
+</li><li><tt>CONCAT</tt> -- Equivalent to using the &amp;= operator
+</li><li><tt>LEAVE</tt> --  If it already exists, the current value is left unchanged otherwise the new value is added to the map.
+</li></ul>
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4478_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map ages</font>
+<font color="#330033">ages = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Andy"</font><font color="#330033">, 12</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Budi"</font><font color="#330033">, 13</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">ages, </font><font color="#330033">"Budi"</font><font color="#330033">, 14</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- ages now contains 2 entries: "Andy" =&gt; 12, "Budi" =&gt; 14</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4479_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4487_remove">remove</a>, <a href="std_map.html#_4460_has">has</a>,  <a href="std_map.html#_4481_nested_put">nested_put</a></p>
+
+<p> 
+<a name="mapnested_put"></a><a name="put"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.12 nested_put</h4>
+<a name="_4481_nested_put"></a><a name="nested_put"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure </font><font color="#330033">nested_put</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">sequence </font><font color="#330033">the_keys_p, </font><font color="#0000FF">object </font><font color="#330033">the_value_p,</font>
+<font color="#0000FF">        integer </font><font color="#330033">operation_p = PUT, </font><font color="#0000FF">object </font><font color="#330033">deprecated_trigger_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   adds or updates an entry on a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4482_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map where an entry is being added or updated
+</li><li><tt>the_keys_p</tt> : a sequence of keys for the nested maps
+</li><li><tt>the_value_p</tt> : an object, the value to add, or to use for updating.
+</li><li><tt>operation_p</tt> : an integer, indicating what is to be done with <tt>value</tt>. Defaults to PUT.
+</li><li><tt>deprecated_trigger_p</tt> : Deprecated. This parameter defaults to zero and is not used.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4483_comments"></a><a name="comments"></a>
+<p> Valid operations are:</p>
+<ul><li><tt>PUT</tt> --  This is the default, and it replaces any value in there already
+</li><li><tt>ADD</tt> --  Equivalent to using the += operator
+</li><li><tt>SUBTRACT</tt> --  Equivalent to using the -= operator
+</li><li><tt>MULTIPLY</tt> --  Equivalent to using the *= operator
+</li><li><tt>DIVIDE</tt> -- Equivalent to using the /= operator
+</li><li><tt>APPEND</tt> -- Appends the value to the existing data
+</li><li><tt>CONCAT</tt> -- Equivalent to using the &amp;= operator
+</li></ul><ul><li>If existing entry with the same key is already in the map, the value of the entry is updated.
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4484_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map city_population</font>
+<font color="#330033">city_population = new</font><font color="#880033">()</font>
+<font color="#330033">nested_put</font><font color="#880033">(</font><font color="#330033">city_population, </font><font color="#993333">{</font><font color="#330033">"United States"</font><font color="#330033">, </font><font color="#330033">"California"</font><font color="#330033">, </font><font color="#330033">"Los Angeles"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">    3819951 </font><font color="#880033">)</font>
+<font color="#330033">nested_put</font><font color="#880033">(</font><font color="#330033">city_population, </font><font color="#993333">{</font><font color="#330033">"Canada"</font><font color="#330033">,        </font><font color="#330033">"Ontario"</font><font color="#330033">,    </font><font color="#330033">"Toronto"</font><font color="#993333">}</font><font color="#330033">,     </font>
+<font color="#330033">    2503281 </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4485_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4402_put">put</a></p>
+
+<p> 
+<a name="mapremove"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.13 remove</h4>
+<a name="_4487_remove"></a><a name="remove"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure remove</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">object </font><font color="#330033">key</font><font color="#880033">)</font>
+</pre>
+
+<p>   removes an entry with given key from a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4488_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map to operate on
+</li><li><tt>key</tt> : an object, the key to remove.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4489_comments"></a><a name="comments"></a><ul><li>If <tt>key</tt> is not on <tt>the_map_p</tt>, the <tt>the_map_p</tt> is returned unchanged.
+</li><li>If you need to remove all entries, see <a href="std_map.html#_4493_clear">clear</a>
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4490_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"Amy"</font><font color="#330033">, 66.9</font><font color="#880033">)</font>
+<font color="#0000FF">remove</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"Amy"</font><font color="#880033">)</font>
+<font color="#FF0055">-- the_map_p is now an empty map again</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4491_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4493_clear">clear</a>, <a href="std_map.html#_4460_has">has</a></p>
+
+<p> 
+<a name="mapclear"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.14 clear</h4>
+<a name="_4493_clear"></a><a name="clear"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure </font><font color="#330033">clear</font><font color="#880033">(</font><font color="#330033">map the_map_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   removes all entries in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4494_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map to operate on
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4495_comments"></a><a name="comments"></a><ul><li>This is much faster than removing each entry individually.
+</li><li>If you need to remove just one entry, see <a href="std_map.html#_4487_remove">remove</a>
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4496_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"Amy"</font><font color="#330033">, 66.9</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"Betty"</font><font color="#330033">, 67.8</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#330033">"Claire"</font><font color="#330033">, 64.1</font><font color="#880033">)</font>
+<font color="#330033">...</font>
+<font color="#330033">clear</font><font color="#880033">(</font><font color="#330033">the_map_p</font><font color="#880033">)</font>
+<font color="#FF0055">-- the_map_p is now an empty map again</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4497_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4487_remove">remove</a>, <a href="std_map.html#_4460_has">has</a></p>
+
+<p> 
+<a name="mapsize"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.15 size</h4>
+<a name="_4499_size"></a><a name="size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">size</font><font color="#880033">(</font><font color="#330033">map the_map_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the number of entries in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4500_parameters"></a><a name="parameters"></a>
+<p> <tt>the_map_p</tt> : the map being queried</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4501_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the number of entries it has.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4502_comments"></a><a name="comments"></a>
+<p> For an empty map, size will be zero</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4503_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 1, </font><font color="#330033">"a"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 2, </font><font color="#330033">"b"</font><font color="#880033">)</font>
+<font color="#330033">? size</font><font color="#880033">(</font><font color="#330033">the_map_p</font><font color="#880033">) </font><font color="#FF0055">-- outputs 2</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4504_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4520_statistics">statistics</a></p>
+
+<p> 
+<a name="mapnum_entries"></a><a name="entries"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.16 NUM_ENTRIES</h4>
+<a name="_4506_num_entries"></a><a name="num_entries"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">NUM_ENTRIES</font>
+</pre>
+
+<p> 
+<a name="mapnum_in_use"></a><a name="in_use"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.17 NUM_IN_USE</h4>
+<a name="_4508_num_in_use"></a><a name="num_in_use"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">NUM_IN_USE</font>
+</pre>
+
+<p> 
+<a name="mapnum_buckets"></a><a name="buckets"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.18 NUM_BUCKETS</h4>
+<a name="_4510_num_buckets"></a><a name="num_buckets"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">NUM_BUCKETS</font>
+</pre>
+
+<p> 
+<a name="maplargest_bucket"></a><a name="bucket"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.19 LARGEST_BUCKET</h4>
+<a name="_4512_largest_bucket"></a><a name="largest_bucket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">LARGEST_BUCKET</font>
+</pre>
+
+<p> 
+<a name="mapsmallest_bucket"></a><a name="bucket"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.20 SMALLEST_BUCKET</h4>
+<a name="_4514_smallest_bucket"></a><a name="smallest_bucket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">SMALLEST_BUCKET</font>
+</pre>
+
+<p> 
+<a name="mapaverage_bucket"></a><a name="bucket"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.21 AVERAGE_BUCKET</h4>
+<a name="_4516_average_bucket"></a><a name="average_bucket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">AVERAGE_BUCKET</font>
+</pre>
+
+<p> 
+<a name="mapstdev_bucket"></a><a name="bucket"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.22 STDEV_BUCKET</h4>
+<a name="_4518_stdev_bucket"></a><a name="stdev_bucket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">STDEV_BUCKET</font>
+</pre>
+
+<p> 
+<a name="mapstatistics"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.23 statistics</h4>
+<a name="_4520_statistics"></a><a name="statistics"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">statistics</font><font color="#880033">(</font><font color="#330033">map the_map_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   retrieves characteristics of a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4521_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map being queried
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4522_returns"></a><a name="returns"></a>
+<p> A  <strong>sequence</strong>, of 7 integers: </p>
+<ul><li><tt>NUM_ENTRIES</tt> -- number of entries
+</li><li><tt>NUM_IN_USE</tt> -- number of buckets in use
+</li><li><tt>NUM_BUCKETS</tt> -- number of buckets
+</li><li><tt>LARGEST_BUCKET</tt> -- size of largest bucket
+</li><li><tt>SMALLEST_BUCKET</tt> -- size of smallest bucket
+</li><li><tt>AVERAGE_BUCKET</tt> -- average size for a bucket
+</li><li><tt>STDEV_BUCKET</tt> -- standard deviation for the bucket length series
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4523_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = statistics</font><font color="#880033">(</font><font color="#330033">mymap</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The average size of the buckets is %d"</font><font color="#330033">, s</font><font color="#993333">[</font><font color="#330033">AVERAGE_BUCKET</font><font color="#993333">]</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="mapkeys"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.24 keys</h4>
+<a name="_4525_keys"></a><a name="keys"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">keys</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">integer </font><font color="#330033">sorted_result = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns all keys in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4526_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt>: the map being queried
+</li><li><tt>sorted_result</tt>: optional integer. 0 [default] means do not sort the output and 1 means to sort the output before returning.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4527_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> made of all the keys in the map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4528_comments"></a><a name="comments"></a>
+<p> If <tt>sorted_result</tt> is not used, the order of the keys returned is not predicable.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4529_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 10, </font><font color="#330033">"ten"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 20, </font><font color="#330033">"twenty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 30, </font><font color="#330033">"thirty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 40, </font><font color="#330033">"forty"</font><font color="#880033">)</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">keys</font>
+<font color="#330033">keys = keys</font><font color="#880033">(</font><font color="#330033">the_map_p</font><font color="#880033">) </font><font color="#FF0055">-- keys might be {20,40,10,30} or some other order</font>
+<font color="#330033">keys = keys</font><font color="#880033">(</font><font color="#330033">the_map_p, 1</font><font color="#880033">) </font><font color="#FF0055">-- keys will be {10,20,30,40}</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4530_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4460_has">has</a>, <a href="std_map.html#_4532_values">values</a>, <a href="std_map.html#_4540_pairs">pairs</a></p>
+
+<p> 
+<a name="mapvalues"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.25 values</h4>
+<a name="_4532_values"></a><a name="values"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">values</font><font color="#880033">(</font><font color="#330033">map the_map, </font><font color="#0000FF">object </font><font color="#330033">keys = 0, </font><font color="#0000FF">object </font><font color="#330033">default_values = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns values, without their keys, from a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4533_parameters"></a><a name="parameters"></a><ol><li><tt>the_map</tt> : the map being queried
+</li><li><tt>keys</tt> : optional, key list of values to return.
+</li><li><tt>default_values</tt> : optional default values for keys list
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4534_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of all values stored in <tt>the_map</tt>.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4535_comments"></a><a name="comments"></a><ul><li>The order of the values returned may not be the same as the putting order.
+</li><li>Duplicate values are not removed.
+</li><li>You use the <tt>keys</tt> parameter to return a specific set of values from the map. They are returned in the same order as the <tt>keys</tt> parameter. If no <tt>default_values</tt> is given and one is needed, 0 will be used.
+</li><li>If <tt>default_values</tt> is an atom, it represents the default value for all values in <tt>keys</tt>.
+</li><li>If <tt>default_values</tt> is a sequence, and its length is less than <tt>keys</tt>, then the last item in <tt>default_values</tt> is used for the rest of the <tt>keys</tt>.
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4536_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 10, </font><font color="#330033">"ten"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 20, </font><font color="#330033">"twenty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 30, </font><font color="#330033">"thirty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 40, </font><font color="#330033">"forty"</font><font color="#880033">)</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">values</font>
+<font color="#330033">values = values</font><font color="#880033">(</font><font color="#330033">the_map_p</font><font color="#880033">)</font>
+<font color="#FF0055">-- values might be {"twenty","forty","ten","thirty"}</font>
+<font color="#FF0055">-- or some other order</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 2:</h5>
+<a name="_4537_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 10, </font><font color="#330033">"ten"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 20, </font><font color="#330033">"twenty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 30, </font><font color="#330033">"thirty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 40, </font><font color="#330033">"forty"</font><font color="#880033">)</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">values</font>
+<font color="#330033">values = values</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#993333">{ </font><font color="#330033">10, 50, 30, 9000 </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- values WILL be { "ten", 0, "thirty", 0 }</font>
+<font color="#330033">values = values</font><font color="#880033">(</font><font color="#330033">the_map_p, </font><font color="#993333">{ </font><font color="#330033">10, 50, 30, 9000 </font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">-1,-2,-3,-4</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- values WILL be { "ten", -2, "thirty", -4 }</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4538_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4466_get">get</a>, <a href="std_map.html#_4525_keys">keys</a>, <a href="std_map.html#_4540_pairs">pairs</a></p>
+
+<p> 
+<a name="mappairs"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.26 pairs</h4>
+<a name="_4540_pairs"></a><a name="pairs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">pairs</font><font color="#880033">(</font><font color="#330033">map the_map, </font><font color="#0000FF">integer </font><font color="#330033">sorted_result = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns all key:value pairs in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4541_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map to get the data from
+</li><li><tt>sorted_result</tt> : optional integer. 0 [default] means do not sort the output and 1 means to sort the output before returning.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4542_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of all key:value pairs stored in <tt>the_map_p</tt>. Each pair is a sub-sequence in the form <tt>{key, value}</tt></p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4543_comments"></a><a name="comments"></a>
+<p> If <tt>sorted_result</tt> is not used, the order of the values returned is not predicable.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4544_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map the_map_p</font>
+
+<font color="#330033">the_map_p = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 10, </font><font color="#330033">"ten"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 20, </font><font color="#330033">"twenty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 30, </font><font color="#330033">"thirty"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">the_map_p, 40, </font><font color="#330033">"forty"</font><font color="#880033">)</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">keyvals</font>
+<font color="#330033">keyvals = pairs</font><font color="#880033">(</font><font color="#330033">the_map_p</font><font color="#880033">) </font>
+<font color="#FF0055">-- might be {{20,"twenty"},{40,"forty"},{10,"ten"},{30,"thirty"}}</font>
+
+<font color="#330033">keyvals = pairs</font><font color="#880033">(</font><font color="#330033">the_map_p, 1</font><font color="#880033">) </font>
+<font color="#FF0055">-- will be {{10,"ten"},{20,"twenty"},{30,"thirty"},{40,"forty"}}</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4545_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4466_get">get</a>, <a href="std_map.html#_4525_keys">keys</a>, <a href="std_map.html#_4532_values">values</a></p>
+
+<p> 
+<a name="mapoptimize"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.27 optimize</h4>
+<a name="_4547_optimize"></a><a name="optimize"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public procedure </font><font color="#330033">optimize</font><font color="#880033">(</font><font color="#330033">map the_map_p, </font><font color="#0000FF">integer </font><font color="#330033">deprecated_max_p = 0,</font>
+<font color="#0000FF">        atom </font><font color="#330033">deprecated_grow_p = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   rehashes a map to increase performance. This procedure is deprecated in favor of <a href="std_map.html#_4438_rehash">rehash</a>.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4548_parameters"></a><a name="parameters"></a><ol><li><tt>the_map_p</tt> : the map being optimized
+</li><li><tt>deprecated_max_p</tt> : unused
+</li><li><tt>deprecated_grow_p</tt> : unused.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4549_comments"></a><a name="comments"></a>
+<p> This rehashes the map until either the maximum bucket size is less than the desired maximum or the maximum bucket size is less than the largest size statistically expected (mean + 3 standard deviations).</p>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4550_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4520_statistics">statistics</a>, <a href="std_map.html#_4438_rehash">rehash</a></p>
+
+<p> 
+<a name="mapload_map"></a><a name="map"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.28 load_map</h4>
+<a name="_4552_load_map"></a><a name="load_map"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">load_map</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">input_file_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   loads a map from a file.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4553_parameters"></a><a name="parameters"></a><ol><li><tt>file_name_p</tt> : The file to load from. This file may have been created by the <a href="std_map.html#_4563_save_map">save_map</a> function. This can either be a name of a file or an already opened file handle.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4554_returns"></a><a name="returns"></a>
+<p> Either a <strong>map</strong>, with all the entries found in <tt>file_name_p</tt>, or <strong>-1</strong> if the file failed to open, or <strong>-2</strong> if the file is incorrectly formatted.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4555_comments"></a><a name="comments"></a>
+<p> If <tt>file_name_p</tt> is an already opened file handle, this routine will read from that file and not close it. Otherwise, the named file will be opened and closed by this routine.</p>
+
+<p> The input file can be either one created by the <a href="std_map.html#_4563_save_map">save_map</a> function or a manually created or edited text file. See <a href="std_map.html#_4563_save_map">save_map</a> for details about the required layout of the text file.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4556_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/error.e</font>
+
+<font color="#0000FF">object </font><font color="#330033">loaded</font>
+<font color="#330033">map AppOptions</font>
+<font color="#0000FF">sequence </font><font color="#330033">SavedMap = </font><font color="#330033">"c:\\myapp\\options.txt"</font>
+
+<font color="#330033">loaded = load_map</font><font color="#880033">(</font><font color="#330033">SavedMap</font><font color="#880033">)</font>
+<font color="#0000FF">if equal</font><font color="#880033">(</font><font color="#330033">loaded, -1</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    crash</font><font color="#880033">(</font><font color="#330033">"Map '%s' failed to open"</font><font color="#330033">, SavedMap</font><font color="#880033">)</font>
+<font color="#0000FF">end </font><font color="#330033">iF</font>
+
+<font color="#FF0055">-- By now we know that it was loaded and a new map created,</font>
+<font color="#FF0055">-- so we can assign it to a 'map' variable.</font>
+<font color="#330033">AppOptions = loaded</font>
+<font color="#0000FF">if </font><font color="#330033">get</font><font color="#880033">(</font><font color="#330033">AppOptions, </font><font color="#330033">"verbose"</font><font color="#330033">, 1</font><font color="#880033">) </font><font color="#330033">= 3 </font><font color="#0000FF">then</font>
+<font color="#330033">    ShowIntructions</font><font color="#880033">()</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4557_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4443_new">new</a>, <a href="std_map.html#_4563_save_map">save_map</a></p>
+
+<p> 
+<a name="mapsm_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.29 SM_TEXT</h4>
+<a name="_4559_sm_text"></a><a name="sm_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">SM_TEXT</font>
+</pre>
+
+<p> 
+<a name="mapsm_raw"></a><a name="raw"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.30 SM_RAW</h4>
+<a name="_4561_sm_raw"></a><a name="sm_raw"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public enum </font><font color="#330033">SM_RAW</font>
+</pre>
+
+<p> 
+<a name="mapsave_map"></a><a name="map"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.31 save_map</h4>
+<a name="_4563_save_map"></a><a name="save_map"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">save_map</font><font color="#880033">(</font><font color="#330033">map the_map_, </font><font color="#0000FF">object </font><font color="#330033">file_name_p, </font><font color="#0000FF">integer </font><font color="#330033">type_ = SM_TEXT</font><font color="#880033">)</font>
+</pre>
+
+<p>   saves a map to a file.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4564_parameters"></a><a name="parameters"></a><ol><li><tt>m</tt> : a map.
+</li><li><tt>file_name_p</tt> : Either a sequence, the name of the file to save to, or an open file handle as returned by <a href="std_io.html#_1603_open">open</a>().
+</li><li><tt>type</tt> : an integer. SM_TEXT for a human-readable format (default), SM_RAW for a smaller and faster format, but not human-readable.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4565_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the number of keys saved to the file, or -1 if the save failed.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4566_comments"></a><a name="comments"></a>
+<p> If <tt>file_name_p</tt> is an already opened file handle, this routine will write to that file and not close it. Otherwise, the named file will be created and closed by this routine.</p>
+
+<p> The SM_TEXT type saves the map keys and values in a text format which can be read and edited by standard text editor. Each entry in the map is saved as a KEY/VALUE pair in the form <br />
+
+<pre>key = value
+</pre>
+Note that if the 'key' value is a normal string value, it can be enclosed in double quotes. If it is not thus quoted, the first character of the key determines its Euphoria value type. A dash or digit implies an atom, an left-brace implies a sequence, an alphabetic character implies a text string that extends to the next equal '=' symbol, and anything else is ignored.</p>
+
+<p> Note that if a line contains a double-dash, then all text from the double-dash to the end of the line will be ignored. This is so you can optionally add comments to the saved map. Also, any blank lines are ignored too.</p>
+
+<p> All text after the '=' symbol is assumed to be the map item's value data.</p>
+
+<p> Because some map data can be rather long, it is possible to split the text into multiple lines, which will be considered by <a href="std_map.html#_4552_load_map">load_map</a> as a single <em>logical</em> line. If an line ends with a comma (,) or a dollar sign ($), then the next actual line is appended to the end of it. After all these physical lines have been joined into one logical line, all combinations of `",$"` and `,$` are removed.</p>
+
+<p> For example: 
+<pre>one = {"first",
+"second",
+"third",
+$
+}
+second = "A long text ",$
+"line that has been",$
+" split into three lines"
+third = {"first",
+"second",
+"third"}
+</pre>
+is equivalent to 
+<pre>one = {"first","second","third"}
+second = "A long text line that has been split into three lines"
+third = {"first","second","third"}
+</pre>
+
+<p> The SM_RAW type saves the map in an efficient manner. It is generally smaller than the text format and is faster to process, but it is not human readable and standard text editors can not be used to edit it. In this format, the file will contain three serialized sequences: </p>
+<ol><li>Header sequence: {integer:format version, string: date and time of save (YYMMDDhhmmss), sequence: euphoria version {major, minor, revision, patch}}
+</li><li>Keys. A list of all the keys
+</li><li>Values. A list of the corresponding values for the keys.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4567_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/error.e</font>
+
+<font color="#330033">map AppOptions</font>
+<font color="#0000FF">if </font><font color="#330033">save_map</font><font color="#880033">(</font><font color="#330033">AppOptions, </font><font color="#330033">"c:\myapp\options.txt"</font><font color="#880033">) </font><font color="#330033">= -1</font>
+<font color="#330033">    crash</font><font color="#880033">(</font><font color="#330033">"Failed to save application options"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+
+<font color="#0000FF">if </font><font color="#330033">save_map</font><font color="#880033">(</font><font color="#330033">AppOptions, </font><font color="#330033">"c:\myapp\options.dat"</font><font color="#330033">, SM_RAW</font><font color="#880033">) </font><font color="#330033">= -1</font>
+<font color="#330033">    crash</font><font color="#880033">(</font><font color="#330033">"Failed to save application options"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4568_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4552_load_map">load_map</a></p>
+
+<p> 
+<a name="mapcopy"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.32 copy</h4>
+<a name="_4570_copy"></a><a name="copy"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">copy</font><font color="#880033">(</font><font color="#330033">map source_map, </font><font color="#0000FF">object </font><font color="#330033">dest_map = 0, </font><font color="#0000FF">integer </font><font color="#330033">put_operation = PUT</font><font color="#880033">)</font>
+</pre>
+
+<p>   duplicates a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4571_parameters"></a><a name="parameters"></a><ol><li><tt>source_map</tt> : map to copy from
+</li><li><tt>dest_map</tt> : optional, map to copy to
+</li><li><tt>put_operation</tt> : optional, operation to use when <tt>dest_map</tt> is used. The default is PUT.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4572_returns"></a><a name="returns"></a>
+<p> If <tt>dest_map</tt>  was not provided, an exact duplicate of <tt>source_map</tt> otherwise <tt>dest_map</tt>, which does not have to be empty, is returned with the new values copied from <tt>source_map</tt>, according to the <tt>put_operation</tt> value.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4573_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map m1 = new</font><font color="#880033">()</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, 1, </font><font color="#330033">"one"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, 2, </font><font color="#330033">"two"</font><font color="#880033">)</font>
+
+<font color="#330033">map m2 = copy</font><font color="#880033">(</font><font color="#330033">m1</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s, %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">get</font><font color="#0000FF">(</font><font color="#330033">m2, 1</font><font color="#0000FF">)</font><font color="#330033">, get</font><font color="#0000FF">(</font><font color="#330033">m2, 2</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- one, two</font>
+
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, 1, </font><font color="#330033">"one hundred"</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s, %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">get</font><font color="#0000FF">(</font><font color="#330033">m1, 1</font><font color="#0000FF">)</font><font color="#330033">, get</font><font color="#0000FF">(</font><font color="#330033">m1, 2</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- one hundred, two</font>
+
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s, %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">get</font><font color="#0000FF">(</font><font color="#330033">m2, 1</font><font color="#0000FF">)</font><font color="#330033">, get</font><font color="#0000FF">(</font><font color="#330033">m2, 2</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- one, two</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 2:</h5>
+<a name="_4574_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">map m1 = new</font><font color="#880033">()</font>
+<font color="#330033">map m2 = new</font><font color="#880033">()</font>
+
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, 1, </font><font color="#330033">"one"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, 2, </font><font color="#330033">"two"</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m2, 3, </font><font color="#330033">"three"</font><font color="#880033">)</font>
+
+<font color="#330033">copy</font><font color="#880033">(</font><font color="#330033">m1, m2</font><font color="#880033">)</font>
+
+<font color="#330033">? keys</font><font color="#880033">(</font><font color="#330033">m2</font><font color="#880033">)</font>
+<font color="#FF0055">-- { 1, 2, 3 }</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 3:</h5>
+<a name="_4575_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">map m1 = new</font><font color="#880033">()</font>
+<font color="#330033">map m2 = new</font><font color="#880033">()</font>
+
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"XY"</font><font color="#330033">, 1</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"AB"</font><font color="#330033">, 2</font><font color="#880033">)</font>
+<font color="#330033">put</font><font color="#880033">(</font><font color="#330033">m2, </font><font color="#330033">"XY"</font><font color="#330033">, 3</font><font color="#880033">)</font>
+
+<font color="#330033">pairs</font><font color="#880033">(</font><font color="#330033">m1</font><font color="#880033">) </font><font color="#FF0055">--&gt; { {"AB", 2}, {"XY", 1} }</font>
+<font color="#330033">pairs</font><font color="#880033">(</font><font color="#330033">m2</font><font color="#880033">) </font><font color="#FF0055">--&gt; { {"XY", 3} }</font>
+
+<font color="#FF0055">-- Add same keys' values.</font>
+<font color="#330033">copy</font><font color="#880033">(</font><font color="#330033">m1, m2, ADD</font><font color="#880033">)</font>
+
+<font color="#330033">pairs</font><font color="#880033">(</font><font color="#330033">m2</font><font color="#880033">) </font><font color="#FF0055">--&gt; { {"AB", 2}, {"XY", 4} }</font>
+</pre>
+
+<!-- ..\include\std\map.e -->
+<h5>See Also:</h5>
+<a name="_4576_seealso"></a><a name="seealso"></a>
+<p> <a href="std_map.html#_4402_put">put</a></p>
+
+<p> 
+<a name="mapnew_from_kvpairs"></a><a name="from_kvpairs"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.33 new_from_kvpairs</h4>
+<a name="_4578_new_from_kvpairs"></a><a name="new_from_kvpairs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">new_from_kvpairs</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">kv_pairs</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a set of key:value pairs to a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4579_parameters"></a><a name="parameters"></a><ol><li><tt>kv_pairs</tt> : A seqeuence containing any number of subsequences that have the format {KEY, VALUE}. These are loaded into a new map which is then returned by this function.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4580_returns"></a><a name="returns"></a>
+<p> A <strong>map</strong>, containing the data from <tt>kv_pairs</tt></p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4581_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">map m1 = new_from_kvpairs</font><font color="#880033">( </font><font color="#993333">{</font>
+<font color="#0000FF">    { </font><font color="#330033">"application"</font><font color="#330033">, </font><font color="#330033">"Euphoria" </font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">    { </font><font color="#330033">"version"</font><font color="#330033">, </font><font color="#330033">"4.0" </font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">    { </font><font color="#330033">"genre"</font><font color="#330033">, </font><font color="#330033">"programming language" </font><font color="#0000FF">}</font><font color="#330033">,</font>
+<font color="#0000FF">    { </font><font color="#330033">"crc"</font><font color="#330033">, 0x4F71AE10 </font><font color="#0000FF">}</font>
+<font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#330033">v = map:get</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"application"</font><font color="#880033">) </font><font color="#FF0055">--&gt; "Euphoria"</font>
+</pre>
+
+<p> 
+<a name="mapnew_from_string"></a><a name="from_string"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.34 new_from_string</h4>
+<a name="_4583_new_from_string"></a><a name="new_from_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">new_from_string</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">kv_string</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a set of key:value pairs contained in a string to a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4584_parameters"></a><a name="parameters"></a><ol><li><tt>kv_string</tt> : A string containing any number of lines that have the format KEY=VALUE. These are loaded into a new map which is then returned by this function.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4585_returns"></a><a name="returns"></a>
+<p> A <strong>map</strong>, containing the data from <tt>kv_string</tt></p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4586_comments"></a><a name="comments"></a>
+<p> This function actually calls <tt><a href="std_text.html#_3360_keyvalues">keyvalues</a></tt> to convert the string to key-value pairs, which are then used to create the map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4587_example1"></a><a name="example1"></a>
+<p> Given that a file called "xyz.config" contains the lines ... 
+<pre>application = Euphoria,
+version     = 4.0,
+genre       = "programming language",
+crc         = 4F71AE10
+</pre>
+
+<pre class="examplecode"><font color="#330033">map m1 = new_from_string</font><font color="#880033">( </font><font color="#330033">read_file</font><font color="#993333">(</font><font color="#330033">"xyz.config"</font><font color="#330033">, TEXT_MODE</font><font color="#993333">)</font><font color="#880033">)</font>
+
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">map:get</font><font color="#0000FF">(</font><font color="#330033">m1, </font><font color="#330033">"application"</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">--&gt; "Euphoria"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">map:get</font><font color="#0000FF">(</font><font color="#330033">m1, </font><font color="#330033">"genre"</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)       </font><font color="#FF0055">--&gt; "programming language"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">map:get</font><font color="#0000FF">(</font><font color="#330033">m1, </font><font color="#330033">"version"</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)     </font><font color="#FF0055">--&gt; "4.0"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">map:get</font><font color="#0000FF">(</font><font color="#330033">m1, </font><font color="#330033">"crc"</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)         </font><font color="#FF0055">--&gt; "4F71AE10"  </font>
+</pre>
+
+<p> 
+<a name="mapfor_each"></a><a name="each"></a> </p>
+
+<!-- ..\include\std\map.e -->
+<h4>8.33.3.35 for_each</h4>
+<a name="_4589_for_each"></a><a name="for_each"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">map</font>
+<font color="#0000FF">public function </font><font color="#330033">for_each</font><font color="#880033">(</font><font color="#330033">map source_map, </font><font color="#0000FF">integer </font><font color="#330033">user_rid, </font><font color="#0000FF">object </font><font color="#330033">user_data = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">in_sorted_order = 0, </font><font color="#0000FF">integer </font><font color="#330033">signal_boundary = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   calls a user-defined routine for each of the items in a map.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Parameters:</h5>
+<a name="_4590_parameters"></a><a name="parameters"></a><ol><li><tt>source_map</tt> : The map containing the data to process
+</li><li><tt>user_rid</tt>: The routine_id of a user defined processing function
+</li><li><tt>user_data</tt>: An object. Optional. This is passed, unchanged to each call of the user defined routine. By default, zero (0) is used.
+</li><li><tt>in_sorted_order</tt>: An integer. Optional. If non-zero the items in the map are processed in ascending key sequence otherwise the order is undefined. By default they are not sorted.
+</li><li><tt>signal_boundary</tt>: A integer; 0 (the default) means that the user routine is not called if the map is empty and when the last item is passed to the user routine, the Progress Code is not negative.
+</li></ol>
+<!-- ..\include\std\map.e -->
+<h5>Returns:</h5>
+<a name="_4591_returns"></a><a name="returns"></a>
+<p> An integer: 0 means that all the items were processed, and anything else is whatever was returned by the user routine to abort the <tt>for_each</tt> process.</p>
+
+<!-- ..\include\std\map.e -->
+<h5>Comments:</h5>
+<a name="_4592_comments"></a><a name="comments"></a><ul><li>The user defined routine is a function that must accept four parameters.<ol><li>Object: an Item Key
+</li><li>Object: an Item Value
+</li><li>Object: The <tt>user_data</tt> value. This is never used by <tt>for_each</tt> itself, merely passed to the user routine.
+</li><li>Integer: Progress code.<ul><li>The <tt>abs</tt> value of the progress code is the ordinal call number. That is 1 means the first call, 2 means the second call, etc ...
+</li><li>If the progress code is negative, it is also the last call to the routine.
+</li><li>If the progress code is zero, it means that the map is empty and thus the item key and value cannot be used.
+</li><li><strong>note</strong> that if <tt>signal_boundary</tt> is zero, the Progress Code is never less than 1.
+</li></ul>
+</li></ol>
+</li><li>The user routine must return 0 to get the next map item. Anything else will cause <tt>for_each</tt> to stop running, and is returned to whatever called  <tt>for_each</tt>.
+</li><li>Note that any changes that the user routine makes to the map do not affect the order or number of times the routine is called. <tt>for_each</tt> takes a copy of the map keys and data before the first call to the user routine and uses the copied data to call the user routine.
+</li></ul>
+<!-- ..\include\std\map.e -->
+<h5>Example 1:</h5>
+<a name="_4593_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/map.e</font>
+<font color="#0000FF">include </font><font color="#330033">std/math.e</font>
+<font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+
+<font color="#0000FF">function </font><font color="#330033">Process_A</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">k, </font><font color="#0000FF">object </font><font color="#330033">v, </font><font color="#0000FF">object </font><font color="#330033">d, </font><font color="#0000FF">integer </font><font color="#330033">pc</font><font color="#880033">)</font>
+<font color="#330033">    writefln</font><font color="#880033">(</font><font color="#330033">"[] = []"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">k, v</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">    return </font><font color="#330033">0</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">Process_B</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">k, </font><font color="#0000FF">object </font><font color="#330033">v, </font><font color="#0000FF">object </font><font color="#330033">d, </font><font color="#0000FF">integer </font><font color="#330033">pc</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">pc = 0 </font><font color="#0000FF">then</font>
+<font color="#330033">      writefln</font><font color="#880033">(</font><font color="#330033">"The map is empty"</font><font color="#880033">)</font>
+<font color="#0000FF">    else</font>
+<font color="#0000FF">      integer </font><font color="#330033">c</font>
+<font color="#330033">      c = abs</font><font color="#880033">(</font><font color="#330033">pc</font><font color="#880033">)</font>
+<font color="#0000FF">      if </font><font color="#330033">c = 1 </font><font color="#0000FF">then</font>
+<font color="#330033">          writefln</font><font color="#880033">(</font><font color="#330033">"---[]---"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">d</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- Write the report title.</font>
+<font color="#0000FF">      end if</font>
+<font color="#330033">      writefln</font><font color="#880033">(</font><font color="#330033">"[]: [:15] = []"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">c, k, v</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">      if </font><font color="#330033">pc &lt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">          writefln</font><font color="#880033">(</font><font color="#0000FF">repeat</font><font color="#993333">(</font><font color="#330033">'-'</font><font color="#330033">, </font><font color="#0000FF">length</font><font color="#0000FF">(</font><font color="#330033">d</font><font color="#0000FF">) </font><font color="#330033">+ 6</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{}</font><font color="#880033">) </font><font color="#FF0055">-- Write the report end.</font>
+<font color="#0000FF">      end if</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">    return </font><font color="#330033">0</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">map m1 = new</font><font color="#880033">()</font>
+<font color="#330033">map:put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"application"</font><font color="#330033">, </font><font color="#330033">"Euphoria"</font><font color="#880033">)</font>
+<font color="#330033">map:put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"version"</font><font color="#330033">, </font><font color="#330033">"4.0"</font><font color="#880033">)</font>
+<font color="#330033">map:put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"genre"</font><font color="#330033">, </font><font color="#330033">"programming language"</font><font color="#880033">)</font>
+<font color="#330033">map:put</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#330033">"crc"</font><font color="#330033">, </font><font color="#330033">"4F71AE10"</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- Unsorted </font>
+<font color="#330033">map:for_each</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"Process_A"</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">-- Sorted</font>
+<font color="#330033">map:for_each</font><font color="#880033">(</font><font color="#330033">m1, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"Process_B"</font><font color="#993333">)</font><font color="#330033">, </font><font color="#330033">"List of Items"</font><font color="#330033">, 1</font><font color="#880033">)  </font>
+</pre>
+
+<p> The output from the first call could be... 
+<pre>application = Euphoria
+version = 4.0
+genre = programming language
+crc = 4F71AE10
+</pre>
+
+<p> The output from the second call should be... 
+<pre>---List of Items---
+1: application     = Euphoria
+2: crc             = 4F71AE10
+3: genre           = programming language
+4: version         = 4.0
+-------------------
+</pre>
+
+<p> 
+<!-- ..\include\std\stack.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_hash.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_stack.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_hash.html">8.32 Hashing Algorithms</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_stack.html">8.34 Stack</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_tokenize.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_debug_debug.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_tokenize.html">8.53 Euphoria Source Tokenizer</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_debug_debug.html">8.55 Debugging tools</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\unittest.e -->
+<h2>8.54 Unit Testing Framework</h2>
+<a name="_6405_unittestingframework"></a><a name="unittestingframework"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_unittest.html#_6405_unittestingframework">8.54 Unit Testing Framework</a></div>
+<div class="toc_3"><a href="std_unittest.html#_6406_background">8.54.1 Background</a></div>
+<div class="toc_3"><a href="std_unittest.html#_6407_constants">8.54.2 Constants</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6409_test_quiet">8.54.2.1 TEST_QUIET</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6411_test_show_failed_only">8.54.2.2 TEST_SHOW_FAILED_ONLY</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6413_test_show_all">8.54.2.3 TEST_SHOW_ALL</a></div>
+<div class="toc_3"><a href="std_unittest.html#_6414_setuproutines">8.54.3 Setup Routines</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6416_set_test_verbosity">8.54.3.1 set_test_verbosity</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6421_set_wait_on_summary">8.54.3.2 set_wait_on_summary</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6426_set_accumulate_summary">8.54.3.3 set_accumulate_summary</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6430_set_test_abort">8.54.3.4 set_test_abort</a></div>
+<div class="toc_3"><a href="std_unittest.html#_6434_reporting">8.54.4 Reporting</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6436_test_report">8.54.4.1 test_report</a></div>
+<div class="toc_3"><a href="std_unittest.html#_6439_tests">8.54.5 Tests</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6441_test_equal">8.54.5.1 test_equal</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6446_test_not_equal">8.54.5.2 test_not_equal</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6451_test_true">8.54.5.3 test_true</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6456_assert">8.54.5.4 assert</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6461_test_false">8.54.5.5 test_false</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6466_test_fail">8.54.5.6 test_fail</a></div>
+<div class="toc_4"><a href="std_unittest.html#_6470_test_pass">8.54.5.7 test_pass</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\unittest.e -->
+<h3>8.54.1 Background</h3>
+<a name="_6406_background"></a><a name="background"></a>
+<p> Unit testing is the process of assuring that the smallest programming units are actually delivering functionality that complies with their specification. The units in question are usually individual routines rather than whole programs or applications.</p>
+
+<p> The theory is that if the components of a system are working correctly, then there is a high probability that a system using those components can be made to work correctly.</p>
+
+<p> In Euphoria terms, this framework provides the tools to make testing and reporting on functions and procedures easy and standardized. It gives us a simple way to write a test case and to report on the findings.<br />
+Example: </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+
+<font color="#330033">test_equal</font><font color="#880033">( </font><font color="#330033">"Power function test #1"</font><font color="#330033">, 4, </font><font color="#0000FF">power</font><font color="#993333">(</font><font color="#330033">2, 2</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#330033">test_equal</font><font color="#880033">( </font><font color="#330033">"Power function test #2"</font><font color="#330033">, 4, </font><font color="#0000FF">power</font><font color="#993333">(</font><font color="#330033">16, 0.5</font><font color="#993333">)</font><font color="#880033">)</font>
+
+<font color="#330033">test_report</font><font color="#880033">()</font>
+</pre>
+
+<p> Name your test file in the special manner, <tt>t_NAME.e</tt> and then simply run <tt>eutest</tt> in that directory.</p>
+
+<p> 
+<pre>C:\Euphoria&gt; eutest
+t_math.e:
+failed: Bad math, expected: 100 but got: 8
+2 tests run, 1 passed, 1 failed, 50.0% success
+
+===== Test failure summary:
+FAIL: t_math.e
+
+2 file(s) run 1 file(s) failed, 50.0% success--
+</pre>
+
+<p> In this example, we use the <tt>test_equal</tt> function to record the result of a test. The first parameter is the name of the test, which can be anything and is displayed if the test fails. The second parameter is the expected result -- what we expect the function being tested to return. The third parameter is the actual result returned by the function being tested. This is usually written as a call to the function itself.</p>
+
+<p> It is typical to provide as many test cases as would be required to give us confidence that the function is being truly exercised. This includes calling it with typical values and edge-case or exceptional values. It is also useful to test the function's error handling by calling it with bad parameters.</p>
+
+<p> When a test fails, the framework displays a message, showing the test's name, the expected result and the actual result. You can configure the framework to display each test run, regardless of whether it fails or not.</p>
+
+<p> After running a series of tests, you can get a summary displayed by calling the <tt>test_report</tt> procedure. To get a better feel for unit testing, have a look at the provided test cases for the standard library in the <em>tests</em> directory.</p>
+
+<p> When included in your program, <tt>unittest.e</tt> sets a crash handler to log a crash as a failure.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h3>8.54.2 Constants</h3>
+<a name="_6407_constants"></a><a name="constants"></a>
+<p> 
+<a name="unittesttest_quiet"></a><a name="quiet"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.2.1 TEST_QUIET</h4>
+<a name="_6409_test_quiet"></a><a name="test_quiet"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public enum </font><font color="#330033">TEST_QUIET</font>
+</pre>
+
+<p> 
+<a name="unittesttest_show_failed_only"></a><a name="show_failed_only"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.2.2 TEST_SHOW_FAILED_ONLY</h4>
+<a name="_6411_test_show_failed_only"></a><a name="test_show_failed_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public enum </font><font color="#330033">TEST_SHOW_FAILED_ONLY</font>
+</pre>
+
+<p> 
+<a name="unittesttest_show_all"></a><a name="show_all"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.2.3 TEST_SHOW_ALL</h4>
+<a name="_6413_test_show_all"></a><a name="test_show_all"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public enum </font><font color="#330033">TEST_SHOW_ALL</font>
+</pre>
+
+<!-- ..\include\std\unittest.e -->
+<h3>8.54.3 Setup Routines</h3>
+<a name="_6414_setuproutines"></a><a name="setuproutines"></a>
+<p> 
+<a name="unittestset_test_verbosity"></a><a name="test_verbosity"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.3.1 set_test_verbosity</h4>
+<a name="_6416_set_test_verbosity"></a><a name="set_test_verbosity"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_test_verbosity</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">verbosity</font><font color="#880033">)</font>
+</pre>
+
+<p>   set the amount of information that is returned about passed and failed tests.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6417_parameters"></a><a name="parameters"></a><ol><li><tt>verbosity</tt> : an atom which takes predefined values for verbosity levels.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6418_comments"></a><a name="comments"></a>
+<p> The following values are allowable for <tt>verbosity</tt>: </p>
+<ul><li><tt>TEST_QUIET</tt> --  0,
+</li><li><tt>TEST_SHOW_FAILED_ONLY</tt> --  1
+</li><li><tt>TEST_SHOW_ALL</tt> -- 2
+</li></ul>
+<p>However, anything less than <tt>TEST_SHOW_FAILED_ONLY</tt> is treated as <tt>TEST_QUIET</tt>, and everything above <tt>TEST_SHOW_ALL</tt> is treated as <tt>TEST_SHOW_ALL</tt>.</p>
+<ul><li>At the lowest verbosity level, only the score is shown, ie the ratio passed tests/total tests.
+</li><li>At the medium level, in addition, failed tests display their name, the expected outcome and the outcome they got. This is the initial setting.
+</li><li>At the highest level of verbosity, each test is reported as passed or failed.
+</li></ul>
+<p>If a file crashes when it should not, this event is reported no matter the verbosity level.</p>
+
+<p> The command line switch <tt>"-failed"</tt> causes verbosity to be set to medium at startup. The command line switch <tt>"-all"</tt> causes verbosity to be set to high at startup.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6419_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6436_test_report">test_report</a></p>
+
+<p> 
+<a name="unittestset_wait_on_summary"></a><a name="wait_on_summary"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.3.2 set_wait_on_summary</h4>
+<a name="_6421_set_wait_on_summary"></a><a name="set_wait_on_summary"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_wait_on_summary</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">to_wait</font><font color="#880033">)</font>
+</pre>
+
+<p>   requests the test report to pause before exiting.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6422_parameters"></a><a name="parameters"></a><ol><li><tt>to_wait</tt> : an integer, zero not to wait, nonzero to wait.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6423_comments"></a><a name="comments"></a>
+<p> Depending on the environment, the test results may be invisible if <tt>set_wait_on_summary(1)</tt> was not called prior, as this is not the default. The command line switch <tt>"-wait"</tt> performs this call.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6424_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6436_test_report">test_report</a></p>
+
+<p> 
+<a name="unittestset_accumulate_summary"></a><a name="accumulate_summary"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.3.3 set_accumulate_summary</h4>
+<a name="_6426_set_accumulate_summary"></a><a name="set_accumulate_summary"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_accumulate_summary</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">accumulate</font><font color="#880033">)</font>
+</pre>
+
+<p>   requests the test report to save run stats in <tt>"unittest.dat"</tt> before exiting.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6427_parameters"></a><a name="parameters"></a><ol><li><tt>accumulate</tt> : an integer, zero not to accumulate, nonzero to accumulate.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6428_comments"></a><a name="comments"></a>
+<p> The file "unittest.dat" is appended to with {t,f}<br />
+<div style="margin-left:2em"> where <div style="margin-left:2em"> <em>t</em> is total number of tests run <br />
+ <em>f</em> is the total number of tests that failed</p>
+</div></div>
+<p> 
+<a name="unittestset_test_abort"></a><a name="test_abort"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.3.4 set_test_abort</h4>
+<a name="_6430_set_test_abort"></a><a name="set_test_abort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public function </font><font color="#330033">set_test_abort</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">abort_test</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the behavior on test failure, and return previous value.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6431_parameters"></a><a name="parameters"></a><ol><li><tt>abort_test</tt> : an integer, the new value for this setting.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Returns:</h5>
+<a name="_6432_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the previous value for the setting.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6433_comments"></a><a name="comments"></a>
+<p> By default, the tests go on even if a file crashed.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h3>8.54.4 Reporting</h3>
+<a name="_6434_reporting"></a><a name="reporting"></a>
+<p> 
+<a name="unittesttest_report"></a><a name="report"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.4.1 test_report</h4>
+<a name="_6436_test_report"></a><a name="test_report"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_report</font><font color="#880033">()</font>
+</pre>
+
+<p>   outputs the test report.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6437_comments"></a><a name="comments"></a>
+<p> The report components are described in the comments section for <a href="std_unittest.html#_6416_set_test_verbosity">set_test_verbosity</a>. Everything prints on the standard error device.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6438_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6416_set_test_verbosity">set_test_verbosity</a></p>
+
+<!-- ..\include\std\unittest.e -->
+<h3>8.54.5 Tests</h3>
+<a name="_6439_tests"></a><a name="tests"></a>
+<p> 
+<a name="unittesttest_equal"></a><a name="equal"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.1 test_equal</h4>
+<a name="_6441_test_equal"></a><a name="test_equal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_equal</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">expected, </font><font color="#0000FF">object </font><font color="#330033">outcome</font><font color="#880033">)</font>
+</pre>
+
+<p>   records whether a test passes by comparing two values.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6442_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li><li><tt>expected</tt> : an object, the expected outcome of some action
+</li><li><tt>outcome</tt> : an object, some actual value that should equal the reference <tt>expected</tt>.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6443_comments"></a><a name="comments"></a><ul><li>For floating point numbers, a fuzz of <tt>1e-9</tt> is used to assess equality.
+</li></ul>
+<p>A test is recorded as passed if equality holds between <tt>expected</tt> and <tt>outcome</tt>. The latter is typically a function call, or a variable that was set by some prior action.</p>
+
+<p> While <tt>expected</tt> and <tt>outcome</tt> are processed symmetrically, they are not recorded symmetrically, so be careful to pass <tt>expected</tt> before <tt>outcome</tt> for better test failure reports.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6444_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>, <a href="std_unittest.html#_6451_test_true">test_true</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<a name="unittesttest_not_equal"></a><a name="not_equal"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.2 test_not_equal</h4>
+<a name="_6446_test_not_equal"></a><a name="test_not_equal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_not_equal</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">a, </font><font color="#0000FF">object </font><font color="#330033">b</font><font color="#880033">)</font>
+</pre>
+
+<p>   records whether a test passes by comparing two values.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6447_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li><li><tt>expected</tt> : an object, the expected outcome of some action
+</li><li><tt>outcome</tt> : an object, some actual value that should equal the reference <tt>expected</tt>.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6448_comments"></a><a name="comments"></a><ul><li>For atoms, a fuzz of <tt>1e-9</tt> is used to assess equality.
+</li><li>For sequences, no such fuzz is implemented.
+</li></ul>
+<p>A test is recorded as passed if equality does not hold between <tt>expected</tt> and <tt>outcome</tt>. The latter is typically a function call, or a variable that was set by some prior action.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6449_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>, <a href="std_unittest.html#_6451_test_true">test_true</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<a name="unittesttest_true"></a><a name="true"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.3 test_true</h4>
+<a name="_6451_test_true"></a><a name="test_true"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_true</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">outcome</font><font color="#880033">)</font>
+</pre>
+
+<p>   records whether a test passes.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6452_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li><li><tt>outcome</tt> : an object, some actual value that should not be zero.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6453_comments"></a><a name="comments"></a>
+<p> This assumes an expected value different from 0. No fuzz is applied when checking whether an atom is zero or not. Use <a href="std_unittest.html#_6441_test_equal">test_equal</a> instead in this case.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6454_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>, <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<a name="unittestassert"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.4 assert</h4>
+<a name="_6456_assert"></a><a name="assert"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">assert</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">outcome</font><font color="#880033">)</font>
+</pre>
+
+<p>   records whether a test passes. If it fails, the program also fails.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6457_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li><li><tt>outcome</tt> : an object, some actual value that should not be zero.
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6458_comments"></a><a name="comments"></a>
+<p> This is identical to <tt>test_true</tt> except that if the test fails, the program will also be forced to fail at this point.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6459_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>, <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<a name="unittesttest_false"></a><a name="false"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.5 test_false</h4>
+<a name="_6461_test_false"></a><a name="test_false"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_false</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">object </font><font color="#330033">outcome</font><font color="#880033">)</font>
+</pre>
+
+<p>   records whether a test passes by comparing two values.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6462_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li><li><tt>outcome</tt> : an object, some actual value that should be zero
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>Comments:</h5>
+<a name="_6463_comments"></a><a name="comments"></a>
+<p> This assumes an expected value of 0. No fuzz is applied when checking whether an atom is zero or not. Use <a href="std_unittest.html#_6441_test_equal">test_equal</a> instead in this case.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6464_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>, <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>, <a href="std_unittest.html#_6451_test_true">test_true</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<a name="unittesttest_fail"></a><a name="fail"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.6 test_fail</h4>
+<a name="_6466_test_fail"></a><a name="test_fail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_fail</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   records that a test failed.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6467_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6468_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>, <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>, <a href="std_unittest.html#_6451_test_true">test_true</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6470_test_pass">test_pass</a></p>
+
+<p> 
+<a name="unittesttest_pass"></a><a name="pass"></a> </p>
+
+<!-- ..\include\std\unittest.e -->
+<h4>8.54.5.7 test_pass</h4>
+<a name="_6470_test_pass"></a><a name="test_pass"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/unittest.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">unittest</font>
+<font color="#0000FF">public procedure </font><font color="#330033">test_pass</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   records that a test passed.</p>
+
+<!-- ..\include\std\unittest.e -->
+<h5>Parameters:</h5>
+<a name="_6471_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a string, the name of the test
+</li></ol>
+<!-- ..\include\std\unittest.e -->
+<h5>See Also:</h5>
+<a name="_6472_seealso"></a><a name="seealso"></a>
+<p> <a href="std_unittest.html#_6441_test_equal">test_equal</a>,  <a href="std_unittest.html#_6446_test_not_equal">test_not_equal</a>,<a href="std_unittest.html#_6451_test_true">test_true</a>, <a href="std_unittest.html#_6461_test_false">test_false</a>, <a href="std_unittest.html#_6466_test_fail">test_fail</a></p>
+
+<p> 
+<!-- ..\include\euphoria\debug\debug.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_tokenize.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_debug_debug.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_tokenize.html">8.53 Euphoria Source Tokenizer</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_debug_debug.html">8.55 Debugging tools</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

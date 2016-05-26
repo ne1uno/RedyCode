@@ -1,0 +1,41 @@
+=Graphical User Interface
+RedyLib is the standard library that provides an Application Programming Interface (API) for the Redy environment. Redylib provides the following sections:
+    * images
+        
+    * drawing commands
+        DR_SelectBitmap,
+        DR_Restrict,
+        DR_Release,
+        DR_Offset,
+        DR_Scroll,
+        DR_Arc,
+        DR_Image,
+        DR_Chord,
+        DR_Ellipse,
+        DR_Line,
+        DR_PolyLine,
+        DR_Pie,
+        DR_Polygon,
+        DR_Rectangle,
+        DR_RoundRect,
+        DR_BackColor,
+        DR_PenBkColor,
+        DR_PenBkMode,
+        DR_PenBrushColor,
+        DR_PenColor,
+        DR_PenMode,
+        DR_PenStyle,
+        DR_PenWidth,
+        DR_Pixel,
+        DR_TextColor,
+        DR_Font,
+        DR_PenPos,
+        DR_Print,
+        DR_Printf,
+        DR_Puts,
+        DR_BrushStyle,
+        DR_BrushHatch,
+        DR_BrushColor
+
+
+

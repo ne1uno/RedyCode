@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_4_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0.html">9.18 Version 2.4 July 3, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_4_0a.html">9.20 Version 2.4 Alpha February 21, 2003</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.4.0b.txt -->
+<h2>9.19 Version 2.4 Beta April 10, 2003</h2>
+<a name="_6733_version24betaapril102003"></a><a name="version24betaapril102003"></a>
+<p> This release updates the <strong>Euphoria Interpreter</strong>, the <strong>Euphoria To C Translator</strong>, and the <strong>Interpreter Source Code</strong> products, for <strong>Windows</strong>, <strong>DOS</strong>, <strong>Linux</strong> and <strong>FreeBSD</strong>.</p>
+
+<!-- ..\docs\release\2.4.0b.txt -->
+<h3>9.19.1 New Features</h3>
+<a name="_6734_newfeatures"></a><a name="newfeatures"></a><ul><li><strong>bind</strong> and  <strong>shroud</strong> now have an option  <tt>-out</tt> for specifying the output file, so you won't be prompted for it. Thanks to Jonas Temple, Rusty Davis and others.
+</li></ul><ul><li><strong>bind</strong> and <strong>shroud</strong> now have an option  <tt>-quiet</tt> that suppresses normal messages and statistics, and therefore eliminates the window that normally pops up. Only errors are reported. Thanks to Jonas Temple.
+</li></ul><ul><li>The namespace error message that's issued when you refer to a global symbol that's defined in two or more files, now gives you a list of all the files where that symbol has been defined. Thanks to Derek Parnell and Irv Mullins.
+</li></ul><ul><li><strong>Translator</strong>: In many cases, the C code generated for <strong>remainder()</strong>, integer multiplication, and <strong>compare()</strong> is smaller and faster.
+</li></ul><ul><li><strong>exw, ecw -wat</strong>: Deallocation of space for huge numbers of small objects (atoms or small sequences) is much faster than in 2.4 alpha. Thanks to Andy Serpa. (Note that <em>allocation</em> of huge numbers of small objects in <strong>exw</strong>, or <strong>ecw -wat</strong>, became much faster in 2.4 alpha, and remains much faster.)
+</li></ul><ul><li>When an <strong>ex.err</strong> file is created, any warnings issued against the program will be listed at the end of the <strong>ex.err</strong> file. Thanks to Al Getz.
+</li></ul><ul><li>The file name is now included in the warning message that you get for some of the common warnings (variable not used, variable not assigned to). Thanks to Al Getz.
+</li></ul><ul><li><strong>New Icon</strong>: On  <strong>Windows</strong>, Euphoria include files are now labelled with a gray-scale version of the Euphoria <tt>E)</tt> icon. This lets you easily distinguish the executable Euphoria files from the include files. Thanks to Wolfgang Fritz.
+</li></ul><ul><li>Out-of-bounds floating-point subscript values were being reported after rounding down to an integer. Now the value before rounding is reported.
+</li></ul><ul><li><strong>Euphoria Database System (EDS)</strong>:  <strong>db_rename_table()</strong> now checks to see if the target table name already exists, before it renames a table. Thanks to Mike Nelson.
+</li></ul><ul><li>The first value returned by <strong>rand()</strong> (in the absence of <strong>set_rand()</strong>) is now more "random". Thanks to Yuku Sugianto.
+</li></ul>
+<!-- ..\docs\release\2.4.0b.txt -->
+<h3>9.19.2 Bug Fixes</h3>
+<a name="_6735_bugfixes"></a><a name="bugfixes"></a><ul><li><strong>bug fixed</strong>: Due to a change made in 2.4 alpha, the <strong>dir()</strong> routine for Borland and Lcc was concatenating the file attributes characters (if any)  to the file name field. Thanks to Dr. Juan R. Herguijuela.
+</li></ul><ul><li><strong>bug fixed</strong>: No error message was issued when ',' was followed immediately by ')' in a routine's parameter declaration list. Thanks to Brage Moris.
+</li></ul><ul><li><strong>bug fixed</strong>: Huge positive out-of-bounds subscripts (over 2 billion) were reported as huge negative values.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>repeat(0, size)</strong>, where size was a huge positive floating-point number, incorrectly reported: "repetition count must not be negative". Now it reports: "repetition count is too large". Thanks to Martin Stachon.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>machine_proc(x, 5)</strong>, where x was a huge floating-point number, incorrectly reported: "an integer was expected, not a sequence". Now it reports: "The first argument to machine_proc/func must be a small positive integer". Thanks to Martin Stachon.
+</li></ul>
+<p> 
+<!-- ..\docs\release\2.4.0a.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_4_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0.html">9.18 Version 2.4 July 3, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_4_0a.html">9.20 Version 2.4 Alpha February 21, 2003</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_image.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_keywords.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_image.html">8.49 Graphics - Image Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_keywords.html">8.51 Keyword Data</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h2>8.50 Euphoria Information</h2>
+<a name="_6091_euphoriainformation"></a><a name="euphoriainformation"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="euphoria_info.html#_6091_euphoriainformation">8.50 Euphoria Information</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6092_buildtypeconstants">8.50.1 Build Type Constants</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6094_is_developmental">8.50.1.1 is_developmental</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6096_is_release">8.50.1.2 is_release</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6097_numericversioninformation">8.50.2 Numeric Version Information</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6098_compiledplatforminformation">8.50.3 Compiled Platform Information</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6100_platform_name">8.50.3.1 platform_name</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6103_arch_bits">8.50.3.2 arch_bits</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6106_version">8.50.3.3 version</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6109_version_major">8.50.3.4 version_major</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6112_version_minor">8.50.3.5 version_minor</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6115_version_patch">8.50.3.6 version_patch</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6118_version_node">8.50.3.7 version_node</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6122_version_revision">8.50.3.8 version_revision</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6125_version_date">8.50.3.9 version_date</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6128_stringversioninformation">8.50.4 String Version Information</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6130_version_type">8.50.4.1 version_type</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6133_version_string">8.50.4.2 version_string</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6137_version_string_short">8.50.4.3 version_string_short</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6141_version_string_long">8.50.4.4 version_string_long</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6144_copyrightinformation">8.50.5 Copyright Information</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6146_euphoria_copyright">8.50.5.1 euphoria_copyright</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6150_pcre_copyright">8.50.5.2 pcre_copyright</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6154_all_copyrights">8.50.5.3 all_copyrights</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6156_timinginformation">8.50.6 Timing Information</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6158_start_time">8.50.6.1 start_time</a></div>
+<div class="toc_3"><a href="euphoria_info.html#_6160_configureinformation">8.50.7 Configure Information</a></div>
+<div class="toc_4"><a href="euphoria_info.html#_6162_include_paths">8.50.7.1 include_paths</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.1 Build Type Constants</h3>
+<a name="_6092_buildtypeconstants"></a><a name="buildtypeconstants"></a>
+<p> 
+<a name="infois_developmental"></a><a name="developmental"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.1.1 is_developmental</h4>
+<a name="_6094_is_developmental"></a><a name="is_developmental"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public constant </font><font color="#330033">is_developmental</font>
+</pre>
+
+<p>   Is this build a developmental build?</p>
+
+<p> 
+<a name="infois_release"></a><a name="release"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.1.2 is_release</h4>
+<a name="_6096_is_release"></a><a name="is_release"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public constant </font><font color="#330033">is_release</font>
+</pre>
+
+<p>   Is this build a release build?</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.2 Numeric Version Information</h3>
+<a name="_6097_numericversioninformation"></a><a name="numericversioninformation"></a>
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.3 Compiled Platform Information</h3>
+<a name="_6098_compiledplatforminformation"></a><a name="compiledplatforminformation"></a>
+<p> 
+<a name="infoplatform_name"></a><a name="name"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.1 platform_name</h4>
+<a name="_6100_platform_name"></a><a name="platform_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">platform_name</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the platform name</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6101_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing the platform name, i.e. Windows, Linux, FreeBSD or OS X.</p>
+
+<p> 
+<a name="infoarch_bits"></a><a name="bits"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.2 arch_bits</h4>
+<a name="_6103_arch_bits"></a><a name="arch_bits"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">arch_bits</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the native architecture word size.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6104_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> in the form of "%d-bit", where %d is the word size for the architecture for which this version of euphoria was built.</p>
+
+<p> 
+<a name="infoversion"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.3 version</h4>
+<a name="_6106_version"></a><a name="version"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the version, as an integer, of the host Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6107_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, representing Major, Minor and Patch versions. Version 4.0.0 will return 40000, 4.0.1 will return 40001, 5.6.2 will return 50602, 5.12.24 will return 512624, etc...</p>
+
+<p> 
+<a name="infoversion_major"></a><a name="major"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.4 version_major</h4>
+<a name="_6109_version_major"></a><a name="version_major"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_major</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the major version of the host Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6110_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, representing the Major version number. Version 4.0.0 will return 4, version 5.6.2 will return 5, etc...</p>
+
+<p> 
+<a name="infoversion_minor"></a><a name="minor"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.5 version_minor</h4>
+<a name="_6112_version_minor"></a><a name="version_minor"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_minor</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the minor version of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6113_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, representing the Minor version number. Version 4.0.0 will return 0, 4.1.0 will return 1, 5.6.2 will return 6, etc...</p>
+
+<p> 
+<a name="infoversion_patch"></a><a name="patch"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.6 version_patch</h4>
+<a name="_6115_version_patch"></a><a name="version_patch"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_patch</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the patch version of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6116_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, representing the Path version number. Version 4.0.0 will return 0, 4.0.1 will return 1, 5.6.2 will return 2, etc...</p>
+
+<p> 
+<a name="infoversion_node"></a><a name="node"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.7 version_node</h4>
+<a name="_6118_version_node"></a><a name="version_node"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_node</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">full = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get the source code node id of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Parameters:</h5>
+<a name="_6119_parameters"></a><a name="parameters"></a><ul><li><tt>full</tt> - If TRUE, the full node id is returned. If FALSE only the first 12 characters of the node id is returned. Typically the short node id is considered unique.
+</li></ul>
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6120_returns"></a><a name="returns"></a>
+<p> A text <strong>sequence</strong>, containing the source code management systems node id that globally identifies the executing Euphoria.</p>
+
+<p> 
+<a name="infoversion_revision"></a><a name="revision"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.8 version_revision</h4>
+<a name="_6122_version_revision"></a><a name="version_revision"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_revision</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the source code revision of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6123_returns"></a><a name="returns"></a>
+<p> A text <strong>sequence</strong>, containing the source code management systems revision number that the executing Euphoria was built from.</p>
+
+<p> 
+<a name="infoversion_date"></a><a name="date"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.3.9 version_date</h4>
+<a name="_6125_version_date"></a><a name="version_date"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_date</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">full = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get the compilation date of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Parameters:</h5>
+<a name="_6126_parameters"></a><a name="parameters"></a><ul><li><tt>full</tt> - Standard return value is a string formatted as <tt>CCYY-MM-DD</tt>. However, if this is a development build or the <tt>full</tt> parameter is TRUE (1), then the result will be formatted as <tt>CCYY-MM-DD HH:MM:SS</tt>.
+</li></ul>
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6127_returns"></a><a name="returns"></a>
+<p> A text <strong>sequence</strong> containing the commit date of the the associated SCM revision.</p>
+
+<p> The date/time is UTC.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.4 String Version Information</h3>
+<a name="_6128_stringversioninformation"></a><a name="stringversioninformation"></a>
+<p> 
+<a name="infoversion_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.4.1 version_type</h4>
+<a name="_6130_version_type"></a><a name="version_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_type</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the type version of the hosting Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6131_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, representing the Type version string. Version 4.0.0 alpha 1 will return <tt>alpha 1</tt>. 4.0.0 beta 2 will return <tt>beta 2</tt>. 4.0.0 final, or release, will return <tt>release</tt>.</p>
+
+<p> 
+<a name="infoversion_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.4.2 version_string</h4>
+<a name="_6133_version_string"></a><a name="version_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_string</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">full = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get a normal version string</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Parameters:</h5>
+<a name="_6134_parameters"></a><a name="parameters"></a><ol><li><tt>full</tt> - Return full version information regardless of developmental/production status.
+</li></ol>
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6135_returns"></a><a name="returns"></a>
+<p> A <strong>#sequence</strong>, representing the entire version information in one string. The amount of detail you get depends on if this version of Euphoria has been compiled as a developmental version (more detailed version information) or if you have indicated TRUE for the <tt>full</tt> argument.</p>
+
+<p> Example return values </p>
+<ul><li>"4.0.0 alpha 3 (ab8e98ab3ce4,2010-11-18)"
+</li><li>"4.0.0 release (8d8874dc9e0a, 2010-12-22)"
+</li><li>"4.1.5 development (12332:e8d8787af7de, 2011-07-18 12:55:03)"
+</li></ul>
+<p> 
+<a name="infoversion_string_short"></a><a name="string_short"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.4.3 version_string_short</h4>
+<a name="_6137_version_string_short"></a><a name="version_string_short"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_string_short</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get a short version string</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6138_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, representing the Major, Minor and Patch all in one string.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Example return values:</h5>
+<a name="_6139_examplereturnvalues"></a><a name="examplereturnvalues"></a><ul><li>"4.0.0"
+</li><li>"4.0.2"
+</li><li>"5.6.2"
+</li></ul>
+<p> 
+<a name="infoversion_string_long"></a><a name="string_long"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.4.4 version_string_long</h4>
+<a name="_6141_version_string_long"></a><a name="version_string_long"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">version_string_long</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">full = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get a long version string</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Parameters:</h5>
+<a name="_6142_parameters"></a><a name="parameters"></a><ol><li><tt>full</tt> - Return full version information regardless of developmental/production status.
+</li></ol>
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6143_returns"></a><a name="returns"></a>
+<p> A <strong>#sequence</strong>, representing the entire version information in one string. The amount of detail you get depends on if this version of Euphoria has been compiled as a developmental version (more detailed version information) or if you have indicated TRUE for the <tt>full</tt> argument.</p>
+
+<p> Example return values </p>
+<ul><li>"4.0.0 alpha 3 (ab8e98ab3ce4,2010-11-18) for Windows 32-bit"
+</li><li>"4.0.0 release (8d8874dc9e0a, 2010-12-22) for Linux 32-bit"
+</li><li>"4.1.5 development (12332:e8d8787af7de, 2011-07-18 12:55:03) for OS X 64-bit"
+</li></ul>
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.5 Copyright Information</h3>
+<a name="_6144_copyrightinformation"></a><a name="copyrightinformation"></a>
+<p> 
+<a name="infoeuphoria_copyright"></a><a name="copyright"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.5.1 euphoria_copyright</h4>
+<a name="_6146_euphoria_copyright"></a><a name="euphoria_copyright"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">euphoria_copyright</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the copyright statement for Euphoria</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6147_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing 2 sequences: product name and copyright message</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Example 1:</h5>
+<a name="_6148_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">info = euphoria_copyright</font><font color="#880033">()</font>
+<font color="#FF0055">-- info = {</font>
+<font color="#FF0055">--     "Euphoria v4.0.0 alpha 3",</font>
+<font color="#FF0055">--     "Copyright (c) XYZ, ABC\n" &amp;</font>
+<font color="#FF0055">--     "Copyright (c) ABC, DEF"</font>
+<font color="#FF0055">-- }</font>
+</pre>
+
+<p> 
+<a name="infopcre_copyright"></a><a name="copyright"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.5.2 pcre_copyright</h4>
+<a name="_6150_pcre_copyright"></a><a name="pcre_copyright"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">pcre_copyright</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get the copyright statement for PCRE.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6151_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing 2 sequences: product name and copyright message.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>See Also:</h5>
+<a name="_6152_seealso"></a><a name="seealso"></a>
+<p> <a href="euphoria_info.html#_6146_euphoria_copyright">euphoria_copyright()</a></p>
+
+<p> 
+<a name="infoall_copyrights"></a><a name="copyrights"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.5.3 all_copyrights</h4>
+<a name="_6154_all_copyrights"></a><a name="all_copyrights"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">all_copyrights</font><font color="#880033">()</font>
+</pre>
+
+<p>   Get all copyrights associated with this version of Euphoria.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6155_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of product names and copyright messages. </p>
+
+<pre class="examplecode"><font color="#880033">{</font>
+<font color="#993333">    { </font><font color="#330033">ProductName, CopyrightMessage </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    { </font><font color="#330033">ProductName, CopyrightMessage </font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">    ...</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.6 Timing Information</h3>
+<a name="_6156_timinginformation"></a><a name="timinginformation"></a>
+<p> 
+<a name="infostart_time"></a><a name="time"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.6.1 start_time</h4>
+<a name="_6158_start_time"></a><a name="start_time"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/info.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">info</font>
+<font color="#0000FF">public function </font><font color="#330033">start_time</font><font color="#880033">()</font>
+</pre>
+
+<p>   Euphoria start time.</p>
+
+<p> This time represents the time Euphoria itself started. This time is recorded before any of the users code is opened, parsed or executed. It can provide accurate timing information as to how long it takes for your application to go from start time to usable time.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6159_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong> representing the start time of Euphoria itself</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h3>8.50.7 Configure Information</h3>
+<a name="_6160_configureinformation"></a><a name="configureinformation"></a>
+<p> 
+<a name="euinclude_paths"></a><a name="paths"></a> </p>
+
+<!-- ..\include\euphoria\info.e -->
+<h4>8.50.7.1 include_paths</h4>
+<a name="_6162_include_paths"></a><a name="include_paths"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function include_paths</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">convert</font><font color="#880033">)</font>
+</pre>
+
+<p> Returns the list of include paths, in the order in which they are searched</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Parameters:</h5>
+<a name="_6163_parameters"></a><a name="parameters"></a><ol><li><tt>convert</tt> : an integer, nonzero to include converted path entries that were not validated yet.
+</li></ol>
+<!-- ..\include\euphoria\info.e -->
+<h5>Returns:</h5>
+<a name="_6164_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of strings, each holding a fully qualified include path.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>Comments:</h5>
+<a name="_6165_comments"></a><a name="comments"></a>
+<p> <tt>convert</tt> is checked only under <em>Windows</em>. If a path has accented characters in it, then it may or may not be valid to convert those to the OEM code page. Setting <tt>convert</tt> to a nonzero value will force conversion for path entries that have accents and which have not been checked to be valid yet. The extra entries, if any, are returned at the end of the returned sequence.</p>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>The paths are ordered in the order they are searched:</h5>
+<a name="_6166_thepathsareorderedintheordertheyaresearched"></a><a name="thepathsareorderedintheordertheyaresearched"></a><ol><li>current directory
+</li><li>configuration file,
+</li><li>command line switches,
+</li><li>EUINC
+</li><li>a default based on EUDIR.
+</li></ol>
+<!-- ..\include\euphoria\info.e -->
+<h5>Example 1:</h5>
+<a name="_6167_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = </font><font color="#0000FF">include_paths</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)</font>
+<font color="#FF0055">-- s might contain</font>
+<font color="#880033">{</font>
+<font color="#330033">  "/usr/euphoria/tests"</font><font color="#330033">,</font>
+<font color="#330033">  "/usr/euphoria/include"</font><font color="#330033">,</font>
+<font color="#330033">  "./include"</font><font color="#330033">,</font>
+<font color="#330033">  "../include"</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\euphoria\info.e -->
+<h5>See Also:</h5>
+<a name="_6168_seealso"></a><a name="seealso"></a>
+<p> <a href="command_switches.html#eucfg">eu.cfg</a>, <a href="syntax.html#_199_include">include</a>, <a href="std_cmdline.html#_785_option_switches">option_switches</a></p>
+
+<p> 
+<!-- ..\include\euphoria\keywords.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_image.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_keywords.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_image.html">8.49 Graphics - Image Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_keywords.html">8.51 Keyword Data</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+==Fancylist Widget Class
+
+Widget Class name: "fancylist"
+
+===API
+====Properties
+
+====="label"
+====="stay_at_bottom"
+====="LabelPos"
+====="MultiSelect"
+
+Example:
+<eucode>
+</eucode>
+====Events
+
+====={widgetname, "selection", itms}
+====={widgetname, "left_double_click", itms}
+
+Example:
+<eucode>
+</eucode>
+====Commands
+
+=====procedure cmd_add_list_items(atom wid, sequence items)
+--items:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+=====procedure cmd_clear_list(atom wid)
+=====procedure cmd_set_selection(atom wid, atom setsel, atom setrelative)
+=====procedure cmd_select_items(atom wid, object sel)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

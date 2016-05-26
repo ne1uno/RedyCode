@@ -1,0 +1,97 @@
+==Textbox Widget Class
+
+Widget Class name: "textbox"
+
+===API
+====Properties
+====="autofocus"
+====="label"
+====="label_position"
+    "side"
+    "above"
+====="text"
+====="monowidth"
+====="highlight"
+====="locked"
+====="mode"
+    "number" : numerical value
+        wcpOptMode              "number"
+        wcpOptModeOptions       {"min_value", "max_value"}
+        wcpOptDataFormat        number format
+        wcpOptControlVisible    "show_control" : +- buttons to adjust value
+        
+    "text" : multiple lines of text
+        wcpOptMode              "text"
+        wcpOptModeOptions       {"wordwrap", "visible_lines"}
+        wcpOptDataFormat        string format
+        wcpOptControlVisible    "spell_check"  : indicates misspelled words "Check Spelling..." appears in right-click menu
+        
+    "string" : string of text that can be formatted or restricted to a maximum length
+        wcpOptMode              "string"
+        wcpOptModeOptions       {list of auto-complete items}
+        wcpOptDataFormat        string format
+        wcpOptControlVisible    "show_control" : "..." button to display custom window for editing data
+        
+    "item" : string selected from a list
+        wcpOptMode              "item"
+        wcpOptModeOptions       {list of items}
+        wcpOptDataFormat        "restrict_to_list"
+        wcpOptControlVisible    "show_control" : Dropdown button to show popup list
+        
+    "datetime" : string representing a date/time
+        wcpOptMode              "datetime"
+        wcpOptModeOptions       precision" : the smallest unit allowed to be adjusted {"year", "month", "day", "minute", "second"}
+        wcpOptDataFormat        date/time format
+        wcpOptControlVisible    "show_control" : Button to display popup Calendar/clock
+        
+    "password" : masked string of text for entering a password
+        wcpOptMode              "password"
+        wcpOptModeOptions       mask character
+        wcpOptDataFormat        password character requirements
+        wcpOptControlVisible    "show_control" : Button to display password generator
+    
+====="min"
+====="max"
+====="format"
+====="show_control"
+====="wordwrap"
+====="visible_lines"
+====="list"
+====="restrict_to_list"
+====="precision"
+    "year", "month", "day", "minute", "second"
+====="mask"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "enter", TextLinesLength}
+====={widgetname, "KeyFocus", KeyFocus}
+====={widgetname, "Visible", IsVisible}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====procedure cmd_clear_text(atom wid)
+--Lines:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+=====procedure cmd_set_text(atom wid, sequence txtlines)
+--Lines:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+=====procedure cmd_append_text(atom wid, sequence txtlines)
+--Lines:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+=====function cmd_get_text(atom wid)
+=====function cmd_get_label(atom wid)
+=====procedure cmd_set_label(atom wid, sequence txt)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

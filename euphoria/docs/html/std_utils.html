@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_types.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_convert.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_types.html">8.11 Types - Extended</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_convert.html">8.13 Data Type Conversion</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\utils.e -->
+<h2>8.12 Utilities</h2>
+<a name="_2171_utilities"></a><a name="utilities"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_utils.html#_2171_utilities">8.12 Utilities</a></div>
+<div class="toc_3"><a href="std_utils.html#_2172_routines">8.12.1 Routines</a></div>
+<div class="toc_4"><a href="std_utils.html#_2174_iif">8.12.1.1 iif</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\utils.e -->
+<h3>8.12.1 Routines</h3>
+<a name="_2172_routines"></a><a name="routines"></a>
+<p> 
+<a name="utilsiif"></a> </p>
+
+<!-- ..\include\std\utils.e -->
+<h4>8.12.1.1 iif</h4>
+<a name="_2174_iif"></a><a name="iif"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/utils.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">utils</font>
+<font color="#0000FF">public function </font><font color="#330033">iif</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">test, </font><font color="#0000FF">object </font><font color="#330033">ifTrue, </font><font color="#0000FF">object </font><font color="#330033">ifFalse</font><font color="#880033">)</font>
+</pre>
+
+<p>   Used to embed an 'if' test inside an expression. <tt>iif</tt> stands for inline if or immediate if.</p>
+
+<!-- ..\include\std\utils.e -->
+<h5>Parameters:</h5>
+<a name="_2175_parameters"></a><a name="parameters"></a><ol><li><tt>test</tt> : an atom, the result of a boolean expression
+</li><li><tt>ifTrue</tt> : an object, returned if <tt>test</tt> is <strong>non-zero </strong>
+</li><li><tt>ifFalse</tt> : an object, returned if <tt>test</tt> is zero
+</li></ol>
+<!-- ..\include\std\utils.e -->
+<h5>Returns:</h5>
+<a name="_2176_returns"></a><a name="returns"></a>
+<p> An object. Either <tt>ifTrue</tt> or <tt>ifFalse</tt> is returned depending on the value of <tt>test</tt>.</p>
+
+<p> Warning Note:<br />
+You must take care when using this function because just like all other Euphoria routines, this does not do any <em>lazy evaluation</em>. All parameter expressions are evaluated <strong>before</strong> the function is called, thus, it cannot be used when one of the parameters could fail to evaluate correctly. For example, this is an <strong>improper</strong> use of the <tt>iif</tt> statement: </p>
+
+<pre class="examplecode"><font color="#330033">first = iif</font><font color="#880033">(</font><font color="#0000FF">sequence</font><font color="#993333">(</font><font color="#330033">var</font><font color="#993333">)</font><font color="#330033">, var</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#330033">, var</font><font color="#880033">)</font>
+</pre>
+
+<p> The reason for this is that both <tt>var[1]</tt> and <tt>var</tt> will be evaluated. Therefore if <tt>var</tt> happens to be an atom, the <tt>var[1]</tt> statement will fail. <br />
+In situations like this, it is better to use the <em>long</em> style. </p>
+
+<pre class="examplecode"><font color="#0000FF">if sequence</font><font color="#880033">(</font><font color="#330033">var</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">     first = var</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">]</font>
+<font color="#0000FF">  else</font>
+<font color="#330033">     first = var</font>
+<font color="#0000FF">  end if</font>
+</pre>
+
+<!-- ..\include\std\utils.e -->
+<h5>Example 1:</h5>
+<a name="_2177_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">msg = </font><font color="#0000FF">sprintf</font><font color="#880033">(</font><font color="#330033">"%s: %s"</font><font color="#330033">, </font><font color="#993333">{</font>
+<font color="#330033">    iif</font><font color="#0000FF">(</font><font color="#330033">ErrType = </font><font color="#330033">'E'</font><font color="#330033">, </font><font color="#330033">"Fatal error"</font><font color="#330033">, </font><font color="#330033">"Warning"</font><font color="#0000FF">)</font><font color="#330033">, </font>
+<font color="#330033">    errortext </font>
+<font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\convert.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_types.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_convert.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_types.html">8.11 Types - Extended</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_convert.html">8.13 Data Type Conversion</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

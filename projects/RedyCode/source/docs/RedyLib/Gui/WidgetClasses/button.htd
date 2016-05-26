@@ -1,0 +1,33 @@
+==Button Widget Class
+
+Widget Class name: "button"
+
+===API
+====Properties
+====="label"
+====="icon"
+====="toolmode"
+====="command"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={wname, "clicked", {}}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands      
+
+=====cmd_set_label(atom wid, sequence txt)
+Example:
+<eucode>
+</eucode>
+
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+

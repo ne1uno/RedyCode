@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_decl.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_branch.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_decl.html">4.2 Declarations</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_branch.html">4.4 Branching Statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.3 Assignment statement</h2>
+<a name="_140_assignmentstatement"></a><a name="assignmentstatement"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_assignment.html#_140_assignmentstatement">4.3 Assignment statement</a></div>
+<div class="toc_3"><a href="lang_assignment.html#_141_assignmentwithoperator">4.3.1 Assignment with Operator</a></div>
+</div>
+</div>
+ An <strong>assignment statement</strong> assigns the value of an expression to a simple variable, or to a subscript or slice of a variable. e.g.</p>
+</div>
+<pre class="examplecode"><font color="#330033">x = a + b</font>
+<font color="#330033">y</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= y</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">+ 1</font>
+<font color="#330033">y</font><font color="#880033">[</font><font color="#330033">i..j</font><font color="#880033">] </font><font color="#330033">= </font><font color="#880033">{</font><font color="#330033">1, 2, 3</font><font color="#880033">}</font>
+</pre>
+
+<p> The previous value of the variable, or element(s) of the subscripted or sliced variable are discarded.  For example, suppose x was a 1000-element sequence that we had initialized with:</p>
+
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">x</font>
+
+<font color="#330033">x = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 1000</font><font color="#880033">)  </font><font color="#FF0055">-- a sequence of 1000 zeros</font>
+</pre>
+
+<p> and then later we assigned an atom to x with:</p>
+
+<pre class="examplecode"><font color="#330033">x = 7</font>
+</pre>
+
+<p> This is perfectly legal since x is declared as an <strong>object</strong>. The previous value of x, namely the 1000-element sequence, would simply disappear. Actually, the space consumed by the 1000-element sequence will be automatically recycled due to Euphoria's dynamic storage allocation.</p>
+
+<p> Note that the equals symbol '=' is used for both assignment and for equality testing.  There is never any confusion because an assignment in Euphoria is a statement only, it can't be used as an expression (as in C).</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.3.1 Assignment with Operator</h3>
+<a name="_141_assignmentwithoperator"></a><a name="assignmentwithoperator"></a>
+<p> Euphoria also provides some additional forms of the assignment statement.</p>
+
+<p> To save typing, and to make your code a bit neater, you can combine assignment with one of the operators:</p>
+
+<pre class="examplecode"><font color="#330033">+ - / * &amp;</font>
+</pre>
+
+<p> For example, instead of saying:</p>
+
+<pre class="examplecode"><font color="#330033">mylongvarname = mylongvarname + 1</font>
+</pre>
+
+<p> You can say:</p>
+
+<pre class="examplecode"><font color="#330033">mylongvarname += 1</font>
+</pre>
+
+<p> Instead of saying:</p>
+
+<pre class="examplecode"><font color="#330033">galaxy</font><font color="#880033">[</font><font color="#330033">q_row</font><font color="#880033">][</font><font color="#330033">q_col</font><font color="#880033">][</font><font color="#330033">q_size</font><font color="#880033">] </font><font color="#330033">= galaxy</font><font color="#880033">[</font><font color="#330033">q_row</font><font color="#880033">][</font><font color="#330033">q_col</font><font color="#880033">][</font><font color="#330033">q_size</font><font color="#880033">] </font><font color="#330033">* 10</font>
+</pre>
+
+<p> You can say:</p>
+
+<pre class="examplecode"><font color="#330033">galaxy</font><font color="#880033">[</font><font color="#330033">q_row</font><font color="#880033">][</font><font color="#330033">q_col</font><font color="#880033">][</font><font color="#330033">q_size</font><font color="#880033">] </font><font color="#330033">*= 10</font>
+</pre>
+
+<p> and instead of saying:</p>
+
+<pre class="examplecode"><font color="#330033">accounts</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">= accounts</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">/ 10</font>
+</pre>
+
+<p> You can say:</p>
+
+<pre class="examplecode"><font color="#330033">accounts</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">/= 10</font>
+</pre>
+
+<p> In general, whenever you have an assignment of the form:</p>
+
+<p> 
+<pre>left-hand-side = left-hand-side op expression
+</pre>
+
+<p> You can say:</p>
+
+<p> 
+<pre>left-hand-side op= expression
+</pre>
+
+<p> where <strong><em>op</em></strong> is one of:</p>
+
+<pre class="examplecode"><font color="#330033">+ - * / &amp;</font>
+</pre>
+
+<p> When the left-hand-side contains multiple subscripts/slices, the <tt>op=</tt> form will usually execute faster than the longer form. When you get used to it, you may find the <tt>op=</tt> form to be slightly more readable than the long form, since you don't have to visually compare the left-hand-side against the copy of itself on the right side.</p>
+
+<p> You cannot use assignment with operators while declaring a variable, because that variable is not initialized when you perform the assignment.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_decl.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_branch.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_decl.html">4.2 Declarations</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_branch.html">4.4 Branching Statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

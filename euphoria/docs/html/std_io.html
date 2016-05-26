@@ -1,0 +1,1789 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_filesys.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_os.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_filesys.html">8.5 File System</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_os.html">8.7 Operating System Helpers</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\io.e -->
+<h2>8.6 I/O</h2>
+<a name="_1485_io"></a><a name="io"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_io.html#_1485_io">8.6 I/O</a></div>
+<div class="toc_3"><a href="std_io.html#_1486_constants">8.6.1 Constants</a></div>
+<div class="toc_4"><a href="std_io.html#_1488_stdin">8.6.1.1 STDIN</a></div>
+<div class="toc_4"><a href="std_io.html#_1490_stdout">8.6.1.2 STDOUT</a></div>
+<div class="toc_4"><a href="std_io.html#_1492_stderr">8.6.1.3 STDERR</a></div>
+<div class="toc_4"><a href="std_io.html#_1494_screen">8.6.1.4 SCREEN</a></div>
+<div class="toc_4"><a href="std_io.html#_1496_eof">8.6.1.5 EOF</a></div>
+<div class="toc_3"><a href="std_io.html#_1497_readandwriteroutines">8.6.2 Read and Write Routines</a></div>
+<div class="toc_4"><a href="std_io.html#_1500_using">8.6.2.1 using</a></div>
+<div class="toc_4"><a href="std_io.html#_1506_print">8.6.2.2 print</a></div>
+<div class="toc_4"><a href="std_io.html#_1515_printf">8.6.2.3 printf</a></div>
+<div class="toc_4"><a href="std_io.html#_1526_puts">8.6.2.4 puts</a></div>
+<div class="toc_4"><a href="std_io.html#_1534_getc">8.6.2.5 getc</a></div>
+<div class="toc_4"><a href="std_io.html#_1541_gets">8.6.2.6 gets</a></div>
+<div class="toc_4"><a href="std_io.html#_1550_get_bytes">8.6.2.7 get_bytes</a></div>
+<div class="toc_4"><a href="std_io.html#_1557_get_integer32">8.6.2.8 get_integer32</a></div>
+<div class="toc_4"><a href="std_io.html#_1564_get_integer16">8.6.2.9 get_integer16</a></div>
+<div class="toc_4"><a href="std_io.html#_1571_put_integer32">8.6.2.10 put_integer32</a></div>
+<div class="toc_4"><a href="std_io.html#_1577_put_integer16">8.6.2.11 put_integer16</a></div>
+<div class="toc_4"><a href="std_io.html#_1583_get_dstring">8.6.2.12 get_dstring</a></div>
+<div class="toc_3"><a href="std_io.html#_1589_lowlevelfileanddevicehandling">8.6.3 Low Level File and Device Handling</a></div>
+<div class="toc_4"><a href="std_io.html#_1591_lock_shared">8.6.3.1 LOCK_SHARED</a></div>
+<div class="toc_4"><a href="std_io.html#_1593_lock_exclusive">8.6.3.2 LOCK_EXCLUSIVE</a></div>
+<div class="toc_4"><a href="std_io.html#_1595_file_number">8.6.3.3 file_number</a></div>
+<div class="toc_4"><a href="std_io.html#_1597_file_position">8.6.3.4 file_position</a></div>
+<div class="toc_4"><a href="std_io.html#_1599_lock_type">8.6.3.5 lock_type</a></div>
+<div class="toc_4"><a href="std_io.html#_1601_byte_range">8.6.3.6 byte_range</a></div>
+<div class="toc_4"><a href="std_io.html#_1603_open">8.6.3.7 open</a></div>
+<div class="toc_4"><a href="std_io.html#_1610_close">8.6.3.8 close</a></div>
+<div class="toc_4"><a href="std_io.html#_1615_seek">8.6.3.9 seek</a></div>
+<div class="toc_4"><a href="std_io.html#_1623_where">8.6.3.10 where</a></div>
+<div class="toc_4"><a href="std_io.html#_1629_flush">8.6.3.11 flush</a></div>
+<div class="toc_4"><a href="std_io.html#_1636_lock_file">8.6.3.12 lock_file</a></div>
+<div class="toc_4"><a href="std_io.html#_1644_unlock_file">8.6.3.13 unlock_file</a></div>
+<div class="toc_3"><a href="std_io.html#_1649_filereadingandwriting">8.6.4 File Reading and Writing</a></div>
+<div class="toc_4"><a href="std_io.html#_1651_read_lines">8.6.4.1 read_lines</a></div>
+<div class="toc_4"><a href="std_io.html#_1659_process_lines">8.6.4.2 process_lines</a></div>
+<div class="toc_4"><a href="std_io.html#_1666_write_lines">8.6.4.3 write_lines</a></div>
+<div class="toc_4"><a href="std_io.html#_1674_append_lines">8.6.4.4 append_lines</a></div>
+<div class="toc_4"><a href="std_io.html#_1682_binary_mode">8.6.4.5 BINARY_MODE</a></div>
+<div class="toc_4"><a href="std_io.html#_1684_text_mode">8.6.4.6 TEXT_MODE</a></div>
+<div class="toc_4"><a href="std_io.html#_1686_unix_text">8.6.4.7 UNIX_TEXT</a></div>
+<div class="toc_4"><a href="std_io.html#_1688_dos_text">8.6.4.8 DOS_TEXT</a></div>
+<div class="toc_4"><a href="std_io.html#_1690_read_file">8.6.4.9 read_file</a></div>
+<div class="toc_4"><a href="std_io.html#_1697_write_file">8.6.4.10 write_file</a></div>
+<div class="toc_4"><a href="std_io.html#_1705_writef">8.6.4.11 writef</a></div>
+<div class="toc_4"><a href="std_io.html#_1711_writefln">8.6.4.12 writefln</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\io.e -->
+<h3>8.6.1 Constants</h3>
+<a name="_1486_constants"></a><a name="constants"></a>
+<p> 
+<a name="iostdin"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.1.1 STDIN</h4>
+<a name="_1488_stdin"></a><a name="stdin"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public constant </font><font color="#330033">STDIN</font>
+</pre>
+
+<p>   Standard Input</p>
+
+<p> 
+<a name="iostdout"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.1.2 STDOUT</h4>
+<a name="_1490_stdout"></a><a name="stdout"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public constant </font><font color="#330033">STDOUT</font>
+</pre>
+
+<p>   Standard Output</p>
+
+<p> 
+<a name="iostderr"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.1.3 STDERR</h4>
+<a name="_1492_stderr"></a><a name="stderr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public constant </font><font color="#330033">STDERR</font>
+</pre>
+
+<p>   Standard Error</p>
+
+<p> 
+<a name="ioscreen"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.1.4 SCREEN</h4>
+<a name="_1494_screen"></a><a name="screen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public constant </font><font color="#330033">SCREEN</font>
+</pre>
+
+<p>   Screen (Standard Out)</p>
+
+<p> 
+<a name="ioeof"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.1.5 EOF</h4>
+<a name="_1496_eof"></a><a name="eof"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public constant </font><font color="#330033">EOF</font>
+</pre>
+
+<p>   End of file</p>
+
+<!-- ..\include\std\io.e -->
+<h3>8.6.2 Read and Write Routines</h3>
+<a name="_1497_readandwriteroutines"></a><a name="readandwriteroutines"></a>
+<p> 
+<a name="q_print"></a><a name="print"></a> 
+<a name="iousing"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.1 using</h4>
+<a name="_1500_using"></a><a name="using"></a>
+<p> &lt;built-in&gt; procedure <tt>?</tt></p>
+
+<p> displays an object using numbers and braces.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Note:</h5>
+<a name="_1501_note"></a><a name="note"></a>
+<p> There are no parenthesis delimiting the single argument to this procedure. This is a unique shortcut in Euphoria syntax.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1502_comments"></a><a name="comments"></a>
+<p> This is a shorthand way of writing <tt>pretty_print(STDOUT, x, {})</tt>. An object or an expression is printed to the standard output with braces and indentation to show the structure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1503_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? </font><font color="#880033">{</font><font color="#330033">1, 2</font><font color="#880033">} </font><font color="#330033">+ </font><font color="#880033">{</font><font color="#330033">3, 4</font><font color="#880033">}  </font><font color="#FF0055">-- will display {4, 6}</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1504_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1506_print">print</a></p>
+
+<p> 
+<a name="euprint"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.2 print</h4>
+<a name="_1506_print"></a><a name="print"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure print</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> displays an object using numbers and braces.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1507_comments"></a><a name="comments"></a>
+<p> All data objects are in <em>binary</em> format within computer hardware; something that is easy to forget. An output routine must convert these binary values into "text" to be human readable. The procedures <tt>print</tt> and <tt>?</tt> produce a "text" representation of an object that is output to a file or device. The text shows the <u>numerical form</u> of the object. If the object <tt>x</tt> is a sequence it uses braces <strong><tt>{ , , , }</tt></strong> to show the structure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1508_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to a file or device to output to
+</li><li><tt>x</tt> : the object to print
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1509_errors"></a><a name="errors"></a>
+<p> The target file or device must be open and able to be written to.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1510_comments"></a><a name="comments"></a>
+<p> This is not used to write to "binary" files as it only outputs text.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1511_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">print</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"ABC"</font><font color="#880033">)   </font><font color="#FF0055">-- output is:  "{65,66,67}"</font>
+<font color="#0000FF">puts </font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"ABC"</font><font color="#880033">)    </font><font color="#FF0055">-- output is:  "ABC"</font>
+<font color="#0000FF">print</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"65"</font><font color="#880033">)    </font><font color="#FF0055">-- output is:  "65"</font>
+<font color="#0000FF">puts </font><font color="#880033">(</font><font color="#330033">STDOUT, 65</font><font color="#880033">)       </font><font color="#FF0055">-- output is:  "A"  (ASCII-65 ==&gt; 'A')</font>
+<font color="#0000FF">print</font><font color="#880033">(</font><font color="#330033">STDOUT, 65.1234</font><font color="#880033">) </font><font color="#FF0055">-- output is:  "65.1234"</font>
+<font color="#0000FF">puts </font><font color="#880033">(</font><font color="#330033">STDOUT, 65.1234</font><font color="#880033">)  </font><font color="#FF0055">-- output is:  "A" (Converts to integer first)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1512_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">print</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#0000FF">repeat</font><font color="#993333">(</font><font color="#0000FF">{</font><font color="#330033">10,20</font><font color="#0000FF">}</font><font color="#330033">, 3</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- output is: {{10,20},{10,20},{10,20}}</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1513_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#q_print">?</a>, <a href="std_io.html#_1526_puts">puts</a></p>
+
+<p> 
+<a name="euprintf"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.3 printf</h4>
+<a name="_1515_printf"></a><a name="printf"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure printf</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">sequence </font><font color="#330033">format, </font><font color="#0000FF">object </font><font color="#330033">values</font><font color="#880033">)</font>
+</pre>
+
+<p> prints one or more values to a file or device, using a format string to embed them in and define how they should be represented.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1516_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to a file or device to output to
+</li><li><tt>format</tt> : a sequence, the text to print. This text may contain format specifiers.
+</li><li><tt>values</tt> : usually, a sequence of values. It should have as many elements as format specifiers in <tt>format</tt>, as these values will be substituted to the specifiers.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1517_errors"></a><a name="errors"></a>
+<p> If there are less values to show than format specifiers, a run time error will occur.</p>
+
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1518_comments"></a><a name="comments"></a>
+<p> A <strong>format specifier</strong> is a string of characters starting with a percent sign ( %  ) and ending in a letter. Some extra information may come in between those.</p>
+
+<p> This procedure writes out the <tt>format</tt> text to the output file <tt>fn</tt>, replacing format specifiers with the corresponding data from the <tt>values</tt> parameter. Whenever a format specifiers is found in <tt>format</tt>, the n-th item in <tt>values</tt> will be turned into a string according to the format specifier. The resulting string will the format specifier. This means that the first format specifier uses the first item in <tt>values</tt>, the second format specifier the second item, and so on.</p>
+
+<p> You must have at least as many items in <tt>values</tt> as there are format specifiers in <tt>format</tt>. This means that if there is only one format specifier then <tt>values</tt> can be either an atom, integer or a non-empty sequence. And when there are more than one format specifier in <tt>format</tt> then <tt>values</tt> must be a sequence with a length that is greater than or equal to the number of format specifiers present.</p>
+
+<p> This way, <tt>printf</tt> always takes exactly three arguments no matter how many values are to be printed.</p>
+
+<p> The basic format specifiers are:</p>
+<ul><li><tt>%d</tt> -- print an atom as a decimal integer
+</li><li><tt>%x</tt> -- print an atom as a hexadecimal integer. Negative numbers are printed in two's complement, so -1 will print as <tt>FFFFFFFF</tt>
+</li><li><tt>%o</tt> -- print an atom as an octal integer
+</li><li><tt>%s</tt> -- print a sequence as a string of characters, or print an atom as a single character
+</li><li><tt>%e</tt> -- print an atom as a floating-point number with exponential notation
+</li><li><tt>%f</tt> -- print an atom as a floating-point number with a decimal point but no exponent
+</li><li><tt>%g</tt> -- print an atom as a floating-point number using whichever format seems appropriate, given the magnitude of the number
+</li><li><tt>%%</tt> -- print the <tt>'%'</tt> character itself. This is not an actual format specifier.
+</li></ul>
+<p>Field widths can be added to the basic formats (for example: <tt> %5d, %8.2f, %10.4s</tt>). The number before the decimal point is the minimum field width to be used. The number after the decimal point is the precision to be used for numeric values.</p>
+
+<p> If the field width is negative (for example <tt>%-5d</tt>) then the value will be left-justified within the field. Normally it will be right-justified, even strings. If the field width starts with a leading 0 (for example <tt>%08d</tt>) then leading zeros will be supplied to fill up the field. If the field width starts with a <tt>'+'</tt> (for example <tt>%+7d</tt> ) then a plus sign will be printed for positive values.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1519_comments"></a><a name="comments"></a>
+<p> Watch out for the following common mistake. The intention is to output all the characters in the third argument but actually only outputs the first character:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">name=</font><font color="#330033">"John Smith"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"My name is %s"</font><font color="#330033">, name</font><font color="#880033">)</font>
+<font color="#FF0055">   --&gt; My name is J</font>
+</pre>
+
+<p> The output of this will be <em><tt>My name is J</tt></em> because each format specifier uses exactly <em>one</em> item from the <tt>values</tt> parameter. In this case we have only one specifier so it uses the first item in the <tt>values</tt> parameter, which is the character <tt>'J'</tt>. To fix this situation, you must ensure that the first item in the <tt>values</tt> parameter is the entire text string and not just a character, so you need code this instead:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#330033">name=</font><font color="#330033">"John Smith"</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"My name is %s"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">name</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">   --&gt; My name is John Smith</font>
+</pre>
+
+<p> Now, the third argument of <tt>printf</tt> is a one-element sequence containing all the text to be formatted.</p>
+
+<p> Also note that if there is only one format specifier then <tt>values</tt> can simply be an atom or integer.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1520_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">atom </font><font color="#330033">rate = 7.875</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"The interest rate is: %8.2f\n"</font><font color="#330033">, rate</font><font color="#880033">)</font>
+
+<font color="#FF0055">--      The interest rate is:     7.88</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1521_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">name=</font><font color="#330033">"John Smith"</font>
+<font color="#0000FF">integer </font><font color="#330033">score=97</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%15s, %5d\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">name, score</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- "     John Smith,    97"</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 3:</h5>
+<a name="_1522_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%-10.4s $ %s"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"ABCDEFGHIJKLMNOP"</font><font color="#330033">, </font><font color="#330033">"XXX"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">--      ABCD       $ XXX</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 4:</h5>
+<a name="_1523_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%d  %e  %f  %g"</font><font color="#330033">, </font><font color="#0000FF">repeat</font><font color="#993333">(</font><font color="#330033">7.75, 4</font><font color="#993333">)</font><font color="#880033">) </font>
+<font color="#FF0055">                  -- same value in different formats</font>
+
+<font color="#FF0055">--      7  7.750000e+000  7.750000  7.75</font>
+</pre>
+
+<p> <strong><em>NOTE</em></strong> that <tt>printf</tt> cannot use an item in <tt>values</tt> that contains nested sequences. Thus this is an error ... </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">name = </font><font color="#880033">{</font><font color="#330033">"John"</font><font color="#330033">, </font><font color="#330033">"Smith"</font><font color="#880033">}</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%s"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">name</font><font color="#993333">} </font><font color="#880033">)</font>
+</pre>
+
+<p> because the item that is used from the <tt>values</tt> parameter contains two subsequences (strings in this case). To get the correct output you would need to do this instead ...</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">name = </font><font color="#880033">{</font><font color="#330033">"John"</font><font color="#330033">, </font><font color="#330033">"Smith"</font><font color="#880033">}</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%s %s"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">name</font><font color="#0000FF">[</font><font color="#330033">1</font><font color="#0000FF">]</font><font color="#330033">, name</font><font color="#0000FF">[</font><font color="#330033">2</font><font color="#0000FF">]</font><font color="#993333">} </font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1524_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3293_sprintf">sprintf</a>, <a href="std_text.html#_3300_sprint">sprint</a>, <a href="std_io.html#_1506_print">print</a></p>
+
+<p> 
+<a name="euputs"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.4 puts</h4>
+<a name="_1526_puts"></a><a name="puts"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure puts</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">object </font><font color="#330033">text</font><font color="#880033">)</font>
+</pre>
+
+<p> outputs text characters to a screen or file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1527_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to an opened file or device
+</li><li><tt>text</tt> : an object, either a single character or a sequence of characters.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1528_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1529_comments"></a><a name="comments"></a>
+<p> This procedures outputs, to a file or device, a single byte (atom) or sequence of bytes. The low order 8-bits of each value is actually sent out. If outputting to the screen you will see text characters displayed.</p>
+
+<p> When you output a sequence of bytes it must not have any sub-sequences within it. It must be a sequence of atoms only. (Typically a string of ASCII codes).</p>
+
+<p> Avoid outputting 0's to the screen or to standard output. Your output might get truncated.</p>
+
+<p> Remember that if the output file was opened in text mode, <em>Windows</em> will change <tt>\n</tt> (10) to <tt>\r\n</tt> <tt>(13 10)</tt>. Open the file in binary mode if this is not what you want.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1530_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">SCREEN, </font><font color="#330033">"Enter your first name: "</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1531_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">output, </font><font color="#330033">'A'</font><font color="#880033">)  </font><font color="#FF0055">-- the single byte 65 will be sent to output</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1532_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1506_print">print</a></p>
+
+<p> 
+<a name="eugetc"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.5 getc</h4>
+<a name="_1534_getc"></a><a name="getc"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function getc</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn</font><font color="#880033">)</font>
+</pre>
+
+<p> gets the next character (byte) from a file or device <tt>fn</tt>.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1535_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle of the file or device to read from.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1536_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the character read from the file, in the 0..255 range. If no character is left to read, <a href="std_io.html#_1496_eof">EOF</a> is returned instead.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1537_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1538_comments"></a><a name="comments"></a>
+<p> File input using <tt>getc</tt> is buffered, that means <tt>getc</tt> does not actually go out to the disk for each character. Instead, a large block of characters will be read in at one time and returned to you one by one from a memory buffer.</p>
+
+<p> When <tt>getc</tt> reads from the keyboard, it will not see any characters until the user presses Enter. Note that the user can type Control+Z, which the operating system treats as "end of file" returning <a href="std_io.html#_1496_eof">EOF</a>.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1539_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1541_gets">gets</a>, <a href="std_console.html#_857_get_key">get_key</a></p>
+
+<p> 
+<a name="eugets"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.6 gets</h4>
+<a name="_1541_gets"></a><a name="gets"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function gets</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn</font><font color="#880033">)</font>
+</pre>
+
+<p> gets a sequence of characters.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1542_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle of the file or device to read from.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1543_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either <a href="std_io.html#_1496_eof">EOF</a> on end of file, or the next line of text from the file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1544_errors"></a><a name="errors"></a>
+<p> The file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1545_comments"></a><a name="comments"></a>
+<p> This function gets the next sequence (one line, including <tt>'\n'</tt>) of characters from a file or device. The characters will have values from 0 to 255.</p>
+
+<p> If the line had an end of line marker, a <tt>~'\n'~</tt> terminates the line. The last line of a file needs not have an end of line marker.</p>
+
+<p> After reading a line of text from the keyboard, you should normally output a <tt>\n</tt> character, (for example  <tt>puts(1, '\n')</tt> ), before printing something. Only on the last line of the screen does the operating system automatically scroll the screen and advance to the next line.</p>
+
+<p> When your program reads from the keyboard, the user can type Control+Z, which the operating system treats as "end of file". <a href="std_io.html#_1496_eof">EOF</a> will be returned.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1546_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">buffer</font>
+<font color="#0000FF">object </font><font color="#330033">line</font>
+<font color="#0000FF">integer </font><font color="#330033">fn</font>
+
+<font color="#FF0055">-- read a text file into a sequence</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"my_file.txt"</font><font color="#330033">, </font><font color="#330033">"r"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">fn = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Couldn't open my_file.txt\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+
+<font color="#330033">buffer = </font><font color="#880033">{}</font>
+<font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#330033">    line = </font><font color="#0000FF">gets</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#0000FF">    if atom</font><font color="#880033">(</font><font color="#330033">line</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">        exit   </font><font color="#FF0055">-- EOF is returned at end of file</font>
+<font color="#0000FF">    end if</font>
+<font color="#330033">    buffer = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">buffer, line</font><font color="#880033">)</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1547_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">line</font>
+
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"What is your name?\n"</font><font color="#880033">)</font>
+<font color="#330033">line = </font><font color="#0000FF">gets</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)  </font><font color="#FF0055">-- read standard input (keyboard)</font>
+<font color="#330033">line = line</font><font color="#880033">[</font><font color="#330033">1..$-1</font><font color="#880033">] </font><font color="#FF0055">-- get rid of \n character at end</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">'\n'</font><font color="#880033">)   </font><font color="#FF0055">-- necessary</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, line &amp; </font><font color="#330033">" is a nice name.\n"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1548_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1651_read_lines">read_lines</a></p>
+
+<p> 
+<a name="ioget_bytes"></a><a name="bytes"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.7 get_bytes</h4>
+<a name="_1550_get_bytes"></a><a name="get_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">get_bytes</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">integer </font><font color="#330033">n</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads the next bytes from a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1551_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to an open file to read from.
+</li><li><tt>n</tt> : a positive integer, the number of bytes to read.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1552_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of length at most <tt>n</tt>, made of the bytes that could be read from the file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1553_comments"></a><a name="comments"></a>
+<p> When <tt>n</tt> <tt>&gt; 0</tt> and the function returns a sequence of length less than <tt>n</tt> you know you have reached the end of file. Eventually, an empty sequence will be returned.</p>
+
+<p> This function is normally used with files opened in binary mode, <tt>"rb"</tt>. This avoids the confusing situation in text mode where <em>Windows</em> will convert CR LF pairs to LF.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1554_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)  </font><font color="#FF0055">-- an existing file</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">whole_file</font>
+<font color="#330033">whole_file = </font><font color="#880033">{}</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">chunk</font>
+
+<font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#330033">    chunk = get_bytes</font><font color="#880033">(</font><font color="#330033">fn, 100</font><font color="#880033">) </font><font color="#FF0055">-- read 100 bytes at a time</font>
+<font color="#330033">    whole_file &amp;= chunk        </font><font color="#FF0055">-- chunk might be empty, that's ok</font>
+<font color="#0000FF">    if length</font><font color="#880033">(</font><font color="#330033">chunk</font><font color="#880033">) </font><font color="#330033">&lt; 100 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        exit</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end while</font>
+
+<font color="#0000FF">close</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#330033">? </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">whole_file</font><font color="#880033">)  </font><font color="#FF0055">-- should match DIR size of "temp"</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1555_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1557_get_integer32">get_integer32</a>, <a href="std_io.html#_1583_get_dstring">get_dstring</a></p>
+
+<p> 
+<a name="ioget_integer32"></a><a name="integer32"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.8 get_integer32</h4>
+<a name="_1557_get_integer32"></a><a name="get_integer32"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">get_integer32</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads the next four bytes from a file and returns them as a single integer.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1558_parameters"></a><a name="parameters"></a><ol><li><tt>fh</tt> : an integer, the handle to an open file to read from.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1559_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, between <tt>-1</tt> and <tt>power(2,32)-1</tt>, made of the bytes that could be read from the file. When an end of file is encountered, it returns <tt>-1</tt>.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1560_comments"></a><a name="comments"></a><ul><li>This function is normally used with files opened in binary mode, <tt>"rb"</tt>.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1561_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)  </font><font color="#FF0055">-- an existing file</font>
+
+<font color="#0000FF">atom </font><font color="#330033">file_type_code</font>
+<font color="#330033">file_type_code = get_integer32</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1562_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1583_get_dstring">get_dstring</a></p>
+
+<p> 
+<a name="ioget_integer16"></a><a name="integer16"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.9 get_integer16</h4>
+<a name="_1564_get_integer16"></a><a name="get_integer16"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">get_integer16</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads the next two bytes from a file and returns them as a single integer.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1565_parameters"></a><a name="parameters"></a><ol><li><tt>fh</tt> : an integer, the handle to an open file to read from.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1566_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, made of the bytes that could be read from the file. When an end of file is encountered, it returns <tt>-1</tt>.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1567_comments"></a><a name="comments"></a><ul><li>This function is normally used with files opened in binary mode, <tt>"rb"</tt>.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1568_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)  </font><font color="#FF0055">-- an existing file</font>
+
+<font color="#0000FF">atom </font><font color="#330033">file_type_code</font>
+<font color="#330033">file_type_code = get_integer16</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1569_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1583_get_dstring">get_dstring</a></p>
+
+<p> 
+<a name="ioput_integer32"></a><a name="integer32"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.10 put_integer32</h4>
+<a name="_1571_put_integer32"></a><a name="put_integer32"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">put_integer32</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh, </font><font color="#0000FF">atom </font><font color="#330033">val</font><font color="#880033">)</font>
+</pre>
+
+<p>   writes the supplied integer as four bytes to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1572_parameters"></a><a name="parameters"></a><ol><li><tt>fh</tt> : an integer, the handle to an open file to write to.
+</li><li><tt>val</tt> : an integer
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1573_comments"></a><a name="comments"></a><ul><li>This function is normally used with files opened in binary mode, <tt>"wb"</tt>.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1574_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"wb"</font><font color="#880033">)</font>
+
+<font color="#330033">put_integer32</font><font color="#880033">(</font><font color="#330033">fn, 1234</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1575_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1583_get_dstring">get_dstring</a></p>
+
+<p> 
+<a name="ioput_integer16"></a><a name="integer16"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.11 put_integer16</h4>
+<a name="_1577_put_integer16"></a><a name="put_integer16"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">put_integer16</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh, </font><font color="#0000FF">atom </font><font color="#330033">val</font><font color="#880033">)</font>
+</pre>
+
+<p>   writes the supplied integer as two bytes to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1578_parameters"></a><a name="parameters"></a><ol><li><tt>fh</tt> : an integer, the handle to an open file to write to.
+</li><li><tt>val</tt> : an integer
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1579_comments"></a><a name="comments"></a><ul><li>This function is normally used with files opened in binary mode, <tt>"wb"</tt>.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1580_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"wb"</font><font color="#880033">)</font>
+
+<font color="#330033">put_integer16</font><font color="#880033">(</font><font color="#330033">fn, 1234</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1581_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1583_get_dstring">get_dstring</a></p>
+
+<p> 
+<a name="ioget_dstring"></a><a name="dstring"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.2.12 get_dstring</h4>
+<a name="_1583_get_dstring"></a><a name="get_dstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">get_dstring</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh, </font><font color="#0000FF">integer </font><font color="#330033">delim = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   read a delimited byte string from an opened file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1584_parameters"></a><a name="parameters"></a><ol><li><tt>fh</tt> : an integer, the handle to an open file to read from.
+</li><li><tt>delim</tt> : an integer, the delimiter that marks the end of a byte string. If omitted, a zero is assumed.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1585_returns"></a><a name="returns"></a>
+<p> An <strong>sequence</strong>, made of the bytes that could be read from the file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1586_comments"></a><a name="comments"></a><ul><li>If the end-of-file is found before the delimiter, the delimiter is appended to the returned string.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1587_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"temp"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)  </font><font color="#FF0055">-- an existing file</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">text</font>
+<font color="#330033">text = get_dstring</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)	</font><font color="#FF0055">-- Get a zero-delimited string</font>
+<font color="#330033">text = get_dstring</font><font color="#880033">(</font><font color="#330033">fn, </font><font color="#330033">'$'</font><font color="#880033">)	</font><font color="#FF0055">-- Get a '$'-delimited string</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1588_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1534_getc">getc</a>, <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1557_get_integer32">get_integer32</a></p>
+
+<!-- ..\include\std\io.e -->
+<h3>8.6.3 Low Level File and Device Handling</h3>
+<a name="_1589_lowlevelfileanddevicehandling"></a><a name="lowlevelfileanddevicehandling"></a>
+<p> 
+<a name="iolock_shared"></a><a name="shared"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.1 LOCK_SHARED</h4>
+<a name="_1591_lock_shared"></a><a name="lock_shared"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">LOCK_SHARED</font>
+</pre>
+
+<p> 
+<a name="iolock_exclusive"></a><a name="exclusive"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.2 LOCK_EXCLUSIVE</h4>
+<a name="_1593_lock_exclusive"></a><a name="lock_exclusive"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">LOCK_EXCLUSIVE</font>
+</pre>
+
+<p> 
+<a name="iofile_number"></a><a name="number"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.3 file_number</h4>
+<a name="_1595_file_number"></a><a name="file_number"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public type </font><font color="#330033">file_number</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">f</font><font color="#880033">)</font>
+</pre>
+
+<p>   File number type</p>
+
+<p> 
+<a name="iofile_position"></a><a name="position"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.4 file_position</h4>
+<a name="_1597_file_position"></a><a name="file_position"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public type </font><font color="#330033">file_position</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">p</font><font color="#880033">)</font>
+</pre>
+
+<p>   File position type</p>
+
+<p> 
+<a name="iolock_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.5 lock_type</h4>
+<a name="_1599_lock_type"></a><a name="lock_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public type </font><font color="#330033">lock_type</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">t</font><font color="#880033">)</font>
+</pre>
+
+<p>   Lock Type</p>
+
+<p> 
+<a name="iobyte_range"></a><a name="range"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.6 byte_range</h4>
+<a name="_1601_byte_range"></a><a name="byte_range"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public type </font><font color="#330033">byte_range</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">r</font><font color="#880033">)</font>
+</pre>
+
+<p>   Byte Range Type</p>
+
+<p> 
+<a name="euopen"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.7 open</h4>
+<a name="_1603_open"></a><a name="open"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function open</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">sequence </font><font color="#330033">mode, </font><font color="#0000FF">integer </font><font color="#330033">cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p> opens a file or device, to get the file number.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1604_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : a string, the path to the file or device to open.
+</li><li><tt>mode</tt> : a string, the mode being used o open the file.
+</li><li><tt>cleanup</tt> : an integer, if 0, then the file must be manually closed by the coder.  If 1, then the file will be closed when either the file handle's references goes to 0, or if called as a parameter to <tt>delete</tt>.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1605_returns"></a><a name="returns"></a>
+<p> A small <strong>integer</strong>, -1 on failure, else 0 or more.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1606_errors"></a><a name="errors"></a>
+<p> There is a limit on the number of files that can be simultaneously opened, currently 40. After this limit is reached the next call to <tt>open</tt> will produce an error.</p>
+
+<p> The length of <tt>path</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1607_comments"></a><a name="comments"></a>
+<p> Possible modes are:</p>
+<ul><li><tt>"r"</tt> -- open text file for reading
+</li><li><tt>"rb"</tt> -- open binary file for reading
+</li><li><tt>"w"</tt> -- create text file for writing
+</li><li><tt>"wb"</tt> -- create binary file for writing
+</li><li><tt>"u"</tt> -- open text file for update (reading and writing)
+</li><li><tt>"ub"</tt> -- open binary file for update
+</li><li><tt>"a"</tt> -- open text file for appending
+</li><li><tt>"ab"</tt> -- open binary file for appending
+</li></ul>
+<p>Files opened for read or update must already exist. Files opened for write or append will be created if necessary. A file opened for write will be set to 0 bytes. Output to a file opened for append will start at the end of file.</p>
+
+<p> On <em>Windows</em>, output to text files will have carriage-return characters automatically added before linefeed characters. On input, these carriage-return characters are removed. A Control+Z character (ASCII 26) will signal an immediate end of file.</p>
+
+<p> I/O to binary files is not modified in any way. Any byte values from 0 to 255 can be read or written. On <em>Unix</em>, all files are binary files, so <tt>"r"</tt> mode and <tt>"rb"</tt> mode are equivalent, as are <tt>"w"</tt> and <tt>"wb"</tt>, <tt>"u"</tt> and <tt>"ub"</tt>, and <tt>"a"</tt> and <tt>"ab"</tt>.</p>
+
+<p> Some typical devices that you can open on <em>Windows</em> are:</p>
+<ul><li><tt>"CON"</tt> -- the console (screen)
+</li><li><tt>"AUX"</tt> -- the serial auxiliary port
+</li><li><tt>"COM1"</tt> -- serial port 1
+</li><li><tt>"COM2"</tt> -- serial port 2
+</li><li><tt>"PRN"</tt> -- the printer on the parallel port
+</li><li><tt>"NUL"</tt> -- a non-existent device that accepts and discards output
+</li></ul>
+<p>Close a file or device when done with it, flushing out any still-buffered characters prior.</p>
+
+<p> <em>Windows</em> and <em>Unix</em>: Long filenames are fully supported for reading and writing and creating.</p>
+
+<p> <em>Windows</em>: Be careful not to use the special device names in a file name, even if you add an extension. For example: <tt>CON.TXT</tt>, <tt>CON.DAT</tt>, <tt>CON.JPG</tt> all refer to the <tt>CON</tt> device and <em>not</em> to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1608_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">file_num, file_num95</font>
+<font color="#0000FF">sequence </font><font color="#330033">first_line</font>
+<font color="#0000FF">constant </font><font color="#330033">ERROR = 2</font>
+
+<font color="#330033">file_num = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"my_file"</font><font color="#330033">, </font><font color="#330033">"r"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">file_num = -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">ERROR, </font><font color="#330033">"couldn't open my_file\n"</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#330033">    first_line = </font><font color="#0000FF">gets</font><font color="#880033">(</font><font color="#330033">file_num</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+
+<font color="#330033">file_num = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"PRN"</font><font color="#330033">, </font><font color="#330033">"w"</font><font color="#880033">) </font><font color="#FF0055">-- open printer for output</font>
+
+<font color="#FF0055">-- on Windows 95:</font>
+<font color="#330033">file_num95 = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"big_directory_name\\very_long_file_name.abcdefg"</font><font color="#330033">,</font>
+<font color="#330033">                  "r"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">file_num95 != -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"it worked!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="euclose"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.8 close</h4>
+<a name="_1610_close"></a><a name="close"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure close</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">fn</font><font color="#880033">)</font>
+</pre>
+
+<p> closes a file or device and flushes out any still-buffered characters.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1611_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to query.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1612_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1613_comments"></a><a name="comments"></a>
+<p> Any still-open files will be closed automatically when your program terminates.</p>
+
+<p> 
+<a name="ioseek"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.9 seek</h4>
+<a name="_1615_seek"></a><a name="seek"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">seek</font><font color="#880033">(</font><font color="#330033">file_number fn, file_position pos</font><font color="#880033">)</font>
+</pre>
+
+<p>   Seek (move) to any byte position in a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1616_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to <tt>seek</tt>
+</li><li><tt>pos</tt> : an atom, either an absolute 0-based position or -1 to seek to end of file.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1617_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success, 1 on failure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1618_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1619_comments"></a><a name="comments"></a>
+<p> For each open file, there is a current byte position that is updated as a result of I/O operations on the file. The initial file position is 0 for files opened for read, write or update. The initial position is the end of file for files opened for append. It is possible to seek past the end of a file. If you seek past the end of the file, and write some data, undefined bytes will be inserted into the gap between the original end of file and your new data.</p>
+
+<p> After seeking and reading (writing) a series of bytes, you may need to call <tt>seek</tt> explicitly before you switch to writing (reading) bytes, even though the file position should already be what you want.</p>
+
+<p> This function is normally used with files opened in binary mode. In text mode, <em>Windows</em> converts CR LF to LF on input, and LF to CR LF on output, which can cause great confusion when you are trying to count bytes because <tt>seek</tt> counts the <em>Windows</em> end of line sequences as two bytes, even if the file has been opened in text mode.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1620_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+
+<font color="#0000FF">integer </font><font color="#330033">fn</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"my.data"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)</font>
+<font color="#FF0055">-- read and display first line of file 3 times:</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">3 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#0000FF">gets</font><font color="#993333">(</font><font color="#330033">fn</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">seek</font><font color="#880033">(</font><font color="#330033">fn, 0</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">        puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"rewind failed!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1621_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1550_get_bytes">get_bytes</a>, <a href="std_io.html#_1526_puts">puts</a>, <a href="std_io.html#_1623_where">where</a></p>
+
+<p> 
+<a name="iowhere"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.10 where</h4>
+<a name="_1623_where"></a><a name="where"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">where</font><font color="#880033">(</font><font color="#330033">file_number fn</font><font color="#880033">)</font>
+</pre>
+
+<p>   retrieves the current file position for an opened file or device.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1624_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to query.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1625_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the current byte position in the file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1626_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1627_comments"></a><a name="comments"></a>
+<p> The file position is is the place in the file where the next byte will be read from, or written to. It is updated by reads, writes and seeks on the file. This procedure always counts <em>Windows</em> end of line sequences (CR LF) as two bytes even when the file number has been opened in text mode.</p>
+
+<p> 
+<a name="ioflush"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.11 flush</h4>
+<a name="_1629_flush"></a><a name="flush"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">flush</font><font color="#880033">(</font><font color="#330033">file_number fn</font><font color="#880033">)</font>
+</pre>
+
+<p>   forces writing any buffered data to an open file or device.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1630_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to close.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1631_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1632_comments"></a><a name="comments"></a>
+<p> When you write data to a file, Euphoria normally stores the data in a memory buffer until a large enough chunk of data has accumulated. This large chunk can then be written to disk very efficiently. Sometimes you may want to force, or flush, all data out immediately, even if the memory buffer is not full. To do this you must call <tt>flush(fn)</tt>, where fn is the file number of a file open for writing or appending.</p>
+
+<p> When a file is closed, (see <tt><a href="std_io.html#_1610_close">close</a></tt>), all buffered data is flushed out. When a program terminates, all open files are flushed and closed automatically. Use <tt>flush</tt> when another process may need to see all of the data written so far, but you are not ready to close the file yet. <tt>flush</tt> is also used in crash routines, where files may not be closed in the cleanest possible way.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1633_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">f = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"file.log"</font><font color="#330033">, </font><font color="#330033">"w"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">f, </font><font color="#330033">"Record#1\n"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"Press Enter when ready\n"</font><font color="#880033">)</font>
+
+<font color="#330033">flush</font><font color="#880033">(</font><font color="#330033">f</font><font color="#880033">)  </font><font color="#FF0055">-- This forces "Record #1" into "file.log" on disk.</font>
+<font color="#FF0055">          -- Without this, "file.log" will appear to have</font>
+<font color="#FF0055">          -- 0 characters when we stop for keyboard input.</font>
+
+<font color="#330033">s = </font><font color="#0000FF">gets</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">) </font><font color="#FF0055">-- wait for keyboard input</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1634_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1610_close">close</a>, <a href="std_error.html#_5540_crash_routine">crash_routine</a></p>
+
+<p> 
+<a name="iolock_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.12 lock_file</h4>
+<a name="_1636_lock_file"></a><a name="lock_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">lock_file</font><font color="#880033">(</font><font color="#330033">file_number fn, lock_type t, byte_range r = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   locks a file so access is restricted.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1637_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to (partially) lock.
+</li><li><tt>t</tt> : an integer which defines the kind of lock to apply.
+</li><li><tt>r</tt> : a sequence, defining a section of the file to be locked, or <tt>{}</tt> for the whole file (the default).
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1638_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on failure, 1 on success.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1639_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1640_comments"></a><a name="comments"></a>
+<p> When multiple processes can simultaneously access a file, some kind of locking mechanism may be needed to avoid mangling the contents of the file, or causing erroneous data to be read from the file.</p>
+
+<p> <tt>lock_file</tt> attempts to place a lock on an open file, <tt>fn</tt>, to stop other processes from using the file while your program is reading it or writing it.</p>
+
+<p> There are two types of locks that you can request using the <tt>t</tt> parameter. Ask for a <strong>shared</strong> lock when you intend to read a file, and you want to temporarily block other processes from writing it. Ask for an <strong>exclusive</strong> lock when you intend to write to a file and you want to temporarily block other processes from reading or writing it. It is ok for many processes to simultaneously have shared locks on the same file, but only one process can have an exclusive lock, and that can happen only when no other process has any kind of lock on the file. <tt>io.e</tt> contains the following declarations:</p>
+
+<pre class="examplecode"><font color="#0000FF">public enum</font>
+<font color="#330033">    LOCK_SHARED,</font>
+<font color="#330033">    LOCK_EXCLUSIVE</font>
+</pre>
+
+<p> On <em>/Windows</em> you can lock a specified portion of a file using the <tt>r</tt>  parameter. <tt>r</tt> is a sequence of the form: <tt>{first_byte, last_byte}</tt>. It indicates the first byte and last byte in the file,  that the lock applies to. Specify the empty sequence <tt>{}</tt>, if you want to lock the whole file, or don't specify it at all, as this is the default. In the current release for <em>Unix</em>, locks always apply to the whole file, and you should use this default value.</p>
+
+<p> <tt>lock_file</tt> does not wait for other processes to relinquish their locks. You may have to call it repeatedly, before the lock request is granted.</p>
+
+<p> On <em>Unix</em>, these locks are called advisory locks, which means they are not enforced by the operating system. It is up to the processes that use a particular file to cooperate with each other. A process can access a file without first obtaining a lock on it. On <em>Windows</em> locks are enforced by the operating system.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1641_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">integer </font><font color="#330033">v</font>
+<font color="#0000FF">atom </font><font color="#330033">t</font>
+<font color="#330033">v = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"visitor_log"</font><font color="#330033">, </font><font color="#330033">"a"</font><font color="#880033">)  </font><font color="#FF0055">-- open for append</font>
+<font color="#330033">t = </font><font color="#0000FF">time</font><font color="#880033">()</font>
+<font color="#0000FF">while not </font><font color="#330033">lock_file</font><font color="#880033">(</font><font color="#330033">v, LOCK_EXCLUSIVE, </font><font color="#993333">{}</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    if time</font><font color="#880033">() </font><font color="#330033">&gt; t + 60 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        puts</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"One minute already ... I can't wait forever!\n"</font><font color="#880033">)</font>
+<font color="#0000FF">        abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">    end if</font>
+<font color="#330033">    sleep</font><font color="#880033">(</font><font color="#330033">5</font><font color="#880033">) </font><font color="#FF0055">-- let other processes run</font>
+<font color="#0000FF">end while</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">v, </font><font color="#330033">"Yet another visitor\n"</font><font color="#880033">)</font>
+<font color="#330033">unlock_file</font><font color="#880033">(</font><font color="#330033">v, </font><font color="#993333">{}</font><font color="#880033">)</font>
+<font color="#0000FF">close</font><font color="#880033">(</font><font color="#330033">v</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1642_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1644_unlock_file">unlock_file</a></p>
+
+<p> 
+<a name="iounlock_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.3.13 unlock_file</h4>
+<a name="_1644_unlock_file"></a><a name="unlock_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">unlock_file</font><font color="#880033">(</font><font color="#330033">file_number fn, byte_range r = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   unlock (a portion of) an open file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1645_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the handle to the file or device to (partially) lock.
+</li><li><tt>r</tt> : a sequence, defining a section of the file to be locked, or <tt>{}</tt> for the whole file (the default).
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1646_errors"></a><a name="errors"></a>
+<p> The target file or device must be open.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1647_comments"></a><a name="comments"></a>
+<p> You must have previously locked the file using <tt>lock_file</tt>. On <em>Windows</em> you can unlock a range of bytes within a file by specifying the <tt>r</tt> as <tt>{first_byte, last_byte}</tt>. The same range of bytes must have been locked by a previous call to <a href="std_io.html#_1636_lock_file">lock_file</a>. On <em>Unix</em> you can currently only lock or unlock an entire file. <tt>r</tt> should be <tt>{}</tt> when you want to unlock an entire file. On <em>Unix</em>, <tt>r</tt> must always be <tt>{}</tt>, which is the default.</p>
+
+<p> You should unlock a file as soon as possible so other processes can use it.</p>
+
+<p> Any files that you have locked, will automatically be unlocked when your program terminates.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1648_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1636_lock_file">lock_file</a></p>
+
+<!-- ..\include\std\io.e -->
+<h3>8.6.4 File Reading and Writing</h3>
+<a name="_1649_filereadingandwriting"></a><a name="filereadingandwriting"></a>
+<p> 
+<a name="ioread_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.1 read_lines</h4>
+<a name="_1651_read_lines"></a><a name="read_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">read_lines</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads the contents of a file as a sequence of lines.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1652_parameters"></a><a name="parameters"></a>
+<p> <tt>file</tt> : an object, either a file path or the handle to an open file. If this is an empty string, STDIN (the console) is used.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1653_returns"></a><a name="returns"></a>
+<p> -1 on error or a <strong>sequence</strong>, made of lines from the file, as <a href="std_io.html#_1541_gets">gets</a> could read them.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1654_comments"></a><a name="comments"></a>
+<p> If <tt>file</tt> was a sequence, the file will be closed on completion. Otherwise, it will remain open, but at end of file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1655_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">data = read_lines</font><font color="#880033">(</font><font color="#330033">"my_file.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- data contains the entire contents of ##my_file.txt##, 1 sequence per line:</font>
+<font color="#FF0055">-- {"Line 1", "Line 2", "Line 3"}</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1656_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">fh = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"my_file.txt"</font><font color="#330033">, </font><font color="#330033">"r"</font><font color="#880033">)</font>
+<font color="#330033">data = read_lines</font><font color="#880033">(</font><font color="#330033">fh</font><font color="#880033">)</font>
+<font color="#0000FF">close</font><font color="#880033">(</font><font color="#330033">fh</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- data contains the entire contents of ##my_file.txt##, 1 sequence per line:</font>
+<font color="#FF0055">-- {"Line 1", "Line 2", "Line 3"}</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1657_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1666_write_lines">write_lines</a>, <a href="std_io.html#_1690_read_file">read_file</a></p>
+
+<p> 
+<a name="ioprocess_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.2 process_lines</h4>
+<a name="_1659_process_lines"></a><a name="process_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">process_lines</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file, </font><font color="#0000FF">integer </font><font color="#330033">proc, </font><font color="#0000FF">object </font><font color="#330033">user_data = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   processes the contents of a file, one line at a time.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1660_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an object. Either a file path or the handle to an open file. An empty string signifies <tt>STDIN</tt> -- the console keyboard.
+</li><li><tt>proc</tt> : an integer. The routine_id of a function that will process the line.
+</li><li><tt>user_data</tt> : on object. This is passed untouched to <tt>proc</tt> for each line.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1661_returns"></a><a name="returns"></a>
+<p> An object. If 0 then all the file was processed successfully. Anything else means that something went wrong and this is whatever value was returned by <tt>proc</tt>.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1662_comments"></a><a name="comments"></a><ul><li>The function <tt>proc</tt> must accept three parameters:<ul><li>A sequence: The line to process. It will <strong>not</strong> contain an end-of-line character.
+</li><li>An integer: The line number.
+</li><li>An object : This is the <tt>user_data</tt> that was passed to <tt>process_lines</tt>.
+</li></ul>
+</li><li>If <tt>file</tt> was a sequence, the file will be closed on completion. Otherwise, it will remain open, and be positioned where ever reading stopped.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1663_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Format each supplied line according to the format pattern supplied as well.</font>
+<font color="#0000FF">function </font><font color="#330033">show</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">aLine, </font><font color="#0000FF">integer </font><font color="#330033">line_no, </font><font color="#0000FF">object </font><font color="#330033">data</font><font color="#880033">)</font>
+<font color="#330033">  writefln</font><font color="#880033">( </font><font color="#330033">data</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">line_no, aLine</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">  if </font><font color="#330033">data</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">&gt; 0 </font><font color="#0000FF">and </font><font color="#330033">line_no = data</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#0000FF">then</font>
+<font color="#0000FF">  	return </font><font color="#330033">1</font>
+<font color="#0000FF">  else</font>
+<font color="#0000FF">  	return </font><font color="#330033">0</font>
+<font color="#0000FF">  end if</font>
+<font color="#0000FF">end function</font>
+<font color="#FF0055">-- Show the first 20 lines.</font>
+<font color="#330033">process_lines</font><font color="#880033">(</font><font color="#330033">"sample.txt"</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"show"</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"[1z:4] : [2]"</font><font color="#330033">, 20</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1664_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1541_gets">gets</a>, <a href="std_io.html#_1651_read_lines">read_lines</a>, <a href="std_io.html#_1690_read_file">read_file</a></p>
+
+<p> 
+<a name="iowrite_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.3 write_lines</h4>
+<a name="_1666_write_lines"></a><a name="write_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">write_lines</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file, </font><font color="#0000FF">sequence </font><font color="#330033">lines</font><font color="#880033">)</font>
+</pre>
+
+<p>   write a sequence of lines to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1667_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an object, either a file path or the handle to an open file.
+</li><li><tt>lines</tt> : the sequence of lines to write
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1668_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 on success, -1 on failure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1669_errors"></a><a name="errors"></a>
+<p> If <a href="std_io.html#_1526_puts">puts</a> cannot write some line of text, a runtime error will occur.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1670_comments"></a><a name="comments"></a>
+<p> If <tt>file</tt> was a sequence, the file will be closed on completion. Otherwise, it will remain open, but at end of file.</p>
+
+<p> Whatever integer the lines in <tt>lines</tt> holds will be truncated to its 8 lowest bits so as to fall in the 0..255 range.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1671_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">write_lines</font><font color="#880033">(</font><font color="#330033">"data.txt"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"This is important data"</font><font color="#330033">, </font><font color="#330033">"Goodbye"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#330033">!= -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"Failed to write data\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1672_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1651_read_lines">read_lines</a>, <a href="std_io.html#_1697_write_file">write_file</a>, <a href="std_io.html#_1526_puts">puts</a></p>
+
+<p> 
+<a name="ioappend_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.4 append_lines</h4>
+<a name="_1674_append_lines"></a><a name="append_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">append_lines</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">file, </font><font color="#0000FF">sequence </font><font color="#330033">lines</font><font color="#880033">)</font>
+</pre>
+
+<p>   appends a sequence of lines to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1675_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an object, either a file path or the handle to an open file.
+</li><li><tt>lines</tt> : the sequence of lines to write
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1676_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 on success, -1 on failure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1677_errors"></a><a name="errors"></a>
+<p> If <a href="std_io.html#_1526_puts">puts</a> cannot write some line of text, a runtime error will occur.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1678_comments"></a><a name="comments"></a>
+<p> <tt>file</tt> is opened, written to and then closed.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1679_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">append_lines</font><font color="#880033">(</font><font color="#330033">"data.txt"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"This is important data"</font><font color="#330033">, </font><font color="#330033">"Goodbye"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#330033">!= -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"Failed to append data\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1680_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1666_write_lines">write_lines</a>, <a href="std_io.html#_1526_puts">puts</a></p>
+
+<p> 
+<a name="iobinary_mode"></a><a name="mode"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.5 BINARY_MODE</h4>
+<a name="_1682_binary_mode"></a><a name="binary_mode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">BINARY_MODE</font>
+</pre>
+
+<p> 
+<a name="iotext_mode"></a><a name="mode"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.6 TEXT_MODE</h4>
+<a name="_1684_text_mode"></a><a name="text_mode"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">TEXT_MODE</font>
+</pre>
+
+<p> 
+<a name="iounix_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.7 UNIX_TEXT</h4>
+<a name="_1686_unix_text"></a><a name="unix_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">UNIX_TEXT</font>
+</pre>
+
+<p> 
+<a name="iodos_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.8 DOS_TEXT</h4>
+<a name="_1688_dos_text"></a><a name="dos_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public enum </font><font color="#330033">DOS_TEXT</font>
+</pre>
+
+<p> 
+<a name="ioread_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.9 read_file</h4>
+<a name="_1690_read_file"></a><a name="read_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">read_file</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file, </font><font color="#0000FF">integer </font><font color="#330033">as_text = BINARY_MODE</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads the contents of a file as a single sequence of bytes.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1691_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an object, either a file path or the handle to an open file.
+</li><li><tt>as_text</tt> : integer, <tt>BINARY_MODE</tt> (the default) assumes <em>binary mode</em> that causes every byte to be read in, and <tt>TEXT_MODE</tt> assumes <em>text mode</em> that ensures that lines end with just a Control+J (NewLine) character, and the first byte value of 26 (Control+Z) is interpreted as End-Of-File.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1692_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, holding the entire file.</p>
+
+<p> Comments </p>
+<ul><li>When using <tt>BINARY_MODE</tt>, each byte in the file is returned as an element in the return sequence.
+</li><li>When not using <tt>BINARY_MODE</tt>, the file will be interpreted as a text file. This means that all line endings will be transformed to a single <tt>0x0A</tt> character and the first <tt>0x1A</tt> character (Control+Z) will indicate the end of file (all data after this will not be returned to the caller.)
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1693_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">data = read_file</font><font color="#880033">(</font><font color="#330033">"my_file.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- data contains the entire contents of ##my_file.txt##</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>Example 2:</h5>
+<a name="_1694_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">fh = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"my_file.txt"</font><font color="#330033">, </font><font color="#330033">"r"</font><font color="#880033">)</font>
+<font color="#330033">data = read_file</font><font color="#880033">(</font><font color="#330033">fh</font><font color="#880033">)</font>
+<font color="#0000FF">close</font><font color="#880033">(</font><font color="#330033">fh</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- data contains the entire contents of ##my_file.txt##</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1695_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1697_write_file">write_file</a>, <a href="std_io.html#_1651_read_lines">read_lines</a></p>
+
+<p> 
+<a name="iowrite_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.10 write_file</h4>
+<a name="_1697_write_file"></a><a name="write_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public function </font><font color="#330033">write_file</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">file, </font><font color="#0000FF">sequence </font><font color="#330033">data, </font><font color="#0000FF">integer </font><font color="#330033">as_text = BINARY_MODE</font><font color="#880033">)</font>
+</pre>
+
+<p>   write a sequence of bytes to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1698_parameters"></a><a name="parameters"></a><ol><li><tt>file</tt> : an object, either a file path or the handle to an open file.
+</li><li><tt>data</tt> : the sequence of bytes to write
+</li><li><tt>as_text</tt> : integer<ul><li><tt>BINARY_MODE</tt> (the default) assumes <em>binary mode</em> that causes every byte to be written out as is,
+</li><li><tt>TEXT_MODE</tt> assumes <em>text mode</em> that causes a NewLine to be written out according to the operating system's end of line convention. On <em>Unix</em> this is Control+J and on <em>Windows</em> this is the pair <tt>{Ctrl-L, Ctrl-J}</tt>.
+</li><li><tt>UNIX_TEXT</tt> ensures that lines are written out with <em>Unix</em> style line endings (Control+J).
+</li><li><tt>DOS_TEXT</tt> ensures that lines are written out with <em>Windows</em> style line endings <tt>{Ctrl-L, Ctrl-J}</tt>.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Returns:</h5>
+<a name="_1699_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 1 on success, -1 on failure.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Errors:</h5>
+<a name="_1700_errors"></a><a name="errors"></a>
+<p> If <a href="std_io.html#_1526_puts">puts</a> cannot write <tt>data</tt>, a runtime error will occur.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1701_comments"></a><a name="comments"></a><ul><li>When <tt>file</tt> is a file handle, the file is not closed after writing is finished. When <tt>file</tt> is a file name, it is opened, written to and then closed.
+</li><li>Note that when writing the file in ony of the text modes, the file is truncated at the first Control+Z character in the input data.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1702_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">write_file</font><font color="#880033">(</font><font color="#330033">"data.txt"</font><font color="#330033">, </font><font color="#330033">"This is important data\nGoodbye"</font><font color="#880033">) </font><font color="#330033">= -1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"Failed to write data\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1703_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1690_read_file">read_file</a>, <a href="std_io.html#_1666_write_lines">write_lines</a></p>
+
+<p> 
+<a name="iowritef"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.11 writef</h4>
+<a name="_1705_writef"></a><a name="writef"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">writef</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">fm, </font><font color="#0000FF">object </font><font color="#330033">data = </font><font color="#993333">{}</font><font color="#330033">, </font><font color="#0000FF">object </font><font color="#330033">fn = 1, </font><font color="#0000FF">object </font><font color="#330033">data_not_string = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   writes formatted text to a file.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1706_parameters"></a><a name="parameters"></a>
+<p> There are two ways to pass arguments to this function:</p>
+<ol><li>Traditional way with first arg being a file handle.<ol><li>: integer, The file handle.
+</li><li>: sequence, The format pattern.
+</li><li>: object, The data that will be formatted.
+</li><li><tt>data_not_string</tt>: object, If not 0 then the <tt>data</tt> is not a string. By default this is 0 meaning that <tt>data</tt> could be a single string.
+</li></ol>
+</li></ol><ol><li>Alternative way with first argument being the format pattern.<ol><li>: sequence, Format pattern.
+</li><li>: sequence, The data that will be formatted,
+</li><li>: object, The file to receive the formatted output. Default is to the STDOUT device (console).
+</li><li><tt>data_not_string</tt>: object, If not 0 then the <tt>data</tt> is not a string. By default this is 0 meaning that <tt>data</tt> could be a single string.
+</li></ol>
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1707_comments"></a><a name="comments"></a><ul><li>With the traditional arguments, the first argument must be an integer file handle.
+</li><li>With the alternative arguments, the thrid argument can be a file name string, in which case it is opened for output, written to and then closed.
+</li><li>With the alternative arguments, the third argument can be a two-element sequence containing a file name string and an output type (<tt>"a"</tt> for append, <tt>"w"</tt> for write), in which case it is opened accordingly, written to and then closed.
+</li><li>With the alternative arguments, the third argument can a file handle, in which case it is written to only
+</li><li>The format pattern uses the formatting codes defined in <a href="std_text.html#textformat">text:format</a>.
+</li><li>When the data to be formatted is a single text string, it does not have to be enclosed in braces,
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1708_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- To console</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">       {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- To "sample.txt"</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">       {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">"sample.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- To "sample.dat"</font>
+<font color="#0000FF">integer </font><font color="#330033">dat = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"sample.dat"</font><font color="#330033">, </font><font color="#330033">"w"</font><font color="#880033">)</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">       {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#330033">, dat</font><font color="#880033">)</font>
+<font color="#FF0055">-- Appended to "sample.log"</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">       {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"sample.log"</font><font color="#330033">, </font><font color="#330033">"a"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- Simple message to console</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">"A message"</font><font color="#880033">)</font>
+<font color="#FF0055">-- Another console message</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"This is a []"</font><font color="#330033">, </font><font color="#330033">"message"</font><font color="#880033">)</font>
+<font color="#FF0055">-- Outputs two numbers</font>
+<font color="#330033">writef</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"First [], second []"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">65, 100</font><font color="#993333">}</font><font color="#330033">, 1</font><font color="#880033">)</font>
+<font color="#FF0055">     -- Note that {65, 100} is also "Ad"</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1709_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#textformat">text:format</a>, <a href="std_io.html#_1711_writefln">writefln</a>, <a href="std_io.html#_1666_write_lines">write_lines</a></p>
+
+<p> 
+<a name="iowritefln"></a> </p>
+
+<!-- ..\include\std\io.e -->
+<h4>8.6.4.12 writefln</h4>
+<a name="_1711_writefln"></a><a name="writefln"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/io.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">io</font>
+<font color="#0000FF">public procedure </font><font color="#330033">writefln</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">fm, </font><font color="#0000FF">object </font><font color="#330033">data = </font><font color="#993333">{}</font><font color="#330033">, </font><font color="#0000FF">object </font><font color="#330033">fn = 1,</font>
+<font color="#0000FF">        object </font><font color="#330033">data_not_string = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   writes formatted text to a file, ensuring that a new line is also output.</p>
+
+<!-- ..\include\std\io.e -->
+<h5>Parameters:</h5>
+<a name="_1712_parameters"></a><a name="parameters"></a><ol><li><tt>fm</tt> : sequence, Format pattern.
+</li><li><tt>data</tt> : sequence, The data that will be formatted,
+</li><li><tt>fn</tt> : object, The file to receive the formatted output. Default is to the <tt>STDOUT</tt> device (console).
+</li><li><tt>data_not_string</tt>: object, If not 0 then the <tt>data</tt> is not a string. By default this is 0 meaning that <tt>data</tt> could be a single string.
+</li></ol>
+<!-- ..\include\std\io.e -->
+<h5>Comments:</h5>
+<a name="_1713_comments"></a><a name="comments"></a><ul><li>This is the same as <a href="std_io.html#_1705_writef">writef</a>, except that it always adds a New Line to the output.
+</li><li>When <tt>fn</tt> is a file name string, it is opened for output, written to and then closed.
+</li><li>When <tt>fn</tt> is a two-element sequence containing a file name string and an output type (<tt>"a"</tt> for append, <tt>"w"</tt> for write), it is opened accordingly, written to and then closed.
+</li><li>When <tt>fn</tt> is a file handle, it is written to only
+</li><li>The <tt>fm</tt> uses the formatting codes defined in <a href="std_text.html#textformat">text:format</a>.
+</li></ul>
+<!-- ..\include\std\io.e -->
+<h5>Example 1:</h5>
+<a name="_1714_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- To console</font>
+<font color="#330033">writefln</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">         {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- To "sample.txt"</font>
+<font color="#330033">writefln</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">         {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">"sample.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- Appended to "sample.log"</font>
+<font color="#330033">writefln</font><font color="#880033">(</font><font color="#330033">"Today is [4], [u2:3] [3:02], [1:4]."</font><font color="#330033">, </font>
+<font color="#993333">         {</font><font color="#330033">Year, MonthName, Day, DayName</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"sample.log"</font><font color="#330033">, </font><font color="#330033">"a"</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\io.e -->
+<h5>See Also:</h5>
+<a name="_1715_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#textformat">text:format</a>, <a href="std_io.html#_1705_writef">writef</a>, <a href="std_io.html#_1666_write_lines">write_lines</a></p>
+
+<p> 
+<!-- ..\include\std\os.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_filesys.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_os.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_filesys.html">8.5 File System</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_os.html">8.7 Operating System Helpers</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

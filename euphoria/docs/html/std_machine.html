@@ -1,0 +1,2352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_eumem.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_memconst.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_eumem.html">8.43 Pseudo Memory</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_memconst.html">8.46 Memory Constants</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\machine.e -->
+<h2>8.44 Machine Level Access</h2>
+<a name="_5566_machinelevelaccess"></a><a name="machinelevelaccess"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_machine.html#_5566_machinelevelaccess">8.44 Machine Level Access</a></div>
+<div class="toc_4"><a href="std_machine.html#_5567_marchinelevelaccesssummary">8.44.0.1 Marchine Level Access Summary</a></div>
+<div class="toc_4"><a href="std_machine.html#_5570_peek_longs">8.44.0.2 peek_longs</a></div>
+<div class="toc_4"><a href="std_machine.html#_5572_map_anonymous">8.44.0.3 MAP_ANONYMOUS</a></div>
+<div class="toc_4"><a href="std_machine.html#_5574_map_failed">8.44.0.4 MAP_FAILED</a></div>
+<div class="toc_3"><a href="std_machine.html#_5575_safemode">8.44.1 Safe Mode</a></div>
+<div class="toc_4"><a href="std_machine.html#_5576_safemodesummary">8.44.1.1 Safe Mode Summary</a></div>
+<div class="toc_4"><a href="std_machine.html#_5577_check_calls">8.44.1.2 check_calls</a></div>
+<div class="toc_4"><a href="std_machine.html#_5579_edges_only">8.44.1.3 edges_only</a></div>
+<div class="toc_4"><a href="std_machine.html#_5581_check_all_blocks">8.44.1.4 check_all_blocks</a></div>
+<div class="toc_4"><a href="std_machine.html#_5584_register_block">8.44.1.5 register_block</a></div>
+<div class="toc_4"><a href="std_machine.html#_5589_unregister_block">8.44.1.6 unregister_block</a></div>
+<div class="toc_3"><a href="std_machine.html#_5593_dataexecutemodeanddataexecuteprotection">8.44.2 Data Execute Mode and Data Execute Protection</a></div>
+<div class="toc_3"><a href="std_machine.html#_5594_typesortedfunctionlist">8.44.3 Type Sorted Function List</a></div>
+<div class="toc_4"><a href="std_machine.html#_5595_executablememory">8.44.3.1 Executable Memory</a></div>
+<div class="toc_4"><a href="std_machine.html#_5597_usingdatabytes">8.44.3.2 Using Data Bytes</a></div>
+<div class="toc_4"><a href="std_machine.html#_5598_usingdatawords">8.44.3.3 Using Data Words</a></div>
+<div class="toc_4"><a href="std_machine.html#_5599_usingdatadoublewords">8.44.3.4 Using Data Double Words</a></div>
+<div class="toc_4"><a href="std_machine.html#_5600_usingdataquadwords">8.44.3.5 Using Data Quad Words</a></div>
+<div class="toc_4"><a href="std_machine.html#_5601_usingpointers">8.44.3.6 Using Pointers</a></div>
+<div class="toc_4"><a href="std_machine.html#_5602_usinglongintegers">8.44.3.7 Using Long Integers</a></div>
+<div class="toc_4"><a href="std_machine.html#_5603_usingstrings">8.44.3.8 Using Strings</a></div>
+<div class="toc_4"><a href="std_machine.html#_5604_usingpointerarrays">8.44.3.9 Using Pointer Arrays</a></div>
+<div class="toc_3"><a href="std_machine.html#_5605_memoryallocation">8.44.4 Memory Allocation</a></div>
+<div class="toc_4"><a href="std_machine.html#_5607_allocate">8.44.4.1 allocate</a></div>
+<div class="toc_4"><a href="std_machine.html#_5610_allocate_data">8.44.4.2 allocate_data</a></div>
+<div class="toc_4"><a href="std_machine.html#_5617_allocate_pointer_array">8.44.4.3 allocate_pointer_array</a></div>
+<div class="toc_4"><a href="std_machine.html#_5623_free_pointer_array">8.44.4.4 free_pointer_array</a></div>
+<div class="toc_4"><a href="std_machine.html#_5628_allocate_string_pointer_array">8.44.4.5 allocate_string_pointer_array</a></div>
+<div class="toc_4"><a href="std_machine.html#_5634_allocate_wstring">8.44.4.6 allocate_wstring</a></div>
+<div class="toc_3"><a href="std_machine.html#_5638_readingfrommemory">8.44.5 Reading from Memory</a></div>
+<div class="toc_4"><a href="std_machine.html#_5640_peek">8.44.5.1 peek</a></div>
+<div class="toc_4"><a href="std_machine.html#_5648_peeks">8.44.5.2 peeks</a></div>
+<div class="toc_4"><a href="std_machine.html#_5656_peek2s">8.44.5.3 peek2s</a></div>
+<div class="toc_4"><a href="std_machine.html#_5664_peek2u">8.44.5.4 peek2u</a></div>
+<div class="toc_4"><a href="std_machine.html#_5672_peek4s">8.44.5.5 peek4s</a></div>
+<div class="toc_4"><a href="std_machine.html#_5680_peek8s">8.44.5.6 peek8s</a></div>
+<div class="toc_4"><a href="std_machine.html#_5688_peek4u">8.44.5.7 peek4u</a></div>
+<div class="toc_4"><a href="std_machine.html#_5696_peek8u">8.44.5.8 peek8u</a></div>
+<div class="toc_4"><a href="std_machine.html#_5704_peek_longu">8.44.5.9 peek_longu</a></div>
+<div class="toc_4"><a href="std_machine.html#_5712_peek_string">8.44.5.10 peek_string</a></div>
+<div class="toc_4"><a href="std_machine.html#_5719_peek_pointer">8.44.5.11 peek_pointer</a></div>
+<div class="toc_4"><a href="std_machine.html#_5721_peek_wstring">8.44.5.12 peek_wstring</a></div>
+<div class="toc_3"><a href="std_machine.html#_5725_writingtomemory">8.44.6 Writing to Memory</a></div>
+<div class="toc_4"><a href="std_machine.html#_5727_poke">8.44.6.1 poke</a></div>
+<div class="toc_4"><a href="std_machine.html#_5735_poke2">8.44.6.2 poke2</a></div>
+<div class="toc_4"><a href="std_machine.html#_5742_poke4">8.44.6.3 poke4</a></div>
+<div class="toc_4"><a href="std_machine.html#_5749_poke8">8.44.6.4 poke8</a></div>
+<div class="toc_4"><a href="std_machine.html#_5756_poke_long">8.44.6.5 poke_long</a></div>
+<div class="toc_4"><a href="std_machine.html#_5763_poke_pointer">8.44.6.6 poke_pointer</a></div>
+<div class="toc_4"><a href="std_machine.html#_5770_poke_string">8.44.6.7 poke_string</a></div>
+<div class="toc_4"><a href="std_machine.html#_5777_poke_wstring">8.44.6.8 poke_wstring</a></div>
+<div class="toc_3"><a href="std_machine.html#_5783_memorymanipulation">8.44.7 Memory Manipulation</a></div>
+<div class="toc_4"><a href="std_machine.html#_5785_mem_copy">8.44.7.1 mem_copy</a></div>
+<div class="toc_4"><a href="std_machine.html#_5791_mem_set">8.44.7.2 mem_set</a></div>
+<div class="toc_3"><a href="std_machine.html#_5796_callingintomemory">8.44.8 Calling Into Memory</a></div>
+<div class="toc_4"><a href="std_machine.html#_5798_call">8.44.8.1 call</a></div>
+<div class="toc_3"><a href="std_machine.html#_5803_allocatingandwritingtomemory">8.44.9 Allocating and Writing to memory:</a></div>
+<div class="toc_4"><a href="std_machine.html#_5805_allocate_code">8.44.9.1 allocate_code</a></div>
+<div class="toc_4"><a href="std_machine.html#_5811_allocate_string">8.44.9.2 allocate_string</a></div>
+<div class="toc_4"><a href="std_machine.html#_5818_allocate_protect">8.44.9.3 allocate_protect</a></div>
+<div class="toc_3"><a href="std_machine.html#_5822_memorydisposal">8.44.10 Memory Disposal</a></div>
+<div class="toc_4"><a href="std_machine.html#_5824_free">8.44.10.1 free</a></div>
+<div class="toc_4"><a href="std_machine.html#_5829_free_code">8.44.10.2 free_code</a></div>
+<div class="toc_3"><a href="std_machine.html#_5832_automaticresourcemanagement">8.44.11 Automatic Resource Management</a></div>
+<div class="toc_4"><a href="std_machine.html#_5834_delete_routine">8.44.11.1 delete_routine</a></div>
+<div class="toc_4"><a href="std_machine.html#_5837_delete">8.44.11.2 delete</a></div>
+<div class="toc_3"><a href="std_machine.html#_5839_typesandconstants">8.44.12 Types and Constants</a></div>
+<div class="toc_4"><a href="std_machine.html#_5841_std_library_address">8.44.12.1 std_library_address</a></div>
+<div class="toc_4"><a href="std_machine.html#_5844_valid_memory_protection_constant">8.44.12.2 valid_memory_protection_constant</a></div>
+<div class="toc_4"><a href="std_machine.html#_5845_machine_addr">8.44.12.3 machine_addr</a></div>
+<div class="toc_4"><a href="std_machine.html#_5846_safe_address">8.44.12.4 safe_address</a></div>
+<div class="toc_4"><a href="std_machine.html#_5849_address_length">8.44.12.5 ADDRESS_LENGTH</a></div>
+<div class="toc_4"><a href="std_machine.html#_5850_page_size">8.44.12.6 PAGE_SIZE</a></div>
+</div>
+</div>
+ </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.0.1 Marchine Level Access Summary</h4>
+<a name="_5567_marchinelevelaccesssummary"></a><a name="marchinelevelaccesssummary"></a>
+<p> Warning: Some of these routines require a knowledge of machine-level programming. You could crash your system!</p>
+
+<p> These routines, along with <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5727_poke">poke</a> and <a href="std_machine.html#_5798_call">call</a>, let you access all of the features of your computer.  You can read and write to any allowed memory location, and you can create and execute machine code subroutines.</p>
+
+<p> If you are manipulating 32-bit addresses or values, remember to use variables declared as atom. The integer type only goes up to 31 bits.</p>
+
+<p> If you choose to call <tt>machine_proc</tt> or <tt>machine_func</tt> directly (to save a bit of overhead) you *must* pass valid arguments or Euphoria could crash.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Some example programs to look at:</h5>
+<a name="_5568_someexampleprogramstolookat"></a><a name="someexampleprogramstolookat"></a><ul><li><tt>demo/callmach.ex</tt>      -- calling a machine language routine
+</li></ul>
+<p> 
+<a name="machinepeek_longs"></a><a name="longs"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.0.2 peek_longs</h4>
+<a name="_5570_peek_longs"></a><a name="peek_longs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function peek_longs</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   @nodoc</p>
+
+<p> 
+<a name="machinemap_anonymous"></a><a name="anonymous"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.0.3 MAP_ANONYMOUS</h4>
+<a name="_5572_map_anonymous"></a><a name="map_anonymous"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">export constant </font><font color="#330033">MAP_ANONYMOUS</font>
+</pre>
+
+<p> 
+<a name="machinemap_failed"></a><a name="failed"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.0.4 MAP_FAILED</h4>
+<a name="_5574_map_failed"></a><a name="map_failed"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">export constant </font><font color="#330033">MAP_FAILED</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.1 Safe Mode</h3>
+<a name="_5575_safemode"></a><a name="safemode"></a>
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.1 Safe Mode Summary</h4>
+<a name="_5576_safemodesummary"></a><a name="safemodesummary"></a>
+<p> During the development of your application, you can define the word <tt>SAFE</tt> to cause <tt>machine.e</tt> to use alternative memory functions. These functions are slower but help in the debugging stages. In general, <tt>SAFE</tt> mode should not be enabled during production phases but only for development phases.</p>
+
+<p> To define the word <tt>SAFE</tt> run your application with the <tt>-D SAFE</tt> command line option, or add to the top of your main file:</p>
+
+<pre class="examplecode"><font color="#0000FF">with </font><font color="#330033">define safe</font>
+</pre>
+
+<p> before the first appearance of <tt>include std/machine.e</tt></p>
+
+<p> The implementation of the Machine Level Access routines used are controled with the define word <tt>SAFE</tt>. The use of <tt>SAFE</tt> switches the routines included here to use debugging versions which will allow you to catch all kinds of bugs that might otherwise may not always crash your program where in the line your program is written. There may be bugs that are invisible until you port the program they are in to another platform.  There has been no bench marking for how much of a speed penalty there is using <tt>SAFE</tt>.</p>
+
+<p> You can take advantage of <tt>SAFE</tt> debugging by:</p>
+<ul><li>If necessary, call <a href="std_machine.html#_5584_register_block">register_block</a>(address, length, memory_protection) to add additional "external" blocks of memory to the safe_address_list. These are blocks of memory that are safe to use but which you did not acquire through Euphoria's <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5610_allocate_data">allocate_data</a>, <a href="std_machine.html#_5805_allocate_code">allocate_code</a> or <a href="std_machine.html#_5818_allocate_protect">allocate_protect</a>, <a href="std_machine.html#_5811_allocate_string">allocate_string</a>, <a href="std_machine.html#_5634_allocate_wstring">allocate_wstring</a>. Call <a href="std_machine.html#_5589_unregister_block">unregister_block</a>(address) when you want to prevent further access to an external block.  When <tt>SAFE</tt> is not enabled these functions will do nothing and will be converted into nothing by the inline code in the front-end.
+</li></ul><ul><li>You will be notified if memory that you haven't allocated is accessed, or if memory is freed twice, or if memory is used in the wrong way.  Your application will can be ready for D.E.P. enabled systems even if the system you test on doesn't have D.E.P..
+</li></ul><ul><li>If a bug is caught, you will hear some "beep" sounds. Press Enter to clear the screen and see the error message. There will be a descriptive crash message and a traceback in ex.err so you can find the statement that is making the illegal memory access.
+</li></ul>
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.2 check_calls</h4>
+<a name="_5577_check_calls"></a><a name="check_calls"></a>
+<p> Define block checking policy. </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public integer </font><font color="#330033">check_calls</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5578_comments"></a><a name="comments"></a>
+<p> If this integer is 1, (the default), check all blocks for edge corruption after each <a href="std_machine.html#_5595_executablememory">Executable Memory</a>, <a href="std_machine.html#_5798_call">call</a>, <a href="std_dll.html#_5485_c_proc">c_proc</a> or <a href="std_dll.html#_5477_c_func">c_func</a>. To save time, your program can turn off this checking by setting check_calls to 0.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.3 edges_only</h4>
+<a name="_5579_edges_only"></a><a name="edges_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public integer </font><font color="#330033">edges_only</font>
+</pre>
+
+<p> Determine whether to flag accesses to remote memory areas.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5580_comments"></a><a name="comments"></a>
+<p> If this integer is 1 (the default under <em>Windows</em>), only check for references to the leader or trailer areas just outside each registered block, and don't complain about addresses that are far out of bounds (it's probably a legitimate block from another source)</p>
+
+<p> For a stronger check, set this to 0 if your program will never read/write an unregistered block of memory.</p>
+
+<p> On <em>Windows</em> people often use unregistered blocks.  Please do not be one of them.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.4 check_all_blocks</h4>
+<a name="_5581_check_all_blocks"></a><a name="check_all_blocks"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#330033">check_all_blocks</font><font color="#880033">()</font>
+</pre>
+
+<p> Scans the list of registered blocks for any corruption.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5582_comments"></a><a name="comments"></a>
+<p> safe.e maintains a list of acquired memory blocks. Those gained through <tt>allocate</tt> are automatically included. Any other block, for debugging purposes, must be registered by <a href="std_machine.html#_5584_register_block">register_block</a> and unregistered by <a href="std_machine.html#_5589_unregister_block">unregister_block</a>.</p>
+
+<p> The list is scanned and, if any block shows signs of corruption, it is displayed on the screen and the program terminates. Otherwise, nothing happens.</p>
+
+<p> Unless <tt>SAFE</tt> is defined, this routine does nothing. It is there to make switching between debugged and normal version of your program easier.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5583_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5584_register_block">register_block</a>, <a href="std_machine.html#_5589_unregister_block">unregister_block</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.5 register_block</h4>
+<a name="_5584_register_block"></a><a name="register_block"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">procedure </font><font color="#330033">register_block</font><font color="#880033">(</font><font color="#330033">machine_addr block_addr, positive_int block_len, </font>
+<font color="#330033">            valid_memory_protection_constant memory_protection = PAGE_READ_WRITE </font><font color="#880033">)</font>
+</pre>
+
+<p> Adds a block of memory to the list of safe blocks maintained by safe.e (the debug version of memory.e). The block starts at address a. The length of the block is i bytes.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5585_parameters"></a><a name="parameters"></a><ol><li><tt>block_addr</tt> : an atom, the start address of the block
+</li><li><tt>block_len</tt> : an integer, the size of the block.
+</li><li><tt>protection</tt> : a constant integer, of the memory protection constants found in machine.e, that describes what access we have to the memory.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5586_comments"></a><a name="comments"></a>
+<p> In memory.e, this procedure does nothing. It is there to simplify switching between the normal and debug version of the library.</p>
+
+<p> This routine is only meant to be used for debugging purposes. safe.e tracks the blocks of memory that your program is allowed to <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5785_mem_copy">mem_copy</a> etc. These are normally just the blocks that you have allocated using Euphoria's <a href="std_machine.html#_5607_allocate">allocate</a> routine, and which you have not yet freed using Euphoria's <a href="std_machine.html#_5824_free">free</a>. In some cases, you may acquire additional, external, blocks of memory, perhaps as a result of calling a C routine.</p>
+
+<p> If you are debugging your program using <tt>safe.e</tt>, you must register these external blocks of memory or <tt>safe.e</tt> will prevent you from accessing them. When you are finished using an external block you can unregister it using <tt>unregister_block</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5587_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">addr</font>
+
+<font color="#330033">addr = </font><font color="#0000FF">c_func</font><font color="#880033">(</font><font color="#330033">x, </font><font color="#993333">{}</font><font color="#880033">)</font>
+<font color="#330033">register_block</font><font color="#880033">(</font><font color="#330033">addr, 5</font><font color="#880033">)</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">addr, </font><font color="#330033">"ABCDE"</font><font color="#880033">)</font>
+<font color="#330033">unregister_block</font><font color="#880033">(</font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5588_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5589_unregister_block">unregister_block</a>, <a href="std_machine.html#_5575_safemode">Safe Mode</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.1.6 unregister_block</h4>
+<a name="_5589_unregister_block"></a><a name="unregister_block"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public procedure </font><font color="#330033">unregister_block</font><font color="#880033">(</font><font color="#330033">machine_addr block_addr</font><font color="#880033">)</font>
+</pre>
+
+<p> removes a block of memory from the list of safe blocks maintained by safe.e (the debug version of memory.e).</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5590_parameters"></a><a name="parameters"></a><ol><li><tt>block_addr</tt> : an atom, the start address of the block
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5591_comments"></a><a name="comments"></a>
+<p> In memory.e, this procedure does nothing. It is there to simplify switching between the normal and debug version of the library.</p>
+
+<p> This routine is only meant to be used for debugging purposes. Use it to unregister blocks of memory that you have previously registered using <a href="std_machine.html#_5584_register_block">register_block</a>. By unregistering a block, you remove it from the list of safe blocks maintained by safe.e. This prevents your program from performing any further reads or writes of memory within the block.</p>
+
+<p> See <a href="std_machine.html#_5584_register_block">register_block</a> for further comments and an example.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5592_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5584_register_block">register_block</a>, <a href="std_machine.html#_5575_safemode">Safe Mode</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.2 Data Execute Mode and Data Execute Protection</h3>
+<a name="_5593_dataexecutemodeanddataexecuteprotection"></a><a name="dataexecutemodeanddataexecuteprotection"></a>
+<p> <tt>Data Execute Mode</tt> makes data that will be returned from <a href="std_machine.html#_5607_allocate">allocate</a> executable.  On some systems you will not be allowed to run code in memory returned from <a href="std_machine.html#_5607_allocate">allocate</a> unless this mode has been enabled.   This restriction is called Data Execute Protection or D.E.P..  When writing software you should use <a href="std_machine.html#_5805_allocate_code">allocate_code</a> or <a href="std_machine.html#_5818_allocate_protect">allocate_protect</a> to get memory for execution.  This is more efficient and more secure than using <tt>Data Execute mode</tt>.  Because many hacker exploits of software use data buffers and then trick software into running this data, Data Execute Protection stops an entire class of exploits.</p>
+
+<p> If you get a Data Execute Protection Exception from running software, it means that D.E.P. could have thwarted an attack!  Your application crashes and your computer wasn't infected.  However, many people will decide that they want to disable D.E.P. because they know that they call memory returned by <a href="std_machine.html#_5607_allocate">allocate</a> or perhaps they are simply careless.</p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.3 Type Sorted Function List</h3>
+<a name="_5594_typesortedfunctionlist"></a><a name="typesortedfunctionlist"></a>
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.1 Executable Memory</h4>
+<a name="_5595_executablememory"></a><a name="executablememory"></a>
+<p> Executable Memory is the way to run code on the stack in a completly portable way.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Use the following Routines:</h5>
+<a name="_5596_usethefollowingroutines"></a><a name="usethefollowingroutines"></a>
+<p> Use <a href="std_machine.html#_5805_allocate_code">allocate_code</a> to allocate some executable machine-code, <a href="std_machine.html#_5798_call">call</a> to call the code, and <a href="std_machine.html#_5829_free_code">free_code</a> to free the machine-code.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.2 Using Data Bytes</h4>
+<a name="_5597_usingdatabytes"></a><a name="usingdatabytes"></a>
+<p> In C, bytes are called 'char' or 'BOOL' or 'boolean'.  They sometimes are used for very small numbers but mostly, they are used in C-strings. See <a href="std_machine.html#_5603_usingstrings">Using Strings</a>.</p>
+
+<p> Use <a href="std_machine.html#_5610_allocate_data">allocate_data</a> to allocate data and return an address. Use <a href="std_machine.html#_5727_poke">poke</a> to save atoms or sequences to at an address. Use <a href="std_machine.html#_5648_peeks">peeks</a> or <a href="std_machine.html#_5640_peek">peek</a> to read from an address. Use <a href="std_machine.html#_5791_mem_set">mem_set</a> and <a href="std_machine.html#_5785_mem_copy">mem_copy</a> to set and copy sections of memory. Use <a href="std_machine.html#_5824_free">free</a> to free or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.3 Using Data Words</h4>
+<a name="_5598_usingdatawords"></a><a name="usingdatawords"></a>
+<p> Words are 16-bit integers and are big enough to hold most integers in common use as far as whole numbers go.  So they often are used to hold numbers.  In C, they are declared as WORD or short.</p>
+
+<p> Use <a href="std_machine.html#_5610_allocate_data">allocate_data</a> to allocate data and return its address. Use <a href="std_machine.html#_5735_poke2">poke2</a> to write to the data at an address. Use <a href="std_machine.html#_5664_peek2u">peek2</a> or <a href="std_machine.html#_5656_peek2s">peek2s</a> to read from an address. Use <a href="std_machine.html#_5824_free">free</a> to free or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.4 Using Data Double Words</h4>
+<a name="_5599_usingdatadoublewords"></a><a name="usingdatadoublewords"></a>
+<p> Double words are 32-bit integers.  In C, they are typically declared as int, or long (on Windows and other 32-bit architectures), or DWORD.  They are big enough to hold pointers to other values in memory on 32-bit architectures.</p>
+
+<p> Use <a href="std_machine.html#_5610_allocate_data">allocate_data</a> to allocate data and return its address. Use <a href="std_machine.html#_5742_poke4">poke4</a> to write to the data at an address. Use <a href="std_machine.html#_5688_peek4u">peek4</a> or <a href="std_machine.html#_5672_peek4s">peek4s</a> to read from an address. Use <a href="std_machine.html#_5824_free">free</a> to free or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.5 Using Data Quad Words</h4>
+<a name="_5600_usingdataquadwords"></a><a name="usingdataquadwords"></a>
+<p> Quad words are 64-bit integers.  In C, they are typically declared as long long int, or long int (on 64-bit architectures other than Windows).  They are big enough to hold pointers to other values in memory on 64-bit architectures.</p>
+
+<p> Use <a href="std_machine.html#_5610_allocate_data">allocate_data</a> to allocate data and return its address. Use <a href="std_machine.html#_5749_poke8">poke8</a> to write to the data at an address. Use <a href="std_machine.html#_5696_peek8u">peek8u</a> or <a href="std_machine.html#_5680_peek8s">peek8s</a> to read from an address. Use <a href="std_machine.html#_5824_free">free</a> to free or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.6 Using Pointers</h4>
+<a name="_5601_usingpointers"></a><a name="usingpointers"></a>
+<p> A Euphoria atom should be used to store pointer values.  On 32-bit architectures, pointers may be larger than a Euphoria integer.  On 64-bit architectures, a Euphoria integer is large enough to hold pointer values, since current 64-bit architectures use only a 48-bit memory space</p>
+
+<p> To portably peek and poke pointers, you should use <a href="std_machine.html#_5719_peek_pointer">peek_pointer</a> and <a href="std_machine.html#_5763_poke_pointer">poke_pointer</a>.  These routines automatically detect the architecture and use the correct size for a pointer.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.7 Using Long Integers</h4>
+<a name="_5602_usinglongintegers"></a><a name="usinglongintegers"></a>
+<p> When interfacing with C code, some data will be defined as <tt>long</tt> or <tt>long int</tt>. This data type can be tricky to use in a portable manner, due to the way that different architectures and operating systems define it.</p>
+
+<p> On all 32-bit architectures on which Euphoria runs, a <tt>long int</tt> is defined as 32-bits. On 64-bit Windows, a <tt>long int</tt> is also 32-bits.  However, on other 64-bit operating systems, a <tt>long int</tt> is defined as 64-bits.</p>
+
+<p> To portably peek and poke <tt>long int</tt> data, you should use <a href="std_machine.html#_5570_peek_longs">peek_longs</a>, <a href="std_machine.html#_5704_peek_longu">peek_longu</a> and <a href="std_machine.html#_5756_poke_long">poke_long</a>.  You can also use <tt>sizeof( C_LONG )</tt> to determine the size (in bytes) of a native <tt>long int</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.8 Using Strings</h4>
+<a name="_5603_usingstrings"></a><a name="usingstrings"></a>
+<p> You can create legal ANSI and 16-bit UNICODE Strings with these routines.  In C, strings are often declared as some pointer to a character:  char * or wchar *.</p>
+
+<p> Microsoft Windows uses 8-bit ANSI and 16-bit UNICODE in its routines.</p>
+
+<p> Use <a href="std_machine.html#_5811_allocate_string">allocate_string</a> or <a href="std_machine.html#_5634_allocate_wstring">allocate_wstring</a> to allocate a string pointer. Use <a href="std_machine.html#_5712_peek_string">peek_string</a>, <a href="std_machine.html#_5721_peek_wstring">peek_wstring</a>, <a href="std_machine.html#_5688_peek4u">peek4</a>, to read from memory byte strings, word strings and double word strings repsectively. Use <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, or <a href="std_machine.html#_5742_poke4">poke4</a> to write to memory byte strings, word strings and double word strings. Use <a href="std_machine.html#_5824_free">free</a> to free or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.3.9 Using Pointer Arrays</h4>
+<a name="_5604_usingpointerarrays"></a><a name="usingpointerarrays"></a>
+<p> Use <a href="std_machine.html#_5628_allocate_string_pointer_array">allocate_string_pointer_array</a> to allocate a string array from a sequence of strings.  Use <a href="std_machine.html#_5617_allocate_pointer_array">allocate_pointer_array</a> to allocate and then write to an array for pointers . Use <a href="std_machine.html#_5623_free_pointer_array">free_pointer_array</a> to deallocate or use <a href="std_machine.html#_5837_delete">delete</a> if you enabled <tt>cleanup</tt> in <a href="std_machine.html#_5610_allocate_data">allocate_data</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.4 Memory Allocation</h3>
+<a name="_5605_memoryallocation"></a><a name="memoryallocation"></a>
+<p> 
+<a name="machineallocate"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.1 allocate</h4>
+<a name="_5607_allocate"></a><a name="allocate"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate</font><font color="#880033">(</font><font color="#330033">memory :positive_int n, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   This does the same as <a href="std_machine.html#_5610_allocate_data">allocate_data</a> but allows the DATA_EXECUTE defined word to cause it to return executable memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5608_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5610_allocate_data">allocate_data</a>, <a href="std_machine.html#_5805_allocate_code">allocate_code</a>, <a href="std_machine.html#_5824_free">free</a></p>
+
+<p> 
+<a name="machineallocate_data"></a><a name="data"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.2 allocate_data</h4>
+<a name="_5610_allocate_data"></a><a name="allocate_data"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_data</font><font color="#880033">(</font><font color="#330033">memory :positive_int n, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Allocate a contiguous block of data memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5611_parameters"></a><a name="parameters"></a><ol><li><tt>n</tt> : a positive integer, the size of the requested block.
+</li><li><tt>cleanup</tt> : an integer, if non-zero, then the returned pointer will be automatically freed when its reference count drops to zero, or when passed as a parameter to <a href="std_machine.html#_5837_delete">delete</a>.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5612_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the address of the allocated memory or 0 if the memory can't be allocated. <strong>NOTE</strong> you must use either an atom or object to receive the returned value as sometimes the returned memory address is too larger for an integer to hold.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5613_comments"></a><a name="comments"></a><ul><li>Since <tt>allocate</tt> acquires memory from the system, it is your responsiblity to return that memory when your application is done with it. There are two ways to do that - automatically or manually.<ul><li><em>Automatically</em> - If the <tt>cleanup</tt> parameter is non-zero, then the memory is returned when the variable that receives the address goes out of scope <strong>and</strong> is not referenced by anything else. Alternatively you can force it be released by calling the <a href="std_machine.html#_5837_delete">delete</a> function.
+</li><li><em>Manually</em> - If the <tt>cleanup</tt> parameter is zero, then you must call the <a href="std_machine.html#_5824_free">free</a> function at some point in your program to release the memory back to the system.
+</li></ul>
+</li><li>When your program terminates, the operating system will reclaim all memory that your applicaiton acquired anyway.
+</li><li>An address returned by this function shouldn't be passed to <tt><a href="std_machine.html#_5798_call">call</a></tt>. For that purpose you should use <tt><a href="std_machine.html#_5805_allocate_code">allocate_code</a></tt> instead.
+</li><li>The address returned will be at least 8-byte aligned.
+</li></ul>
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5614_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">buffer = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)</font>
+<font color="#0000FF">for </font><font color="#330033">i = 0 </font><font color="#0000FF">to </font><font color="#330033">99 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    poke</font><font color="#880033">(</font><font color="#330033">buffer+i, 0</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5615_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5598_usingdatawords">Using Data Words</a>, <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5805_allocate_code">allocate_code</a>, <a href="std_machine.html#_5824_free">free</a></p>
+
+<p> 
+<a name="machineallocate_pointer_array"></a><a name="pointer_array"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.3 allocate_pointer_array</h4>
+<a name="_5617_allocate_pointer_array"></a><a name="allocate_pointer_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_pointer_array</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">pointers, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Allocate a NULL terminated pointer array.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5618_parameters"></a><a name="parameters"></a><ol><li><tt>pointers</tt> : a sequence of pointers to add to the pointer array.
+</li><li><tt>cleanup</tt> : an integer, if non-zero, then the returned pointer will be automatically freed when its reference count drops to zero, or when passed as a parameter to <a href="std_machine.html#_5837_delete">delete</a>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5619_comments"></a><a name="comments"></a>
+<p> This function adds the NULL terminator.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5620_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">pa</font>
+<font color="#330033">pa = allocate_pointer_array</font><font color="#880033">(</font><font color="#993333">{ </font><font color="#330033">allocate_string</font><font color="#0000FF">(</font><font color="#330033">"1"</font><font color="#0000FF">)</font><font color="#330033">, allocate_string</font><font color="#0000FF">(</font><font color="#330033">"2"</font><font color="#0000FF">) </font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5621_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5604_usingpointerarrays">Using Pointer Arrays</a>, <a href="std_machine.html#_5628_allocate_string_pointer_array">allocate_string_pointer_array</a>, <a href="std_machine.html#_5623_free_pointer_array">free_pointer_array</a></p>
+
+<p> 
+<a name="machinefree_pointer_array"></a><a name="pointer_array"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.4 free_pointer_array</h4>
+<a name="_5623_free_pointer_array"></a><a name="free_pointer_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public procedure </font><font color="#330033">free_pointer_array</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">pointers_array</font><font color="#880033">)</font>
+</pre>
+
+<p>   Free a NULL terminated pointers array.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5624_parameters"></a><a name="parameters"></a><ol><li><tt>pointers_array</tt> : memory address of where the NULL terminated array exists at.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5625_comments"></a><a name="comments"></a>
+<p> This is for NULL terminated lists, such as allocated by <a href="std_machine.html#_5617_allocate_pointer_array">allocate_pointer_array</a>. Do not call <tt>free_pointer_array</tt> for a pointer that was allocated to be cleaned up automatically.  Instead, use <a href="std_machine.html#_5837_delete">delete</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5626_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5617_allocate_pointer_array">allocate_pointer_array</a>, <a href="std_machine.html#_5628_allocate_string_pointer_array">allocate_string_pointer_array</a></p>
+
+<p> 
+<a name="machineallocate_string_pointer_array"></a><a name="string_pointer_array"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.5 allocate_string_pointer_array</h4>
+<a name="_5628_allocate_string_pointer_array"></a><a name="allocate_string_pointer_array"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_string_pointer_array</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">string_list, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Allocate a C-style null-terminated array of strings in memory</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5629_parameters"></a><a name="parameters"></a><ol><li><tt>string_list</tt> : sequence of strings to store in RAM.
+</li><li><tt>cleanup</tt> : an integer, if non-zero, then the returned pointer will be automatically freed when its reference count drops to zero, or when passed as a parameter to <a href="std_machine.html#_5837_delete">delete</a>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5630_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the address of the memory block where the string pointer array was stored.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5631_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">p = allocate_string_pointer_array</font><font color="#880033">(</font><font color="#993333">{ </font><font color="#330033">"One"</font><font color="#330033">, </font><font color="#330033">"Two"</font><font color="#330033">, </font><font color="#330033">"Three" </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- Same as C: char *p = { "One", "Two", "Three", NULL };</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5632_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5604_usingpointerarrays">Using Pointer Arrays</a>, <a href="std_machine.html#_5623_free_pointer_array">free_pointer_array</a></p>
+
+<p> 
+<a name="machineallocate_wstring"></a><a name="wstring"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.4.6 allocate_wstring</h4>
+<a name="_5634_allocate_wstring"></a><a name="allocate_wstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_wstring</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Create a C-style null-terminated wchar_t string in memory</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5635_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : a unicode (utf16) string
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5636_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the address of the allocated string, or 0 on failure.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5637_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5811_allocate_string">allocate_string</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.5 Reading from Memory</h3>
+<a name="_5638_readingfrommemory"></a><a name="readingfrommemory"></a>
+<p> 
+<a name="eupeek"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.1 peek</h4>
+<a name="_5640_peek"></a><a name="peek"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches a byte, or some bytes, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5641_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one byte at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> -- to fetch <tt>len</tt> bytes at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5642_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an integer if the input was a single address, or a sequence of integers if a sequence was passed. In both cases, integers returned are bytes, in the range 0..255.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5643_errors"></a><a name="errors"></a>
+<p> <a href="std_machine.html#_5640_peek">Peeking</a> in memory you don't own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a EUPHORIA error.</p>
+
+<p> When supplying a {address, count} sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5644_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several bytes at once using the second form of <tt>peek</tt> than it is to read one byte at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5645_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">101</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">102</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">103</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5646_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5648_peeks">peeks</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5664_peek2u">peek2u</a></p>
+
+<p> 
+<a name="eupeeks"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.2 peeks</h4>
+<a name="_5648_peeks"></a><a name="peeks"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peeks</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches a byte, or some bytes, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5649_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> : to fetch one byte at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> : to fetch <tt>len</tt> bytes at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5650_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an integer if the input was a single address, or a sequence of integers if a sequence was passed. In both cases, integers returned are bytes, in the range -128..127.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5651_errors"></a><a name="errors"></a>
+<p> <a href="std_machine.html#_5640_peek">Peeking</a> in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a {address, count} sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5652_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several bytes at once using the second form of <tt>peek</tt> than it is to read one byte at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peeks</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5653_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peeks</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">101</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">102</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek</font><font color="#993333">(</font><font color="#330033">103</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peeks</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5654_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a>, <a href="std_machine.html#_5640_peek">peek</a></p>
+
+<p> 
+<a name="eupeek2s"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.3 peek2s</h4>
+<a name="_5656_peek2s"></a><a name="peek2s"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek2s</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> Fetches a <em>signed</em> word, or some <em>signed</em> words  , from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5657_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one word at <tt>addr</tt>, or
+</li><li>a pair <tt>{ addr, len}</tt>, to fetch <tt>len</tt> words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5658_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an integer if the input was a single address, or a sequence of integers if a sequence was passed. In both cases, integers returned are double words, in the range -32768..32767.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5659_errors"></a><a name="errors"></a>
+<p> Peeking in memory you don't own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a EUPHORIA error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5660_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several words at once using the second form of <tt>peek</tt> than it is to read one word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek2s</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek2s</tt> and <tt>peek2u</tt> is how words with the highest bit set are returned. <tt>peek2s</tt> assumes them to be negative, while <tt>peek2u</tt> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5661_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek2s</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2s</font><font color="#993333">(</font><font color="#330033">102</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2s</font><font color="#993333">(</font><font color="#330033">104</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2s</font><font color="#993333">(</font><font color="#330033">106</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek2s</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5662_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5598_usingdatawords">Using Data Words</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5648_peeks">peeks</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a> <a href="std_machine.html#_5664_peek2u">peek2u</a></p>
+
+<p> 
+<a name="eupeek2u"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.4 peek2u</h4>
+<a name="_5664_peek2u"></a><a name="peek2u"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek2u</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches an <em>unsigned</em> word, or some <em>unsigned</em> words, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5665_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> -- to fetch <tt>len</tt> double words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5666_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an integer if the input was a single address, or a sequence of integers if a sequence was passed. In both cases, integers returned are words, in the range 0..65535.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5667_errors"></a><a name="errors"></a>
+<p> Peeking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5668_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several words at once using the second form of <tt>peek</tt> than it is to read one word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek2u</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek2s</tt> and <tt>peek2u</tt> is how words with the highest bit set are returned. <tt>peek2s</tt> assumes them to be negative, while <tt>peek2u</tt> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5669_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">Get 4 2-byte numbers starting address 100.</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek2u</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2u</font><font color="#993333">(</font><font color="#330033">102</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2u</font><font color="#993333">(</font><font color="#330033">104</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek2u</font><font color="#993333">(</font><font color="#330033">106</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">Get 4 2-byte numbers starting address 100.</font>
+<font color="#330033">s = </font><font color="#0000FF">peek2u</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5670_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5598_usingdatawords">Using Data Words</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a> <a href="std_machine.html#_5688_peek4u">peek4u</a></p>
+
+<p> 
+<a name="eupeek4s"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.5 peek4s</h4>
+<a name="_5672_peek4s"></a><a name="peek4s"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek4s</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches a <em>signed</em> double words, or some <em>signed</em> double words, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5673_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair <tt>{ addr, len }</tt> -- to fetch <tt>len</tt> double words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5674_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an atom if the input was a single address, or a sequence of atoms if a sequence was passed. In both cases, atoms returned are double words, in the range -(2<sup>31</sup>)..2<sup>31</sup>-1.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5675_errors"></a><a name="errors"></a>
+<p> Peeking in memory you don't own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5676_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several double words at once using the second form of <tt>peek</tt> than it is to read one double word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek4s</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek4s</tt> and <a href="std_machine.html#_5688_peek4u">peek4u</a> is how double words with the highest bit set are returned. <tt>peek4s</tt> assumes them to be negative, while <a href="std_machine.html#_5688_peek4u">peek4u</a> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5677_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek4s</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4s</font><font color="#993333">(</font><font color="#330033">104</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4s</font><font color="#993333">(</font><font color="#330033">108</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4s</font><font color="#993333">(</font><font color="#330033">112</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek4s</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5678_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5648_peeks">peeks</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a></p>
+
+<p> 
+<a name="eupeek8s"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.6 peek8s</h4>
+<a name="_5680_peek8s"></a><a name="peek8s"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek8s</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches a <em>signed</em> quad words, or some <em>signed</em> quad words, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5681_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair <tt>{ addr, len }</tt> -- to fetch <tt>len</tt> quad words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5682_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an atom if the input was a single address, or a sequence of atoms if a sequence was passed. In both cases, atoms returned are quad words, in the range -power(2,63)..power(2,63)-1.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5683_errors"></a><a name="errors"></a>
+<p> Peeking in memory you don't own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5684_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several quad words at once using the second form of <tt>peek</tt> than it is to read one quad word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek8s</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek8s</tt> and <a href="std_machine.html#_5696_peek8u">peek8u</a> is how quad words with the highest bit set are returned. <tt>peek4s</tt> assumes them to be negative, while <a href="std_machine.html#_5688_peek4u">peek4u</a> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5685_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek8s</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8s</font><font color="#993333">(</font><font color="#330033">108</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8s</font><font color="#993333">(</font><font color="#330033">116</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8s</font><font color="#993333">(</font><font color="#330033">124</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek8s</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5686_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5648_peeks">peeks</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a></p>
+
+<p> 
+<a name="eupeek4u"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.7 peek4u</h4>
+<a name="_5688_peek4u"></a><a name="peek4u"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek4u</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches an <em>unsigned</em> double word, or some <em>unsigned</em> double words, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5689_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> -- to fetch <tt>len</tt> double words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5690_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an atom if the input was a single address, or a sequence of atoms if a sequence was passed. In both cases, atoms returned are double words, in the range 0..2<sup>32</sup>-1.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5691_errors"></a><a name="errors"></a>
+<p> Peeking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5692_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several double words at once using the second form of <tt>peek</tt> than it is to read one double word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek4u</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek4s</tt> and <tt>peek4u</tt> is how double words with the highest bit set are returned. <tt>peek4s</tt> assumes them to be negative, while <tt>peek4u</tt> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5693_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">104</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">108</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">112</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek4u</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5694_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5664_peek2u">peek2u</a></p>
+
+<p> 
+<a name="eupeek8u"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.8 peek8u</h4>
+<a name="_5696_peek8u"></a><a name="peek8u"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek8u</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches an <em>unsigned</em> quad word, or some <em>unsigned</em> quad words, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5697_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> -- to fetch <tt>len</tt> double words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5698_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an atom if the input was a single address, or a sequence of atoms if a sequence was passed. In both cases, atoms returned are quad words, in the range 0..power(2,64)-1.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5699_errors"></a><a name="errors"></a>
+<p> Peeking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5700_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several quad words at once using the second form of <tt>peek</tt> than it is to read one quad word at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek8u</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek8s</tt> and <tt>peek8u</tt> is how quad words with the highest bit set are returned. <tt>peek8s</tt> assumes them to be negative, while <tt>peek8u</tt> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5701_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent:</font>
+<font color="#FF0055">--first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek8u</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8u</font><font color="#993333">(</font><font color="#330033">108</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8u</font><font color="#993333">(</font><font color="#330033">116</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek8u</font><font color="#993333">(</font><font color="#330033">124</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek8u</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5702_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5664_peek2u">peek2u</a></p>
+
+<p> 
+<a name="eupeek_longu"></a><a name="longu"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.9 peek_longu</h4>
+<a name="_5704_peek_longu"></a><a name="peek_longu"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek_longu</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> fetches an <em>unsigned</em> integer, or some <em>unsigned</em> integers, from an address in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5705_parameters"></a><a name="parameters"></a><ol><li><tt>addr_n_length</tt> : an object, either of<ul><li>an atom <tt>addr</tt> -- to fetch one double word at <tt>addr</tt>, or
+</li><li>a pair {<tt>addr,len}</tt> -- to fetch <tt>len</tt> double words at <tt>addr</tt>
+</li></ul>
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5706_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, either an atom if the input was a single address, or a sequence of atoms if a sequence was passed. In both cases, atoms returned are based on the native size of a "long int."  On <em>Windows</em> and all other 32-bit architectures, the number will be in the range 0..power(2,32)-1. On other 64-bit architectures, the number will be in the range of 0..power(2,64)-1.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5707_errors"></a><a name="errors"></a>
+<p> Peeking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<p> When supplying a <tt>{address, count}</tt> sequence, the count must not be negative.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5708_comments"></a><a name="comments"></a>
+<p> Since addresses are 32-bit numbers on 32-bit architectures, they can be larger than the largest value of type integer (31-bits). Variables that hold an address should therefore be declared as atoms.</p>
+
+<p> It is faster to read several integers at once using the second form of <tt>peek</tt> than it is to read one integer at a time in a loop. The returned sequence has the length you asked for on input.</p>
+
+<p> Remember that <tt>peek_longu</tt> takes just one argument, which in the second form is actually a 2-element sequence.</p>
+
+<p> The only difference between <tt>peek_longs</tt> and <tt>peek_longu</tt> is how double words with the highest bit set are returned. <tt>peek4s</tt> assumes them to be negative, while <tt>peek_longu</tt> just assumes them to be large and positive.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5709_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- The following are equivalent (on a 32-bit architecture, or Windows):</font>
+<font color="#FF0055">-- first way</font>
+<font color="#330033">s = </font><font color="#880033">{</font><font color="#0000FF">peek_longu</font><font color="#993333">(</font><font color="#330033">100</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">104</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">108</font><font color="#993333">)</font><font color="#330033">, </font><font color="#0000FF">peek4u</font><font color="#993333">(</font><font color="#330033">112</font><font color="#993333">)</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- second way</font>
+<font color="#330033">s = </font><font color="#0000FF">peek_longu</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">100, 4</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5710_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5664_peek2u">peek2u</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a>, <a href="std_machine.html#_5696_peek8u">peek8u</a>, <a href="std_machine.html#_5680_peek8s">peek8s</a>, <a href="std_machine.html#_5570_peek_longs">peek_longs</a>, <a href="std_machine.html#_5756_poke_long">poke_long</a></p>
+
+<p> 
+<a name="eupeek_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.10 peek_string</h4>
+<a name="_5712_peek_string"></a><a name="peek_string"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek_string</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<p> reads an ASCII string in RAM, starting from a supplied address.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5713_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to start reading.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5714_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of bytes, the string that could be read.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5715_errors"></a><a name="errors"></a>
+<p> Further, peeking in memory that does not belong to your process is something the operating system could prevent, and you'd crash with a machine level exception.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5716_comments"></a><a name="comments"></a>
+<p> An ASCII string is any sequence of bytes and ends with a 0 byte. If you <tt>peek_string</tt> at some place where there is no string, you will get a sequence of garbage.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5717_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5721_peek_wstring">peek_wstring</a>, <a href="std_machine.html#_5811_allocate_string">allocate_string</a></p>
+
+<p> 
+<a name="eupeek_pointer"></a><a name="pointer"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.11 peek_pointer</h4>
+<a name="_5719_peek_pointer"></a><a name="peek_pointer"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function peek_pointer</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr_n_length</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="machinepeek_wstring"></a><a name="wstring"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.5.12 peek_wstring</h4>
+<a name="_5721_peek_wstring"></a><a name="peek_wstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">peek_wstring</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a unicode (utf16) string that are stored at machine address a.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5722_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address of the string in memory
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5723_returns"></a><a name="returns"></a>
+<p> The <strong>string</strong>, at the memory position.  The terminator is the null word (two bytes equal to 0).</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5724_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5712_peek_string">peek_string</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.6 Writing to Memory</h3>
+<a name="_5725_writingtomemory"></a><a name="writingtomemory"></a>
+<p> 
+<a name="eupoke"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.1 poke</h4>
+<a name="_5727_poke"></a><a name="poke"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more bytes, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5728_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either a byte or a non empty sequence of bytes.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5729_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. The <tt>-D SAFE</tt> option will make <tt>poke</tt> catch this sort of issues.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5730_comments"></a><a name="comments"></a>
+<p> The lower 8-bits of each byte value (such as <tt>remainder(x, 256)</tt>) is actually stored in memory.</p>
+
+<p> It is faster to write several bytes at once by poking a sequence of values, than it is to write one byte at a time in a loop.</p>
+
+<p> Writing to the screen memory with <tt>poke</tt> can be much faster than using <tt>puts</tt> or <tt>printf</tt>, but the programming is more difficult. In most cases the speed is not needed. For example, the Euphoria editor, <tt>ed</tt>, never uses <tt>poke</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5731_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one byte at a time:</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">a, 97</font><font color="#880033">)</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">a+1, 98</font><font color="#880033">)</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">a+2, 99</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 bytes at once:</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">97, 98, 99</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 2:</h5>
+<a name="_5732_example2"></a><a name="example2"></a>
+<p> <tt>demo/callmach.ex</tt></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5733_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5648_peeks">peeks</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5785_mem_copy">mem_copy</a>, <a href="std_machine.html#_5791_mem_set">mem_set</a></p>
+
+<p> 
+<a name="eupoke2"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.2 poke2</h4>
+<a name="_5735_poke2"></a><a name="poke2"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke2</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more words, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5736_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either a word or a non empty sequence of words.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5737_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5738_comments"></a><a name="comments"></a>
+<p> There is no point in having <tt>poke2s</tt> or <tt>poke2u</tt>. For example, both 32768 and -32768 are stored as <tt>#F000</tt> when stored as words. It is up to whoever reads the value to figure it out.</p>
+
+<p> It is faster to write several words at once by poking a sequence of values, than it is to write one words at a time in a loop.</p>
+
+<p> Writing to the screen memory with <tt>poke2</tt> can be much faster than using <tt>puts</tt> or <tt>printf</tt>, but the programming is more difficult. In most cases the speed is not needed. For example, the Euphoria editor, ed, never uses <tt>poke2</tt>.</p>
+
+<p> The 2-byte values to be stored can be negative or positive. You can read them back with either <tt>peek2s</tt> or <tt>peek2u</tt>. Actually, only <tt>remainder(</tt>x<tt>,65536)</tt> is being stored.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5739_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one 2-byte value at a time:</font>
+<font color="#0000FF">poke2</font><font color="#880033">(</font><font color="#330033">a, 12345</font><font color="#880033">)</font>
+<font color="#0000FF">poke2</font><font color="#880033">(</font><font color="#330033">a+2, #FF00</font><font color="#880033">)</font>
+<font color="#0000FF">poke2</font><font color="#880033">(</font><font color="#330033">a+4, -12345</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 2-byte values at once:</font>
+<font color="#0000FF">poke2</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">12345, #FF00, -12345</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5740_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5598_usingdatawords">Using Data Words</a>, <a href="std_machine.html#_5656_peek2s">peek2s</a>, <a href="std_machine.html#_5664_peek2u">peek2u</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5742_poke4">poke4</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a></p>
+
+<p> 
+<a name="eupoke4"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.3 poke4</h4>
+<a name="_5742_poke4"></a><a name="poke4"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke4</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more double words, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5743_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either a double word or a non empty sequence of double words.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5744_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5745_comments"></a><a name="comments"></a>
+<p> There is no point in having <tt>poke4s</tt> or <tt>poke4u</tt>. For example, both +2<sup>31</sup> and -(2<sup>31</sup>) are stored as <tt>#F0000000</tt>. It is up to whoever reads the value to figure it out.</p>
+
+<p> It is faster to write several double words at once by poking a sequence of values, than it is to write one double words at a time in a loop.</p>
+
+<p> Writing to the screen memory with <tt>poke4</tt> can be much faster than using <tt>puts</tt> or <tt>printf</tt>, but the programming is more difficult. In most cases the speed is not needed. For example, the Euphoria editor, ed, never uses <tt>poke4</tt>.</p>
+
+<p> The 4-byte values to be stored can be negative or positive. You can read them back with either <tt>peek4s</tt> or <tt>peek4u</tt>. However, the results are unpredictable if you want to store values with a fractional part or a magnitude greater than 2<sup>32</sup>, even though Euphoria represents them all as atoms.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5746_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one 4-byte value at a time:</font>
+<font color="#0000FF">poke4</font><font color="#880033">(</font><font color="#330033">a, 9712345</font><font color="#880033">)</font>
+<font color="#0000FF">poke4</font><font color="#880033">(</font><font color="#330033">a+4, #FF00FF00</font><font color="#880033">)</font>
+<font color="#0000FF">poke4</font><font color="#880033">(</font><font color="#330033">a+8, -12345</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 4-byte values at once:</font>
+<font color="#0000FF">poke4</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">9712345, #FF00FF00, -12345</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5747_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5798_call">call</a></p>
+
+<p> 
+<a name="eupoke8"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.4 poke8</h4>
+<a name="_5749_poke8"></a><a name="poke8"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke8</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more quad words, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5750_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either a quad word or a non empty sequence of double words.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5751_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5752_comments"></a><a name="comments"></a>
+<p> There is no point in having <tt>poke8s</tt> or <tt>poke8u</tt>. For example, both +power(2,63) and -power(2,63) are stored as <tt>#F000000000000000</tt>. It is up to whoever reads the value to figure it out.</p>
+
+<p> It is faster to write several quad words at once by poking a sequence of values, than it is to write one quad words at a time in a loop.</p>
+
+<p> The 8-byte values to be stored can be negative or positive. You can read them back with either <tt>peek8s</tt> or <tt>peek8u</tt>. However, the results are unpredictable if you want to store values with a fractional part or a magnitude greater than power(2,64), even though Euphoria represents them all as atoms.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5753_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one 8-byte value at a time:</font>
+<font color="#0000FF">poke8</font><font color="#880033">(</font><font color="#330033">a, 9712345</font><font color="#880033">)</font>
+<font color="#0000FF">poke8</font><font color="#880033">(</font><font color="#330033">a+8, #FF00FF00</font><font color="#880033">)</font>
+<font color="#0000FF">poke8</font><font color="#880033">(</font><font color="#330033">a+16, -12345</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 8-byte values at once:</font>
+<font color="#0000FF">poke8</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">9712345, #FF00FF00, -12345</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5754_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5798_call">call</a></p>
+
+<p> 
+<a name="eupoke_long"></a><a name="long"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.5 poke_long</h4>
+<a name="_5756_poke_long"></a><a name="poke_long"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke_long</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more integers, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5757_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either an integer or a non empty sequence of double words.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5758_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5759_comments"></a><a name="comments"></a>
+<p> There is no point in having <tt>poke_longs</tt> or <tt>poke_longu</tt>. For example, both +power(2,31) and -power(2,31) are stored as <tt>#F0000000</tt> on a 32-bit architecture. It is up to whoever reads the value to figure it out.</p>
+
+<p> On all <em>Windows</em> and other 32-bit operating systems, the <tt>poke_long</tt> uses 4-byte integers.  On 64-bit architectures using operating systems other than <em>Windows</em>, <tt>poke_long</tt> uses 8-byte integers.</p>
+
+<p> It is faster to write several integers at once by poking a sequence of values, than it is to write one double words at a time in a loop.</p>
+
+<p> The 4-byte (or 8-byte) values to be stored can be negative or positive. You can read them back with either <tt>peek_longs</tt> or <tt>peek_longu</tt>. However, the results are unpredictable if you want to store values with a fractional part or a magnitude greater than the size of a native <tt>long int</tt>, even though Euphoria represents them all as atoms.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5760_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one 4-byte value at a time (on Windows or other 32-bit operating system):</font>
+<font color="#0000FF">poke_long</font><font color="#880033">(</font><font color="#330033">a, 9712345</font><font color="#880033">)</font>
+<font color="#0000FF">poke_long</font><font color="#880033">(</font><font color="#330033">a+4, #FF00FF00</font><font color="#880033">)</font>
+<font color="#0000FF">poke_long</font><font color="#880033">(</font><font color="#330033">a+8, -12345</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 long int values at once:</font>
+<font color="#0000FF">poke_long</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">9712345, #FF00FF00, -12345</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5761_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5798_call">call</a></p>
+
+<p> 
+<a name="eupoke_pointer"></a><a name="pointer"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.6 poke_pointer</h4>
+<a name="_5763_poke_pointer"></a><a name="poke_pointer"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure poke_pointer</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> stores one or more pointers, starting at a memory location.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5764_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to store
+</li><li><tt>x</tt> : an object, either an integer or a non empty sequence of pointers.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5765_errors"></a><a name="errors"></a>
+<p> Poking in memory you do not own may be blocked by the OS, and cause a machine exception. If you use the define safe these routines will catch these problems with a Euphoria error.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5766_comments"></a><a name="comments"></a>
+<p> There is no point in having <tt>poke_pointers</tt> or <tt>poke_pointersu</tt>. For example, both +power(2,31) and -power(2,31) are stored as <tt>#F0000000</tt> on a 32-bit architecture. It is up to whoever reads the value to figure it out.</p>
+
+<p> On all  32-bit operating systems, the <tt>poke_pointer</tt> uses 4-byte integers.  On 64-bit architectures using operating systems, <tt>poke_pointer</tt> uses 8-byte integers.</p>
+
+<p> It is faster to write several pointers at once by poking a sequence of values, than it is to write one double words at a time in a loop.</p>
+
+<p> The 4-byte (or 8-byte) values to be stored can be negative or positive. You can read them back with either <tt>peek_pointer</tt> or any other peek function of the correctsize. However, the results are unpredictable if you want to store values with a fractional part or a magnitude greater than the size of a native <tt>pointer</tt>, even though Euphoria represents them all as atoms.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5767_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)   </font><font color="#FF0055">-- allocate 100 bytes in memory</font>
+
+<font color="#FF0055">-- poke one 4-byte value at a time (on a 32-bit operating system):</font>
+<font color="#0000FF">poke_pointer</font><font color="#880033">(</font><font color="#330033">a, 9712345</font><font color="#880033">)</font>
+<font color="#0000FF">poke_pointer</font><font color="#880033">(</font><font color="#330033">a+4, #FF00FF00</font><font color="#880033">)</font>
+<font color="#0000FF">poke_pointer</font><font color="#880033">(</font><font color="#330033">a+8, -12345</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- poke 3 long int values at once:</font>
+<font color="#0000FF">poke_pointer</font><font color="#880033">(</font><font color="#330033">a, </font><font color="#993333">{</font><font color="#330033">9712345, #FF00FF00, -12345</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5768_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5696_peek8u">peek8u</a>, <a href="std_machine.html#_5680_peek8s">peek8s</a>, <a href="std_machine.html#_5719_peek_pointer">peek_pointer</a> <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5735_poke2">poke2</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5798_call">call</a></p>
+
+<p> 
+<a name="machinepoke_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.7 poke_string</h4>
+<a name="_5770_poke_string"></a><a name="poke_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">poke_string</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">buffaddr, </font><font color="#0000FF">integer </font><font color="#330033">buffsize, </font><font color="#0000FF">sequence </font><font color="#330033">s</font><font color="#880033">)</font>
+</pre>
+
+<p>   Stores a C-style null-terminated ANSI string in memory</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5771_parameters"></a><a name="parameters"></a><ol><li><tt>buffaddr</tt>: an atom, the RAM address to to the string at.
+</li><li><tt>buffsize</tt>: an integer, the number of bytes available, starting from <tt>buffaddr</tt>.
+</li><li><tt>s</tt> : a sequence, the string to store at address <tt>buffaddr</tt>.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5772_comments"></a><a name="comments"></a><ul><li>This does not allocate an RAM. You must supply the preallocated area.
+</li><li>This can only be used on ANSI strings. It cannot be used for double-byte strings.
+</li><li>If <tt>s</tt> is not a string, nothing is stored and a zero is returned.
+</li></ul>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5773_returns"></a><a name="returns"></a>
+<p> An atom. If this is zero, then nothing was stored, otherwise it is the address of the first byte after the stored string.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5774_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">title</font>
+
+<font color="#330033">title = allocate</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">poke_string</font><font color="#880033">(</font><font color="#330033">title, 1000, </font><font color="#330033">"The Wizard of Oz"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">    -- successful</font>
+<font color="#0000FF">else</font>
+<font color="#FF0055">    -- failed</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5775_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5811_allocate_string">allocate_string</a></p>
+
+<p> 
+<a name="machinepoke_wstring"></a><a name="wstring"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.6.8 poke_wstring</h4>
+<a name="_5777_poke_wstring"></a><a name="poke_wstring"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">poke_wstring</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">buffaddr, </font><font color="#0000FF">integer </font><font color="#330033">buffsize, </font><font color="#0000FF">sequence </font><font color="#330033">s</font><font color="#880033">)</font>
+</pre>
+
+<p>   stores a C-style null-terminated Double-Byte string in memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5778_parameters"></a><a name="parameters"></a><ol><li><tt>buffaddr</tt>: an atom, the RAM address to to the string at.
+</li><li><tt>buffsize</tt>: an integer, the number of bytes available, starting from <tt>buffaddr</tt>.
+</li><li><tt>s</tt> : a sequence, the string to store at address <tt>buffaddr</tt>.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5779_comments"></a><a name="comments"></a><ul><li>This does not allocate an RAM. You must supply the preallocated area.
+</li><li>This uses two bytes per string character. <strong>Note</strong> that <tt>buffsize</tt> is the number of <em>bytes</em> available in the buffer and not the number of <em>characters</em> available.
+</li><li>If <tt>s</tt> is not a double-byte string, nothing is stored and a zero is returned.
+</li></ul>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5780_returns"></a><a name="returns"></a>
+<p> An atom. If this is zero, then nothing was stored, otherwise it is the address of the first byte after the stored string.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5781_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">title</font>
+
+<font color="#330033">title = allocate</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">poke_wstring</font><font color="#880033">(</font><font color="#330033">title, 1000, </font><font color="#330033">"The Wizard of Oz"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">    -- successful</font>
+<font color="#0000FF">else</font>
+<font color="#FF0055">    -- failed</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5782_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5634_allocate_wstring">allocate_wstring</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.7 Memory Manipulation</h3>
+<a name="_5783_memorymanipulation"></a><a name="memorymanipulation"></a>
+<p> 
+<a name="eumem_copy"></a><a name="copy"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.7.1 mem_copy</h4>
+<a name="_5785_mem_copy"></a><a name="mem_copy"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure mem_copy</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">destination, </font><font color="#0000FF">atom </font><font color="#330033">origin, </font><font color="#0000FF">integer </font><font color="#330033">len</font><font color="#880033">)</font>
+</pre>
+
+<p> copies a block of memory from an address to another.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5786_parameters"></a><a name="parameters"></a><ol><li><tt>destination</tt> : an atom, the address at which data is to be copied
+</li><li><tt>origin</tt> : an atom, the address from which data is to be copied
+</li><li><tt>len</tt> : an integer, how many bytes are to be copied.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5787_comments"></a><a name="comments"></a>
+<p> The bytes of memory will be copied correctly even if the block of memory at <tt>destination</tt> overlaps with the block of memory at <tt>origin</tt>.</p>
+
+<p> mem_copy(destination, origin, len) is equivalent to: poke(destination, peek({origin, len})) but is much faster.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5788_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dest = allocate</font><font color="#880033">(</font><font color="#330033">50</font><font color="#880033">)</font>
+<font color="#330033">src = allocate</font><font color="#880033">(</font><font color="#330033">100</font><font color="#880033">)</font>
+<font color="#0000FF">poke</font><font color="#880033">(</font><font color="#330033">src, </font><font color="#993333">{</font><font color="#330033">1,2,3,4,5,6,7,8,9</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">mem_copy</font><font color="#880033">(</font><font color="#330033">dest, src, 9</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5789_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5791_mem_set">mem_set</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a></p>
+
+<p> 
+<a name="eumem_set"></a><a name="set"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.7.2 mem_set</h4>
+<a name="_5791_mem_set"></a><a name="mem_set"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure mem_set</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">destination, </font><font color="#0000FF">integer </font><font color="#330033">byte_value, </font><font color="#0000FF">integer </font><font color="#330033">how_many</font><font color="#880033">)</font><font color="#330033">)</font>
+</pre>
+
+<p> sets a contiguous range of memory locations to a single value.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5792_parameters"></a><a name="parameters"></a><ol><li><tt>destination</tt> : an atom, the address starting the range to set.
+</li><li><tt>byte_value</tt> : an integer, the value to copy at all addresses in the range.
+</li><li><tt>how_many</tt> : an integer, how many bytes are to be set.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5793_comments"></a><a name="comments"></a>
+<p> The low order 8 bits of <tt>byte_value</tt> are actually stored in each byte. mem_set(destination, byte_value, how_many) is equivalent to: poke(destination, repeat(byte_value, how_many)) but is much faster.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5794_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">destination = allocate</font><font color="#880033">(</font><font color="#330033">1000</font><font color="#880033">)</font>
+<font color="#0000FF">mem_set</font><font color="#880033">(</font><font color="#330033">destination, </font><font color="#330033">' '</font><font color="#330033">, 1000</font><font color="#880033">)</font>
+<font color="#FF0055">-- 1000 consecutive bytes in memory will be set to 32</font>
+<font color="#FF0055">-- (the ASCII code for ' ')</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5795_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5727_poke">poke</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5824_free">free</a>, <a href="std_machine.html#_5785_mem_copy">mem_copy</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.8 Calling Into Memory</h3>
+<a name="_5796_callingintomemory"></a><a name="callingintomemory"></a>
+<p> 
+<a name="eucall"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.8.1 call</h4>
+<a name="_5798_call"></a><a name="call"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure call</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<p> calls a machine language routine which was stored in memory prior.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5799_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : an atom, the address at which to transfer execution control.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5800_comments"></a><a name="comments"></a>
+<p> The machine code routine must execute a RET instruction #C3 to return control to Euphoria. The routine should save and restore any registers that it uses.</p>
+
+<p> You can allocate a block of memory for the routine and then poke in the bytes of machine code using <tt>allocate_code</tt>. You might allocate other blocks of memory for data and parameters that the machine code can operate on using <tt>allocate</tt>. The addresses of these blocks could be part of the machine code.</p>
+
+<p> If your machine code uses the stack, use <tt>c_proc</tt> instead of <tt>call</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5801_example1"></a><a name="example1"></a>
+<p> <tt>demo/callmach.ex</tt></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5802_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5595_executablememory">Executable Memory</a>, <a href="std_machine.html#_5805_allocate_code">allocate_code</a>, <a href="std_machine.html#_5829_free_code">free_code</a>, <a href="std_dll.html#_5485_c_proc">c_proc</a>, <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.9 Allocating and Writing to memory:</h3>
+<a name="_5803_allocatingandwritingtomemory"></a><a name="allocatingandwritingtomemory"></a>
+<p> 
+<a name="machineallocate_code"></a><a name="code"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.9.1 allocate_code</h4>
+<a name="_5805_allocate_code"></a><a name="allocate_code"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_code</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">data, memconst :valid_wordsize wordsize = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   allocates and copies data into executable memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5806_parameters"></a><a name="parameters"></a><ol><li><tt>a_sequence_of_machine_code</tt> : is the machine code to be put into memory to be later called with <a href="std_machine.html#_5798_call">call</a>
+</li><li>the <tt>word length</tt> : of the said code.  You can specify your code as 1-byte, 2-byte or 4-byte chunks if you wish.  If your machine code is byte code specify 1.  The default is 1.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5807_returns"></a><a name="returns"></a>
+<p> An <strong>address</strong>, The function returns the address in memory of the code, that can be safely executed whether DEP is enabled or not or 0 if it fails.  On the other hand, if you try to execute a code address returned by <a href="std_machine.html#_5607_allocate">allocate</a> with DEP enabled the program will receive a machine exception.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5808_comments"></a><a name="comments"></a>
+<p> Use this for the machine code you want to run in memory.  The copying is done for you and when the routine returns the memory may not be readable or writeable but it is guaranteed to be executable.  If you want to also write to this memory <strong>after the machine code has been copied</strong> you should use <a href="std_machine.html#_5818_allocate_protect">allocate_protect</a> instead and you should read about having memory executable and writeable at the same time is a bad idea.  You mustn't use <tt>free</tt> on memory returned from this function.  You may instead use <tt>free_code</tt> but since you will probably need the code throughout the life of your program's process this normally is not necessary. If you want to put only data in the memory to be read and written use <a href="std_machine.html#_5607_allocate">allocate</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5809_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5595_executablememory">Executable Memory</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5829_free_code">free_code</a>, <a href="std_machine.html#_5818_allocate_protect">allocate_protect</a></p>
+
+<p> 
+<a name="machineallocate_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.9.2 allocate_string</h4>
+<a name="_5811_allocate_string"></a><a name="allocate_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_string</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, types :boolean cleanup = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Allocate a C-style null-terminated string in memory</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5812_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : a sequence, the string to store in RAM.
+</li><li><tt>cleanup</tt> : an integer, if non-zero, then the returned pointer will be automatically freed when its reference count drops to zero, or when passed as a parameter to <a href="std_machine.html#_5837_delete">delete</a>.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5813_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the address of the memory block where the string was stored, or 0 on failure.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5814_comments"></a><a name="comments"></a>
+<p> Only the 8 lowest bits of each atom in <tt>s</tt> is stored. Use <tt>allocate_wstring</tt>  for storing double byte encoded strings.</p>
+
+<p> There is no <tt>allocate_string_low</tt> function. However, you could easily craft one by adapting the code for <tt>allocate_string</tt>.</p>
+
+<p> Since <tt>allocate_string</tt> allocates memory, you are responsible to <a href="std_machine.html#_5824_free">free</a> the block when done with it if <tt>cleanup</tt> is zero. If <tt>cleanup</tt> is non-zero, then the memory can be freed by calling <a href="std_machine.html#_5837_delete">delete</a>, or when the pointer's reference count drops to zero.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5815_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">title</font>
+
+<font color="#330033">title = allocate_string</font><font color="#880033">(</font><font color="#330033">"The Wizard of Oz"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5816_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5607_allocate">allocate</a>, <a href="std_machine.html#_5634_allocate_wstring">allocate_wstring</a></p>
+
+<p> 
+<a name="machineallocate_protect"></a><a name="protect"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.9.3 allocate_protect</h4>
+<a name="_5818_allocate_protect"></a><a name="allocate_protect"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public function </font><font color="#330033">allocate_protect</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">data, memconst :valid_wordsize wordsize = 1,</font>
+<font color="#330033">        valid_memory_protection_constant protection</font><font color="#880033">)</font>
+</pre>
+
+<p>   Allocates and copies data into memory and gives it protection using <a href="std_memconst.html#_5909_standardlibrarymemoryprotectionconstants">Standard Library Memory Protection Constants</a> or <a href="std_memconst.html#_5891_microsoftwindowsmemoryprotectionconstants">Microsoft Windows Memory Protection Constants</a>.  The user may only pass in one of these constants.  If you only wish to execute a sequence as machine code use <tt>allocate_code</tt>. If you only want to read and write data into memory use <tt>allocate</tt>.</p>
+
+<p> See <a class="external" href="http://msdn.microsoft.com/en-us/library/aa366786(VS.85).aspx">MSDN: Microsoft's Memory Protection Constants</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5819_parameters"></a><a name="parameters"></a><ol><li><tt>data</tt> : is the machine code to be put into memory.
+</li><li><tt>wordsize</tt> : is the size each element of data will take in memory.  Are they 1-byte, 2-bytes, 4-bytes or 8-bytes long?  Specify here.  The default is 1.
+</li><li><tt>protection</tt> : is the particular <em>Windows</em> protection.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5820_returns"></a><a name="returns"></a>
+<p> An <strong>address</strong>, The function returns the address to the required memory or 0 if it fails.  This function is guaranteed to return memory on the 8 byte boundary.  It also guarantees that the memory returned with at least the protection given (but you may get more).</p>
+
+<p> If you want to call <tt>allocate_protect( data, PAGE_READWRITE )</tt>, you can use <a href="std_machine.html#_5607_allocate">allocate</a> instead.  It is more efficient and simpler.</p>
+
+<p> If you want to call <tt>allocate_protect( data, PAGE_EXECUTE )</tt>, you can use <a href="std_machine.html#_5805_allocate_code">allocate_code</a> instead.  It is simpler.</p>
+
+<p> You must not use <a href="std_machine.html#_5824_free">free</a> on memory returned from this function, instead use <a href="std_machine.html#_5829_free_code">free_code</a>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5821_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5595_executablememory">Executable Memory</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.10 Memory Disposal</h3>
+<a name="_5822_memorydisposal"></a><a name="memorydisposal"></a>
+<p> 
+<a name="machinefree"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.10.1 free</h4>
+<a name="_5824_free"></a><a name="free"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public procedure </font><font color="#330033">free</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<p>   frees up a previously allocated block of memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5825_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt>, either a single atom or a sequence of atoms; these are addresses of a blocks to free.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5826_comments"></a><a name="comments"></a><ul><li>Use <tt>free</tt> to return blocks of memory the during execution. This will reduce the chance of running out of memory or getting into excessive virtual memory swapping to disk.
+</li><li>Do not reference a block of memory that has been freed.
+</li><li>When your program terminates, all allocated memory will be returned to the system.
+</li><li><tt>addr</tt> must have been allocated previously using <a href="std_machine.html#_5607_allocate">allocate</a>. You cannot use it to relinquish part of a block. Instead, you have to allocate a block of the new size, copy useful contents from old block there and then <tt>free</tt> the old block.
+</li><li>If the memory was allocated and automatic cleanup was specified, then do not call <tt>free</tt> directly.  Instead, use <a href="std_machine.html#_5837_delete">delete</a>.
+</li><li>An <tt>addr</tt> of zero is simply ignored.
+</li></ul>
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5827_example1"></a><a name="example1"></a>
+<p> <tt>demo/callmach.ex</tt></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5828_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5597_usingdatabytes">Using Data Bytes</a>, <a href="std_machine.html#_5598_usingdatawords">Using Data Words</a>, <a href="std_machine.html#_5599_usingdatadoublewords">Using Data Double Words</a>, <a href="std_machine.html#_5603_usingstrings">Using Strings</a>, <a href="std_machine.html#_5610_allocate_data">allocate_data</a>, <a href="std_machine.html#_5829_free_code">free_code</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.10.2 free_code</h4>
+<a name="_5829_free_code"></a><a name="free_code"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public procedure </font><font color="#330033">free_code</font><font color="#880033">( </font><font color="#0000FF">atom </font><font color="#330033">addr, </font><font color="#0000FF">integer </font><font color="#330033">size, valid_wordsize wordsize = 1 </font><font color="#880033">)</font>
+</pre>
+
+<p> frees up allocated code memory.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5830_parameters"></a><a name="parameters"></a><ol><li><tt>addr</tt> : must be an address returned by <a href="std_machine.html#_5805_allocate_code">allocate_code</a> or <a href="std_machine.html#_5818_allocate_protect">allocate_protect</a>.  Do <strong>not</strong> pass memory returned from <a href="std_machine.html#_5607_allocate">allocate</a> here!
+</li><li><tt>size</tt> : is the length of the sequence passed to <tt>alllocate_code</tt> or the size you specified when you called <tt>allocate_protect</tt>.
+</li><li><tt>wordsize</tt>: valid_wordsize  default = 1
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5831_comments"></a><a name="comments"></a>
+<p> Chances are you will not need to call this function because code allocations are typically public scope operations that you want to have available until your process exits.</p>
+
+<p> See Also: <a href="std_machine.html#_5595_executablememory">Executable Memory</a>, <a href="std_machine.html#_5805_allocate_code">allocate_code</a>, <a href="std_machine.html#_5824_free">free</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.11 Automatic Resource Management</h3>
+<a name="_5832_automaticresourcemanagement"></a><a name="automaticresourcemanagement"></a>
+<p> Euphoria objects are automatically garbage collected when they are no longer referenced anywhere.  Euphoria also provides the ability to manage resources associated with euphoria objects.  These resources could be open file handles, allocated memory, or other euphoria objects.  There are two built-in routines for managing these external resources.</p>
+
+<p> 
+<a name="eudelete_routine"></a><a name="routine"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.11.1 delete_routine</h4>
+<a name="_5834_delete_routine"></a><a name="delete_routine"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function delete_routine</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">rid </font><font color="#880033">)</font>
+</pre>
+
+<p> associates a routine for cleaning up after a Euphoria object.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5835_comments"></a><a name="comments"></a>
+<p> <tt>delete_routine</tt> associates a euphoria object with a routine id meant to clean up any allocated resources.  It always returns an atom (double) or a sequence, depending on what was passed (integers are promoted to atoms).</p>
+
+<p> The routine specified by <tt>delete_routine</tt> should be a procedure that takes a single parameter, being the object to be cleaned up after. Objects are cleaned up under one of two circumstances.  The first is if it's called as a parameter to <tt>delete</tt>.  After the call, the association with the delete routine is removed.</p>
+
+<p> The second way for the delete routine to be called is when its reference count is reduced to 0.  Before its memory is freed, the delete routine is called. A default delete will be used if the cleanup parameter to one of the <a href="std_machine.html#_5607_allocate">allocate</a> routines is true.</p>
+
+<p> <tt>delete_routine</tt> may be called multiple times for the same object. In this case, the routines are called in reverse order compared to how they were associated.</p>
+
+<p> 
+<a name="eudelete"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.11.2 delete</h4>
+<a name="_5837_delete"></a><a name="delete"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure delete</font><font color="#880033">( </font><font color="#0000FF">object </font><font color="#330033">x </font><font color="#880033">)</font>
+</pre>
+
+<p> calls the cleanup routines associated with the object, and removes the association with those routines.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5838_comments"></a><a name="comments"></a>
+<p> The cleanup routines associated with the object are called in reverse order than they were added.  If the object is an integer, or if no cleanup routines are associated with the object, then nothing happens.</p>
+
+<p> After the cleanup routines are called, the value of the object is unchanged, though the cleanup routine will no longer be associated with the object.</p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.44.12 Types and Constants</h3>
+<a name="_5839_typesandconstants"></a><a name="typesandconstants"></a>
+<p> 
+<a name="machinestd_library_address"></a><a name="library_address"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.1 std_library_address</h4>
+<a name="_5841_std_library_address"></a><a name="std_library_address"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public type </font><font color="#330033">std_library_address</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">addr</font><font color="#880033">)</font>
+</pre>
+
+<p>   an address returned from <tt>allocate</tt> or <tt>allocate_protect</tt> or <tt>allocate_code</tt> or the value 0.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5842_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, The type will return 1 if the parameter, an address, was returned from one of these Machine Level functions (and has not yet been freeed)</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5843_comments"></a><a name="comments"></a>
+<p> This type is equivalent to atom unless SAFE is defined. Only values that satisfy this type may be passed into free or free_code.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.2 valid_memory_protection_constant</h4>
+<a name="_5844_valid_memory_protection_constant"></a><a name="valid_memory_protection_constant"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public type </font><font color="#330033">valid_memory_protection_constant</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p> protection constants type</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.3 machine_addr</h4>
+<a name="_5845_machine_addr"></a><a name="machine_addr"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public type </font><font color="#330033">machine_addr</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p> a 32-bit non-null machine address</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.4 safe_address</h4>
+<a name="_5846_safe_address"></a><a name="safe_address"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">public function </font><font color="#330033">safe_address</font><font color="#880033">(</font><font color="#330033">machine_addr start, natural len, </font>
+<font color="#330033">              positive_int action </font><font color="#880033">)</font>
+</pre>
+
+<p> action is some bitwise-or combination of the following constants: A_READ, A_WRITE and A_EXECUTE.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5847_returns"></a><a name="returns"></a>
+<p> When <a href="std_machine.html#_5575_safemode">Safe Mode</a> is turned on, this returns true iff it is ok to perform action all addresses from start to start+len-1.</p>
+
+<p> When <a href="std_machine.html#_5575_safemode">Safe Mode</a> is not turned on, this always returns true.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5848_comments"></a><a name="comments"></a>
+<p> This is used mostly inside the safe library itself to check whenever you call Machine Level Access Functions or Procedures.  It should only be used for debugging purposes.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.5 ADDRESS_LENGTH</h4>
+<a name="_5849_address_length"></a><a name="address_length"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public constant </font><font color="#330033">ADDRESS_LENGTH</font>
+</pre>
+
+<p> The number of bytes required to hold a pointer.</p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.44.12.6 PAGE_SIZE</h4>
+<a name="_5850_page_size"></a><a name="page_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/machine.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">machine</font>
+<font color="#0000FF">public constant </font><font color="#330033">PAGE_SIZE</font>
+</pre>
+
+<p> The operating system's memory page length in bytes.</p>
+
+<!-- ..\include\std\machine.e -->
+<h2>8.45 Indirect Routine Calling</h2>
+<a name="_5851_indirectroutinecalling"></a><a name="indirectroutinecalling"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_machine.html#_5851_indirectroutinecalling">8.45 Indirect Routine Calling</a></div>
+<div class="toc_3"><a href="std_machine.html#_5853_accessingeuphoriacodedroutines">8.45.1 Accessing Euphoria coded routines</a></div>
+<div class="toc_4"><a href="std_machine.html#_5855_routine_id">8.45.1.1 routine_id</a></div>
+<div class="toc_4"><a href="std_machine.html#_5865_call_func">8.45.1.2 call_func</a></div>
+<div class="toc_4"><a href="std_machine.html#_5873_call_proc">8.45.1.3 call_proc</a></div>
+<div class="toc_3"><a href="std_machine.html#_5879_accessingeuphoriainternals">8.45.2 Accessing Euphoria Internals</a></div>
+<div class="toc_4"><a href="std_machine.html#_5881_machine_func">8.45.2.1 machine_func</a></div>
+<div class="toc_4"><a href="std_machine.html#_5886_machine_proc">8.45.2.2 machine_proc</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="dyncall"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.45.1 Accessing Euphoria coded routines</h3>
+<a name="_5853_accessingeuphoriacodedroutines"></a><a name="accessingeuphoriacodedroutines"></a>
+<p> 
+<a name="euroutine_id"></a><a name="id"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.45.1.1 routine_id</h4>
+<a name="_5855_routine_id"></a><a name="routine_id"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function routine_id</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">routine_name</font><font color="#880033">)</font>
+</pre>
+
+<p> returns an integer id number for a user-defined Euphoria procedure or function.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5856_parameters"></a><a name="parameters"></a><ol><li><tt>routine_name</tt> : a string, the name of the procedure or function.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5857_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, known as a routine id, -1  if the named routine can't be found, else zero or more.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5858_errors"></a><a name="errors"></a>
+<p> <tt>routine_name</tt> should not exceed 1,024 characters.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5859_comments"></a><a name="comments"></a>
+<p> The id number can be passed to <a href="std_machine.html#_5873_call_proc">call_proc</a> or <a href="std_machine.html#_5865_call_func">call_func</a>, to indirectly call the routine named by <tt>routine_name</tt>. This id depends on the internal process of parsing your code, not on <tt>routine_name</tt>.</p>
+
+<p> The routine named <tt>routine_name</tt> must be visible (that is callable) at the place where <tt>routine_id</tt> is used to get the id number. If it is not, -1 is returned.</p>
+
+<p> Indirect calls to the routine can appear earlier in the program than the definition of the routine, but the id number can only be obtained in code that comes after the definition of the routine - see example 2 below.</p>
+
+<p> Once obtained, a valid routine id can be used at any place in the program to call a routine indirectly via <a href="std_machine.html#_5873_call_proc">call_proc</a> or <a href="std_machine.html#_5865_call_func">call_func</a>, including at places where the routine is no longer in scope.</p>
+
+<p> Some typical uses of <tt>routine_id</tt> are:</p>
+<ol><li>Creating a subroutine that takes another routine as a parameter. (See Example 2 below)
+</li><li>Using a sequence of routine id's to make a case (switch) statement. Using the <a href="lang_branch.html#_149_switchstatement">switch statement</a> is more efficient.
+</li><li>Setting up an Object-Oriented system.
+</li><li>Getting a routine id so you can pass it to <a href="std_dll.html#_5492_call_back">call_back</a>. (See <a href="platform.html#_640_platformspecificissues">Platform-Specific Issues</a>)
+</li><li>Getting a routine id so you can pass it to <a href="std_task.html#_1907_task_create">task_create</a>. (See <a href="tasking.html#_583_multitaskingineuphoria">Multitasking in Euphoria</a>)
+</li><li>Calling a routine that is defined later in a program. This is no longer needed from v4.0 onward.
+</li></ol>
+<p>Note that C routines, callable by Euphoria, also have ids, but they cannot be used where routine ids are, because of the different type checking and other technical issues.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5860_seealso"></a><a name="seealso"></a>
+<p> <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a> and <a href="std_dll.html#_5469_define_c_func">define_c_func</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5861_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">()</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello World\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">integer </font><font color="#330033">foo_num</font>
+<font color="#330033">foo_num = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"foo"</font><font color="#880033">)</font>
+
+<font color="#0000FF">call_proc</font><font color="#880033">(</font><font color="#330033">foo_num, </font><font color="#993333">{}</font><font color="#880033">)  </font><font color="#FF0055">-- same as calling foo()</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 2:</h5>
+<a name="_5862_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">function </font><font color="#330033">apply_to_all</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, </font><font color="#0000FF">integer </font><font color="#330033">f</font><font color="#880033">)</font>
+<font color="#FF0055">    -- apply a function to all elements of a sequence</font>
+<font color="#0000FF">    sequence </font><font color="#330033">result</font>
+<font color="#330033">    result = </font><font color="#880033">{}</font>
+<font color="#0000FF">    for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">s</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#FF0055">        -- we can call add1() here although it comes later in the program</font>
+<font color="#330033">        result = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">result, </font><font color="#0000FF">call_func</font><font color="#993333">(</font><font color="#330033">f, </font><font color="#0000FF">{</font><font color="#330033">s</font><font color="#5500FF">[</font><font color="#330033">i</font><font color="#5500FF">]</font><font color="#0000FF">}</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">    return </font><font color="#330033">result</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">add1</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    return </font><font color="#330033">x + 1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#FF0055">-- add1() is visible here, so we can ask for its routine id</font>
+<font color="#330033">? apply_to_all</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, 2, 3</font><font color="#993333">}</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"add1"</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">-- displays {2,3,4}</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5863_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5873_call_proc">call_proc</a>, <a href="std_machine.html#_5865_call_func">call_func</a>, <a href="std_dll.html#_5492_call_back">call_back</a>, <a href="std_dll.html#_5469_define_c_func">define_c_func</a>, <a href="std_dll.html#_5461_define_c_proc">define_c_proc</a>, <a href="std_task.html#_1907_task_create">task_create</a>, <a href="platform.html#_640_platformspecificissues">Platform-Specific Issues</a>, <a href="std_machine.html#_5851_indirectroutinecalling">Indirect routine calling</a></p>
+
+<p> 
+<a name="eucall_func"></a><a name="func"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.45.1.2 call_func</h4>
+<a name="_5865_call_func"></a><a name="call_func"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function call_func</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">id, </font><font color="#0000FF">sequence </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> calls the user-defined Euphoria function by routine id.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5866_parameters"></a><a name="parameters"></a><ol><li><tt>id</tt> : an integer, the routine id of the function to call
+</li><li><tt>args</tt> : a sequence, the parameters to pass to the function.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5867_returns"></a><a name="returns"></a>
+<p> The <strong>value</strong>, the called function returns.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5868_errors"></a><a name="errors"></a>
+<p> If <tt>id</tt> is negative or otherwise unknown, an error occurs.</p>
+
+<p> If the length of <tt>args</tt> is not the number of parameters the function takes, an error occurs.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5869_comments"></a><a name="comments"></a>
+<p> <tt>id</tt> must be a valid routine id returned by <a href="std_machine.html#_5855_routine_id">routine_id</a>.</p>
+
+<p> <tt>args</tt> must be a sequence of argument values of length n, where n is the number of arguments required by the called function. Defaulted parameters currently cannot be synthesized while making a indirect call.</p>
+
+<p> If the function with id <tt>id</tt> does not take any arguments then <tt>args</tt> should be <tt>{}</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5870_example1"></a><a name="example1"></a>
+<p> Take a look at the sample program called <tt>demo/csort.ex</tt></p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5871_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5873_call_proc">call_proc</a>, <a href="std_machine.html#_5855_routine_id">routine_id</a>, <a href="std_dll.html#_5477_c_func">c_func</a></p>
+
+<p> 
+<a name="eucall_proc"></a><a name="proc"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.45.1.3 call_proc</h4>
+<a name="_5873_call_proc"></a><a name="call_proc"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure call_proc</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">id, </font><font color="#0000FF">sequence </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> calls a user-defined Euphoria procedure by routine id.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Parameters:</h5>
+<a name="_5874_parameters"></a><a name="parameters"></a><ol><li><tt>id</tt> : an integer, the routine id of the procedure to call
+</li><li><tt>args</tt> : a sequence, the parameters to pass to the function.
+</li></ol>
+<!-- ..\include\std\machine.e -->
+<h5>Errors:</h5>
+<a name="_5875_errors"></a><a name="errors"></a>
+<p> If <tt>id</tt> is negative or otherwise unknown, an error occurs.</p>
+
+<p> If the length of <tt>args</tt> is not the number of parameters the function takes, an error occurs.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5876_comments"></a><a name="comments"></a>
+<p> <tt>id</tt> must be a valid routine id returned by <a href="std_machine.html#_5855_routine_id">routine_id</a>.</p>
+
+<p> <tt>args</tt> must be a sequence of argument values of length n, where n is the number of arguments required by the called procedure. Defaulted parameters currently cannot be synthesized while making a indirect call.</p>
+
+<p> If the procedure with id <tt>id</tt> does not take any arguments then <tt>args</tt> should be <tt>{}</tt>.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Example 1:</h5>
+<a name="_5877_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">public integer </font><font color="#330033">foo_id</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">x</font><font color="#880033">()</font>
+<font color="#0000FF">    call_proc</font><font color="#880033">(</font><font color="#330033">foo_id, </font><font color="#993333">{</font><font color="#330033">1, </font><font color="#330033">"Hello World\n"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">a, </font><font color="#0000FF">sequence </font><font color="#330033">s</font><font color="#880033">)</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">a, s</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">foo_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"foo"</font><font color="#880033">)</font>
+
+<font color="#330033">x</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5878_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5865_call_func">call_func</a>, <a href="std_machine.html#_5855_routine_id">routine_id</a>, <a href="std_dll.html#_5485_c_proc">c_proc</a></p>
+
+<!-- ..\include\std\machine.e -->
+<h3>8.45.2 Accessing Euphoria Internals</h3>
+<a name="_5879_accessingeuphoriainternals"></a><a name="accessingeuphoriainternals"></a>
+<p> 
+<a name="eumachine_func"></a><a name="func"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.45.2.1 machine_func</h4>
+<a name="_5881_machine_func"></a><a name="machine_func"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function machine_func</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">machine_id, </font><font color="#0000FF">object </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> performs a machine-specific operation that returns a value.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Returns:</h5>
+<a name="_5882_returns"></a><a name="returns"></a>
+<p> Depends on the called internal facility.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5883_comments"></a><a name="comments"></a>
+<p> This function us mainly used by the standard library files to implement machine dependent operations such as graphics and sound effects. This routine should normally be called indirectly via one of the library routines in a Euphoria include file. User programs normally do not need to call <tt>machine_func</tt>.</p>
+
+<p> A direct call might cause a machine exception if done incorrectly.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5884_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5886_machine_proc">machine_proc</a></p>
+
+<p> 
+<a name="eumachine_proc"></a><a name="proc"></a> </p>
+
+<!-- ..\include\std\machine.e -->
+<h4>8.45.2.2 machine_proc</h4>
+<a name="_5886_machine_proc"></a><a name="machine_proc"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure machine_proc</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">machine_id, </font><font color="#0000FF">object </font><font color="#330033">args=</font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p> perform a machine-specific operation that does not return a value.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>Comments:</h5>
+<a name="_5887_comments"></a><a name="comments"></a>
+<p> This procedure us mainly used by the standard library files to implement machine dependent operations such as graphics and sound effects. This routine should normally be called indirectly via one of the library routines in a Euphoria include file. User programs normally do not need to call <tt>machine_proc</tt>.</p>
+
+<p> A direct call might cause a machine exception if done incorrectly.</p>
+
+<!-- ..\include\std\machine.e -->
+<h5>See Also:</h5>
+<a name="_5888_seealso"></a><a name="seealso"></a>
+<p> <a href="std_machine.html#_5881_machine_func">machine_func</a></p>
+
+<p> 
+<!-- ..\include\std\memconst.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_eumem.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_memconst.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_eumem.html">8.43 Pseudo Memory</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_memconst.html">8.46 Memory Constants</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

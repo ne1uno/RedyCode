@@ -1,0 +1,982 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_def.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_assignment.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_def.html">4.1 Definition</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_assignment.html">4.3 Assignment statement</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.2 Declarations</h2>
+<a name="_110_declarations"></a><a name="declarations"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_decl.html#_110_declarations">4.2 Declarations</a></div>
+<div class="toc_3"><a href="lang_decl.html#_111_identifiers">4.2.1 Identifiers</a></div>
+<div class="toc_4"><a href="lang_decl.html#_113_procedures">4.2.1.1 procedures</a></div>
+<div class="toc_4"><a href="lang_decl.html#_114_functions">4.2.1.2 functions</a></div>
+<div class="toc_4"><a href="lang_decl.html#_115_returnstatement">4.2.1.3 return statement</a></div>
+<div class="toc_4"><a href="lang_decl.html#_116_types">4.2.1.4 types</a></div>
+<div class="toc_4"><a href="lang_decl.html#_117_variables">4.2.1.5 variables</a></div>
+<div class="toc_4"><a href="lang_decl.html#_118_constants">4.2.1.6 constants</a></div>
+<div class="toc_4"><a href="lang_decl.html#_119_enum">4.2.1.7 enum</a></div>
+<div class="toc_4"><a href="lang_decl.html#_120_enumtype">4.2.1.8 enum type</a></div>
+<div class="toc_3"><a href="lang_decl.html#_121_specifyingthetypeofavariable">4.2.2 Specifying the type of a variable</a></div>
+<div class="toc_4"><a href="lang_decl.html#_123_userdefinedtypes">4.2.2.1 User-defined types</a></div>
+<div class="toc_4"><a href="lang_decl.html#_125_integer">4.2.2.2 integer</a></div>
+<div class="toc_4"><a href="lang_decl.html#_126_atom">4.2.2.3 atom</a></div>
+<div class="toc_4"><a href="lang_decl.html#_127_sequence">4.2.2.4 sequence</a></div>
+<div class="toc_4"><a href="lang_decl.html#_128_object">4.2.2.5 object</a></div>
+<div class="toc_3"><a href="lang_decl.html#_129_scope">4.2.3 Scope</a></div>
+<div class="toc_4"><a href="lang_decl.html#_130_whyscopesandwhatarethey">4.2.3.1 Why scopes, and what are they?</a></div>
+<div class="toc_4"><a href="lang_decl.html#_131_definingthescopeofanidentifier">4.2.3.2 Defining the scope of an identifier</a></div>
+<div class="toc_4"><a href="lang_decl.html#_132_usingnamespaces">4.2.3.3 Using namespaces</a></div>
+<div class="toc_4"><a href="lang_decl.html#_134_thevisibilityofpublicandexportidentifiers">4.2.3.4 The visibility of public and export identifiers</a></div>
+<div class="toc_4"><a href="lang_decl.html#_135_thecompletesetofresolutionrules">4.2.3.5 The complete set of resolution rules</a></div>
+<div class="toc_4"><a href="lang_decl.html#_137_theoverridequalifier">4.2.3.6 The override qualifier</a></div>
+<div class="toc_3"><a href="lang_decl.html#_139_deprecation">4.2.4 Deprecation</a></div>
+</div>
+</div>
+ </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.2.1 Identifiers</h3>
+<a name="_111_identifiers"></a><a name="identifiers"></a></div>
+<p> <strong>Identifiers</strong>, which encompass all explicitly declared variable, constant or routine names, may be of any length. Upper and lower case are distinct. Identifiers must start with a letter or underscore and then be followed by any combination of letters, digits and underscores. The following <strong>reserved words</strong> have special meaning in Euphoria and cannot be used as identifiers:</p>
+
+<pre class="examplecode"><font color="#0000FF">and             export           public</font>
+<font color="#0000FF">as              fallthru         retry  </font>
+<font color="#0000FF">break           for              return </font>
+<font color="#0000FF">by              function         routine</font>
+<font color="#0000FF">case            global           switch </font>
+<font color="#0000FF">constant        goto             then</font>
+<font color="#0000FF">continue        if               to </font>
+<font color="#0000FF">do              ifdef            type </font>
+<font color="#0000FF">else            include          </font><font color="#330033">until</font>
+<font color="#0000FF">elsedef         label            while</font>
+<font color="#0000FF">elsif           loop             with </font>
+<font color="#0000FF">elsifdef        namespace        without</font>
+<font color="#0000FF">end             not              xor </font>
+<font color="#0000FF">entry           or</font>
+<font color="#0000FF">enum            override</font>
+<font color="#0000FF">exit            procedure</font>
+</pre>
+
+<p> For example, the <tt>edx</tt> editor displays these words in blue.</p>
+
+<p> The following are Euphoria built-in routines. It is best if you do not use these for your own identifiers:</p>
+
+<pre class="examplecode"><font color="#0000FF">abort           getenv          peek4s          system</font>
+<font color="#0000FF">and_bits        gets            peek4u          system_exec</font>
+<font color="#0000FF">append          hash            peeks           tail</font>
+<font color="#0000FF">arctan          head            platform        tan</font>
+<font color="#0000FF">atom            include_paths   poke            task_clock_start</font>
+<font color="#0000FF">c_func          insert          poke2           task_clock_stop</font>
+<font color="#0000FF">c_proc          integer         poke4           task_create</font>
+<font color="#0000FF">call            length          position        task_list</font>
+<font color="#0000FF">call_func       log             power           task_schedule</font>
+<font color="#0000FF">call_proc       machine_func    prepend         task_self</font>
+<font color="#0000FF">clear_screen    machine_proc    print           task_status</font>
+<font color="#0000FF">close           match           printf          task_suspend</font>
+<font color="#0000FF">command_line    </font><font color="#330033">match_from      </font><font color="#0000FF">puts            task_yield</font>
+<font color="#0000FF">compare         mem_copy        rand            time</font>
+<font color="#0000FF">cos             mem_set         remainder       trace</font>
+<font color="#0000FF">date            not_bits        remove          xor_bits</font>
+<font color="#0000FF">delete          object          repeat          </font><font color="#330033">?</font>
+<font color="#0000FF">delete_routine  open            replace         </font><font color="#330033">&amp;</font>
+<font color="#0000FF">equal           option_switches routine_id      </font><font color="#330033">$</font>
+<font color="#0000FF">find            or_bits         sequence        </font>
+<font color="#330033">find_from       </font><font color="#0000FF">peek            sin             </font>
+<font color="#0000FF">floor           peek_string     splice          </font>
+<font color="#0000FF">get_key         peek2s          sprintf</font>
+<font color="#0000FF">getc            peek2u          sqrt</font>
+</pre>
+
+<p> Identifiers can be used in naming the following:</p>
+<ul><li>procedures
+</li><li>functions
+</li><li>types
+</li><li>variables
+</li><li>constants
+</li><li>enums
+</li></ul>
+<p>
+<a name="end"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.1 procedures</h4>
+<a name="_113_procedures"></a><a name="procedures"></a>
+<p> These perform some computation and may contain a list of parameters, e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">empty</font><font color="#880033">()</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">plot</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">y</font><font color="#880033">)</font>
+<font color="#0000FF">    position</font><font color="#880033">(</font><font color="#330033">x, y</font><font color="#880033">)</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">'*'</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> There are a fixed number of named parameters, but this is not restrictive since any parameter could be a variable-length sequence of arbitrary objects. In many languages variable-length parameter lists are impossible.  In C, you must set up strange mechanisms that are complex enough that the average programmer cannot do it without consulting a manual or a local guru.</p>
+
+<p> A copy of the value of each argument is passed in. The formal parameter variables may be modified inside the procedure but this does not affect the value of the arguments. Pass by reference can be achieved using indexes into some fixed sequence.</p>
+
+<p> <dl>
+<dt><strong>Performance Note:</strong>
+</dt>
+<dd>The interpreter does not actually copy sequences or floating-point numbers unless it becomes necessary. For example, </p>
+
+<pre class="examplecode"><font color="#330033">y = </font><font color="#880033">{</font><font color="#330033">1,2,3,4,5,6,7,8.5,</font><font color="#330033">"ABC"</font><font color="#880033">}</font>
+<font color="#330033">x = y</font>
+</pre>
+
+<p> The statement <tt>x = y</tt> does not actually cause a new copy of <tt>y</tt> to be created. Both <tt>x</tt> and <tt>y</tt> will simply "point" to the same sequence. If we later perform <tt>x[3] = 9</tt>, then a separate sequence will be created for <tt>x</tt> in memory (although there will still be just one shared copy of <tt>8.5</tt> and <tt>"ABC"</tt>). The same thing applies to "copies" of arguments passed in to subroutines.</dd>
+</dl>
+For a number of procedures or functions--see below--some parameters may have the same value in many cases. The most expected value for any parameter may be given a default value. To pass the default value, use a question mark <tt>?</tt>, or omit the value.  When the parameter is not the last in the list to the routine, you should use the <tt>?</tt> for clarity, rather than simply omitting the parameter, and having consecutive commas.</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, </font><font color="#0000FF">integer </font><font color="#330033">n=1</font><font color="#880033">)</font>
+<font color="#330033">    ? n + </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">s</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">foo</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#880033">)     </font><font color="#FF0055">-- prints out 4 = 3 + 1. n was not specified, so was set to 1.</font>
+<font color="#330033">foo</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#330033">, ? </font><font color="#880033">) </font><font color="#FF0055">-- prints out 4 = 3 + 1. n was not specified, so was set to 1.</font>
+<font color="#330033">foo</font><font color="#880033">(</font><font color="#330033">"abc"</font><font color="#330033">, 3</font><font color="#880033">)  </font><font color="#FF0055">-- prints out 6 = 3 + 3</font>
+</pre>
+
+<p> This is not limited to the last parameter(s):</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">bar</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s=</font><font color="#330033">"abc"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">n, </font><font color="#0000FF">integer </font><font color="#330033">p=1</font><font color="#880033">)</font>
+<font color="#330033">    ? </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">s</font><font color="#880033">)</font><font color="#330033">+n+p</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#330033">?, 2</font><font color="#880033">)     </font><font color="#FF0055">-- prints out 6 = 3 + 2 + 1</font>
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#330033">, 2</font><font color="#880033">)      </font><font color="#FF0055">-- prints out 6 = 3 + 2 + 1.  Legal, but considered bad form.</font>
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#330033">2</font><font color="#880033">)        </font><font color="#FF0055">-- errors out, as 2 is not a sequence</font>
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#330033">?, 2, ?</font><font color="#880033">)  </font><font color="#FF0055">-- same as bar(,2)</font>
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#330033">?, 2, 3</font><font color="#880033">)  </font><font color="#FF0055">-- prints out 8 = 3 + 22 + 3</font>
+<font color="#330033">bar</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#330033">, 2, ?</font><font color="#880033">) </font><font color="#FF0055">-- prints out 3 = 0 + 2 + 1</font>
+<font color="#330033">bar</font><font color="#880033">()         </font><font color="#FF0055">-- errors out, second parameter is omitted,</font>
+<font color="#FF0055">              -- but doesn't have a default value</font>
+</pre>
+
+<p> Any expression may be used in a default value. Parameters that have been already mentioned may even be part of the expression:</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">baz</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, </font><font color="#0000FF">integer </font><font color="#330033">n=</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#330033">    ? n</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">baz</font><font color="#880033">(</font><font color="#330033">"abcd"</font><font color="#880033">) </font><font color="#FF0055">-- prints out 4</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.2 functions</h4>
+<a name="_114_functions"></a><a name="functions"></a>
+<p> These are just like procedures, but they return a value, and can be used in an expression, e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">function </font><font color="#330033">max</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">a, </font><font color="#0000FF">atom </font><font color="#330033">b</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">a &gt;= b </font><font color="#0000FF">then</font>
+<font color="#0000FF">        return </font><font color="#330033">a</font>
+<font color="#0000FF">    else</font>
+<font color="#0000FF">        return </font><font color="#330033">b</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end function</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.3 return statement</h4>
+<a name="_115_returnstatement"></a><a name="returnstatement"></a>
+<p> Any Euphoria object can be returned.  You can, in effect, have multiple return values, by returning a sequence of objects. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">return </font><font color="#880033">{</font><font color="#330033">x_pos, y_pos</font><font color="#880033">}</font>
+</pre>
+
+<p> However, Euphoria does not have variable lists. When you return a sequence, you still have to dispatch its contents to variables as needed. And you cannot pass a sequence of parameters to a routine, unless using <a href="std_machine.html#_5865_call_func">call_func</a> or <a href="std_machine.html#_5873_call_proc">call_proc</a>, which carries a performance penalty.</p>
+
+<p> We will use the general term "subroutine", or simply "routine" when a remark is applicable to both procedures and functions.</p>
+
+<p> Defaulted parameters can be used in functions exactly as they are in procedures. See the section above for a few examples.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.4 types</h4>
+<a name="_116_types"></a><a name="types"></a>
+<p> These are special functions that may be used in declaring the allowed values for a variable. A type must have exactly one parameter and should return an atom that is either true (non-zero) or false (zero).  Types can also be called just like other functions. See <a href="lang_decl.html#_121_specifyingthetypeofavariable">Specifying the Type of a variable</a>.</p>
+
+<p> Although there are no restrictions to using defaulted parameters with types, their use is so much constrained by a type having exactly one parameter that they are of little practical help there.</p>
+
+<p> You cannot use a type to perform any adjustment to the value being checked, if only because this value may be the temporary result of an expression, not an actual variable.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.5 variables</h4>
+<a name="_117_variables"></a><a name="variables"></a>
+<p> These may be assigned values during execution e.g.</p>
+
+<pre class="examplecode"><font color="#FF0055">-- x may only be assigned integer values</font>
+<font color="#0000FF">integer </font><font color="#330033">x</font>
+<font color="#330033">x = 25</font>
+
+<font color="#FF0055">-- a, b and c may be assigned *any* value</font>
+<font color="#0000FF">object </font><font color="#330033">a, b, c</font>
+<font color="#330033">a = </font><font color="#880033">{}</font>
+<font color="#330033">b = a</font>
+<font color="#330033">c = 0</font>
+</pre>
+
+<p> When you declare a variable you name the variable (which protects you against making spelling mistakes later on) and you define which sort of values may legally be assigned to the variable during execution of your program.</p>
+
+<p> The simple act of declaring a variable does not assign any value to it. If you attempt to read it before assigning any value to it, Euphoria will issue a run-time error as "variable xyz has never been assigned a value".</p>
+
+<p> To guard against forgetting to initialize a variable, and also because it may make the code clearer to read, you can combine declaration and assignment:</p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">n = 5</font>
+</pre>
+
+<p> This is equivalent to</p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">n</font>
+<font color="#330033">n = 5</font>
+</pre>
+
+<p> It is not infrequent that one defines a private variable that bears the same name as one already in scope. You can reuse the value of that variable when performing an initialization on declare by using a default namespace for the current <a class="external" href="file:">file:</a></p>
+
+<pre class="examplecode"><font color="#0000FF">namespace </font><font color="#330033">app</font>
+
+<font color="#0000FF">integer </font><font color="#330033">n</font>
+<font color="#330033">n=5</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">()</font>
+<font color="#0000FF">    integer </font><font color="#330033">n = app:n + 2</font>
+<font color="#330033">    ? n</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">foo</font><font color="#880033">() </font><font color="#FF0055">-- prints out 7</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.6 constants</h4>
+<a name="_118_constants"></a><a name="constants"></a>
+<p> These are variables that are assigned an initial value that can never change e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">MAX = 100</font>
+<font color="#0000FF">constant </font><font color="#330033">Upper = MAX - 10, Lower = 5</font>
+<font color="#0000FF">constant </font><font color="#330033">name_list = </font><font color="#880033">{</font><font color="#330033">"Fred"</font><font color="#330033">, </font><font color="#330033">"George"</font><font color="#330033">, </font><font color="#330033">"Larry"</font><font color="#880033">}</font>
+</pre>
+
+<p> The result of any expression can be assigned to a constant, even one involving calls to previously defined functions, but once the assignment is made, the value of the constant variable is "locked in".</p>
+
+<p> Constants may not be declared inside a subroutine.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.7 enum</h4>
+<a name="_119_enum"></a><a name="enum"></a>
+<p> An enumerated value is a special type of constant where the first value defaults to the number 1 and each item after that is incremented by 1 by default. An optional <tt>by</tt> keyword can be supplied to change the increment value. As with sequences, enums can also be terminated with a <tt>$</tt> for ease of editing <tt>enum</tt> lists that may change frequently during development.</p>
+
+<pre class="examplecode"><font color="#0000FF">enum </font><font color="#330033">ONE, TWO, THREE, FOUR</font>
+
+<font color="#FF0055">-- ONE is 1, TWO is 2, THREE is 3, FOUR is 4</font>
+</pre>
+
+<p> You can change the value of any one item by assigning it a numeric value. Enums can only take numeric values. You cannot set the starting value to an expression or other variable. Subsequent values are always the previous value plus one, unless they too are assigned a default value.</p>
+
+<pre class="examplecode"><font color="#0000FF">enum </font><font color="#330033">ONE, TWO, THREE, ABC=10, DEF, XYZ</font>
+
+<font color="#FF0055">-- ONE is 1, TWO is 2, THREE is 3</font>
+<font color="#FF0055">-- ABC is 10, DEF is 11, XYZ is 12</font>
+</pre>
+
+<p> Euphoria sequences use integer indexes, but with <tt>enum</tt> you may write code like this:</p>
+
+<pre class="examplecode"><font color="#0000FF">enum </font><font color="#330033">X, Y</font>
+<font color="#0000FF">sequence </font><font color="#330033">point = </font><font color="#880033">{ </font><font color="#330033">0,0 </font><font color="#880033">}</font>
+<font color="#330033">point</font><font color="#880033">[</font><font color="#330033">X</font><font color="#880033">] </font><font color="#330033">= 3</font>
+<font color="#330033">point</font><font color="#880033">[</font><font color="#330033">Y</font><font color="#880033">] </font><font color="#330033">= 4</font>
+</pre>
+
+<p> By default, unless an enum member is being specifically set to some value, its value will be one more than the previous member's value, with the first default value being <tt>1</tt>. This default can be overridden. The syntax is:</p>
+
+<pre class="examplecode"><font color="#0000FF">enum by </font><font color="#330033">DELTA member1, member2, ... ,memberN</font>
+</pre>
+
+<p> where <tt>'DELTA'</tt> is a literal number with an optional operation code (<tt>*, +, -, /</tt>) preceding it.</p>
+
+<p> Examples: </p>
+
+<pre class="examplecode"><font color="#0000FF">enum by </font><font color="#330033">2 A,B,C=6,D      </font><font color="#FF0055">--&gt; values are 1,3,6,8</font>
+<font color="#0000FF">enum by </font><font color="#330033">-2 A=10,B,C,D    </font><font color="#FF0055">--&gt; values are 10,8,6,4</font>
+<font color="#0000FF">enum by </font><font color="#330033">* 2 A,B,C,D,E    </font><font color="#FF0055">--&gt; values are 1,2,4,8,16</font>
+<font color="#0000FF">enum by </font><font color="#330033">/ 3 A=81,B,C,D,E </font><font color="#FF0055">--&gt; values are 81,27,9,3,1</font>
+</pre>
+
+<p> Also note that enum members do not have to be integers. </p>
+
+<pre class="examplecode"><font color="#0000FF">enum by </font><font color="#330033">/ 2 A=5,B,C </font><font color="#FF0055">--&gt; values are 5, 2.5, 1.25</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.1.8 enum type</h4>
+<a name="_120_enumtype"></a><a name="enumtype"></a>
+<p> There is also a special form of <tt>enum</tt>, an <em>enum type</em>. This is a simple way to write a user-defined type based on the set of values in a specific enum group. The type created this way can be used anywhere a normal user-defined type can be use.</p>
+
+<p> For example, </p>
+
+<pre class="examplecode"><font color="#0000FF">enum type </font><font color="#330033">RGBA RED, GREEN, BLUE, ALPHA </font><font color="#0000FF">end type</font>
+
+<font color="#FF0055">-- Only allow values of RED, GREEN, BLUE, or ALPHA as parameters</font>
+<font color="#0000FF">procedure </font><font color="#330033">xyz</font><font color="#880033">( </font><font color="#330033">RGBA x, RGBA y</font><font color="#880033">)</font>
+<font color="#FF0055">	-- do stuff...</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> However there is one significant difference when it comes to enum types. For normal types, when calling the type function, it returns either <tt>0</tt> or <tt>1</tt>. The enum type function returns <tt>0</tt> if the argument is not a member of the enum set, and it returns a positive integer when the argument is a member. The value returned is the ordinal number of the member in the enum's definition, regardless of what the member's value is. As an exception to this, if two enums share the same value, then they will share the same ordinal number. The ordinal numbers of enums surrounding these will continue to increment as if every enum had a unique ordinal number, causing some numbers to be skipped.</p>
+
+<p> For example, </p>
+
+<pre class="examplecode"><font color="#0000FF">enum type </font><font color="#330033">color RED=4, GREEN=7, BLACK=1, BLUE=3 , PINK=10 </font><font color="#0000FF">end type</font>
+
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">RED</font><font color="#880033">)   </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">GREEN</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">BLACK</font><font color="#880033">) </font><font color="#FF0055">--&gt; 3</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">BLUE</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 4</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">PINK</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 5</font>
+
+<font color="#0000FF">constant </font><font color="#330033">color_names = </font><font color="#880033">{</font><font color="#330033">"rouge"</font><font color="#330033">, </font><font color="#330033">"vert"</font><font color="#330033">, </font><font color="#330033">"noir"</font><font color="#330033">, </font><font color="#330033">"bleu"</font><font color="#330033">, </font><font color="#330033">"rose"</font><font color="#880033">}</font>
+
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, color_names</font><font color="#993333">[</font><font color="#330033">color</font><font color="#0000FF">(</font><font color="#330033">BLUE</font><font color="#0000FF">)</font><font color="#993333">]</font><font color="#880033">) </font><font color="#FF0055">--&gt; bleu</font>
+
+</pre>
+
+<p> But with the exception, </p>
+
+<pre class="examplecode"><font color="#0000FF">enum type </font><font color="#330033">color RED, GREEN=7, BLACK=1, BLUE=3 , PINK=10 </font><font color="#0000FF">end type</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">RED</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">GREEN</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">BLACK</font><font color="#880033">) </font><font color="#FF0055">--&gt; 1</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">BLUE</font><font color="#880033">) </font><font color="#FF0055">--&gt; 4</font>
+<font color="#330033">? color</font><font color="#880033">(</font><font color="#330033">PINK</font><font color="#880033">) </font><font color="#FF0055">--&gt; 5</font>
+</pre>
+
+<p> Note that none of the enums have an ordinal number with a value of 3. This is simply skipped.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.2.2 Specifying the type of a variable</h3>
+<a name="_121_specifyingthetypeofavariable"></a><a name="specifyingthetypeofavariable"></a>
+<p> So far you've already seen some examples of variable types but now we will define types more precisely.</p>
+
+<p> Variable declarations have a type name followed by a list of the variables being declared. For example,</p>
+
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">a</font>
+
+<font color="#0000FF">global integer </font><font color="#330033">x, y, z</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">fred</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">q, </font><font color="#0000FF">sequence </font><font color="#330033">r</font><font color="#880033">)</font>
+</pre>
+
+<p> The types: <strong>object</strong>, <strong>sequence</strong>, <strong>atom</strong> and <strong>integer</strong> are <strong>predefined</strong>.  Variables of type <strong>object</strong> may take on <em>any</em> value.  Those declared with type <strong>sequence</strong> must always be sequences.  Those declared with type <strong>atom</strong> must always be atoms.</p>
+
+<p> Variables declared with type <strong>integer</strong> must be atoms with integer values from <tt>-1073741824</tt> to <tt>+1073741823</tt> inclusive. You can perform exact calculations on larger integer values, up to about <tt>15</tt> decimal digits, but declare them as <strong>atom</strong>, rather than integer.</p>
+
+<p> <dl>
+<dt><strong>Note:</strong>
+</dt>
+<dd>In a procedure or function parameter list like the one for <tt>fred</tt> above, a type name may only be followed by a single parameter name.</dd>
+</dl>
+<dl>
+<dt><strong>Performance Note:</strong>
+</dt>
+<dd>Calculations using variables declared as integer will usually be somewhat faster than calculations involving variables declared as atom. If your machine has floating-point hardware, Euphoria will use it to manipulate atoms that are not integers. If your machine doesn't have floating-point hardware (this may happen on old 386 or 486 PCs), Euphoria will call software floating-point arithmetic routines contained in <strong>euid.exe</strong> (or in <em>Windows</em>). You can force <tt>eui.exe</tt> to bypass any floating-point hardware, by setting an environment variable: </p>
+
+<pre class="examplecode"><font color="#330033">SET NO87=1</font>
+</pre>
+
+<p> The slower software routines will be used, but this could be of some advantage if you are worried about the floating-point bug in some early Pentium chips.</dd>
+</dl>
+
+<a name="udt"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.2.1 User-defined types</h4>
+<a name="_123_userdefinedtypes"></a><a name="userdefinedtypes"></a>
+<p> To augment the <a href="lang_def.html#predefinedtypes">predefined types</a>, you can create <strong>user-defined types</strong>. All  you have to do is define a single-parameter function, but declare it with <strong>type ... end type</strong> instead of <strong>function ... end function</strong>.  For example,</p>
+
+<pre class="examplecode"><font color="#0000FF">type </font><font color="#330033">hour</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    return </font><font color="#330033">x &gt;= 0 </font><font color="#0000FF">and </font><font color="#330033">x &lt;= 23</font>
+<font color="#0000FF">end type</font>
+
+<font color="#330033">hour h1, h2</font>
+
+<font color="#330033">h1 = 10      </font><font color="#FF0055">-- ok</font>
+<font color="#330033">h2 = 25      </font><font color="#FF0055">-- error! program aborts with a message</font>
+</pre>
+
+<p> Variables <tt>h1</tt> and <tt>h2</tt> can only be assigned integer values in the range <tt>0</tt> to <tt>23</tt> inclusive. After each assignment to <tt>h1</tt> or <tt>h2</tt> the interpreter will call <tt>hour</tt>, passing the new value.  The value will first be checked to see if it is an integer (because of "integer x"). If it is, the return statement will be executed to test the value of <tt>x</tt> (i.e. the new value of <tt>h1</tt> or <tt>h2</tt>).  If <tt>hour</tt> returns true, execution continues normally. If <tt>hour</tt> returns false then the program is aborted with a suitable diagnostic message.</p>
+
+<p> "hour" can be used to declare subroutine parameters as well:</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">set_time</font><font color="#880033">(</font><font color="#330033">hour h</font><font color="#880033">)</font>
+</pre>
+
+<p> <tt>set_time</tt> can only be called with a reasonable value for parameter <tt>h</tt>, otherwise the program will abort with a message.</p>
+
+<p> A variable's type will be checked after each assignment to the variable (except where the compiler can predetermine that a check will not be necessary), and the program will terminate immediately if the type function returns false. Subroutine parameter types are checked each time that the subroutine is called. This checking guarantees that a variable can never have a value that does not belong to the type of that variable.</p>
+
+<p> Unlike other languages, the type of a variable does not affect any calculations on the variable, nor the way its contents are displayed. Only the value of the variable matters in an expression. The type just serves as an error check to prevent any "corruption" of the variable.    User-defined types can catch unexpected logical errors in your program.  They are not designed to catch or correct user input errors. In particular, they cannot adjust a wrong value to some other, presumably legal, one.</p>
+
+<p> 
+<a name="type_check"></a><a name="check"></a> Type checking can be turned off or on between subroutines using the with <tt>type_check</tt> or <tt>without type_check</tt> (see <a href="lang_toplevel.html#specialstatements">specialstatements</a>). It is initially on by default.</p>
+
+<p> <dl>
+<dt><strong>Note to Bench markers:</strong>
+</dt>
+<dd>When comparing the speed of Euphoria programs against programs written in other languages, you should specify <strong>without type_check</strong> at the top of the file.  This gives Euphoria permission to skip run-time type checks, thereby saving some execution time. All other checks are still performed, e.g. subscript checking, uninitialized variable checking etc.  Even when you turn off type checking, Euphoria reserves the right to make checks at strategic places, since this can actually allow it to run your program <em>faster</em> in many cases.  So you may still get a type check failure even when you have turned off type checking. Whether type checking is on or off, you will never get a <strong><em>machine-level</em></strong> exception.  <strong>You will always get a meaningful message from Euphoria when something goes wrong</strong>.  (<em>This might not be the case when you <a href="std_machine.html#_5727_poke">poke</a> directly into memory, or call routines written in C or machine code.</em>)</dd>
+</dl>
+Euphoria's way of defining types is simpler than what you will find in other languages, yet Euphoria provides the programmer with <em>greater</em> flexibility in defining the legal values for a type of data. Any algorithm can be used to include or exclude values. You can even declare a variable to be of type object which will allow it to take on <em>any</em> value. Routines can be written to work with very specific types, or very general types.</p>
+
+<p> For many programs, there is little advantage in defining new types, and you may wish to stick with the four <a href="lang_def.html#predefinedtypes">predefined types</a>. Unlike other languages, Euphoria's type mechanism is optional.  You don't need it to create a program.</p>
+
+<p> However, for larger programs, strict type definitions can aid the process of debugging.  Logic errors are caught close to their source and are not allowed to propagate in subtle ways through the rest of the program.  Furthermore, it is easier to reason about the misbehavior of a section of code when you are guaranteed that the variables involved always had a legal value, if not the desired value.</p>
+
+<p> Types also provide meaningful, machine-checkable documentation about your program, making it easier for you or others to understand your code at a later date. Combined with the subscript checking, uninitialized variable checking, and other checking that is always present, strict run-time type checking makes debugging much easier in Euphoria than in most other languages. It also increases the reliability of the final program since many latent bugs that would have survived the testing phase in other languages will have been caught by Euphoria.</p>
+
+<p> <dl>
+<dt><strong>Anecdote 1:</strong>
+</dt>
+<dd>In porting a large C program to Euphoria, a number of latent bugs were discovered. Although this C program was believed to be totally "correct", we found: a situation where an uninitialized variable was being read; a place where element number "-1" of an array was routinely written and read; and a situation where something was written just off the screen. These problems resulted in errors that weren't easily visible to a casual observer, so they had survived testing of the C code.</dd>
+</dl>
+<dl>
+<dt><strong>Anecdote 2:</strong>
+</dt>
+<dd>The Quick Sort algorithm presented on page 117 of <em>Writing Efficient Programs</em> by Jon Bentley has a subscript error! The algorithm will sometimes read the element just <em>before</em> the beginning of the array to be sorted, and will sometimes read the element just <em>after</em> the end of the array. Whatever garbage is read, the algorithm will still work - this is probably why the bug was never caught. But what if there isn't any (virtual) memory just before or just after the array? Bentley later modifies the algorithm such that this bug goes away--but he presented this version as being correct. <strong><em>Even the experts need subscript checking!</em></strong></dd>
+</dl>
+<dl>
+<dt><strong>Performance Note:</strong>
+</dt>
+<dd>When typical user-defined types are used extensively, type checking adds only 20 to 40 percent to execution time. Leave it on unless you really need the extra speed. You might also consider turning it off for just a few heavily-executed routines.  <a href="debug.html#_521_profiling">Profiling</a> can help with this decision.</dd>
+</dl>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.2.2 integer</h4>
+<a name="_125_integer"></a><a name="integer"></a>
+<p> An Euphoria <tt>integer</tt> is a mathematical integer restricted to the range <tt>-1,073,741,824</tt> to <tt>+1,073,741,823</tt>. As a result, a variable of the integer type, while allowing computations as fast as possible, cannot hold 32-bit machine addresses, even though the latter are mathematical integers. You must use the <a href="lang_decl.html#_126_atom">atom</a> type for this purpose. Also, even though the product of two integers is a mathematical integer, it may not fit into an integer, and should be kept in an atom instead.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.2.3 atom</h4>
+<a name="_126_atom"></a><a name="atom"></a>
+<p> An <tt>atom</tt> can hold three kinds of data: </p>
+<ul><li>Mathematical integers in the range <tt>-power(2,53)</tt> to +<tt>power(2,53)</tt>
+</li><li>Floating point numbers, in the range <tt>-power(2,1024)+1</tt> to <tt>+power(2,1024)-1</tt>
+</li><li>Large mathematical integers in the same range, but with a fuzz that grows with the magnitude of the integer.
+</li></ul>
+<p><tt>power(2,53)</tt> is slightly above 9.10<sup>15</sup>, <tt>power(2,1024)</tt> is in the 10<sup>308</sup> range.</p>
+
+<p> Because of these constraints, which arise in part from common hardware limitations, some care is needed for specific purposes: </p>
+<ul><li>The sum or product of two integers is an <tt>atom</tt>, but may not be an  <tt>integer</tt>.
+</li><li>Memory addresses, or handles acquired from anything non Euphoria, including the operating system, <strong>must</strong> be stored as an <tt>atom</tt>.
+</li><li>For large numbers, usual operations may yield strange results:
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">n = </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#330033">2, 27</font><font color="#880033">) </font><font color="#FF0055">-- ok</font>
+<font color="#0000FF">integer </font><font color="#330033">n_plus = n + 1, n_minus = n - 1 </font><font color="#FF0055">-- ok</font>
+<font color="#0000FF">atom </font><font color="#330033">a = n * n </font><font color="#FF0055">-- ok</font>
+<font color="#0000FF">atom </font><font color="#330033">a1 = n_plus * n_minus </font><font color="#FF0055">-- still ok</font>
+<font color="#330033">? a - a1 </font><font color="#FF0055">-- prints 0, should be 1 mathematically</font>
+</pre>
+
+<p> <em>This is not an Euphoria bug</em>. The IEEE 754 standard for floating point numbers provides for 53 bits of precision for any real number, and an accurate computation of <tt>a-a1</tt> would require 54 of them. Intel FPU chips do have 64 bit precision registers, but the low order 16 bits are only used internally, and Intel recommends against using them for high precision arithmetic. Their SIMD machine instruction set only uses the IEEE 754 defined format.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.2.4 sequence</h4>
+<a name="_127_sequence"></a><a name="sequence"></a>
+<p> A sequence is a type that is a <em>container</em>. A sequence has <em>elements</em> which can be accessed through their <em>index</em>, like in <tt>my_sequence[3]</tt>. <tt>sequence</tt>s are so generic as being able to store all sorts of data structures: strings, trees, lists, anything. Accesses to sequences are always bound checked, so that you cannot read or write an element that does not exist, ever. A large amount of extraction and shape change operations on sequences is available, both as built-in operations and library routines. The elements of a sequence can have any type.</p>
+
+<p> <tt>sequence</tt>s are implemented very efficiently. Programmers used to pointers will soon notice that they can get most usual pointer operations done using sequence indexes. The loss in efficiency is usually hard to notice, and the gain in code safety and bug prevention far outweighs it.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.2.5 object</h4>
+<a name="_128_object"></a><a name="object"></a>
+<p> This type can hold any data Euphoria can handle, both atoms and sequences.</p>
+
+<p> The <tt>object</tt> type returns 0 if a variable is not initialized, else <tt>1</tt>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.2.3 Scope</h3>
+<a name="_129_scope"></a><a name="scope"></a>
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.1 Why scopes, and what are they?</h4>
+<a name="_130_whyscopesandwhatarethey"></a><a name="whyscopesandwhatarethey"></a>
+<p> The <em>scope</em> of an identifier is the portion of the program where its declaration is in effect, i.e. where that identifier is <em>visible</em>.</p>
+
+<p> Euphoria has many pre-defined procedures, functions and types.  These are defined automatically at the start of any program.  For exmaple, the <tt>edx</tt> editor shows them in magenta. These pre-defined names are not reserved. You can override them with your own variables or routines.</p>
+
+<p> It is possible to use a user-defined identifier before it has been declared, provided that it will be declared at some point later in the program.</p>
+
+<p> For example, procedures, functions and types can call themselves or one another <em>recursively</em>. Mutual recursion, where routine A calls routine B which directly or indirectly calls routine A, implies one of A or B being called before it is defined. This was traditionally the most frequent situation which required using the <a href="std_machine.html#_5855_routine_id">routine_id</a> mechanism, but is now supported directly. See <a href="dynamic.html#_574_indirectroutinecalling">Indirect Routine Calling</a> for more details on the <a href="std_machine.html#_5855_routine_id">routine_id</a> mechanism.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.2 Defining the scope of an identifier</h4>
+<a name="_131_definingthescopeofanidentifier"></a><a name="definingthescopeofanidentifier"></a>
+<p> The scope of an identifier is a description of what code can 'access' it. Code in the same scope of an identifier can access that identifier and code not in the same scope cannot access it.</p>
+
+<p> The scope of a <strong>variable</strong> depends upon where and how it is declared. </p>
+<ul><li>If it is declared within a <tt><strong>for</strong></tt>, <tt><strong>while</strong></tt>, <tt><strong>loop</strong></tt> or  <tt><strong>switch</strong></tt>, its scope starts at the declaration and ends at the respective  <tt><strong>end</strong></tt> statement.
+</li><li>In an <tt><strong>if</strong></tt> statement, the scope starts at the declaration and ends either at the next <tt><strong>else</strong></tt>, <tt><strong>elsif</strong></tt> or <tt><strong>end if</strong></tt> statement.
+</li><li>If a variable is declared within a routine (known as a private variable) and outside one of the structures listed above, the scope of the variable starts at the declaration and ends at the routine's <tt><strong>end</strong></tt> statement.
+</li><li>If a variable is declared outside of a routine (known as a module variable), and does not have a scope modifier, its scope starts at the declaration and ends at the end of the file it is declared in.
+</li></ul>
+<p>The scope of a <strong>constant</strong> that does not have a scope modifier, starts at the declaration and ends at the end of the file it is declared in.</p>
+
+<p> The scope of a <strong>enum</strong> that does not have a scope modifier, starts at the declaration and ends at the end of the file it is declared in.</p>
+
+<p> The scope of all <strong>procedures</strong>, <strong>functions</strong> and <strong>types</strong>, which do not have a scope modifier, starts at the beginning of the source file and ends at the end of the source file in which they are declared. In other words, these can be accessed by any code in the same file.</p>
+
+<p> Constants, enums, module variables, procedures, functions and types, which do not have a scope modifier are referred to as <strong>local</strong>. However, these identifiers can have a scope modifier preceding their declaration, which causes their scope to extend beyond the file they are declared in. </p>
+<ul><li>If the keyword <strong>global</strong> precedes the declaration, the scope of these identifiers extends to the whole application. They can be accessed by code anywhere in the application files.
+</li><li>If the keyword <strong>public</strong> precedes the declaration, the scope extends to any file that explicitly includes the file in which the identifier is declared, or to any file that includes a file that in turn <tt>public include</tt>s the file containing the <tt>public</tt> declaration.
+</li><li>If the keyword <strong>export</strong> precedes the declaration, the scope only extends to any file that directly includes the file in which the identifier is declared.
+</li></ul>
+<p>When you <strong><a href="syntax.html#_199_include">include</a></strong> a Euphoria file in another file, only the identifiers declared using a scope modifier are accessible to the file doing the include. The other declarations in the included file are invisible to the file doing the include, and you will get an error message, "<tt>Errors resolving the following references</tt>", if you try to use them.</p>
+
+<p> There is a variant of the <strong>include</strong> statement, called <strong>public include</strong>, which will be discussed later and behaves differently on <strong>public</strong> symbols.</p>
+
+<p> Note that <strong>constant</strong> and <strong>enum</strong> declarations must be outside of any subroutine.</p>
+
+<p> Euphoria encourages you to restrict the scope of identifiers. If all identifiers were automatically global to the whole program, you might have a lot of naming conflicts, especially in a large program consisting of files written by many different programmers. A naming conflict might cause a compiler error message, or it could lead to a very subtle bug, where different parts of a program accidentally modify the same variable without being aware of it.  Try to use the most restrictive scope that you can. Make variables <strong>private</strong> to one routine where possible, and where that is not possible, make them <strong>local</strong> to a file, rather than <strong>global</strong> to the whole program. And whenever an identifier needs to be known from  a few files only, make it <strong>public</strong> or <strong>export</strong> so as to hide it from whoever does not need to see it -- and might some day define the same identifier.</p>
+
+<p> For example: </p>
+
+<pre class="examplecode"><font color="#FF0055">-- sublib.e</font>
+<font color="#0000FF">export procedure </font><font color="#330033">bar</font><font color="#880033">()</font>
+<font color="#330033">?0</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#FF0055">-- some_lib.e</font>
+<font color="#0000FF">include </font><font color="#330033">sublib.e</font>
+<font color="#0000FF">export procedure </font><font color="#330033">foo</font><font color="#880033">()</font>
+<font color="#330033">?1</font>
+<font color="#0000FF">end procedure</font>
+<font color="#330033">bar</font><font color="#880033">() </font><font color="#FF0055">-- ok, declared in sublib.e</font>
+
+<font color="#FF0055">-- my_app.exw</font>
+<font color="#0000FF">include </font><font color="#330033">some_lib.e</font>
+<font color="#330033">foo</font><font color="#880033">() </font><font color="#FF0055">-- ok, declared in some_lib.e</font>
+<font color="#330033">bar</font><font color="#880033">() </font><font color="#FF0055">-- error! bar() is not declared here</font>
+</pre>
+
+<p> Why not declare <tt>foo</tt> as global, as it is meant to be used anywhere? Well, one could, but this will increase the risks of name conflicts. This is why, for instance, all public identifiers from the standard library have <strong>public</strong> scope. <strong>global</strong> should be used rarely, if ever. Because earlier versions of Euphoria didn't have <strong>public</strong> or <strong>export</strong>, it has to remain there for a while. One should be very sure of not polluting any foreign file's symbol table before using <strong>global</strong> scope. Built-in identifiers act as if declared as <strong>global</strong> -- but they are not declared in any Euphoria coded file.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.3 Using namespaces</h4>
+<a name="_132_usingnamespaces"></a><a name="usingnamespaces"></a>
+<p> 
+<a name="namespace"></a></p>
+
+<p> Euphoria namespaces are used to disambiguate between symbols (routines, variables, constants, etc) with the same names in different files. They may be declared as a default namespace in a file for the convenience of the users of that file, or they may be declared at the point where a file is included. Note that unlike namespaces in some other languages, this does not provide a sandbox around the symbols in the file. It is just an easy way to tell euphoria to look for a symbol in a particular file.</p>
+
+<p> Identifiers marked as <tt>global</tt>, <tt>public</tt> or <tt>export</tt> are known as <em>exposed</em> variables because they can be used in files other than the one they were declared in.</p>
+
+<p> All other identifiers can only be used within their own file. This information is helpful when maintaining or enhancing the file, or when learning how to use the file. You can make changes to the internal routines and variables, without having to examine other files, or notify other users of the include file.</p>
+
+<p> Sometimes, when using include files developed by others, you will encounter a naming conflict.  One of the include file authors has used the same name for a exposed identifier as one of the other authors. One of way of fixing this, if you have the source, is to simply edit one of the include files to correct the problem, however then you'd have repeat this process whenever a new version of the include file was released.</p>
+
+<p> Euphoria has a simpler way to solve this. Using an extension to the include statement, you can say for example:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">johns_file.e </font><font color="#0000FF">as </font><font color="#330033">john</font>
+<font color="#0000FF">include </font><font color="#330033">bills_file.e </font><font color="#0000FF">as </font><font color="#330033">bill</font>
+
+<font color="#330033">john:x += 1</font>
+<font color="#330033">bill:x += 2</font>
+</pre>
+
+<p> In this case, the variable <tt>x</tt> was declared in two different files, and you want to refer to both variables in your file.  Using the <em>namespace identifier</em> of either <tt>john</tt> or <tt>bill</tt>, you can attach a prefix to <tt>x</tt> to indicate which <tt>x</tt> you are referring to.  We sometimes say that <tt>john</tt> refers to one <em>namespace</em>, while <tt>bill</tt> refers to another distinct <em>namespace</em>.  You can attach a namespace identifier to any user-defined variable, constant, procedure or function. You can do it to solve a conflict, or simply to make things clearer. A namespace identifier has local scope. It is known only within the file that declares it, i.e. the file that contains the include statement.  Different files might define different namespace identifiers to refer to the same included file.</p>
+
+<p> There is a special, reserved namespace, <tt><strong>eu</strong></tt> for referring to built-in Euphoria routines.  This can be useful when a built-in routine has been overridden:</p>
+
+<pre class="examplecode"><font color="#0000FF">procedure puts</font><font color="#880033">( </font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">object </font><font color="#330033">text </font><font color="#880033">)</font>
+<font color="#330033">    eu:</font><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">fn, </font><font color="#330033">"Overloaded puts says: "</font><font color="#330033">&amp; text </font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, world!\n"</font><font color="#880033">)</font>
+<font color="#330033">eu:</font><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, world!\n"</font><font color="#880033">)</font>
+</pre>
+
+<p> Files can also declare a default namespace to be used with the file.  When a file with a default namespace is included, if the include statement did not specify a namespace, then the default namespace will be automatically declared in that file.  If the include statement declares a namespace for the newly included file, then the specified namespace will be available instead of the default.  No two files can use the same namespace identifier.  If two files with the same default namespaces are included, at least one will be required to have a different namespace to be specified.</p>
+
+<p> To declare a default namespace in a file, the first token (whitespace and comments are ignored) should be 'namespace' followed by the desired name:</p>
+
+<pre class="examplecode"><font color="#FF0055">-- foo.e :  this file does some stuff</font>
+<font color="#0000FF">namespace </font><font color="#330033">foo</font>
+</pre>
+
+<p> A namespace that is declared as part of an <tt>include</tt> statement is local to the file where the <tt>include</tt> statement is.  A default namespace declared in a file is considered a public symbol in that file.  Namespaces and other symbols (e.g., variables, functions, procedures and types) can have the same name without conflict. A namespace declared through an <tt>include</tt> statement will mask a default namespace declared in another file, just like a normal local variable will mask a public variable in another file.  In this case, rather than using the default namespace, declare a new namespace through the <tt>include</tt> statement.</p>
+
+<p> Note that declaring a namespace, either through the include statement or as a default namespace does not <strong>require</strong> that every symbol reference must be qualified with that namespace.  The namespace simply <strong>allows</strong> the user to deconflict symbols in different files with the same name, or to allow the programmer to be explicit about where symbols are coming from for the purposes of clarity, or to avoid possible future conflicts.</p>
+
+<p> A qualified reference does not absolutely restrict the reference to symbols that actually reside within the specified file.  It can also apply to symbols included by that file.  This is especially useful for multi-file libraries. Programmers can use a single namespace for the library, even though some of the visible symbols in that library are not declared in the main <a class="external" href="file:">file:</a></p>
+
+<pre class="examplecode"><font color="#FF0055">-- lib.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">lib</font>
+
+<font color="#0000FF">public include </font><font color="#330033">sublib.e</font>
+
+<font color="#0000FF">public procedure </font><font color="#330033">main</font><font color="#880033">()</font>
+<font color="#330033">...</font>
+
+<font color="#FF0055">-- sublib.e</font>
+<font color="#0000FF">public procedure </font><font color="#330033">sub</font><font color="#880033">()</font>
+<font color="#330033">...</font>
+
+<font color="#FF0055">-- app.ex</font>
+<font color="#0000FF">include </font><font color="#330033">lib.e</font>
+
+<font color="#330033">lib:main</font><font color="#880033">()</font>
+<font color="#330033">lib:sub</font><font color="#880033">()</font>
+</pre>
+
+<p> Now, what happens if you do not use 'public include'?</p>
+
+<pre class="examplecode"><font color="#FF0055">-- lib2.e</font>
+<font color="#0000FF">include </font><font color="#330033">sublib.e</font>
+<font color="#330033">...</font>
+
+<font color="#FF0055">-- app2.ex</font>
+<font color="#0000FF">include </font><font color="#330033">lib.e</font>
+<font color="#330033">lib:main</font><font color="#880033">()</font>
+<font color="#330033">lib:sub</font><font color="#880033">() </font><font color="#FF0055">-- error.  sub() is visible in lib2.e but not in app2.ex</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.4 The visibility of public and export identifiers</h4>
+<a name="_134_thevisibilityofpublicandexportidentifiers"></a><a name="thevisibilityofpublicandexportidentifiers"></a>
+<p> When a file needs to see the public or exported identifiers in another file that includes the first file, the first file must include that other (including) file.</p>
+
+<p> For example, </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Parent file: foo.e --</font>
+<font color="#0000FF">public integer </font><font color="#330033">Foo = 1</font>
+<font color="#0000FF">include </font><font color="#330033">bar.e </font><font color="#FF0055">-- bar.e needs to see Foo</font>
+<font color="#330033">showit</font><font color="#880033">() </font><font color="#FF0055">-- execute a routine in bar.e</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- Included file: bar.e --</font>
+<font color="#0000FF">include </font><font color="#330033">foo.e </font><font color="#FF0055">-- included so I can see Foo</font>
+<font color="#0000FF">constant </font><font color="#330033">xyz = Foo + 1</font>
+
+<font color="#0000FF">public procedure </font><font color="#330033">showit</font><font color="#880033">()</font>
+<font color="#330033">? xyz</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> <em>Public</em> symbols can only be seen by the file that explicitly includes the file where those public symbols are declared.</p>
+
+<p> For example, </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Parent file: foo.e --</font>
+<font color="#0000FF">include </font><font color="#330033">bar.e</font>
+<font color="#330033">showit</font><font color="#880033">() </font><font color="#FF0055">-- execute a public routine in bar.e</font>
+</pre>
+
+<p> If however, a file wants a third file to also see the symbols that it can, it needs to do a <tt>public include</tt>.</p>
+
+<p> For example, </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Parent file: foo.e --</font>
+<font color="#0000FF">public include </font><font color="#330033">bar.e</font>
+<font color="#330033">showit</font><font color="#880033">() </font><font color="#FF0055">-- execute a public routine in bar.e</font>
+
+<font color="#0000FF">public procedure </font><font color="#330033">fooer</font><font color="#880033">()</font>
+<font color="#330033">   . . .</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- Appl file: runner.ex --</font>
+<font color="#0000FF">include </font><font color="#330033">foo.e</font>
+<font color="#330033">showit</font><font color="#880033">() </font><font color="#FF0055">-- execute a public routine that foo.e can see in bar.e</font>
+<font color="#330033">fooer</font><font color="#880033">()  </font><font color="#FF0055">-- execute a public routine in foo.e</font>
+</pre>
+
+<p> The <tt>public include</tt> facility is designed to make having a library composed of multiple files easy for an application to use. It allows the main library file to expose symbols in files that <em>it</em> includes as if the application had actually included them. That way, symbols meant for the end user can be declared in files other than the main file, and the library can still be organized however the author prefers without affecting the end user.</p>
+
+<p> <strong>Another example</strong><br />
+Given that we have two files LIBA.e and LIBB.e ... <div style="margin-left:2em"> </p>
+
+<pre class="examplecode"><font color="#FF0055">-- LIBA.e --</font>
+<font color="#0000FF">public constant</font>
+<font color="#330033">    foo1 = 1,</font>
+<font color="#330033">    foo2 = 2</font>
+
+<font color="#0000FF">export function </font><font color="#330033">foobarr1</font><font color="#880033">()</font>
+<font color="#0000FF">    return </font><font color="#330033">0</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">export function </font><font color="#330033">foobarr2</font><font color="#880033">()</font>
+<font color="#0000FF">    return </font><font color="#330033">0</font>
+<font color="#0000FF">end function</font>
+</pre>
+
+<p> </div>  and <div style="margin-left:2em"> </p>
+
+<pre class="examplecode"><font color="#FF0055">-- LIBB.e --</font>
+<font color="#FF0055">-- I want to pass on just the constants not</font>
+<font color="#FF0055">-- the functions from LIBA.e.</font>
+<font color="#0000FF">public include </font><font color="#330033">LIBA.e</font>
+</pre>
+
+<p> </div>  The export scope modifier is used to limit the extent that symbols can be  accessed. It works just like <tt>public</tt> except that <tt>export</tt> symbols are only ever passed up one level only. In other words, if a file wants to use an <tt>export</tt> symbol, that file must include it explicitly.</p>
+
+<p> In this example above, code in LIBB.e can see both the public and export symbols declared in LIBA.e (<tt>foo1, foo2 foobarr1</tt> and <tt>foobarr2</tt>) because it explicitly includes LIBA.e. And by using the <tt>public</tt> prefix on the <tt>include</tt> of LIBA.e, it also allows any file that <tt>includes</tt> LIBB.e to the <tt>public</tt> symbols from LIBA.e but they will not see any <tt>export</tt> symbols declared in LIBA.e.</p>
+
+<p> In short, a <tt>public include</tt> is used expose <tt>public</tt> symbols that are included, up one level but not any <tt>export</tt> symbols that were include.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.5 The complete set of resolution rules</h4>
+<a name="_135_thecompletesetofresolutionrules"></a><a name="thecompletesetofresolutionrules"></a>
+<p> <strong>Resolution</strong> is the process by which the interpreter determines which specific symbol will actually be used at any given point in the code. This is usually quite easy as most symbol names in a given scope are unique and so Euphoria does not have to choose between them. However, when the same symbol name is used in different but enclosing scopes, Euphoria has to make a decision about which symbol the coder is referring to.</p>
+
+<p> When Euphoria sees an identifier name being used, it looks for the name's declaration starting from the current scope and moving outwards through the enclosing scopes until the name's declaration is found.</p>
+
+<p> The hierarchy of scopes can be viewed like this ... 
+<pre>global/public/export
+  file
+     routine
+        block 1
+           block 2
+           ...
+              block n
+</pre>
+So, if a name is used at a <tt>block</tt> level, Euphoria will first check for its declaration in the same block, and if not found will check the enclosing blocks until it reaches the routine level, in which case it checks the routine (including parameter names), and then check the file that the block is declared in and finally check the global/public/export symbols.</p>
+
+<p> By the way, Euphoria will not allow a name to be declared if it is already declared in the same scope, or enclosing <tt>block</tt> or enclosing <tt>routine</tt>. Thus the following examples are illegal... </p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">a</font>
+<font color="#0000FF">if </font><font color="#330033">x </font><font color="#0000FF">then</font>
+<font color="#0000FF">   integer </font><font color="#330033">a </font><font color="#FF0055">-- redefinition not allowed.</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">x </font><font color="#0000FF">then</font>
+<font color="#0000FF">   integer </font><font color="#330033">a</font>
+<font color="#0000FF">   if </font><font color="#330033">y </font><font color="#0000FF">then</font>
+<font color="#0000FF">      integer </font><font color="#330033">a </font><font color="#FF0055">-- redefinition not allowed.</font>
+<font color="#0000FF">   end if</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<pre class="examplecode"><font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">a</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">x </font><font color="#0000FF">then</font>
+<font color="#0000FF">  integer </font><font color="#330033">a </font><font color="#FF0055">-- redefinition not allowed.</font>
+<font color="#0000FF">end if</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> But note that this below is valid ... </p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">a = 1</font>
+<font color="#0000FF">procedure </font><font color="#330033">foo</font><font color="#880033">()</font>
+<font color="#0000FF">    integer </font><font color="#330033">a = 2</font>
+<font color="#330033">    ? a</font>
+<font color="#0000FF">end procedure</font>
+<font color="#330033">? a</font>
+</pre>
+
+<p> In this situation, the second declaration of 'a' is said to <em>shadow</em> the first one. The output from this example will be ... <div style="margin-left:2em"> 
+<pre>2
+1
+</pre>
+</div>
+<p> Symbols all declared in the same file (be they in blocks, routines or at the file level) are easy to check by Euphoria for scope clashes. However, a problem can arise when symbol names declared as global/public/export in different files are placed in the same scope during <tt>include</tt> processing. As it is quite possible for these files to come from independent developers that are not aware of each other's symbol names, the potential for name clashes is high. A name clash is just when the same name is declared in the same scope but in different files. Euphoria cannot generally decide which name you were referring to when this happens, so it needs you help to resolve it. This is where the <tt>namespace</tt> concept is used.</p>
+
+<p> A namespace is just a name that you assign to an include file so that your code can exactly specify where an identifier that your code is using actually comes from. Using a namespace with an identifier, for example: </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">somefile.e </font><font color="#0000FF">as </font><font color="#330033">my_lib</font>
+<font color="#0000FF">include </font><font color="#330033">another.e</font>
+<font color="#330033">my_lib:foo</font><font color="#880033">()</font>
+</pre>
+
+<p> enables Euphoria to resolve the identifier (<tt>foo</tt>) as explicitly coming from the file associated with the namespace "my_lib". This means that if <tt>foo</tt> was also declared as global/public/export in <em>another.e</em> then that <tt>foo</tt> would be ignored and the <tt>foo</tt> in <em>somefile.e</em> would be used instead. Without that namespace, Euphoria would have complained (<tt>Errors resolving the following references:</tt>)</p>
+
+<p> If you need to use both <tt>foo</tt> symbols you can still do that by using two different namespaces. For example: </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">somefile.e </font><font color="#0000FF">as </font><font color="#330033">my_lib</font>
+<font color="#0000FF">include </font><font color="#330033">another.e  </font><font color="#0000FF">as </font><font color="#330033">her_ns</font>
+<font color="#330033">my_lib:foo</font><font color="#880033">() </font><font color="#FF0055">-- Calls the one in somefile.e</font>
+<font color="#330033">her_ns:foo</font><font color="#880033">() </font><font color="#FF0055">-- Calls the one in another.e</font>
+</pre>
+
+<p> Note that there is a reserved namespace name that is always in use. The special namespace <strong><tt>eu</tt></strong> is used to let Euphoria know that you are accessing a built-in symbol rather than one of the same name declared in someone's file.</p>
+
+<p> For example... </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">somefile.e </font><font color="#0000FF">as </font><font color="#330033">my_lib</font>
+<font color="#330033"> result = my_lib:</font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">something</font><font color="#880033">) </font><font color="#FF0055">-- Calls the 'find' in somefile.e</font>
+<font color="#330033"> xy = eu:</font><font color="#0000FF">find</font><font color="#880033">(</font><font color="#330033">X, Y</font><font color="#880033">) </font><font color="#FF0055">-- Calls Euphoria's built-in 'find'</font>
+</pre>
+
+<p> The controlling variable used in a <a href="lang_loop.html#_164_forstatement">for statement</a> is special. It is automatically declared at the beginning of the loop block, and its scope ends at the end of the for-loop. If the loop is inside a function or procedure, the loop variable cannot have the same name as any other variable declared in the routine or enclosing block. When the loop is at the top level, outside of any routine, the loop variable cannot have the same name as any other file-scoped variable. You can use the same name in many different for-loops as long as the loops are not nested. You do not declare loop variables as you would other variables because they are automatically declared as atoms. The range of values specified in the for statement defines the legal values of the loop variable.</p>
+
+<p> Variables declared inside other types of blocks, such as a <strong>loop</strong>, <strong>while</strong>, <strong>if</strong> or <strong>switch</strong> statement use the same scoping rules as a for-loop index.</p>
+
+<p> 
+<a name="override"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.2.3.6 The override qualifier</h4>
+<a name="_137_theoverridequalifier"></a><a name="theoverridequalifier"></a>
+<p> There are times when it is necessary to replace a global, public or export identifier. Typically, one would do this to extend the capabilities of a routine. Or perhaps to supersede the user defined type of some public, export or global variable, since the type itself may not be global.</p>
+
+<p> This can be achieved by declaring the identifier as <strong>override</strong>: </p>
+
+<pre class="examplecode"><font color="#0000FF">override procedure puts</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">channel,</font><font color="#0000FF">sequence </font><font color="#330033">text</font><font color="#880033">)</font>
+<font color="#330033">    eu:</font><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">log_file, text</font><font color="#880033">)</font>
+<font color="#330033">    eu:</font><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">channel, text</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> A warning will be issued when you do this, because it can be very confusing, and would probably break code, for the new routine to change the behavior of the former routine. Code that was calling the former routine expects no difference in service, so there should not be any.</p>
+
+<p> If an identifier is declared global, public or export, but not override, and there is a built-in of the same name, Euphoria will not assume an override, and will choose the built-in. A warning will be generated whenever this happens.</p>
+
+<p> 
+<a name="deprecate"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.2.4 Deprecation</h3>
+<a name="_139_deprecation"></a><a name="deprecation"></a>
+<p> Beginning in Euphoria 4.1, procedures and functions can be marked as deprecated. Deprecation is a computer software term that assigns a status to a particular item to indicate that it should be avoided, typically because it has been superseded. Deprecated routines remain in the language or library but should be avoided.</p>
+
+<p> The <tt>deprecate</tt> modifier will cause a warning to appear if that routine is used. It serves no more purpose but is a powerful way to keep an evolving library clean, slim and fit for the task. Instead of simply removing an old routine authors are encouraged to use the <tt>deprecate</tt> modifier on a routine and leave it a part of the library for at least one major version increment. It can then be removed. This allows your users time to upgrade their code to the new recommended routine. Deprecated routines should be included in your manual, state when and why they were deprecated and what is the path future for accomplishing the same task.</p>
+
+<pre class="examplecode"><font color="#FF0055">--**</font>
+<font color="#FF0055">-- Say hello to someone</font>
+<font color="#FF0055">--</font>
+<font color="#FF0055">-- Parameters:</font>
+<font color="#FF0055">--   * name - name of person to say hello to</font>
+<font color="#FF0055">--</font>
+<font color="#FF0055">-- Deprecated:</font>
+<font color="#FF0055">--   ##say_hello## has been deprecated in favor of the new greet routine.</font>
+<font color="#FF0055">--</font>
+
+<font color="#0000FF">deprecate public procedure </font><font color="#330033">say_hello</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">name </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#0000FF">public procedure </font><font color="#330033">greet</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name=</font><font color="#330033">"World"</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">greeting=</font><font color="#330033">"Hello"</font><font color="#880033">)</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%s, %s\n"</font><font color="#330033">, </font><font color="#993333">{ </font><font color="#330033">greeting, name </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<p> When deprecating a routine, the keyword <tt>deprecate</tt> should occur before any scope modifier.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_def.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_assignment.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_def.html">4.1 Definition</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_assignment.html">4.3 Assignment statement</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

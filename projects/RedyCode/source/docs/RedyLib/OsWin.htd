@@ -1,0 +1,146 @@
+==Operating System Window Library
+oswin.e : Operating System API layer
+
+===Introduction
+OS Window provides a layer between OS API and the Redy GUI. Currently, only win32api is supported.
+
+===API
+The API for this library is not recommended for direct use, however some routines may be accessible through the [[GUI library->RedyLib/Gui]] or  [[Widget library->RedyLib/Gui/Widgets]] namespaces. 
+
+The routines are listed here, but not supported or documented currently, bucause it is considered low-level API that the rest of RedyLib accesses, not the application programmer. This library is subject to change as cross-platform support is added in a future version.
+
+====Globals
+=====atom GuiRunning
+=====constant False, True
+=====enum --drawing commands
+    DR_SelectBitmap,
+    DR_Restrict,
+    DR_Release,
+    DR_Offset,
+    DR_Scroll,
+    
+    DR_Arc,
+    DR_Image,
+    DR_Chord,
+    DR_Ellipse,
+    DR_Line,
+    DR_PolyLine,
+    DR_Pie,
+    DR_Polygon,
+    DR_Rectangle,
+    DR_RoundRect,
+    DR_BackColor,
+    DR_PenBkColor,
+    DR_PenBkMode,
+    DR_PenBrushColor,
+    DR_PenColor,
+    DR_PenMode,
+    DR_PenStyle,
+    DR_PenWidth,
+    DR_Pixel,
+    DR_TextColor,
+    DR_Font,
+    DR_PenPos,
+    DR_Print,
+    DR_Printf,
+    DR_Puts,
+    
+    DR_BrushStyle,
+    DR_BrushHatch,
+    DR_BrushColor
+
+Example:
+<eucode>
+
+</eucode>
+
+====Routines
+=====procedure set_global_busy(atom busyornot) --set mouse cursor to "Busy" (or clear) for all fluidae windows
+=====function load_bitmap(sequence bmpfile)
+=====function get_sys_color(atom color)
+=====function ClientToScreen(atom hWnd, sequence xyin)
+=====procedure capture_mouse(atom hwnd)
+=====procedure release_mouse()
+=====function EnumFonts(atom hWnd)
+=====function CreateProcess(sequence CommandLine)
+=====function TerminateProcess(atom hProcess, atom signal)
+=====function sm_create(sequence strHandle, integer size)
+=====function sm_open(sequence strHandle)
+=====procedure sm_close(object smPointer)
+=====function load_images(atom hwnd)
+=====procedure window_add_event(atom winid, sequence evtype, object evdata)
+=====function window_get_event()
+=====procedure close_all_popups(sequence dbug)
+=====procedure win_main()
+=====procedure start()
+=====function create_window(atom wid, sequence wtitle, object wstyle,
+=====procedure destroy_window(atom hWnd)
+=====procedure show_window(atom hWnd, atom maximized)
+=====procedure hide_window(atom hWnd)
+=====function get_window_owner(atom hWnd)
+=====function draw_enabled(atom hWnd)
+=====procedure enable_draw(atom hWnd)
+=====procedure disable_draw(atom hWnd)
+=====procedure enable_close(atom hWnd, atom en)
+=====function get_enable_close(atom hWnd)
+=====procedure set_window_title(atom hWnd, sequence title)
+=====procedure set_window_size(atom hWnd, atom width, atom height) --set window size by client size
+=====function get_window_size(atom hWnd)
+=====procedure set_window_pos(atom hWnd, atom x, atom y)
+=====function get_window_pos(atom hWnd)
+=====function client_area_offset(atom hWnd)
+=====procedure set_window_topmost(atom hWnd)
+=====procedure set_window_not_topmost(atom hWnd)
+=====procedure set_window_top(atom hWnd)
+=====procedure set_window_bottom(atom hWnd)
+=====procedure set_window_modal(atom hWnd)
+=====function get_window_modal(atom hWnd)
+=====procedure set_window_modal_override(atom hWnd, atom mo) --don't allow modal windows to block specified window (used for debug console and error messages)
+=====function get_window_modal_override(atom hWnd)
+=====procedure setTimer(atom hWnd, atom nIDEvent, atom uElapse)
+=====procedure killTimer(atom hWnd, atom uIDEvent)
+=====procedure set_global_busy(atom busyornot) --set mouse cursor to "Busy" (or clear) for all fluidae windows
+=====procedure refresh_mouse_pointer(atom hWnd)
+=====procedure set_mouse_pointer(atom hWnd, atom mouseP)
+=====function get_mouse_pos()
+=====function get_window_focus()
+=====function GetOpenFileName(atom hwnd, sequence Filter, atom allowmultiselect)
+=====function GetSaveFileName(atom hwnd, sequence currentName)
+=====function clipboard_write_txt(atom hWnd, sequence txt) --"cut" or "copy" text to the clipboard. hWnd is a Window handle
+=====function clipboard_read_txt(atom hWnd) --
+=====function get_text_extent(atom windowid, sequence txt) --SEQUENCE: {width, height}
+=====function get_text_width(atom windowid, sequence txt)
+=====function get_text_height(atom windowid, sequence txt)
+=====procedure load_bitmap(sequence bitmapname, sequence fName) --loads a bitmap, returns the handle
+=====procedure create_bitmap(sequence bitmapname, atom xs, atom ys)
+=====procedure destroy_bitmap(object hbit)
+=====function get_pixel_color(sequence bitmapname, atom wh, atom xpos, atom ypos)
+=====function get_bitmap_size(sequence bitmapname)
+=====function bitmap_to_sequence(sequence bitmapname, atom wh)
+=====procedure sequence_to_bitmap(atom hwnd, sequence bitmapname, sequence bitmapdata)
+=====function bitmap_effect(atom hwnd, sequence bitmapname, sequence effectname, atom refresh)
+=====procedure set_font(object windowid, sequence fontname, object size, object attributes)
+=====procedure draw(atom hwnd, sequence cmds, sequence bmpname, object invalidrect)
+=====procedure update_windows()
+=====function struct_allot(atom dsize)
+=====function struct_allotted_size()
+=====procedure link_dll_routines()
+=====function RegisterClassEx(
+=====function CreateWindowEx(
+=====function rgb(atom r, atom g, atom b)
+=====function get_rgb(atom color)
+=====function short_int( atom i ) --from win32lib
+=====function lo_word( atom pData) --from win32lib
+=====function hi_word( atom pData)
+=====function getPrimaryDisplaySize() --get size of primary display
+=====function createMousePointer( atom x, atom y, sequence image ) --from win32lib
+=====function TrackMouseEvent(atom hwndTrack)
+=====function create_font(atom hdc, sequence fName, object fSize, atom fWeight, atom fItalic, atom fUnderline, atom fStrikeout)
+=====function GetDrivesInfo()  --get info on all logical drives in the system
+=====function GetLastDlgError()  -- return last common dialogs error code.
+=====function GetFileTitle(sequence File)
+=====function ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb, sequence workingdir)
+
+
+
+

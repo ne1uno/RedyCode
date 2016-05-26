@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_loop.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_short_circuit.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_loop.html">4.5 Loop statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_short_circuit.html">4.7 Short-Circuit Evaluation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.6 Flow control statements</h2>
+<a name="_165_flowcontrolstatements"></a><a name="flowcontrolstatements"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_flow.html#_165_flowcontrolstatements">4.6 Flow control statements</a></div>
+<div class="toc_3"><a href="lang_flow.html#_166_exitstatement">4.6.1 exit statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_167_breakstatement">4.6.2 break statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_168_continuestatement">4.6.3 continue statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_169_retrystatement">4.6.4 retry statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_171_withentrystatement">4.6.5 with entry statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_172_gotostatement">4.6.6 goto statement</a></div>
+<div class="toc_3"><a href="lang_flow.html#_173_headerlabels">4.6.7 Header Labels</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> Program execution flow refers to the order in which program statements are run in. By default, the next statement to run after the current one is the next statement <em>physically</em> located after the current one.<br />
+Example: </p>
+
+<pre class="examplecode"><font color="#330033">a = b + c</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"The result of adding %d and %d is %d"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">b,c,a</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<p> In that example, <tt>b</tt> is added to <tt>c</tt>, assigning the result to <tt>a</tt>, and then the information is displayed on the screen using the <tt>printf</tt> statement.</p>
+
+<p> However, there are many times in which the order of execution needs to be different from the default order, to get the job done. Euphoria has a number of <em>flow control statements</em> that you can use to arrange the execution order of statements.</p>
+
+<p> A set of statements that are run in their order of appearance is called a <em>block</em>. Blocks are good ways to organize code in easily identifiable chunks. However it can be desirable to leave a block before reaching the end, or slightly alter the default course of execution.<br />
+
+<p> The following flow control keywords are available.</p>
+
+<pre class="examplecode"><font color="#0000FF">break retry entry exit continue return goto end</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.1 exit statement</h3>
+<a name="_166_exitstatement"></a><a name="exitstatement"></a>
+<p> Exiting a loop is done with the keyword <strong>exit</strong>. This causes flow to immediately leave the current loop and recommence with the first statement after the end of the loop. </p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = a </font><font color="#0000FF">to </font><font color="#330033">b </font><font color="#0000FF">do</font>
+<font color="#330033">    c = i</font>
+<font color="#0000FF">    if </font><font color="#330033">doSomething</font><font color="#880033">(</font><font color="#330033">i</font><font color="#880033">) </font><font color="#330033">= 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        exit </font><font color="#FF0055">-- Stop executing code inside the 'for' block.</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end for</font>
+
+<font color="#FF0055">-- Flow restarts here.</font>
+<font color="#0000FF">if </font><font color="#330033">c = a </font><font color="#0000FF">then </font><font color="#330033">...</font>
+</pre>
+
+<p> But sometimes you need to leave a block that encloses the current one. Euphoria has two ways available for you to do this. The safest way, in terms of future maintenance, is to name the block you want to exit from and use that name on the exit statement. The other way is to use a number on the exit statement that refers to the depth that you want to exit from.</p>
+
+<p> A block's name is always a string literal and only a string literal. You cannot use a variable that contains the block's name on an exit statement. The name comes after the <tt>label</tt> keyword, just before the <tt>do</tt> keyword.<br />
+Example: </p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">b</font>
+<font color="#330033">  b = 0</font>
+<font color="#0000FF">  for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">label </font><font color="#330033">"main" </font><font color="#0000FF">do</font>
+<font color="#0000FF">    for </font><font color="#330033">j = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">do</font>
+<font color="#330033">      b  += i + j</font>
+<font color="#330033">      ? </font><font color="#880033">{</font><font color="#330033">i, j, b</font><font color="#880033">}</font>
+<font color="#0000FF">      if </font><font color="#330033">b &gt; 50 </font><font color="#0000FF">then</font>
+<font color="#330033">        b  = 0</font>
+<font color="#0000FF">        exit </font><font color="#330033">"main"</font>
+<font color="#0000FF">      end if</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">  end for</font>
+<font color="#330033">  ? b</font>
+</pre>
+
+<p> The output from this is ...</p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">1, 1,  2</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 2,  5</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 3,  9</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 4, 14</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 5, 20</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 6, 27</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 7, 35</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 8, 44</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 9, 54</font><font color="#880033">}</font>
+<font color="#330033">0</font>
+</pre>
+
+<p> The <strong>exit "main"</strong> causes execution flow to leave the <strong>for</strong> block named <em>main</em>.</p>
+
+<p> The same thing could be achieved using the <strong>exit N</strong> format...</p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">b</font>
+<font color="#330033">  b = 0</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    for </font><font color="#330033">j = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">do</font>
+<font color="#330033">        b  += i + j</font>
+<font color="#330033">        ? </font><font color="#880033">{</font><font color="#330033">i, j, b</font><font color="#880033">}</font>
+<font color="#0000FF">        if </font><font color="#330033">b &gt; 50 </font><font color="#0000FF">then</font>
+<font color="#330033">            b  = 0</font>
+<font color="#0000FF">            exit </font><font color="#330033">2 </font><font color="#FF0055">-- exit 2 levels of depth</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">end for</font>
+
+<font color="#330033">? b</font>
+</pre>
+
+<p> But using this way means you have to take more care when changing the program so that if you change the depth, you also need to change the <em>exit</em> statement.</p>
+
+<p> <dl>
+<dt>Note:
+</dt>
+<dd>A special form of <strong>exit N</strong> is <tt>exit 0</tt>. This leaves all levels of loop, regardless of the depth. Control continues after the outermost loop block. Likewise, <tt>exit -1</tt> exits the second outermost loop, and so on.</dd>
+</dl>
+For easier and safer program maintenance, the explicit label form is to be preferred. Other forms are variously sensitive to changes in the program organization. Yet, they may prove more convenient in short, short lived programs, and are provided mostly for this purpose.</p>
+
+<p> For information on how to associate a string to a block of code, see the section <a href="lang_flow.html#_173_headerlabels">Header Labels</a>.</p>
+
+<p> An <strong>exit</strong> without any label or number in a <a href="lang_loop.html#_160_whilestatement">while statement</a> or a <a href="lang_loop.html#_164_forstatement">for statement</a> causes immediate termination of that loop, with control passing to the first statement after the loop.<br />
+Example: </p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">100 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    if </font><font color="#330033">a</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= x </font><font color="#0000FF">then</font>
+<font color="#330033">        location = i</font>
+<font color="#0000FF">        exit</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> It is also quite common to see something like this:</p>
+
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">TRUE = 1</font>
+
+<font color="#0000FF">while </font><font color="#330033">TRUE </font><font color="#0000FF">do</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">    if </font><font color="#330033">some_condition </font><font color="#0000FF">then</font>
+<font color="#0000FF">        exit</font>
+<font color="#0000FF">    end if</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> i.e. an "infinite" while-loop that actually terminates via an <strong>exit statement</strong> at some arbitrary point in the body of the loop.</p>
+
+<p> <dl>
+<dt><strong>Performance Note:</strong>
+</dt>
+<dd>Euphoria optimizes this type of loop.  At run-time, no test is performed at the top of the loop. There's just a simple unconditional jump from <strong>end while</strong> back to the first statement inside the loop.</dd>
+</dl>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.2 break statement</h3>
+<a name="_167_breakstatement"></a><a name="breakstatement"></a>
+<p> Works exactly like the <strong>exit statement</strong>, but applies to <strong>if statements</strong> or <strong>switch statements</strong> rather than to loop statements of any kind. Example:</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#330033">= </font><font color="#330033">'E' </font><font color="#0000FF">then</font>
+<font color="#330033">    a = 3</font>
+<font color="#0000FF">    if </font><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= </font><font color="#330033">'u' </font><font color="#0000FF">then</font>
+<font color="#330033">        b = 1</font>
+<font color="#0000FF">        if </font><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">3</font><font color="#880033">] </font><font color="#330033">= </font><font color="#330033">'p' </font><font color="#0000FF">then</font>
+<font color="#0000FF">            break </font><font color="#330033">0 </font><font color="#FF0055">-- leave topmost if block</font>
+<font color="#0000FF">        end if</font>
+<font color="#330033">        a = 2</font>
+<font color="#0000FF">    else</font>
+<font color="#330033">        b = 4</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">else</font>
+<font color="#330033">    a = 0</font>
+<font color="#330033">    b = 0</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> This code results in:</p>
+<ul><li>"Dur" -&gt; a=0 b=0
+</li><li>"Exe" -&gt; a=3 b=4
+</li><li>"Eux" -&gt;  a=2 b=1
+</li><li>"Eup" -&gt;  a=3 b=1
+</li></ul>
+<p>The same optional parameters can be used with the <strong>break</strong> statement as with the <strong>exit</strong> statement, but of course apply to if and switch blocks only, instead of loops.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.3 continue statement</h3>
+<a name="_168_continuestatement"></a><a name="continuestatement"></a>
+<p> Likewise, skipping the rest of an iteration in a single code block is done using a single keyword, <strong>continue</strong>. The <strong>continue statement</strong> continues execution of the loop it applies to by going to the next iteration now. Going to the next iteration means testing a condition (for <strong>while</strong> and <strong>loop</strong> constructs, or changing the <strong>for</strong> construct variable index and checking whether it is still within bounds.</p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">i = 3 </font><font color="#0000FF">to </font><font color="#330033">6 </font><font color="#0000FF">do</font>
+<font color="#330033">    ? i</font>
+<font color="#0000FF">    if </font><font color="#330033">i = 4 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        puts</font><font color="#880033">(</font><font color="#330033">1,</font><font color="#330033">"(2)\n"</font><font color="#880033">)</font>
+<font color="#0000FF">        continue</font>
+<font color="#0000FF">    end if</font>
+<font color="#330033">    ? i * i</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> This will print 3, 9, 4, (2), 5 25, 6 36.</p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">b</font>
+<font color="#330033">  b = 0</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">label </font><font color="#330033">"main" </font><font color="#0000FF">do</font>
+<font color="#0000FF">    for </font><font color="#330033">j = 1 </font><font color="#0000FF">to </font><font color="#330033">20 </font><font color="#0000FF">do</font>
+<font color="#330033">        b  += i + j</font>
+<font color="#0000FF">        if </font><font color="#330033">b &gt; 50 </font><font color="#0000FF">then</font>
+<font color="#0000FF">            printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"%d "</font><font color="#330033">, b</font><font color="#880033">)</font>
+<font color="#330033">            b  = 0</font>
+<font color="#0000FF">            continue </font><font color="#330033">"main"</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">end for</font>
+
+<font color="#330033">? b</font>
+</pre>
+
+<p> The same optional parameters that can be used in an <strong>exit</strong> statement can apply to a <strong>continue</strong> statement.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.4 retry statement</h3>
+<a name="_169_retrystatement"></a><a name="retrystatement"></a>
+<p> The <strong>retry statement</strong> retries executing the current iteration of the loop it applies to. The statement branches to the first statement of the designated loop, without testing anything nor incrementing the for loop index.</p>
+
+<p> Normally, a sub-block which contains a <strong>retry statement</strong> also contains another flow control keyword, since otherwise the iteration would be endlessly executed.</p>
+
+<pre class="examplecode"><font color="#330033">errors = 0</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">files_to_open</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#330033">    fh = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">files_to_open</font><font color="#993333">[</font><font color="#330033">i</font><font color="#993333">]</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">fh=-1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        if </font><font color="#330033">errors &gt; 5 </font><font color="#0000FF">then</font>
+<font color="#0000FF">            exit</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            errors += 1</font>
+<font color="#0000FF">            retry</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end if</font>
+<font color="#330033">    file_handles</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= fh</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> Since <strong>retry</strong> does not change the value of i and tries again opening the same file, there has to be a way to break from the loop, which the <strong>exit statement</strong> provides.</p>
+
+<p> The same optional parameters that can be used in an <strong>exit</strong> statement can apply to a <strong>retry</strong> statement.</p>
+
+<p> 
+<a name="entry"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.5 with entry statement</h3>
+<a name="_171_withentrystatement"></a><a name="withentrystatement"></a>
+<p> It is often the case that the first iteration of a loop is somehow special. Some things have to be done before the loop starts--they are done before the statement starting the loop.  Now, the problem is that, just as often, some things do not need to, or should not, be done at this initialization stage. The <strong>entry keyword</strong> is an alternative to setting flags relentlessly and forgetting to update them. Just add the <strong>entry</strong> keyword at the point you wish the first iteration starts.</p>
+
+<pre class="examplecode"><font color="#0000FF">public function </font><font color="#330033">find_all</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x, </font><font color="#0000FF">sequence </font><font color="#330033">source, </font><font color="#0000FF">integer </font><font color="#330033">from</font><font color="#880033">)</font>
+<font color="#0000FF">    sequence </font><font color="#330033">ret = </font><font color="#880033">{}</font>
+
+<font color="#0000FF">    while </font><font color="#330033">from &gt; 0 </font><font color="#0000FF">with entry do</font>
+<font color="#330033">        ret &amp;= from</font>
+<font color="#330033">        from += 1</font>
+<font color="#0000FF">    entry</font>
+<font color="#330033">        from = find_from</font><font color="#880033">(</font><font color="#330033">x, source, from</font><font color="#880033">)</font>
+<font color="#0000FF">    end while</font>
+
+<font color="#0000FF">    return </font><font color="#330033">ret</font>
+<font color="#0000FF">end function</font>
+</pre>
+
+<p> Instead of performing an initial test, which may crash because from has not been assigned a value yet, the first iteration jumps at the point where from is being computed. The following iterations are normal. To emphasize the fact that the first iteration is not normal, the entry clause must be added to the loop header, after the condition.</p>
+
+<p> The entry statement is not supported for <tt>for</tt> loops, because they have a more rigid nature structure than while or loop constructs.</p>
+
+<p> <dl>
+<dt>Note on infinite loops.
+</dt>
+<dd>With <strong>eui.exe</strong> or <strong>eui</strong>, control-c will always stop your program immediately, but with the <tt>euiw.exe</tt> that has not produced any console output, you will have to use the <em>Windows</em> process monitor to end the application.</dd>
+</dl>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.6 goto statement</h3>
+<a name="_172_gotostatement"></a><a name="gotostatement"></a>
+<p> <tt>goto</tt> instructs the computer to resume code execution at a place which does not follow the statement. The place to resume execution is called the <em>target</em> of the statement. It is restricted to lie in the current routine, or the current file if outside any routine.</p>
+
+<p> Syntax is: </p>
+
+<pre class="examplecode"><font color="#0000FF">goto </font><font color="#330033">"label string"</font>
+</pre>
+
+<p> The target of a <tt>goto</tt> statement can be any accessible <tt>label</tt> statement: </p>
+
+<pre class="examplecode"><font color="#0000FF">label </font><font color="#330033">"label string"</font>
+</pre>
+
+<p> Label names must be double quoted constant strings. Characters that would be illegal in an Euphoria identifier may appear in a label name, since it is a regular string.</p>
+
+<p> <a href="lang_flow.html#_173_headerlabels">Header Labels</a> do not count as possible goto targets.</p>
+
+<p> Use <tt>goto</tt> in production code when all the following applies: </p>
+<ul><li>you want to proceed with a statement which is not the following one;
+</li><li>the various structured constructs wouldn't do, or very awkwardly;
+</li><li>you contemplate a significant gain in speed/reliability from such a direct move;
+</li><li>the code flow remains understandable for an outsider nevertheless.
+</li></ul>
+<p>During early development, it may be nice to have while the code is not firmly structured. But most instances of <tt>goto</tt> should melt into structured constructs as soon as possible as code matures. You may find out that modifying a program that has goto statements is usually trickier than if it had not had them.</p>
+
+<p> The following may be situations where <tt>goto</tt> can help: </p>
+<ul><li>A routine has several return statements, and some processing must be done before returning, no matter from where. It may be clearer to goto a single return point and perform the processing only at this point.
+</li><li>An exit statement in a loop corresponds to an early exit, and the normal processing that immediately follows the loop is not relevant. Replacing an exit statement followed by various flag testing by a single goto can help.
+</li></ul>
+<p>Explicit label names will tremendously help maintenance. Remember that there is no limit to their contents.</p>
+
+<p> goto-ing into a scope (like an if block, a for loop,...) will just do that. Some variables may be defined only in that scope, and they may or may not have sensible values. It is up to the programmer to take appropriate action in this respect.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.6.7 Header Labels</h3>
+<a name="_173_headerlabels"></a><a name="headerlabels"></a>
+<p> As shown in the above section on control flow statements, most can have their own label. To label a flow control statement, use a <tt>label</tt> clause immediately preceding the flow control's terminator keyword (<tt>then</tt> / <tt>do</tt>).</p>
+
+<p> A <tt>label</tt> clause consists of the keyword <strong><tt>label</tt></strong> followed by a string literal. The string is the label name.</p>
+
+<p> Examples: </p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">n=0 </font><font color="#0000FF">label </font><font color="#330033">"an_if_block" </font><font color="#0000FF">then</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">end if</font>
+
+<font color="#0000FF">while </font><font color="#330033">TRUE </font><font color="#0000FF">label </font><font color="#330033">"a_while_block" </font><font color="#0000FF">do</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">end while</font>
+
+<font color="#0000FF">loop label </font><font color="#330033">"a_loop_block" </font><font color="#0000FF">do</font>
+<font color="#330033">    ...</font>
+<font color="#0000FF">   until </font><font color="#330033">TRUE</font>
+<font color="#0000FF">end loop</font>
+
+<font color="#0000FF">switch </font><font color="#330033">x </font><font color="#0000FF">label </font><font color="#330033">"a_switch_block" </font><font color="#0000FF">do</font>
+<font color="#330033">   ...</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> <strong>Note</strong>: If a flow control statement has both an <tt>entry</tt> clause and a <tt>label</tt> clause, the <tt>entry</tt> clause must come before the <tt>label</tt> clause:</p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">label </font><font color="#330033">"top" </font><font color="#0000FF">with entry do </font><font color="#FF0055">-- WRONG</font>
+
+<font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">with entry label </font><font color="#330033">"top" </font><font color="#0000FF">do </font><font color="#FF0055">-- CORRECT</font>
+</pre>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_loop.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_short_circuit.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_loop.html">4.5 Loop statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_short_circuit.html">4.7 Short-Circuit Evaluation</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

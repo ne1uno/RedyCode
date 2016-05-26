@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href=""><img src="images/prev.png" /></a></td>
+									<td><a href="eu_intro.html">Up</a></td>
+									<td><a href="intro.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										Up: <a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										<a href="intro.html">1.2 Introduction</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="installation.html">2 Installing Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\welcome.txt -->
+<h2>1.1 Quick Overview</h2>
+<a name="_3_quickoverview"></a><a name="quickoverview"></a>
+<p> Welcome to the Euphoria programming language!</p>
+
+<p> Euphoria is a programming language with the following advantages over conventional languages:</p>
+
+<p> <dl>
+<dt>Euphoric
+</dt>
+<dd>A remarkably simple, flexible, powerful language definition that is easy to    learn and use.</dd>
+<dt>Dynamic
+</dt>
+<dd>Variables grow or shrink without the programmer having to worry about    allocating and freeing chunks of memory.  Objects of any size can be assigned    to an element of a Euphoria sequence (array).</dd>
+<dt>Fast
+</dt>
+<dd>A high-performance, state-of-the-art interpreter that's significantly faster    than  conventional interpreters such as Perl and Python.</dd>
+<dt>Compiles
+</dt>
+<dd>An optimizing <a href="e2c.html#_533_euphoriatoctranslator">Euphoria To C Translator</a>, that can boost your speed even further, often by a factor of 2x to 5x versus the already-fast interpreter.</dd>
+<dt>Safe
+</dt>
+<dd>Extensive run-time checking for: out-of-bounds subscripts, uninitialized variables, bad parameter values for library routines, illegal value assigned to a variable and many more. There are no mysterious machine exceptions--you will always get a full English description of any problem that occurs with  your program at run-time, along with a call-stack trace-back and a dump of all of your variable values. Programs can be debugged quickly, easily and  more thoroughly.</dd>
+<dt>High level
+</dt>
+<dd>Features of the underlying hardware are completely hidden. Programs are not aware of word-lengths, underlying bit-level representation of values, byte-order etc.</dd>
+<dt>Debugger
+</dt>
+<dd>A full-screen source debugger and an execution profiler are included.</dd>
+<dt>Editor
+</dt>
+<dd>A full-screen, multi-file editor is also included. On a color monitor, the editor displays Euphoria programs in multiple colors, to highlight comments, reserved words, built-in functions, strings, and level of nesting of brackets. It optionally performs auto-completion of statements, saving you typing effort and reducing syntax errors. This editor is written in Euphoria, and the source code is provided to you without restrictions. You are free to modify it, add features, and redistribute it as you wish.</dd>
+<dt>Multi-platform
+</dt>
+<dd>Euphoria programs run under Windows, Linux, OS/X, FreeBSD, NetBSD, OpenBSD and can be easily ported to any platform supporting GCC.</dd>
+<dt>Stand-alone
+</dt>
+<dd>You can make a single, stand-alone executable file from your program.</dd>
+<dt>Generic
+</dt>
+<dd>Euphoria routines are naturally generic. The example program below shows a  single routine that will sort any type of data--integers, floating-point numbers, strings etc. Euphoria is not an "object-oriented" language, yet it achieves many of the benefits of these languages in a much simpler way.</dd>
+<dt>Free
+</dt>
+<dd>Euphoria is completely free and open source.</dd>
+</dl>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">original_list</font>
+
+<font color="#0000FF">function </font><font color="#330033">merge_sort</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#FF0055">-- put x into ascending order using a recursive merge sort</font>
+<font color="#0000FF">    integer </font><font color="#330033">n, mid</font>
+<font color="#0000FF">    sequence </font><font color="#330033">merged, a, b</font>
+
+<font color="#330033">    n = </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">n = 0 </font><font color="#0000FF">or </font><font color="#330033">n = 1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        return </font><font color="#330033">x  </font><font color="#FF0055">-- trivial case</font>
+<font color="#0000FF">    end if</font>
+
+<font color="#330033">    mid = </font><font color="#0000FF">floor</font><font color="#880033">(</font><font color="#330033">n/2</font><font color="#880033">)</font>
+<font color="#330033">    a = merge_sort</font><font color="#880033">(</font><font color="#330033">x</font><font color="#993333">[</font><font color="#330033">1..mid</font><font color="#993333">]</font><font color="#880033">)       </font><font color="#FF0055">-- sort first half of x</font>
+<font color="#330033">    b = merge_sort</font><font color="#880033">(</font><font color="#330033">x</font><font color="#993333">[</font><font color="#330033">mid+1..n</font><font color="#993333">]</font><font color="#880033">)     </font><font color="#FF0055">-- sort second half of x</font>
+
+<font color="#FF0055">    -- merge the two sorted halves into one</font>
+<font color="#330033">    merged = </font><font color="#880033">{}</font>
+<font color="#0000FF">    while length</font><font color="#880033">(</font><font color="#330033">a</font><font color="#880033">) </font><font color="#330033">&gt; 0 </font><font color="#0000FF">and length</font><font color="#880033">(</font><font color="#330033">b</font><font color="#880033">) </font><font color="#330033">&gt; 0 </font><font color="#0000FF">do</font>
+<font color="#0000FF">        if compare</font><font color="#880033">(</font><font color="#330033">a</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#330033">, b</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">) </font><font color="#330033">&lt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">            merged = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">merged, a</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#330033">            a = a</font><font color="#880033">[</font><font color="#330033">2..</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">a</font><font color="#993333">)</font><font color="#880033">]</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            merged = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">merged, b</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#330033">            b = b</font><font color="#880033">[</font><font color="#330033">2..</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">b</font><font color="#993333">)</font><font color="#880033">]</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end while</font>
+<font color="#0000FF">    return </font><font color="#330033">merged &amp; a &amp; b  </font><font color="#FF0055">-- merged data plus leftovers</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">print_sorted_list</font><font color="#880033">()</font>
+<font color="#FF0055">-- generate sorted_list from original_list</font>
+<font color="#0000FF">    sequence </font><font color="#330033">sorted_list</font>
+    
+<font color="#330033">    original_list = </font><font color="#880033">{</font><font color="#330033">19, 10, 23, 41, 84, 55, 98, 67, 76, 32</font><font color="#880033">}</font>
+<font color="#330033">    sorted_list = merge_sort</font><font color="#880033">(</font><font color="#330033">original_list</font><font color="#880033">)</font>
+<font color="#0000FF">    for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">sorted_list</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#330033">    	display</font><font color="#880033">(</font><font color="#330033">"Number [] was at position [:2], now at [:2]"</font><font color="#330033">, </font>
+<font color="#993333">    	        {</font><font color="#330033">sorted_list</font><font color="#0000FF">[</font><font color="#330033">i</font><font color="#0000FF">]</font><font color="#330033">, </font><font color="#0000FF">find</font><font color="#0000FF">(</font><font color="#330033">sorted_list</font><font color="#5500FF">[</font><font color="#330033">i</font><font color="#5500FF">]</font><font color="#330033">, original_list</font><font color="#0000FF">)</font><font color="#330033">, i</font><font color="#993333">}</font>
+<font color="#880033">    	    )</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">print_sorted_list</font><font color="#880033">()     </font><font color="#FF0055">-- this command starts the program</font>
+</pre>
+
+<p> Euphoria has come a long way since v1.0 was released in July 1993 by <strong>R</strong>apid <strong>D</strong>eployment <strong>S</strong>oftware (<em>RDS</em>). There are now enthusiastic users around the world.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href=""><img src="images/prev.png" /></a></td>
+									<td><a href="eu_intro.html">Up</a></td>
+									<td><a href="intro.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href=""></a>
+									</td>
+									<td width="20%">
+										Up: <a href="eu_intro.html">1 Euphoria Programming Language v4.1</a>
+									</td>
+									<td width="20%">
+										<a href="intro.html">1.2 Introduction</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="installation.html">2 Installing Euphoria</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="e2c.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="tasking.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="e2c.html">6.4 Euphoria To C Translator</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="tasking.html">6.6 Multitasking in Euphoria</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h2>6.5 Indirect Routine Calling</h2>
+<a name="_574_indirectroutinecalling"></a><a name="indirectroutinecalling"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="dynamic.html#_574_indirectroutinecalling">6.5 Indirect Routine Calling</a></div>
+<div class="toc_3"><a href="dynamic.html#_575_indirectcallingaroutinecodedineuphoria">6.5.1 Indirect Calling a Routine Coded in Euphoria</a></div>
+<div class="toc_4"><a href="dynamic.html#_576_gettingaroutineidentifier">6.5.1.1 Getting a Routine Identifier</a></div>
+<div class="toc_4"><a href="dynamic.html#_577_callingeuphoriaroutinesbyid">6.5.1.2 Calling Euphoria Routines by Id</a></div>
+<div class="toc_4"><a href="dynamic.html#_580_whycallindirectly">6.5.1.3 Why Call Indirectly?</a></div>
+<div class="toc_3"><a href="dynamic.html#_581_callingeuphoriainternals">6.5.2 Calling Euphoria Internals</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> Euphoria does not have function pointers. However, it enables you to call any routine, including some internal to the interpreter, in an indirect way, using two different sets of identifiers.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h3>6.5.1 Indirect Calling a Routine Coded in Euphoria</h3>
+<a name="_575_indirectcallingaroutinecodedineuphoria"></a><a name="indirectcallingaroutinecodedineuphoria"></a>
+<p> The following applies to any routine coded in Euphoria that your program uses, whether it is defined in the standard library, any third party library or your own code. It does not apply to routines implemented in the backend.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h4>6.5.1.1 Getting a Routine Identifier</h4>
+<a name="_576_gettingaroutineidentifier"></a><a name="gettingaroutineidentifier"></a>
+<p> Whenever a routine is in scope, you can supply its name to the builtin <tt>routine_id</tt> function, which returns a small integer:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">get.e</font>
+<font color="#0000FF">constant </font><font color="#330033">value_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"value"</font><font color="#880033">)</font>
+</pre>
+
+<p> Because <tt>value</tt> is defined as <tt>public</tt>, that routine is in scope. This ensures the call succeeds. A failed call returns <tt>-1</tt>, else a small nonnegative integer.</p>
+
+<p> You can then feed this integer to <tt>call_func</tt> or <tt>call_proc</tt> as appropriate. It does not matter whether the routine is still in scope at the time you make that call. Once the id is gotten, it's valid.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h4>6.5.1.2 Calling Euphoria Routines by Id</h4>
+<a name="_577_callingeuphoriaroutinesbyid"></a><a name="callingeuphoriaroutinesbyid"></a>
+<p> This is very similar to using <a href="std_dll.html#_5477_c_func">c_func</a> or <a href="std_dll.html#_5485_c_proc">c_proc</a> to interface with external code.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h5>Function Calling</h5>
+<a name="_578_functioncalling"></a><a name="functioncalling"></a>
+<p> This is done as follows:</p>
+
+<pre class="examplecode"><font color="#330033">result = </font><font color="#0000FF">call_func</font><font color="#880033">(</font><font color="#330033">id_of_the_routine,argument_sequence</font><font color="#880033">)</font>
+</pre>
+
+<p> where </p>
+<ul><li><tt>id_of_the_routine</tt> is an id you obtained from <a href="std_machine.html#_5855_routine_id">routine_id</a>.
+</li><li><tt>argument_sequence</tt> is the list of the parameters to pass, enclosed into curly braces
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">get.e</font>
+
+<font color="#0000FF">constant </font><font color="#330033">value_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"value"</font><font color="#880033">)</font>
+<font color="#330033">result = </font><font color="#0000FF">call_func</font><font color="#880033">(</font><font color="#330033">value_id, </font><font color="#993333">{</font><font color="#330033">"Model 36A"</font><font color="#330033">, 6, GET_LONG_ANSWER</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- result is {GET_SUCCESS, 36, 4, 1}</font>
+</pre>
+
+<p> This is equivalent to</p>
+
+<pre class="examplecode"><font color="#330033">result = value</font><font color="#880033">(</font><font color="#330033">"Model 36A"</font><font color="#330033">, 6, GET_LONG_ANSWER</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\docs\dynamic.txt -->
+<h5>Procedure Calling</h5>
+<a name="_579_procedurecalling"></a><a name="procedurecalling"></a>
+<p> The same formalism applies, but using <tt>call_proc</tt> instead. The differences are almost the same as between <a href="std_dll.html#_5477_c_func">c_func</a> and <a href="std_dll.html#_5485_c_proc">c_proc</a>.</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+
+<font color="#0000FF">constant </font><font color="#330033">pretty_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"pretty_print"</font><font color="#880033">)</font>
+
+<font color="#0000FF">call_proc</font><font color="#880033">(</font><font color="#330033">pretty_id,</font><font color="#993333">{</font><font color="#330033">1, some_object, some_options</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<p> This does the same as a straightforward </p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+
+<font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#330033">1, some_object, some_options</font><font color="#880033">)</font>
+</pre>
+
+<p> The difference with <a href="std_dll.html#_5485_c_proc">c_proc</a> is that you can call an external function using <a href="std_dll.html#_5485_c_proc">c_proc</a> and thus ignore its return value, like in C. Note that you cannot use <tt>call_proc</tt> to invoke a Euphoria function, only C functions.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h4>6.5.1.3 Why Call Indirectly?</h4>
+<a name="_580_whycallindirectly"></a><a name="whycallindirectly"></a>
+<p> Calling functions and procedures indirectly can seem more complicated and slower than just calling the routine directly, but indirect calls can be used when the name of the routine you want to call might not be known until run-time.</p>
+
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">foo_id</font>
+
+<font color="#0000FF">function </font><font color="#330033">bar</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    return call_func</font><font color="#880033">(</font><font color="#330033">foo_id,</font><font color="#993333">{</font><font color="#330033">x</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">foo_dev1</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">y</font><font color="#880033">)</font>
+<font color="#0000FF">	return </font><font color="#330033">y + 1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">foo_dev2</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">y</font><font color="#880033">)</font>
+<font color="#0000FF">	return </font><font color="#330033">y - 1</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">foo_dev3</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">y</font><font color="#880033">)</font>
+<font color="#0000FF">	return </font><font color="#330033">y * y - 3</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">user_opt</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#330033">	 ... </font>
+<font color="#0000FF">end function</font>
+
+<font color="#FF0055">-- Initialize foo ID</font>
+<font color="#0000FF">switch </font><font color="#330033">user_opt</font><font color="#880033">(</font><font color="#330033">"dev"</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">	case </font><font color="#330033">1 </font><font color="#0000FF">then</font>
+<font color="#330033">		foo_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"foo_dev1"</font><font color="#880033">)</font>
+<font color="#0000FF">	case </font><font color="#330033">2 </font><font color="#0000FF">then</font>
+<font color="#330033">		foo_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"foo_dev2"</font><font color="#880033">)</font>
+<font color="#0000FF">	case else</font>
+<font color="#330033">		foo_id = </font><font color="#0000FF">routine_id</font><font color="#880033">(</font><font color="#330033">"foo_dev3"</font><font color="#880033">)</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> One last word: when calling a routine indirectly, its <strong>full</strong> parameter list must be passed, even if some of its parameters are defaulted. This limitation may be overcome in future versions.</p>
+
+<!-- ..\docs\dynamic.txt -->
+<h3>6.5.2 Calling Euphoria Internals</h3>
+<a name="_581_callingeuphoriainternals"></a><a name="callingeuphoriainternals"></a>
+<p> A number of Euphoria routines are defined in different ways depending on the platform they will run on. It would be cumbersome, and at times downright impossible, to put such code in include files or to make the routine fully builtin.</p>
+
+<p> A solution to this is provided by <tt>machine_func</tt> and <tt>machine_proc</tt>. User code normally never needs to use these. Various examples are to be found in the standard library.</p>
+
+<p> These primitives are called like this: </p>
+
+<pre class="examplecode"><font color="#0000FF">machine_proc</font><font color="#880033">(</font><font color="#330033">id, argument</font><font color="#880033">)</font>
+<font color="#330033">result = </font><font color="#0000FF">machine_func</font><font color="#880033">(</font><font color="#330033">id, argument</font><font color="#880033">)</font>
+</pre>
+
+<p> <tt>argument</tt> is either an atom, or a sequence standing for one or more parameters. Since the first parameter does not need to be a constant, you may use some sort of dynamic calling. The circumstances where it is useful are rare.</p>
+
+<p> The complete list of known values for <tt>id</tt> is to be found in the file <tt>source/execute.h</tt>.</p>
+
+<p> Defining new identifiers and overriding <tt>machine_func</tt> or <tt>machine_proc</tt> to handle them is an easy way to extend the capabilities of the interpreter.</p>
+
+<p> 
+<!-- ..\docs\tasking.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="e2c.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="tasking.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="e2c.html">6.4 Euphoria To C Translator</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="tasking.html">6.6 Multitasking in Euphoria</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

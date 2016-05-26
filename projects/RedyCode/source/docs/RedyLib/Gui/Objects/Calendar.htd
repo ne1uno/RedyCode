@@ -1,0 +1,16 @@
+=Calendar Canvas Object Library
+gui/objects/calendar.e 
+
+Sorry, this library is not supported yet.
+
+===API
+====Actions
+The following actions are defined by this library:
+
+=====action:do_proc("", {})
+
+
+====Routines
+=====procedure
+
+See also [[Canvas Objects->RedyLib\Gui\Objects]]

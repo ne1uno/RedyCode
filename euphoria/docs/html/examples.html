@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="configuration.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="creating_eu_progs.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="configuration.html">2.3 Set Up the Euphoria Configuration File (eu.cfg)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="creating_eu_progs.html">3.2 Creating Euphoria programs</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h2>3.1 Example Programs</h2>
+<a name="_52_exampleprograms"></a><a name="exampleprograms"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="examples.html#_52_exampleprograms">3.1 Example Programs</a></div>
+<div class="toc_3"><a href="examples.html#_53_helloworld">3.1.1 Hello, World</a></div>
+<div class="toc_3"><a href="examples.html#_54_sorting">3.1.2 Sorting</a></div>
+<div class="toc_3"><a href="examples.html#_55_whattodo">3.1.3 What to Do?</a></div>
+<div class="toc_4"><a href="examples.html#_56_runthedemoprograms">3.1.3.1 Run the Demo Programs</a></div>
+<div class="toc_4"><a href="examples.html#_57_editsamplefiles">3.1.3.2 Edit Sample Files</a></div>
+<div class="toc_4"><a href="examples.html#_58_benchmark">3.1.3.3 Benchmark</a></div>
+<div class="toc_4"><a href="examples.html#_59_readthemanual">3.1.3.4 Read the Manual</a></div>
+<div class="toc_4"><a href="examples.html#_60_visittheeuforum">3.1.3.5 Visit the EuForum</a></div>
+<div class="toc_4"><a href="examples.html#_61_traceademo">3.1.3.6 Trace a Demo</a></div>
+<div class="toc_4"><a href="examples.html#_62_runthetutorialprograms">3.1.3.7 Run the Tutorial Programs</a></div>
+<div class="toc_4"><a href="examples.html#_63_modifythetutorialprograms">3.1.3.8 Modify the Tutorial Programs</a></div>
+<div class="toc_4"><a href="examples.html#_68_writeyourown">3.1.3.9 Write Your Own</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.1.1 Hello, World</h3>
+<a name="_53_helloworld"></a><a name="helloworld"></a>
+<p> The <em>mandatory</em> 'Hello World' program is a one-liner in Euphoria. </p>
+
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, World\n"</font><font color="#880033">)</font>
+</pre>
+
+<p> The built-in routine <tt>puts</tt> does the job of displaying text on a screen. It requires two arguments. The first argument, <tt>1</tt>,  directs the output to STDOUT or the console. The second argument, is a string of text that will be output.</p>
+
+<p> The result is: 
+<pre>Hello, World
+</pre>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.1.2 Sorting</h3>
+<a name="_54_sorting"></a><a name="sorting"></a>
+<p> The following is an example of a more useful Euphoria program.</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">original_list</font>
+
+<font color="#0000FF">function </font><font color="#330033">merge_sort</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#FF0055">-- put x into ascending order using a recursive merge sort</font>
+<font color="#0000FF">    integer </font><font color="#330033">n, mid</font>
+<font color="#0000FF">    sequence </font><font color="#330033">merged, a, b</font>
+
+<font color="#330033">    n = </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">n = 0 </font><font color="#0000FF">or </font><font color="#330033">n = 1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        return </font><font color="#330033">x  </font><font color="#FF0055">-- trivial case</font>
+<font color="#0000FF">    end if</font>
+
+<font color="#330033">    mid = </font><font color="#0000FF">floor</font><font color="#880033">(</font><font color="#330033">n/2</font><font color="#880033">)</font>
+<font color="#330033">    a = merge_sort</font><font color="#880033">(</font><font color="#330033">x</font><font color="#993333">[</font><font color="#330033">1..mid</font><font color="#993333">]</font><font color="#880033">)       </font><font color="#FF0055">-- sort first half of x</font>
+<font color="#330033">    b = merge_sort</font><font color="#880033">(</font><font color="#330033">x</font><font color="#993333">[</font><font color="#330033">mid+1..n</font><font color="#993333">]</font><font color="#880033">)     </font><font color="#FF0055">-- sort second half of x</font>
+
+<font color="#FF0055">    -- merge the two sorted halves into one</font>
+<font color="#330033">    merged = </font><font color="#880033">{}</font>
+<font color="#0000FF">    while length</font><font color="#880033">(</font><font color="#330033">a</font><font color="#880033">) </font><font color="#330033">&gt; 0 </font><font color="#0000FF">and length</font><font color="#880033">(</font><font color="#330033">b</font><font color="#880033">) </font><font color="#330033">&gt; 0 </font><font color="#0000FF">do</font>
+<font color="#0000FF">        if compare</font><font color="#880033">(</font><font color="#330033">a</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#330033">, b</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">) </font><font color="#330033">&lt; 0 </font><font color="#0000FF">then</font>
+<font color="#330033">            merged = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">merged, a</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#330033">            a = a</font><font color="#880033">[</font><font color="#330033">2..</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">a</font><font color="#993333">)</font><font color="#880033">]</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            merged = </font><font color="#0000FF">append</font><font color="#880033">(</font><font color="#330033">merged, b</font><font color="#993333">[</font><font color="#330033">1</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#330033">            b = b</font><font color="#880033">[</font><font color="#330033">2..</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">b</font><font color="#993333">)</font><font color="#880033">]</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end while</font>
+<font color="#0000FF">    return </font><font color="#330033">merged &amp; a &amp; b  </font><font color="#FF0055">-- merged data plus leftovers</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">print_sorted_list</font><font color="#880033">()</font>
+<font color="#FF0055">-- generate sorted_list from original_list</font>
+<font color="#0000FF">    sequence </font><font color="#330033">sorted_list</font>
+    
+<font color="#330033">    original_list = </font><font color="#880033">{</font><font color="#330033">19, 10, 23, 41, 84, 55, 98, 67, 76, 32</font><font color="#880033">}</font>
+<font color="#330033">    sorted_list = merge_sort</font><font color="#880033">(</font><font color="#330033">original_list</font><font color="#880033">)</font>
+<font color="#0000FF">    for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">sorted_list</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#330033">    	display</font><font color="#880033">(</font><font color="#330033">"Number [] was at position [:2], now at [:2]"</font><font color="#330033">, </font>
+<font color="#993333">    	        {</font><font color="#330033">sorted_list</font><font color="#0000FF">[</font><font color="#330033">i</font><font color="#0000FF">]</font><font color="#330033">, </font><font color="#0000FF">find</font><font color="#0000FF">(</font><font color="#330033">sorted_list</font><font color="#5500FF">[</font><font color="#330033">i</font><font color="#5500FF">]</font><font color="#330033">, original_list</font><font color="#0000FF">)</font><font color="#330033">, i</font><font color="#993333">}</font>
+<font color="#880033">    	    )</font>
+<font color="#0000FF">    end for</font>
+<font color="#0000FF">end procedure</font>
+
+<font color="#330033">print_sorted_list</font><font color="#880033">()     </font><font color="#FF0055">-- this command starts the program</font>
+</pre>
+
+<p> The above example contains a number of statements that are processed in order. <dl>
+<dt><tt>include std/console.e</tt>
+</dt>
+<dd>This tells Euphoria that this application needs access to the public symbols declared in the file 'std/console.e'. This is referred to as a <em>library</em> file. In our case here, the application will be using the <tt>display</tt> routine from </dd>
+</dl>
+<dl>
+<dt><tt>sequence original_list</tt>
+</dt>
+<dd>This declares a variable that is not public but is accessible from anywhere in this file. The datatype for the variable is a <tt>sequence</tt>, which is a variable-length "array," and whose symbol name is <tt>original_list</tt>.</dd>
+</dl>
+<dl>
+<dt><tt>function merge_sort(sequence x) ... end function</tt>
+</dt>
+<dd>This declares and defines a function routine. Functions return values when called. This function must be passed a single parameter when called -- a sequence.</dd>
+</dl>
+<dl>
+<dt><tt>procedure print_sorted_list() ... end procedure</tt>
+</dt>
+<dd>This declares and defines a procedure routine. Procedures never return values when called. This procedure must not be passed any parameters when called.</dd>
+</dl>
+<dl>
+<dt><tt>print_sorted_list</tt>
+</dt>
+<dd>This calls the routine called <tt>print_sorted_list</tt>.</dd>
+</dl>
+The output from the program will be: 
+<pre>Number 10 was at position  2, now at  1
+Number 19 was at position  1, now at  2
+Number 23 was at position  3, now at  3
+Number 32 was at position 10, now at  4
+Number 41 was at position  4, now at  5
+Number 55 was at position  6, now at  6
+Number 67 was at position  8, now at  7
+Number 76 was at position  9, now at  8
+Number 84 was at position  5, now at  9
+Number 98 was at position  7, now at 10
+</pre>
+
+<p> Note that <tt>merge_sort</tt> will just as easily sort any list of data items: </p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">1.5, -9, 1e6, 100</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">"oranges"</font><font color="#330033">, </font><font color="#330033">"apples"</font><font color="#330033">, </font><font color="#330033">"bananas"</font><font color="#880033">}</font>
+</pre>
+
+<p> This example is stored as <tt>euphoria\tutorial\example.ex</tt>. This is not the fastest way to sort in Euphoria. Go to the <tt>euphoria\demo</tt> directory and type</p>
+
+<pre class="examplecode"><font color="#330033">eui allsorts</font>
+</pre>
+
+<p> to compare timings on several different sorting algorithms for increasing numbers of objects.</p>
+
+<p> For a quick tutorial example of Euphoria programming, see <tt>euphoria\demo\bench\filesort.ex</tt>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h3>3.1.3 What to Do?</h3>
+<a name="_55_whattodo"></a><a name="whattodo"></a>
+<p> Now that you have installed Euphoria, here are some things you can try:</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.1 Run the Demo Programs</h4>
+<a name="_56_runthedemoprograms"></a><a name="runthedemoprograms"></a>
+<p> Run each of the demo programs in the <tt>demo</tt> directory. You just type <tt>eui &lt;program name&gt;</tt>. An example of running the demos in a console 
+<pre>eui buzz
+</pre>
+
+<p> You can also double-click on a <tt>.ex</tt> or <tt>.exw</tt> file from <em>Windows</em> as file associations have been setup during the installation process.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.2 Edit Sample Files</h4>
+<a name="_57_editsamplefiles"></a><a name="editsamplefiles"></a>
+<p> You can use any plain text editor for writing Euphoria source-code.</p>
+
+<p> Code-editors provide a syntax highlighter. The wiki lists many editors suitable for Euphoria. Check <a class="external" href="/wiki/view.wc?page=Editors">the wiki for more information about Euphoria editors</a>.</p>
+
+<p> You can examine the source-code for the demonstration editor <tt>edx</tt> to see how editors and highlighters work. Notice the use of colors. You can adjust these colors along with the cursor size and many other "user-modifiable" parameters by editing constant declarations in <tt>edx.ex</tt>. Use <em>Esc q</em> to quit the editor or <em>Esc h</em> for help.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.3 Benchmark</h4>
+<a name="_58_benchmark"></a><a name="benchmark"></a>
+<p> Create some new benchmark tests. See <tt>demo\bench</tt>. Do you get the same speed ratios as we did in comparison with other popular languages? Report your findings on <a class="external" href="http://openeuphoria.org/forum/index.wc">the forum</a>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.4 Read the Manual</h4>
+<a name="_59_readthemanual"></a><a name="readthemanual"></a>
+<p> Read the manual in <tt>html\index.html</tt> by double-clicking it. If you have a specific question, type at the console:</p>
+
+<p> 
+<pre>guru word
+</pre>
+
+<p> The <tt>guru</tt> program will search all the <tt>.doc</tt> files, example programs, and other files, and will present you with a <em>sorted</em> list of the most relevant chunks of text that might answer your enquiry.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.5 Visit the EuForum</h4>
+<a name="_60_visittheeuforum"></a><a name="visittheeuforum"></a>
+<p> <a class="external" href="http://openeuphoria.org/forum/index.wc">Euphoria Discussion Forum</a></p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.6 Trace a Demo</h4>
+<a name="_61_traceademo"></a><a name="traceademo"></a>
+<p> Try running a Euphoria program with <tt>tracing</tt> turned on. Add:</p>
+
+<pre class="examplecode"><font color="#0000FF">with trace</font>
+<font color="#0000FF">trace</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+</pre>
+
+<p> at the beginning of any Euphoria source file.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.7 Run the Tutorial Programs</h4>
+<a name="_62_runthetutorialprograms"></a><a name="runthetutorialprograms"></a>
+<p> Run some of the tutorial programs in <tt>euphoria\tutorial</tt>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.8 Modify the Tutorial Programs</h4>
+<a name="_63_modifythetutorialprograms"></a><a name="modifythetutorialprograms"></a>
+<p> Try modifying some of the demo programs.</p>
+
+<p> First some <em>simple</em> modifications (takes less than a minute):</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h5>Simple</h5>
+<a name="_64_simple"></a><a name="simple"></a>
+<p> What if there were 100 C++ ships in <strong>Language Wars</strong>? What if <tt>sb.ex</tt> had to move 1000 balls instead of 125? Change some parameters in <tt>polygon.ex</tt>. Can you get prettier pictures to appear? Add some funny phrases to <tt>buzz.ex</tt>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h5>Harder</h5>
+<a name="_65_harder"></a><a name="harder"></a>
+<p> Then, some slightly harder ones (takes a few minutes):</p>
+
+<p> Define a new function of x and y in <tt>plot3d.ex</tt>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h5>Challenging</h5>
+<a name="_66_challenging"></a><a name="challenging"></a>
+<p> Then a challenging one (takes an hour or more):</p>
+
+<p> Set up your own customized database by defining the fields in <tt>mydata.ex</tt>.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h5>Major</h5>
+<a name="_67_major"></a><a name="major"></a>
+<p> Then a major project (several days or weeks):</p>
+
+<p> Write a <em>smarter</em> 3D TicTacToe algorithm.</p>
+
+<!-- ..\docs\using_euphoria.txt -->
+<h4>3.1.3.9 Write Your Own</h4>
+<a name="_68_writeyourown"></a><a name="writeyourown"></a>
+<p> Try writing your own program in Euphoria. A program can be as simple as:</p>
+
+<pre class="examplecode"><font color="#330033">? 2+2</font>
+</pre>
+
+<p> <strong>Remember that after any error you can simply type:</strong> <tt>edx</tt> to jump into the editor at the offending file and line.</p>
+
+<p> Once you get used to it, you'll be developing programs <em>much</em> faster in Euphoria than you could in Perl, Java, C/C++ or any other language that we are aware of.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="configuration.html"><img src="images/prev.png" /></a></td>
+									<td><a href="using.html">Up</a></td>
+									<td><a href="creating_eu_progs.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="installation.html">2 Installing Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="configuration.html">2.3 Set Up the Euphoria Configuration File (eu.cfg)</a>
+									</td>
+									<td width="20%">
+										Up: <a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										<a href="creating_eu_progs.html">3.2 Creating Euphoria programs</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="langref_index.html">4 Language Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

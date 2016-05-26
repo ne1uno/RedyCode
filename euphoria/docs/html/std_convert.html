@@ -1,0 +1,750 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_utils.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_get.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_utils.html">8.12 Utilities</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_get.html">8.14 Input Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\convert.e -->
+<h2>8.13 Data Type Conversion</h2>
+<a name="_2179_datatypeconversion"></a><a name="datatypeconversion"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_convert.html#_2179_datatypeconversion">8.13 Data Type Conversion</a></div>
+<div class="toc_3"><a href="std_convert.html#_2180_routines">8.13.1 Routines</a></div>
+<div class="toc_4"><a href="std_convert.html#_2182_int_to_bytes">8.13.1.1 int_to_bytes</a></div>
+<div class="toc_4"><a href="std_convert.html#_2190_bytes_to_int">8.13.1.2 bytes_to_int</a></div>
+<div class="toc_4"><a href="std_convert.html#_2197_int_to_bits">8.13.1.3 int_to_bits</a></div>
+<div class="toc_4"><a href="std_convert.html#_2204_bits_to_int">8.13.1.4 bits_to_int</a></div>
+<div class="toc_4"><a href="std_convert.html#_2211_atom_to_float64">8.13.1.5 atom_to_float64</a></div>
+<div class="toc_4"><a href="std_convert.html#_2218_atom_to_float80">8.13.1.6 atom_to_float80</a></div>
+<div class="toc_4"><a href="std_convert.html#_2220_float80_to_atom">8.13.1.7 float80_to_atom</a></div>
+<div class="toc_4"><a href="std_convert.html#_2222_atom_to_float32">8.13.1.8 atom_to_float32</a></div>
+<div class="toc_4"><a href="std_convert.html#_2229_float64_to_atom">8.13.1.9 float64_to_atom</a></div>
+<div class="toc_4"><a href="std_convert.html#_2236_float32_to_atom">8.13.1.10 float32_to_atom</a></div>
+<div class="toc_4"><a href="std_convert.html#_2243_hex_text">8.13.1.11 hex_text</a></div>
+<div class="toc_4"><a href="std_convert.html#_2250_set_decimal_mark">8.13.1.12 set_decimal_mark</a></div>
+<div class="toc_4"><a href="std_convert.html#_2255_to_number">8.13.1.13 to_number</a></div>
+<div class="toc_4"><a href="std_convert.html#_2261_to_integer">8.13.1.14 to_integer</a></div>
+<div class="toc_4"><a href="std_convert.html#_2267_to_string">8.13.1.15 to_string</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\convert.e -->
+<h3>8.13.1 Routines</h3>
+<a name="_2180_routines"></a><a name="routines"></a>
+<p> 
+<a name="convertint_to_bytes"></a><a name="to_bytes"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.1 int_to_bytes</h4>
+<a name="_2182_int_to_bytes"></a><a name="int_to_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">int_to_bytes</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">size = 4</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an atom that represents an integer to a sequence of 4 bytes.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2183_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : an atom, the value to convert.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2184_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of 4 bytes, lowest significant byte first.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2185_comments"></a><a name="comments"></a>
+<p> If the atom does not fit into a 32-bit integer, things may still work right: </p>
+<ul><li>If there is a fractional part, the first element in the returned value will carry it. If you poke the sequence to RAM, that fraction will be discarded anyway.
+</li><li>If <tt>x</tt> is simply too big, the first three bytes will still be correct, and the 4th element will be  <tt>floor(x/power(2,24))</tt>. If this is not a byte sized integer, some truncation may occur, but usually no error.
+</li></ul>
+<p>The integer can be negative. Negative byte-values will be returned, but after poking them into memory you will have the correct (two's complement) representation for the 386+.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2186_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = int_to_bytes</font><font color="#880033">(</font><font color="#330033">999</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {231, 3, 0, 0}</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 2:</h5>
+<a name="_2187_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = int_to_bytes</font><font color="#880033">(</font><font color="#330033">-999</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {-231, -4, -1, -1}</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2188_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2190_bytes_to_int">bytes_to_int</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a>, <a href="std_convert.html#_2211_atom_to_float64">atom_to_float64</a>, <a href="std_machine.html#_5742_poke4">poke4</a></p>
+
+<p> 
+<a name="convertbytes_to_int"></a><a name="to_int"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.2 bytes_to_int</h4>
+<a name="_2190_bytes_to_int"></a><a name="bytes_to_int"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">bytes_to_int</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a sequence of at most 4 bytes into an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2191_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt> : the sequence to convert
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2192_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the value of the concatenated bytes of <tt>s</tt>.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2193_comments"></a><a name="comments"></a>
+<p> This performs the reverse operation from <a href="std_convert.html#_2182_int_to_bytes">int_to_bytes</a></p>
+
+<p> An atom is being returned, because the converted value may be bigger than what can fit in an Euphoria integer.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2194_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">int32</font>
+
+<font color="#330033">int32 = bytes_to_int</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">37,1,0,0</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- int32 is 37 + 256*1 = 293</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2195_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2204_bits_to_int">bits_to_int</a>, <a href="std_convert.html#_2229_float64_to_atom">float64_to_atom</a>, <a href="std_convert.html#_2182_int_to_bytes">int_to_bytes</a>, <a href="std_machine.html#_5640_peek">peek</a>, <a href="std_machine.html#_5672_peek4s">peek4s</a>, <a href="std_machine.html#_5688_peek4u">peek4u</a>, <a href="std_machine.html#_5742_poke4">poke4</a></p>
+
+<p> 
+<a name="convertint_to_bits"></a><a name="to_bits"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.3 int_to_bits</h4>
+<a name="_2197_int_to_bits"></a><a name="int_to_bits"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">int_to_bits</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">x, </font><font color="#0000FF">integer </font><font color="#330033">nbits = 32</font><font color="#880033">)</font>
+</pre>
+
+<p>   extracts the lower bits from an integer.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2198_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the atom to convert
+</li><li><tt>nbits</tt> : the number of bits requested. The default is 32.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2199_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of length <tt>nbits</tt>, made of 1's and 0's.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2200_comments"></a><a name="comments"></a>
+<p> <tt>x</tt> should have no fractional part. If it does, then the first "bit" will be an atom between 0 and 2.</p>
+
+<p> The bits are returned lowest first.</p>
+
+<p> For negative numbers the two's complement bit pattern is returned.</p>
+
+<p> You can use operators like subscripting/slicing/and/or/xor/not on entire sequences to manipulate sequences of bits. Shifting of bits and rotating of bits are easy to perform.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2201_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = int_to_bits</font><font color="#880033">(</font><font color="#330033">177, 8</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {1,0,0,0,1,1,0,1} -- "reverse" order</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2202_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2204_bits_to_int">bits_to_int</a>, <a href="std_convert.html#_2182_int_to_bytes">int_to_bytes</a>, <a href="lang_def.html#_91_relationaloperators">Relational operators</a>, <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a></p>
+
+<p> 
+<a name="convertbits_to_int"></a><a name="to_int"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.4 bits_to_int</h4>
+<a name="_2204_bits_to_int"></a><a name="bits_to_int"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">bits_to_int</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">bits</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a sequence of bits to an atom that has no fractional part.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2205_parameters"></a><a name="parameters"></a><ol><li><tt>bits</tt> : the sequence to convert.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2206_returns"></a><a name="returns"></a>
+<p> A positive <strong>atom</strong>, whose machine representation was given by <tt>bits</tt>.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2207_comments"></a><a name="comments"></a>
+<p> An element in <tt>bits</tt> can be any atom. If nonzero, it counts for 1, else for 0.</p>
+
+<p> The first elements in <tt>bits</tt> represent the bits with the least weight in the returned value. Only the 52 last bits will matter, as the PC hardware cannot hold an integer with more digits than this.</p>
+
+<p> If you print s the bits will appear in "reverse" order, but it is convenient to have increasing subscripts access bits of increasing significance.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2208_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">a = bits_to_int</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,1,1,0,1</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 23 (binary 10111)</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2209_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2190_bytes_to_int">bytes_to_int</a>, <a href="std_convert.html#_2197_int_to_bits">int_to_bits</a>, <a href="lang_def.html#_94_operationsonsequences">operations on sequences</a></p>
+
+<p> 
+<a name="convertatom_to_float64"></a><a name="to_float64"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.5 atom_to_float64</h4>
+<a name="_2211_atom_to_float64"></a><a name="atom_to_float64"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">atom_to_float64</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an atom to a sequence of 8 bytes in IEEE 64-bit format.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2212_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : the atom to convert:
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2213_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of 8 bytes, which can be poked in memory to represent <tt>a</tt>.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2214_comments"></a><a name="comments"></a>
+<p> All Euphoria atoms have values which can be represented as 64-bit IEEE floating-point numbers, so you can convert any atom to 64-bit format without losing any precision.</p>
+
+<p> Integer values will also be converted to 64-bit floating-point format.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2215_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"numbers.dat"</font><font color="#330033">, </font><font color="#330033">"wb"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">fn, atom_to_float64</font><font color="#993333">(</font><font color="#330033">157.82</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- write 8 bytes to a file</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2216_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2229_float64_to_atom">float64_to_atom</a>, <a href="std_convert.html#_2182_int_to_bytes">int_to_bytes</a>, <a href="std_convert.html#_2222_atom_to_float32">atom_to_float32</a></p>
+
+<p> 
+<a name="convertatom_to_float80"></a><a name="to_float80"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.6 atom_to_float80</h4>
+<a name="_2218_atom_to_float80"></a><a name="atom_to_float80"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">atom_to_float80</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="convertfloat80_to_atom"></a><a name="to_atom"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.7 float80_to_atom</h4>
+<a name="_2220_float80_to_atom"></a><a name="float80_to_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">float80_to_atom</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">bytes</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="convertatom_to_float32"></a><a name="to_float32"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.8 atom_to_float32</h4>
+<a name="_2222_atom_to_float32"></a><a name="atom_to_float32"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">atom_to_float32</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">a</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an atom to a sequence of 4 bytes in IEEE 32-bit format.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2223_parameters"></a><a name="parameters"></a><ol><li><tt>a</tt> : the atom to convert:
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2224_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of 4 bytes, which can be poked in memory to represent <tt>a</tt>.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2225_comments"></a><a name="comments"></a>
+<p> Euphoria atoms can have values which are 64-bit IEEE floating-point numbers, so you may lose precision when you convert to 32-bits (16 significant digits versus 7). The range of exponents is much larger in 64-bit format (10 to the 308, versus 10 to the 38), so some atoms may be too large or too small to represent in 32-bit format. In this case you will get one of the special 32-bit values: <tt>inf</tt> or <tt>-inf</tt> (infinity or -infinity). To avoid this, you can use <a href="std_convert.html#_2211_atom_to_float64">atom_to_float64</a>.</p>
+
+<p> Integer values will also be converted to 32-bit floating-point format.</p>
+
+<p> On modern computers, computations on 64 bit floats are no slower than on 32 bit floats. Internally, the PC stores them in 80 bit registers anyway. Euphoria does not support these so called long doubles. Not all C compilers do.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2226_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"numbers.dat"</font><font color="#330033">, </font><font color="#330033">"wb"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">fn, atom_to_float32</font><font color="#993333">(</font><font color="#330033">157.82</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">-- write 4 bytes to a file</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2227_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2236_float32_to_atom">float32_to_atom</a>, <a href="std_convert.html#_2182_int_to_bytes">int_to_bytes</a>, <a href="std_convert.html#_2211_atom_to_float64">atom_to_float64</a></p>
+
+<p> 
+<a name="convertfloat64_to_atom"></a><a name="to_atom"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.9 float64_to_atom</h4>
+<a name="_2229_float64_to_atom"></a><a name="float64_to_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">float64_to_atom</font><font color="#880033">(</font><font color="#330033">sequence_8 ieee64</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a sequence of 8 bytes in IEEE 64-bit format to an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2230_parameters"></a><a name="parameters"></a><ol><li><tt>ieee64</tt> : the sequence to convert.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2231_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the same value as the FPU would see by peeking <tt>ieee64</tt> from RAM.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2232_comments"></a><a name="comments"></a>
+<p> Any 64-bit IEEE floating-point number can be converted to an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2233_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">f = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 8</font><font color="#880033">)</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"numbers.dat"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">)  </font><font color="#FF0055">-- read binary</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">8 </font><font color="#0000FF">do</font>
+<font color="#330033">    f</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">getc</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">a = float64_to_atom</font><font color="#880033">(</font><font color="#330033">f</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2234_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2236_float32_to_atom">float32_to_atom</a>, <a href="std_convert.html#_2190_bytes_to_int">bytes_to_int</a>, <a href="std_convert.html#_2211_atom_to_float64">atom_to_float64</a></p>
+
+<p> 
+<a name="convertfloat32_to_atom"></a><a name="to_atom"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.10 float32_to_atom</h4>
+<a name="_2236_float32_to_atom"></a><a name="float32_to_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">float32_to_atom</font><font color="#880033">(</font><font color="#330033">sequence_4 ieee32</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a sequence of 4 bytes in IEEE 32-bit format to an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2237_parameters"></a><a name="parameters"></a><ol><li><tt>ieee32</tt> : the sequence to convert.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2238_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the same value as the FPU would see by peeking <tt>ieee64</tt> from RAM.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2239_comments"></a><a name="comments"></a>
+<p> Any 32-bit IEEE floating-point number can be converted to an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2240_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">f = </font><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 4</font><font color="#880033">)</font>
+<font color="#330033">fn = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"numbers.dat"</font><font color="#330033">, </font><font color="#330033">"rb"</font><font color="#880033">) </font><font color="#FF0055">-- read binary</font>
+<font color="#330033">f</font><font color="#880033">[</font><font color="#330033">1</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">getc</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#330033">f</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">getc</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#330033">f</font><font color="#880033">[</font><font color="#330033">3</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">getc</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#330033">f</font><font color="#880033">[</font><font color="#330033">4</font><font color="#880033">] </font><font color="#330033">= </font><font color="#0000FF">getc</font><font color="#880033">(</font><font color="#330033">fn</font><font color="#880033">)</font>
+<font color="#330033">a = float32_to_atom</font><font color="#880033">(</font><font color="#330033">f</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2241_seealso"></a><a name="seealso"></a>
+<p> <a href="std_convert.html#_2229_float64_to_atom">float64_to_atom</a>, <a href="std_convert.html#_2190_bytes_to_int">bytes_to_int</a>, <a href="std_convert.html#_2222_atom_to_float32">atom_to_float32</a></p>
+
+<p> 
+<a name="converthex_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.11 hex_text</h4>
+<a name="_2243_hex_text"></a><a name="hex_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">hex_text</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">text</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a text representation of a hexadecimal number to an atom.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2244_parameters"></a><a name="parameters"></a><ol><li><tt>text</tt> : the text to convert.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2245_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the numeric equivalent to <tt>text</tt></p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2246_comments"></a><a name="comments"></a><ul><li>The text can optionally begin with <tt>'#'</tt> which is ignored.
+</li><li>The text can have any number of underscores, all of which are ignored.
+</li><li>The text can have one leading <tt>'-'</tt>, indicating a negative number.
+</li><li>The text can have any number of underscores, all of which are ignored.
+</li><li>Any other characters in the text stops the parsing and returns the value thus far.
+</li></ul>
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2247_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">h = hex_text</font><font color="#880033">(</font><font color="#330033">"-#3_4FA.00E_1BD"</font><font color="#880033">)</font>
+<font color="#FF0055"> -- h is now -13562.003444492816925</font>
+<font color="#0000FF"> atom </font><font color="#330033">h = hex_text</font><font color="#880033">(</font><font color="#330033">"DEADBEEF"</font><font color="#880033">)</font>
+<font color="#FF0055"> -- h is now 3735928559</font>
+</pre>
+
+<!-- ..\include\std\convert.e -->
+<h5>See Also:</h5>
+<a name="_2248_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2298_value">value</a></p>
+
+<p> 
+<a name="convertset_decimal_mark"></a><a name="decimal_mark"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.12 set_decimal_mark</h4>
+<a name="_2250_set_decimal_mark"></a><a name="set_decimal_mark"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">set_decimal_mark</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">new_mark</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets, and possibly sets, the decimal mark that <a href="std_convert.html#_2255_to_number">to_number</a> uses.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2251_parameters"></a><a name="parameters"></a><ol><li><tt>new_mark</tt> : An integer: Either a comma (,), a period (.) or any other integer.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2252_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, The current value, before <tt>new_mark</tt> changes it.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2253_comments"></a><a name="comments"></a><ul><li>When <tt>new_mark</tt> is a <em>period</em> it will cause <tt>to_number</tt> to interpret a dot <tt>(.)</tt> as the decimal point symbol. The pre-changed value is returned.
+</li><li>When <tt>new_mark</tt> is a <em>comma</em> it will cause <tt>to_number</tt> to interpret a comma <tt>(,)</tt> as the decimal point symbol. The pre-changed value is returned.
+</li><li>Any other value does not change the current setting. Instead it just returns the current value.
+</li><li>The initial value of the decimal marker is a period.
+</li></ul>
+<p> 
+<a name="convertto_number"></a><a name="number"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.13 to_number</h4>
+<a name="_2255_to_number"></a><a name="to_number"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">to_number</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">text_in, </font><font color="#0000FF">integer </font><font color="#330033">return_bad_pos = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts the text into a number.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2256_parameters"></a><a name="parameters"></a><ol><li><tt>text_in</tt> : A string containing the text representation of a number.
+</li><li><tt>return_bad_pos</tt> : An integer.<ul><li>If 0 (the default) then this will return a number based on the supplied text and it will <strong>not</strong> return any position in <tt>text_in</tt> that caused an incomplete conversion.
+</li><li>If <tt>return_bad_pos</tt> is -1 then if the conversion of <tt>text_in</tt> was complete the resulting number is returned otherwise a single-element sequence containing the position within <tt>text_in</tt> where the conversion stopped.
+</li><li>If not 0 then this returns both the converted value up to the point of failure (if any) and the position in <tt>text_in</tt> that caused the failure. If that position is 0 then there was no failure.
+</li></ul>
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2257_returns"></a><a name="returns"></a><ul><li>an <strong>atom</strong>, If <tt>return_bad_pos</tt> is zero, the number represented by <tt>text_in</tt>. If <tt>text_in</tt> contains invalid characters, zero is returned.<br />
+
+</li><li>a <strong>sequence</strong>, If <tt>return_bad_pos</tt> is non-zero. If <tt>return_bad_pos</tt> is -1 it returns a 1-element sequence containing the spot inside <tt>text_in</tt> where conversion stopped. Otherwise it returns a 2-element sequence containing the number represented by <tt>text_in</tt> and either 0 or the position in  <tt>text_in</tt> where conversion stopped.
+</li></ul>
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2258_comments"></a><a name="comments"></a><ol><li>You can supply <strong>Hexadecimal</strong> values if the value is preceded by a '#' character, <strong>Octal</strong> values if the value is preceded by a '@' character, and <strong>Binary</strong> values if the value is preceded by a '!' character. With hexadecimal values, the case of the digits 'A' - 'F' is not important. Also, any decimal marker embedded in the number is used with the correct base.
+</li><li>Any underscore characters or thousands separators, that are embedded in the text number are ignored. These can be used to help visual clarity for long numbers. The thousands separator is a ',' when the decimal mark is '.' (the default), or '.' if the decimal mark is ','. You inspect and set it using <a href="std_convert.html#_2250_set_decimal_mark">set_decimal_mark</a>().
+</li><li>You can supply a single leading or trailing sign. Either a minus (-) or plus (+).
+</li><li>You can supply one or more trailing adjacent percentage signs. The first one causes the resulting value to be divided by 100, and each subsequent one divides the result by a further 10. Thus <tt>3845%</tt> gives a value of <tt>(3845 / 100) ==&gt; 38.45</tt>, and <tt>3845%%</tt> gives a value of <tt>(3845 / 1000) ==&gt; 3.845</tt>.
+</li><li>You can have single currency symbol before the first digit or after the last digit. A currency symbol is any character of the string: "$£¤¥€".
+</li><li>You can have any number of whitespace characters before the first digit and after the last digit.
+</li><li>The currency, sign and base symbols can appear in any order. Thus <tt>"$ -21.10"</tt> is the same as <tt>" -$21.10 "</tt>, which is also the same as <tt>"21.10$-"</tt>, and so on.
+</li><li>This function can optionally return information about invalid numbers. If <tt>return_bad_pos</tt> is not zero, a two-element sequence is returned. The first element is the converted number value , and the second is the position in the text where conversion stopped. If no errors were found then the second element is zero.
+</li><li>When converting floating point text numbers to atoms, you need to be aware that many numbers cannot be accurately converted to the exact value expected due to the limitations of the 64-bit IEEEE Floating point format.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2259_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">val</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34"</font><font color="#880033">)      </font><font color="#FF0055">---&gt; 12.34 -- No errors and no error return needed.</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34"</font><font color="#330033">, 1</font><font color="#880033">)   </font><font color="#FF0055">---&gt; {12.34, 0} -- No errors.</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34"</font><font color="#330033">, -1</font><font color="#880033">)  </font><font color="#FF0055">---&gt; 12.34 -- No errors.</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34a"</font><font color="#330033">, 1</font><font color="#880033">)  </font><font color="#FF0055">---&gt; {12.34, 6} -- Error at position 6</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34a"</font><font color="#330033">, -1</font><font color="#880033">) </font><font color="#FF0055">---&gt; {6} -- Error at position 6</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12.34a"</font><font color="#880033">)     </font><font color="#FF0055">---&gt; 0 because its not a valid number</font>
+
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"#f80c"</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 63500</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"#f80c.7aa"</font><font color="#880033">)    </font><font color="#FF0055">--&gt; 63500.47900390625</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"@1703"</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 963</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"!101101"</font><font color="#880033">)      </font><font color="#FF0055">--&gt; 45</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12_583_891"</font><font color="#880033">)   </font><font color="#FF0055">--&gt; 12583891</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12_583_891%"</font><font color="#880033">)  </font><font color="#FF0055">--&gt; 125838.91</font>
+<font color="#330033">val = to_number</font><font color="#880033">(</font><font color="#330033">"12,583,891%%"</font><font color="#880033">) </font><font color="#FF0055">--&gt; 12583.891</font>
+</pre>
+
+<p> 
+<a name="convertto_integer"></a><a name="integer"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.14 to_integer</h4>
+<a name="_2261_to_integer"></a><a name="to_integer"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">to_integer</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">data_in, </font><font color="#0000FF">integer </font><font color="#330033">def_value = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an object into a integer.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2262_parameters"></a><a name="parameters"></a><ol><li><tt>data_in</tt> : Any Euphoria object.
+</li><li><tt>def_value</tt> : An integer. This is returned if <tt>data_in</tt> cannot be converted into an integer. If omitted, zero is returned.
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2263_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either the integer rendition of <tt>data_in</tt> or <tt>def_value</tt> if it has no integer value.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2264_comments"></a><a name="comments"></a>
+<p> The returned value is guaranteed to be a valid Euphoria integer.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2265_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">12</font><font color="#880033">)            </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">12.4</font><font color="#880033">)          </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">"12"</font><font color="#880033">)          </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">"12.9"</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 12</font>
+
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">"a12"</font><font color="#880033">)         </font><font color="#FF0055">--&gt; 0 (not a valid number)</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">"a12"</font><font color="#330033">,-1</font><font color="#880033">)      </font><font color="#FF0055">--&gt; -1 (not a valid number)</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"12"</font><font color="#993333">}</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 0 (sub-sequence found)</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">#3FFFFFFF</font><font color="#880033">)     </font><font color="#FF0055">--&gt; 1073741823</font>
+<font color="#330033">? to_integer</font><font color="#880033">(</font><font color="#330033">#3FFFFFFF + 1</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0 (too big for a Euphoria integer)</font>
+</pre>
+
+<p> 
+<a name="convertto_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\std\convert.e -->
+<h4>8.13.1.15 to_string</h4>
+<a name="_2267_to_string"></a><a name="to_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/convert.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">convert</font>
+<font color="#0000FF">public function </font><font color="#330033">to_string</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">data_in, </font><font color="#0000FF">integer </font><font color="#330033">string_quote = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">embed_string_quote = </font><font color="#330033">'"'</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an object into a text string.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Parameters:</h5>
+<a name="_2268_parameters"></a><a name="parameters"></a><ol><li><tt>data_in</tt> : Any Euphoria object.
+</li><li><tt>string_quote</tt> : An integer. If not zero (the default) this will be used to enclose <tt>data_in</tt>, if it is already a string.
+</li><li><tt>embed_string_quote</tt> : An integer. This will be used to enclose any strings embedded inside <tt>data_in</tt>. The default is '"'
+</li></ol>
+<!-- ..\include\std\convert.e -->
+<h5>Returns:</h5>
+<a name="_2269_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>. This is the string repesentation of <tt>data_in</tt>.</p>
+
+<!-- ..\include\std\convert.e -->
+<h5>Comments:</h5>
+<a name="_2270_comments"></a><a name="comments"></a><ul><li>The returned value is guaranteed to be a displayable text string.
+</li><li><tt>string_quote</tt> is only used if <tt>data_in</tt> is already a string. In this case, all occurances of <tt>string_quote</tt> already in <tt>data_in</tt> are prefixed with the '\' escape character, as are any preexisting escape characters. Then  <tt>string_quote</tt> is added to both ends of <tt>data_in</tt>, resulting in a quoted string.
+</li><li><tt>embed_string_quote</tt> is only used if <tt>data_in</tt> is a sequence that contains strings. In this case, it is used as the enclosing quote for embedded strings.
+</li></ul>
+<!-- ..\include\std\convert.e -->
+<h5>Example 1:</h5>
+<a name="_2271_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#330033">12</font><font color="#993333">)</font><font color="#880033">)           </font><font color="#FF0055">--&gt; 12</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#330033">"abc"</font><font color="#993333">)</font><font color="#880033">)        </font><font color="#FF0055">--&gt; abc</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#330033">"abc"</font><font color="#330033">,</font><font color="#330033">'"'</font><font color="#993333">)</font><font color="#880033">)    </font><font color="#FF0055">--&gt; "abc"</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#330033">`abc\"`</font><font color="#330033">,</font><font color="#330033">'"'</font><font color="#993333">)</font><font color="#880033">)  </font><font color="#FF0055">--&gt; "abc\\\""</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#0000FF">{</font><font color="#330033">12,</font><font color="#330033">"abc"</font><font color="#330033">,</font><font color="#5500FF">{</font><font color="#330033">4.5, -99</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#993333">)</font><font color="#880033">)    </font><font color="#FF0055">--&gt; {12, "abc", {4.5, -99}}</font>
+<font color="#330033">display</font><font color="#880033">(</font><font color="#330033">to_string</font><font color="#993333">(</font><font color="#0000FF">{</font><font color="#330033">12,</font><font color="#330033">"abc"</font><font color="#330033">,</font><font color="#5500FF">{</font><font color="#330033">4.5, -99</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#330033">,,0</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">--&gt; {12, abc, {4.5, -99}}</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\get.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_utils.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_get.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_utils.html">8.12 Utilities</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_get.html">8.14 Input Routines</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

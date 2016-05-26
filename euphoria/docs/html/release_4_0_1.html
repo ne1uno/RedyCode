@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_2.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_2.html">9.6 Version 4.0.2 April 5, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0.html">9.8 Version 4.0.0 December 22, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\4.0.1.txt -->
+<h2>9.7 Version 4.0.1 March 29, 2011</h2>
+<a name="_6672_version401march292011"></a><a name="version401march292011"></a>
+<!-- ..\docs\release\4.0.1.txt -->
+<h3>9.7.1 Bug Fixes</h3>
+<a name="_6673_bugfixes"></a><a name="bugfixes"></a><ul><li>Renamed implicit Top Level SubProgram to an illegal name.  Previously used "_toplevel_", which became a legal name for euphoria 4.0
+</li><li><a class="external" href="/ticket/view.wc?id=577">ticket:577</a> <tt>object()</tt> works same on translator as the interpreter.
+</li><li>euc now uses quotes around filenames when processing resource files
+</li><li><a class="external" href="/ticket/view.wc?id=575">ticket:575</a> OW installer file setenv-ow.bat functionality restored from 4.0.0RC2.
+</li><li>case issues were removed from pathinfo(), canonical_path(), and abbreviate_path() these functions now return raw OS output; it is up to the user to change case when necessary
+</li><li><a class="external" href="/ticket/view.wc?id=593">ticket:593</a> Atoms represented as doubles, but that hold the double representation of a euphoria integer, now hash as though they were actually represented as an integer.  This ensures that two objects that evaluate as <tt>equal()</tt> will have the same hash value.
+</li><li><a class="external" href="/ticket/view.wc?id=597">ticket:597</a> Invalid negative routine ids were not detected properly by the interpreter, leading to a machine crash.
+</li><li>Now EUPHORIA can be installed under the Windows' 'Program Files' (with spaces) and the translated code will be compiled.
+</li><li>Fixed Demos to not rely on EUDIR being set and to not issue warnings
+</li><li>Improved confirmation in the algorithm that determines where EUPHORIA is.
+</li><li><a class="external" href="/ticket/view.wc?id=601">ticket:601</a> Missing htmldoc added to Makefile
+</li><li><a class="external" href="/ticket/view.wc?id=604">ticket:604</a> Uninstaller now completely cleans up after the installer. Note %EUBIN%\bin\eu.cfg is left  in place if modified.
+</li><li>Fixed link to PDF documentation
+</li><li>Added HTML documentation
+</li><li><a class="external" href="/ticket/view.wc?id=610">ticket:610</a> Euphoria Installer that includes Watcom will now prevent the user from installing Euphoria under a directory with spaces.  Watcom itself has a lot of problems when spaces are in its path
+</li><li><a class="external" href="/ticket/view.wc?id=614">ticket:614</a> maybe_any_key() was not pausing when a Console Program was run from Windows Explorer.
+</li><li><a class="external" href="/ticket/view.wc?id=591">ticket:591</a> updated copyright and version and added documentation reminding us all of the places we need to change that information.
+</li><li><a class="external" href="/ticket/view.wc?id=607">ticket:607</a> Fixed translation of integers with decimals (e.g., 2.0) when assigned to constants
+</li><li><a class="external" href="/ticket/view.wc?id=598">ticket:598</a> Link windows binaries to comdlg32.dll to make sure GUI calls work with the new manifest.
+</li><li><a class="external" href="/ticket/view.wc?id=590">ticket:590</a> Fixed outdated or incorrect documentation on loop statements
+</li><li><a class="external" href="/ticket/view.wc?id=594">ticket:594</a> Fixed problem with not being able to link to resource file in a location with spaces.
+</li><li><a class="external" href="/ticket/view.wc?id=615">ticket:615</a> Fixed abbreviate_path for Windows
+</li><li><a class="external" href="/ticket/view.wc?id=595">ticket:595</a> When it is necessary, tell user to change directory before using the make program.
+</li><li><a class="external" href="/ticket/view.wc?id=592">ticket:592</a> eu.cfg files in the program's directory and the euphoria executable directories are searched before platform specific directories
+</li><li><a class="external" href="/ticket/view.wc?id=609">ticket:609</a> Scientific notation not handling a decimal of all zeroes correctly.
+</li><li><a class="external" href="/ticket/view.wc?id=621">ticket:621</a> Add <tt>-eudir &lt;dir&gt;</tt> handler to binder and shrouder
+</li><li><a class="external" href="/ticket/view.wc?id=617">ticket:617</a> Fix top level <tt>case</tt> values when referencing an unqualified constant in another file
+</li><li><a class="external" href="/ticket/view.wc?id=620">ticket:620</a> Added comdlg32.dll to mingw linking flags
+</li><li><a class="external" href="/ticket/view.wc?id=625">ticket:625</a> Negative subscripts result in runtime errors.
+</li><li>Fixed eu.cfg handling precedence and parameter merge / de-dupe algorithm to keep correct order of switches.
+</li><li>Load eu.cfg arguments when running programs with no arguments, e.g., "eui app.ex"
+</li><li><a class="external" href="/ticket/view.wc?id=619">ticket:619</a> GNU makefile "all" target builds all binaries now
+</li><li><a class="external" href="/ticket/view.wc?id=632">ticket:632</a> fix trace screen prompts to prompt to continue
+</li><li><a class="external" href="/ticket/view.wc?id=633">ticket:633</a> On Windows, <tt><a href="std_filesys.html#_1192_dir">dir</a></tt> was incorrectly case sensitive if wildcards were used.
+</li><li><a class="external" href="/ticket/view.wc?id=624">ticket:624</a> Fixed regex function <tt><a href="std_regex.html#_3247_is_match">is_match</a></tt> to use the <tt>from</tt> parameter
+</li><li><a class="external" href="/ticket/view.wc?id=596">ticket:596</a> Worked around GNU C problem of a lack of alias attribute support on some Mac OS X machines.
+</li><li><a class="external" href="/ticket/view.wc?id=636">ticket:636</a> Source files checked out from Mercurial (and thus distributed packages) will use the conventions of the OS for line breaks.
+</li><li><a class="external" href="/ticket/view.wc?id=639">ticket:639</a> In place RHS slice (on sequence with reference count 1), followed by in place <tt><a href="std_sequence.html#_2632_splice">splice</a></tt> (on sequence still with reference count 1) works correctly
+</li><li><a class="external" href="/ticket/view.wc?id=640">ticket:640</a> Fix <tt><a href="std_filesys.html#_1192_dir">dir</a></tt> when a file cannot be stat()ed
+</li><li><a class="external" href="/ticket/view.wc?id=641">ticket:641</a> Use <tt><a href="std_filesys.html#_1192_dir">dir</a></tt> instead of just calling raw machine_func in  <tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a></tt> and <tt><a href="std_filesys.html#_1356_abbreviate_path">abbreviate_path</a></tt>
+</li></ul>
+<!-- ..\docs\release\4.0.1.txt -->
+<h3>9.7.2 Enhancements</h3>
+<a name="_6674_enhancements"></a><a name="enhancements"></a><ul><li>Added parsing of two digit years to <tt>std/datetime.e</tt> <tt><a href="std_datetime.html#_1117_parse">parse</a></tt>.
+</li><li><a class="external" href="/ticket/view.wc?id=516">ticket:516</a> added <tt><a href="std_filesys.html#_1369_join_path">join_path</a></tt> and <tt><a href="std_filesys.html#_1362_split_path">split_path</a></tt> routines.
+</li><li><tt><a href="std_filesys.html#_1200_current_dir">current_dir</a>()</tt> now always returns an upper case letter for the drive id.
+</li><li><tt><a href="std_filesys.html#_1349_canonical_path">canonical_path</a>()</tt> can now leave the case alone, lower the case, correct the case, and even get short file names for programs that still cannot handle quoted arguments at the command line.
+</li></ul>
+<p> 
+<!-- ..\docs\release\4.0.0.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_4_0_2.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_4_0_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_4_0_2.html">9.6 Version 4.0.2 April 5, 2011</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_4_0_0.html">9.8 Version 4.0.0 December 22, 2010</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

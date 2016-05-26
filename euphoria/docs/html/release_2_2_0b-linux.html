@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_2_0-linux.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_2_0a-linux.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_2_0-linux.html">9.33 Version 2.2 Linux November 22, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_2_0a-linux.html">9.35 Version 2.2 Alpha Linux August 24, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.2.0b-linux.txt -->
+<h2>9.34 Version 2.2 Beta Linux October 22, 1999</h2>
+<a name="_6780_version22betalinuxoctober221999"></a><a name="version22betalinuxoctober221999"></a>
+<p> <em>Most of these features and bug fixes will also be made available in Version 2.2 for <strong>WIN32 + DOS32</strong></em>.</p>
+<ul><li><strong>platform()</strong> has been moved from misc.e into exu to eliminate the function call overhead. platform() now takes zero time to compute. The compiler simply plugs in the appropriate constant value.
+</li><li><strong>lock_file()</strong> and <strong>unlock_file()</strong> have been added to allow multiple processes to share access to files. This can be important in CGI programming and other areas.
+</li><li><strong>flush()</strong> will force the contents of the memory buffer out to a file or device.
+</li><li><strong>chdir()</strong> will change to a new current directory and let you know if it was successful.
+</li><li><strong>sleep()</strong> will suspend execution of your program for a number of seconds, and let the operating system schedule another process.
+</li><li><strong>put_screen_char()</strong> will write a character and its attributes (colors etc.) to the screen.
+</li><li><strong>get_screen_char()</strong> will read a character and its attributes from the screen.
+</li><li><strong>save_text_image()</strong> now works on Linux (as well as DOS32). It copies a rectangular text image from the screen.
+</li><li><strong>display_text_image()</strong> now works under Linux (as well as DOS32). It writes a rectangular text image to the screen.
+</li></ul><ul><li>The "short-circuit" warning now gives the filename and line number of the possibly short-circuited call. Minor clarifications were made in some other error messages as well.
+</li><li>Minor improvements were made to <strong>ed</strong> and <strong>search</strong>.
+</li><li>A portability problem in <strong>how2reg.ex</strong> was fixed.
+</li><li><strong>exu</strong> is compressed better. It's actually a bit smaller now, although functionality has been added to it.
+</li></ul>
+<p>
+<!-- ..\docs\release\2.2.0a-linux.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_2_0-linux.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_2_0a-linux.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_2_0-linux.html">9.33 Version 2.2 Linux November 22, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_2_0a-linux.html">9.35 Version 2.2 Alpha Linux August 24, 1999</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

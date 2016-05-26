@@ -1,0 +1,8 @@
+=Canvas Objects
+gui/objects
+
+===Introduction
+These libraries control [[Canvas->RedyLib\Gui\WidgetClasses\canvas]] widgets to display graphics and interact with the user to provide various types of commonly needed viewers or editors. They effectively create what could be thought of as custom widget classes. More will be added in future versions.
+    * [[Calendar->RedyLib\Gui\Objects\Calendar]]
+    * [[Graphs->RedyLib\Gui\Objects\Graphs]]
+    * [[TextDoc->RedyLib\Gui\Objects\TextDoc]]

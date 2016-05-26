@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_graphics.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_info.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_graphics.html">8.48 Graphics - Cross Platform</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_info.html">8.50 Euphoria Information</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\image.e -->
+<h2>8.49 Graphics - Image Routines</h2>
+<a name="_6072_graphicsimageroutines"></a><a name="graphicsimageroutines"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_image.html#_6072_graphicsimageroutines">8.49 Graphics - Image Routines</a></div>
+<div class="toc_4"><a href="std_image.html#_6074_graphics_point">8.49.0.1 graphics_point</a></div>
+<div class="toc_3"><a href="std_image.html#_6075_bitmaphandling">8.49.1 Bitmap Handling</a></div>
+<div class="toc_4"><a href="std_image.html#_6077_read_bitmap">8.49.1.1 read_bitmap</a></div>
+<div class="toc_4"><a href="std_image.html#_6084_save_bitmap">8.49.1.2 save_bitmap</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="imagegraphics_point"></a><a name="point"></a> </p>
+
+<!-- ..\include\std\image.e -->
+<h4>8.49.0.1 graphics_point</h4>
+<a name="_6074_graphics_point"></a><a name="graphics_point"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/image.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">image</font>
+<font color="#0000FF">public type </font><font color="#330033">graphics_point</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">p</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\image.e -->
+<h3>8.49.1 Bitmap Handling</h3>
+<a name="_6075_bitmaphandling"></a><a name="bitmaphandling"></a>
+<p> 
+<a name="imageread_bitmap"></a><a name="bitmap"></a> </p>
+
+<!-- ..\include\std\image.e -->
+<h4>8.49.1.1 read_bitmap</h4>
+<a name="_6077_read_bitmap"></a><a name="read_bitmap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/image.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">image</font>
+<font color="#0000FF">public function </font><font color="#330033">read_bitmap</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">file_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   reads a bitmap (<tt>.BMP</tt>) file into a 2-d sequence of sequences (image)</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Parameters:</h5>
+<a name="_6078_parameters"></a><a name="parameters"></a><ol><li><tt>file_name</tt> : a sequence, the path to a <tt>.bmp</tt> file to read from. The extension is not assumed if missing.
+</li></ol>
+<!-- ..\include\std\image.e -->
+<h5>Returns:</h5>
+<a name="_6079_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, on success, a sequence of the form <tt>{palette,image}</tt>. On failure, an error code is returned.</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Comments:</h5>
+<a name="_6080_comments"></a><a name="comments"></a>
+<p> In the returned value, the first element is a list of three membered sequences, each containing three color intensity values in the range 0 to 255, and the second, a list of pixel rows. Each pixel in a row is represented by its color index in the said first element of the return value.</p>
+
+<p> The file should be in the bitmap format. The most common variations of the format are supported.</p>
+
+<p> Bitmaps of 2, 4, 16 or 256 colors are supported. If the file is not in a good format, an error code (atom) is returned instead</p>
+
+<pre class="examplecode"><font color="#0000FF">public constant</font>
+<font color="#330033">    BMP_OPEN_FAILED = 1,</font>
+<font color="#330033">    BMP_UNEXPECTED_EOF = 2,</font>
+<font color="#330033">    BMP_UNSUPPORTED_FORMAT = 3</font>
+</pre>
+
+<p> You can create your own bitmap picture files using Windows Paintbrush and many other graphics programs. You can then incorporate these pictures into your Euphoria programs.</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Example 1:</h5>
+<a name="_6081_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">x = read_bitmap</font><font color="#880033">(</font><font color="#330033">"c:\\windows\\arcade.bmp"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\image.e -->
+<h5>See Also:</h5>
+<a name="_6082_seealso"></a><a name="seealso"></a>
+<p> <a href="std_image.html#_6084_save_bitmap">save_bitmap</a></p>
+
+<p> 
+<a name="imagesave_bitmap"></a><a name="bitmap"></a> </p>
+
+<!-- ..\include\std\image.e -->
+<h4>8.49.1.2 save_bitmap</h4>
+<a name="_6084_save_bitmap"></a><a name="save_bitmap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/image.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">image</font>
+<font color="#0000FF">public function </font><font color="#330033">save_bitmap</font><font color="#880033">(</font><font color="#330033">two_seq palette_n_image, </font><font color="#0000FF">sequence </font><font color="#330033">file_name</font><font color="#880033">)</font>
+</pre>
+
+<p>   create a <tt>.BMP</tt> bitmap file, given a palette and a 2-d sequence of sequences of colors.</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Parameters:</h5>
+<a name="_6085_parameters"></a><a name="parameters"></a><ol><li><tt>palette_n_image</tt> : a <tt>{palette, image}</tt> pair, like <a href="std_image.html#_6077_read_bitmap">read_bitmap</a> returns
+</li><li><tt>file_name</tt> : a sequence, the name of the file to save to.
+</li></ol>
+<!-- ..\include\std\image.e -->
+<h5>Returns:</h5>
+<a name="_6086_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, 0 on success.</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Comments:</h5>
+<a name="_6087_comments"></a><a name="comments"></a>
+<p> This routine does the opposite of <a href="std_image.html#_6077_read_bitmap">read_bitmap</a>(). The first element of <tt>palette_n_image</tt> is a list of sequences each sequence containing exactly three color intensity values in the range 0 to 255. The second element is a list of sequences of colors. The inner sequences must have the same length.  Each element in the each inner sequence represents the color index in <tt>palette_n_image</tt> of a pixel.  Each inner sequence is a row in the image.</p>
+
+<p> The result will be one of the following codes: </p>
+
+<pre class="examplecode"><font color="#0000FF">public constant</font>
+<font color="#330033">    BMP_SUCCESS = 0,</font>
+<font color="#330033">    BMP_OPEN_FAILED = 1,</font>
+<font color="#330033">    BMP_INVALID_MODE = 4 </font><font color="#FF0055">-- invalid graphics mode</font>
+<font color="#FF0055">                         -- or invalid argument</font>
+</pre>
+
+<p> <tt>save_bitmap</tt> produces bitmaps of 2, 4, 16, or 256 colors and these can all be read with <tt>read_bitmap</tt>. Windows Paintbrush and some other tools do not support 4-color bitmaps.</p>
+
+<!-- ..\include\std\image.e -->
+<h5>Example 1:</h5>
+<a name="_6088_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">code = save_bitmap</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">paletteData, imageData</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">                   "c:\\example\\a1.bmp"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\image.e -->
+<h5>See Also:</h5>
+<a name="_6089_seealso"></a><a name="seealso"></a>
+<p> <a href="std_image.html#_6077_read_bitmap">read_bitmap</a></p>
+
+<p> 
+<!-- ..\include\euphoria\info.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_graphics.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="euphoria_info.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_graphics.html">8.48 Graphics - Cross Platform</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="euphoria_info.html">8.50 Euphoria Information</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

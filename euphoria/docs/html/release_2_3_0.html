@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0a.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0b.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0a.html">9.20 Version 2.4 Alpha February 21, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0b.html">9.22 Version 2.3 Beta January 15, 2002</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.3.0.txt -->
+<h2>9.21 Version 2.3 February 11, 2002</h2>
+<a name="_6754_version23february112002"></a><a name="version23february112002"></a>
+<p> This release updates the Euphoria Interpreter, the Euphoria To C Translator, and the Interpreter Source Code product, for all platforms.</p>
+<ul><li>The DJGPP version of the interpreter source code now uses GNU C's dynamic labels, just like the Linux version. This allows it to achieve full speed, without the need for any assembly-level tweaking. Thanks to Bernie Ryan.
+</li><li>The Interpreter Source Code now includes an overview document describing how the interpreter works.
+</li><li>In the Complete Edition, bind.bat and bindw.bat now use exw to run the binder/shrouder. This avoids problems with long filenames on some systems. A console window will appear while the binder/shrouder is running. Thanks to "void", Bruce Axtens, and others.
+</li><li><strong>bug fixed : </strong> Due to a bug in the WATCOM 10.6 C library, the ex and exw interpreters, and code translated to C and compiled by Watcom, might get the wrong result from Euphoria's where() function when the file was opened in append mode, and the file pointer was in the uncommitted (not written to disk yet) portion of the file. The bug has been worked around by having Euphoria flush() the file in this particular case, before calling the Watcom routine. Thanks to Bob Elia.
+</li><li><strong>bug fixed : </strong> A bug introduced in the binder for 2.3 beta, might cause a function call on the last line of a program to be ignored. Thanks to Wolfgang Fritz.
+</li><li><strong>bug fixed : </strong> Several Euphoria files in the WIN32+DOS32 distribution had Linux-style line terminators (\n only). This made them hard to view using NotePad and some other editors. Thanks to Pete Lomax.
+</li><li><strong>bug fixed : </strong> If "with type_check" was turned on, ed.ex would get a type_check failure when the Esc key was pressed. Thanks to Kenneth Orr.
+</li></ul>
+<p> 
+<!-- ..\docs\release\2.3.0b.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0a.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0b.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0a.html">9.20 Version 2.4 Alpha February 21, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0b.html">9.22 Version 2.3 Beta January 15, 2002</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

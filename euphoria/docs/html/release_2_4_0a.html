@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0b.html">9.19 Version 2.4 Beta April 10, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0.html">9.21 Version 2.3 February 11, 2002</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.4.0a.txt -->
+<h2>9.20 Version 2.4 Alpha February 21, 2003</h2>
+<a name="_6737_version24alphafebruary212003"></a><a name="version24alphafebruary212003"></a>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h3>9.20.1 New Features</h3>
+<a name="_6738_newfeatures"></a><a name="newfeatures"></a><ul><li>Most machine-level exceptions (peek/poke to bad addresses etc.) in both the main program and in .dlls, are now caught by  <strong>exw</strong> and <strong>exu</strong>, and reported in the usual way, with a full traceback and  <strong>ex.err</strong> variable dump. This is a great improvement over the cryptic machine-level messages you used to get (and still get when using compiled languages, and most interpreted languages) about "segmentation violation", "illegal instruction" etc.). Thanks to Martin Stachon.
+</li></ul><ul><li>In addition to <tt>stdcall</tt>, the C <tt>cdecl</tt> calling convention is now supported for calls to C routines in .dll's and also call-backs to Euphoria routines from C code.
+</li></ul><ul><li>Euphoria's support for DOS long filenames has been extended to Windows XP.
+</li></ul><ul><li>The <strong>trace</strong> screen shows you large sequences in pretty-print display on a separate screen. You can scroll through the whole sequence.
+</li></ul><ul><li><strong>pretty_print()</strong> was added to  <strong>misc.e</strong>. It lets you display Euphoria objects with a nice, readable structured display, and many formatting options.
+</li></ul><ul><li>Pretty-printing of sequences is now done in  <strong>ex.err</strong>, the <strong>?</strong> command, and  <strong>db_dump()</strong>.
+</li></ul><ul><li><strong>Euphoria Database System (EDS)</strong>:  <strong>db_rename_table(name, new_name)</strong> was added to <strong>database.e</strong>. This routine was submitted by Jordah Ferguson, and included with only trivial changes.
+</li></ul><ul><li><strong>Linux/FreeBSD</strong>:  <strong>system()</strong> no longer initializes curses when there is no console window yet. Thanks to Daniel Johnson.
+</li></ul><ul><li>The number of levels of nested include files has been raised to 30 (from 10). Thanks to Tone Skoda.
+</li></ul><ul><li>Include statement path names can have double-quotes around them, so paths containing blanks can be handled correctly. This was actually implemented for 2.3 but never documented.
+</li></ul><ul><li><strong>exw.exe</strong>, and any executables produced by the <strong>Translator</strong> with Watcom, now have the subsystem set to 4.0 instead of 3.1. This improves the appearance of GUI's in some cases. The utility  <strong>make31.exw</strong> will create a version of <strong>exw.exe</strong> that supports Windows GUI 3.1 as before, in the unlikely case that there are compatibility problems with Euphoria 2.3. Thanks to H. W. Overman, Brian Broker and others for recommending this change.
+</li></ul><ul><li><strong>makecon.exw</strong> - will create a version of <strong>exw.exe</strong> that operates as a console application - no console window is popped up, and <strong>stdin/stdout</strong> can be redirected
+</li></ul><ul><li><strong>trace(1 2 and 3)</strong> are now allowed with <strong>bind -clear</strong> (still not allowed with <strong>shrouded bind</strong> for security reasons). Thanks to Jonas Temple.
+</li></ul><ul><li><strong>Translator</strong>: You can now make a Euphoria .dll using Lcc and interface it with interpreted programs running under <strong>exw</strong>, and translated programs using Borland and Watcom. Previously, the main program had to also be compiled with Lcc.
+</li></ul><ul><li>The <strong>Translator</strong> no longer uses the <strong>-m486</strong> or <strong>-mpentium</strong> options available with GCC and DJGPP. These options were causing warnings, and the C compiler apparently sets the machine model correctly by itself. Thanks to Kenneth Rhodes.
+</li></ul><ul><li>The <strong>Translator</strong> will now perform automatic calls to user-defined types, in the unusual case where the type routine has side-effects (it sets global variables, performs I/O etc.). Thanks to Andy Serpa.
+</li></ul><ul><li><strong>euphoria\demo\bench</strong> compares the  <strong>Euphoria Interpreter</strong> and the  <strong>Euphoria To C Translator</strong> against more than 20 other interpreted languages.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h3>9.20.2 Porting Activity</h3>
+<a name="_6739_portingactivity"></a><a name="portingactivity"></a><ul><li>We ported the <strong>Interpreter</strong> and <strong>Translator</strong> to <strong>FreeBSD.</strong> The source now has several C #ifdef's for FreeBSD.
+</li></ul><ul><li>Andy Cranston has ported Euphoria to HP Unix, and he plans to do Sun Unix.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h3>9.20.3 Optimizations</h3>
+<a name="_6740_optimizations"></a><a name="optimizations"></a>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.3.1 Interpreter</h4>
+<a name="_6741_interpreter"></a><a name="interpreter"></a><ul><li>Typical large slices are faster. About 30% faster for slices from about 100 to 50000 in length. (Overhead dominates for smaller slices, and lack of caching affects larger slices.) This assumes the slice is mostly integers (usually true), and an actual copy of the data is made (usually true since v1.4b).
+</li></ul><ul><li>Statements that contain multiple <tt>&amp;</tt> concatenations are much faster.
+</li></ul>
+<p>  e.g. instead of:
+             **result = a &amp; b &amp; c**
+             being evaluated as:
+               1. copy a and b into temp
+               2. copy temp and c into result
+                  (a and b are effectively copied twice!)
+
+             We now do:
+               1. copy a and b and c directly into result</p>
+
+<p>   So there is less copying of data and fewer temp sequences to create.   The more <tt>&amp;</tt> operators in an   expression, the greater the speed-up. e.g. with 3   <tt>&amp;</tt> operators some of the data   was copied 3 times, etc.   Jordah Ferguson pointed out that this was slow.</p>
+<ul><li>The time overhead involved in calling and returning from a Euphoria call-back routine has been reduced by about 10 percent.
+</li></ul><ul><li>In <strong>exw</strong> and <strong>ecw -wat</strong>, allocation of space for large numbers of objects is faster. It can be tremendously faster when hundreds of thousands or millions of objects are involved.
+</li></ul><ul><li>Better UPX compression has chopped a few K off  <strong>exw.exe</strong> vs. 2.3 (even though new code was added). Thanks to Wolfgang Fritz
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.3.2 Euphoria Database System</h4>
+<a name="_6742_euphoriadatabasesystem"></a><a name="euphoriadatabasesystem"></a><ul><li>Keys and records are read faster due to a faster  <strong>decompress()</strong> routine. Almost twice as fast when the key or record data to be retrieved consists mainly of sequences of characters or small integers. This case is quite common.
+</li></ul><ul><li>Allocating new space in a database is much faster, up to 4x faster, especially in large databases with a large list of free blocks
+</li></ul><ul><li>Inserting and deleting records in huge tables is now much faster. Combined with the speeded-up slices in Euphoria 2.4,  <strong>database.e</strong> is now about 25% faster for a table with 10,000 records and over 3x faster for a table with 100,000 records. This really only matters if you are trying to insert/delete hundreds of records per second. In the typical case of a human operator entering data via GUI, you would never notice the insert/delete time for one record (a few milliseconds). Derek Parnell pointed out the slowness.
+</li></ul><ul><li><strong>db_select_table()</strong> is significantly faster.
+</li></ul><ul><li><strong>get4()</strong> is faster which speeds up everything.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.3.3 Other Optimizations</h4>
+<a name="_6743_otheroptimizations"></a><a name="otheroptimizations"></a><ul><li><strong>bytes_to_int()</strong> in  <strong>machine.e</strong> is now more than twice as fast.
+</li></ul><ul><li><strong>gets()</strong> is about 5% faster
+</li></ul><ul><li><strong>sort()</strong> and  <strong>custom_sort()</strong> are a few percent faster. Thanks to Ricardo Forno for tweaking the Shell sort algorithm.
+</li></ul><ul><li>Several additional optimizations have been added to the  <strong>Translator</strong>. It produces executables that are faster and smaller than version 2.3. The 2.4 Translator has been successfully tested on hundreds of thousands of lines of Euphoria code, and there are currently no known code generation bugs. Some Translator benchmark results are in  <strong>euphoria\demo\bench</strong>.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h3>9.20.4 Bug Fixes</h3>
+<a name="_6744_bugfixes"></a><a name="bugfixes"></a>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.1 Source Code</h4>
+<a name="_6745_sourcecode"></a><a name="sourcecode"></a><ul><li><strong>bug fixed</strong>: The  <strong>gnubsd</strong> batch file referred to  <strong>syncolor.c</strong> and  <strong>syncolor.o</strong>. (<strong>gnuexu</strong> was ok.)
+</li></ul><ul><li><strong>bug fixed</strong>: Karl Bochert pointed out a necessary C coding change to make <strong>poke()</strong> work with the latest version of Lcc. The change corrected the <strong>Translator</strong> (with recent versions of Lcc) and the <strong>Interpreter Source Code</strong> (compiled with Lcc)
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.2 Interpreter</h4>
+<a name="_6746_interpreter"></a><a name="interpreter"></a><ul><li><strong>bug fixed</strong>: A crash might occur in situations where a call-back routine indirectly called itself recursively. Thanks to Matthew Lewis and George Papadopoulos.
+</li></ul><ul><li><strong>bug fixed</strong>: In for-loops at the top-level of a program (outside of any routine), that incremented the loop variable by an integer other than the default of +1, <tt>end for</tt> was taking up to 15x longer than necessary due to a bug fix that was made back in November 1999. Only the  <tt>end for</tt> itself was slow, not the code contained in the body of the loop. Antoine Tammer detected this.
+</li></ul><ul><li><strong>bug fixed</strong>: On XP, when you open a new DOS window that has more than 25 lines, the Virtual DOS Machine (VDM) is at first confused about the true number of lines. The first time (only) when you ran a Euphoria program in that window, if you ran it near the very bottom of the screen, the output might disappear, or the VDM or Euphoria might report an error etc. Euphoria (<strong>ex.exe</strong>) now detects the rare cases when VDM is confused and clears the screen, which clears up the confusion. A similar problem existed on NT, and was fixed a few years ago.
+</li></ul><ul><li><strong>bug fixed</strong>: The interpreter was referring to "call back from Windows" in <strong>ex.err</strong>, even on Linux or FreeBSD. It now says "call-back from external source" on those systems. Thanks to Pete Eberlein.
+</li></ul><ul><li><strong>bug fixed</strong>: When an include file couldn't be found, the error message referred to "euphoria\include". It now uses %EUDIR%\include
+</li></ul><ul><li><strong>bug fixed</strong>: An error message will no longer be generated on any platform for <tt>without profile_time</tt>. Thanks to Alan Oxley.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.3 Translator</h4>
+<a name="_6747_translator"></a><a name="translator"></a><ul><li><strong>bug fixed</strong>: When assigning the result of an arithmetic calculation (typically multiply) involving two integers, to a variable declared as atom, where the atom variable had already (in the same basic block) been assigned an integer value, the Translator might not output any code to check for integer overflow (result outside of +/- one billion). This could cause a crash. Thanks to Andy Serpa.
+</li></ul><ul><li><strong>bug fixed</strong>: DJGPP strip.exe command in <strong>emake.bat</strong> would fail on XP,2000 due to a bug in DJGPP. Now <strong>emake.bat</strong> has: <strong>SET LFN=n</strong> to work around the bug in strip.exe
+</li></ul><ul><li><strong>bug fixed</strong>: Translated code compiled with Borland C was not producing INF's and NAN's, like Watcom and Lcc. Rather, it was crashing when a floating-point overflow (over 1e308), or an undefined f.p. result was calculated. The <strong>Interpreter Source Code</strong> was also corrected for those who wish to compile <strong>exw.exe</strong> using Borland. Thanks to Andy Serpa.
+</li></ul><ul><li><strong>bug fixed</strong>: In the first basic block of a Euphoria routine (i.e. before any control-flow statements),  <strong>peek4u()</strong>, &lt;font color="#006699"&gt;  <strong>peek4s()</strong>, and the "add integer 1" operation, would sometimes neglect to check for possible 31-bit integer overflow when assigning to a private variable declared as atom, unless the variable had been previously initialized. Thanks to Mike Duffy.
+</li></ul><ul><li><strong>bug fixed</strong>: In some cases, when assigning a sequence element to a variable declared as integer, and known to have an integer value at this point, the case where the element was an integer value stored in C double form was not handled correctly.
+</li></ul><ul><li><strong>bug fixed</strong>: In rare cases, the translator might output two unary minus operators in a row, which would be parsed by a C compiler as the C decrement operator "--".
+</li></ul><ul><li><strong>bug fixed</strong>: Euphoria .dll's were not always correctly freeing storage allocated by the main program, and vice versa. Memory could be wasted, and you might get a machine-level crash. Thanks to H. W. Overman.
+</li></ul>
+<p>  <strong>Note:</strong> Due to this fix, any Euphoria .dll's created with the   Translator version 2.3 or earlier, must be re-translated with 2.4,   and re-compiled, in order to interface with the Euphoria 2.4 (or later)   interpreter or translated code. New .dll's created with version 2.4   or later, will not work with the interpreter version 2.3 or earlier,   except in trivial cases.</p>
+<ul><li><strong>bug fixed</strong>: The  <strong>sleep(x)</strong> function was only sleeping for x milliseconds when using the Lcc run-time library. It now sleeps for x seconds, to conform with the Euphoria documentation for  <strong>sleep()</strong>. Thanks to Wolfgang Fritz.
+</li></ul><ul><li><strong>bug fixed</strong>: On some versions of Linux, a translated/compiled Euphoria program would crash if standard output was redirected, e.g. for CGI
+</li></ul><ul><li><strong>bug fixed</strong>: On some versions of Linux, a translated/compiled Euphoria program would crash if machine(M_GET_SCREEN_CHAR, {row, col}) were called.
+</li></ul><ul><li><strong>bug fixed</strong>: In some cases the code was not correct when an integer variable was assigned the unary minus of an atom variable.
+</li></ul><ul><li><strong>bug fixed</strong>: In a very rare case, an uninitialized value in memory might be used to determine if a literal floating-point value should be treated as an integer or not. Incorrect code could result.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.4 Binder</h4>
+<a name="_6748_binder"></a><a name="binder"></a><ul><li><strong>bug fixed</strong>: The binder would crash after seeing a comment with no new-line character, just EOF, on the last line of a file. Some versions of Win32Lib.ew had this. Thanks to Henri Goffin.
+</li></ul><ul><li><strong>bug fixed</strong>: The usage report of  <strong>bind</strong>/&lt;font color="#993333"&gt;<strong>shroud</strong> still said "-scramble", instead of "-clear" and had other errors for Linux/FreeBSD. Thanks to Chris Bensler.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>bind/shroud -clear</strong> might neglect to rename a private variable, when an earlier local variable gets renamed into the same name. Thanks to Pete Lomax.
+</li></ul><ul><li><strong>bug fixed</strong>: When an include file was missing <tt>\n</tt> on the last line,  <strong>bind/shroud -clear</strong> might neglect to leave some whitespace before the next word in the main file. Thanks to Pete Lomax.
+</li></ul><ul><li><strong>bug fixed</strong>: If you defined a constant that was never used, and it was defined using an expression that contained a binary minus operator, a syntax error could occur in the bound or shrouded file that you create. Thanks to Chris Bensler.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.5 Library Routines</h4>
+<a name="_6749_libraryroutines"></a><a name="libraryroutines"></a><ul><li><strong>bug fixed</strong>:  <strong>walk_dir("/",...)</strong> would fail on Linux. Thanks to Ricardo Forno.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>db_compress()</strong> of EDS had an error if the database file or it's path contained a blank character. A blank is ok now on all platforms except DOS. Thanks to Virtual B.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>wildcard_file()</strong> in  <strong>euphoria\include\wildcard.e</strong> is now case sensitive on Linux/FreeBSD (but is still case insensitive on DOS/Windows). Thanks to Jeff Fielding.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>dir()</strong> was not always reporting file sizes greater than 1 Gb correctly. It now handles up to 4 Gb. Arithmetic performed on the file size would probably fail. Thanks to Ricardo Forno.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>where()</strong> was not always reporting file positions greater than 1 Gb correctly. Arithmetic performed on the position would probably fail. It now handles up to 2 Gb.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>ex, exw, ec -wat, ecw -wat</strong>: The  <strong>dir()</strong> function for DOS and Windows was not handling wildcards correctly when a backslash appeared at the end of the file or directory path. Thanks to Juergen Luethje.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.6 Namespace Feature</h4>
+<a name="_6750_namespacefeature"></a><a name="namespacefeature"></a><ul><li><strong>bug fixed</strong>: If you tried to declare a new variable, using a namespace qualifier, e.g. <strong>integer y:x</strong> (which is illegal) it wouldn't complain, and would just ignore the "y:" part, as long as y:x was a routine (not a variable) in an earlier file. This is now caught as an error. Thanks to Martin Stachon.
+</li></ul><ul><li><strong>bug fixed</strong>: When declaring the type of a parameter, using a global type that was defined in more than one file, you would get an unclear error message stating "a type is expected here". Now you'll get a message pointing out that the type requires a namespace identifier to resolve it. Thanks to Juergen Luethje.
+</li></ul><ul><li><strong>bug fixed</strong>: The error message that you get if you specify a namespace qualifier and a ':', but you neglect to follow it with a properly-formed identifier, has been improved.  Thanks to Carl White.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.7 Demo Programs</h4>
+<a name="_6751_demoprograms"></a><a name="demoprograms"></a><ul><li><strong>bug fixed</strong>: In the <strong>window.exw</strong> demo program,  <strong>allocate(64)</strong> and  <strong>allocate(16)</strong> caused a storage leak. Thanks to Wolfgang Fritz and Jordah Ferguson.
+</li></ul>
+<!-- ..\docs\release\2.4.0a.txt -->
+<h4>9.20.4.8 Trace/Debug</h4>
+<a name="_6752_tracedebug"></a><a name="tracedebug"></a><ul><li><strong>bug fixed</strong>: When  <strong>trace(0)</strong> was executed, followed later by  <strong>trace(1)</strong>, with no screen I/O in between, the values of some variables on the trace screen were not updated. Thanks to Ricardo Forno.
+</li></ul><ul><li><strong>bug fixed</strong>:  <strong>with trace</strong> /  <strong>with profile</strong> /  <strong>trace(3)</strong>, used all together, produced garbage source lines in  <strong>ctrace.out</strong>. Thanks to Kat.
+</li></ul>
+<p>
+<!-- ..\docs\release\2.3.0.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_4_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_4_0b.html">9.19 Version 2.4 Beta April 10, 2003</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0.html">9.21 Version 2.3 February 11, 2002</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

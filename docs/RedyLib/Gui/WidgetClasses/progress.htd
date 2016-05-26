@@ -1,0 +1,28 @@
+==Progress Widget Class
+
+Widget Class name: "progress"
+
+===API
+====Properties
+
+====="label"
+====="value"
+====="vague"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====Commands
+
+=====procedure cmd_set_value(atom wid, atom sv)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

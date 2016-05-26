@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="demos.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="bind.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="demos.html">6.1 Bundled Demos</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="bind.html">6.3 Shrouding and Binding</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\debug.txt -->
+<h2>6.2 Debugging and Profiling</h2>
+<a name="_515_debuggingandprofiling"></a><a name="debuggingandprofiling"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="debug.html#_515_debuggingandprofiling">6.2 Debugging and Profiling</a></div>
+<div class="toc_3"><a href="debug.html#_516_debugging">6.2.1 Debugging</a></div>
+<div class="toc_4"><a href="debug.html#_518_tracedirectiveswithwithout">6.2.1.1 Trace Directives: with, without</a></div>
+<div class="toc_3"><a href="debug.html#_519_tracescreen">6.2.2 Trace Screen</a></div>
+<div class="toc_3"><a href="debug.html#_520_tracefile">6.2.3 Trace File</a></div>
+<div class="toc_3"><a href="debug.html#_521_profiling">6.2.4 Profiling</a></div>
+<div class="toc_3"><a href="debug.html#_523_timeprofiling">6.2.5 Time Profiling</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\docs\debug.txt -->
+<h3>6.2.1 Debugging</h3>
+<a name="_516_debugging"></a><a name="debugging"></a>
+<p> Extensive run-time checking provided by the Euphoria interpreter catches many bugs that in other languages might take hours of your time to track down. When the interpreter catches an error, you will always get a brief report on your screen, and a detailed report in a file called <tt>ex.err</tt>. These reports include a full English description of what happened, along with a call-stack traceback. The file <tt>ex.err</tt> will also have a dump of all variable values, and optionally a list of the most recently executed statements. For extremely large sequences, only a partial dump is shown. If the name <tt>ex.err</tt> is not convenient, or if a nondefault path is required, you can choose another file name, anywhere on your system, by calling <a href="std_error.html#_5517_crash_file">crash_file</a>.</p>
+
+<p> In addition, you are able to create <a href="lang_decl.html#udt">user-defined types</a> that precisely determine the set of legal values for each of your variables. An error report will occur the moment that one of your variables is assigned an illegal value.</p>
+
+<p> Sometimes a program will misbehave without failing any run-time checks. In any programming language it may be a good idea to simply study the source code and rethink the algorithm that you have coded. It may also be useful to insert print statements at strategic locations in order to monitor the internal logic of the program. This approach is particularly convenient in an interpreted language like Euphoria since you can simply edit the source and rerun the program without waiting for a re-compile/re-link. 
+<a name="trace"></a></p>
+
+<!-- ..\docs\debug.txt -->
+<h4>6.2.1.1 Trace Directives: with, without</h4>
+<a name="_518_tracedirectiveswithwithout"></a><a name="tracedirectiveswithwithout"></a>
+<p> The interpreter provides you with additional powerful tools for debugging. Using <tt>trace(1)</tt> you can <strong><em>trace</em></strong> the execution of your program on one screen while you witness the output of your program on another.  <tt>trace(2)</tt> is the same as <tt>trace(1)</tt> but the trace screen will be in monochrome. Finally, using <tt>trace(3)</tt>, you can log all executed statements to a file called <tt>ctrace.out</tt>.</p>
+
+<p> The <strong>with/without trace</strong> special statements select the parts of your program that are available for tracing. Often you will simply insert a with trace statement at the very beginning of your source code to make it all traceable. Sometimes it is better to place the first with trace after all of your <a href="lang_decl.html#udt">user-defined types</a>, so you don't trace into these routines after each assignment to a variable.  At other times, you may know exactly which routine or routines you are interested in tracing, and you will want to select only these ones. Of course, once you are in the trace window, you can  skip viewing the execution of any routine by pressing down-arrow on the keyboard rather than Enter. However, once inside a routine, you must step through till it returns, even if stepping in was an mistake.</p>
+
+<p> Only traceable lines can appear in <tt>ctrace.out</tt> or in <tt>ex.err</tt> as "Traced lines leading up to the failure", should a run-time error occur.  If you want this information and didn't get it, you should insert a with trace and then rerun your program.  Execution will be slower when lines compiled with trace are executed, especially when <tt>trace(3)</tt> is used.</p>
+
+<p> After you have predetermined the lines that are traceable, your program must then dynamically cause the trace facility to be activated by executing a <a href="debug.html#trace">trace</a> statement.  You could simply say:</p>
+
+<pre class="examplecode"><font color="#0000FF">with trace</font>
+<font color="#0000FF">trace</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+</pre>
+
+<p> However, you cannot dynamically set or free breakpoints while tracing. You must abort program, edit, change setting, save, and run again.</p>
+
+<p> At the top of your program, so you can start tracing from the beginning of execution. More commonly, you will want to trigger tracing when a certain routine is entered, or when some condition arises. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">x &lt; 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    trace</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> You can turn off tracing by executing a <tt>trace(0)</tt> statement. You can also turn it off interactively by typing 'q' to quit tracing. Remember that with trace must appear <strong><em>outside</em></strong> of any routine, whereas <tt>trace</tt> can appear <strong><em>inside</em></strong> a routine <strong><em>or outside</em></strong>.</p>
+
+<p> You might want to turn on tracing from within a <a href="lang_decl.html#_116_types">type</a>. Suppose you run your program and it fails, with the <tt>ex.err</tt> file showing that one of your variables has been set to a strange, although not illegal value, and you wonder how it could have happened. Simply create a type for that variable that executes <tt>trace(1)</tt> if the value being assigned to the variable is the strange one that you are interested in.  e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">type </font><font color="#330033">positive_int</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x</font><font color="#880033">)</font>
+<font color="#0000FF">    if </font><font color="#330033">x = 99 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        trace</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">) </font><font color="#FF0055">-- how can this be???</font>
+<font color="#0000FF">        return </font><font color="#330033">1 </font><font color="#FF0055">-- keep going</font>
+<font color="#0000FF">    else</font>
+<font color="#0000FF">        return </font><font color="#330033">x &gt; 0</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end type</font>
+</pre>
+
+<p> When <tt>positive_int</tt> returns, you will see the exact statement that caused your variable to be set to the strange value, and you will be able to check the values of other variables.  You will also be able to check the output screen to see what has happened up to this precise moment. If you define <tt>positive_int</tt> so it returns zero for the strange value (99) instead of one, you can force a diagnostic dump into <tt>ex.err</tt>.</p>
+
+<p> Remember that the argument to <tt>trace</tt> does not need to be a constant. It only needs to be 0, 1, 2 or 3, but these values may be the result from any expression passed to <tt>trace</tt>. Other values will cause <tt>trace</tt> to fail.</p>
+
+<!-- ..\docs\debug.txt -->
+<h3>6.2.2 Trace Screen</h3>
+<a name="_519_tracescreen"></a><a name="tracescreen"></a>
+<p> When a <tt>trace(1)</tt> or <tt>trace(2)</tt> statement is executed by the interpreter, your main output screen is saved and a <strong>trace screen</strong> appears.  It shows a view of your program with the statement that will be executed next highlighted, and several statements before and after showing as well. You cannot scroll the window further up or down though. Several lines at the bottom of the screen are reserved for displaying variable names and values. The top line shows the commands that you can enter at this point:</p>
+<table><tr><th> Command </th>
+<th> Action </th>
+</tr>
+<tr><td> </td>
+<td> </td>
+</tr>
+<tr><td> F1 </td>
+<td> display main output screen <br />
+ take a look at your program's output so far </td>
+</tr>
+<tr><td> F2 </td>
+<td> redisplay trace screen. Press this key while viewing the main output screen <br />
+ to return to the trace display. </td>
+</tr>
+<tr><td> Enter </td>
+<td> execute the currently-highlighted statement only </td>
+</tr>
+<tr><td> down-arrow </td>
+<td> continue execution and break when any statement coming after <br />
+this one in the source listing is about to be executed. <br />
+This lets you skip over subroutine calls. It also lets you stop on the first statement following the end of a loop<br />
+ without having to witness all iterations of the loop. </td>
+</tr>
+<tr><td> ? </td>
+<td> display the value of a variable. After hitting <strong>?</strong> you will be prompted for the name of the variable.<br />
+ Many variables are displayed for you automatically as they are assigned a value. If a variable is not currently being displayed, or is only partially displayed, you can ask for it.<br />
+ Large sequences are limited to one line on the trace screen, but when you ask for the value of<br />
+ a variable that contains a large sequence, the screen will clear, and you can scroll through<br />
+ a pretty-printed display of the sequence. You will then be returned to the trace screen, <br />
+where only one line of the variable is displayed. Variables that are not defined at this point<br />
+ in the program cannot be shown. Variables that have not yet been initialized will have <br />
+"&lt; NO VALUE &gt;" beside their name. Only variables, not general expressions, can be displayed.<br />
+ As you step through execution of the program, the system will update any values showing<br />
+ on the screen. Occasionally it will remove variables that are no longer in scope, or<br />
+ that haven't been updated in a long time compared with newer, recently-updated variables. </td>
+</tr>
+<tr><td> q </td>
+<td> quit tracing and resume normal execution. Tracing will start again when the next trace(1) is executed. </td>
+</tr>
+<tr><td> Q </td>
+<td> quit tracing and let the program run freely to its normal completion. <tt>trace</tt> statements will be ignored. </td>
+</tr>
+<tr><td> !</td>
+<td> this will abort execution of your program. A traceback and dump of variable values will go to <tt>ex.err</tt>. </td>
+</tr>
+</table>
+
+<p> As you trace your program, variable names and values appear automatically in the bottom portion of the screen. Whenever a variable is assigned to, you will see its name and new value appear at the bottom. This value is always kept up-to-date. Private variables are automatically cleared from the screen when their routine returns. When the variable display area is full, least-recently referenced variables will be discarded to make room for new variables. The value of a long sequence will be cut off after 80 characters.</p>
+
+<p> For your convenience, numbers that are in the range of printable ASCII characters (32-127) are displayed along with the ASCII character itself. The ASCII character will be in a different color (or in quotes in a mono display). This is done for all variables, since Euphoria does not know in general whether you are thinking of a number as an ASCII character or not. You will also see ASCII characters (in quotes) in <tt>ex.err</tt>. This can make for a rather "busy" display, but the ASCII information is often very useful.</p>
+
+<p> The trace screen adopts the same graphics mode as the main output screen.  This makes flipping between them quicker and easier.</p>
+
+<p> When a traced program requests keyboard input, the main output screen will appear, to let you type your input as you normally would. This works fine for a <a href="std_io.html#_1541_gets">gets</a> (read one line) input.  When a <a href="std_console.html#_857_get_key">get_key</a> (quickly sample the keyboard) is called you will be given 8 seconds to type a character, otherwise it is assumed that there is no input for this call to <tt>get_key</tt>. This allows you to test the case of input and also the case of no input for <tt>get_key</tt>.</p>
+
+<!-- ..\docs\debug.txt -->
+<h3>6.2.3 Trace File</h3>
+<a name="_520_tracefile"></a><a name="tracefile"></a>
+<p> When your program calls <tt>trace(3)</tt>, tracing to a file is activated.  The file, <tt>ctrace.out</tt> will be created in the current directory.  It contains the last 500 Euphoria statements that your program executed.  It is set up as a circular buffer that holds a maximum of 500 statements. Whenever the end of <tt>ctrace.out</tt> is reached, the next statement is written back at the beginning. The very last statement executed is always followed by "=== THE END ===". Because it's circular, the last statement executed could appear anywhere in <tt>ctrace.out</tt>.  The statement coming after "=== THE END ===" is the 500th-last.</p>
+
+<p> This form of tracing is supported by both the interpreter and the the Euphoria to C translator.  It is particularly useful when a machine-level error occurs that prevents Euphoria from writing out an <tt>ex.err</tt> diagnostic file. By looking at the last statement executed, you may be able to guess why the program crashed. Perhaps the last statement was a <tt>poke</tt> into an illegal area of memory. Perhaps it was a call to a C routine. In some cases it might be a bug in the interpreter or the translator.</p>
+
+<p> The source code for a statement is written to <tt>ctrace.out</tt>, and flushed, just <em>before</em> the statement is performed, so the crash will likely have happened <em>during</em> execution of the final statement that you see in <tt>ctrace.out</tt>.</p>
+
+<!-- ..\docs\debug.txt -->
+<h3>6.2.4 Profiling</h3>
+<a name="_521_profiling"></a><a name="profiling"></a>
+<p> If you specify a <tt>with profile</tt> or <tt>with profile_time</tt> (<em>Windows</em> only) directive, then a special listing of your program, called a <strong>profile</strong>, will be produced by the interpreter when your program finishes execution.  This listing is written to the file <strong><tt>ex.pro</tt></strong> in the current directory.</p>
+
+<p> There are two types of profiling available: execution-count profiling, and time profiling.  You get <strong>execution-count</strong> profiling when you specify with profile. You get <strong>time profiling</strong> when you specify with <tt>profile_time</tt>.  You can not mix the two types of profiling in a single run of your program.  You need to make two separate runs.</p>
+
+<p> We ran the <tt>sieve8k.ex</tt> benchmark program in <tt>demo\bench</tt> under both types of profiling. The results are in <tt>sieve8k.pro</tt> (execution-count profiling) and <tt>sieve8k.pro2</tt> (time profiling).</p>
+
+<p> 
+<a name="profile"></a> Execution-count profiling shows precisely how many times each statement in your program was executed. If the statement was never executed the count field will be blank.</p>
+
+<p> Time profiling shows an estimate of the total time spent executing each statement. This estimate is expressed as a percentage of the time spent profiling your program. If a statement was never sampled, the percentage field will be blank. If you see 0.00 it means the statement was sampled, but not enough to get a score of 0.01.</p>
+
+<p> Only statements compiled <tt>with profile</tt> or <tt>with profile_time</tt> are shown in the listing. Normally you will specify either <tt>with profile</tt> or <tt>with profile_time</tt> at the top of your main <tt>.ex</tt>* file, so you can get a complete listing.</p>
+
+<p> Profiling can help you in many ways:</p>
+<ul><li>It lets you see which statements are heavily executed, as a clue to speeding up your program
+</li><li>It lets you verify that your program is actually working the way you intended
+</li><li>It can provide you with statistics about the input data
+</li><li>It lets you see which sections of code were never tested -- don't let your users be the first!
+</li></ul>
+<p>Sometimes you will want to focus on a particular action performed by your program. For example, in the <strong>Language War</strong> game, we found that the game in general was fast enough, but when a planet exploded, shooting 2500 pixels off in all directions, the game slowed down. We wanted to speed up the explosion routine. We did not care about the rest of the code. The solution was to call <tt>profile(0)</tt> at the beginning of Language War, just after <tt>with profile_time</tt>, to turn off profiling, and then to call <tt>profile(1)</tt> at the beginning of the explosion routine and <tt>profile(0)</tt> at the end of the routine. In this way we could run the game, creating numerous explosions, and logging a lot of samples, just for the explosion effect. If samples were charged against other lower-level routines, we knew that those samples occurred during an explosion. If we had simply profiled the whole program, the picture would not have been clear, as the lower-level routines would also have been used for moving ships, drawing phasors etc. <tt>profile</tt> can help in the same way when you do execution-count profiling.</p>
+
+<!-- ..\docs\debug.txt -->
+<h3>6.2.5 Time Profiling</h3>
+<a name="_523_timeprofiling"></a><a name="timeprofiling"></a>
+<p> With each click of the system clock, an interrupt is generated. When you specify <tt>with profile_time</tt> Euphoria will sample your program to see which statement is being executed at the exact moment that each interrupt occurs.</p>
+
+<p> Each sample requires four bytes of memory and buffer space is normally reserved for 25000 samples. If you need more than 25000 samples you can request it:</p>
+
+<pre class="examplecode"><font color="#0000FF">with </font><font color="#330033">profile_time 100000</font>
+</pre>
+
+<p> will reserve space for 100000 samples (for example). If the buffer overflows you'll see a warning at the top of <strong>ex.pro</strong>.  At 100 samples per second your program can run for 250 seconds before using up the default 25000 samples. It's not feasible for Euphoria to dynamically enlarge the sample buffer during the handling of an interrupt. That's why you might have to specify it in your program. After completing each top-level executable statement, Euphoria will process the samples accumulated so far, and free up the buffer for more samples. In this way the profile can be based on more samples than you have actually reserved space for.</p>
+
+<p> The percentages shown in the left margin of <tt>ex.pro</tt>, are calculated by dividing the number of times that a particular statement was sampled, by the total number of samples taken. e.g. if a statement were sampled 50 times out of a total of 500 samples, then a value of 10.0 (10 per cent) would appear in the margin beside that statement. When profiling is disabled with <tt>profile(0)</tt>, interrupts are ignored, no samples are taken and the total number of samples does not increase.</p>
+
+<p> By taking more samples you can get more accurate results. However, one situation to watch out for is the case where a program synchronizes itself to the clock interrupt, by waiting for <tt><a href="std_datetime.html#_1030_time">time</a></tt> to advance. The statements executed just after the point where the clock advances might <em>never</em> be sampled, which could give you a very distorted picture. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">while time</font><font color="#880033">() </font><font color="#330033">&lt; LIMIT </font><font color="#0000FF">do</font>
+<font color="#0000FF">end while</font>
+<font color="#330033">x += 1 </font><font color="#FF0055">-- This statement will never be sampled</font>
+</pre>
+
+<p> Sometimes you will see a significant percentage beside a <tt>return</tt> statement. This is usually due to time spent deallocating storage for temporary and private variables used within the routine. Significant storage deallocation time can also occur when you assign a new value to a large sequence.</p>
+
+<p> If disk swapping starts to happen, you may see large times attributed to statements that need to access the swap file, such as statements that access elements of a large swapped-out sequence.</p>
+
+<p> 
+<!-- ..\docs\bind.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="demos.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="bind.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="demos.html">6.1 Bundled Demos</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="bind.html">6.3 Shrouding and Binding</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

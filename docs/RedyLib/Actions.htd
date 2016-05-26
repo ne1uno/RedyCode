@@ -1,0 +1,137 @@
+==Actions Library
+
+action.e : Action system
+
+===Introduction
+Actions are commands that can be called from anywhere in the application to manipulate data or application state in some way, by calling a routine associated with that action. When actions are called, an undo system keeps track of action history so actions can be undone.
+
+Actions are typically called from tool buttons, menu items, key combos, list items, tree nodes, scripts/macros, or plugins. Widgets can be assigned actions so instead of processing events through an event handler routine, an action can be triggered directly from widget events. This reduces the complexity and redundancy of event-handling code. For example, you don't need to write event handlers for dozens of menu items and dozens of tool buttons for common actions, simply assign actions to each menu item or tool button upon creation.
+
+Each action must be defined and assigned a handler routine id. An action may have undo enabled or disabled, because it is possible that certain actions should not be allowed to be undone (such as saving a file, starting the app, reporting an error, printing, etc.)
+
+(Not implemented yet:)
+When an action is called, it is first appeneded to the undo history (if applicable), then the handler function is called, and returns 0 for success or non-zero for failure.
+
+The action system has some built-in pre-defined actions, such as "undo" and "redo".
+
+====Editing Documents by Performing "Actions"
+Typically, most actions will be defined by and handled by the applications's main "document" library (whatever library is responsible for editing and 
+displaying the application's data). However, it would make sense to have other parts of the application define some actions, such as showing or applying preferences. Some application-wide actions should probably be defined by the application's main file, such as "confirm_quit", "quit", etc. 
+ 
+Actions can have labels, icons, hotkeys, and descriptions, which makes it easy to integrate actions into application design. This provides the ecessary data needed to create toolbuttons, menu items, hot keys, tool tips, and macro editors, all from a centralized location.  
+
+====Types of actions
+(Only Trigger is currently supported)
+=====Trigger
+An action with no paramaters
+
+=====Toggle
+An action with property {"toggle", {val1, val2}})
+
+=====List
+An action with property {"list", {{icon1, label1, data1}, {icon2, label2, data2}, ...}}
+
+=====Text
+An action with property {"text", routine_id("validate_func")})
+
+=====Number
+An action with property {"number", routine_id("validate_func")})
+
+====Action States
+(Not implemented yet)
+Actions that have paramaters (all types besides "trigger" actions) retain a state value, set by the most recent "do_proc" paramaters, or by set_state(). This value can be read by get_state() or monitored by calling action:monitor("action_name", routine_id("callback_routine")). An example of this is a "text_style_font" tool that displays the font of the current cursor position. If the cursor is moved to a different paragraph with a different font, the tool will be automatically refreshed to show the new font name.
+
+State is not really relevent to any actual data, merely a way to manage what the GUI displays to the user, and it needs to be updated based on the context (which file is currently being edited, cursor location, edit mode, etc.).
+
+===API
+====Routines
+
+=====procedure define(object actionprops)
+Define an action. This should be called in top-level code (not inside a routine) so that actions are defined before the GUI starts and everything initializes. During initialization, images are loaded, menus and toolbars are created, etc. which require information about the actions.
+
+Example:
+<eucode>
+include redylib_0_9/actions.e as action
+
+action:define({
+    {"name", "file_new"},
+    {"do_proc", routine_id("do_file_new")},
+    {"label", "New"},
+    {"icon", "document-new"},
+    {"hotkey", "Ctrl+N"},
+    {"description", "Create new file"},
+    {"enabled", 0}
+})
+
+procedure do_file_new()
+    create_tab("Untitled", NullFileName, "")
+end procedure
+</eucode>
+
+======Properties
+    * "name" - string name of action
+    * "do_proc" - routine_id of action's "do" procedure.
+    * "undo_proc" - routine_id of action's "undo" procedure. (not supported yet)
+    * "list" - (not supported yet)
+    * "toggle" - (not supported yet)
+    * "enabled" - 0: disabled 1: enabled
+    * "label" - label to display on menu item or tooltip
+    * "text" - (not supported yet)
+    * "number"  - (not supported yet)
+    * "icon" - image name of icon to display in menu or tool items
+    * "hotkey" - (not supported yet)
+    * "description" - More info about what the action does (can be used in help, etc.)
+
+
+=====function names()
+Returns list of names of defined actions.
+
+=====function get_enabled(sequence actionname)
+Returns action's enabled status (0 or 1).
+
+=====procedure set_enabled(sequence actionname, atom actionenabled)
+Enable or disable an action. (0 or 1) Menu items and tools of disabled actions appear grey and do not respond when clicked.
+
+=====procedure do_proc(sequence actionname, object actionparams)
+Call an action's "do" procedure. Actionparams is a sequence of paramaters to pass the the proc.
+
+Example:
+<eucode>
+include redylib_0_9/actions.e as action
+
+action:do_proc("project_load", {projfile})
+</eucode>
+
+
+=====procedure undo_proc(sequence actionname, sequence actionparams)
+
+=====function get_undo_history()
+
+=====procedure monitor(sequence actionname, atom callbackproc)
+
+=====function get_type(sequence actionname)
+
+=====function get_label(sequence actionname)
+
+=====function get_icon(sequence actionname)
+
+=====function get_description(sequence actionname)
+
+=====function get_undoable(sequence actionname)
+
+
+
+=====function get_hotkey(sequence actionname)
+
+=====procedure set_hotkey(sequence actionname, sequence actionhotkey)
+
+=====function get_state(sequence actionname)
+
+=====procedure set_state(sequence actionname, sequence actionstate)
+
+=====function get_list(sequence actionname)
+
+=====procedure set_list(sequence actionname, object actionlist)
+
+
+Next page: [[Application->RedyLib\App]]

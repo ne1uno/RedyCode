@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eudoc.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="dis.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eudoc.html">7.2 EuDOC Source Documentation Tool</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="dis.html">7.4 EuDis, Disassembling Euphoria Code</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\edx.txt -->
+<h2>7.3 Edx Demonstration Code Editor</h2>
+<a name="_697_edxdemonstrationcodeeditor"></a><a name="edxdemonstrationcodeeditor"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="edx.html#_697_edxdemonstrationcodeeditor">7.3 Edx Demonstration Code Editor</a></div>
+<div class="toc_3"><a href="edx.html#_698_introduction">7.3.1 Introduction</a></div>
+<div class="toc_3"><a href="edx.html#_699_summary">7.3.2 Summary</a></div>
+<div class="toc_3"><a href="edx.html#_700_specialkeys">7.3.3 Special Keys</a></div>
+<div class="toc_3"><a href="edx.html#_701_escapecommands">7.3.4 Escape Commands</a></div>
+<div class="toc_3"><a href="edx.html#_702_recallingpreviousstrings">7.3.5 Recalling Previous Strings</a></div>
+<div class="toc_3"><a href="edx.html#_703_cuttingandpasting">7.3.6 Cutting and Pasting</a></div>
+<div class="toc_3"><a href="edx.html#_704_usingtabs">7.3.7 Using Tabs</a></div>
+<div class="toc_3"><a href="edx.html#_705_longlines">7.3.8 Long Lines</a></div>
+<div class="toc_3"><a href="edx.html#_706_maximumfilesize">7.3.9 Maximum File Size</a></div>
+<div class="toc_3"><a href="edx.html#_707_nontextfiles">7.3.10 Non-text Files</a></div>
+<div class="toc_3"><a href="edx.html#_708_lineterminator">7.3.11 Line Terminator</a></div>
+<div class="toc_3"><a href="edx.html#_709_sourcecode">7.3.12 Source-Code</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\edx.txt -->
+<h3>7.3.1 Introduction</h3>
+<a name="_698_introduction"></a><a name="introduction"></a>
+<p> The Euphoria includes a handy, text-mode editor, <strong><tt>edx</tt></strong>  that is written completely in Euphoria. </p>
+
+<p> While <tt>edx</tt> is intended as a demonstration program, many people find <tt>edx</tt> convenient for editing and examinng small programs.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.2 Summary</h3>
+<a name="_699_summary"></a><a name="summary"></a>
+<p> Usage:</p>
+<ol><li><tt>edx filename</tt>
+</li><li><tt>edx</tt>
+</li></ol>
+<p>After any error, just type <tt>edx</tt> and you will be placed in the editor at the line and column where the error was detected. The error message will be at the top of your screen.</p>
+
+<p> Euphoria related files are displayed in color. Other text files are in mono. You will know that you have misspelled something when the color does not change as you expect. Keywords are blue. Names of routines that are built in to the interpreter appear in magenta. Strings are green, comments are red, most other text is black. Balanced brackets (on the same line) have the same color. You can change these colors as well as several other parameters of <strong>edx</strong>. See <em>user-modifiable parameters</em> near the top of <tt>edx.ex</tt>.</p>
+
+<p> The arrow keys move the cursor left, right, up or down. Most other characters are immediately inserted into the file.</p>
+
+<p> In Windows, you can <em>associate</em> various types of files with <tt>edx.bat</tt>. You will then be put into <strong>edx</strong> when you <em>double-click</em> on these types of files -- such as. <tt>.e, .pro, .doc</tt> etc.  Main Euphoria files ending in <tt>.ex</tt>, <tt>.exd</tt> or <tt>.exw</tt> might better be associated with <tt>eui.exe</tt>, <tt>euid.exe</tt>, or <tt>euiw.exe</tt>, respectively.</p>
+
+<p> <strong>edx</strong> is a multi-file and multi-window text-based editor. <em>Esc c</em> will split your screen so you can view and edit up to ten files simultaneously, with cutting and pasting between them. You can also use multiple edit windows to view and edit different parts of a single file.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.3 Special Keys</h3>
+<a name="_700_specialkeys"></a><a name="specialkeys"></a>
+<p> Some PC keys do not work in a Linux or FreeBSD or Windows text console, or in Telnet, and some keys do not work in an xterm under X windows. Alternate keys have been provided. In some cases you might have to edit <tt>edx.ex</tt> to map the desired key to the desired function.  For example you may have to use <em>C-t</em> and <em>C-b</em> instead of <em>C-Home</em> and <em>C-End</em>.</p>
+<table><tr><td> Delete    </td>
+<td> Delete the current character above the cursor </td>
+</tr>
+<tr><td> Backspace </td>
+<td> Move the cursor to the left and delete a character </td>
+</tr>
+<tr><td> C-Delete  </td>
+<td> Delete the current line (not available on all platforms) </td>
+</tr>
+<tr><td> C-d       </td>
+<td> Delete the current line (same as C-Delete) </td>
+</tr>
+<tr><td> Insert    </td>
+<td> re-insert the preceding series of Deletes before the current line/character </td>
+</tr>
+<tr><td> C-Left    </td>
+<td> Move to the start of the previous word. On <em>Unix</em> use C-l </td>
+</tr>
+<tr><td> C-Right   </td>
+<td> Move to the start of the next word. On <em>Unix</em> use C-r </td>
+</tr>
+<tr><td> Home      </td>
+<td> Move to the beginning of the current line </td>
+</tr>
+<tr><td> End       </td>
+<td> Move to the end of the current line </td>
+</tr>
+<tr><td> C-Home    </td>
+<td> Move to the beginning of the file (euid.exe only, others use C-t </td>
+</tr>
+<tr><td> C-End     </td>
+<td> Move to the end of the file (euid.exe only, others use C-b </td>
+</tr>
+<tr><td> PgUp      </td>
+<td> Move up one screen. On <em>Unix</em> use C-u </td>
+</tr>
+<tr><td> PgDn      </td>
+<td> Move down one screen. On <em>Unix</em> use C-p </td>
+</tr>
+<tr><td> F1..F10   </td>
+<td> Select a new window. The windows are numbered from top to bottom with the top window on the screen being <em>F1</em> </td>
+</tr>
+<tr><td> F12       </td>
+<td> User definable key (see <tt>CUSTOM_KEYSTROKES</tt> near top of <tt>ed.ex</tt>. Default action is to insert <tt>--</tt> for a Euphoria comment </td>
+</tr>
+</table>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.4 Escape Commands</h3>
+<a name="_701_escapecommands"></a><a name="escapecommands"></a>
+<p> Press and release the <em>Esc</em> key, then press one of the following keys:</p>
+<table><tr><td> h </td>
+<td> Get help text for the editor, or Euphoria. The screen is split so you can view your program and the help text at the same time. </td>
+</tr>
+<tr><td> c </td>
+<td> "Clone" the current window, i.e. make a new edit window that is initially viewing the same file at the same position as the current window. The sizes of all windows are adjusted to make room for the new window. You might want to use <strong>Esc l</strong> to get more lines on the screen. Each window that you create can be scrolled independently and each has its own menu bar. The changes that you make to a file will initially appear only in the current window. When you press an <strong>F-key</strong> to select a new window, any changes will appear there as well. You can use <strong>Esc n</strong> to read a new file into any window. </td>
+</tr>
+<tr><td> q </td>
+<td> Quit (delete) the current window and leave the editor if there are no more windows. You'll be warned if this is the last window used for editing a modified file. Any remaining windows are given more space. </td>
+</tr>
+<tr><td> s </td>
+<td> Save the file being edited in the current window, then quit the current window as <strong>Esc q</strong> above. </td>
+</tr>
+<tr><td> w </td>
+<td> Save the file but do not quit the window. </td>
+</tr>
+<tr><td> e </td>
+<td> Save the file, and then execute it with <tt>euid</tt>, <tt>euiw</tt> or <tt>eui</tt>. When the program finishes execution you'll hear a beep. Hit <em>Enter</em> to return to the editor. This operation may not work if you are very low on extended memory. You can't supply any command-line arguments to the program. </td>
+</tr>
+<tr><td> d </td>
+<td> Run an operating system command. After the beep, hit <em>Enter</em> to return to the editor. You could also use this command to edit another file and then return, but <em>Esc c</em> is probably more convenient. </td>
+</tr>
+<tr><td> n </td>
+<td> Start editing a new file in the current window. Deleted lines/chars and search strings are available for use in the new file. You must type in the path to the new file. Alternatively, you can drag a file name from a Windows file manager window into the console window for <tt>edx</tt>. This will type the full path for you. </td>
+</tr>
+<tr><td> f </td>
+<td> Find the next occurrence of a string in the current window. When you type in a new string there is an option to "match case" or not. Press <em>y</em> if you require upper/lower case to match. Keep hitting <em>Enter</em> to find subsequent occurrences. Any other key stops the search. To search from the beginning, press <em>C-Home</em> before <em>Esc f</em>. The default string to search for, if you don't type anything, is shown in double quotes. </td>
+</tr>
+<tr><td> r </td>
+<td> Globally replace one string by another. Operates like <em>Esc f</em> command. Keep hitting <em>Enter</em> to continue replacing. Be careful - <em>there is no way to skip over a possible replacement.</em> </td>
+</tr>
+<tr><td> l </td>
+<td> Change the number of lines displayed on the screen. Only certain values are allowed, depending on your video card. Many cards will allow 25, 28, 43 and 50 lines. In a <em>Unix</em> text console you're stuck with the number of lines available (usually 25). In a <em>Unix</em> terminal xterm window, <tt>edx</tt> will use the number of lines initially available when <tt>edx</tt> is started up. Changing the size of the window will have no effect after <tt>edx</tt> is started. </td>
+</tr>
+<tr><td> m </td>
+<td> Show the modifications that you've made so far. The current edit buffer is saved as <tt>editbuff.tmp</tt>, and is compared with the file on disk using the Windows <tt>fc</tt> command, or the Linux/FreeBSD <tt>diff</tt> command. <em>Esc m</em> is very useful when you want to quit the editor, but you can't remember what changes you made, or whether it's ok to save them. It's also useful when you make an editing mistake and you want to see what the original text looked like. </td>
+</tr>
+<tr><td> <em>ddd</em> </td>
+<td> Move to line number <em>ddd</em>. e.g. <em>Esc 1023 Enter</em> would move to line 1023 in the file.</td>
+</tr>
+<tr><td> CR </td>
+<td> <em>Esc Carriage-Return</em>, i.e. <em>Esc Enter</em>, will tell you the name of the current file, as well as the line and character position you are on, and whether the file has been modified since the last save. If you press <em>Esc</em> and then change your mind, it is harmless to just hit <em>Enter</em> so you can go back to editing. </td>
+</tr>
+</table>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.5 Recalling Previous Strings</h3>
+<a name="_702_recallingpreviousstrings"></a><a name="recallingpreviousstrings"></a>
+<p> The <em>Esc n</em>, <em>Esc d</em>, <em>Esc r</em> and <em>Esc f</em> commands prompt you to enter a string. You can recall and edit these strings just as you would at the  command line. Type up-arrow or down-arrow to cycle through strings that you previously entered for a given command, then use left-arrow, right-arrow and the delete key to edit the strings. Press Enter to submit the string.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.6 Cutting and Pasting</h3>
+<a name="_703_cuttingandpasting"></a><a name="cuttingandpasting"></a>
+<p> When you <em>C-Delete</em> (or <em>C-d</em>) a series of consecutive lines, or <em>Delete</em> a series of consecutive characters, you create a "kill-buffer" containing what you just deleted. This kill-buffer can be re-inserted by moving the cursor and then pressing <em>Insert</em>.</p>
+
+<p> A new kill-buffer is started, and the old buffer is lost, each time you move away and start deleting somewhere else. For example, cut a series of <em>lines</em> with <em>C-Delete</em>. Then move the cursor to where you want to paste the lines and press <em>Insert</em>. If you want to copy the lines, without destroying the original text, first <em>C-Delete</em> them, then immediately press <em>Insert</em> to re-insert them. Then move somewhere else and press <em>Insert</em> to insert them again, as many times as you like. You can also <em>Delete</em> a series of individual <em>characters</em>, move the cursor, and then paste the deleted characters somewhere else. Immediately press <em>Insert</em> after deleting if you want to copy without removing the original characters.</p>
+
+<p> Once you have a kill-buffer, you can type <em>Esc n</em> to read in a new file, or you can press an <em>F-key</em> to select a new edit window. You can then insert your kill-buffer.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.7 Using Tabs</h3>
+<a name="_704_usingtabs"></a><a name="usingtabs"></a>
+<p> The standard <em>tab</em> width is 8 spaces. The editor assumes tab=8 for most files. However, it is more convenient when editing a program for a tab to equal the amount of space that you like to indent.  Therefore you will find that tabs are set to four when you edit Euphoria files (or .c, or .h or .bas files). The editor converts from tab=8 to tab=4 when reading your <em>program</em> file, and converts back to tab=8 when you save the file. Thus your file remains compatible with the tab=8 world.</p>
+
+<p> If you would like to choose a different number of spaces to indent, change the line at the top of <tt>edx.ex</tt> that says "<tt>constant PROG_INDENT = 4</tt>".</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.8 Long Lines</h3>
+<a name="_705_longlines"></a><a name="longlines"></a>
+<p> Lines that extend beyond the right edge of the screen are marked with an  <em>inverse video</em> character in the 80th column. This warns you that  there is more text "out there" that you can not see. You can move the cursor beyond the 80th column. The screen will scroll left or right so the cursor position is always visible.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.9 Maximum File Size</h3>
+<a name="_706_maximumfilesize"></a><a name="maximumfilesize"></a>
+<p> Like any Euphoria program, <tt>edx</tt> can access all the memory on your machine. It can edit huge files, and unless disk swapping occurs, most operations will be very fast.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.10 Non-text Files</h3>
+<a name="_707_nontextfiles"></a><a name="nontextfiles"></a>
+<p> <tt>edx</tt> is designed for editing pure text files, although you can use it to view other files. As <tt>edx</tt> reads in a file, it replaces certain non-printable characters (less than ASCII 14) with ASCII 254 -- a small square. <em>If you try to save a non-text file you will be warned about this.</em> Since <tt>edx</tt> opens all files as "text" files, a <em>control-z</em> character (26) embedded in a file will appear to <tt>edx</tt> to be the <em>end of the file</em>.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.11 Line Terminator</h3>
+<a name="_708_lineterminator"></a><a name="lineterminator"></a>
+<p> The end-of-line terminator on <em>Unix</em>is simply <tt>\n</tt>. On <em>Windows</em> text files have lines ending with <tt>\r\n</tt>. If you copy a <em>Windows</em> file to <em>Unix</em>  and try to modify it, <strong>edx</strong> will give you a choice of either keeping the <tt>\r\n</tt> terminators, or saving the file with <tt>\n</tt> terminators.</p>
+
+<!-- ..\docs\edx.txt -->
+<h3>7.3.12 Source-Code</h3>
+<a name="_709_sourcecode"></a><a name="sourcecode"></a>
+<p> The complete source code to this editor is in <tt>bin\edx.ex</tt> and <tt>bin\syncolor.e</tt> . You are welcome to make improvements. There is a section at the top of <tt>edx.ex</tt> containing <em>user-modifiable</em> configuration parameters that you can adjust. The colors and the cursor size may need adjusting for some operating environments.</p>
+
+<p> 
+<!-- ..\docs\dis.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="eudoc.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href="dis.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="eudoc.html">7.2 EuDOC Source Documentation Tool</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href="dis.html">7.4 EuDis, Disassembling Euphoria Code</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

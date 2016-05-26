@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_flow.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_toplevel.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_flow.html">4.6 Flow control statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_toplevel.html">4.8 Special Top-Level Statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.7 Short-Circuit Evaluation</h2>
+<a name="_174_shortcircuitevaluation"></a><a name="shortcircuitevaluation"></a>
+<p> 
+<a name="short_circuit"></a><a name="circuit"></a> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_short_circuit.html#_174_shortcircuitevaluation">4.7 Short-Circuit Evaluation</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> When the condition tested by if, elsif, until, or while contains <tt>and</tt> or <tt>or</tt> operators, <a href="lang_short_circuit.html#short_circuit">short_circuit</a> evaluation will be used.  For example,</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">a &lt; 0 </font><font color="#0000FF">and </font><font color="#330033">b &gt; 0 </font><font color="#0000FF">then </font><font color="#330033">...</font>
+</pre>
+
+<p> If a &lt; 0 is false, then Euphoria will not bother to test if b is greater than 0. It will know that the overall result is false regardless. Similarly,</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">a &lt; 0 </font><font color="#0000FF">or </font><font color="#330033">b &gt; 0 </font><font color="#0000FF">then </font><font color="#330033">...</font>
+</pre>
+
+<p> if a &lt; 0 is true, then Euphoria will immediately decide that the result is true, without testing the value of b, since the result of this test would be irrelevant.</p>
+
+<p> In general, whenever we have a condition of the form:</p>
+
+<pre class="examplecode"><font color="#330033">A </font><font color="#0000FF">and </font><font color="#330033">B</font>
+</pre>
+
+<p> where A and B can be any two expressions, Euphoria will take a short-cut when A is false and immediately make the overall result false, without even looking at expression B.</p>
+
+<p> Similarly, with:</p>
+
+<pre class="examplecode"><font color="#330033">A </font><font color="#0000FF">or </font><font color="#330033">B</font>
+</pre>
+
+<p> when A is true, Euphoria will skip the evaluation of expression B, and declare the result to be true.</p>
+
+<p> If the expression B contains a call to a function, and that function has possible <strong>side-effects</strong>, i.e. it might do more than just return a value, you will get a compile-time warning. Older versions (pre-2.1) of Euphoria did not use <a href="lang_short_circuit.html#short_circuit">short_circuit</a> evaluation, and it's possible that some old code will no longer work correctly, although a search of the Euphoria archives did not turn up any programs that depend on side-effects in this way, but other Euphoria code might do so.</p>
+
+<p> The expression, B, could contain something that would normally cause a run-time error. If Euphoria skips the evaluation of B, the error will not be discovered. For instance:</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">x != 0 </font><font color="#0000FF">and </font><font color="#330033">1/x &gt; 10 </font><font color="#0000FF">then  </font><font color="#FF0055">-- divide by zero error avoided</font>
+
+<font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">or </font><font color="#880033">{</font><font color="#330033">1,2,3,4,5</font><font color="#880033">} </font><font color="#0000FF">do    </font><font color="#FF0055">-- illegal sequence result avoided</font>
+</pre>
+
+<p> B could even contain uninitialized variables, out-of-bounds subscripts etc.</p>
+
+<p> This may look like sloppy coding, but in fact it often allows you to write something in a simpler and more readable way. For instance:</p>
+
+<pre class="examplecode"><font color="#0000FF">if length</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">) </font><font color="#330033">&gt; 1 </font><font color="#0000FF">and </font><font color="#330033">x</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= y </font><font color="#0000FF">then</font>
+</pre>
+
+<p> Without short-circuiting, you would have a problem when x contains less than 2 items. With short-circuiting, the assignment to x[2] will only be done when x has at least 2 items. Similarly:</p>
+
+<pre class="examplecode"><font color="#FF0055">-- find 'a' or 'A' in s</font>
+<font color="#330033">i = 1</font>
+<font color="#0000FF">while </font><font color="#330033">i &lt;= </font><font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">s</font><font color="#880033">) </font><font color="#0000FF">and </font><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">!= </font><font color="#330033">'a' </font><font color="#0000FF">and </font><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">i</font><font color="#880033">] </font><font color="#330033">!= </font><font color="#330033">'A' </font><font color="#0000FF">do</font>
+<font color="#330033">     i += 1</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> In this loop the variable i might eventually become greater than length(s). Without short-circuit evaluation, a subscript out-of-bounds error will occur when s[i] is evaluated on the final iteration. With short-circuiting, the loop will terminate immediately when i &lt;= length(s) becomes false. Euphoria will not evaluate s[i] != 'a' and will not evaluate s[i] != 'A'. No subscript error will occur.</p>
+
+<p> <strong>Short-circuit</strong> evaluation of <tt>and</tt> and <tt>or</tt> takes place inside decision making expressions.  These are found in the <a href="lang_branch.html#_146_ifstatement">if statement</a>, <a href="lang_loop.html#_160_whilestatement">while statement</a> and the <a href="lang_loop.html#_161_loopuntilstatement">loop until statement</a>.  It is not used in other contexts. For example, the assignment statement:</p>
+
+<pre class="examplecode"><font color="#330033">x = 1 </font><font color="#0000FF">or </font><font color="#880033">{</font><font color="#330033">1,2,3,4,5</font><font color="#880033">}  </font><font color="#FF0055">-- x should be set to {1,1,1,1,1}</font>
+</pre>
+
+<p> If short-circuiting were used here, we would set x to 1, and not even look at {1,2,3,4,5}. This would be wrong. Short-circuiting can be used in if/elsif/until/while conditions because we only care if the result is true or false, and conditions are required to produce an atom as a result.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_flow.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_toplevel.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_flow.html">4.6 Flow control statements</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_toplevel.html">4.8 Special Top-Level Statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

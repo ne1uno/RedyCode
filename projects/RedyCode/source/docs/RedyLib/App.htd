@@ -1,0 +1,219 @@
+==Application Library
+app.e : Application definition library
+
+===Introduction
+The App library is an important part of application design.
+
+===API
+====Routines
+=====procedure define(object appinfo)
+Define information about the application. This should be called in top-level code (not inside a routine) so that the application information is availible when the GUI starts and everything initializes.
+<eucode>
+include redylib_0_9/app.e as app
+
+app:define({
+    {"title", "SimpleApp"},
+    {"version", "0.9.0"},
+    {"author", "You"},
+    {"copyright", "2016 You"},
+    {"license", {
+        "Your license...",
+        "...continued."
+    }},
+    {"about", "Simple application example."}
+})
+</eucode>
+
+=====function info(object infoname)
+Return info about the application. If infoname is an atom, a sequence of all app info is returned. If infoname is a sequence that matches the name of a specific info, the info data will be returned. If infoname is not found, "" is returned.
+
+<eucode>
+    sequence txtinfo =  
+    app:info("about") & "\n" &
+    "\n" &
+    "Copyright " & app:info("copyright") & "\n" &
+    "\n" &
+    app:info("license") & "\n"
+    
+    gui:wcreate({
+        {"name", "txtInfo"},
+        {"parent", "cntMain"},
+        {"class", "textbox"},
+        {"mode", "text"},
+        {"monowidth", 1},
+        {"text", txtinfo}
+    })
+</eucode>
+
+=====procedure create_main_window()
+Creates a main application window.
+
+Example:
+<eucode>
+procedure start()
+    app:create_main_window()
+    --create widgets in the main window here.
+end procedure
+
+gui:start(routine_id("start"), routine_id("gui_event"))
+</eucode>
+You can actually create a window manually, but you would have to do many things from scratch. This procedure is a shortcut to creating a window that has lots of features built in. See [[MainWin Dialog->Redylib/Gui/Dialogs/MainWin]] for more information. 
+
+=====procedure set_menus(sequence menus)
+Set menus of main window. "menus" is a sequence of menus, where each menu is a sequence of 2 elements:
+<eucode>
+{"MenuLabel", {list_of_action_names_or_submenus}}
+</eucode>
+Each [[action->RedyLib\Actions]] name in the menu definition will generate a menu item with that action's label and icon. 
+
+Because menus are based on Actions, your do not have write any event handler code for menu items! 
+
+Example:
+<eucode>
+app:set_menus({
+    {"File", {
+        "file_new",
+        "-",
+        "file_open",
+        {"Open Recent", {
+            "file_open_recent",
+            "-",
+            "file_cleanup_recent",
+            "file_clear_recent"}
+        },
+        "file_close",
+        "file_close_all",
+        "-",
+        "file_save",
+        "file_save_as",
+        "file_save_all",
+        "-",
+        "confirm_exit"}
+    },
+    {"Edit", {
+        "undo",
+        "redo",
+        "-",
+        "select_all",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "-",
+        "delete",
+        "-",
+        "format_indent_less",
+        "format_indent_more"
+        }
+    },
+    {"Options", {
+        "show_preferences",
+        "show_edit_toolbars"}
+    },
+    {"Help", {
+        "show_help",
+        "-",
+        "show_about"}
+    }
+})
+</eucode>
+If you do not call this procedure, the default menus will be assumed:
+<eucode>
+defaultMenus = {
+    {"File", {
+        "confirm_exit"}
+    },
+    {"Help", {
+        "show_about"}
+    }
+}
+</eucode>
+If you don't want menus, then call:
+<eucode>
+app:set_menus({})
+</eucode>
+
+=====procedure set_default_toolbars(sequence tools)
+Set default toolbars of main window. "tools" is a sequence of toolbars, where each toolbar is a sequence of 3 elements:
+<eucode>
+{"ToolbarLabel", dock_position, {list_of_action_names}}
+</eucode>
+Each action name in the toolbar definition will generate a tool with that action's icon,
+(not implement yet: ) and the action's label will appear in a tooltip when the mouse hovers over that tool (tooltips not working yet). Different types of actions create different types of tools:
+    * Trigger: creates a tool button
+    * Toggle: creates an on/off tool button (toggles between two values)
+    * List: creates a dropdown list of values to select from
+    * Text: creates a textbox that accepts a string
+    * Number: creates a number box/slider that acceps numerical values within a specified range
+(^not implement yet)
+
+The dock position can be "top", "left", "bottom", "right", or "hidden". (Currently, only top and hidden are implemented). Toolbars automatically arrange themselves. If necessary, they will wrap to muliple rows/columns.
+
+Example:
+<eucode>
+app:set_default_toolbars({
+    {"File", "top", {
+        "file_new",
+        "file_open",
+        "file_close",
+        "-",
+        "file_save",
+        "file_save_as"}
+    },
+    {"Edit", "top", {
+        "undo",
+        "redo",
+        "-",
+        "cut",
+        "copy",
+        "paste",
+        "delete",
+        "-",
+        "format_indent_less",
+        "format_indent_more"}
+    }
+})
+</eucode>
+Because toolbars are based on Actions, your do not have write any event handler code for them! 
+
+Keep in mind that this only sets the //defualt// toolbars. Toolbars can be customized by the user. By making the "show_edit_toolbars" action availible to the sure (in a menu or toolbar, for example) a user can open the [[Edit Toolbars Dialog->Redylib/Gui/Dialogs/EditToolbars]]. Any actions that have been defined within the application that have icons and labels can be assigned to toolbars. It is a good practice for an application to define a default toolbar layout. 
+
+If you do not call this procedure, there will be no toolbars by default, but the user can still create them as desired.
+
+=====function get_default_toolbars()
+
+=====function load_menus()
+
+=====function load_toolbars()
+
+=====procedure save_toolbars(sequence tools)
+
+
+
+=====procedure reload_toolbars()
+
+=====procedure start()
+
+=====function modified_count()
+
+=====procedure set_tabs_double_click_action(sequence actionname)
+
+=====procedure set_tabs_select_action(sequence actionname)
+
+=====procedure set_tab_context_menu(sequence tabname, sequence tabmenu)
+
+=====function create_tab(sequence tablabel, sequence tabtitle, atom readonly : 0)
+
+=====procedure destroy_tab(sequence tabname)
+
+=====procedure select_tab(sequence tabname)
+
+=====procedure set_tab_label(sequence tabname, sequence tablabel)
+   
+=====procedure set_tab_title(sequence tabname, sequence tabtitle)
+
+=====procedure set_tab_modified(sequence tabname, atom modified)
+
+=====procedure set_tab_readonly(sequence tabname, atom readonly)
+
+Next page: [[Configuration->RedyLib\Config]]

@@ -1,0 +1,63 @@
+==Select File Dialog
+gui/dialogs/dialog_file.e
+
+The Select File Dialog is a wrapper for the GetSaveFileName and GetOpenFileName win32 functions.
+
+===API
+====Routines
+=====function os_select_open_file(object parwid, sequence filefilter, atom allowmultiselect : 0)
+Displays an Open File dialog. Returns a sequence of one or more selected files or an atom if cancelled.
+
+A list of file type filters can be defined by filefilter in this format:
+<eucode>
+{
+    {"All", "*.*"},
+    {"Text", "*.txt;*.cfg;*.ini;*.log"},
+    {"Euphoria", "*.exw;*.ex;*.ew;*.e"}
+}
+</eucode>
+
+The name of a widget parwid is required so that a window handle can be passed to the OS Win library when creating the dialog. For correct behavior, use the name of the window that contains the widget that initiated this function call. Usually "winMain" is used, but there are cases when this might be a different window. For example, if an event handler for a button labelled "Select File..." in the window "winPreferences" calls this function, then "winPreferences" should be used as parwid.
+
+If allowmultiselect is 1, multiple files can be selected.
+If one file is selected, the return value is a sequence in this format:
+<eucode>
+{"file_path_and_name"}
+</eucode>
+If multiple files are selected, the return value is a sequence in this format:
+<eucode>
+{"file_path", "file_name1", "file_name2", ...}
+</eucode>
+If cancelled, an atom is returned.
+
+Example:
+<eucode>
+    sequence filelist = {}
+    object selfiles = dlgfile:os_select_open_file("winMain", {{"All", "*.*"}, {"Text", "*.txt;*.cfg;*.ini;*.log"}}, 1)
+    if sequence(selfiles) then
+        if length(selfiles) = 1 then --single file selected
+            filelist &= {selfiles[1]}
+        elsif length(selfiles) > 1 then --multiple files selected
+            for f = 2 to length(selfiles) do
+                filelist &= {selfiles[1] & "\\" & selfiles[f]}
+            end for
+        end if
+    else
+        --no file selected
+    end if
+</eucode>
+
+
+=====function os_select_save_file(object parwid, sequence defautfile)
+Displays a Save File dialog. Returns a file name or an atom if cancelled.
+
+The name of a widget parwid is required so that a window handle can be passed to the OS Win library when creating the dialog.
+
+<eucode>
+object newname = dlgfile:os_select_save_file("winMain", oldname)
+if sequence(newname) then
+    --save file
+end if
+</eucode>
+
+See also: [[Common Dialogs->RedyLib\Gui\Dialogs]]

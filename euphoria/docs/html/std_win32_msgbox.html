@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_debug_debug.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_win32_sounds.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_debug_debug.html">8.55 Debugging tools</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_win32_sounds.html">8.57 Windows Sound</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h2>8.56 Windows Message Box</h2>
+<a name="_6549_windowsmessagebox"></a><a name="windowsmessagebox"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_win32_msgbox.html#_6549_windowsmessagebox">8.56 Windows Message Box</a></div>
+<div class="toc_3"><a href="std_win32_msgbox.html#_6550_styleconstants">8.56.1 Style Constants</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6552_mb_abortretryignore">8.56.1.1 MB_ABORTRETRYIGNORE</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6554_mb_applmodal">8.56.1.2 MB_APPLMODAL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6556_mb_default_desktop_only">8.56.1.3 MB_DEFAULT_DESKTOP_ONLY</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6558_mb_defbutton1">8.56.1.4 MB_DEFBUTTON1</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6560_mb_defbutton2">8.56.1.5 MB_DEFBUTTON2</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6562_mb_defbutton3">8.56.1.6 MB_DEFBUTTON3</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6564_mb_defbutton4">8.56.1.7 MB_DEFBUTTON4</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6566_mb_help">8.56.1.8 MB_HELP</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6568_mb_iconasterisk">8.56.1.9 MB_ICONASTERISK</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6570_mb_iconerror">8.56.1.10 MB_ICONERROR</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6572_mb_iconexclamation">8.56.1.11 MB_ICONEXCLAMATION</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6574_mb_iconhand">8.56.1.12 MB_ICONHAND</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6576_mb_iconinformation">8.56.1.13 MB_ICONINFORMATION</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6578_mb_iconquestion">8.56.1.14 MB_ICONQUESTION</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6580_mb_iconstop">8.56.1.15 MB_ICONSTOP</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6582_mb_iconwarning">8.56.1.16 MB_ICONWARNING</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6584_mb_ok">8.56.1.17 MB_OK</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6586_mb_okcancel">8.56.1.18 MB_OKCANCEL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6588_mb_retrycancel">8.56.1.19 MB_RETRYCANCEL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6590_mb_right">8.56.1.20 MB_RIGHT</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6592_mb_rtlreading">8.56.1.21 MB_RTLREADING</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6594_mb_service_notification">8.56.1.22 MB_SERVICE_NOTIFICATION</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6596_mb_setforeground">8.56.1.23 MB_SETFOREGROUND</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6598_mb_systemmodal">8.56.1.24 MB_SYSTEMMODAL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6600_mb_taskmodal">8.56.1.25 MB_TASKMODAL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6602_mb_yesno">8.56.1.26 MB_YESNO</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6604_mb_yesnocancel">8.56.1.27 MB_YESNOCANCEL</a></div>
+<div class="toc_3"><a href="std_win32_msgbox.html#_6605_returnvalueconstants">8.56.2 Return Value Constants</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6607_idabort">8.56.2.1 IDABORT</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6609_idcancel">8.56.2.2 IDCANCEL</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6611_idignore">8.56.2.3 IDIGNORE</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6613_idno">8.56.2.4 IDNO</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6615_idok">8.56.2.5 IDOK</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6617_idretry">8.56.2.6 IDRETRY</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6619_idyes">8.56.2.7 IDYES</a></div>
+<div class="toc_3"><a href="std_win32_msgbox.html#_6620_routines">8.56.3 Routines</a></div>
+<div class="toc_4"><a href="std_win32_msgbox.html#_6622_message_box">8.56.3.1 message_box</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h3>8.56.1 Style Constants</h3>
+<a name="_6550_styleconstants"></a><a name="styleconstants"></a>
+<p> Possible style values for message_box() style sequence</p>
+
+<p> 
+<a name="msgboxmb_abortretryignore"></a><a name="abortretryignore"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.1 MB_ABORTRETRYIGNORE</h4>
+<a name="_6552_mb_abortretryignore"></a><a name="mb_abortretryignore"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ABORTRETRYIGNORE</font>
+</pre>
+
+<p>  Abort, Retry, Ignore</p>
+
+<p> 
+<a name="msgboxmb_applmodal"></a><a name="applmodal"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.2 MB_APPLMODAL</h4>
+<a name="_6554_mb_applmodal"></a><a name="mb_applmodal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_APPLMODAL</font>
+</pre>
+
+<p>  User must respond before doing something else</p>
+
+<p> 
+<a name="msgboxmb_default_desktop_only"></a><a name="default_desktop_only"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.3 MB_DEFAULT_DESKTOP_ONLY</h4>
+<a name="_6556_mb_default_desktop_only"></a><a name="mb_default_desktop_only"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_DEFAULT_DESKTOP_ONLY</font>
+</pre>
+
+<p> 
+<a name="msgboxmb_defbutton1"></a><a name="defbutton1"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.4 MB_DEFBUTTON1</h4>
+<a name="_6558_mb_defbutton1"></a><a name="mb_defbutton1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_DEFBUTTON1</font>
+</pre>
+
+<p>  First button is default button</p>
+
+<p> 
+<a name="msgboxmb_defbutton2"></a><a name="defbutton2"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.5 MB_DEFBUTTON2</h4>
+<a name="_6560_mb_defbutton2"></a><a name="mb_defbutton2"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_DEFBUTTON2</font>
+</pre>
+
+<p>  Second button is default button</p>
+
+<p> 
+<a name="msgboxmb_defbutton3"></a><a name="defbutton3"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.6 MB_DEFBUTTON3</h4>
+<a name="_6562_mb_defbutton3"></a><a name="mb_defbutton3"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_DEFBUTTON3</font>
+</pre>
+
+<p>  Third button is default button</p>
+
+<p> 
+<a name="msgboxmb_defbutton4"></a><a name="defbutton4"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.7 MB_DEFBUTTON4</h4>
+<a name="_6564_mb_defbutton4"></a><a name="mb_defbutton4"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_DEFBUTTON4</font>
+</pre>
+
+<p>  Fourth button is default button</p>
+
+<p> 
+<a name="msgboxmb_help"></a><a name="help"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.8 MB_HELP</h4>
+<a name="_6566_mb_help"></a><a name="mb_help"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_HELP</font>
+</pre>
+
+<p>  Windows 95: Help button generates help event</p>
+
+<p> 
+<a name="msgboxmb_iconasterisk"></a><a name="iconasterisk"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.9 MB_ICONASTERISK</h4>
+<a name="_6568_mb_iconasterisk"></a><a name="mb_iconasterisk"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONASTERISK</font>
+</pre>
+
+<p> 
+<a name="msgboxmb_iconerror"></a><a name="iconerror"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.10 MB_ICONERROR</h4>
+<a name="_6570_mb_iconerror"></a><a name="mb_iconerror"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONERROR</font>
+</pre>
+
+<p> 
+<a name="msgboxmb_iconexclamation"></a><a name="iconexclamation"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.11 MB_ICONEXCLAMATION</h4>
+<a name="_6572_mb_iconexclamation"></a><a name="mb_iconexclamation"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONEXCLAMATION</font>
+</pre>
+
+<p>  Exclamation-point appears in the box</p>
+
+<p> 
+<a name="msgboxmb_iconhand"></a><a name="iconhand"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.12 MB_ICONHAND</h4>
+<a name="_6574_mb_iconhand"></a><a name="mb_iconhand"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONHAND</font>
+</pre>
+
+<p>  A hand appears</p>
+
+<p> 
+<a name="msgboxmb_iconinformation"></a><a name="iconinformation"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.13 MB_ICONINFORMATION</h4>
+<a name="_6576_mb_iconinformation"></a><a name="mb_iconinformation"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONINFORMATION</font>
+</pre>
+
+<p>  Lowercase letter i in a circle appears</p>
+
+<p> 
+<a name="msgboxmb_iconquestion"></a><a name="iconquestion"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.14 MB_ICONQUESTION</h4>
+<a name="_6578_mb_iconquestion"></a><a name="mb_iconquestion"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONQUESTION</font>
+</pre>
+
+<p>  A question-mark icon appears</p>
+
+<p> 
+<a name="msgboxmb_iconstop"></a><a name="iconstop"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.15 MB_ICONSTOP</h4>
+<a name="_6580_mb_iconstop"></a><a name="mb_iconstop"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONSTOP</font>
+</pre>
+
+<p> 
+<a name="msgboxmb_iconwarning"></a><a name="iconwarning"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.16 MB_ICONWARNING</h4>
+<a name="_6582_mb_iconwarning"></a><a name="mb_iconwarning"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_ICONWARNING</font>
+</pre>
+
+<p> 
+<a name="msgboxmb_ok"></a><a name="ok"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.17 MB_OK</h4>
+<a name="_6584_mb_ok"></a><a name="mb_ok"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_OK</font>
+</pre>
+
+<p>  Message box contains one push button: OK</p>
+
+<p> 
+<a name="msgboxmb_okcancel"></a><a name="okcancel"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.18 MB_OKCANCEL</h4>
+<a name="_6586_mb_okcancel"></a><a name="mb_okcancel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_OKCANCEL</font>
+</pre>
+
+<p>  Message box contains OK and Cancel</p>
+
+<p> 
+<a name="msgboxmb_retrycancel"></a><a name="retrycancel"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.19 MB_RETRYCANCEL</h4>
+<a name="_6588_mb_retrycancel"></a><a name="mb_retrycancel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_RETRYCANCEL</font>
+</pre>
+
+<p>  Message box contains Retry and Cancel</p>
+
+<p> 
+<a name="msgboxmb_right"></a><a name="right"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.20 MB_RIGHT</h4>
+<a name="_6590_mb_right"></a><a name="mb_right"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_RIGHT</font>
+</pre>
+
+<p>  Windows 95: The text is right-justified</p>
+
+<p> 
+<a name="msgboxmb_rtlreading"></a><a name="rtlreading"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.21 MB_RTLREADING</h4>
+<a name="_6592_mb_rtlreading"></a><a name="mb_rtlreading"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_RTLREADING</font>
+</pre>
+
+<p>  Windows 95: For Hebrew and Arabic systems</p>
+
+<p> 
+<a name="msgboxmb_service_notification"></a><a name="service_notification"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.22 MB_SERVICE_NOTIFICATION</h4>
+<a name="_6594_mb_service_notification"></a><a name="mb_service_notification"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_SERVICE_NOTIFICATION</font>
+</pre>
+
+<p>  Windows NT: The caller is a service</p>
+
+<p> 
+<a name="msgboxmb_setforeground"></a><a name="setforeground"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.23 MB_SETFOREGROUND</h4>
+<a name="_6596_mb_setforeground"></a><a name="mb_setforeground"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_SETFOREGROUND</font>
+</pre>
+
+<p>  Message box becomes the foreground window</p>
+
+<p> 
+<a name="msgboxmb_systemmodal"></a><a name="systemmodal"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.24 MB_SYSTEMMODAL</h4>
+<a name="_6598_mb_systemmodal"></a><a name="mb_systemmodal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_SYSTEMMODAL</font>
+</pre>
+
+<p>  All applications suspended until user responds</p>
+
+<p> 
+<a name="msgboxmb_taskmodal"></a><a name="taskmodal"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.25 MB_TASKMODAL</h4>
+<a name="_6600_mb_taskmodal"></a><a name="mb_taskmodal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_TASKMODAL</font>
+</pre>
+
+<p>  Similar to MB_APPLMODAL</p>
+
+<p> 
+<a name="msgboxmb_yesno"></a><a name="yesno"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.26 MB_YESNO</h4>
+<a name="_6602_mb_yesno"></a><a name="mb_yesno"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_YESNO</font>
+</pre>
+
+<p>  Message box contains Yes and No</p>
+
+<p> 
+<a name="msgboxmb_yesnocancel"></a><a name="yesnocancel"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.1.27 MB_YESNOCANCEL</h4>
+<a name="_6604_mb_yesnocancel"></a><a name="mb_yesnocancel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">MB_YESNOCANCEL</font>
+</pre>
+
+<p>  Message box contains Yes, No, and Cancel</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h3>8.56.2 Return Value Constants</h3>
+<a name="_6605_returnvalueconstants"></a><a name="returnvalueconstants"></a>
+<p> possible values returned by MessageBox(). 0 means failure</p>
+
+<p> 
+<a name="msgboxidabort"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.1 IDABORT</h4>
+<a name="_6607_idabort"></a><a name="idabort"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDABORT</font>
+</pre>
+
+<p>  Abort button was selected.</p>
+
+<p> 
+<a name="msgboxidcancel"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.2 IDCANCEL</h4>
+<a name="_6609_idcancel"></a><a name="idcancel"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDCANCEL</font>
+</pre>
+
+<p>  Cancel button was selected.</p>
+
+<p> 
+<a name="msgboxidignore"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.3 IDIGNORE</h4>
+<a name="_6611_idignore"></a><a name="idignore"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDIGNORE</font>
+</pre>
+
+<p>  Ignore button was selected.</p>
+
+<p> 
+<a name="msgboxidno"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.4 IDNO</h4>
+<a name="_6613_idno"></a><a name="idno"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDNO</font>
+</pre>
+
+<p>  No button was selected.</p>
+
+<p> 
+<a name="msgboxidok"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.5 IDOK</h4>
+<a name="_6615_idok"></a><a name="idok"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDOK</font>
+</pre>
+
+<p>  OK button was selected.</p>
+
+<p> 
+<a name="msgboxidretry"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.6 IDRETRY</h4>
+<a name="_6617_idretry"></a><a name="idretry"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDRETRY</font>
+</pre>
+
+<p>  Retry button was selected.</p>
+
+<p> 
+<a name="msgboxidyes"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.2.7 IDYES</h4>
+<a name="_6619_idyes"></a><a name="idyes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public constant </font><font color="#330033">IDYES</font>
+</pre>
+
+<p>  Yes button was selected.</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h3>8.56.3 Routines</h3>
+<a name="_6620_routines"></a><a name="routines"></a>
+<p> 
+<a name="msgboxmessage_box"></a><a name="box"></a> </p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h4>8.56.3.1 message_box</h4>
+<a name="_6622_message_box"></a><a name="message_box"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/win32/msgbox.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">msgbox</font>
+<font color="#0000FF">public function </font><font color="#330033">message_box</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">text, </font><font color="#0000FF">sequence </font><font color="#330033">title, </font><font color="#0000FF">object </font><font color="#330033">style</font><font color="#880033">)</font>
+</pre>
+
+<p>   Displays a window with a title, message, buttons and an icon, usually known as a message box.</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h5>Parameters:</h5>
+<a name="_6623_parameters"></a><a name="parameters"></a><ol><li><tt>text</tt>: a sequence, the message to be displayed
+</li><li><tt>title</tt>: a sequence, the title the box should have
+</li><li><tt>style</tt>: an object which defines which,icon should be displayed, if any, and which buttons will be presented.
+</li></ol>
+<!-- ..\include\std\win32\msgbox.e -->
+<h5>Returns:</h5>
+<a name="_6624_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, the button which was clicked to close the message box, or 0 on failure.</p>
+
+<!-- ..\include\std\win32\msgbox.e -->
+<h5>Comments:</h5>
+<a name="_6625_comments"></a><a name="comments"></a>
+<p> See <a href="std_win32_msgbox.html#_6550_styleconstants">Style Constants</a> above for a complete list of possible values for <tt>style</tt> and <a href="std_win32_msgbox.html#_6605_returnvalueconstants">Return Value Constants</a> for the returned value. If <tt>style</tt> is a sequence, its elements will be or'ed together.</p>
+
+<p> 
+<!-- ..\include\std\win32\sounds.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_debug_debug.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_win32_sounds.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_debug_debug.html">8.55 Debugging tools</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_win32_sounds.html">8.57 Windows Sound</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

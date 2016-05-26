@@ -1,0 +1,1403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_syncolor.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_unittest.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_syncolor.html">8.52 Syntax Coloring</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_unittest.html">8.54 Unit Testing Framework</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h2>8.53 Euphoria Source Tokenizer</h2>
+<a name="_6197_euphoriasourcetokenizer"></a><a name="euphoriasourcetokenizer"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="euphoria_tokenize.html#_6197_euphoriasourcetokenizer">8.53 Euphoria Source Tokenizer</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6198_tokenizereturnsequencekey">8.53.1 tokenize return sequence key</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6200_et_tokens">8.53.1.1 ET_TOKENS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6202_et_error">8.53.1.2 ET_ERROR</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6204_et_err_line">8.53.1.3 ET_ERR_LINE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6206_et_err_column">8.53.1.4 ET_ERR_COLUMN</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6207_tokens">8.53.2 Tokens</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6209_t_eof">8.53.2.1 T_EOF</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6211_t_null">8.53.2.2 T_NULL</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6213_t_shbang">8.53.2.3 T_SHBANG</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6215_t_newline">8.53.2.4 T_NEWLINE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6217_t_comment">8.53.2.5 T_COMMENT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6219_t_number">8.53.2.6 T_NUMBER</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6221_t_char">8.53.2.7 T_CHAR</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6223_t_string">8.53.2.8 T_STRING</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6225_t_identifier">8.53.2.9 T_IDENTIFIER</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6227_t_keyword">8.53.2.10 T_KEYWORD</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6229_t_double_ops">8.53.2.11 T_DOUBLE_OPS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6231_t_pluseq">8.53.2.12 T_PLUSEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6233_t_minuseq">8.53.2.13 T_MINUSEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6235_t_multiplyeq">8.53.2.14 T_MULTIPLYEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6237_t_divideeq">8.53.2.15 T_DIVIDEEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6239_t_lteq">8.53.2.16 T_LTEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6241_t_gteq">8.53.2.17 T_GTEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6243_t_noteq">8.53.2.18 T_NOTEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6245_t_concateq">8.53.2.19 T_CONCATEQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6247_t_delimiter">8.53.2.20 T_DELIMITER</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6249_t_plus">8.53.2.21 T_PLUS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6251_t_minus">8.53.2.22 T_MINUS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6253_t_multiply">8.53.2.23 T_MULTIPLY</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6255_t_divide">8.53.2.24 T_DIVIDE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6257_t_lt">8.53.2.25 T_LT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6259_t_gt">8.53.2.26 T_GT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6261_t_not">8.53.2.27 T_NOT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6263_t_concat">8.53.2.28 T_CONCAT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6265_t_single_ops">8.53.2.29 T_SINGLE_OPS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6267_t_eq">8.53.2.30 T_EQ</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6269_t_lparen">8.53.2.31 T_LPAREN</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6271_t_rparen">8.53.2.32 T_RPAREN</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6273_t_lbrace">8.53.2.33 T_LBRACE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6275_t_rbrace">8.53.2.34 T_RBRACE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6277_t_lbracket">8.53.2.35 T_LBRACKET</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6279_t_rbracket">8.53.2.36 T_RBRACKET</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6281_t_qprint">8.53.2.37 T_QPRINT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6283_t_comma">8.53.2.38 T_COMMA</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6285_t_period">8.53.2.39 T_PERIOD</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6287_t_colon">8.53.2.40 T_COLON</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6289_t_dollar">8.53.2.41 T_DOLLAR</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6291_t_slice">8.53.2.42 T_SLICE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6293_t_white">8.53.2.43 T_WHITE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6295_t_builtin">8.53.2.44 T_BUILTIN</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6297_t_text">8.53.2.45 T_TEXT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6299_tf_hex">8.53.2.46 TF_HEX</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6300_t_numberformatsandt_types">8.53.3 T_NUMBER formats and T_types</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6302_tf_int">8.53.3.1 TF_INT</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6304_tf_atom">8.53.3.2 TF_ATOM</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6306_tf_string_single">8.53.3.3 TF_STRING_SINGLE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6308_tf_string_triple">8.53.3.4 TF_STRING_TRIPLE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6310_tf_string_backtick">8.53.3.5 TF_STRING_BACKTICK</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6312_tf_string_hex">8.53.3.6 TF_STRING_HEX</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6314_tf_comment_single">8.53.3.7 TF_COMMENT_SINGLE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6316_tf_comment_multiple">8.53.3.8 TF_COMMENT_MULTIPLE</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6317_tokenaccessors">8.53.4 Token accessors</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6319_ttype">8.53.4.1 TTYPE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6321_tdata">8.53.4.2 TDATA</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6323_tlnum">8.53.4.3 TLNUM</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6325_tlpos">8.53.4.4 TLPOS</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6327_tform">8.53.4.5 TFORM</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6328_eterrorcodes">8.53.5 ET error codes</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6330_err_none">8.53.5.1 ERR_NONE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6332_err_open">8.53.5.2 ERR_OPEN</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6334_err_escape">8.53.5.3 ERR_ESCAPE</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6336_err_eol_char">8.53.5.4 ERR_EOL_CHAR</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6338_err_close_char">8.53.5.5 ERR_CLOSE_CHAR</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6340_err_eol_string">8.53.5.6 ERR_EOL_STRING</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6342_err_hex">8.53.5.7 ERR_HEX</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6344_err_decimal">8.53.5.8 ERR_DECIMAL</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6346_err_unknown">8.53.5.9 ERR_UNKNOWN</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6348_err_eof">8.53.5.10 ERR_EOF</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6350_err_eof_string">8.53.5.11 ERR_EOF_STRING</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6352_err_hex_string">8.53.5.12 ERR_HEX_STRING</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6354_error_string">8.53.5.13 error_string</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6356_new">8.53.5.14 new</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6359_reset">8.53.5.15 reset</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6361_getsetoptions">8.53.6 get/set options</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6363_keep_builtins">8.53.6.1 keep_builtins</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6365_keep_keywords">8.53.6.2 keep_keywords</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6367_keep_whitespace">8.53.6.3 keep_whitespace</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6369_keep_newlines">8.53.6.4 keep_newlines</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6371_keep_comments">8.53.6.5 keep_comments</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6373_return_literal_string">8.53.6.6 return_literal_string</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6375_string_strip_quotes">8.53.6.7 string_strip_quotes</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6377_string_numbers">8.53.6.8 string_numbers</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6380_multiline_token">8.53.6.9 multiline_token</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6382_last_multiline_token">8.53.6.10 last_multiline_token</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6385_routines">8.53.7 Routines</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6387_tokenize_string">8.53.7.1 tokenize_string</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6391_tokenize_file">8.53.7.2 tokenize_file</a></div>
+<div class="toc_3"><a href="euphoria_tokenize.html#_6394_debugging">8.53.8 Debugging</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6396_token_names">8.53.8.1 token_names</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6398_token_forms">8.53.8.2 token_forms</a></div>
+<div class="toc_4"><a href="euphoria_tokenize.html#_6400_show_tokens">8.53.8.3 show_tokens</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.1 tokenize return sequence key</h3>
+<a name="_6198_tokenizereturnsequencekey"></a><a name="tokenizereturnsequencekey"></a>
+<p> 
+<a name="tokenizeet_tokens"></a><a name="tokens"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.1.1 ET_TOKENS</h4>
+<a name="_6200_et_tokens"></a><a name="et_tokens"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ET_TOKENS</font>
+</pre>
+
+<p> 
+<a name="tokenizeet_error"></a><a name="error"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.1.2 ET_ERROR</h4>
+<a name="_6202_et_error"></a><a name="et_error"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ET_ERROR</font>
+</pre>
+
+<p> 
+<a name="tokenizeet_err_line"></a><a name="err_line"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.1.3 ET_ERR_LINE</h4>
+<a name="_6204_et_err_line"></a><a name="et_err_line"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ET_ERR_LINE</font>
+</pre>
+
+<p> 
+<a name="tokenizeet_err_column"></a><a name="err_column"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.1.4 ET_ERR_COLUMN</h4>
+<a name="_6206_et_err_column"></a><a name="et_err_column"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ET_ERR_COLUMN</font>
+</pre>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.2 Tokens</h3>
+<a name="_6207_tokens"></a><a name="tokens"></a>
+<p> 
+<a name="tokenizet_eof"></a><a name="eof"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.1 T_EOF</h4>
+<a name="_6209_t_eof"></a><a name="t_eof"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_EOF</font>
+</pre>
+
+<p> 
+<a name="tokenizet_null"></a><a name="null"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.2 T_NULL</h4>
+<a name="_6211_t_null"></a><a name="t_null"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_NULL</font>
+</pre>
+
+<p> 
+<a name="tokenizet_shbang"></a><a name="shbang"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.3 T_SHBANG</h4>
+<a name="_6213_t_shbang"></a><a name="t_shbang"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_SHBANG</font>
+</pre>
+
+<p> 
+<a name="tokenizet_newline"></a><a name="newline"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.4 T_NEWLINE</h4>
+<a name="_6215_t_newline"></a><a name="t_newline"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_NEWLINE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_comment"></a><a name="comment"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.5 T_COMMENT</h4>
+<a name="_6217_t_comment"></a><a name="t_comment"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_COMMENT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_number"></a><a name="number"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.6 T_NUMBER</h4>
+<a name="_6219_t_number"></a><a name="t_number"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_NUMBER</font>
+</pre>
+
+<p> 
+<a name="tokenizet_char"></a><a name="char"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.7 T_CHAR</h4>
+<a name="_6221_t_char"></a><a name="t_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_CHAR</font>
+</pre>
+
+<p> quoted character</p>
+
+<p> 
+<a name="tokenizet_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.8 T_STRING</h4>
+<a name="_6223_t_string"></a><a name="t_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_STRING</font>
+</pre>
+
+<p> string</p>
+
+<p> 
+<a name="tokenizet_identifier"></a><a name="identifier"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.9 T_IDENTIFIER</h4>
+<a name="_6225_t_identifier"></a><a name="t_identifier"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_IDENTIFIER</font>
+</pre>
+
+<p> 
+<a name="tokenizet_keyword"></a><a name="keyword"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.10 T_KEYWORD</h4>
+<a name="_6227_t_keyword"></a><a name="t_keyword"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_KEYWORD</font>
+</pre>
+
+<p> 
+<a name="tokenizet_double_ops"></a><a name="double_ops"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.11 T_DOUBLE_OPS</h4>
+<a name="_6229_t_double_ops"></a><a name="t_double_ops"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_DOUBLE_OPS</font>
+</pre>
+
+<p> 
+<a name="tokenizet_pluseq"></a><a name="pluseq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.12 T_PLUSEQ</h4>
+<a name="_6231_t_pluseq"></a><a name="t_pluseq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_PLUSEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_minuseq"></a><a name="minuseq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.13 T_MINUSEQ</h4>
+<a name="_6233_t_minuseq"></a><a name="t_minuseq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_MINUSEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_multiplyeq"></a><a name="multiplyeq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.14 T_MULTIPLYEQ</h4>
+<a name="_6235_t_multiplyeq"></a><a name="t_multiplyeq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_MULTIPLYEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_divideeq"></a><a name="divideeq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.15 T_DIVIDEEQ</h4>
+<a name="_6237_t_divideeq"></a><a name="t_divideeq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_DIVIDEEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_lteq"></a><a name="lteq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.16 T_LTEQ</h4>
+<a name="_6239_t_lteq"></a><a name="t_lteq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_LTEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_gteq"></a><a name="gteq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.17 T_GTEQ</h4>
+<a name="_6241_t_gteq"></a><a name="t_gteq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_GTEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_noteq"></a><a name="noteq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.18 T_NOTEQ</h4>
+<a name="_6243_t_noteq"></a><a name="t_noteq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_NOTEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_concateq"></a><a name="concateq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.19 T_CONCATEQ</h4>
+<a name="_6245_t_concateq"></a><a name="t_concateq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_CONCATEQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_delimiter"></a><a name="delimiter"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.20 T_DELIMITER</h4>
+<a name="_6247_t_delimiter"></a><a name="t_delimiter"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_DELIMITER</font>
+</pre>
+
+<p> 
+<a name="tokenizet_plus"></a><a name="plus"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.21 T_PLUS</h4>
+<a name="_6249_t_plus"></a><a name="t_plus"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_PLUS</font>
+</pre>
+
+<p> 
+<a name="tokenizet_minus"></a><a name="minus"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.22 T_MINUS</h4>
+<a name="_6251_t_minus"></a><a name="t_minus"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_MINUS</font>
+</pre>
+
+<p> 
+<a name="tokenizet_multiply"></a><a name="multiply"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.23 T_MULTIPLY</h4>
+<a name="_6253_t_multiply"></a><a name="t_multiply"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_MULTIPLY</font>
+</pre>
+
+<p> 
+<a name="tokenizet_divide"></a><a name="divide"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.24 T_DIVIDE</h4>
+<a name="_6255_t_divide"></a><a name="t_divide"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_DIVIDE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_lt"></a><a name="lt"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.25 T_LT</h4>
+<a name="_6257_t_lt"></a><a name="t_lt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_LT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_gt"></a><a name="gt"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.26 T_GT</h4>
+<a name="_6259_t_gt"></a><a name="t_gt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_GT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_not"></a><a name="not"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.27 T_NOT</h4>
+<a name="_6261_t_not"></a><a name="t_not"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_NOT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_concat"></a><a name="concat"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.28 T_CONCAT</h4>
+<a name="_6263_t_concat"></a><a name="t_concat"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_CONCAT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_single_ops"></a><a name="single_ops"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.29 T_SINGLE_OPS</h4>
+<a name="_6265_t_single_ops"></a><a name="t_single_ops"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_SINGLE_OPS</font>
+</pre>
+
+<p> 
+<a name="tokenizet_eq"></a><a name="eq"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.30 T_EQ</h4>
+<a name="_6267_t_eq"></a><a name="t_eq"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_EQ</font>
+</pre>
+
+<p> 
+<a name="tokenizet_lparen"></a><a name="lparen"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.31 T_LPAREN</h4>
+<a name="_6269_t_lparen"></a><a name="t_lparen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_LPAREN</font>
+</pre>
+
+<p> 
+<a name="tokenizet_rparen"></a><a name="rparen"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.32 T_RPAREN</h4>
+<a name="_6271_t_rparen"></a><a name="t_rparen"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_RPAREN</font>
+</pre>
+
+<p> 
+<a name="tokenizet_lbrace"></a><a name="lbrace"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.33 T_LBRACE</h4>
+<a name="_6273_t_lbrace"></a><a name="t_lbrace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_LBRACE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_rbrace"></a><a name="rbrace"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.34 T_RBRACE</h4>
+<a name="_6275_t_rbrace"></a><a name="t_rbrace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_RBRACE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_lbracket"></a><a name="lbracket"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.35 T_LBRACKET</h4>
+<a name="_6277_t_lbracket"></a><a name="t_lbracket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_LBRACKET</font>
+</pre>
+
+<p> 
+<a name="tokenizet_rbracket"></a><a name="rbracket"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.36 T_RBRACKET</h4>
+<a name="_6279_t_rbracket"></a><a name="t_rbracket"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_RBRACKET</font>
+</pre>
+
+<p> 
+<a name="tokenizet_qprint"></a><a name="qprint"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.37 T_QPRINT</h4>
+<a name="_6281_t_qprint"></a><a name="t_qprint"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_QPRINT</font>
+</pre>
+
+<p> 
+<a name="tokenizet_comma"></a><a name="comma"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.38 T_COMMA</h4>
+<a name="_6283_t_comma"></a><a name="t_comma"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_COMMA</font>
+</pre>
+
+<p> 
+<a name="tokenizet_period"></a><a name="period"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.39 T_PERIOD</h4>
+<a name="_6285_t_period"></a><a name="t_period"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_PERIOD</font>
+</pre>
+
+<p> 
+<a name="tokenizet_colon"></a><a name="colon"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.40 T_COLON</h4>
+<a name="_6287_t_colon"></a><a name="t_colon"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_COLON</font>
+</pre>
+
+<p> 
+<a name="tokenizet_dollar"></a><a name="dollar"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.41 T_DOLLAR</h4>
+<a name="_6289_t_dollar"></a><a name="t_dollar"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_DOLLAR</font>
+</pre>
+
+<p> 
+<a name="tokenizet_slice"></a><a name="slice"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.42 T_SLICE</h4>
+<a name="_6291_t_slice"></a><a name="t_slice"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_SLICE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_white"></a><a name="white"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.43 T_WHITE</h4>
+<a name="_6293_t_white"></a><a name="t_white"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_WHITE</font>
+</pre>
+
+<p> 
+<a name="tokenizet_builtin"></a><a name="builtin"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.44 T_BUILTIN</h4>
+<a name="_6295_t_builtin"></a><a name="t_builtin"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_BUILTIN</font>
+</pre>
+
+<p> 
+<a name="tokenizet_text"></a><a name="text"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.45 T_TEXT</h4>
+<a name="_6297_t_text"></a><a name="t_text"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">T_TEXT</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_hex"></a><a name="hex"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.2.46 TF_HEX</h4>
+<a name="_6299_tf_hex"></a><a name="tf_hex"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_HEX</font>
+</pre>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.3 T_NUMBER formats and T_types</h3>
+<a name="_6300_t_numberformatsandt_types"></a><a name="t_numberformatsandt_types"></a>
+<p> 
+<a name="tokenizetf_int"></a><a name="int"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.1 TF_INT</h4>
+<a name="_6302_tf_int"></a><a name="tf_int"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_INT</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_atom"></a><a name="atom"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.2 TF_ATOM</h4>
+<a name="_6304_tf_atom"></a><a name="tf_atom"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_ATOM</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_string_single"></a><a name="string_single"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.3 TF_STRING_SINGLE</h4>
+<a name="_6306_tf_string_single"></a><a name="tf_string_single"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_STRING_SINGLE</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_string_triple"></a><a name="string_triple"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.4 TF_STRING_TRIPLE</h4>
+<a name="_6308_tf_string_triple"></a><a name="tf_string_triple"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_STRING_TRIPLE</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_string_backtick"></a><a name="string_backtick"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.5 TF_STRING_BACKTICK</h4>
+<a name="_6310_tf_string_backtick"></a><a name="tf_string_backtick"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_STRING_BACKTICK</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_string_hex"></a><a name="string_hex"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.6 TF_STRING_HEX</h4>
+<a name="_6312_tf_string_hex"></a><a name="tf_string_hex"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_STRING_HEX</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_comment_single"></a><a name="comment_single"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.7 TF_COMMENT_SINGLE</h4>
+<a name="_6314_tf_comment_single"></a><a name="tf_comment_single"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_COMMENT_SINGLE</font>
+</pre>
+
+<p> 
+<a name="tokenizetf_comment_multiple"></a><a name="comment_multiple"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.3.8 TF_COMMENT_MULTIPLE</h4>
+<a name="_6316_tf_comment_multiple"></a><a name="tf_comment_multiple"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TF_COMMENT_MULTIPLE</font>
+</pre>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.4 Token accessors</h3>
+<a name="_6317_tokenaccessors"></a><a name="tokenaccessors"></a>
+<p> 
+<a name="tokenizettype"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.4.1 TTYPE</h4>
+<a name="_6319_ttype"></a><a name="ttype"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TTYPE</font>
+</pre>
+
+<p> 
+<a name="tokenizetdata"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.4.2 TDATA</h4>
+<a name="_6321_tdata"></a><a name="tdata"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TDATA</font>
+</pre>
+
+<p> 
+<a name="tokenizetlnum"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.4.3 TLNUM</h4>
+<a name="_6323_tlnum"></a><a name="tlnum"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TLNUM</font>
+</pre>
+
+<p> 
+<a name="tokenizetlpos"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.4.4 TLPOS</h4>
+<a name="_6325_tlpos"></a><a name="tlpos"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TLPOS</font>
+</pre>
+
+<p> 
+<a name="tokenizetform"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.4.5 TFORM</h4>
+<a name="_6327_tform"></a><a name="tform"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">TFORM</font>
+</pre>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.5 ET error codes</h3>
+<a name="_6328_eterrorcodes"></a><a name="eterrorcodes"></a>
+<p> 
+<a name="tokenizeerr_none"></a><a name="none"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.1 ERR_NONE</h4>
+<a name="_6330_err_none"></a><a name="err_none"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_NONE</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_open"></a><a name="open"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.2 ERR_OPEN</h4>
+<a name="_6332_err_open"></a><a name="err_open"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_OPEN</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_escape"></a><a name="escape"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.3 ERR_ESCAPE</h4>
+<a name="_6334_err_escape"></a><a name="err_escape"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_ESCAPE</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_eol_char"></a><a name="eol_char"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.4 ERR_EOL_CHAR</h4>
+<a name="_6336_err_eol_char"></a><a name="err_eol_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_EOL_CHAR</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_close_char"></a><a name="close_char"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.5 ERR_CLOSE_CHAR</h4>
+<a name="_6338_err_close_char"></a><a name="err_close_char"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_CLOSE_CHAR</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_eol_string"></a><a name="eol_string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.6 ERR_EOL_STRING</h4>
+<a name="_6340_err_eol_string"></a><a name="err_eol_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_EOL_STRING</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_hex"></a><a name="hex"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.7 ERR_HEX</h4>
+<a name="_6342_err_hex"></a><a name="err_hex"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_HEX</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_decimal"></a><a name="decimal"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.8 ERR_DECIMAL</h4>
+<a name="_6344_err_decimal"></a><a name="err_decimal"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_DECIMAL</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_unknown"></a><a name="unknown"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.9 ERR_UNKNOWN</h4>
+<a name="_6346_err_unknown"></a><a name="err_unknown"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_UNKNOWN</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_eof"></a><a name="eof"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.10 ERR_EOF</h4>
+<a name="_6348_err_eof"></a><a name="err_eof"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_EOF</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_eof_string"></a><a name="eof_string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.11 ERR_EOF_STRING</h4>
+<a name="_6350_err_eof_string"></a><a name="err_eof_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_EOF_STRING</font>
+</pre>
+
+<p> 
+<a name="tokenizeerr_hex_string"></a><a name="hex_string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.12 ERR_HEX_STRING</h4>
+<a name="_6352_err_hex_string"></a><a name="err_hex_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public enum </font><font color="#330033">ERR_HEX_STRING</font>
+</pre>
+
+<p> 
+<a name="tokenizeerror_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.13 error_string</h4>
+<a name="_6354_error_string"></a><a name="error_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public function </font><font color="#330033">error_string</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">err</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get an error message string for a given error code.</p>
+
+<p> 
+<a name="tokenizenew"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.14 new</h4>
+<a name="_6356_new"></a><a name="new"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public function </font><font color="#330033">new</font><font color="#880033">()</font>
+</pre>
+
+<p>   Create a new tokenizer state</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>See Also:</h5>
+<a name="_6357_seealso"></a><a name="seealso"></a>
+<p> <a href="euphoria_tokenize.html#_6359_reset">reset</a>, <a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a>, <a href="euphoria_tokenize.html#_6391_tokenize_file">tokenize_file</a></p>
+
+<p> 
+<a name="tokenizereset"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.5.15 reset</h4>
+<a name="_6359_reset"></a><a name="reset"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">reset</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Reset the state to begin parsing a new file</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>See Also:</h5>
+<a name="_6360_seealso"></a><a name="seealso"></a>
+<p> <a href="euphoria_tokenize.html#_6356_new">new</a>, <a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a>, <a href="euphoria_tokenize.html#_6391_tokenize_file">tokenize_file</a></p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.6 get/set options</h3>
+<a name="_6361_getsetoptions"></a><a name="getsetoptions"></a>
+<p> 
+<a name="tokenizekeep_builtins"></a><a name="builtins"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.1 keep_builtins</h4>
+<a name="_6363_keep_builtins"></a><a name="keep_builtins"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">keep_builtins</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Specify whether to identify builtins specially or not</p>
+
+<p> default is FALSE</p>
+
+<p> 
+<a name="tokenizekeep_keywords"></a><a name="keywords"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.2 keep_keywords</h4>
+<a name="_6365_keep_keywords"></a><a name="keep_keywords"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">keep_keywords</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Specify whether to identify keywords specially or not</p>
+
+<p> default is TRUE</p>
+
+<p> 
+<a name="tokenizekeep_whitespace"></a><a name="whitespace"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.3 keep_whitespace</h4>
+<a name="_6367_keep_whitespace"></a><a name="keep_whitespace"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">keep_whitespace</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Return white space (other than newlines) as tokens.</p>
+
+<p> default is FALSE</p>
+
+<p> 
+<a name="tokenizekeep_newlines"></a><a name="newlines"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.4 keep_newlines</h4>
+<a name="_6369_keep_newlines"></a><a name="keep_newlines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">keep_newlines</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Return new lines as tokens.</p>
+
+<p> default is FALSE</p>
+
+<p> 
+<a name="tokenizekeep_comments"></a><a name="comments"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.5 keep_comments</h4>
+<a name="_6371_keep_comments"></a><a name="keep_comments"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">keep_comments</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Return comments as tokens</p>
+
+<p> default is FALSE</p>
+
+<p> 
+<a name="tokenizereturn_literal_string"></a><a name="literal_string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.6 return_literal_string</h4>
+<a name="_6373_return_literal_string"></a><a name="return_literal_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">return_literal_string</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   When returning string tokens, we have the option to process them and return their value, or to return the literal text that made up the original string.</p>
+
+<p> Right now, this option only affects the processing of hex strings.</p>
+
+<p> default is FALSE - process the string and return its value</p>
+
+<p> 
+<a name="tokenizestring_strip_quotes"></a><a name="strip_quotes"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.7 string_strip_quotes</h4>
+<a name="_6375_string_strip_quotes"></a><a name="string_strip_quotes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">string_strip_quotes</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   When returning string tokens, we have the option to strip the quotes.</p>
+
+<p> default is TRUE</p>
+
+<p> 
+<a name="tokenizestring_numbers"></a><a name="numbers"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.8 string_numbers</h4>
+<a name="_6377_string_numbers"></a><a name="string_numbers"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">string_numbers</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">val = 1, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state</font><font color="#880033">)</font>
+</pre>
+
+<p>   Return TDATA for all T_NUMBER tokens in "string" format.</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Defaults:</h5>
+<a name="_6378_defaults"></a><a name="defaults"></a><ul><li>T_NUMBER tokens return atoms
+</li><li>T_CHAR tokens return single integer chars
+</li><li>T_EOF tokens return undefined data
+</li><li>Other tokens return strings
+</li></ul>
+<p> 
+<a name="tokenizemultiline_token"></a><a name="token"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.9 multiline_token</h4>
+<a name="_6380_multiline_token"></a><a name="multiline_token"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public type </font><font color="#330033">multiline_token</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">mlt</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="tokenizelast_multiline_token"></a><a name="multiline_token"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.6.10 last_multiline_token</h4>
+<a name="_6382_last_multiline_token"></a><a name="last_multiline_token"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public function </font><font color="#330033">last_multiline_token</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Returns:</h5>
+<a name="_6383_returns"></a><a name="returns"></a>
+<p> One of 0, TF_COMMENT_MULTIPLE, TF_STRING_BACKTICK, TF_STRING_TRIPLE.</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Comments:</h5>
+<a name="_6384_comments"></a><a name="comments"></a>
+<p> After calling <tt><a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a></tt>, this function will return a value of 0 if the line did not end in the middle of a multiline construct, or the value for the respective token. This is meant to facilitate proper tokenizing of individual lines of code.</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.7 Routines</h3>
+<a name="_6385_routines"></a><a name="routines"></a>
+<p> 
+<a name="tokenizetokenize_string"></a><a name="string"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.7.1 tokenize_string</h4>
+<a name="_6387_tokenize_string"></a><a name="tokenize_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public function </font><font color="#330033">tokenize_string</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">code, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state,</font>
+<font color="#0000FF">        integer </font><font color="#330033">stop_on_error = TRUE, multiline_token multi = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Tokenize euphoria source code</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Parameters:</h5>
+<a name="_6388_parameters"></a><a name="parameters"></a><ol><li><tt>code</tt> The code to be tokenized
+</li><li><tt>state</tt> (default g_state) the tokenizer returned by <tt><a href="euphoria_tokenize.html#_6356_new">new</a></tt>
+</li><li><tt>stop_on_error</tt> (default TRUE)
+</li><li><tt>multi</tt> one of 0, TF_COMMENT_MULTIPLE, TF_STRING_BACKTICK, TF_STRING_TRIPLE
+</li></ol>
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Returns:</h5>
+<a name="_6389_returns"></a><a name="returns"></a>
+<p> Sequence of tokens</p>
+
+<p> 
+<a name="tokenizetokenize_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.7.2 tokenize_file</h4>
+<a name="_6391_tokenize_file"></a><a name="tokenize_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public function </font><font color="#330033">tokenize_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">fname, </font><font color="#0000FF">atom </font><font color="#330033">state = g_state,</font>
+<font color="#0000FF">        integer </font><font color="#330033">mode = io :BINARY_MODE</font><font color="#880033">)</font>
+</pre>
+
+<p>   Tokenize euphoria source code</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Parameters:</h5>
+<a name="_6392_parameters"></a><a name="parameters"></a><ol><li><tt>fname</tt> the file to be read and tokenized
+</li><li><tt>state</tt> (default g_state) the tokenizer returned by <tt><a href="euphoria_tokenize.html#_6356_new">new</a></tt>
+</li><li><tt>mode</tt> the mode in which to open the file. One of: <tt><a href="std_io.html#iobinary_mode">io:BINARY_MODE</a></tt> (default) or <tt><a href="std_io.html#iotext_mode">io:TEXT_MODE</a></tt>. Note that for large files with Windows line endings, text mode may be much slower. See <a href="std_io.html#ioread_file">io:read_file</a> for more information.
+</li></ol>
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Returns:</h5>
+<a name="_6393_returns"></a><a name="returns"></a>
+<p> Sequence of tokens</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h3>8.53.8 Debugging</h3>
+<a name="_6394_debugging"></a><a name="debugging"></a>
+<p> 
+<a name="tokenizetoken_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.8.1 token_names</h4>
+<a name="_6396_token_names"></a><a name="token_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public constant </font><font color="#330033">token_names</font>
+</pre>
+
+<p>   Sequence containing token names for debugging</p>
+
+<p> 
+<a name="tokenizetoken_forms"></a><a name="forms"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.8.2 token_forms</h4>
+<a name="_6398_token_forms"></a><a name="token_forms"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public constant </font><font color="#330033">token_forms</font>
+</pre>
+
+<p> 
+<a name="tokenizeshow_tokens"></a><a name="tokens"></a> </p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h4>8.53.8.3 show_tokens</h4>
+<a name="_6400_show_tokens"></a><a name="show_tokens"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">euphoria/tokenize.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">tokenize</font>
+<font color="#0000FF">public procedure </font><font color="#330033">show_tokens</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fh, </font><font color="#0000FF">sequence </font><font color="#330033">tokens</font><font color="#880033">)</font>
+</pre>
+
+<p>   Print token names and data for each token in `tokens` to the file handle `fh`</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Parameters:</h5>
+<a name="_6401_parameters"></a><a name="parameters"></a><ul><li><tt>fh</tt> - file handle to print information to
+</li><li><tt>tokens</tt> - token sequence to print
+</li></ul>
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>Comments:</h5>
+<a name="_6402_comments"></a><a name="comments"></a>
+<p> This does not take direct output from <tt><a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a></tt> or <tt><a href="euphoria_tokenize.html#_6391_tokenize_file">tokenize_file</a></tt>. Instead they take the first element of their return value, the token stream only.</p>
+
+<!-- ..\include\euphoria\tokenize.e -->
+<h5>See Also:</h5>
+<a name="_6403_seealso"></a><a name="seealso"></a>
+<p> <a href="euphoria_tokenize.html#_6387_tokenize_string">tokenize_string</a>, <a href="euphoria_tokenize.html#_6391_tokenize_file">tokenize_file</a></p>
+
+<p> 
+<!-- ..\include\std\unittest.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="euphoria_syncolor.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_unittest.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="euphoria_syncolor.html">8.52 Syntax Coloring</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_unittest.html">8.54 Unit Testing Framework</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

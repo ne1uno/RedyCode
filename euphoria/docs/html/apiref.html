@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="tools.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="relnotes.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\eudist.txt -->
+<h1>8 API Reference</h1>
+<a name="_719_apireference"></a><a name="apireference"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_1"><a href="apiref.html#_719_apireference">8 API Reference</a></div>
+<div class="toc_2"><a href="builtins.html#_721_builtinroutines">8.1 Built-in Routines</a></div>
+<div class="toc_2"><a href="std_cmdline.html#_723_commandlinehandling">8.2 Command Line Handling</a></div>
+<div class="toc_2"><a href="std_console.html#_819_console">8.3 Console</a></div>
+<div class="toc_2"><a href="std_datetime.html#_980_dateandtime">8.4 Date and Time</a></div>
+<div class="toc_2"><a href="std_filesys.html#_1147_filesystem">8.5 File System</a></div>
+<div class="toc_2"><a href="std_io.html#_1485_io">8.6 I/O</a></div>
+<div class="toc_2"><a href="std_os.html#_1717_operatingsystemhelpers">8.7 Operating System Helpers</a></div>
+<div class="toc_2"><a href="std_pipeio.html#_1800_pipeinputandoutput">8.8 Pipe Input and Output</a></div>
+<div class="toc_2"><a href="std_pretty.html#_1848_prettyprinting">8.9 Pretty Printing</a></div>
+<div class="toc_2"><a href="std_task.html#_1888_multitasking">8.10 Multi-Tasking</a></div>
+<div class="toc_2"><a href="std_types.html#_1950_typesextended">8.11 Types - Extended</a></div>
+<div class="toc_2"><a href="std_utils.html#_2171_utilities">8.12 Utilities</a></div>
+<div class="toc_2"><a href="std_convert.html#_2179_datatypeconversion">8.13 Data Type Conversion</a></div>
+<div class="toc_2"><a href="std_get.html#_2273_inputroutines">8.14 Input Routines</a></div>
+<div class="toc_2"><a href="std_search.html#_2313_searching">8.15 Searching</a></div>
+<div class="toc_2"><a href="std_sequence.html#_2491_sequencemanipulation">8.16 Sequence Manipulation</a></div>
+<div class="toc_2"><a href="std_serialize.html#_2896_serializationofeuphoriaobjects">8.17 Serialization of Euphoria Objects</a></div>
+<div class="toc_2"><a href="std_sort.html#_2927_sorting">8.18 Sorting</a></div>
+<div class="toc_2"><a href="std_locale.html#_2976_localeroutines">8.19 Locale Routines</a></div>
+<div class="toc_2"><a href="std_localeconv.html#_3050_localenames">8.20 Locale Names</a></div>
+<div class="toc_2"><a href="std_regex.html#_3079_regularexpressions">8.21 Regular Expressions</a></div>
+<div class="toc_2"><a href="std_text.html#_3290_textmanipulation">8.22 Text Manipulation</a></div>
+<div class="toc_2"><a href="std_wildcard.html#_3409_wildcardmatching">8.23 Wildcard Matching</a></div>
+<div class="toc_2"><a href="std_base64.html#_3422_base64encodinganddecoding">8.24 Base 64 Encoding and Decoding</a></div>
+<div class="toc_2"><a href="std_math.html#_3435_math">8.25 Math</a></div>
+<div class="toc_2"><a href="std_mathcons.html#_3812_mathconstants">8.26 Math Constants</a></div>
+<div class="toc_2"><a href="std_rand.html#_3859_randomnumbers">8.27 Random Numbers</a></div>
+<div class="toc_2"><a href="std_stats.html#_3923_statistics">8.28 Statistics</a></div>
+<div class="toc_2"><a href="std_eds.html#_4074_euphoriadatabaseeds">8.29 Euphoria Database (EDS)</a></div>
+<div class="toc_2"><a href="std_primes.html#_4340_primenumbers">8.30 Prime Numbers</a></div>
+<div class="toc_2"><a href="std_flags.html#_4363_flags">8.31 Flags</a></div>
+<div class="toc_2"><a href="std_hash.html#_4377_hashingalgorithms">8.32 Hashing Algorithms</a></div>
+<div class="toc_2"><a href="std_map.html#_4399_maphashtable">8.33 Map (Hash Table)</a></div>
+<div class="toc_2"><a href="std_stack.html#_4595_stack">8.34 Stack</a></div>
+<div class="toc_2"><a href="std_scinot.html#_4710_scientificnotationparsing">8.35 Scientific Notation Parsing</a></div>
+<div class="toc_2"><a href="std_socket.html#_4739_coresockets">8.36 Core Sockets</a></div>
+<div class="toc_2"><a href="std_net_common.html#_5162_commoninternetroutines">8.37 Common Internet Routines</a></div>
+<div class="toc_2"><a href="std_net_dns.html#_5200_dns">8.38 DNS</a></div>
+<div class="toc_2"><a href="std_net_http.html#_5286_httpclient">8.39 HTTP Client</a></div>
+<div class="toc_2"><a href="std_net_url.html#_5330_urlhandling">8.40 URL handling</a></div>
+<div class="toc_2"><a href="std_dll.html#_5374_dynamiclinkingtoexternalcode">8.41 Dynamic Linking to External Code</a></div>
+<div class="toc_2"><a href="std_error.html#_5501_errorsandwarnings">8.42 Errors and Warnings</a></div>
+<div class="toc_2"><a href="std_eumem.html#_5546_pseudomemory">8.43 Pseudo Memory</a></div>
+<div class="toc_2"><a href="std_machine.html#_5566_machinelevelaccess">8.44 Machine Level Access</a></div>
+<div class="toc_2"><a href="std_machine.html#_5851_indirectroutinecalling">8.45 Indirect Routine Calling</a></div>
+<div class="toc_2"><a href="std_memconst.html#_5890_memoryconstants">8.46 Memory Constants</a></div>
+<div class="toc_2"><a href="std_graphcst.html#_5926_graphicsconstants">8.47 Graphics Constants</a></div>
+<div class="toc_2"><a href="std_graphics.html#_6018_graphicscrossplatform">8.48 Graphics - Cross Platform</a></div>
+<div class="toc_2"><a href="std_image.html#_6072_graphicsimageroutines">8.49 Graphics - Image Routines</a></div>
+<div class="toc_2"><a href="euphoria_info.html#_6091_euphoriainformation">8.50 Euphoria Information</a></div>
+<div class="toc_2"><a href="euphoria_keywords.html#_6170_keyworddata">8.51 Keyword Data</a></div>
+<div class="toc_2"><a href="euphoria_syncolor.html#_6177_syntaxcoloring">8.52 Syntax Coloring</a></div>
+<div class="toc_2"><a href="euphoria_tokenize.html#_6197_euphoriasourcetokenizer">8.53 Euphoria Source Tokenizer</a></div>
+<div class="toc_2"><a href="std_unittest.html#_6405_unittestingframework">8.54 Unit Testing Framework</a></div>
+<div class="toc_2"><a href="euphoria_debug_debug.html#_6474_debuggingtools">8.55 Debugging tools</a></div>
+<div class="toc_2"><a href="std_win32_msgbox.html#_6549_windowsmessagebox">8.56 Windows Message Box</a></div>
+<div class="toc_2"><a href="std_win32_sounds.html#_6627_windowssound">8.57 Windows Sound</a></div>
+<div class="toc_2"><a href="unsupported.html#_6644_unsupportedfeatures">8.58 Unsupported Features</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<!-- ..\docs\builtins.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="tools.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="relnotes.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

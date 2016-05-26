@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_pipeio.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_task.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_pipeio.html">8.8 Pipe Input and Output</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_task.html">8.10 Multi-Tasking</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\pretty.e -->
+<h2>8.9 Pretty Printing</h2>
+<a name="_1848_prettyprinting"></a><a name="prettyprinting"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_pretty.html#_1848_prettyprinting">8.9 Pretty Printing</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1850_pretty_default">8.9.0.1 PRETTY_DEFAULT</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1852_display_ascii">8.9.0.2 DISPLAY_ASCII</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1854_indent">8.9.0.3 INDENT</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1856_start_column">8.9.0.4 START_COLUMN</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1858_wrap">8.9.0.5 WRAP</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1860_int_format">8.9.0.6 INT_FORMAT</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1862_fp_format">8.9.0.7 FP_FORMAT</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1864_min_ascii">8.9.0.8 MIN_ASCII</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1866_max_ascii">8.9.0.9 MAX_ASCII</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1868_max_lines">8.9.0.10 MAX_LINES</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1870_line_breaks">8.9.0.11 LINE_BREAKS</a></div>
+<div class="toc_3"><a href="std_pretty.html#_1871_routines">8.9.1 Routines</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1873_pretty_print">8.9.1.1 pretty_print</a></div>
+<div class="toc_4"><a href="std_pretty.html#_1882_pretty_sprint">8.9.1.2 pretty_sprint</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="prettypretty_default"></a><a name="default"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.1 PRETTY_DEFAULT</h4>
+<a name="_1850_pretty_default"></a><a name="pretty_default"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public constant </font><font color="#330033">PRETTY_DEFAULT</font>
+</pre>
+
+<p> 
+<a name="prettydisplay_ascii"></a><a name="ascii"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.2 DISPLAY_ASCII</h4>
+<a name="_1852_display_ascii"></a><a name="display_ascii"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">DISPLAY_ASCII</font>
+</pre>
+
+<p> 
+<a name="prettyindent"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.3 INDENT</h4>
+<a name="_1854_indent"></a><a name="indent"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">INDENT</font>
+</pre>
+
+<p> 
+<a name="prettystart_column"></a><a name="column"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.4 START_COLUMN</h4>
+<a name="_1856_start_column"></a><a name="start_column"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">START_COLUMN</font>
+</pre>
+
+<p> 
+<a name="prettywrap"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.5 WRAP</h4>
+<a name="_1858_wrap"></a><a name="wrap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">WRAP</font>
+</pre>
+
+<p> 
+<a name="prettyint_format"></a><a name="format"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.6 INT_FORMAT</h4>
+<a name="_1860_int_format"></a><a name="int_format"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">INT_FORMAT</font>
+</pre>
+
+<p> 
+<a name="prettyfp_format"></a><a name="format"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.7 FP_FORMAT</h4>
+<a name="_1862_fp_format"></a><a name="fp_format"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">FP_FORMAT</font>
+</pre>
+
+<p> 
+<a name="prettymin_ascii"></a><a name="ascii"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.8 MIN_ASCII</h4>
+<a name="_1864_min_ascii"></a><a name="min_ascii"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">MIN_ASCII</font>
+</pre>
+
+<p> 
+<a name="prettymax_ascii"></a><a name="ascii"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.9 MAX_ASCII</h4>
+<a name="_1866_max_ascii"></a><a name="max_ascii"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">MAX_ASCII</font>
+</pre>
+
+<p> 
+<a name="prettymax_lines"></a><a name="lines"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.10 MAX_LINES</h4>
+<a name="_1868_max_lines"></a><a name="max_lines"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">MAX_LINES</font>
+</pre>
+
+<p> 
+<a name="prettyline_breaks"></a><a name="breaks"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.0.11 LINE_BREAKS</h4>
+<a name="_1870_line_breaks"></a><a name="line_breaks"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public enum </font><font color="#330033">LINE_BREAKS</font>
+</pre>
+
+<!-- ..\include\std\pretty.e -->
+<h3>8.9.1 Routines</h3>
+<a name="_1871_routines"></a><a name="routines"></a>
+<p> 
+<a name="prettypretty_print"></a><a name="print"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.1.1 pretty_print</h4>
+<a name="_1873_pretty_print"></a><a name="pretty_print"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public procedure </font><font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">fn, </font><font color="#0000FF">object </font><font color="#330033">x, </font><font color="#0000FF">sequence </font><font color="#330033">options = PRETTY_DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   prints an object to a file or device using braces <tt>{ , , , }</tt>, indentation, and multiple lines to show the structure.</p>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Parameters:</h5>
+<a name="_1874_parameters"></a><a name="parameters"></a><ol><li><tt>fn</tt> : an integer, the file or device number to write to
+</li><li><tt>x</tt> : the object to display or convert to printable form
+</li><li><tt>options</tt> : is an (up to) 10-element options sequence.
+</li></ol>
+<!-- ..\include\std\pretty.e -->
+<h5>Comments:</h5>
+<a name="_1875_comments"></a><a name="comments"></a>
+<p> Pass <tt>{}</tt> in <tt>options</tt> to select the defaults, or set options as below: </p>
+<ol><li>display ASCII characters:<ul><li>0 -- never
+</li><li>1 -- alongside any integers in printable ASCII range (default)
+</li><li>2 --  display as "string" when all integers of a sequence are in ASCII range
+</li><li>3 -- show strings, and quoted characters (only) for any integers in ASCII range as well as the characters: \t \r \n
+</li></ul>
+</li><li>amount to indent for each level of sequence nesting -- default: 2
+</li><li>column we are starting at -- default: 1
+</li><li>approximate column to wrap at -- default: 78
+</li><li>format to use for integers -- default: "%d"
+</li><li>format to use for floating-point numbers -- default: "%.10g"
+</li><li>minimum value for printable ASCII -- default 32
+</li><li>maximum value for printable ASCII -- default 127
+</li><li>maximum number of lines to output
+</li><li>line breaks between elements   -- default 1 (0 = no line breaks, -1 = line breaks to wrap only)
+</li></ol>
+<p>If the length is less than ten, unspecified options at the end of the sequence will keep the default values. For example: <tt>{0, 5}</tt> will choose <tt>"never display ASCII"</tt>, plus 5-character indentation, with defaults for everything else.</p>
+
+<p> The default options can be applied using the public constant <tt>PRETTY_DEFAULT</tt>, and the elements may be accessed using the following public enum:</p>
+<ol><li><tt>DISPLAY_ASCII</tt>
+</li><li><tt>INDENT</tt>
+</li><li><tt>START_COLUMN</tt>
+</li><li><tt>WRAP</tt>
+</li><li><tt>INT_FORMAT</tt>
+</li><li><tt>FP_FORMAT</tt>
+</li><li><tt>MIN_ASCII</tt>
+</li><li><tt>MAX_ASCII</tt>
+</li><li><tt>MAX_LINES</tt>
+</li><li><tt>LINE_BREAKS</tt>
+</li></ol>
+<p>The display will start at the current cursor position. Normally you will want to call <tt>pretty_print</tt> when the cursor is in column 1 (after printing a <tt>\n</tt> character). If you want to start in a different column, you should call <tt>position</tt> and specify a value for option <tt>[3]</tt>. This will ensure that the first and last braces in a sequence line up vertically.</p>
+
+<p> When specifying the format to use for integers and floating-point numbers, you can add some decoration. For example: <tt>"(%d)"</tt> or <tt>"$ %.2f"</tt> .</p>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Example 1:</h5>
+<a name="_1876_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"ABC"</font><font color="#330033">, </font><font color="#993333">{}</font><font color="#880033">)</font>
+
+<font color="#880033">{</font><font color="#330033">65</font><font color="#330033">'A'</font><font color="#330033">,66</font><font color="#330033">'B'</font><font color="#330033">,67</font><font color="#330033">'C'</font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Example 2:</h5>
+<a name="_1877_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">1,2,3</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">4,5,6</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{}</font><font color="#880033">)</font>
+
+<font color="#880033">{</font>
+<font color="#993333">  {</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">  {</font><font color="#330033">4,5,6</font><font color="#993333">}</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Example 3:</h5>
+<a name="_1878_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#993333">{</font><font color="#330033">"Euphoria"</font><font color="#330033">, </font><font color="#330033">"Programming"</font><font color="#330033">, </font><font color="#330033">"Language"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">2</font><font color="#993333">}</font><font color="#880033">)</font>
+
+<font color="#880033">{</font>
+<font color="#330033">  "Euphoria"</font><font color="#330033">,</font>
+<font color="#330033">  "Programming"</font><font color="#330033">,</font>
+<font color="#330033">  "Language"</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Example 4:</h5>
+<a name="_1879_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"word_list = "</font><font color="#880033">) </font><font color="#FF0055">-- moves cursor to column 13</font>
+<font color="#330033">pretty_print</font><font color="#880033">(</font><font color="#330033">1, </font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">"Euphoria"</font><font color="#330033">, 8, 5.3</font><font color="#0000FF">}</font><font color="#330033">, </font>
+<font color="#0000FF">     {</font><font color="#330033">"Programming"</font><font color="#330033">, 11, -2.9</font><font color="#0000FF">}</font><font color="#330033">, </font>
+<font color="#0000FF">     {</font><font color="#330033">"Language"</font><font color="#330033">, 8, 9.8</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">, </font>
+<font color="#993333">     {</font><font color="#330033">2, 4, 13, 78, </font><font color="#330033">"%03d"</font><font color="#330033">, </font><font color="#330033">"%.3f"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#FF0055">-- first 6 of 8 options</font>
+
+<font color="#330033">word_list = </font><font color="#880033">{</font>
+<font color="#993333">    {</font>
+<font color="#330033">        "Euphoria"</font><font color="#330033">,</font>
+<font color="#330033">        008,</font>
+<font color="#330033">        5.300</font>
+<font color="#993333">    }</font><font color="#330033">,</font>
+<font color="#993333">    {</font>
+<font color="#330033">        "Programming"</font><font color="#330033">,</font>
+<font color="#330033">        011,</font>
+<font color="#330033">        -2.900</font>
+<font color="#993333">    }</font><font color="#330033">,</font>
+<font color="#993333">    {</font>
+<font color="#330033">        "Language"</font><font color="#330033">,</font>
+<font color="#330033">        008,</font>
+<font color="#330033">        9.800</font>
+<font color="#993333">    }</font>
+<font color="#880033">}</font>
+</pre>
+
+<!-- ..\include\std\pretty.e -->
+<h5>See Also:</h5>
+<a name="_1880_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1506_print">print</a>, <a href="std_text.html#_3300_sprint">sprint</a>, <a href="std_io.html#_1515_printf">printf</a>, <a href="std_text.html#_3293_sprintf">sprintf</a>, <a href="std_pretty.html#_1882_pretty_sprint">pretty_sprint</a></p>
+
+<p> 
+<a name="prettypretty_sprint"></a><a name="sprint"></a> </p>
+
+<!-- ..\include\std\pretty.e -->
+<h4>8.9.1.2 pretty_sprint</h4>
+<a name="_1882_pretty_sprint"></a><a name="pretty_sprint"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/pretty.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">pretty</font>
+<font color="#0000FF">public function </font><font color="#330033">pretty_sprint</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x, </font><font color="#0000FF">sequence </font><font color="#330033">options = PRETTY_DEFAULT</font><font color="#880033">)</font>
+</pre>
+
+<p>   formats an object using braces { , , , }, indentation, and multiple lines to show the structure.</p>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Parameters:</h5>
+<a name="_1883_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : the object to display
+</li><li><tt>options</tt> : is an (up to) 10-element options sequence: Pass {} to select the defaults, or set options
+</li></ol>
+<!-- ..\include\std\pretty.e -->
+<h5>Returns:</h5>
+<a name="_1884_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of printable characters, representing <tt>x</tt> in an human-readable form.</p>
+
+<!-- ..\include\std\pretty.e -->
+<h5>Comments:</h5>
+<a name="_1885_comments"></a><a name="comments"></a>
+<p> This function formats objects the same as <a href="std_pretty.html#_1873_pretty_print">pretty_print</a> but returns the sequence obtained instead of sending it to some file..</p>
+
+<!-- ..\include\std\pretty.e -->
+<h5>See Also:</h5>
+<a name="_1886_seealso"></a><a name="seealso"></a>
+<p> <a href="std_pretty.html#_1873_pretty_print">pretty_print</a>, <a href="std_text.html#_3300_sprint">sprint</a></p>
+
+<p> 
+<!-- ..\include\std\task.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_pipeio.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_task.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_pipeio.html">8.8 Pipe Input and Output</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_task.html">8.10 Multi-Tasking</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

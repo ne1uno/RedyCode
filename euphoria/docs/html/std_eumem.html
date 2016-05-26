@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_error.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_machine.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_error.html">8.42 Errors and Warnings</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_machine.html">8.44 Machine Level Access</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\eumem.e -->
+<h2>8.43 Pseudo Memory</h2>
+<a name="_5546_pseudomemory"></a><a name="pseudomemory"></a>
+<p> One use is to emulate PBR, such as Euphoria's map and stack types.</p>
+
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_eumem.html#_5546_pseudomemory">8.43 Pseudo Memory</a></div>
+<div class="toc_4"><a href="std_eumem.html#_5548_ram_space">8.43.0.1 ram_space</a></div>
+<div class="toc_4"><a href="std_eumem.html#_5550_malloc">8.43.0.2 malloc</a></div>
+<div class="toc_4"><a href="std_eumem.html#_5555_free">8.43.0.3 free</a></div>
+<div class="toc_4"><a href="std_eumem.html#_5560_valid">8.43.0.4 valid</a></div>
+</div>
+</div>
+</p>
+
+<p> 
+<a name="eumemram_space"></a><a name="space"></a> </p>
+
+<!-- ..\include\std\eumem.e -->
+<h4>8.43.0.1 ram_space</h4>
+<a name="_5548_ram_space"></a><a name="ram_space"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eumem.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eumem</font>
+<font color="#0000FF">export sequence </font><font color="#330033">ram_space</font>
+</pre>
+
+<p>   The (pseudo) RAM heap space. Use <a href="std_eumem.html#_5550_malloc">malloc</a> to gain ownership to a heap location and <a href="std_eumem.html#_5555_free">free</a> to release it back to the system.</p>
+
+<p> 
+<a name="eumemmalloc"></a> </p>
+
+<!-- ..\include\std\eumem.e -->
+<h4>8.43.0.2 malloc</h4>
+<a name="_5550_malloc"></a><a name="malloc"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eumem.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eumem</font>
+<font color="#0000FF">export function </font><font color="#330033">malloc</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">mem_struct_p = 1, </font><font color="#0000FF">integer </font><font color="#330033">cleanup_p = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   allocates a block of (pseudo) memory.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Parameters:</h5>
+<a name="_5551_parameters"></a><a name="parameters"></a><ol><li><tt>mem_struct_p</tt> : The initial structure (sequence) to occupy the allocated block. If this is an integer, a sequence of zero this long is used. The default is the number one, meaning that the default initial structure is <tt>{0}</tt>
+</li><li><tt>cleanup_p</tt> : Identifies whether the memory should be released automatically when the reference count for the handle for the allocated block drops to zero, or when passed to <tt>delete</tt>.  If zero, then the block must be freed using the <a href="std_eumem.html#_5555_free">free</a> procedure.
+</li></ol>
+<!-- ..\include\std\eumem.e -->
+<h5>Returns:</h5>
+<a name="_5552_returns"></a><a name="returns"></a>
+<p> A <strong>handle</strong>, to the acquired block. Once you acquire the handle you can use it as needed. Note that if <tt>cleanup_p</tt> is one, then the variable holding the handle must be capable of storing an atom (do not use an integer) as a double floating point value.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Example 1:</h5>
+<a name="_5553_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">my_spot = malloc</font><font color="#880033">()</font>
+<font color="#330033"> ram_space</font><font color="#880033">[</font><font color="#330033">my_spot</font><font color="#880033">] </font><font color="#330033">= my_data</font>
+</pre>
+
+<p> 
+<a name="eumemfree"></a> </p>
+
+<!-- ..\include\std\eumem.e -->
+<h4>8.43.0.3 free</h4>
+<a name="_5555_free"></a><a name="free"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eumem.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eumem</font>
+<font color="#0000FF">export procedure </font><font color="#330033">free</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">mem_p</font><font color="#880033">)</font>
+</pre>
+
+<p>   deallocates a block of (pseudo) memory.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Parameters:</h5>
+<a name="_5556_parameters"></a><a name="parameters"></a><ol><li><tt>mem_p</tt> : The handle to a previously acquired <a href="std_eumem.html#_5548_ram_space">ram_space</a> location.
+</li></ol>
+<!-- ..\include\std\eumem.e -->
+<h5>Comments:</h5>
+<a name="_5557_comments"></a><a name="comments"></a>
+<p> This allows the location to be used by other parts of your application. You should no longer access this location again because it could be acquired by some other process in your application.  This routine should only be called if you passed zero as <tt>cleanup_p</tt> to <a href="std_eumem.html#_5550_malloc">malloc</a>.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Example 1:</h5>
+<a name="_5558_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">my_spot = malloc</font><font color="#880033">(</font><font color="#330033">1,0</font><font color="#880033">)</font>
+<font color="#330033"> ram_space</font><font color="#880033">[</font><font color="#330033">my_spot</font><font color="#880033">] </font><font color="#330033">= my_data</font>
+<font color="#FF0055">     -- . . . do some processing  . . . </font>
+<font color="#330033"> free</font><font color="#880033">(</font><font color="#330033">my_spot</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="eumemvalid"></a> </p>
+
+<!-- ..\include\std\eumem.e -->
+<h4>8.43.0.4 valid</h4>
+<a name="_5560_valid"></a><a name="valid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/eumem.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">eumem</font>
+<font color="#0000FF">export function </font><font color="#330033">valid</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">mem_p, </font><font color="#0000FF">object </font><font color="#330033">mem_struct_p = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   validates a block of (pseudo) memory.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Parameters:</h5>
+<a name="_5561_parameters"></a><a name="parameters"></a><ol><li><tt>mem_p</tt> : The handle to a previously acquired <a href="std_eumem.html#_5548_ram_space">ram_space</a> location.
+</li><li><tt>mem_struct_p</tt> : If an integer, this is the length of the sequence that should be occupying the <tt>ram_space</tt> location pointed to by <tt>mem_p</tt>.
+</li></ol>
+<!-- ..\include\std\eumem.e -->
+<h5>Returns:</h5>
+<a name="_5562_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>,<br />
+0 if either the <tt>mem_p</tt> is invalid or if the sequence at that location is the wrong length.<br />
+1 if the handle and contents are okay.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Comments:</h5>
+<a name="_5563_comments"></a><a name="comments"></a>
+<p> This can only check the length of the contents at the location. Nothing else is checked at that location.</p>
+
+<!-- ..\include\std\eumem.e -->
+<h5>Example 1:</h5>
+<a name="_5564_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">my_spot = malloc</font><font color="#880033">()</font>
+<font color="#330033"> ram_space</font><font color="#880033">[</font><font color="#330033">my_spot</font><font color="#880033">] </font><font color="#330033">= my_data</font>
+<font color="#330033"> . . . </font><font color="#0000FF">do </font><font color="#330033">some processing  . . </font>
+<font color="#0000FF"> if </font><font color="#330033">valid</font><font color="#880033">(</font><font color="#330033">my_spot, </font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">my_data</font><font color="#993333">)</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">     free</font><font color="#880033">(</font><font color="#330033">my_spot</font><font color="#880033">)</font>
+<font color="#0000FF"> end if</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\machine.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_error.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_machine.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_error.html">8.42 Errors and Warnings</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_machine.html">8.44 Machine Level Access</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1097 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_regex.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_wildcard.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_regex.html">8.21 Regular Expressions</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_wildcard.html">8.23 Wildcard Matching</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\text.e -->
+<h2>8.22 Text Manipulation</h2>
+<a name="_3290_textmanipulation"></a><a name="textmanipulation"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_text.html#_3290_textmanipulation">8.22 Text Manipulation</a></div>
+<div class="toc_3"><a href="std_text.html#_3291_routines">8.22.1 Routines</a></div>
+<div class="toc_4"><a href="std_text.html#_3293_sprintf">8.22.1.1 sprintf</a></div>
+<div class="toc_4"><a href="std_text.html#_3300_sprint">8.22.1.2 sprint</a></div>
+<div class="toc_4"><a href="std_text.html#_3308_trim_head">8.22.1.3 trim_head</a></div>
+<div class="toc_4"><a href="std_text.html#_3314_trim_tail">8.22.1.4 trim_tail</a></div>
+<div class="toc_4"><a href="std_text.html#_3320_trim">8.22.1.5 trim</a></div>
+<div class="toc_4"><a href="std_text.html#_3326_set_encoding_properties">8.22.1.6 set_encoding_properties</a></div>
+<div class="toc_4"><a href="std_text.html#_3333_get_encoding_properties">8.22.1.7 get_encoding_properties</a></div>
+<div class="toc_4"><a href="std_text.html#_3339_lower">8.22.1.8 lower</a></div>
+<div class="toc_4"><a href="std_text.html#_3346_upper">8.22.1.9 upper</a></div>
+<div class="toc_4"><a href="std_text.html#_3353_proper">8.22.1.10 proper</a></div>
+<div class="toc_4"><a href="std_text.html#_3360_keyvalues">8.22.1.11 keyvalues</a></div>
+<div class="toc_4"><a href="std_text.html#_3371_escape">8.22.1.12 escape</a></div>
+<div class="toc_4"><a href="std_text.html#_3377_quote">8.22.1.13 quote</a></div>
+<div class="toc_4"><a href="std_text.html#_3388_dequote">8.22.1.14 dequote</a></div>
+<div class="toc_4"><a href="std_text.html#_3394_format">8.22.1.15 format</a></div>
+<div class="toc_4"><a href="std_text.html#_3401_wrap">8.22.1.16 wrap</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\text.e -->
+<h3>8.22.1 Routines</h3>
+<a name="_3291_routines"></a><a name="routines"></a>
+<p> 
+<a name="eusprintf"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.1 sprintf</h4>
+<a name="_3293_sprintf"></a><a name="sprintf"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function sprintf</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">format, </font><font color="#0000FF">object </font><font color="#330033">values</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the representation of any Euphoria object as a string of characters with formatting.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3294_parameters"></a><a name="parameters"></a><ol><li><tt>format</tt> : a sequence, the text to print. This text may contain format specifiers.
+</li><li><tt>values</tt> : usually, a sequence of values. It should have as many elements as format specifiers in <tt>format</tt>, as these values will be substituted to the specifiers.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3295_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of printable characters, representing <tt>format</tt> with the values in <tt>values</tt> spliced in.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3296_comments"></a><a name="comments"></a>
+<p> This is exactly the same as <a href="std_io.html#_1515_printf">printf</a> except that the output is returned as a sequence of characters, rather than being sent to a file or device.</p>
+
+<p> <tt>printf(fn, st, x)</tt> is equivalent to <tt>puts(fn, sprintf(st, x))</tt>.</p>
+
+<p> Some typical uses of <tt>sprintf</tt> are:</p>
+<ol><li>Converting numbers to strings.
+</li><li>Creating strings to pass to <tt>system</tt>.
+</li><li>Creating formatted error messages that can be passed to a common error message handler.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3297_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">sprintf</font><font color="#880033">(</font><font color="#330033">"%08d"</font><font color="#330033">, 12345</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "00012345"</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3298_seealso"></a><a name="seealso"></a>
+<p> <a href="std_io.html#_1515_printf">printf</a>, <a href="std_text.html#_3300_sprint">sprint</a>, <a href="std_text.html#_3394_format">format</a></p>
+
+<p> 
+<a name="textsprint"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.2 sprint</h4>
+<a name="_3300_sprint"></a><a name="sprint"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">sprint</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the representation of any Euphoria object as a string of characters.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3301_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : Any Euphoria object.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3302_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, a string representation of <tt>x</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3303_comments"></a><a name="comments"></a>
+<p> This is exactly the same as <tt>print(fn, x)</tt>, except that the output is returned as a sequence of characters, rather than being sent to a file or device. <tt>x</tt> can be any Euphoria object.</p>
+
+<p> The atoms contained within <tt>x</tt> will be displayed to a maximum of ten significant digits, just as with <a href="std_io.html#_1506_print">print</a>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3304_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = sprint</font><font color="#880033">(</font><font color="#330033">12345</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "12345"</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 2:</h5>
+<a name="_3305_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = sprint</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">10,20,30</font><font color="#993333">}</font><font color="#330033">+5</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "{15,25,35}"</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3306_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3293_sprintf">sprintf</a>, <a href="std_io.html#_1515_printf">printf</a></p>
+
+<p> 
+<a name="texttrim_head"></a><a name="head"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.3 trim_head</h4>
+<a name="_3308_trim_head"></a><a name="trim_head"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">trim_head</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">source, </font><font color="#0000FF">object </font><font color="#330033">what = </font><font color="#330033">" \t\r\n"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">ret_index = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   trims all items in the supplied set from the leftmost (start or head) of a sequence.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3309_parameters"></a><a name="parameters"></a><ol><li><tt>source</tt> : the sequence to trim.
+</li><li><tt>what</tt> : the set of item to trim from <tt>source</tt> (defaults to <tt>" \t\r\n"</tt>).
+</li><li><tt>ret_index</tt> : If zero (the default) returns the trimmed sequence, otherwise it returns the index of the leftmost item <strong>not</strong> in <tt>what</tt>.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3310_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, if <tt>ret_index</tt> is zero, which is the trimmed version of <tt>source</tt><br />
+A <strong>integer</strong>, if <tt>ret_index</tt> is not zero, which is index of the leftmost element in <tt>source</tt> that is not in <tt>what</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3311_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">s</font>
+<font color="#330033">s = trim_head</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "Sentence read from a file\r\n"</font>
+<font color="#330033">s = trim_head</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#330033">, TRUE</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 3</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3312_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3314_trim_tail">trim_tail</a>, <a href="std_text.html#_3320_trim">trim</a>, <a href="std_sequence.html#_2640_pad_head">pad_head</a></p>
+
+<p> 
+<a name="texttrim_tail"></a><a name="tail"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.4 trim_tail</h4>
+<a name="_3314_trim_tail"></a><a name="trim_tail"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">trim_tail</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">source, </font><font color="#0000FF">object </font><font color="#330033">what = </font><font color="#330033">" \t\r\n"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">ret_index = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   trims all items in the supplied set from the rightmost (end or tail) of a sequence.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3315_parameters"></a><a name="parameters"></a><ol><li><tt>source</tt> : the sequence to trim.
+</li><li><tt>what</tt> : the set of item to trim from <tt>source</tt> (defaults to <tt>" \t\r\n"</tt>).
+</li><li><tt>ret_index</tt> : If zero (the default) returns the trimmed sequence, otherwise it returns the index of the rightmost item <strong>not</strong> in <tt>what</tt>.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3316_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, if <tt>ret_index</tt> is zero, which is the trimmed version of <tt>source</tt><br />
+A <strong>integer</strong>, if <tt>ret_index</tt> is not zero, which is index of the rightmost element in <tt>source</tt> that is not in <tt>what</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3317_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">s</font>
+<font color="#330033">s = trim_tail</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "\r\nSentence read from a file"</font>
+<font color="#330033">s = trim_tail</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#330033">, TRUE</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is 27</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3318_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3308_trim_head">trim_head</a>, <a href="std_text.html#_3320_trim">trim</a>, <a href="std_sequence.html#_2647_pad_tail">pad_tail</a></p>
+
+<p> 
+<a name="texttrim"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.5 trim</h4>
+<a name="_3320_trim"></a><a name="trim"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">trim</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">source, </font><font color="#0000FF">object </font><font color="#330033">what = </font><font color="#330033">" \t\r\n"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">ret_index = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   trims all items in the supplied set from both the left end (head/start) and right end (tail/end) of a sequence.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3321_parameters"></a><a name="parameters"></a><ol><li><tt>source</tt> : the sequence to trim.
+</li><li><tt>what</tt> : the set of item to trim from <tt>source</tt> (defaults to <tt>" \t\r\n"</tt>).
+</li><li><tt>ret_index</tt> : If zero (the default) returns the trimmed sequence, otherwise it returns a 2-element sequence containing the index of the leftmost item and rightmost item <strong>not</strong> in <tt>what</tt>.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3322_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, if <tt>ret_index</tt> is zero, which is the trimmed version of <tt>source</tt><br />
+A <strong>2-element sequence</strong>, if <tt>ret_index</tt> is not zero, in the form <tt>{left_index, right_index}</tt> .</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3323_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">s</font>
+<font color="#330033">s = trim</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "Sentence read from a file"</font>
+<font color="#330033">s = trim</font><font color="#880033">(</font><font color="#330033">"\r\nSentence read from a file\r\n"</font><font color="#330033">, </font><font color="#330033">"\r\n"</font><font color="#330033">, TRUE</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {3,27}</font>
+<font color="#330033">s = trim</font><font color="#880033">(</font><font color="#330033">" This is a sentence.\n"</font><font color="#880033">)  </font><font color="#FF0055">-- Default is to trim off all " \t\r\n"</font>
+<font color="#FF0055">-- s is "This is a sentence."</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3324_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3308_trim_head">trim_head</a>, <a href="std_text.html#_3314_trim_tail">trim_tail</a></p>
+
+<p> 
+<a name="textset_encoding_properties"></a><a name="encoding_properties"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.6 set_encoding_properties</h4>
+<a name="_3326_set_encoding_properties"></a><a name="set_encoding_properties"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public procedure </font><font color="#330033">set_encoding_properties</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">en = </font><font color="#330033">""</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">lc = </font><font color="#330033">""</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">uc = </font><font color="#330033">""</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets the table of lowercase and uppercase characters that is used by <a href="std_text.html#_3339_lower">lower</a> and <a href="std_text.html#_3346_upper">upper</a></p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3327_parameters"></a><a name="parameters"></a><ol><li><tt>en</tt> : The name of the encoding represented by these character sets
+</li><li><tt>lc</tt> : The set of lowercase characters
+</li><li><tt>uc</tt> : The set of upper case characters
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3328_comments"></a><a name="comments"></a><ul><li><tt>lc</tt> and <tt>uc</tt> must be the same length.
+</li><li>If no parameters are given, the default ASCII table is set.
+</li></ul>
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3329_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_encoding_properties</font><font color="#880033">( </font><font color="#330033">"Elvish"</font><font color="#330033">, </font><font color="#330033">"aeiouy"</font><font color="#330033">, </font><font color="#330033">"AEIOUY"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3330_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">set_encoding_properties</font><font color="#880033">( </font><font color="#330033">"1251"</font><font color="#880033">) </font><font color="#FF0055">-- Loads a predefined code page.</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3331_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3339_lower">lower</a>, <a href="std_text.html#_3346_upper">upper</a>, <a href="std_text.html#_3333_get_encoding_properties">get_encoding_properties</a></p>
+
+<p> 
+<a name="textget_encoding_properties"></a><a name="encoding_properties"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.7 get_encoding_properties</h4>
+<a name="_3333_get_encoding_properties"></a><a name="get_encoding_properties"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">get_encoding_properties</font><font color="#880033">()</font>
+</pre>
+
+<p>   gets the table of lowercase and uppercase characters that is used by <a href="std_text.html#_3339_lower">lower</a> and <a href="std_text.html#_3346_upper">upper</a>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3334_parameters"></a><a name="parameters"></a>
+<p> none</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3335_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing three items.<br />
+<tt>{Encoding_Name, LowerCase_Set, UpperCase_Set}</tt></p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3336_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">encode_sets = get_encoding_properties</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3337_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3339_lower">lower</a>, <a href="std_text.html#_3346_upper">upper</a>, <a href="std_text.html#_3326_set_encoding_properties">set_encoding_properties</a></p>
+
+<p> 
+<a name="textlower"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.8 lower</h4>
+<a name="_3339_lower"></a><a name="lower"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">lower</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an atom or sequence to lower case.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3340_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : Any Euphoria object.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3341_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the lowercase version of <tt>x</tt></p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3342_comments"></a><a name="comments"></a><ul><li>For <em>Windows</em> systems, this uses the current code page for conversion
+</li><li>For <em>Unix</em> this only works on ASCII characters. It alters characters in the <tt>'a'..'z'</tt> range. If you need to do case conversion with other encodings use the <a href="std_text.html#_3326_set_encoding_properties">set_encoding_properties</a> first.
+</li><li><tt>x</tt> may be a sequence of any shape, all atoms of which will be acted upon.
+</li></ul>
+<p><strong>WARNING</strong>, When using ASCII encoding, this can also affect floating point numbers in the range <tt>65</tt> to <tt>90</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3343_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = lower</font><font color="#880033">(</font><font color="#330033">"Euphoria"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "euphoria"</font>
+
+<font color="#330033">a = lower</font><font color="#880033">(</font><font color="#330033">'B'</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 'b'</font>
+
+<font color="#330033">s = lower</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"Euphoria"</font><font color="#330033">, </font><font color="#330033">"Programming"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {"euphoria", "programming"}</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3344_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3346_upper">upper</a>, <a href="std_text.html#_3353_proper">proper</a>, <a href="std_text.html#_3326_set_encoding_properties">set_encoding_properties</a>, <a href="std_text.html#_3333_get_encoding_properties">get_encoding_properties</a></p>
+
+<p> 
+<a name="textupper"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.9 upper</h4>
+<a name="_3346_upper"></a><a name="upper"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">upper</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts an atom or sequence to upper case.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3347_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : Any Euphoria object.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3348_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the uppercase version of <tt>x</tt></p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3349_comments"></a><a name="comments"></a><ul><li>For <em>Windows</em> systems, this uses the current code page for conversion
+</li><li>For <em>Unix</em> this only works on ASCII characters. It alters characters in the <tt>'a'..'z'</tt> range. If you need to do case conversion with other encodings use the <a href="std_text.html#_3326_set_encoding_properties">set_encoding_properties</a> first.
+</li><li><tt>x</tt> may be a sequence of any shape, all atoms of which will be acted upon.
+</li></ul>
+<p><strong>WARNING</strong>, When using ASCII encoding, this can also affects floating point numbers in the range <tt>97</tt> to <tt>122</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3350_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = upper</font><font color="#880033">(</font><font color="#330033">"Euphoria"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "EUPHORIA"</font>
+
+<font color="#330033">a = upper</font><font color="#880033">(</font><font color="#330033">'b'</font><font color="#880033">)</font>
+<font color="#FF0055">-- a is 'B'</font>
+
+<font color="#330033">s = upper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"Euphoria"</font><font color="#330033">, </font><font color="#330033">"Programming"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {"EUPHORIA", "PROGRAMMING"}</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3351_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3339_lower">lower</a>, <a href="std_text.html#_3353_proper">proper</a>, <a href="std_text.html#_3326_set_encoding_properties">set_encoding_properties</a>, <a href="std_text.html#_3333_get_encoding_properties">get_encoding_properties</a></p>
+
+<p> 
+<a name="textproper"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.10 proper</h4>
+<a name="_3353_proper"></a><a name="proper"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">proper</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a text sequence to capitalized words.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3354_parameters"></a><a name="parameters"></a><ol><li><tt>x</tt> : A text sequence.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3355_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the Capitalized Version of <tt>x</tt></p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3356_comments"></a><a name="comments"></a>
+<p> A text sequence is one in which all elements are either characters or text sequences. This means that if a non-character is found in the input, it is not converted. However this rule only applies to elements on the same level, meaning that sub-sequences could be converted if they are actually text sequences.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3357_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s = proper</font><font color="#880033">(</font><font color="#330033">"euphoria programming language"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "Euphoria Programming Language"</font>
+<font color="#330033">s = proper</font><font color="#880033">(</font><font color="#330033">"EUPHORIA PROGRAMMING LANGUAGE"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "Euphoria Programming Language"</font>
+<font color="#330033">s = proper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"EUPHORIA PROGRAMMING"</font><font color="#330033">, </font><font color="#330033">"language"</font><font color="#330033">, </font><font color="#330033">"rapid dEPLOYMENT"</font><font color="#330033">, </font><font color="#330033">"sOfTwArE"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {"Euphoria Programming", "Language", "Rapid Deployment", "Software"}</font>
+<font color="#330033">s = proper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">'b'</font><font color="#330033">, </font><font color="#330033">'c'</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {'A', 'b', c'} -- "Abc"</font>
+<font color="#330033">s = proper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">'a'</font><font color="#330033">, </font><font color="#330033">'b'</font><font color="#330033">, </font><font color="#330033">'c'</font><font color="#330033">, 3.1472</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {'a', 'b', c', 3.1472} -- Unchanged because it contains a non-character.</font>
+<font color="#330033">s = proper</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"abc"</font><font color="#330033">, 3.1472</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is {"Abc", 3.1472} -- The embedded text sequence is converted.</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3358_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3339_lower">lower</a> <a href="std_text.html#_3346_upper">upper</a></p>
+
+<p> 
+<a name="textkeyvalues"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.11 keyvalues</h4>
+<a name="_3360_keyvalues"></a><a name="keyvalues"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">keyvalues</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">source, </font><font color="#0000FF">object </font><font color="#330033">pair_delim = </font><font color="#330033">";,"</font><font color="#330033">, </font><font color="#0000FF">object </font><font color="#330033">kv_delim = </font><font color="#330033">":="</font><font color="#330033">,</font>
+<font color="#0000FF">        object </font><font color="#330033">quotes = </font><font color="#330033">"\"'`"</font><font color="#330033">, </font><font color="#0000FF">object </font><font color="#330033">whitespace = </font><font color="#330033">" \t\n\r"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">haskeys = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a string containing Key/Value pairs into a set of sequences, one per K/V pair.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3361_parameters"></a><a name="parameters"></a><ol><li><tt>source</tt> : a text sequence, containing the representation of the key/values.
+</li><li><tt>pair_delim</tt> : an object containing a list of elements that delimit one key/value pair from the next. The defaults are semi-colon (;) and comma (,).
+</li><li><tt>kv_delim</tt> : an object containing a list of elements that delimit the key from its value. The defaults are colon (:) and equal (=).
+</li><li><tt>quotes</tt> : an object containing a list of elements that can be used to enclose either keys or values that contain delimiters or whitespace. The defaults are double-quote ("), single-quote (') and back-quote (`)
+</li><li><tt>whitespace</tt> : an object containing a list of elements that are regarded as whitespace characters. The defaults are space, tab, new-line, and carriage-return.
+</li><li><tt>haskeys</tt> : an integer containing true or false. The default is true. When  <tt>true</tt>, the <tt>kv_delim</tt> values are used to separate keys from values, but when <tt>false</tt> it is assumed that each 'pair' is actually just a value.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3362_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of pairs. Each pair is in the form <tt>{key, value}</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3363_comments"></a><a name="comments"></a>
+<p> String representations of atoms are not converted, either in the key or value part, but returned as any regular string instead.</p>
+
+<p> If <tt>haskeys</tt> is <tt>true</tt>, but a substring only holds what appears to be a value, the key is synthesized as <tt>p[n]</tt>, where <tt>n</tt> is the number of the pair. See Example 2.</p>
+
+<p> By default, pairs can be delimited by either a comma or semi-colon ",;" and a key is delimited from its value by either an equal or a colon "=:". Whitespace between pairs, and between delimiters is ignored.</p>
+
+<p> If you need to have one of the delimiters in the value data, enclose it in quotation marks. You can use any of single, double and back quotes, which also means you can quote quotation marks themselves. See Example 3.</p>
+
+<p> It is possible that the value data itself is a nested set of pairs. To do this enclose the value in parentheses. Nested sets can nested to any level. See Example 4.</p>
+
+<p> If a sub-list has only data values and not keys, enclose it in either braces or square brackets. See Example 5. If you need to have a bracket as the first character in a data value, prefix it with a tilde. Actually a leading tilde will always just be stripped off regardless of what it prefixes. See Example 6.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3364_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">s= keyvalues</font><font color="#880033">(</font><font color="#330033">"foo=bar, qwe=1234, asdf='contains space, comma, and equal(=)'"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is </font>
+<font color="#FF0055">-- {</font>
+<font color="#FF0055">--   {"foo", "bar"}, </font>
+<font color="#FF0055">--   {"qwe", "1234"}, </font>
+<font color="#FF0055">--   {"asdf", "contains space, comma, and equal(=)"}</font>
+<font color="#FF0055">--  }</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 2:</h5>
+<a name="_3365_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"abc fgh=ijk def"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"p[1]", "abc"}, {"fgh", "ijk"}, {"p[3]", "def"} }</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 3:</h5>
+<a name="_3366_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"abc=`'quoted'`"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"abc", "'quoted'"} }</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 4:</h5>
+<a name="_3367_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"colors=(a=black, b=blue, c=red)"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"colors", {{"a", "black"}, {"b", "blue"},{"c", "red"}}  } }</font>
+<font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"colors=(black=[0,0,0], blue=[0,0,FF], red=[FF,0,0])"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is </font>
+<font color="#FF0055">-- { {"colors", </font>
+<font color="#FF0055">--   {{"black",{"0", "0", "0"}}, </font>
+<font color="#FF0055">--   {"blue",{"0", "0", "FF"}},</font>
+<font color="#FF0055">--   {"red", {"FF","0","0"}}}} }</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 5:</h5>
+<a name="_3368_example5"></a><a name="example5"></a>
+<pre class="examplecode"><font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"colors=[black, blue, red]"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"colors", { "black", "blue", "red"}  } }</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 6:</h5>
+<a name="_3369_example6"></a><a name="example6"></a>
+<pre class="examplecode"><font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"colors=~[black, blue, red]"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"colors", "[black, blue, red]"}  } }</font>
+<font color="#FF0055">-- The following is another way to do the same.</font>
+<font color="#330033">s = keyvalues</font><font color="#880033">(</font><font color="#330033">"colors=`[black, blue, red]`"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is { {"colors", "[black, blue, red]"}  } }</font>
+</pre>
+
+<p> 
+<a name="textescape"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.12 escape</h4>
+<a name="_3371_escape"></a><a name="escape"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">escape</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">s, </font><font color="#0000FF">sequence </font><font color="#330033">what = </font><font color="#330033">"\""</font><font color="#880033">)</font>
+</pre>
+
+<p>   escapes special characters in a string.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3372_parameters"></a><a name="parameters"></a><ol><li><tt>s</tt>: string to escape
+</li><li><tt>what</tt>: sequence of characters to escape defaults to escaping a double quote.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3373_returns"></a><a name="returns"></a>
+<p> An escaped <tt>sequence</tt> representing <tt>s</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3374_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s = escape</font><font color="#880033">(</font><font color="#330033">"John \"Mc\" Doe"</font><font color="#880033">)</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, s</font><font color="#880033">)</font>
+<font color="#FF0055">-- output is: John \"Mc\" Doe</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3375_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3377_quote">quote</a></p>
+
+<p> 
+<a name="textquote"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.13 quote</h4>
+<a name="_3377_quote"></a><a name="quote"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">quote</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">text_in, </font><font color="#0000FF">object </font><font color="#330033">quote_pair = </font><font color="#993333">{</font><font color="#330033">"\""</font><font color="#330033">, </font><font color="#330033">"\""</font><font color="#993333">}</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">esc = - 1,</font>
+<font color="#330033">        t_text sp = </font><font color="#330033">""</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a quoted version of the first argument.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3378_parameters"></a><a name="parameters"></a><ol><li><tt>text_in</tt> : The string or set of strings to quote.
+</li><li><tt>quote_pair</tt> : A sequence of two strings. The first string is the opening quote to use, and the second string is the closing quote to use. The default is {"\"", "\""} which means that the output will be enclosed by double-quotation marks.
+</li><li><tt>esc</tt> : A single escape character. If this is not negative (the default), then this is used to 'escape' any embedded quote characters and 'esc' characters already in the <tt>text_in</tt> string.
+</li><li><tt>sp</tt>  : A list of zero or more special characters. The <tt>text_in</tt> is only quoted if it contains any of the special characters. The default is "" which means that the <tt>text_in</tt> is always quoted.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3379_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the quoted version of <tt>text_in</tt>.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3380_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Using the defaults. Output enclosed in double-quotes, no escapes and no specials.</font>
+<font color="#330033">s = quote</font><font color="#880033">(</font><font color="#330033">"The small man"</font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains '"the small man"' including the double-quote characters.</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 2:</h5>
+<a name="_3381_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">s = quote</font><font color="#880033">(</font><font color="#330033">"The small man"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"("</font><font color="#330033">, </font><font color="#330033">")"</font><font color="#993333">} </font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains '(the small man)'</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 3:</h5>
+<a name="_3382_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">s = quote</font><font color="#880033">(</font><font color="#330033">"The (small) man"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"("</font><font color="#330033">, </font><font color="#330033">")"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">'~' </font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains '(The ~(small~) man)'</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 4:</h5>
+<a name="_3383_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#330033">s = quote</font><font color="#880033">(</font><font color="#330033">"The (small) man"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"("</font><font color="#330033">, </font><font color="#330033">")"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">'~'</font><font color="#330033">, </font><font color="#330033">"#" </font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains "the (small) man"</font>
+<font color="#FF0055">-- because the input did not contain a '#' character.</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 5:</h5>
+<a name="_3384_example5"></a><a name="example5"></a>
+<pre class="examplecode"><font color="#330033">s = quote</font><font color="#880033">(</font><font color="#330033">"The #1 (small) man"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"("</font><font color="#330033">, </font><font color="#330033">")"</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">'~'</font><font color="#330033">, </font><font color="#330033">"#" </font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains '(the #1 ~(small~) man)'</font>
+<font color="#FF0055">-- because the input did contain a '#' character.</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 6:</h5>
+<a name="_3385_example6"></a><a name="example6"></a>
+<pre class="examplecode"><font color="#FF0055">-- input is a set of strings...</font>
+<font color="#330033">s = quote</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">"a b c"</font><font color="#330033">, </font><font color="#330033">"def"</font><font color="#330033">, </font><font color="#330033">"g hi"</font><font color="#993333">}</font><font color="#330033">,</font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains three quoted strings: '"a b c"', '"def"', and '"g hi"'</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3386_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3371_escape">escape</a></p>
+
+<p> 
+<a name="textdequote"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.14 dequote</h4>
+<a name="_3388_dequote"></a><a name="dequote"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">dequote</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">text_in, </font><font color="#0000FF">object </font><font color="#330033">quote_pairs = </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">"\""</font><font color="#330033">, </font><font color="#330033">"\""</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#0000FF">        integer </font><font color="#330033">esc = - 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   removes 'quotation' text from the argument.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3389_parameters"></a><a name="parameters"></a><ol><li><tt>text_in</tt> : The string or set of strings to de-quote.
+</li><li><tt>quote_pairs</tt> : A set of one or more sub-sequences of two strings, or an atom representing a single character to be used as both the open and close quotes. The first string in each sub-sequence is the opening quote to look for, and the second string is the closing quote. The default is "\"", "\"" which means that the output is 'quoted' if it is enclosed by double-quotation marks.
+</li><li><tt>esc</tt> : A single escape character. If this is not negative (the default), then this is used to 'escape' any embedded occurrences of the quote characters. In which case the 'escape' character is also removed.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3390_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the original text but with 'quote' strings stripped of quotes.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3391_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Using the defaults.</font>
+<font color="#330033">s = dequote</font><font color="#880033">(</font><font color="#330033">"\"The small man\""</font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains "The small man"</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 2:</h5>
+<a name="_3392_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- Using the defaults.</font>
+<font color="#330033">s = dequote</font><font color="#880033">(</font><font color="#330033">"(The small ?(?) man)"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">"("</font><font color="#330033">,</font><font color="#330033">")"</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">, </font><font color="#330033">'?'</font><font color="#880033">)</font>
+<font color="#FF0055">-- 's' now contains "The small () man"</font>
+</pre>
+
+<p> 
+<a name="textformat"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.15 format</h4>
+<a name="_3394_format"></a><a name="format"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">format</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">format_pattern, </font><font color="#0000FF">object </font><font color="#330033">arg_list = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   formats a set of arguments in to a string based on a supplied pattern.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3395_parameters"></a><a name="parameters"></a><ol><li><tt>format_pattern</tt> : A sequence: the pattern string that contains zero or more tokens.
+</li><li><tt>arg_list</tt> : An object: Zero or more arguments used in token replacement.
+</li></ol>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3396_returns"></a><a name="returns"></a>
+<p> A string <strong>sequence</strong>, the original <tt>format_pattern</tt> but with tokens replaced by corresponding arguments.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Comments:</h5>
+<a name="_3397_comments"></a><a name="comments"></a>
+<p> The <tt>format_pattern</tt> string contains text and argument tokens. The resulting string is the same as the format string except that each token is replaced by an item from the argument list.</p>
+
+<p> A token has the form <strong><tt>[&lt;Q&gt;]</tt></strong>, where <tt>&lt;Q&gt;</tt> is are optional qualifier codes.</p>
+
+<p> The qualifier. <tt>&lt;Q&gt;</tt> is a set of zero or more codes that modify the default way that the argument is used to replace the token. The default replacement way is to convert the argument to its shortest string representation and use that to replace the token. This may be modified by the following codes, which can occur in any order.</p>
+<table><tr><th> Qualifier </th>
+<th> Usage                                              </th>
+</tr>
+<tr><td>  N         </td>
+<td> ('N' is an integer) The index of the argument to use</td>
+</tr>
+<tr><td> {id}       </td>
+<td> Uses the argument that begins with "id=" where "id" <br />
+is an identifier name.                              </td>
+</tr>
+<tr><td> %envvar%   </td>
+<td> Uses the Environment Symbol 'envar' as an argument  </td>
+</tr>
+<tr><td>  w         </td>
+<td> For string arguments, if capitalizes the first<br />
+letter in each word                                 </td>
+</tr>
+<tr><td>  u         </td>
+<td> For string arguments, it converts it to upper case. </td>
+</tr>
+<tr><td>  l         </td>
+<td> For string arguments, it converts it to lower case. </td>
+</tr>
+<tr><td>  &lt;         </td>
+<td> For numeric arguments, it left justifies it.        </td>
+</tr>
+<tr><td>  &gt;         </td>
+<td> For string arguments, it right justifies it.        </td>
+</tr>
+<tr><td>  c         </td>
+<td> Centers the argument.                               </td>
+</tr>
+<tr><td>  z         </td>
+<td> For numbers, it zero fills the left side.           </td>
+</tr>
+<tr><td>  :S        </td>
+<td> ('S' is an integer) The maximum size of the<br />
+resulting field. Also, if 'S' begins with '0' the<br />
+field will be zero-filled if the argument is an integer</td>
+</tr>
+<tr><td>  .N        </td>
+<td> ('N' is an integer) The number of digits after<br />
+the  decimal point                                 </td>
+</tr>
+<tr><td>  +         </td>
+<td> For positive numbers, show a leading plus sign      </td>
+</tr>
+<tr><td>  (         </td>
+<td> For negative numbers, enclose them in parentheses   </td>
+</tr>
+<tr><td>  b         </td>
+<td> For numbers, causes zero to be all blanks           </td>
+</tr>
+<tr><td>  s         </td>
+<td> If the resulting field would otherwise be zero<br />
+length, this ensures that at least one space occurs<br />
+between this token's field                          </td>
+</tr>
+<tr><td>  t         </td>
+<td> After token replacement, the resulting string up to this point is trimmed. </td>
+</tr>
+<tr><td>  X         </td>
+<td> Outputs integer arguments using hexadecimal digits. </td>
+</tr>
+<tr><td>  B         </td>
+<td> Outputs integer arguments using binary digits.      </td>
+</tr>
+<tr><td>  ?         </td>
+<td> The corresponding argument is a set of two strings. This<br />
+uses the first string if the previous token's argument is<br />
+not the value 1 or a zero-length string, otherwise it<br />
+uses the second string.                             </td>
+</tr>
+<tr><td>  [         </td>
+<td> Does not use any argument. Outputs a left-square-bracket symbol </td>
+</tr>
+<tr><td>  ,X        </td>
+<td> Insert thousands separators. The &lt;X&gt; is the character<br />
+to use. If this is a dot "." then the decimal point<br />
+is rendered using a comma. Does not apply to zero-filled<br />
+fields.                         <br />
+N.B. if hex or binary output was specified, the <br />
+separators are every 4 digits otherwise they are <br />
+every three digits. </td>
+</tr>
+<tr><td>  T         </td>
+<td> If the argument is a number it is output as a text character, <br />
+otherwise it is output as text string </td>
+</tr>
+</table>
+
+<p> Clearly, certain combinations of these qualifier codes do not make sense and in those situations, the rightmost clashing code is used and the others are ignored.</p>
+
+<p> Any tokens in the format that have no corresponding argument are simply removed from the result. Any arguments that are not used in the result are ignored.</p>
+
+<p> Any sequence argument that is not a string will be converted to its <em>pretty</em> format before being used in token replacement.</p>
+
+<p> If a token is going to be replaced by a zero-length argument, all white space following the token until the next non-whitespace character is not copied to the result string.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3398_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"Cannot open file '[]' - code []"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"/usr/temp/work.dat"</font><font color="#330033">, 32</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "Cannot open file '/usr/temp/work.dat' - code 32"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"Err-[2], Cannot open file '[1]'"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"/usr/temp/work.dat"</font><font color="#330033">, 32</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "Err-32, Cannot open file '/usr/temp/work.dat'"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[4w] [3z:2] [6] [5l] [2z:2], [1:4]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">2009,4,21,</font><font color="#330033">"DAY"</font><font color="#330033">,</font><font color="#330033">"MONTH"</font><font color="#330033">,</font><font color="#330033">"of"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "Day 21 of month 04, 2009"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"The answer is [:6.2]%"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">35.22341</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "The answer is  35.22%"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"The answer is [.6]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1.2345</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "The answer is 1.234500"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"The answer is [,,.2]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1234.56</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "The answer is 1,234.56"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"The answer is [,..2]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1234.56</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "The answer is 1.234,56"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"The answer is [,:.2]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1234.56</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "The answer is 1:234.56"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[] [?]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5, </font><font color="#0000FF">{</font><font color="#330033">"cats"</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "5 cats"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[] [?]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">1, </font><font color="#0000FF">{</font><font color="#330033">"cats"</font><font color="#330033">, </font><font color="#330033">"cat"</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "1 cat"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[&lt;:4]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"abcdef"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "abcd"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[&gt;:4]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"abcdef"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "cdef"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"[&gt;:8]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"abcdef"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "  abcdef"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"seq is []"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#0000FF">{</font><font color="#330033">1.2, 5, </font><font color="#330033">"abcdef"</font><font color="#330033">, </font><font color="#5500FF">{</font><font color="#330033">3</font><font color="#5500FF">}</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- `seq is {1.2,5,"abcdef",{3}}`</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"Today is [{day}], the [{date}]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"date=10/Oct/2012"</font><font color="#330033">, </font><font color="#330033">"day=Wednesday"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- "Today is Wednesday, the 10/Oct/2012"</font>
+
+<font color="#330033">format</font><font color="#880033">(</font><font color="#330033">"'A' is [T]"</font><font color="#330033">, 65</font><font color="#880033">)</font>
+<font color="#FF0055">-- `'A' is A`</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>See Also:</h5>
+<a name="_3399_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3293_sprintf">sprintf</a></p>
+
+<p> 
+<a name="textwrap"></a> </p>
+
+<!-- ..\include\std\text.e -->
+<h4>8.22.1.16 wrap</h4>
+<a name="_3401_wrap"></a><a name="wrap"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/text.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">text</font>
+<font color="#0000FF">public function </font><font color="#330033">wrap</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">content, </font><font color="#0000FF">integer </font><font color="#330033">width = 78, </font><font color="#0000FF">sequence </font><font color="#330033">wrap_with = </font><font color="#330033">"\n"</font><font color="#330033">,</font>
+<font color="#0000FF">        sequence </font><font color="#330033">wrap_at = </font><font color="#330033">" \t"</font><font color="#880033">)</font>
+</pre>
+
+<p>   wraps text to a column width.</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Parameters:</h5>
+<a name="_3402_parameters"></a><a name="parameters"></a><ul><li><tt>content</tt>   -- sequence content to wrap
+</li><li><tt>width</tt>     -- width to wrap at, defaults to 78
+</li><li><tt>wrap_with</tt> -- sequence to wrap with, defaults to <tt>"\n"</tt>
+</li><li><tt>wrap_at</tt>   -- sequence of characters to wrap at, defaults to space and tab
+</li></ul>
+<!-- ..\include\std\text.e -->
+<h5>Returns:</h5>
+<a name="_3403_returns"></a><a name="returns"></a>
+<p> Sequence containing wrapped text</p>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 1:</h5>
+<a name="_3404_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">result = wrap</font><font color="#880033">(</font><font color="#330033">"Hello, World"</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = "Hello, World"</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 2:</h5>
+<a name="_3405_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">msg = </font><font color="#330033">"Hello, World. Today we are going to learn about apples."</font>
+<font color="#0000FF">sequence </font><font color="#330033">result = wrap</font><font color="#880033">(</font><font color="#330033">msg, 40</font><font color="#880033">)</font>
+<font color="#FF0055">-- result =</font>
+<font color="#FF0055">--   "Hello, World. today we are going to\n"</font>
+<font color="#FF0055">--   "learn about apples."</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 3:</h5>
+<a name="_3406_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">msg = </font><font color="#330033">"Hello, World. Today we are going to learn about apples."</font>
+<font color="#0000FF">sequence </font><font color="#330033">result = wrap</font><font color="#880033">(</font><font color="#330033">msg, 40, </font><font color="#330033">"\n    "</font><font color="#880033">)</font>
+<font color="#FF0055">-- result =</font>
+<font color="#FF0055">--   "Hello, World. today we are going to\n"</font>
+<font color="#FF0055">--   "    learn about apples."</font>
+</pre>
+
+<!-- ..\include\std\text.e -->
+<h5>Example 4:</h5>
+<a name="_3407_example4"></a><a name="example4"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">msg = </font><font color="#330033">"Hello, World. This, Is, A, Dummy, Sentence, Ok, World?"</font>
+<font color="#0000FF">sequence </font><font color="#330033">result = wrap</font><font color="#880033">(</font><font color="#330033">msg, 30, </font><font color="#330033">"\n"</font><font color="#330033">, </font><font color="#330033">","</font><font color="#880033">)</font>
+<font color="#FF0055">-- result = </font>
+<font color="#FF0055">--   "Hello, World. This, Is, A,"</font>
+<font color="#FF0055">--   "Dummy, Sentence, Ok, World?"</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\wildcard.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_regex.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_wildcard.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_regex.html">8.21 Regular Expressions</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_wildcard.html">8.23 Wildcard Matching</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_3_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_3_0.html">9.21 Version 2.3 February 11, 2002</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0a.html">9.23 Version 2.3 Alpha November 30, 2001</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.3.0b.txt -->
+<h2>9.22 Version 2.3 Beta January 15, 2002</h2>
+<a name="_6756_version23betajanuary152002"></a><a name="version23betajanuary152002"></a>
+<p> This release updates the Euphoria Interpreter, the Euphoria To C Translator, and the Interpreter Source Code product, for all platforms.</p>
+<ul><li>You can now override a Euphoria built-in routine with your own variable or namespace identifier of the same name.  Previously this was only allowed for user-defined routines.  Besides giving programmers more freedom, it will allow RDS to add new built-in routines in the future without breaking existing code.
+</li><li>The warning about having multiple global symbols with the same name in different source files has been removed. It was felt to be unnecessary since you'll be asked to supply a namespace identifier if you actually make an ambiguous reference to a global symbol.
+</li><li>You can now have a trailing \ (or Linux /) on the end of all directory names in <strong>EUINC</strong>, and you can have blanks in the directory name.
+</li><li>To eliminate confusion, the binder/shrouder will now delete the output file if a fatal error occurs during the bind or shroud.
+</li><li>Numerous improvements and corrections were made to the documentation. Thanks to Igor Kachan.
+</li><li>Old, pre-ANSI function definitions in the interpreter source code, have been updated to ANSI-style, which is more compatible with C++.
+</li><li><strong>bug fixed : </strong> With DJGPP C, when compiling code produced by the Translator, or compiling the Interpreter source code, there was a memory allocation bug that could waste a bit of time, or, in rare cases, cause a crash.
+</li><li><strong>bug fixed : </strong> On Windows, using the Interpreter, or a Translated program, you were sometimes required to hit Enter twice to exit from a console window. Thanks to Tone Skoda.
+</li><li><strong>bug fixed: </strong> The Euphoria dir() function, as implemented for Lcc or Borland, did not handle directories properly when they had extra attributes set, such as READ_ONLY. Thanks to Euman, who encountered the problem, and then showed how to fix the Interpreter source code for dir().
+</li><li><strong>bug fixed: </strong> You can now declare a namespace identifier with the same name as a built-in function, without causing a lot of errors. Thanks to Martin Stachon (although he recommended a different solution).
+</li><li><strong>bug fixed -  Binder: </strong> Support for the new <strong>EUINC</strong> environment variable has now been added to the binder. Thanks to Ross Boyd.
+</li><li><strong>bug fixed -  Binder: </strong> Appending resource files to a bound .exe didn't work correctly when bind -clear was used. Thanks to Wolfgang Fritz.
+</li><li><strong>bug fixed -  Binder: </strong> When using the binder interactively, you would get a "variable not initialized" error when trying to substitute a different Windows icon. Thanks to Tony Steward.
+</li><li><strong>bug fixed -  Binder: </strong> In some cases the keyword "constant" would be dropped from the shrouded output, when the previous line of input had a constant declaration ending in ']'. Thanks to Ross Boyd.
+</li><li><strong>bug fixed -  Binder: </strong> When a general expression, (not just a string in quotes), was used as the argument to routine_id(), local routines that were potentially the target of that expression, might have their names changed (unless -clear was used), thus causing routine_id() to return -1 at run-time. Global routines were ok.
+</li><li><strong>bug fixed -  Binder: </strong> The binder/shrouder kept going even though an include file was missing.  Thanks to Ross Boyd.
+</li><li><strong>bug fixed -  Linux Binder:</strong> The Linux search path bug for bound executables, supposedly fixed by the 2.3 alpha release, wasn't fixed properly. Fixed now. Thanks to Kenneth Rhodes.
+</li><li><strong>bug fixed -  Linux Binder:</strong> bindu -clear  and shroud -clear with a file containing DOS/Windows-style \r\n line terminators gave you errors "illegal character" when your shrouded program was run, and "not bound correctly" when your bound file was run.
+</li><li><strong>bug fixed -  Interpreter Source:</strong> The link command for building the DOS interpreter with WATCOM C, listed a non-existent .obj file.
+</li></ul>
+<p> 
+<!-- ..\docs\release\2.3.0a.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_3_0.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_3_0a.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_3_0.html">9.21 Version 2.3 February 11, 2002</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_3_0a.html">9.23 Version 2.3 Alpha November 30, 2001</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

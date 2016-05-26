@@ -1,0 +1,207 @@
+=About the Redy™ project
+Redy™ Application Environment is a set of useful libraries and graphical applications written in the Euphoria programming language.
+
+The word "redy" is the Middle English spelling of the word "ready". The logo is based on the "READY." prompt of old computers, reminiscing the simplicity and efficiency that computers once had. The definition of this word represents the desired attributes of this GUI environment:
+
+    * prepared or available for service, action, or progress
+    * prompt in apprehending or reacting
+    * available for immediate use
+    * in a state of completion or preparedness
+    * prompt or rapid
+    * poised for use or action
+    * completely prepared or in fit condition for action or use
+    * quick in action, performance, manifestation, etc.
+
+=Introduction
+RedyCode™ is an open source Integrated Development Environment (IDE) written in and for the [[Euphoria]] programming language and based on the [[RedyLib]] standard library.
+
+RedyCode designed to be an intuitive environment for creating graphical applications. Many important details that you would normally have to design from scratch have been taken care of for you, so you can focus on the contents of your application. These important details include:
+    * Actions, user-customizeable toolbars, and menus
+    * Useful set of icons
+    * Widgets that automatically arrange themselves
+    * Common dialogs
+    * Common objects such as text editors, calendars, etc.
+    * Standardized method of storing application configuration
+    * Windows that remember their position and size automatically
+
+=License and Copyrighte Info
+Redyapplication environment, RedyCode, RedyLib, RedyPad are licensed under the Apache License, Version 2.0.
+Copyright 2016 Ryan W. Johnson.
+The official website is <http://redy-project.org/>.
+
+=Using RedyCode
+==Installation
+ RedyCode is a portable, self-contained application. It should auto-detect it's own subfolders no matter where you unzip it and work without configuration. You should be able to open one of the included projects or create a new project based on the included default template and run projects with the included euiw.exe.
+
+==Euphoria Compatibility
+It comes with a stripped-down version of euphoria, so you don't need euphoria installed (and it should not use your installation of euphoria anyway). Theoretically, you should be able to replace the included version with a full version of euphoria 4.1 32-bit in the same folder, or you can go to Tools -> Preferences and change the euphoria paths, as long as you have redylib_0_9 in the specified include folder. Earlier versions of euphoria will probably not work, because i haven't had time to test compatibility yet. 
+
+==RedyCode Projects
+When you devlope an application, you need to to manage a collection of source code and other types of files related to that application. RedyCode makes that easy.
+
+===Opening an existing project
+When you run RedyCode, it shows a list of projects contained in the defaulet projects folder. Simply double-click one to open it. Alternatively, you can open a project by clicking Project menu -> Open Project to browse for a project file, which has a ".redy" extention.
+
+RedyCode comes with a few example projects, one of which is the source to RedyCode itself. (You can use RedyCode to edit and run RedyCode recursively!)
+
+===Creating a new project from the default template
+RedyCode comes with a default project template (more templates will be added in a future version). To create a project:
+    * Click New Project. An Create New Project dialog will open.
+    * Type a new project name
+    * Edit the default header text, which will be placed at the top of each euphoria source code in the new project. This is useful for adding copyright and license information to your source files.
+    * Click Create New Project. The project will be generated and opened. You will see the new project's files in the [[Project Tree->RedyCode/ProjectTree]]. Open the project's .exw file. Find the app:define() statement, and edit the strings that define the application's info. It will look something like this: 
+
+<eucode>
+--Define Application Info
+app:define({
+    {"title", "Your App Name"},
+    {"version", "1.0.0"},
+    {"author", "You"},
+    {"copyright", "2016 You"},
+    {"license", {
+        "Your license text",
+        "continued..."
+    }},
+    {"about", "Description of your app."}
+})
+</eucode>
+    * Save the file.
+    * Click Run, and you should see your project's application run and and create a window!
+    
+===Copying and renaming a project
+If you want to make a copy of a project and rename it, you will have to do that outside of RedyCode (currently). This is the suggested method:
+    * Open the project you want to copy
+    * Click Project menu -> Explore Project Folder. You should see a Windows Explorer window pop up, showing the project folder with a .redy file in it.
+    * Go up a folder. You should now be in the /projects folder
+    * Copy the folder of the project you want to copy. Rename name it to the new project name you want to use.
+    * Go into the new project's folder and rename the .redy file to the same name.
+    * Go into the new project's source folder and rename the .exw file to the same name.
+    * Switch back to RedyCode, close the current project. You should see the new project has been added to the list of projects. Open the new project. Done!
+
+==Project Tree
+
+The Project tree shows the Source files of the current project and the Includes used by the project. The Source files include euphoria source, docs, and images that make up the project application.
+
+===Opening files
+
+Click an item to open a file in a new tab. If a file is already open, it will switch to that file's tab in the editor. If you click on an item under Includes, it will open as read-only, protecting you from accidentally editing source files that are external to you project. See [[Editor->RedyCode/Editor]] for information on editing files.
+
+===Running files
+If you double-click on a .exw or .ex file, it will run it with the Euphoria Interpretor (euiw.exe). To run the "default app" (the .exw file that has the same name as the project), you can click the Run button above the Project tree, or click the Application menu -> Run.
+
+===Refreshing the view
+If you modify project files outside of RedyCode, you may need to refresh the view by clicking Project menu -> Refresh Project Tree.
+
+==Editor
+The RedyCode Editor lets you view or edit various types of files in your [[project->RedyCode/Projects]]. 
+
+There are 5 types of files currently supported:
+    * Euphoria source (.exw, .ex, .e, etc.) - syntax highlighting (and context help will be added in a future version)
+    * Euphoria error report (ex.err) - for jumping to errors in your code (not working yet, but you can view the ex.err file)
+    * Hypertext Document files (.htd) - [[Creole syntax->RedyCode/Creole]] files (only a limited sub-set currently implemented)
+    * Images (.bmp) - bitmap viewer only
+    * Plain text (.txt, .cfg, etc.) - normal text editor
+
+===Running files
+If you double-click on a .exw or .ex file, it will run it with the Euphoria Interpretor (euiw.exe). To run the "default app" (the .exw file that has the same name as the project), you can click the Run button above the Project tree, or click the Application menu -> Run.
+
+===Refreshing the view
+If you modify project files outside of RedyCode, you may need to refresh the view by clicking Project menu -> Refresh Project Tree.
+
+=Development Information
+==Version Numbers
+RedyCode and RedyLib version numbers will stay in sync.
+
+======Official releases
+Official releases have version numbers x.y.z, where a x.y indicates major/minor feature or API changes and .z indicates bugfixes or changes that don't affect compatibility with other x.y versions.
+
+======Development releases
+Development releases that may be updated frequently and are not recommended for anything other than testing have version numbers x.y.dev, where x.y is the target future official version, and dev indicates that feature or API changes can change without notice. 
+ 
+==Known Issues
+RedyCode is still very new and has some known bugs and missing features.
+
+======Syntax Highlighting
+    * Styles don't continue to the next line, so block comments don't format correctly.
+    * Bracket colors don't work correctly
+    * Wordwrap may have some anomalies
+
+======Creole Syntax
+    * Only headings, links, lists, and eucode work. The parser is not complete yet.
+    * After a link, wordwrapping behaves strangely and there is often a missing character at the end of the last word in the line. Workaround: add a space at the end.
+    * Selecting multiple lines doesn't highlight headings sometimes.
+
+======Editor control
+    * When using PageUp, the display doesn't refresh once the cursor reaches the first line. Workaround: press arrow keys or type something to refresh.
+    * The text editor is incomplete and needs more optimization, so it may be a little bit slow and have subtle visual anomalies.
+    * Smart tabs has strange behavior in certain cases.
+    * Moving the cursor through word-wrapped lines may be erratic sometimes.
+    * If the Project Tree has focus (after clicking on an item), and then you press up or down to open another file in the tree, the editor and Project Tree both think they has focus at the same time, causing some erratical behavior. If this happens, clicking inside the editor should correct the problem.
+    * Many hotkeys do not work yet.
+    * Double-click to select words doesn't work yet
+    * Context menus for the Project tree items and text editor don't work yet.
+    * Help viewer may not scroll correctly sometimes when navigating to links.
+
+======Missing features
+    * Fonts and text styles are hard-coded for now (temporary solution: edit line 92 in include\redylib_0_9\gui\objects\textdoc.e)
+    * Customizable hotkeys aren't implemented in actions.e yet.
+    * Project files aren't monitored to detect changes and automatically refresh the Project Tree or notify the user that open files have changed.
+    * Many planned features are not implemented yet: Undo/redo, block selection, comment/uncomment selected lines, autocomplete, spell check, search/replace, goto line, goto error, goto routine, context help, build project (bind/translate), save project as, select project template, save project as template, ASCII table, color code selector, visual widget designer, etc.
+
+======Included projects, templates, docs, and redylib
+    * More example projects and useful project templates will be added periodically. The ones included in this version are useable, but need some improvements.
+    * Documentation is a work in progress. There is much to write about, so it will have to be improved gradually.
+    * Redylib is still missing lots of planned features. It is stable, as long as you use the officially documented API. There are many partially-implemented, experimental, or depreciated features scattered throughout, which are not documented. Use them at your own risk.
+
+==Future Roadmap
+There are still many unfinished features that are planned for the next few releases.
+
+======Version 0.9.1 - 0.9.9
+    * Search/replace
+    * Double-click to select words/tokens
+    * Right-click context menus
+    * Hotkeys
+    * Goto line number
+    * Comment/uncomment selected lines
+    * Fix known bugs
+    
+======Version 1.0 (December 2016?)
+    * Many improvements in RedyLib
+    * Bugfixes and optimizations
+    * Improve syntax parsers
+    * Project Settings
+    * Preferences
+    * Analize ex.err and goto error
+    * Basic source context parser (understand includes, routines, etc.) and navigate to routines
+    * Undo/redo
+    * Block selection
+    * Build project (bind/translate)
+    * Save project as
+    * Select project template
+    * Save project as template
+    * More project templates
+
+======Version 1.1-1.9 (2017?)
+    * More improvements in RedyLib
+    * More bugfixes and optimizations
+    * Detect project file changes, automatic Project Tree refresh
+    * Auto complete
+    * Beautify code
+    * Spell check
+    * Context-sensitive help
+    * Visual widget designer and debugger
+    * Action editor, menu editor
+    * Image to sequence embedding utility
+    * ASCII table, insert character
+    * Color selector, insert color in various formats
+    * String editor (automatically generate string in code, with appropriate quotes, newlines, etc)
+
+======Version 2.0 (2018-2019?)
+    * Port RedyLib to Linux
+    * More improvements in RedyLib
+    * More advanced features
+    * Customizable syntax highlighting?
+    * Scripting engine based on eu.ex?
+
+
+Next page: [[Euphoria->Euphoria]]

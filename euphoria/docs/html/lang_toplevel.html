@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_short_circuit.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_short_circuit.html">4.7 Short-Circuit Evaluation</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.8 Special Top-Level Statements</h2>
+<a name="_176_specialtoplevelstatements"></a><a name="specialtoplevelstatements"></a>
+<p> 
+<a name="specialstatements"></a> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_toplevel.html#_176_specialtoplevelstatements">4.8 Special Top-Level Statements</a></div>
+<div class="toc_3"><a href="lang_toplevel.html#_178_includestatement">4.8.1 include statement</a></div>
+<div class="toc_3"><a href="lang_toplevel.html#_180_withwithout">4.8.2 with / without</a></div>
+<div class="toc_4"><a href="lang_toplevel.html#_181_onoffoptions">4.8.2.1 On / Off options</a></div>
+<div class="toc_4"><a href="lang_toplevel.html#_184_complexwithwithoutoptions">4.8.2.2 Complex with / without options</a></div>
+<div class="toc_4"><a href="lang_toplevel.html#_189_withwithoutinline">4.8.2.3 with / without inline</a></div>
+</div>
+</div>
+</p>
+</div>
+<p> Before any of your statements are executed, the Euphoria front-end quickly reads your entire program. All statements are syntax checked and converted to a low-level intermediate language (IL).  The interpreter immediately executes the IL after it is completely generated. The translator converts the IL to C. The binder/shrouder saves the IL on disk for later execution. These three tools all share the same front-end (written in Euphoria).</p>
+
+<p> If your program contains only routine and variable declarations, but no top-level executable statements, then nothing will happen when you run it (other than syntax checking). You need a top-level statement to call your main routine (see <a href="examples.html#_52_exampleprograms">Example Programs</a>).  It's quite possible to have a program with nothing but top-level executable statements and no routines. For example you might want to use Euphoria as a simple calculator, typing just a few <a href="std_io.html#_1506_print">print</a> or <a href="std_io.html#q_print">?</a> statements into a file, and then executing it.</p>
+
+<p> As we have seen, you can use any Euphoria statement, including <a href="lang_loop.html#_164_forstatement">for statement</a>, <a href="lang_loop.html#_160_whilestatement">while statement</a>, <a href="lang_branch.html#_146_ifstatement">if statement</a>, etc... (but not <a href="lang_decl.html#_115_returnstatement">return</a>), at the top level i.e. <em>outside</em> of any <a href="lang_decl.html#_114_functions">function</a> or <a href="lang_decl.html#_113_procedures">procedure</a>. In addition, the following special statements may <em>only</em> appear at the top level:</p>
+<ul><li><tt>include</tt>
+</li><li><tt>with</tt> / <tt>without</tt>
+</li></ul>
+<!-- ..\docs\refman_2.txt -->
+<h3>4.8.1 include statement</h3>
+<a name="_178_includestatement"></a><a name="includestatement"></a>
+<p> When you write a large program it is often helpful to break it up into logically separate files, by using <strong>include statements</strong>. Sometimes you will want to reuse some code that you have previously written, or that someone else has written. Rather than copy this code into your main program, you can use an <strong>include statement</strong> to refer to the file containing the code. The first form of the include statement is:</p>
+
+<p> <dl>
+<dt><tt>include <em>filename</em></tt>
+</dt>
+<dd>This reads in (compiles) a Euphoria source file.</dd>
+</dl>
+Some Examples:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/graphics.e</font>
+<font color="#0000FF">include </font><font color="#330033">/mylib/myroutines.e</font>
+<font color="#0000FF">public include </font><font color="#330033">library.e</font>
+</pre>
+
+<p> Any top-level code in the included file will be executed at start up time.</p>
+
+<p> Any <tt>global</tt> identifiers that are declared in the file doing the including will also be visible in the file being included. However the situation is slightly different for an identifier declared as <strong>public</strong> or <strong>export</strong>. In these cases the file being included will <strong>not</strong> see <tt>public/export</tt> symbols declared in the file doing the including, unless the file being included also explicitly includes the file doing the including. Yes, you would better read that again because its not that obvious. Here's an example...</p>
+
+<p> We have two files, a.e and b.e ... </p>
+
+<pre class="examplecode"><font color="#FF0055">-- a.e --</font>
+<font color="#330033">? c </font><font color="#FF0055">-- declared as global in 'b.e'</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- b.e --</font>
+<font color="#0000FF">include </font><font color="#330033">a.e</font>
+<font color="#0000FF">global integer </font><font color="#330033">c = 0</font>
+</pre>
+
+<p> This will work because being <tt>global</tt> the symbol 'c' in b.e can be seen by all files in this <em>include tree</em>.</p>
+
+<p> However ... </p>
+
+<pre class="examplecode"><font color="#FF0055">-- a.e --</font>
+<font color="#330033">? c </font><font color="#FF0055">-- declared as public in 'b.e'</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- b.e --</font>
+<font color="#0000FF">include </font><font color="#330033">a.e</font>
+<font color="#0000FF">public integer </font><font color="#330033">c = 0</font>
+</pre>
+
+<p> Will not work as public symbols can only be seen when their declaring file is explicitly included. So to get this to work you need to write a.e as ... </p>
+
+<pre class="examplecode"><font color="#FF0055">-- a.e --</font>
+<font color="#0000FF">include </font><font color="#330033">b.e</font>
+<font color="#330033">? c </font><font color="#FF0055">-- declared as public in 'b.e'</font>
+</pre>
+
+<hr />
+<strong>N.B.</strong> Only those symbols declared as <tt>global</tt> in the included file will be visible (accessible) in the remainder of the including file. Their visibility in other included files or in the main program file depends on other factors. Specifically, a global symbols can only be accessed by files in the same <em>include tree</em>. For example...</p>
+
+<p> If we have danny.e declare a global symbol called 'foo', and bob.e includes danny.e, then code in bob.e can access danny's 'foo'. Now if we also have cathy.e declare a global symbol called 'foo', and anne.e includes cathy.e, then code in ann.e can access cathy's 'foo'. Nothing unusual about that situation. Now, if we have a program that includes both bob.e and anne.e, the code in bob.e and anne.e should still work even though there are now two global 'foo' symbols available. This is because the include tree for bob.e <em>only</em> contains danny.e and likewise the include tree for anne.e <em>only</em> contains cathy.e. So as the two 'foo' symbols are in separate include trees (from bob.e and anne.e perspective) code in those files continues to work correctly. A problem can occur if the main program (the one that includes both bob.e and anne.e) references 'foo'. In order for Euphoria to know which one the code author meant to use, the coder must use the namespace facility. </p>
+
+<pre class="examplecode"><font color="#FF0055">--- mainprog.ex ---</font>
+<font color="#0000FF">include </font><font color="#330033">anne.e </font><font color="#0000FF">as </font><font color="#330033">anne</font>
+<font color="#0000FF">include </font><font color="#330033">bob.e  </font><font color="#0000FF">as </font><font color="#330033">bob</font>
+
+<font color="#330033">anne:foo</font><font color="#880033">() </font><font color="#FF0055">-- Specify the 'foo' from anne.e.</font>
+</pre>
+
+<p> If the above code did not use namespaces, Euphoria would not have know which 'foo' to use -- the one from bob.e or the one in anne.e.</p>
+
+<p> If public precedes the include statement, then all public identifiers from the included file will also be visible to the including file, and visible to any file that includes the current file.</p>
+
+<p> If an absolute <em>filename</em> is given, Euphoria will open it and start parsing it. When a relative <em>filename</em> is given, Euphoria will try to open the file relative to the following directories, in the following order:</p>
+<ol><li>The directory containing the current source file.  i.e. the source file that contains the include statement that is being processed.
+</li><li>The directory containing the main file given on the interpreter, translator or binder -- see <a href="std_cmdline.html#_779_command_line">command_line</a>.
+</li><li>If you've defined an environment variable named <tt>EUINC</tt>, Euphoria will check each directory listed in <tt>EUINC</tt> (from left to right).  <tt>EUINC</tt> should be a list of directories, separated by semicolons (colons on <em>Linux</em> / <em>FreeBSD</em>), similar in form to your <tt>PATH</tt> variable. <tt>EUINC</tt> can be added to your set of <em>Linux</em> / <em>FreeBSD</em> or <em>Windows</em> environment  variables. (Via <tt>Control Panel / Performance &amp; Maintenance / System / Advanced</tt> on <em>XP</em>, or <tt>AUTOEXEC.BAT</tt> on older versions of <em>Windows</em>).  e.g. <tt>SET EUINC=C:\EU\MYFILES;C:\EU\WINDOWSLIB</tt>  <tt>EUINC</tt> lets you organize your include files according to application areas, and avoid adding numerous unrelated files to <tt>euphoria\include</tt>.
+</li><li>Finally, if it still hasn't found the file, it will look in  <tt>euphoria\include</tt>.  This directory contains the standard Euphoria include files. The environment variable <tt>EUDIR</tt> tells Euphoria where to find your <tt>euphoria</tt> directory.
+</li></ol>
+<p>An included file can include other files. In fact, you can "nest" included files up to 30 levels deep.</p>
+
+<p> Include file names typically end in <tt>.e</tt>, or sometimes <tt>.ew</tt> or <tt>.eu</tt> (when they are intended for use with <em>Windows</em> or <em>Unix</em>).  This is just a convention. It is not required.</p>
+
+<p> If your filename (or path) contains blanks or escape-able characters , you must enclose it in double-quotes, otherwise quotes are optional. When a filename is enclosed in double-quotes, you can also use the standard escape character notation to specify filenames that have non-ASCII characters in them.</p>
+
+<p> Note that under Windows, you can also use the forward slash '/' instead of the usually back-slash '\'. By doing this, the file paths are compatible with <em>Unix</em> systems and it means you don't have to 'escape' the back-slashes. <br />
+For example:</p>
+
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">"c:/program files/myfile.e"</font>
+</pre>
+
+<p> Other than possibly defining a new namespace identifier (see below), an include statement will be quietly ignored if the same file has already been included.</p>
+
+<p> An include statement must be written on a line by itself.  Only a comment can appear after it on the same line.</p>
+
+<p> 
+<a name="as"></a> The second form of the include statement is:</p>
+
+<p> <dl>
+<dt><tt>include<strong> </strong><em>filename</em> as <em>namespace_identifier</em></tt>:
+</dt>
+<dd>This is just like the simple include, but it also defines a <em>namespace identifier</em> that can be attached to global identifiers in the included file that  you want to refer to in the main file. This might be necessary to disambiguate references to those identifiers, or you might feel that it makes your code more readable. This <tt>as identifier</tt> namespace exists in the current file, along with   any <tt>namespace identifier</tt> the included file may define.</dd>
+</dl>
+<div style="margin-left:2em">   See Also:    <a href="lang_decl.html#_132_usingnamespaces">Using namespaces</a>. </div></p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.8.2 with / without</h3>
+<a name="_180_withwithout"></a><a name="withwithout"></a>
+<p> These special statements affect the way that Euphoria translates your program into internal form. Options to the <tt>with</tt> and <tt>without</tt> statement come in two flavors. One simply turns an option on or off, while the others have multiple states.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.8.2.1 On / Off options</h4>
+<a name="_181_onoffoptions"></a><a name="onoffoptions"></a><table><tr><th> Default </th>
+<th> Option                      </th>
+</tr>
+<tr><td> without  </td>
+<td> <a href="debug.html#_521_profiling">profile</a>      </td>
+</tr>
+<tr><td> without  </td>
+<td> <a href="debug.html#_521_profiling">profile_time</a> </td>
+</tr>
+<tr><td> without  </td>
+<td> <a href="debug.html#trace">trace</a>                    </td>
+</tr>
+<tr><td> without  </td>
+<td> <a href="lang_toplevel.html#with_batch">batch</a>       </td>
+</tr>
+<tr><td> with     </td>
+<td> <a href="lang_decl.html#type_check">type_check</a>               </td>
+</tr>
+<tr><td> with     </td>
+<td> <a href="lang_toplevel.html#indirect_includes">indirect_includes</a>        </td>
+</tr>
+<tr><td> with     </td>
+<td> <a href="lang_toplevel.html#with_inline">inline</a>     </td>
+</tr>
+</table>
+
+<p> <tt>with</tt> turns <strong>on</strong> one of the options and <tt>without</tt> turns <strong>off</strong> one of the options.</p>
+
+<p> For more information on the <tt>profile</tt>, <tt>profile_time</tt> and <tt>trace</tt> options, see <a href="debug.html#_515_debuggingandprofiling">Debugging and Profiling</a>. For more information on the <tt>type_check</tt> option, see <a href="perform.html#_653_performancetips">Performance Tips</a>.</p>
+
+<p> There is also a rarely-used special <tt>with</tt> option where a code number appears after <tt>with</tt>.  In previous releases this code was used by RDS to make a file exempt from adding to the statement count in the old "Public Domain" Edition. This is not used any longer, but does not cause an error.</p>
+
+<p> You can select any combination of settings, and you can change the settings, but the changes must occur <em>between</em> subroutines, not within a subroutine. The only exception is that you can only turn on one type of profiling for a given run of your program.</p>
+
+<p> An <strong>included file</strong> inherits the <strong>with/without</strong> settings in effect at the point where it is included.  An included file can change these settings, but they will revert back to their original state at the end of the included file.  For instance, an included file might turn off warnings for itself and (initially) for any files that it includes, but this will not turn off warnings for the main file.</p>
+
+<p> <strong>
+<a name="indirect_includes"></a><a name="includes"></a>indirect_includes</strong>, This <tt>with/without</tt> option changes the way in which global symbols are resolved.  Normally, the parser uses the way that files were included to resolve a usage of a global symbol.  If <tt>without indirect_includes</tt> is in effect, then only direct includes are considered when resolving global symbols.</p>
+
+<p> This option is especially useful when a program uses some code that was developed for a prior version of Euphoria that uses the pre-4.0 standard library, when all exposed symbols were global.  These can often clash with symbols in the new standard library.  Using <tt>without indirect_includes</tt> would not force a coder to use namespaces to resolve symbols that clashed with the new standard library.</p>
+
+<p> Note that this setting does not propagate down to included files, unlike most <tt>with/without options</tt>.  Each file begins with <tt>indirect_includes</tt> turned on.</p>
+
+<p> <strong>
+<a name="with_batch"></a><a name="batch"></a>with batch</strong>, Causes the program to not present the "Press Enter" prompt if an error occurs. The exit code will still be set to 1 on error. This is helpful for programs that run in a mode where no human may be directly interacting with it. For example, a CGI application or a CRON job.</p>
+
+<p> You can also set this option via a <a href="command_switches.html#batch_command_line">command line parameter</a>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.8.2.2 Complex with / without options</h4>
+<a name="_184_complexwithwithoutoptions"></a><a name="complexwithwithoutoptions"></a>
+<!-- ..\docs\refman_2.txt -->
+<h5>with / without warning</h5>
+<a name="_185_withwithoutwarning"></a><a name="withwithoutwarning"></a>
+<p> Any warnings that are issued will appear on your screen after your program has finished execution. Warnings indicate minor problems.  A warning will never terminate the execution of your program. You will simply have to hit the Enter key to keep going -- which may stop the program on an unattended computer.</p>
+
+<p> The forms available are ...</p>
+
+<p> <dl>
+<dt><tt>with warning</tt>
+</dt>
+<dd>enables all warnings</dd>
+</dl>
+<dl>
+<dt><tt>without warning</tt>
+</dt>
+<dd>disables all warnings</dd>
+</dl>
+<dl>
+<dt><tt>with warning {<em>warning name list</em>}<br />
+  with warning = {<em>warning name list</em>}</tt>
+</dt>
+<dd>enables only these warnings, and disables all other</dd>
+</dl>
+<dl>
+<dt><tt>without warning {<em>warning name list</em>}<br />
+  without warning = {<em>warning name list</em>}</tt>
+</dt>
+<dd>enables all warnings except the warnings listed</dd>
+</dl>
+<dl>
+<dt><tt>with warning &amp;= {<em>warning name list</em>}<br />
+  with warning += {<em>warning name list</em>}</tt>
+</dt>
+<dd>enables listed warnings in addition to whichever are enabled already</dd>
+</dl>
+<dl>
+<dt><tt>without warning &amp;= {<em>warning name list</em>}<br />
+  without warning += {<em>warning name list</em>}</tt>
+</dt>
+<dd>disables listed warnings and leaves any not listed in its current state.</dd>
+</dl>
+<dl>
+<dt><tt>with warning save</tt>
+</dt>
+<dd>saves the current warning state, i.e. the list of all enabled   warnings. This destroys any previously saved state.</dd>
+</dl>
+<dl>
+<dt><tt>with warning restore</tt>
+</dt>
+<dd>causes the previously saved state to be restored.</dd>
+</dl>
+<dl>
+<dt><tt>without warning strict</tt>
+</dt>
+<dd>overrides some of the warnings that the -STRICT command line option tests for,   but only until the end of the next function or procedure. The warnings overridden   are   * default_arg_type   * not_used   * short_circuit   * not_reached   * empty_case   * no_case_else</dd>
+</dl>
+
+<p> The <strong>with/without warnings</strong> directives will have no effect if the <tt>-STRICT</tt> command line switch is used. The latter turns on all warnings and ignores any <strong>with/without warnings</strong> statement. However, it can be temporarily affected by the "<tt>without warning strict</tt>" directive.</p>
+
+<hr />
+ <strong>Warning Names</strong></p>
+
+<hr />
+<table><tr><th> Name </th>
+<th> Meaning</th>
+</tr>
+<tr><td> <tt>none</tt>     </td>
+<td> When used with the <tt>with</tt> option, this turns off all warnings. When used with the <tt>without</tt> option, this turns on all warnings.</td>
+</tr>
+<tr><td> <tt>resolution</tt> </td>
+<td> an identifier was used in a file, but was defined in a file this file doesn't (recursively) include.</td>
+</tr>
+<tr><td> <tt>short_circuit</tt> </td>
+<td> a routine call may not take place because of short circuit evaluation in a conditional clause.</td>
+</tr>
+<tr><td> <tt>override</tt> </td>
+<td> a built-in is being overridden</td>
+</tr>
+<tr><td> <tt>builtin_chosen</tt> </td>
+<td> an unqualified call caused Euphoria to choose between a built-in and another global which does not override it. Euphoria chooses the built-in.</td>
+</tr>
+<tr><td> <tt>not_used</tt> </td>
+<td>  A variable has not been used and is going out of scope.</td>
+</tr>
+<tr><td> <tt>no_value</tt> </td>
+<td> A variable never got assigned a value and is going out of scope.</td>
+</tr>
+<tr><td> <tt>custom</tt> </td>
+<td>  Any warning that was defined using the <tt>warning</tt> procedure.</td>
+</tr>
+<tr><td> <tt>not_reached</tt> </td>
+<td> After a keyword that branches unconditionally, the only thing that should appear is an end of block keyword, or possibly a label that a goto statement can target. Otherwise, there is no way that the statement can be reached at all. This warning notifies this condition.</td>
+</tr>
+<tr><td> <tt>translator</tt> </td>
+<td> An option was given to the translator, but this option is not recognized as valid for the C  compiler being used.</td>
+</tr>
+<tr><td> <tt>cmdline</tt> </td>
+<td> A command line option was not recognized.</td>
+</tr>
+<tr><td> <tt>mixed_profile</tt> </td>
+<td> For technical reasons, it is not possible to use both <tt>with profile</tt> and <tt>with profile_time</tt> in the same section of code. The profile statement read last is ignored, and this warning is issued.</td>
+</tr>
+<tr><td> <tt>empty_case</tt> </td>
+<td> In <tt>switch</tt> that have <tt>without fallthru</tt>, an empty case block will result in no code being executed within the switch statement.</td>
+</tr>
+<tr><td> <tt>default_case</tt> </td>
+<td> A <tt>switch</tt> that does not have a <tt>case else</tt> clause.</td>
+</tr>
+<tr><td> <tt>default_arg_type</tt> </td>
+<td> Reserved (not in use yet)</td>
+</tr>
+<tr><td> <tt>deprecated</tt> </td>
+<td> Reserved (not in use yet)</td>
+</tr>
+<tr><td> <tt>all</tt> </td>
+<td> Turns all warnings on. They can still be disabled by with/without warning directives.</td>
+</tr>
+</table>
+
+<p> <strong>Example</strong> </p>
+
+<pre class="examplecode"><font color="#0000FF">with </font><font color="#330033">warning save</font>
+<font color="#0000FF">without </font><font color="#330033">warning &amp;= </font><font color="#880033">(</font><font color="#330033">builtin_chosen, not_used</font><font color="#880033">)</font>
+<font color="#330033"> . . . </font><font color="#FF0055">-- some code that might otherwise issue warnings</font>
+<font color="#0000FF">with </font><font color="#330033">warning restore</font>
+</pre>
+
+<p> Initially, only the following warnings are enabled:</p>
+<ul><li><tt>resolution</tt>
+</li><li><tt>override</tt>
+</li><li><tt>builtin_chosen</tt>
+</li><li><tt>translator</tt>
+</li><li><tt>cmdline</tt>
+</li><li><tt>mixed_profile</tt>
+</li><li><tt>not_reached</tt>
+</li><li><tt>custom</tt>
+</li></ul>
+<p>This set can be changed using -W or -X command line switches.</p>
+
+<p> 
+<a name="with_define"></a><a name="define"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>with / without define</h5>
+<a name="_187_withwithoutdefine"></a><a name="withwithoutdefine"></a>
+<p> As mentioned about <a href="lang_branch.html#_152_ifdefstatement">ifdef statement</a>, this top level statement is used to define/undefine tags which the ifdef statement may use.</p>
+
+<p> The following tags have a predefined meaning in Euphoria:</p>
+<ul><li>WINDOWS:    platform is any version of Windows (tm) from '95 on to Vista and beyond
+</li><li>WINDOWS:  platform is any kind of Windows system
+</li><li>UNIX:     platform is any kind of Unix style system
+</li><li>LINUX:    platform is Linux
+</li><li>FREEBSD:  platform is FreeBSD
+</li><li>OSX:      platform is OS X for Macintosh
+</li><li>SAFE:     turns on a slower debugging version of <tt>memory.e</tt> called  <tt>safe.e</tt> when defined. Switching mode by renaming files <strong><em>no longer works</em></strong>.
+</li><li>EU4:      defined on all versions of the version 4 interpreter
+</li><li>EU4_0:    defined on all versions of the interpreter from 4.0.0 to 4.0.X
+</li><li>EU4_0_0:  defined only for version 4.0.0 of the interpreter
+</li></ul>
+<p>The name of a tag may contain any character that is a valid identifier character, that is <tt>A-Za-z0-9_</tt>. It is not required, but by convention defined words are upper case.</p>
+
+<p> 
+<a name="with_inline"></a><a name="inline"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.8.2.3 with / without inline</h4>
+<a name="_189_withwithoutinline"></a><a name="withwithoutinline"></a>
+<p> This directive allows coders some flexibility with inlined routines. The default is for inlining to be on.  Any routine that is defined when <tt>without inline</tt> is in effect will never be inlined.</p>
+
+<p> <tt>with inline</tt> takes an optional integer parameter that defines the largest routine (by size of IL code) that will be considered for inlining.  The default is 30. </p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_short_circuit.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_short_circuit.html">4.7 Short-Circuit Evaluation</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

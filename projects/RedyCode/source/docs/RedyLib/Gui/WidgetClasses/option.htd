@@ -1,0 +1,33 @@
+==Option Widget Class
+
+Widget Class name: "option"
+
+When creating a group of Option Widgets, the groupID is the widgetID of the first widget created (don't set "group" when creating the first widget. For each widget after that, set the "group" property to the first widget's WidgetID).
+
+===API
+====Properties
+
+====="label"
+====="style"
+    "button"
+====="value"
+====="group"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "selected", {groupname})
+
+====Commands
+
+=====procedure cmd_set_group_value(atom wid)
+=====function func_get_group_value(sequence groupname)
+--oops, this won't work without a wid. FIX PLEASE.
+
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

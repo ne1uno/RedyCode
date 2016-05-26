@@ -1,0 +1,1047 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_locale.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_regex.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_locale.html">8.19 Locale Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_regex.html">8.21 Regular Expressions</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h2>8.20 Locale Names</h2>
+<a name="_3050_localenames"></a><a name="localenames"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_localeconv.html#_3050_localenames">8.20 Locale Names</a></div>
+<div class="toc_3"><a href="std_localeconv.html#_3051_constants">8.20.1 Constants</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3053_w32_names">8.20.1.1 w32_names</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3055_w32_name_canonical">8.20.1.2 w32_name_canonical</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3057_posix_names">8.20.1.3 posix_names</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3059_locale_canonical">8.20.1.4 locale_canonical</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3061_platform_locale">8.20.1.5 platform_locale</a></div>
+<div class="toc_3"><a href="std_localeconv.html#_3062_localenametranslation">8.20.2 Locale Name Translation</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3064_canonical">8.20.2.1 canonical</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3069_decanonical">8.20.2.2 decanonical</a></div>
+<div class="toc_4"><a href="std_localeconv.html#_3074_canon2win">8.20.2.3 canon2win</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h3>8.20.1 Constants</h3>
+<a name="_3051_constants"></a><a name="constants"></a>
+<p> <em>Windows</em> locale names:</p>
+<table><tr><td> af-ZA</td>
+<td>  sq-AL</td>
+<td>  gsw-FR</td>
+<td>  am-ET</td>
+<td>  ar-DZ</td>
+<td>  ar-BH</td>
+<td>  ar-EG</td>
+<td>  ar-IQ</td>
+</tr>
+<tr><td> ar-JO</td>
+<td>  ar-KW</td>
+<td>  ar-LB</td>
+<td>  ar-LY</td>
+<td>  ar-MA</td>
+<td>  ar-OM</td>
+<td>  ar-QA</td>
+<td>  ar-SA</td>
+</tr>
+<tr><td> ar-SY</td>
+<td>  ar-TN</td>
+<td>  ar-AE</td>
+<td>  ar-YE</td>
+<td>  hy-AM</td>
+<td>  as-IN</td>
+<td>  az-Cyrl-AZ</td>
+<td>  az-Latn-AZ</td>
+</tr>
+<tr><td> ba-RU</td>
+<td>  eu-ES</td>
+<td>  be-BY</td>
+<td>  bn-IN</td>
+<td>  bs-Cyrl-BA</td>
+<td>  bs-Latn-BA</td>
+<td>  br-FR</td>
+<td>  bg-BG</td>
+</tr>
+<tr><td> ca-ES</td>
+<td>  zh-HK</td>
+<td>  zh-MO</td>
+<td>  zh-CN</td>
+<td>  zh-SG</td>
+<td>  zh-TW</td>
+<td>  co-FR</td>
+<td>  hr-BA</td>
+</tr>
+<tr><td> hr-HR</td>
+<td>  cs-CZ</td>
+<td>  da-DK</td>
+<td>  prs-AF</td>
+<td>  dv-MV</td>
+<td>  nl-BE</td>
+<td>  nl-NL</td>
+<td>  en-AU</td>
+</tr>
+<tr><td> en-BZ</td>
+<td>  en-CA</td>
+<td>  en-029</td>
+<td>  en-IN</td>
+<td>  en-IE</td>
+<td>  en-JM</td>
+<td>  en-MY</td>
+<td>  en-NZ</td>
+</tr>
+<tr><td> en-PH</td>
+<td>  en-SG</td>
+<td>  en-ZA</td>
+<td>  en-TT</td>
+<td>  en-GB</td>
+<td>  en-US</td>
+<td>  en-ZW</td>
+<td>  et-EE</td>
+</tr>
+<tr><td> fo-FO</td>
+<td>  fil-PH</td>
+<td>  fi-FI</td>
+<td>  fr-BE</td>
+<td>  fr-CA</td>
+<td>  fr-FR</td>
+<td>  fr-LU</td>
+<td>  fr-MC</td>
+</tr>
+<tr><td> fr-CH</td>
+<td>  fy-NL</td>
+<td>  gl-ES</td>
+<td>  ka-GE</td>
+<td>  de-AT</td>
+<td>  de-DE</td>
+<td>  de-LI</td>
+<td>  de-LU</td>
+</tr>
+<tr><td> de-CH</td>
+<td>  el-GR</td>
+<td>  kl-GL</td>
+<td>  gu-IN</td>
+<td>  ha-Latn-NG</td>
+<td>  he-IL</td>
+<td> hi-IN</td>
+<td>  hu-HU</td>
+</tr>
+<tr><td> is-IS</td>
+<td>  ig-NG</td>
+<td>  id-ID</td>
+<td>  iu-Latn-CA</td>
+<td> iu-Cans-CA</td>
+<td> ga-IE</td>
+<td>  it-IT</td>
+<td>  it-CH</td>
+</tr>
+<tr><td> ja-JP</td>
+<td>  kn-IN</td>
+<td>  kk-KZ</td>
+<td>  kh-KH</td>
+<td>  qut-GT</td>
+<td> rw-RW</td>
+<td>  kok-IN</td>
+<td>  ko-KR</td>
+</tr>
+<tr><td> ky-KG</td>
+<td>  lo-LA</td>
+<td>  lv-LV</td>
+<td>  lt-LT</td>
+<td>  dsb-DE</td>
+<td> lb-LU</td>
+<td>  mk-MK</td>
+<td>  ms-BN</td>
+</tr>
+<tr><td> ms-MY</td>
+<td>  ml-IN</td>
+<td>  mt-MT</td>
+<td>  mi-NZ</td>
+<td>  arn-CL</td>
+<td> mr-IN</td>
+<td>  moh-CA</td>
+<td>  mn-Cyrl-MN</td>
+</tr>
+<tr><td> mn-Mong-CN</td>
+<td> ne-IN</td>
+<td> ne-NP</td>
+<td>  nb-NO</td>
+<td>  nn-NO</td>
+<td>  oc-FR</td>
+<td>  or-IN</td>
+<td>  ps-AF</td>
+</tr>
+<tr><td> fa-IR</td>
+<td>  pl-PL</td>
+<td>  pt-BR</td>
+<td>  pt-PT</td>
+<td>  pa-IN</td>
+<td>  quz-BO</td>
+<td>  quz-EC</td>
+<td>  quz-PE</td>
+</tr>
+<tr><td> ro-RO</td>
+<td>  rm-CH</td>
+<td>  ru-RU</td>
+<td>  smn-FI</td>
+<td>  smj-NO</td>
+<td>  smj-SE</td>
+<td>  se-FI</td>
+<td>  se-NO</td>
+</tr>
+<tr><td> se-SE</td>
+<td>  sms-FI</td>
+<td>  sma-NO</td>
+<td>  sma-SE</td>
+<td>  sa-IN</td>
+<td>  sr-Cyrl-BA</td>
+<td>  sr-Latn-BA</td>
+<td>  sr-Cyrl-CS</td>
+</tr>
+<tr><td> sr-Latn-CS</td>
+<td> ns-ZA</td>
+<td> tn-ZA</td>
+<td>  si-LK</td>
+<td>  sk-SK</td>
+<td>  sl-SI</td>
+<td>  es-AR</td>
+<td>  es-BO</td>
+</tr>
+<tr><td> es-CL</td>
+<td>  es-CO</td>
+<td> es-CR</td>
+<td>  es-DO</td>
+<td>  es-EC</td>
+<td>  es-SV</td>
+<td>  es-GT</td>
+<td>  es-HN</td>
+</tr>
+<tr><td> es-MX</td>
+<td>  es-NI</td>
+<td>  es-PA</td>
+<td>  es-PY</td>
+<td>  es-PE</td>
+<td>  es-PR</td>
+<td>  es-ES</td>
+<td>  es-ES_tradnl</td>
+</tr>
+<tr><td> es-US</td>
+<td>  es-UY</td>
+<td>  es-VE</td>
+<td>  sw-KE</td>
+<td>  sv-FI</td>
+<td>  sv-SE</td>
+<td>  syr-SY</td>
+<td>  tg-Cyrl-TJ</td>
+</tr>
+<tr><td> tmz-Latn-DZ</td>
+<td> ta-IN</td>
+<td> tt-RU</td>
+<td>  te-IN</td>
+<td>  th-TH</td>
+<td>  bo-BT</td>
+<td>  bo-CN</td>
+<td>  tr-TR</td>
+</tr>
+<tr><td> tk-TM</td>
+<td>  ug-CN</td>
+<td>  uk-UA</td>
+<td>  wen-DE</td>
+<td>  tr-IN</td>
+<td>  ur-PK</td>
+<td>  uz-Cyrl-UZ</td>
+<td>  uz-Latn-UZ</td>
+</tr>
+<tr><td> vi-VN</td>
+<td>  cy-GB</td>
+<td>  wo-SN</td>
+<td>  xh-ZA</td>
+<td>  sah-RU</td>
+<td>  ii-CN</td>
+<td>  yo-NG</td>
+<td>  zu-ZA</td>
+</tr>
+</table>
+
+<p> 
+<a name="localconvw32_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.1.1 w32_names</h4>
+<a name="_3053_w32_names"></a><a name="w32_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public constant </font><font color="#330033">w32_names</font>
+</pre>
+
+<p> 
+<a name="localconvw32_name_canonical"></a><a name="name_canonical"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.1.2 w32_name_canonical</h4>
+<a name="_3055_w32_name_canonical"></a><a name="w32_name_canonical"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public constant </font><font color="#330033">w32_name_canonical</font>
+</pre>
+
+<p>   Canonical locale names for <em>Windows</em>:</p>
+<table><tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td> Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+<td>  Afrikaans_South Africa</td>
+</tr>
+<tr><td> Basque_Spain</td>
+<td>  Basque_Spain</td>
+<td>  Belarusian_Belarus</td>
+</tr>
+<tr><td> Belarusian_Belarus</td>
+<td>  Belarusian_Belarus</td>
+<td>  Belarusian_Belarus</td>
+</tr>
+<tr><td> Belarusian_Belarus</td>
+<td>  Belarusian_Belarus</td>
+<td>  Catalan_Spain</td>
+</tr>
+<tr><td> Catalan_Spain</td>
+<td>  Catalan_Spain</td>
+<td>  Catalan_Spain</td>
+</tr>
+<tr><td> Catalan_Spain</td>
+<td>  Catalan_Spain</td>
+<td>  Catalan_Spain</td>
+</tr>
+<tr><td> Catalan_Spain</td>
+<td> Catalan_Spain</td>
+<td>  Catalan_Spain</td>
+</tr>
+<tr><td> Danish_Denmark</td>
+<td> Danish_Denmark</td>
+<td>  Danish_Denmark</td>
+</tr>
+<tr><td> Danish_Denmark</td>
+<td>  Danish_Denmark</td>
+<td>  English_Australia</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> English_United States</td>
+<td>  English_United States</td>
+<td>  English_United States</td>
+</tr>
+<tr><td> Finnish_Finland</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> French_France</td>
+<td>  French_France</td>
+<td>  French_France</td>
+</tr>
+<tr><td> Hungarian_Hungary</td>
+<td>  Hungarian_Hungary</td>
+<td>  Hungarian_Hungary</td>
+</tr>
+<tr><td> Hungarian_Hungary</td>
+<td>  Hungarian_Hungary</td>
+<td>  Hungarian_Hungary</td>
+</tr>
+<tr><td> Hungarian_Hungary</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Italian_Italy</td>
+<td>  Italian_Italy</td>
+</tr>
+<tr><td> Italian_Italy</td>
+<td>  Romanian_Romania</td>
+<td>  Romanian_Romania</td>
+</tr>
+<tr><td> Russian_Russia</td>
+<td>  Russian_Russia</td>
+<td>  Russian_Russia</td>
+</tr>
+<tr><td> Russian_Russia</td>
+<td>  Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+</tr>
+<tr><td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+</tr>
+<tr><td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+</tr>
+<tr><td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+</tr>
+<tr><td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+<td> Serbian (Cyrillic)_Serbia</td>
+</tr>
+<tr><td> Serbian (Cyrillic)_Serbia</td>
+<td> Slovak_Slovakia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+</tr>
+<tr><td> Estonian_Estonia</td>
+<td>  Estonian_Estonia</td>
+<td>  Swedish_Sweden</td>
+</tr>
+<tr><td> Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+</tr>
+<tr><td> Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+</tr>
+<tr><td> Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+</tr>
+<tr><td> Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+</tr>
+<tr><td> Swedish_Sweden</td>
+<td>  Swedish_Sweden</td>
+<td>  Ukrainian_Ukraine</td>
+</tr>
+<tr><td> Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+</tr>
+<tr><td> Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+</tr>
+<tr><td> Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+</tr>
+<tr><td> Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+<td>  Ukrainian_Ukraine</td>
+</tr>
+<tr><td> Ukrainian_Ukraine</td>
+<td>                            </td>
+<td>                     </td>
+</tr>
+</table>
+
+<p> 
+<a name="localconvposix_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.1.3 posix_names</h4>
+<a name="_3057_posix_names"></a><a name="posix_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public constant </font><font color="#330033">posix_names</font>
+</pre>
+
+<p>   POSIX locale names:</p>
+<table><tr><td> af_ZA</td>
+<td>  sq_AL</td>
+<td>  gsw_FR</td>
+<td>   am_ET</td>
+<td>  ar_DZ      </td>
+<td> ar_BH      </td>
+<td> ar_EG      </td>
+<td> ar_IQ</td>
+</tr>
+<tr><td> ar_JO</td>
+<td>  ar_KW</td>
+<td>  ar_LB</td>
+<td> ar_LY</td>
+<td>  ar_MA</td>
+<td>  ar_OM</td>
+<td>  ar_QA</td>
+<td>  ar_SA</td>
+</tr>
+<tr><td> ar_SY</td>
+<td>  ar_TN</td>
+<td>  ar_AE</td>
+<td> ar_YE</td>
+<td>  hy_AM</td>
+<td>  as_IN</td>
+<td>  az_Cyrl_AZ</td>
+<td>  az_Latn_AZ</td>
+</tr>
+<tr><td> ba_RU</td>
+<td>  eu_ES</td>
+<td>  be_BY</td>
+<td>  bn_IN</td>
+<td>  bs_Cyrl_BA</td>
+<td>  bs_Latn_BA</td>
+<td>  br_FR</td>
+<td>  bg_BG</td>
+</tr>
+<tr><td> ca_ES</td>
+<td>  zh_HK</td>
+<td>  zh_MO</td>
+<td>  zh_CN</td>
+<td>  zh_SG</td>
+<td>  zh_TW</td>
+<td>  co_FR</td>
+<td>  hr_BA</td>
+</tr>
+<tr><td> hr_HR</td>
+<td>  cs_CZ</td>
+<td>  da_DK</td>
+<td>  prs_AF</td>
+<td>  dv_MV</td>
+<td>  nl_BE</td>
+<td>  nl_NL</td>
+<td>  en_AU</td>
+</tr>
+<tr><td> en_BZ</td>
+<td>  en_CA</td>
+<td>  en_029</td>
+<td>  en_IN</td>
+<td>  en_IE</td>
+<td>  en_JM</td>
+<td>  en_MY</td>
+<td>  en_NZ</td>
+</tr>
+<tr><td> en_PH</td>
+<td>  en_SG</td>
+<td>  en_ZA</td>
+<td>  en_TT</td>
+<td>  en_GB</td>
+<td>  en_US</td>
+<td>  en_ZW</td>
+<td>  et_EE</td>
+</tr>
+<tr><td> fo_FO</td>
+<td>  fil_PH</td>
+<td>  fi_FI</td>
+<td>  fr_BE</td>
+<td>  fr_CA</td>
+<td>  fr_FR</td>
+<td>  fr_LU</td>
+<td>  fr_MC</td>
+</tr>
+<tr><td> fr_CH</td>
+<td>  fy_NL</td>
+<td>  gl_ES</td>
+<td>  ka_GE</td>
+<td>  de_AT</td>
+<td>  de_DE</td>
+<td>  de_LI</td>
+<td>  de_LU</td>
+</tr>
+<tr><td> de_CH</td>
+<td>  el_GR</td>
+<td>  kl_GL</td>
+<td>  gu_IN</td>
+<td>  ha_Latn_NG</td>
+<td>  he_IL</td>
+<td>  hi_IN</td>
+<td>  hu_HU</td>
+</tr>
+<tr><td> is_IS</td>
+<td>  ig_NG</td>
+<td>  id_ID</td>
+<td>  iu_Latn_CA</td>
+<td> iu_Cans_CA</td>
+<td>  ga_IE</td>
+<td>  it_IT</td>
+<td>  it_CH</td>
+</tr>
+<tr><td> ja_JP</td>
+<td>  kn_IN</td>
+<td>  kk_KZ</td>
+<td>  kh_KH</td>
+<td>  qut_GT</td>
+<td>  rw_RW</td>
+<td>  kok_IN</td>
+<td>  ko_KR</td>
+</tr>
+<tr><td> ky_KG</td>
+<td>  lo_LA</td>
+<td>  lv_LV</td>
+<td>  lt_LT</td>
+<td>  dsb_DE</td>
+<td>  lb_LU</td>
+<td>  mk_MK</td>
+<td>  ms_BN</td>
+</tr>
+<tr><td> ms_MY</td>
+<td>  ml_IN</td>
+<td>  mt_MT</td>
+<td>  mi_NZ</td>
+<td>  arn_CL</td>
+<td>  mr_IN</td>
+<td>  moh_CA</td>
+<td>  mn_Cyrl_MN</td>
+</tr>
+<tr><td> mn_Mong_CN</td>
+<td> ne_IN</td>
+<td> ne_NP</td>
+<td>  nb_NO</td>
+<td>  nn_NO</td>
+<td>  oc_FR</td>
+<td>  or_IN</td>
+<td>  ps_AF</td>
+</tr>
+<tr><td> fa_IR</td>
+<td>  pl_PL</td>
+<td>  pt_BR</td>
+<td>  pt_PT</td>
+<td>  pa_IN</td>
+<td>  quz_BO</td>
+<td>  quz_EC</td>
+<td>  quz_PE</td>
+</tr>
+<tr><td> ro_RO</td>
+<td>  rm_CH</td>
+<td>  ru_RU</td>
+<td>  smn_FI</td>
+<td>  smj_NO</td>
+<td>  smj_SE</td>
+<td>  se_FI</td>
+<td>  se_NO</td>
+</tr>
+<tr><td> se_SE</td>
+<td>  sms_FI</td>
+<td>  sma_NO</td>
+<td>  sma_SE</td>
+<td>  sa_IN</td>
+<td>  sr_Cyrl_BA</td>
+<td>  sr_Latn_BA</td>
+<td>  sr_Cyrl_CS</td>
+</tr>
+<tr><td> sr_Latn_CS</td>
+<td> ns_ZA</td>
+<td> tn_ZA</td>
+<td>  si_LK</td>
+<td>  sk_SK</td>
+<td>  sl_SI</td>
+<td>  es_AR</td>
+<td>  es_BO</td>
+</tr>
+<tr><td> es_CL</td>
+<td>  es_CO</td>
+<td>  es_CR</td>
+<td>  es_DO</td>
+<td>  es_EC</td>
+<td>  es_SV</td>
+<td>  es_GT</td>
+<td>  es_HN</td>
+</tr>
+<tr><td> es_MX</td>
+<td>  es_NI</td>
+<td>  es_PA</td>
+<td>  es_PY</td>
+<td>  es_PE</td>
+<td>  es_PR</td>
+<td>  es_ES</td>
+<td>  es_ES_tradnl</td>
+</tr>
+<tr><td> es_US</td>
+<td>  es_UY</td>
+<td>  es_VE</td>
+<td>  sw_KE</td>
+<td>  sv_FI</td>
+<td>  sv_SE</td>
+<td>  syr_SY</td>
+<td>  tg_Cyrl_TJ</td>
+</tr>
+<tr><td> tmz_Latn_DZ</td>
+<td> ta_IN</td>
+<td> tt_RU</td>
+<td>  te_IN</td>
+<td>  th_TH</td>
+<td>  bo_BT</td>
+<td>  bo_CN</td>
+<td>  tr_TR</td>
+</tr>
+<tr><td> tk_TM</td>
+<td>  ug_CN</td>
+<td>  uk_UA</td>
+<td>  wen_DE</td>
+<td>  tr_IN</td>
+<td>  ur_PK</td>
+<td>  uz_Cyrl_UZ</td>
+<td>  uz_Latn_UZ</td>
+</tr>
+<tr><td> vi_VN</td>
+<td>  cy_GB</td>
+<td>  wo_SN</td>
+<td>  xh_ZA</td>
+<td>  sah_RU</td>
+<td>  ii_CN</td>
+<td>  yo_NG      </td>
+<td> zu_ZA</td>
+</tr>
+</table>
+
+<p> 
+<a name="localconvlocale_canonical"></a><a name="canonical"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.1.4 locale_canonical</h4>
+<a name="_3059_locale_canonical"></a><a name="locale_canonical"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public constant </font><font color="#330033">locale_canonical</font>
+</pre>
+
+<p> 
+<a name="localconvplatform_locale"></a><a name="locale"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.1.5 platform_locale</h4>
+<a name="_3061_platform_locale"></a><a name="platform_locale"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public constant </font><font color="#330033">platform_locale</font>
+</pre>
+
+<!-- ..\include\std\localeconv.e -->
+<h3>8.20.2 Locale Name Translation</h3>
+<a name="_3062_localenametranslation"></a><a name="localenametranslation"></a>
+<p> 
+<a name="localconvcanonical"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.2.1 canonical</h4>
+<a name="_3064_canonical"></a><a name="canonical"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public function </font><font color="#330033">canonical</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">new_locale</font><font color="#880033">)</font>
+</pre>
+
+<p>   Get canonical name for a locale.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>Parameters:</h5>
+<a name="_3065_parameters"></a><a name="parameters"></a><ol><li><tt>new_locale</tt> : a sequence, the string for the locale.
+</li></ol>
+<!-- ..\include\std\localeconv.e -->
+<h5>Returns:</h5>
+<a name="_3066_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, either the translated locale on success or <tt>new_locale</tt> on failure.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>See Also:</h5>
+<a name="_3067_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2290_get">get</a>, <a href="std_locale.html#_3018_set">set</a>, <a href="std_localeconv.html#_3069_decanonical">decanonical</a></p>
+
+<p> 
+<a name="localconvdecanonical"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.2.2 decanonical</h4>
+<a name="_3069_decanonical"></a><a name="decanonical"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public function </font><font color="#330033">decanonical</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">new_locale</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the translation of a locale string for current platform.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>Parameters:</h5>
+<a name="_3070_parameters"></a><a name="parameters"></a><ol><li><tt>new_locale</tt>: a sequence, the string for the locale.
+</li></ol>
+<!-- ..\include\std\localeconv.e -->
+<h5>Returns:</h5>
+<a name="_3071_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, either the translated locale on success or <tt>new_locale</tt> on failure.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>See Also:</h5>
+<a name="_3072_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2290_get">get</a>, <a href="std_locale.html#_3018_set">set</a>, <a href="std_localeconv.html#_3064_canonical">canonical</a></p>
+
+<p> 
+<a name="localconvcanon2win"></a> </p>
+
+<!-- ..\include\std\localeconv.e -->
+<h4>8.20.2.3 canon2win</h4>
+<a name="_3074_canon2win"></a><a name="canon2win"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/localeconv.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">localconv</font>
+<font color="#0000FF">public function </font><font color="#330033">canon2win</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">new_locale</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the translation of a canoncial locale string for the <em>Windows</em> platform.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>Parameters:</h5>
+<a name="_3075_parameters"></a><a name="parameters"></a><ol><li><tt>new_locale</tt>: a sequence, the string for the locale.
+</li></ol>
+<!-- ..\include\std\localeconv.e -->
+<h5>Returns:</h5>
+<a name="_3076_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, either the Windows native locale name on success or "C" on failure.</p>
+
+<!-- ..\include\std\localeconv.e -->
+<h5>See Also:</h5>
+<a name="_3077_seealso"></a><a name="seealso"></a>
+<p> <a href="std_get.html#_2290_get">get</a>, <a href="std_locale.html#_3018_set">set</a>, <a href="std_localeconv.html#_3064_canonical">canonical</a>, <a href="std_localeconv.html#_3069_decanonical">decanonical</a></p>
+
+<p> 
+<!-- ..\include\std\regex.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_locale.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_regex.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_locale.html">8.19 Locale Routines</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_regex.html">8.21 Regular Expressions</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_assignment.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_loop.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_assignment.html">4.3 Assignment statement</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_loop.html">4.5 Loop statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.4 Branching Statements</h2>
+<a name="_142_branchingstatements"></a><a name="branchingstatements"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_branch.html#_142_branchingstatements">4.4 Branching Statements</a></div>
+<div class="toc_3"><a href="lang_branch.html#_146_ifstatement">4.4.1 if statement</a></div>
+<div class="toc_3"><a href="lang_branch.html#_149_switchstatement">4.4.2 switch statement</a></div>
+<div class="toc_3"><a href="lang_branch.html#_152_ifdefstatement">4.4.3 ifdef statement</a></div>
+<div class="toc_4"><a href="lang_branch.html#_153_euphoriaversiondefinitions">4.4.3.1 Euphoria Version Definitions</a></div>
+<div class="toc_4"><a href="lang_branch.html#_154_platformdefinitions">4.4.3.2 Platform Definitions</a></div>
+<div class="toc_4"><a href="lang_branch.html#_155_architecturedefinitions">4.4.3.3 Architecture Definitions</a></div>
+<div class="toc_4"><a href="lang_branch.html#_156_applicationdefinitions">4.4.3.4 Application Definitions</a></div>
+<div class="toc_4"><a href="lang_branch.html#_157_librarydefinitions">4.4.3.5 Library Definitions</a></div>
+<div class="toc_4"><a href="lang_branch.html#_158_usingifdef">4.4.3.6 Using ifdef</a></div>
+</div>
+</div>
+ 
+<a name="then"></a> 
+<a name="else"></a></p>
+</div>
+<p>  
+<a name="elsif"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.4.1 if statement</h3>
+<a name="_146_ifstatement"></a><a name="ifstatement"></a>
+<p> An <strong>if statement</strong> tests a condition to see whether it is true or false, and then depending on the result of that test, executes the appropriate set of statements.</p>
+
+<p> The syntax of <tt>if</tt> is </p>
+
+<pre class="examplecode"><font color="#330033">IFSTMT  ==:  IFTEST </font><font color="#880033">[ </font><font color="#330033">ELSIF ...</font><font color="#880033">] [</font><font color="#330033">ELSE</font><font color="#880033">] </font><font color="#330033">ENDIF</font>
+<font color="#330033"> IFTEST  ==:  </font><font color="#0000FF">if </font><font color="#330033">ATOMEXPR </font><font color="#880033">[ </font><font color="#330033">LABEL </font><font color="#880033">] </font><font color="#0000FF">then </font><font color="#880033">[ </font><font color="#330033">STMTBLOCK </font><font color="#880033">]</font>
+<font color="#330033"> ELSIF   ==:  </font><font color="#0000FF">elsif </font><font color="#330033">ATOMEXPR </font><font color="#0000FF">then </font><font color="#880033">[ </font><font color="#330033">STMTBLOCK </font><font color="#880033">]</font>
+<font color="#330033"> ELSE    ==:  </font><font color="#0000FF">else </font><font color="#880033">[ </font><font color="#330033">STMTBLOCK </font><font color="#880033">]</font>
+<font color="#330033"> ENDIF   ==:  </font><font color="#0000FF">end if</font>
+</pre>
+
+<p> <strong>Description of syntax</strong><br />
+<ul><li>An <em>if statement</em> consists of the keyword <tt><strong>if</strong></tt>, followed by an <em>expression</em> that evaluates to an atom, optionally followed by a <em>label</em> clause, followed by the keyword <tt><strong>then</strong></tt>. Next is a set of zero or more statements. This is followed by zero or more <em>elsif</em> clauses. Next is an optional <em>else</em> clause and finally there is the keyword <tt><strong>end</strong></tt> followed by  the keyword <tt><strong>if</strong></tt>.
+</li><li>An <em>elsif</em> clause consists of the key word <tt><strong>elsif</strong></tt>, followed by  an <em>expression</em> that evaluates to an atom, followed by the keyword <tt><strong>then</strong></tt>. Next is a set of zero or more statements.
+</li><li>An <em>else</em> clause consists of the keyword <tt><strong>else</strong></tt> followed by a set of zero or more statements.
+</li></ul>
+<p>In Euphoria, <em>false</em> is represented by an atom whose value is zero and <em>true</em> is represented by an atom that has any non-zero value.</p>
+<ul><li>When an <em>expression</em> being tested is true, Euphoria executes the statements immediately following the <tt><strong>then</strong></tt> keyword after the <em>expression</em>, up to the corresponding <tt><strong>elsif</strong></tt> or <tt><strong>else</strong></tt>, whichever comes next, then skips down to the corresponding <tt><strong>end if</strong></tt>.
+</li><li>When an <em>expression</em> is false, Euphoria skips over any statements until it comes to the next corresponding <tt><strong>elsif</strong></tt> or <tt><strong>else</strong></tt>, whichever comes next. If this is an <tt><strong>elsif</strong></tt> then its <em>expression</em> is tested otherwise any statements following the <tt><strong>else</strong></tt> are executed.
+</li></ul>
+<p>For example: </p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">a &lt; b </font><font color="#0000FF">then</font>
+<font color="#330033">    x = 1</font>
+<font color="#0000FF">end if</font>
+
+<font color="#0000FF">if </font><font color="#330033">a = 9 </font><font color="#0000FF">and find</font><font color="#880033">(</font><font color="#330033">0, s</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    x = 4</font>
+<font color="#330033">    y = 5</font>
+<font color="#0000FF">else</font>
+<font color="#330033">    z = 8</font>
+<font color="#0000FF">end if</font>
+
+<font color="#0000FF">if </font><font color="#330033">char = </font><font color="#330033">'a' </font><font color="#0000FF">then</font>
+<font color="#330033">    x = 1</font>
+<font color="#0000FF">elsif </font><font color="#330033">char = </font><font color="#330033">'b' </font><font color="#0000FF">or </font><font color="#330033">char = </font><font color="#330033">'B' </font><font color="#0000FF">then</font>
+<font color="#330033">    x = 2</font>
+<font color="#0000FF">elsif </font><font color="#330033">char = </font><font color="#330033">'c' </font><font color="#0000FF">then</font>
+<font color="#330033">    x = 3</font>
+<font color="#0000FF">else</font>
+<font color="#330033">    x = -1</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> Notice that <tt><strong>elsif</strong></tt> is a contraction of <em>else if</em>, but it's cleaner because it does not require an <tt><strong>end if</strong></tt> to go with it. There is just one <tt><strong>end if</strong></tt> for the entire <em>if statement</em>, even when there are many <tt><strong>elsif</strong></tt> clauses contained in it.</p>
+
+<p> The <tt><strong>if</strong></tt> and <tt><strong>elsif</strong></tt> expressions are tested using <a href="lang_short_circuit.html#short_circuit">short_circuit</a> evaluation.</p>
+
+<p> An <em>if statement</em> can have a <em>label clause</em> just before the first <tt><strong>then</strong></tt> keyword. See the section on <a href="lang_flow.html#_173_headerlabels">Header Labels</a>. Note that an <em>elsif clause</em> can not have a label.</p>
+
+<p> 
+<a name="case"></a>   
+<a name="do"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.4.2 switch statement</h3>
+<a name="_149_switchstatement"></a><a name="switchstatement"></a>
+<p> The switch statement is used to run a specific set of statements, depending on the value of an expression. It often replaces a set of if-elsif statements due to it's ability to be highly optimized, thus much greater performance. There are some key differences, however.  A switch statement operates upon the value of a single expression, and the program flow continues based upon defined cases.  The syntax of a switch statement:</p>
+
+<pre class="examplecode"><font color="#0000FF">switch </font><font color="#330033">&lt;expr&gt; </font><font color="#880033">[</font><font color="#0000FF">with fallthru</font><font color="#880033">] [</font><font color="#0000FF">label </font><font color="#330033">"&lt;label name&gt;"</font><font color="#880033">] </font><font color="#0000FF">do</font>
+<font color="#0000FF">    case </font><font color="#330033">&lt;val&gt;</font><font color="#880033">[</font><font color="#330033">, &lt;val2&gt;, ...</font><font color="#880033">] </font><font color="#0000FF">then</font>
+<font color="#880033">        [</font><font color="#330033">code block</font><font color="#880033">]</font>
+<font color="#880033">        [</font><font color="#993333">[</font><font color="#0000FF">break </font><font color="#0000FF">[</font><font color="#0000FF">label</font><font color="#0000FF">]</font><font color="#993333">]</font><font color="#330033">|fallthru]</font>
+<font color="#0000FF">    case </font><font color="#330033">&lt;val&gt;</font><font color="#993333">[</font><font color="#330033">, &lt;val2&gt;, ...</font><font color="#993333">] </font><font color="#0000FF">then</font>
+<font color="#993333">        [</font><font color="#330033">code block</font><font color="#993333">]</font>
+<font color="#993333">        [</font><font color="#0000FF">[</font><font color="#0000FF">break </font><font color="#5500FF">[</font><font color="#0000FF">label</font><font color="#5500FF">]</font><font color="#0000FF">]</font><font color="#330033">|fallthru]</font>
+<font color="#0000FF">    case </font><font color="#330033">&lt;val&gt;</font><font color="#0000FF">[</font><font color="#330033">, &lt;val2&gt;, ...</font><font color="#0000FF">] </font><font color="#0000FF">then</font>
+<font color="#0000FF">        [</font><font color="#330033">code block</font><font color="#0000FF">]</font>
+<font color="#0000FF">        [</font><font color="#5500FF">[</font><font color="#0000FF">break </font><font color="#00FF00">[</font><font color="#0000FF">label</font><font color="#00FF00">]</font><font color="#5500FF">]</font><font color="#330033">|fallthru]</font>
+<font color="#330033">    ...</font>
+
+<font color="#5500FF">    [</font><font color="#0000FF">case else</font><font color="#5500FF">]</font>
+<font color="#5500FF">        [</font><font color="#330033">code block</font><font color="#5500FF">]</font>
+<font color="#5500FF">        [</font><font color="#00FF00">[</font><font color="#0000FF">break </font><font color="#330033">[</font><font color="#0000FF">label</font><font color="#330033">]</font><font color="#00FF00">]</font><font color="#330033">|fallthru]</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> The above example could be written with <tt>if</tt> statements like this .. </p>
+
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">temp = expression</font>
+<font color="#0000FF">object </font><font color="#330033">breaking = false</font>
+<font color="#0000FF">if equal</font><font color="#880033">(</font><font color="#330033">temp, val1</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#880033">    [</font><font color="#330033">code block 1</font><font color="#880033">]</font>
+<font color="#880033">    [</font><font color="#330033">breaking = true</font><font color="#880033">]</font>
+<font color="#0000FF">end if</font>
+<font color="#0000FF">if not </font><font color="#330033">breaking </font><font color="#0000FF">and equal</font><font color="#880033">(</font><font color="#330033">temp, val2</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#880033">    [</font><font color="#330033">code block 2</font><font color="#880033">]</font>
+<font color="#880033">    [</font><font color="#330033">breaking = true</font><font color="#880033">]</font>
+<font color="#0000FF">end if</font>
+<font color="#0000FF">if not </font><font color="#330033">breaking </font><font color="#0000FF">and equal</font><font color="#880033">(</font><font color="#330033">temp, val3</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#880033">    [</font><font color="#330033">code block 3</font><font color="#880033">]</font>
+<font color="#880033">    [</font><font color="#330033">breaking = true</font><font color="#880033">]</font>
+<font color="#0000FF">end if</font>
+<font color="#330033"> ...</font>
+<font color="#0000FF">if not </font><font color="#330033">breaking </font><font color="#0000FF">then</font>
+<font color="#880033">    [</font><font color="#330033">code block 4</font><font color="#880033">]</font>
+<font color="#880033">    [</font><font color="#330033">breaking = true</font><font color="#880033">]</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> The &lt;val&gt; in a <tt>case</tt> must be either an atom, literal string, constant or enum.  Multiple values for a single <tt>case</tt> can be specified by separating the values by commas. The same symbol (or literal) may not be used multiple times as a <tt>case</tt> for the same <tt>switch</tt>. If two different symbols used as <tt>case</tt> values happen to have the same value, they must be in the same <tt>case...then</tt> statement, or an error will occur. If the parser can determine all values when the <tt>switch</tt> is parsed, then a compile time error will be thrown. Otherwise, the error will occur the first time that the switch is encountered. Likewise, when translating code, if the parser cannot determine all values at the time when the <tt>case</tt> values are parsed, the compilation will fail due to mulitple <tt>case</tt> values in the emitted C code (it is assumed that the programmer should work out this sort of bug in interpreted mode).</p>
+
+<p> By default, control flows to the end of the <tt>switch</tt> block when the next <tt>case</tt> is encountered.  The default behavior can be modified in two ways.  The default for a particular <tt>switch</tt> block can be changed so that control passes to the next executable statement whenever a new case is encountered by using <tt>with fallthru</tt> in the <tt>switch</tt> statement: </p>
+
+<pre class="examplecode"><font color="#0000FF">switch </font><font color="#330033">x </font><font color="#0000FF">with fallthru do</font>
+<font color="#0000FF">    case </font><font color="#330033">1 </font><font color="#0000FF">then</font>
+<font color="#330033">        ? 1</font>
+<font color="#0000FF">    case </font><font color="#330033">2 </font><font color="#0000FF">then</font>
+<font color="#330033">        ? 2</font>
+<font color="#0000FF">        break</font>
+<font color="#0000FF">    case else</font>
+<font color="#330033">        ? 0</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> Note that when <tt>with fallthru</tt> is used, the <tt>break</tt> statement can be used to jump out of the <tt>switch</tt> block.  The behavior of individual <tt>case</tt>s can be changed by using the <tt>fallthru</tt> statement: </p>
+
+<pre class="examplecode"><font color="#0000FF">switch </font><font color="#330033">x </font><font color="#0000FF">do</font>
+<font color="#0000FF">    case </font><font color="#330033">1 </font><font color="#0000FF">then</font>
+<font color="#330033">        ? 1</font>
+<font color="#0000FF">        fallthru</font>
+<font color="#0000FF">    case </font><font color="#330033">2 </font><font color="#0000FF">then</font>
+<font color="#330033">        ? 2</font>
+<font color="#0000FF">    case else</font>
+<font color="#330033">        ? 0</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> Note that the <tt>break</tt> statement before <tt>case else</tt> was omitted, because the equivalent action is taken automatically by default. </p>
+
+<pre class="examplecode"><font color="#0000FF">switch length</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    case </font><font color="#330033">1 </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- do something</font>
+<font color="#0000FF">        fallthru</font>
+<font color="#0000FF">    case </font><font color="#330033">2 </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- do something extra</font>
+<font color="#0000FF">    case </font><font color="#330033">3 </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- do something usual</font>
+
+<font color="#0000FF">    case else</font>
+<font color="#FF0055">        -- do something else</font>
+<font color="#0000FF">end switch</font>
+</pre>
+
+<p> The <tt>label "name"</tt> is optional and if used it gives a name to the switch block. This name can be used in nested switch <tt>break</tt> statements to break out of an enclosing switch rather than just the owning switch. <br />
+Example: </p>
+
+<pre class="examplecode"><font color="#0000FF">switch </font><font color="#330033">opt </font><font color="#0000FF">label </font><font color="#330033">"LBLa" </font><font color="#0000FF">do</font>
+<font color="#0000FF">    case </font><font color="#330033">1, 5, 8 </font><font color="#0000FF">then</font>
+<font color="#330033">        FuncA</font><font color="#880033">()</font>
+
+
+<font color="#0000FF">    case </font><font color="#330033">4, 2, 7 </font><font color="#0000FF">then</font>
+<font color="#330033">        FuncB</font><font color="#880033">()</font>
+<font color="#0000FF">        switch </font><font color="#330033">alt </font><font color="#0000FF">label </font><font color="#330033">"LBLb" </font><font color="#0000FF">do</font>
+<font color="#0000FF">           case </font><font color="#330033">"X" </font><font color="#0000FF">then</font>
+<font color="#330033">                FuncC</font><font color="#880033">()</font>
+<font color="#0000FF">                break </font><font color="#330033">"LBLa"</font>
+
+<font color="#0000FF">           case </font><font color="#330033">"Y" </font><font color="#0000FF">then</font>
+<font color="#330033">                FuncD</font><font color="#880033">()</font>
+
+<font color="#0000FF">           case else</font>
+<font color="#330033">                FuncE</font><font color="#880033">()</font>
+<font color="#0000FF">       end switch</font>
+<font color="#330033">       FuncF</font><font color="#880033">()</font>
+
+<font color="#0000FF">    case </font><font color="#330033">3 </font><font color="#0000FF">then</font>
+<font color="#330033">       FuncG</font><font color="#880033">()</font>
+<font color="#0000FF">       break</font>
+
+<font color="#0000FF">    case else</font>
+<font color="#330033">        FuncH</font><font color="#880033">()</font>
+<font color="#0000FF">end switch</font>
+<font color="#330033">FuncM</font><font color="#880033">()</font>
+</pre>
+
+<p> In the above, if opt is 2 and alt is "X" then it runs...<br />
+<div style="margin-left:2em"><div style="margin-left:2em"> FuncB() FuncC() FuncM()</p>
+</div></div>
+<p> But if opt is 2 and alt is "Y" then it runs ...<br />
+<div style="margin-left:2em"><div style="margin-left:2em"> FuncB() FuncD() FuncF() FuncG() FuncM()</p>
+</div></div>
+<p> In other words, the <tt>break "LBLa"</tt> skips to the end of the switch called "LBLa" rather than the switch called "LBLb".</p>
+
+<p>  
+<a name="elsedef"></a>  
+<a name="elsifdef"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.4.3 ifdef statement</h3>
+<a name="_152_ifdefstatement"></a><a name="ifdefstatement"></a>
+<p> The <tt>ifdef</tt> statement has a similar syntax to the <tt>if</tt> statement. </p>
+
+<pre class="examplecode"><font color="#0000FF">ifdef </font><font color="#330033">SOME_WORD </font><font color="#0000FF">then</font>
+<font color="#FF0055"> --... zero or more statements</font>
+<font color="#0000FF">elsifdef </font><font color="#330033">SOME_OTHER_WORD </font><font color="#0000FF">then</font>
+<font color="#FF0055"> --... zero or more statements</font>
+<font color="#0000FF">elsedef</font>
+<font color="#FF0055"> --... zero or more statements</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+<p> Of course, the <tt>elsifdef</tt> and <tt>elsedef</tt> clauses are optional, just like <tt>elsif</tt> and <tt>else</tt> are option in an <tt>if</tt> statement.</p>
+
+<p> The major differences between and <tt>if</tt> and <tt>ifdef</tt> statement are that <tt>ifdef</tt> is executed at parse time not runtime, and <tt>ifdef</tt> can only test for the existence of a defined word whereas <tt>if</tt> can test any boolean expression.</p>
+
+<p> <strong>Note</strong> that since the <tt>ifdef</tt> statement executes at parse time, run-time values cannot be checked, only words defined by the <tt>-D</tt> command line switch, or by the <tt>with define</tt> directive, or one of the special predefined words.</p>
+
+<p> The purpose of <tt>ifdef</tt> is to allow you to change the way your program operates in a very efficient manner. Rather than testing for a specific condition repeatedly during the running of a program, <tt>ifdef</tt> tests for it once during parsing and then generates the precise IL code to handle the condition.</p>
+
+<p> For example, assume you have some debugging code in your application that displays information to the screen. Normally you would not want to see this display so you set a condition so it only displays during a 'debug' session. The first example below shows how would could do this just using the <tt>if</tt> statement, and the second example shows the same thing but using the <tt>idef</tt> statement. </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Example 1. --</font>
+<font color="#0000FF">if find</font><font color="#880033">(</font><font color="#330033">"-DEBUG"</font><font color="#330033">, </font><font color="#0000FF">command_line</font><font color="#993333">()</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    writefln</font><font color="#880033">(</font><font color="#330033">"Debug x=[], y=[]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">x,y</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- Example 1. --</font>
+<font color="#0000FF">ifdef </font><font color="#330033">DEBUG </font><font color="#0000FF">then</font>
+<font color="#330033">    writefln</font><font color="#880033">(</font><font color="#330033">"Debug x=[], y=[]"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">x,y</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+<p> As you can see, they are almost identical. However, in the first example, everytime the program gets to this point in the code, it tests the command line for the -DEBUG switch before deciding to display the information or not. But in the second example, the existence of DEBUG is tested <em>once</em> at parse time, and if it exists then, Euphoria generates the IL code to do the display. Thus when the program is running then everytime it gets to this point in the code, it does <strong>not</strong> check that DEBUG exists, instead it already knows it does so it just does the display. If however, DEBUG did not exist at parse time, then the IL code for the display would simply be omitted, meaning that during the running of the program, when it gets to this point in the code, it does not recheck for DEBUG, instead it already knows it doesn't exist and the IL code to do the display also doesn't exist so nothing is displayed. This can be a much needed performance boost for a program.</p>
+
+<p> Euphoria predefines some words itself:</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.1 Euphoria Version Definitions</h4>
+<a name="_153_euphoriaversiondefinitions"></a><a name="euphoriaversiondefinitions"></a><ul><li><strong>EU4</strong> - Major Euphoria Version
+</li><li><strong>EU4_1</strong> - Major and Minor Euphoria Version
+</li><li><strong>EU4_1_0</strong> - Major, Minor and Release Euphoria Version
+</li></ul>
+<p>Euphoria is released with the common version scheme of Major, Minor and Release version identifiers in the form of major.minor.release. When 4.1.1 is released, <tt>EU4_1_1</tt> will be defined and <tt>EU4_1</tt> will still be defined, but <tt>EU4_1_0</tt> will no longer be defined.  When 4.2 is released, <tt>EU4_1</tt> will no longer be defined, but <tt>EU4_2</tt> will be defined. Finally, when 5.0 is released, <tt>EU4</tt> will no longer be defined, but <tt>EU5</tt> will be defined.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.2 Platform Definitions</h4>
+<a name="_154_platformdefinitions"></a><a name="platformdefinitions"></a><ul><li><strong>CONSOLE</strong> - Euphoria is being executed with the Console version of the interpreter (on windows, eui.exe, others are eui)
+</li><li><strong>GUI</strong> - Platform is Windows and is being executed with the GUI version of the interpreter (euiw.exe)
+</li><li><strong>WINDOWS</strong> - Platform is Windows (GUI or Console)
+</li><li><strong>LINUX</strong> - Platform is Linux
+</li><li><strong>OSX</strong> - Platform is Mac OS X
+</li><li><strong>FREEBSD</strong> - Platform is FreeBSD
+</li><li><strong>OPENBSD</strong> - Platform is OpenBSD
+</li><li><strong>NETBSD</strong> - Platform is NetBSD
+</li><li><strong>BSD</strong> - Platform is a BSD variant (FreeBSD, OpenBSD, NetBSD and OS X)
+</li><li><strong>UNIX</strong> - Platform is any Unix
+</li></ul>
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.3 Architecture Definitions</h4>
+<a name="_155_architecturedefinitions"></a><a name="architecturedefinitions"></a>
+<p> Chip architecture: </p>
+<ul><li><strong>X86</strong>
+</li><li><strong>X86_64</strong>
+</li><li><strong>ARM</strong>
+</li></ul>
+<p>Size of pointers and euphoria objects.  This information can be derived from the chip architecture, but is provided for convenience. </p>
+<ul><li><strong>BITS32</strong>
+</li><li><strong>BITS64</strong>
+</li></ul>
+<p>Size of long integers.  On Windows, long integers are always 32 bits.  On other platforms, long integers are the same size as pointers.  This information can also be derived from a combination of other architecture and platform ifdefs, but is provided for convenience. </p>
+<ul><li><strong>LONG32</strong>
+</li><li><strong>LONG64</strong>
+</li></ul>
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.4 Application Definitions</h4>
+<a name="_156_applicationdefinitions"></a><a name="applicationdefinitions"></a><ul><li><strong>EUI</strong> - Application is being interpreted by <tt>eui</tt>.
+</li><li><strong>EUC</strong> - Application is being translated by <tt>euc</tt>.
+</li><li><strong>EUC_DLL</strong> - Application is being translated by <tt>euc</tt> into a <em>DLL</em> file.
+</li><li><strong>EUB</strong> - Application is being converted to a bound program by <tt>eub</tt>.
+</li><li><strong>EUB_SHROUD</strong> - Application is being converted to a shrouded program by  <tt>eub</tt>.
+</li><li><strong>CONSOLE</strong> - Application is being translated, or converted to a bound <em>console</em> program by  <tt>euc</tt> or <tt>eub</tt>, respectively.
+</li><li><strong>GUI</strong> - Application is being converted to a bound <em>Windows GUI</em> program by <tt>eub</tt>.
+</li></ul>
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.5 Library Definitions</h4>
+<a name="_157_librarydefinitions"></a><a name="librarydefinitions"></a><ul><li><strong>DATA_EXECUTE</strong> - Application will always get executable memory from  <tt>allocate</tt> even when the system has Data Execute Protection enabled for the Euphoria Interpreter.
+</li><li><strong>SAFE</strong> - Enables safe runtime checks for operations for routines found in  <tt>machine.e</tt> and <tt>dll.e</tt>
+</li><li><strong>UCSTYPE_DEBUG</strong> - Found in <tt>include/std/ucstypes.e</tt>
+</li><li><strong>CRASH</strong> - Found in <tt>include/std/unittest.e</tt>
+</li></ul>
+<p>More examples </p>
+
+<pre class="examplecode"><font color="#FF0055">-- file: myproj.ex</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, I am "</font><font color="#880033">)</font>
+<font color="#0000FF">ifdef </font><font color="#330033">EUC </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"a translated"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+<font color="#0000FF">ifdef </font><font color="#330033">EUI </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"an interpreted"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+<font color="#0000FF">ifdef </font><font color="#330033">EUB </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"a bound"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+<font color="#0000FF">ifdef </font><font color="#330033">EUB_SHROUD </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">", shrouded"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+<font color="#0000FF">puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">" program.\n"</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<pre>C:\myproj&gt; eui myproj.ex
+Hello, I am an interpreted program.
+C:\myproj&gt; euc -con myprog.ex
+... translating ...
+... compiling ...
+C:\myproj&gt; myprog.exe
+Hello, I am a translated program.
+C:\myproj&gt; bind myprog.ex
+...
+C:\myproj&gt; myprog.exe
+Hello, I am a bound program.
+C:\myproj&gt; shroud myprog.ex
+...
+C:\myproj&gt; eub myprog.il
+Hello, I am a bound, shrouded program.
+</pre>
+
+<p> It is possible for one or more of the above definitions to be true at the same time. For instance, <tt>EUC</tt> and <tt>EUC_DLL</tt> will both be true when the source file has been translated to a DLL. If you wish to know if your source file is translated and not a DLL, then you can</p>
+
+<pre class="examplecode"><font color="#0000FF">ifdef </font><font color="#330033">EUC </font><font color="#0000FF">and not </font><font color="#330033">EUC_DLL </font><font color="#0000FF">then</font>
+<font color="#FF0055">    -- translated to an application</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.4.3.6 Using ifdef</h4>
+<a name="_158_usingifdef"></a><a name="usingifdef"></a>
+<p> You can define your own words either in source:</p>
+
+<pre class="examplecode"><font color="#0000FF">with </font><font color="#330033">define MY_WORD       </font><font color="#FF0055">-- defines</font>
+<font color="#0000FF">without </font><font color="#330033">define OTHER_WORD </font><font color="#FF0055">-- undefines</font>
+</pre>
+
+<p> or by command line:</p>
+
+<p> 
+<pre>eui -D MY_WORD myprog.ex
+</pre>
+
+<p> This can handle many tasks such as change the behavior of your application when running on <em>Linux</em> vs. <em>Windows</em>, enable or disable debug style code or possibly work differently in demo/shareware applications vs. registered applications.</p>
+
+<p> You should surround code that is not portable with <tt>ifdef</tt> like: </p>
+
+<pre class="examplecode"><font color="#0000FF">ifdef </font><font color="#330033">WINDOWS </font><font color="#0000FF">then</font>
+<font color="#FF0055">   -- Windows specific code.</font>
+<font color="#0000FF">elsedef</font>
+<font color="#0000FF">   include </font><font color="#330033">std/error.e</font>
+<font color="#330033">   crash</font><font color="#880033">(</font><font color="#330033">"This program must be run with the Windows interpreter."</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+<p> When writing <strong>include files</strong> that you cannot run on some platform, issue a crash call in the <strong>include file</strong>. <strong>Yet</strong> make sure that public constants and procedures are defined for the unsupported platform as well.</p>
+
+<pre class="examplecode"><font color="#0000FF">ifdef </font><font color="#330033">UNIX </font><font color="#0000FF">then</font>
+<font color="#0000FF">     include </font><font color="#330033">std/bash.e</font>
+<font color="#0000FF">end ifdef</font>
+
+<font color="#FF0055">-- define exported and public constants and procedures for</font>
+<font color="#FF0055">-- OSX as well</font>
+<font color="#0000FF">ifdef </font><font color="#330033">WINDOWS </font><font color="#0000FF">or </font><font color="#330033">OSX </font><font color="#0000FF">then</font>
+<font color="#FF0055">    -- OSX is not supported but we define public symbols for it anyhow.</font>
+</pre>
+
+<p> The reason for doing this is so that the user that includes your include file sees an "OS not supported" message instead of an "undefined reference" message.</p>
+
+<p> Defined words must follow the same character set of an identifier, that is, it must start with either a letter or underscore and contain any mixture of letters, numbers and underscores. It is common for defined words to be in all upper case, however, it is not required.</p>
+
+<p> A few examples:</p>
+
+<pre class="examplecode"><font color="#0000FF">for </font><font color="#330033">a = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">lines</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    ifdef </font><font color="#330033">DEBUG </font><font color="#0000FF">then</font>
+<font color="#0000FF">        printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Line %i is %i characters long\n"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">a, </font><font color="#0000FF">length</font><font color="#0000FF">(</font><font color="#330033">lines</font><font color="#5500FF">[</font><font color="#330033">a</font><font color="#5500FF">]</font><font color="#0000FF">)</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">    end ifdef</font>
+<font color="#0000FF">end for</font>
+
+<font color="#0000FF">sequence </font><font color="#330033">os_name</font>
+<font color="#0000FF">ifdef </font><font color="#330033">UNIX </font><font color="#0000FF">then</font>
+<font color="#0000FF">    include </font><font color="#330033">unix_ftp.e</font>
+<font color="#0000FF">elsifdef </font><font color="#330033">WINDOWS </font><font color="#0000FF">then</font>
+<font color="#0000FF">    include </font><font color="#330033">win32_ftp.e</font>
+<font color="#0000FF">elsedef</font>
+<font color="#330033">    crash</font><font color="#880033">(</font><font color="#330033">"Operating system is not supported"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+
+<font color="#0000FF">ifdef </font><font color="#330033">SHAREWARE </font><font color="#0000FF">then</font>
+<font color="#0000FF">  if </font><font color="#330033">record_count &gt; 100 </font><font color="#0000FF">then</font>
+<font color="#330033">     message</font><font color="#880033">(</font><font color="#330033">"Shareware version can only contain 100 records. Please register"</font><font color="#880033">)</font>
+<font color="#0000FF">     abort</font><font color="#880033">(</font><font color="#330033">1</font><font color="#880033">)</font>
+<font color="#0000FF">  end if</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+<p> The <tt>ifdef</tt> statement is very efficient in that it makes the decision only once during parse time and only emits the <tt>TRUE</tt> portions of code to the resulting interpreter. Thus, in loops that are iterated many times there is zero performance hit when making the decision. Example:</p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    ifdef </font><font color="#330033">DEBUG </font><font color="#0000FF">then</font>
+<font color="#0000FF">        puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, I am a debug message\n"</font><font color="#880033">)</font>
+<font color="#0000FF">    end ifdef</font>
+<font color="#FF0055">    -- more code</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> If <tt>DEBUG</tt> is defined, then the interpreter/translator actually sees the code as being:</p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Hello, I am a debug message\n"</font><font color="#880033">)</font>
+<font color="#FF0055">    -- more code</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> Now, if <tt>DEBUG</tt> is not defined, then the code the interpreter/translator sees is:</p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">1 </font><font color="#0000FF">do</font>
+<font color="#FF0055">    -- more code</font>
+<font color="#0000FF">end while</font>
+</pre>
+
+<p> Do be careful to put the numbers after the platform names for <em>Windows</em>:</p>
+
+<pre class="examplecode"><font color="#FF0055">-- This puts() routine will never be called</font>
+<font color="#FF0055">-- even when run by the Windows interpreter!</font>
+<font color="#0000FF">ifdef </font><font color="#330033">WINDOWS </font><font color="#0000FF">then</font>
+<font color="#0000FF">     puts</font><font color="#880033">(</font><font color="#330033">1,</font><font color="#330033">"I am on Windows\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end ifdef</font>
+</pre>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="lang_assignment.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_loop.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="lang_assignment.html">4.3 Assignment statement</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_loop.html">4.5 Loop statements</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

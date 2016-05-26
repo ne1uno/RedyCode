@@ -1,0 +1,47 @@
+==Window Widget Class
+
+Widget Class name: "window"
+
+===API
+====Properties
+
+====="action-close"
+====="allow_close"
+====="title"
+====="topmost"
+====="modal"
+====="maximized"
+====="remember"
+====="mode"
+    "window" : normal resizeable window
+    "dialog" : non-resizeable window (size automaticly fits contents)
+    "screen" : borderless window (useful for full-screen view)
+    "dock" : tool/panel dock window (not implemented yet)
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+====={widgetname, "resized", {Width, Height, IsMaximized}}
+====={widgetname, "GotFocus", {}}
+====={widgetname, "LostFocus", {}}
+====={widgetname, "closed", {}}
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====procedure cmd_resize(atom wid, atom width, atom height)
+=====procedure cmd_set_title(atom wid, sequence title)
+
+Example:
+<eucode>
+</eucode>
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+

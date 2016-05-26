@@ -1,0 +1,82 @@
+==Canvas Widget Class
+
+Widget Class name: "canvas"
+
+===API
+====Properties
+
+====="autofocus"
+====="label"
+====="border"
+====="scroll_foreground"
+====="handle_routine"
+====="background_pointer"
+====="Arrow"
+    "ArrowBusy"
+    "Ibeam"
+    "Busy"
+    "No"
+    "NS"
+    "EW"
+    "NWSE"
+    "NESW"
+    "Crosshair"
+    "None"
+    "Sleeping"
+    "Link"
+====="scroll_wheel_distance"
+====="handle_debug"
+====="performance_debug"
+
+Example:
+<eucode>
+</eucode>
+
+====Events
+
+=====
+{widgetname, "handle", {hname, "MouseMove", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "LeftDown", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "LeftUp", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "LeftDoubleClick", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "RightDown", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "RightUp", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "RightDoubleClick", MouseY, MouseY, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "handle", {hname, "WheelMove", evdata[1], evdata[2]})
+{widgetname, "KeyDown", {KeyCode, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "KeyUp", {KeyCode, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "KeyPress", {KeyCode, KeyShift, KeyCtrl, KeyAlt})
+{widgetname, "scroll", {wcprops[wcpScrollPosX, ScrollPosY})
+{widgetname, "HardFocus", {hardfocus})
+{widgetname, "KeyFocus", keyfocus)
+{widgetname, "Visible", isvisible)
+{widgetname, "Timer", {TimerID})
+
+Example:
+<eucode>
+</eucode>
+
+====Commands
+
+=====procedure cmd_set_label(atom wid, sequence txt)
+=====procedure cmd_set_visible_size(atom wid, atom cx, atom cy) --doesn't work yet
+=====function cmd_get_visible_size(atom wid, atom cx, atom cy)
+=====procedure cmd_set_canvas_size(atom wid, atom cx, atom cy)
+=====procedure cmd_set_background_pointer(atom wid, object mc)
+=====procedure cmd_scroll_to(atom wid, atom cx, atom cy)
+=====procedure cmd_draw_background(atom wid, sequence drawcmds)
+=====procedure cmd_draw_foreground(atom wid, object drawcmds) --drawcmds: 0 : clear, sequence : append draw commands
+=====procedure cmd_set_handle(atom wid, sequence hname, sequence hshape, object hpointer) --creates a new handle, or overrides an existing handle
+=====procedure cmd_clear_handles(atom wid)
+=====procedure cmd_destroy_handle(atom wid, sequence hname)
+=====function cmd_get_canvas_size(atom wid)
+
+Example:
+<eucode>
+</eucode>
+
+
+See also [[Widget Classes->RedyLib\Gui\WidgetClasses]]
+
+
+

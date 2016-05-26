@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="dis.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="dis.html">7.4 EuDis, Disassembling Euphoria Code</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\eudist.txt -->
+<h2>7.5 EuDist, Distributing Programs</h2>
+<a name="_716_eudistdistributingprograms"></a><a name="eudistdistributingprograms"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="eudist.html#_716_eudistdistributingprograms">7.5 EuDist, Distributing Programs</a></div>
+<div class="toc_3"><a href="eudist.html#_717_introduction">7.5.1 Introduction</a></div>
+<div class="toc_3"><a href="eudist.html#_718_commandlineswitches">7.5.2 Command Line Switches</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\docs\eudist.txt -->
+<h3>7.5.1 Introduction</h3>
+<a name="_717_introduction"></a><a name="introduction"></a>
+<p> EuDist is a tool that makes distributing your program easier. It is designed to gather all of the Euphoria files that your program uses and put them into a directory.  This can also be useful for sending example code for bug reports.</p>
+
+<!-- ..\docs\eudist.txt -->
+<h3>7.5.2 Command Line Switches</h3>
+<a name="_718_commandlineswitches"></a><a name="commandlineswitches"></a>
+<p> You can use the standard <tt>-i</tt> and <tt>-c</tt> switches with <tt>eudist</tt>.  There are additional options:</p>
+<ul><li><tt>--clear</tt> Clear the output directory before copying files
+</li><li><tt>-d &lt;dir&gt;</tt> Specify the output directory for the files
+</li><li><tt>-e &lt;file&gt;</tt> <tt>--exclude-file &lt;file&gt;</tt> Exclude a file from being copied
+</li><li><tt>-ed &lt;dir&gt;</tt> <tt>--exclude-directory &lt;file&gt;</tt> Exclude a directory from being copied
+</li><li><tt>-edr &lt;dir&gt;</tt> <tt>--exclude-directory-recursively &lt;file&gt;</tt> Exclude a directory and all subdirectories from being copied
+</li></ul>
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="dis.html"><img src="images/prev.png" /></a></td>
+									<td><a href="tools.html">Up</a></td>
+									<td><a href=""><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="dis.html">7.4 EuDis, Disassembling Euphoria Code</a>
+									</td>
+									<td width="20%">
+										Up: <a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										<a href=""></a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="apiref.html">8 API Reference</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

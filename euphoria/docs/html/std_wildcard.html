@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_text.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_base64.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_text.html">8.22 Text Manipulation</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_base64.html">8.24 Base 64 Encoding and Decoding</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\wildcard.e -->
+<h2>8.23 Wildcard Matching</h2>
+<a name="_3409_wildcardmatching"></a><a name="wildcardmatching"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_wildcard.html#_3409_wildcardmatching">8.23 Wildcard Matching</a></div>
+<div class="toc_3"><a href="std_wildcard.html#_3410_routines">8.23.1 Routines</a></div>
+<div class="toc_4"><a href="std_wildcard.html#_3412_is_match">8.23.1.1 is_match</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\wildcard.e -->
+<h3>8.23.1 Routines</h3>
+<a name="_3410_routines"></a><a name="routines"></a>
+<p> 
+<a name="wildcardis_match"></a><a name="match"></a> </p>
+
+<!-- ..\include\std\wildcard.e -->
+<h4>8.23.1.1 is_match</h4>
+<a name="_3412_is_match"></a><a name="is_match"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/wildcard.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">wildcard</font>
+<font color="#0000FF">public function </font><font color="#330033">is_match</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">pattern, </font><font color="#0000FF">sequence </font><font color="#330033">string</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines whether a string matches a pattern. The pattern may contain <tt>*</tt> and <tt>?</tt> wildcards.</p>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Parameters:</h5>
+<a name="_3413_parameters"></a><a name="parameters"></a><ol><li><tt>pattern</tt> : a string, the pattern to match
+</li><li><tt>string</tt> : the string to be matched against
+</li></ol>
+<!-- ..\include\std\wildcard.e -->
+<h5>Returns:</h5>
+<a name="_3414_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, TRUE if <tt>string</tt> matches <tt>pattern</tt>, else FALSE.</p>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Comments:</h5>
+<a name="_3415_comments"></a><a name="comments"></a>
+<p> Character comparisons are case sensitive. If you want case insensitive comparisons, pass both <tt>pattern</tt> and <tt>string</tt> through <a href="std_text.html#_3346_upper">upper</a>, or both through <a href="std_text.html#_3339_lower">lower</a>, before calling <tt>is_match</tt>.</p>
+
+<p> If you want to detect a pattern anywhere within a string, add <tt>*</tt> to each end of the pattern:</p>
+
+<pre class="examplecode"><font color="#330033">i = is_match</font><font color="#880033">(</font><font color="#330033">'*' </font><font color="#330033">&amp; pattern &amp; </font><font color="#330033">'*'</font><font color="#330033">, string</font><font color="#880033">)</font>
+</pre>
+
+<p> There is currently no way to treat <tt>*</tt> or <tt>?</tt> literally in a pattern.</p>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Example 1:</h5>
+<a name="_3416_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">i = is_match</font><font color="#880033">(</font><font color="#330033">"A?B*"</font><font color="#330033">, </font><font color="#330033">"AQBXXYY"</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 1 (TRUE)</font>
+</pre>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Example 2:</h5>
+<a name="_3417_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">i = is_match</font><font color="#880033">(</font><font color="#330033">"*xyz*"</font><font color="#330033">, </font><font color="#330033">"AAAbbbxyz"</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 1 (TRUE)</font>
+</pre>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Example 3:</h5>
+<a name="_3418_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#330033">i = is_match</font><font color="#880033">(</font><font color="#330033">"A*B*C"</font><font color="#330033">, </font><font color="#330033">"a111b222c"</font><font color="#880033">)</font>
+<font color="#FF0055">-- i is 0 (FALSE) because upper/lower case doesn't match</font>
+</pre>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>Example 4:</h5>
+<a name="_3419_example4"></a><a name="example4"></a>
+<p> <tt>.../euphoria/demo/search.ex</tt></p>
+
+<!-- ..\include\std\wildcard.e -->
+<h5>See Also:</h5>
+<a name="_3420_seealso"></a><a name="seealso"></a>
+<p> <a href="std_text.html#_3346_upper">upper</a>, <a href="std_text.html#_3339_lower">lower</a>, <a href="std_regex.html#_3079_regularexpressions">Regular Expressions</a></p>
+
+<p> 
+<!-- ..\include\std\base64.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_text.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_base64.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_text.html">8.22 Text Manipulation</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_base64.html">8.24 Base 64 Encoding and Decoding</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

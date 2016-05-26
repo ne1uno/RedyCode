@@ -1,0 +1,1288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_console.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_filesys.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_console.html">8.3 Console</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_filesys.html">8.5 File System</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\datetime.e -->
+<h2>8.4 Date and Time</h2>
+<a name="_980_dateandtime"></a><a name="dateandtime"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_datetime.html#_980_dateandtime">8.4 Date and Time</a></div>
+<div class="toc_3"><a href="std_datetime.html#_981_localizedvariables">8.4.1 Localized Variables</a></div>
+<div class="toc_4"><a href="std_datetime.html#_983_month_names">8.4.1.1 month_names</a></div>
+<div class="toc_4"><a href="std_datetime.html#_985_month_abbrs">8.4.1.2 month_abbrs</a></div>
+<div class="toc_4"><a href="std_datetime.html#_987_day_names">8.4.1.3 day_names</a></div>
+<div class="toc_4"><a href="std_datetime.html#_989_day_abbrs">8.4.1.4 day_abbrs</a></div>
+<div class="toc_4"><a href="std_datetime.html#_991_ampm">8.4.1.5 ampm</a></div>
+<div class="toc_3"><a href="std_datetime.html#_992_dateandtimetypeaccessors">8.4.2 Date and Time Type Accessors</a></div>
+<div class="toc_4"><a href="std_datetime.html#_994_year">8.4.2.1 YEAR</a></div>
+<div class="toc_4"><a href="std_datetime.html#_996_month">8.4.2.2 MONTH</a></div>
+<div class="toc_4"><a href="std_datetime.html#_998_day">8.4.2.3 DAY</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1000_hour">8.4.2.4 HOUR</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1002_minute">8.4.2.5 MINUTE</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1004_second">8.4.2.6 SECOND</a></div>
+<div class="toc_3"><a href="std_datetime.html#_1005_intervals">8.4.3 Intervals</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1007_years">8.4.3.1 YEARS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1009_months">8.4.3.2 MONTHS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1011_weeks">8.4.3.3 WEEKS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1013_days">8.4.3.4 DAYS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1015_hours">8.4.3.5 HOURS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1017_minutes">8.4.3.6 MINUTES</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1019_seconds">8.4.3.7 SECONDS</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1021_date">8.4.3.8 DATE</a></div>
+<div class="toc_3"><a href="std_datetime.html#_1022_types">8.4.4 Types</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1024_datetime">8.4.4.1 datetime</a></div>
+<div class="toc_3"><a href="std_datetime.html#_1028_routines">8.4.5 Routines</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1030_time">8.4.5.1 time</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1036_date">8.4.5.2 date</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1042_from_date">8.4.5.3 from_date</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1048_now">8.4.5.4 now</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1053_now_gmt">8.4.5.5 now_gmt</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1058_new">8.4.5.6 new</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1063_new_time">8.4.5.7 new_time</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1068_weeks_day">8.4.5.8 weeks_day</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1073_years_day">8.4.5.9 years_day</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1079_is_leap_year">8.4.5.10 is_leap_year</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1085_days_in_month">8.4.5.11 days_in_month</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1091_days_in_year">8.4.5.12 days_in_year</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1097_to_unix">8.4.5.13 to_unix</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1103_from_unix">8.4.5.14 from_unix</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1109_format">8.4.5.15 format</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1117_parse">8.4.5.16 parse</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1126_add">8.4.5.17 add</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1133_subtract">8.4.5.18 subtract</a></div>
+<div class="toc_4"><a href="std_datetime.html#_1140_diff">8.4.5.19 diff</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\datetime.e -->
+<h3>8.4.1 Localized Variables</h3>
+<a name="_981_localizedvariables"></a><a name="localizedvariables"></a>
+<p> 
+<a name="datetimemonth_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.1.1 month_names</h4>
+<a name="_983_month_names"></a><a name="month_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public sequence </font><font color="#330033">month_names</font>
+</pre>
+
+<p>   Month Names</p>
+
+<p> 
+<a name="datetimemonth_abbrs"></a><a name="abbrs"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.1.2 month_abbrs</h4>
+<a name="_985_month_abbrs"></a><a name="month_abbrs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public sequence </font><font color="#330033">month_abbrs</font>
+</pre>
+
+<p>   Abbreviations of Month Names</p>
+
+<p> 
+<a name="datetimeday_names"></a><a name="names"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.1.3 day_names</h4>
+<a name="_987_day_names"></a><a name="day_names"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public sequence </font><font color="#330033">day_names</font>
+</pre>
+
+<p>   Day Names</p>
+
+<p> 
+<a name="datetimeday_abbrs"></a><a name="abbrs"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.1.4 day_abbrs</h4>
+<a name="_989_day_abbrs"></a><a name="day_abbrs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public sequence </font><font color="#330033">day_abbrs</font>
+</pre>
+
+<p>   Abbreviations of Day Names</p>
+
+<p> 
+<a name="datetimeampm"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.1.5 ampm</h4>
+<a name="_991_ampm"></a><a name="ampm"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public sequence </font><font color="#330033">ampm</font>
+</pre>
+
+<p>   AM and PM</p>
+
+<!-- ..\include\std\datetime.e -->
+<h3>8.4.2 Date and Time Type Accessors</h3>
+<a name="_992_dateandtimetypeaccessors"></a><a name="dateandtimetypeaccessors"></a>
+<p> These accessors can be used with the <a href="std_datetime.html#_1024_datetime">datetime</a> type.</p>
+
+<p> 
+<a name="datetimeyear"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.1 YEAR</h4>
+<a name="_994_year"></a><a name="year"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">YEAR</font>
+</pre>
+
+<p> Year (full year, i.e. 2010, 1922, )</p>
+
+<p> 
+<a name="datetimemonth"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.2 MONTH</h4>
+<a name="_996_month"></a><a name="month"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">MONTH</font>
+</pre>
+
+<p> Month (1-12)</p>
+
+<p> 
+<a name="datetimeday"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.3 DAY</h4>
+<a name="_998_day"></a><a name="day"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">DAY</font>
+</pre>
+
+<p> Day (1-31)</p>
+
+<p> 
+<a name="datetimehour"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.4 HOUR</h4>
+<a name="_1000_hour"></a><a name="hour"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOUR</font>
+</pre>
+
+<p> Hour (0-23)</p>
+
+<p> 
+<a name="datetimeminute"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.5 MINUTE</h4>
+<a name="_1002_minute"></a><a name="minute"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">MINUTE</font>
+</pre>
+
+<p> Minute (0-59)</p>
+
+<p> 
+<a name="datetimesecond"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.2.6 SECOND</h4>
+<a name="_1004_second"></a><a name="second"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">SECOND</font>
+</pre>
+
+<p> Second (0-59)</p>
+
+<!-- ..\include\std\datetime.e -->
+<h3>8.4.3 Intervals</h3>
+<a name="_1005_intervals"></a><a name="intervals"></a>
+<p> These constant enums are to be used with the <a href="std_datetime.html#_1126_add">add</a> and <a href="std_datetime.html#_1133_subtract">subtract</a> routines.</p>
+
+<p> 
+<a name="datetimeyears"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.1 YEARS</h4>
+<a name="_1007_years"></a><a name="years"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">YEARS</font>
+</pre>
+
+<p> Years</p>
+
+<p> 
+<a name="datetimemonths"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.2 MONTHS</h4>
+<a name="_1009_months"></a><a name="months"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">MONTHS</font>
+</pre>
+
+<p> Months</p>
+
+<p> 
+<a name="datetimeweeks"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.3 WEEKS</h4>
+<a name="_1011_weeks"></a><a name="weeks"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">WEEKS</font>
+</pre>
+
+<p> Weeks</p>
+
+<p> 
+<a name="datetimedays"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.4 DAYS</h4>
+<a name="_1013_days"></a><a name="days"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">DAYS</font>
+</pre>
+
+<p> Days</p>
+
+<p> 
+<a name="datetimehours"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.5 HOURS</h4>
+<a name="_1015_hours"></a><a name="hours"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">HOURS</font>
+</pre>
+
+<p> Hours</p>
+
+<p> 
+<a name="datetimeminutes"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.6 MINUTES</h4>
+<a name="_1017_minutes"></a><a name="minutes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">MINUTES</font>
+</pre>
+
+<p> Minutes</p>
+
+<p> 
+<a name="datetimeseconds"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.7 SECONDS</h4>
+<a name="_1019_seconds"></a><a name="seconds"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">SECONDS</font>
+</pre>
+
+<p> Seconds</p>
+
+<p> 
+<a name="datetimedate"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.3.8 DATE</h4>
+<a name="_1021_date"></a><a name="date"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public enum </font><font color="#330033">DATE</font>
+</pre>
+
+<p> Date</p>
+
+<!-- ..\include\std\datetime.e -->
+<h3>8.4.4 Types</h3>
+<a name="_1022_types"></a><a name="types"></a>
+<p> 
+<a name="datetimedatetime"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.4.1 datetime</h4>
+<a name="_1024_datetime"></a><a name="datetime"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public type </font><font color="#330033">datetime</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">o</font><font color="#880033">)</font>
+</pre>
+
+<p>   datetime type</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1025_parameters"></a><a name="parameters"></a><ol><li><tt>obj</tt> : any object, so no crash takes place.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1026_comments"></a><a name="comments"></a>
+<p> A datetime type consists of a sequence of length six in the form <tt>{year, month, day_of_month, hour, minute, second}</tt>. Checks are made to guarantee those values are in range.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Note:</h5>
+<a name="_1027_note"></a><a name="note"></a>
+<p> All elements must be integers except for seconds which could either integer or atom values.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h3>8.4.5 Routines</h3>
+<a name="_1028_routines"></a><a name="routines"></a>
+<p> 
+<a name="eutime"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.1 time</h4>
+<a name="_1030_time"></a><a name="time"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function time</font><font color="#880033">()</font>
+</pre>
+
+<p> returns the number of seconds since some fixed point in the past.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1031_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, which represents an absolute number of seconds.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1032_comments"></a><a name="comments"></a>
+<p> Take the difference between two readings of <tt>time()</tt> to measure, for example, how long a section of code takes to execute.</p>
+
+<p> On some machines, <tt>time()</tt> can return a negative number. However, you can still use the difference in calls to <tt>time()</tt> to measure elapsed time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1033_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">constant </font><font color="#330033">ITERATIONS = 1000000</font>
+<font color="#0000FF">integer </font><font color="#330033">p</font>
+<font color="#0000FF">atom </font><font color="#330033">t0, loop_overhead</font>
+
+<font color="#330033">t0 = </font><font color="#0000FF">time</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">ITERATIONS </font><font color="#0000FF">do</font>
+<font color="#FF0055">    -- time an empty loop</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">loop_overhead = </font><font color="#0000FF">time</font><font color="#880033">() </font><font color="#330033">- t0</font>
+
+<font color="#330033">t0 = </font><font color="#0000FF">time</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to </font><font color="#330033">ITERATIONS </font><font color="#0000FF">do</font>
+<font color="#330033">    p = </font><font color="#0000FF">power</font><font color="#880033">(</font><font color="#330033">2, 20</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+<font color="#330033">? </font><font color="#880033">(</font><font color="#0000FF">time</font><font color="#993333">() </font><font color="#330033">- t0 - loop_overhead</font><font color="#880033">)</font><font color="#330033">/ITERATIONS</font>
+<font color="#FF0055">-- calculates time (in seconds) for one call to power</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1034_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1021_date">date</a>, <a href="std_datetime.html#_1048_now">now</a></p>
+
+<p> 
+<a name="eudate"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.2 date</h4>
+<a name="_1036_date"></a><a name="date"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function date</font><font color="#880033">()</font>
+</pre>
+
+<p> returns a sequence with information on the current date.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1037_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> of length 8, laid out as follows: </p>
+<ol><li>year  -- since 1900
+</li><li>month -- January = 1
+</li><li>day   -- day of month, starting at 1
+</li><li>hour  -- 0 to 23
+</li><li>minute -- 0 to 59
+</li><li>second -- 0 to 59
+</li><li>day of the week -- Sunday = 1
+</li><li>day of the year -- January 1st = 1
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1038_comments"></a><a name="comments"></a>
+<p> The value returned for the year is actually the number of years since 1900 (not the last 2 digits of the year). In the year 2000 this value was 100. In 2001 it was 101, and so on.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1039_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">now = </font><font color="#0000FF">date</font><font color="#880033">()</font>
+<font color="#FF0055">-- now has: {95,3,24,23,47,38,6,83}</font>
+<font color="#FF0055">-- i.e. Friday March 24, 1995 at 11:47:38pm, day 83 of the year</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1040_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1030_time">time</a>, <a href="std_datetime.html#_1048_now">now</a></p>
+
+<p> 
+<a name="datetimefrom_date"></a><a name="date"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.3 from_date</h4>
+<a name="_1042_from_date"></a><a name="from_date"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">from_date</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">src</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a sequence formatted according to the built-in <tt>date</tt> function to a valid datetime sequence.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1043_parameters"></a><a name="parameters"></a><ol><li><tt>src</tt> : a sequence which <tt>date</tt> might have returned
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1044_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, more precisely a <strong>datetime</strong> corresponding to the same moment in time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1045_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = from_date</font><font color="#880033">(</font><font color="#0000FF">date</font><font color="#993333">()</font><font color="#880033">)</font>
+<font color="#FF0055">-- d is the current date and time</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1046_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1021_date">date</a>, <a href="std_datetime.html#_1103_from_unix">from_unix</a>, <a href="std_datetime.html#_1048_now">now</a>, <a href="std_datetime.html#_1058_new">new</a></p>
+
+<p> 
+<a name="datetimenow"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.4 now</h4>
+<a name="_1048_now"></a><a name="now"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">now</font><font color="#880033">()</font>
+</pre>
+
+<p>   creates a new datetime value initialized with the current date and time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1049_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, more precisely a <strong>datetime</strong> corresponding to the current moment in time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1050_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dt = now</font><font color="#880033">()</font>
+<font color="#FF0055">-- dt is the current date and time</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1051_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1042_from_date">from_date</a>, <a href="std_datetime.html#_1103_from_unix">from_unix</a>, <a href="std_datetime.html#_1058_new">new</a>, <a href="std_datetime.html#_1063_new_time">new_time</a>, <a href="std_datetime.html#_1053_now_gmt">now_gmt</a></p>
+
+<p> 
+<a name="datetimenow_gmt"></a><a name="gmt"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.5 now_gmt</h4>
+<a name="_1053_now_gmt"></a><a name="now_gmt"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">now_gmt</font><font color="#880033">()</font>
+</pre>
+
+<p>   create a new datetime value that falls into the Greenwich Mean Time (GMT) timezone.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1054_comments"></a><a name="comments"></a>
+<p> This function will return a datetime that is GMT no matter what timezone the system is running under.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1055_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dt = now_gmt</font><font color="#880033">()</font>
+<font color="#FF0055">-- If local time was July 16th, 2008 at 10:34pm CST</font>
+<font color="#FF0055">-- dt would be July 17th, 2008 at 03:34pm GMT</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1056_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1048_now">now</a></p>
+
+<p> 
+<a name="datetimenew"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.6 new</h4>
+<a name="_1058_new"></a><a name="new"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">new</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">year = 0, </font><font color="#0000FF">integer </font><font color="#330033">month = 0, </font><font color="#0000FF">integer </font><font color="#330033">day = 0, </font><font color="#0000FF">integer </font><font color="#330033">hour = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">minute = 0, </font><font color="#0000FF">atom </font><font color="#330033">second = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new datetime value.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1059_parameters"></a><a name="parameters"></a><ol><li><tt>year</tt>   -- the full year.
+</li><li><tt>month</tt>  -- the month (1-12).
+</li><li><tt>day</tt>    -- the day of the month (1-31).
+</li><li><tt>hour</tt>   -- the hour (0-23) (defaults to 0)
+</li><li><tt>minute</tt> -- the minute (0-59) (defaults to 0)
+</li><li><tt>second</tt> -- the second (0-59) (defaults to 0)
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1060_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dt = new</font><font color="#880033">(</font><font color="#330033">2010, 1, 1, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#FF0055">-- dt is Jan 1st, 2010</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1061_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1042_from_date">from_date</a>, <a href="std_datetime.html#_1103_from_unix">from_unix</a>, <a href="std_datetime.html#_1048_now">now</a>, <a href="std_datetime.html#_1063_new_time">new_time</a></p>
+
+<p> 
+<a name="datetimenew_time"></a><a name="time"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.7 new_time</h4>
+<a name="_1063_new_time"></a><a name="new_time"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">new_time</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">hour, </font><font color="#0000FF">integer </font><font color="#330033">minute, </font><font color="#0000FF">atom </font><font color="#330033">second</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new datetime value with a date of zeros.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1064_parameters"></a><a name="parameters"></a><ol><li><tt>hour</tt> : is the hour (0-23)
+</li><li><tt>minute</tt> : is the minute (0-59)
+</li><li><tt>second</tt> : is the second (0-59)
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1065_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dt = new_time</font><font color="#880033">(</font><font color="#330033">10, 30, 55</font><font color="#880033">)</font>
+<font color="#330033">dt is 10:30:55 AM</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1066_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1042_from_date">from_date</a>, <a href="std_datetime.html#_1103_from_unix">from_unix</a>, <a href="std_datetime.html#_1048_now">now</a>, <a href="std_datetime.html#_1058_new">new</a></p>
+
+<p> 
+<a name="datetimeweeks_day"></a><a name="day"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.8 weeks_day</h4>
+<a name="_1068_weeks_day"></a><a name="weeks_day"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">weeks_day</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the day of week of the datetime <tt>dt</tt>.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1069_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1070_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, between 1 (Sunday) and 7 (Saturday).</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1071_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 5, 2, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">day = weeks_day</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- day is 6 because May 2, 2008 is a Friday.</font>
+</pre>
+
+<p> 
+<a name="datetimeyears_day"></a><a name="day"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.9 years_day</h4>
+<a name="_1073_years_day"></a><a name="years_day"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">years_day</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the Julian day of year of the supplied date.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1074_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1075_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, between 1 and 366.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1076_comments"></a><a name="comments"></a>
+<p> For dates earlier than 1800, this routine may give inaccurate results if the date applies to a country other than United Kingdom or a former colony thereof. The change from Julian to Gregorian calendar took place much earlier in some other European countries.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1077_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 5, 2, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">day = years_day</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- day is 123</font>
+</pre>
+
+<p> 
+<a name="datetimeis_leap_year"></a><a name="leap_year"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.10 is_leap_year</h4>
+<a name="_1079_is_leap_year"></a><a name="is_leap_year"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">is_leap_year</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines if <tt>dt</tt> falls within leap year.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1080_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1081_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, of 1 if leap year, otherwise 0.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1082_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 1, 1, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">? is_leap_year</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- prints 1</font>
+<font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2005, 1, 1, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">? is_leap_year</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- prints 0</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1083_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1085_days_in_month">days_in_month</a></p>
+
+<p> 
+<a name="datetimedays_in_month"></a><a name="in_month"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.11 days_in_month</h4>
+<a name="_1085_days_in_month"></a><a name="days_in_month"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">days_in_month</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the number of days in the month of <tt>dt</tt>.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1086_comments"></a><a name="comments"></a>
+<p> This takes into account leap year.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1087_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1088_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 1, 1, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">? days_in_month</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- 31</font>
+<font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 2, 1, 0, 0, 0</font><font color="#880033">) </font><font color="#FF0055">-- Leap year</font>
+<font color="#330033">? days_in_month</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- 29</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1089_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1079_is_leap_year">is_leap_year</a></p>
+
+<p> 
+<a name="datetimedays_in_year"></a><a name="in_year"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.12 days_in_year</h4>
+<a name="_1091_days_in_year"></a><a name="days_in_year"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">days_in_year</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the number of days in the year of <tt>dt</tt>.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1092_comments"></a><a name="comments"></a>
+<p> This takes into account leap year.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1093_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1094_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2007, 1, 1, 0, 0, 0</font><font color="#880033">)</font>
+<font color="#330033">? days_in_year</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- 365</font>
+<font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 1, 1, 0, 0, 0</font><font color="#880033">) </font><font color="#FF0055">-- leap year</font>
+<font color="#330033">? days_in_year</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#FF0055">-- 366</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1095_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1079_is_leap_year">is_leap_year</a>, <a href="std_datetime.html#_1085_days_in_month">days_in_month</a></p>
+
+<p> 
+<a name="datetimeto_unix"></a><a name="unix"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.13 to_unix</h4>
+<a name="_1097_to_unix"></a><a name="to_unix"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">to_unix</font><font color="#880033">(</font><font color="#330033">datetime dt</font><font color="#880033">)</font>
+</pre>
+
+<p>   converts a datetime value to the <em>Unix</em> numeric format (seconds since <tt>EPOCH_1970</tt>).</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1098_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : a datetime to be queried.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1099_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, so this will not overflow during the winter 2038-2039.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1100_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">secs_since_epoch = to_unix</font><font color="#880033">(</font><font color="#330033">now</font><font color="#993333">()</font><font color="#880033">)</font>
+<font color="#FF0055">-- secs_since_epoch is equal to the current seconds since epoch</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1101_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1103_from_unix">from_unix</a>, <a href="std_datetime.html#_1109_format">format</a></p>
+
+<p> 
+<a name="datetimefrom_unix"></a><a name="unix"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.14 from_unix</h4>
+<a name="_1103_from_unix"></a><a name="from_unix"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">from_unix</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">unix</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a datetime value from the <em>Unix</em> numeric format (seconds since EPOCH).</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1104_parameters"></a><a name="parameters"></a><ol><li><tt>unix</tt> : an atom, counting seconds elapsed since EPOCH.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1105_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, more precisely a <strong>datetime</strong> representing the same moment in time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1106_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = from_unix</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">)</font>
+<font color="#FF0055">-- d is 1970-01-01 00:00:00  (zero seconds since EPOCH)</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1107_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1097_to_unix">to_unix</a>, <a href="std_datetime.html#_1042_from_date">from_date</a>, <a href="std_datetime.html#_1048_now">now</a>, <a href="std_datetime.html#_1058_new">new</a></p>
+
+<p> 
+<a name="datetimeformat"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.15 format</h4>
+<a name="_1109_format"></a><a name="format"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">format</font><font color="#880033">(</font><font color="#330033">datetime d, </font><font color="#0000FF">sequence </font><font color="#330033">pattern = </font><font color="#330033">"%Y-%m-%d %H:%M:%S"</font><font color="#880033">)</font>
+</pre>
+
+<p>   formats the date according to the format pattern string.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1110_parameters"></a><a name="parameters"></a><ol><li><tt>d</tt> : a datetime which is to be printed out
+</li><li><tt>pattern</tt> : a format string, similar to the ones <tt>sprintf</tt> uses, but with some Unicode encoding. The default is <tt>"%Y-%m-%d %H:%M:%S"</tt>.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1111_returns"></a><a name="returns"></a>
+<p> A <strong>string</strong>, with the date <tt>d</tt> formatted according to the specification in <tt>pattern</tt>.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1112_comments"></a><a name="comments"></a>
+<p> Pattern string can include the following specifiers:</p>
+<ul><li><tt>%%</tt> -- a literal %
+</li><li><tt>%a</tt> -- locale's abbreviated weekday name (e.g., Sun)
+</li><li><tt>%A</tt> -- locale's full weekday name (e.g., Sunday)
+</li><li><tt>%b</tt> -- locale's abbreviated month name (e.g., Jan)
+</li><li><tt>%B</tt> -- locale's full month name (e.g., January)
+</li><li><tt>%C</tt> -- century; like %Y, except omit last two digits (e.g., 21)
+</li><li><tt>%d</tt> -- day of month (e.g, 01)
+</li><li><tt>%H</tt> -- hour (00..23)
+</li><li><tt>%I</tt> -- hour (01..12)
+</li><li><tt>%j</tt> -- day of year (001..366)
+</li><li><tt>%k</tt> -- hour ( 0..23)
+</li><li><tt>%l</tt> -- hour ( 1..12)
+</li><li><tt>%m</tt> -- month (01..12)
+</li><li><tt>%M</tt> -- minute (00..59)
+</li><li><tt>%p</tt> -- locale's equivalent of either AM or PM; blank if not known
+</li><li><tt>%P</tt> -- like %p, but lower case
+</li><li><tt>%s</tt> -- seconds since 1970-01-01 00:00:00 UTC
+</li><li><tt>%S</tt> -- second (00..60)
+</li><li><tt>%u</tt> -- day of week (1..7); 1 is Monday
+</li><li><tt>%w</tt> -- day of week (0..6); 0 is Sunday
+</li><li><tt>%y</tt> -- last two digits of year (00..99)
+</li><li><tt>%Y</tt> -- year
+</li></ul>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1113_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 5, 2, 12, 58, 32</font><font color="#880033">)</font>
+<font color="#330033">s = format</font><font color="#880033">(</font><font color="#330033">d, </font><font color="#330033">"%Y-%m-%d %H:%M:%S"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "2008-05-02 12:58:32"</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 2:</h5>
+<a name="_1114_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">d = new</font><font color="#880033">(</font><font color="#330033">2008, 5, 2, 12, 58, 32</font><font color="#880033">)</font>
+<font color="#330033">s = format</font><font color="#880033">(</font><font color="#330033">d, </font><font color="#330033">"%A, %B %d '%y %H:%M%p"</font><font color="#880033">)</font>
+<font color="#FF0055">-- s is "Friday, May 2 '08 12:58PM"</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1115_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1097_to_unix">to_unix</a>, <a href="std_datetime.html#_1117_parse">parse</a></p>
+
+<p> 
+<a name="datetimeparse"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.16 parse</h4>
+<a name="_1117_parse"></a><a name="parse"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">parse</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">val, </font><font color="#0000FF">sequence </font><font color="#330033">fmt = </font><font color="#330033">"%Y-%m-%d %H:%M:%S"</font><font color="#330033">,</font>
+<font color="#0000FF">        integer </font><font color="#330033">yylower = - 80</font><font color="#880033">)</font>
+</pre>
+
+<p>   parses a datetime string according to the given format.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1118_parameters"></a><a name="parameters"></a><ol><li><tt>val</tt> : string datetime value
+</li><li><tt>fmt</tt> : datetime format. Default is <tt>"%Y-%m-%d %H:%M:%S"</tt>
+</li><li><tt>yysplit</tt> : Set the maximum difference from the current year when parsing a two digit year. Defaults to -80/+20.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1119_returns"></a><a name="returns"></a>
+<p> A <strong>datetime</strong>, value.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1120_comments"></a><a name="comments"></a>
+<p> Only a subset of the format specification is currently supported:</p>
+<ul><li><tt>%d</tt> --  day of month (e.g, 01)
+</li><li><tt>%H</tt> --  hour (00..23)
+</li><li><tt>%m</tt> --  month (01..12)
+</li><li><tt>%M</tt> --  minute (00..59)
+</li><li><tt>%S</tt> --  second (00..60)
+</li><li><tt>%y</tt> --  2-digit year (YY)
+</li><li><tt>%Y</tt> --  4-digit year (CCYY)
+</li></ul>
+<p>More format codes will be added in future versions.</p>
+
+<p> All non-format characters in the format string are ignored and are not matched against the input string.</p>
+
+<p> All non-digits in the input string are ignored.</p>
+
+<p> Parsing Two Digit Years:</p>
+
+<p> When parsing a two digit year <tt>parse</tt> has to make a decision if a given year is in the past or future. For example, 10/18/44. Is that Oct 18, 1944 or Oct 18, 2044. A common rule has come about for this purpose and that is the -80/+20 rule. Based on research it was found that more historical events are recorded than future events, thus it favors history rather than future. Some other applications may require a different rule, thus the <tt>yylower</tt> parameter can be supplied.</p>
+
+<p> Assuming today is 12/22/2010 here is an example of the -80/+20 rule: </p>
+<table><tr><th> YY </th>
+<th> Diff   </th>
+<th> CCYY </th>
+</tr>
+<tr><td> 18   </td>
+<td> -92/+8  </td>
+<td>  2018 </td>
+</tr>
+<tr><td> 95   </td>
+<td> -15/+85 </td>
+<td>  1995 </td>
+</tr>
+<tr><td> 33   </td>
+<td> -77/+23 </td>
+<td>  1933 </td>
+</tr>
+<tr><td> 29   </td>
+<td> -81/+19 </td>
+<td>  2029 </td>
+</tr>
+</table>
+
+<p> Another rule in use is the -50/+50 rule. Therefore, if you supply -50 to the <tt>yylower</tt> to set the lower bounds, some examples may be (given that today is 12/22/2010): </p>
+<table><tr><th> YY </th>
+<th> Diff   </th>
+<th> CCYY </th>
+</tr>
+<tr><td> 18   </td>
+<td> -92/+8  </td>
+<td>  2018 </td>
+</tr>
+<tr><td> 95   </td>
+<td> -15/+85 </td>
+<td>  1995 </td>
+</tr>
+<tr><td> 33   </td>
+<td> -77/+23 </td>
+<td>  2033 </td>
+</tr>
+<tr><td> 29   </td>
+<td> -81/+19 </td>
+<td>  2029 </td>
+</tr>
+</table>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Note:</h5>
+<a name="_1121_note"></a><a name="note"></a><ul><li>Since 4.0.1 -- 2-digit year parsing and <tt>yylower</tt> parameter.
+</li></ul>
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1122_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">datetime d = parse</font><font color="#880033">(</font><font color="#330033">"05/01/2009 10:20:30"</font><font color="#330033">, </font><font color="#330033">"%m/%d/%Y %H:%M:%S"</font><font color="#880033">)</font>
+<font color="#FF0055">-- d is { 2009, 5, 1, 10, 20, 30 }</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 2:</h5>
+<a name="_1123_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#330033">datetime d = parse</font><font color="#880033">(</font><font color="#330033">"05/01/44"</font><font color="#330033">, </font><font color="#330033">"%m/%d/%y"</font><font color="#330033">, -50</font><font color="#880033">) </font><font color="#FF0055">-- -50/+50 rule</font>
+<font color="#FF0055">-- d is { 2044, 5, 14, 0, 0, 0 }</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1124_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1109_format">format</a></p>
+
+<p> 
+<a name="datetimeadd"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.17 add</h4>
+<a name="_1126_add"></a><a name="add"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">add</font><font color="#880033">(</font><font color="#330033">datetime dt, </font><font color="#0000FF">object </font><font color="#330033">qty, </font><font color="#0000FF">integer </font><font color="#330033">interval</font><font color="#880033">)</font>
+</pre>
+
+<p>   adds a number of <em>intervals</em> to a datetime.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1127_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : the base datetime
+</li><li><tt>qty</tt> : the number of <em>intervals</em> to add. It should be positive.
+</li><li><tt>interval</tt> : which kind of interval to add.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1128_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, more precisely a <strong>datetime</strong> representing the new moment in time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1129_comments"></a><a name="comments"></a>
+<p> Please see Constants for Date and Time for a reference of valid intervals.</p>
+
+<p> Do not confuse the item access constants (such as <tt>YEAR</tt>, <tt>MONTH</tt>, <tt>DAY</tt> ) with the interval constants (<tt>YEARS</tt>, <tt>MONTHS</tt>, <tt>DAYS</tt> ).</p>
+
+<p> When adding <tt>MONTHS</tt>, it is a calendar based addition. For instance, a date of 5/2/2008 with 5 <tt>MONTHS</tt> added will become 10/2/2008. <tt>MONTHS</tt> does not compute the number of days per each month and the average number of days per month.</p>
+
+<p> When adding <tt>YEARS</tt>, leap year is taken into account. Adding 4 <tt>YEARS</tt> to a date may result in a different day of month number due to leap year.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1130_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d2 = add</font><font color="#880033">(</font><font color="#330033">d1, 35, SECONDS</font><font color="#880033">) </font><font color="#FF0055">-- add 35 seconds to d1</font>
+<font color="#330033">d2 = add</font><font color="#880033">(</font><font color="#330033">d1, 7, WEEKS</font><font color="#880033">)    </font><font color="#FF0055">-- add 7 weeks to d1</font>
+<font color="#330033">d2 = add</font><font color="#880033">(</font><font color="#330033">d1, 19, YEARS</font><font color="#880033">)   </font><font color="#FF0055">-- add 19 years to d1</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1131_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1133_subtract">subtract</a>, <a href="std_datetime.html#_1140_diff">diff</a></p>
+
+<p> 
+<a name="datetimesubtract"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.18 subtract</h4>
+<a name="_1133_subtract"></a><a name="subtract"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">subtract</font><font color="#880033">(</font><font color="#330033">datetime dt, </font><font color="#0000FF">atom </font><font color="#330033">qty, </font><font color="#0000FF">integer </font><font color="#330033">interval</font><font color="#880033">)</font>
+</pre>
+
+<p>   subtracts a number of <em>intervals</em> to a base datetime.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1134_parameters"></a><a name="parameters"></a><ol><li><tt>dt</tt> : the base datetime
+</li><li><tt>qty</tt> : the number of <em>intervals</em> to subtract. It should be positive.
+</li><li><tt>interval</tt> : which kind of interval to subtract.
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1135_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, more precisely a <strong>datetime</strong> representing the new moment in time.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1136_comments"></a><a name="comments"></a>
+<p> Please see Constants for Date and Time for a reference of valid intervals.</p>
+
+<p> See the function <tt>add</tt> for more information on adding and subtracting date intervals</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1137_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">dt2 = subtract</font><font color="#880033">(</font><font color="#330033">dt1, 18, MINUTES</font><font color="#880033">) </font><font color="#FF0055">-- subtract 18 minutes from dt1</font>
+<font color="#330033">dt2 = subtract</font><font color="#880033">(</font><font color="#330033">dt1, 7, MONTHS</font><font color="#880033">)   </font><font color="#FF0055">-- subtract 7 months from dt1</font>
+<font color="#330033">dt2 = subtract</font><font color="#880033">(</font><font color="#330033">dt1, 12, HOURS</font><font color="#880033">)   </font><font color="#FF0055">-- subtract 12 hours from dt1</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1138_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1126_add">add</a>, <a href="std_datetime.html#_1140_diff">diff</a></p>
+
+<p> 
+<a name="datetimediff"></a> </p>
+
+<!-- ..\include\std\datetime.e -->
+<h4>8.4.5.19 diff</h4>
+<a name="_1140_diff"></a><a name="diff"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/datetime.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">datetime</font>
+<font color="#0000FF">public function </font><font color="#330033">diff</font><font color="#880033">(</font><font color="#330033">datetime dt1, datetime dt2</font><font color="#880033">)</font>
+</pre>
+
+<p>   computes the difference, in seconds, between two dates.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Parameters:</h5>
+<a name="_1141_parameters"></a><a name="parameters"></a><ol><li><tt>dt1</tt> : the end datetime
+</li><li><tt>dt2</tt> : the start datetime
+</li></ol>
+<!-- ..\include\std\datetime.e -->
+<h5>Returns:</h5>
+<a name="_1142_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the number of seconds elapsed from <tt>dt2</tt> to <tt>dt1</tt>.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Comments:</h5>
+<a name="_1143_comments"></a><a name="comments"></a>
+<p> <tt>dt2</tt> is subtracted from <tt>dt1</tt>, therefore, you can come up with a negative value.</p>
+
+<!-- ..\include\std\datetime.e -->
+<h5>Example 1:</h5>
+<a name="_1144_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d1 = now</font><font color="#880033">()</font>
+<font color="#330033">sleep</font><font color="#880033">(</font><font color="#330033">15</font><font color="#880033">)  </font><font color="#FF0055">-- sleep for 15 seconds</font>
+<font color="#330033">d2 = now</font><font color="#880033">()</font>
+
+<font color="#330033">i = diff</font><font color="#880033">(</font><font color="#330033">d1, d2</font><font color="#880033">) </font><font color="#FF0055">-- i is 15</font>
+</pre>
+
+<!-- ..\include\std\datetime.e -->
+<h5>See Also:</h5>
+<a name="_1145_seealso"></a><a name="seealso"></a>
+<p> <a href="std_datetime.html#_1126_add">add</a>, <a href="std_datetime.html#_1133_subtract">subtract</a></p>
+
+<p> 
+<!-- ..\include\std\filesys.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_console.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_filesys.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_console.html">8.3 Console</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_filesys.html">8.5 File System</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

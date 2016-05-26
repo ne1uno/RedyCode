@@ -1,0 +1,2389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_datetime.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_io.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_datetime.html">8.4 Date and Time</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_io.html">8.6 I/O</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\filesys.e -->
+<h2>8.5 File System</h2>
+<a name="_1147_filesystem"></a><a name="filesystem"></a>
+<p> Cross platform file operations for Euphoria</p>
+
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_filesys.html#_1147_filesystem">8.5 File System</a></div>
+<div class="toc_3"><a href="std_filesys.html#_1148_constants">8.5.1 Constants</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1150_slash">8.5.1.1 SLASH</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1153_slashes">8.5.1.2 SLASHES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1155_eolsep">8.5.1.3 EOLSEP</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1157_eol">8.5.1.4 EOL</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1159_pathsep">8.5.1.5 PATHSEP</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1161_nulldevice">8.5.1.6 NULLDEVICE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1163_shared_lib_ext">8.5.1.7 SHARED_LIB_EXT</a></div>
+<div class="toc_3"><a href="std_filesys.html#_1164_directoryhandling">8.5.2 Directory Handling</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1166_d_name">8.5.2.1 D_NAME</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1168_d_attributes">8.5.2.2 D_ATTRIBUTES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1170_d_size">8.5.2.3 D_SIZE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1172_d_year">8.5.2.4 D_YEAR</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1174_d_month">8.5.2.5 D_MONTH</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1176_d_day">8.5.2.6 D_DAY</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1178_d_hour">8.5.2.7 D_HOUR</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1180_d_minute">8.5.2.8 D_MINUTE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1182_d_second">8.5.2.9 D_SECOND</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1184_d_millisecond">8.5.2.10 D_MILLISECOND</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1186_d_altname">8.5.2.11 D_ALTNAME</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1188_w_bad_path">8.5.2.12 W_BAD_PATH</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1190_w_skip_directory">8.5.2.13 W_SKIP_DIRECTORY</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1192_dir">8.5.2.14 dir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1200_current_dir">8.5.2.15 current_dir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1206_chdir">8.5.2.16 chdir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1213_my_dir">8.5.2.17 my_dir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1215_walk_dir">8.5.2.18 walk_dir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1222_create_directory">8.5.2.19 create_directory</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1229_create_file">8.5.2.20 create_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1236_delete_file">8.5.2.21 delete_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1240_curdir">8.5.2.22 curdir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1247_init_curdir">8.5.2.23 init_curdir</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1254_clear_directory">8.5.2.24 clear_directory</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1261_remove_directory">8.5.2.25 remove_directory</a></div>
+<div class="toc_3"><a href="std_filesys.html#_1266_filenameparsing">8.5.3 File Name Parsing</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1268_path_dir">8.5.3.1 PATH_DIR</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1270_path_filename">8.5.3.2 PATH_FILENAME</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1272_path_basename">8.5.3.3 PATH_BASENAME</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1274_path_fileext">8.5.3.4 PATH_FILEEXT</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1276_path_driveid">8.5.3.5 PATH_DRIVEID</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1278_pathinfo">8.5.3.6 pathinfo</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1287_dirname">8.5.3.7 dirname</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1294_pathname">8.5.3.8 pathname</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1301_filename">8.5.3.9 filename</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1308_filebase">8.5.3.10 filebase</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1314_fileext">8.5.3.11 fileext</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1321_driveid">8.5.3.12 driveid</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1327_defaultext">8.5.3.13 defaultext</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1333_absolute_path">8.5.3.14 absolute_path</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1339_as_is">8.5.3.15 AS_IS</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1341_to_lower">8.5.3.16 TO_LOWER</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1343_correct">8.5.3.17 CORRECT</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1345_to_short">8.5.3.18 TO_SHORT</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1347_case_flagset_type">8.5.3.19 case_flagset_type</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1349_canonical_path">8.5.3.20 canonical_path</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1356_abbreviate_path">8.5.3.21 abbreviate_path</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1362_split_path">8.5.3.22 split_path</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1369_join_path">8.5.3.23 join_path</a></div>
+<div class="toc_3"><a href="std_filesys.html#_1375_filetypes">8.5.4 File Types</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1377_filetype_undefined">8.5.4.1 FILETYPE_UNDEFINED</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1379_filetype_not_found">8.5.4.2 FILETYPE_NOT_FOUND</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1381_filetype_file">8.5.4.3 FILETYPE_FILE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1383_filetype_directory">8.5.4.4 FILETYPE_DIRECTORY</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1385_file_type">8.5.4.5 file_type</a></div>
+<div class="toc_3"><a href="std_filesys.html#_1389_filehandling">8.5.5 File Handling</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1391_sectors_per_cluster">8.5.5.1 SECTORS_PER_CLUSTER</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1393_bytes_per_sector">8.5.5.2 BYTES_PER_SECTOR</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1395_number_of_free_clusters">8.5.5.3 NUMBER_OF_FREE_CLUSTERS</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1397_total_number_of_clusters">8.5.5.4 TOTAL_NUMBER_OF_CLUSTERS</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1399_total_bytes">8.5.5.5 TOTAL_BYTES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1401_free_bytes">8.5.5.6 FREE_BYTES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1403_used_bytes">8.5.5.7 USED_BYTES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1405_count_dirs">8.5.5.8 COUNT_DIRS</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1407_count_files">8.5.5.9 COUNT_FILES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1409_count_size">8.5.5.10 COUNT_SIZE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1411_count_types">8.5.5.11 COUNT_TYPES</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1413_ext_name">8.5.5.12 EXT_NAME</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1415_ext_count">8.5.5.13 EXT_COUNT</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1417_ext_size">8.5.5.14 EXT_SIZE</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1419_file_exists">8.5.5.15 file_exists</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1424_file_timestamp">8.5.5.16 file_timestamp</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1428_copy_file">8.5.5.17 copy_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1434_rename_file">8.5.5.18 rename_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1440_move_file">8.5.5.19 move_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1446_file_length">8.5.5.20 file_length</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1452_locate_file">8.5.5.21 locate_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1458_disk_metrics">8.5.5.22 disk_metrics</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1463_disk_size">8.5.5.23 disk_size</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1468_dir_size">8.5.5.24 dir_size</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1474_temp_file">8.5.5.25 temp_file</a></div>
+<div class="toc_4"><a href="std_filesys.html#_1479_checksum">8.5.5.26 checksum</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\filesys.e -->
+<h3>8.5.1 Constants</h3>
+<a name="_1148_constants"></a><a name="constants"></a>
+<p> 
+<a name="filesysslash"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.1 SLASH</h4>
+<a name="_1150_slash"></a><a name="slash"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">SLASH</font>
+</pre>
+
+<p> Current platform's path separator character</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1151_comments"></a><a name="comments"></a>
+<p> When on <em>Windows</em>, <tt>'\\'</tt>. When on <em>Unix</em>, <tt>'/'</tt>.</p>
+
+<p> 
+<a name="filesysslashes"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.2 SLASHES</h4>
+<a name="_1153_slashes"></a><a name="slashes"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">SLASHES</font>
+</pre>
+
+<p> Current platform's possible path separators. This is slightly different in that on <em>Windows</em> the path separators variable contains <tt>\\</tt> as well as <tt>:</tt> and <tt>/</tt> as newer <em>Windows</em> versions support <tt>/</tt> as a path separator. On <em>Unix</em> systems, it only contains <tt>/</tt>.</p>
+
+<p> 
+<a name="filesyseolsep"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.3 EOLSEP</h4>
+<a name="_1155_eolsep"></a><a name="eolsep"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">EOLSEP</font>
+</pre>
+
+<p> Current platform's newline string: <tt>"\n"</tt> on <em>Unix</em>, else <tt>"\r\n"</tt>.</p>
+
+<p> 
+<a name="filesyseol"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.4 EOL</h4>
+<a name="_1157_eol"></a><a name="eol"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">EOL</font>
+</pre>
+
+<p> All platform's newline character: <tt>'\n'</tt>. When text lines are read the native platform's EOLSEP string is replaced by a single character EOL.</p>
+
+<p> 
+<a name="filesyspathsep"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.5 PATHSEP</h4>
+<a name="_1159_pathsep"></a><a name="pathsep"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">PATHSEP</font>
+</pre>
+
+<p> Current platform's path separator character: <tt>:</tt> on <em>Unix</em>, else <tt>;</tt>.</p>
+
+<p> 
+<a name="filesysnulldevice"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.6 NULLDEVICE</h4>
+<a name="_1161_nulldevice"></a><a name="nulldevice"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">NULLDEVICE</font>
+</pre>
+
+<p> Current platform's null device path: <tt>/dev/null</tt> on <em>Unix</em>, else <tt>NUL:</tt>.</p>
+
+<p> 
+<a name="filesysshared_lib_ext"></a><a name="lib_ext"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.1.7 SHARED_LIB_EXT</h4>
+<a name="_1163_shared_lib_ext"></a><a name="shared_lib_ext"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">SHARED_LIB_EXT</font>
+</pre>
+
+<p> Current platform's shared library extension. For instance it can be <tt>dll</tt>, <tt>so</tt> or <tt>dylib</tt> depending on the platform.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h3>8.5.2 Directory Handling</h3>
+<a name="_1164_directoryhandling"></a><a name="directoryhandling"></a>
+<p> 
+<a name="filesysd_name"></a><a name="name"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.1 D_NAME</h4>
+<a name="_1166_d_name"></a><a name="d_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_NAME</font>
+</pre>
+
+<p> 
+<a name="filesysd_attributes"></a><a name="attributes"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.2 D_ATTRIBUTES</h4>
+<a name="_1168_d_attributes"></a><a name="d_attributes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_ATTRIBUTES</font>
+</pre>
+
+<p> 
+<a name="filesysd_size"></a><a name="size"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.3 D_SIZE</h4>
+<a name="_1170_d_size"></a><a name="d_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_SIZE</font>
+</pre>
+
+<p> 
+<a name="filesysd_year"></a><a name="year"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.4 D_YEAR</h4>
+<a name="_1172_d_year"></a><a name="d_year"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_YEAR</font>
+</pre>
+
+<p> 
+<a name="filesysd_month"></a><a name="month"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.5 D_MONTH</h4>
+<a name="_1174_d_month"></a><a name="d_month"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_MONTH</font>
+</pre>
+
+<p> 
+<a name="filesysd_day"></a><a name="day"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.6 D_DAY</h4>
+<a name="_1176_d_day"></a><a name="d_day"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_DAY</font>
+</pre>
+
+<p> 
+<a name="filesysd_hour"></a><a name="hour"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.7 D_HOUR</h4>
+<a name="_1178_d_hour"></a><a name="d_hour"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_HOUR</font>
+</pre>
+
+<p> 
+<a name="filesysd_minute"></a><a name="minute"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.8 D_MINUTE</h4>
+<a name="_1180_d_minute"></a><a name="d_minute"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_MINUTE</font>
+</pre>
+
+<p> 
+<a name="filesysd_second"></a><a name="second"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.9 D_SECOND</h4>
+<a name="_1182_d_second"></a><a name="d_second"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_SECOND</font>
+</pre>
+
+<p> 
+<a name="filesysd_millisecond"></a><a name="millisecond"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.10 D_MILLISECOND</h4>
+<a name="_1184_d_millisecond"></a><a name="d_millisecond"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_MILLISECOND</font>
+</pre>
+
+<p> 
+<a name="filesysd_altname"></a><a name="altname"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.11 D_ALTNAME</h4>
+<a name="_1186_d_altname"></a><a name="d_altname"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">D_ALTNAME</font>
+</pre>
+
+<p> 
+<a name="filesysw_bad_path"></a><a name="bad_path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.12 W_BAD_PATH</h4>
+<a name="_1188_w_bad_path"></a><a name="w_bad_path"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">W_BAD_PATH</font>
+</pre>
+
+<p> Bad path error code. See <a href="std_filesys.html#_1215_walk_dir">walk_dir</a></p>
+
+<p> 
+<a name="filesysw_skip_directory"></a><a name="skip_directory"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.13 W_SKIP_DIRECTORY</h4>
+<a name="_1190_w_skip_directory"></a><a name="w_skip_directory"></a>
+<pre class="examplecode"><font color="#0000FF">public constant </font><font color="#330033">W_SKIP_DIRECTORY</font>
+</pre>
+
+<p> 
+<a name="filesysdir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.14 dir</h4>
+<a name="_1192_dir"></a><a name="dir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">dir</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns directory information for the specified file or directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1193_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name to be looked up in the file system.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1194_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>,  -1 if no match found, else a sequence of sequence entries</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Errors:</h5>
+<a name="_1195_errors"></a><a name="errors"></a>
+<p> The length of <tt>name</tt> should not exceed 1_024 characters.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1196_comments"></a><a name="comments"></a>
+<p> <tt>name</tt> can also contain <tt>*</tt> and <tt>?</tt> wildcards to select multiple files.</p>
+
+<p> The returned information is similar to what you would get from the DIR command. A sequence is returned where each element is a sequence that describes one file or subdirectory.</p>
+
+<p> If <tt>name</tt> refers to a <strong>directory</strong> you may have entries for "." and "..", just as with the DIR command. If it refers to an existing <strong>file</strong>, and has no wildcards, then the returned sequence will have just one entry (that is its length will be <tt>1</tt>). If <tt>name</tt> contains wildcards you may have multiple entries.</p>
+
+<p> Each entry contains the name, attributes and file size as well as the time of the last modification.</p>
+
+<p> You can refer to the elements of an entry with the following constants:</p>
+
+<pre class="examplecode"><font color="#0000FF">public constant</font>
+<font color="#FF0055">    -- File Attributes</font>
+<font color="#330033">    D_NAME       = 1,</font>
+<font color="#330033">    D_ATTRIBUTES = 2,</font>
+<font color="#330033">    D_SIZE       = 3,</font>
+<font color="#330033">    D_YEAR       = 4,</font>
+<font color="#330033">    D_MONTH      = 5,</font>
+<font color="#330033">    D_DAY        = 6,</font>
+<font color="#330033">    D_HOUR       = 7,</font>
+<font color="#330033">    D_MINUTE     = 8,</font>
+<font color="#330033">    D_SECOND     = 9,</font>
+<font color="#330033">    D_MILLISECOND = 10,</font>
+<font color="#330033">    D_ALTNAME    = 11</font>
+</pre>
+
+<p> The attributes element is a string sequence containing characters chosen from:</p>
+<table><tr><th> Attribute </th>
+<th> Description </th>
+</tr>
+<tr><td> 'd'         </td>
+<td> directory</td>
+</tr>
+<tr><td> 'r'         </td>
+<td> read only file</td>
+</tr>
+<tr><td> 'h'         </td>
+<td> hidden file</td>
+</tr>
+<tr><td> 's'         </td>
+<td> system file</td>
+</tr>
+<tr><td> 'v'         </td>
+<td> volume-id entry</td>
+</tr>
+<tr><td> 'a'         </td>
+<td> archive file</td>
+</tr>
+<tr><td> 'c'         </td>
+<td> compressed file</td>
+</tr>
+<tr><td> 'e'         </td>
+<td> encrypted file</td>
+</tr>
+<tr><td> 'N'         </td>
+<td> not indexed</td>
+</tr>
+<tr><td> 'D'         </td>
+<td> a device name</td>
+</tr>
+<tr><td> 'O'         </td>
+<td> offline</td>
+</tr>
+<tr><td> 'R'         </td>
+<td> reparse point or symbolic link</td>
+</tr>
+<tr><td> 'S'         </td>
+<td> sparse file</td>
+</tr>
+<tr><td> 'T'         </td>
+<td> temporary file</td>
+</tr>
+<tr><td> 'V'         </td>
+<td> virtual file</td>
+</tr>
+</table>
+
+<p> A normal file without special attributes would just have an empty string, <tt>""</tt>, in this field.</p>
+
+<p> The top level directory ( therefore c:\ does not have "." or ".." entries).</p>
+
+<p> This function is often used just to test if a file or directory exists.</p>
+
+<p> Under <em>Windows</em>, the argument can have a long file or directory name anywhere in the path.</p>
+
+<p> Under <em>Unix</em>, the only attribute currently available is <tt>'d'</tt> and the milliseconds are always zero.</p>
+
+<p> <em>Windows</em>: The file name returned in <tt>[D_NAME]</tt> will be a long file name. If <tt>[D_ALTNAME]</tt> is not zero, it contains the 'short' name of the file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1197_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">d = dir</font><font color="#880033">(</font><font color="#330033">current_dir</font><font color="#993333">()</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- d might have:</font>
+<font color="#FF0055">--  {</font>
+<font color="#FF0055">--    {".",    "d",     0  1994, 1, 18,  9, 30, 02},</font>
+<font color="#FF0055">--    {"..",   "d",     0  1994, 1, 18,  9, 20, 14},</font>
+<font color="#FF0055">--    {"fred", "ra", 2350, 1994, 1, 22, 17, 22, 40},</font>
+<font color="#FF0055">--    {"sub",  "d" ,    0, 1993, 9, 20,  8, 50, 12}</font>
+<font color="#FF0055">--  }</font>
+
+<font color="#330033">d</font><font color="#880033">[</font><font color="#330033">3</font><font color="#880033">][</font><font color="#330033">D_NAME</font><font color="#880033">] </font><font color="#330033">would be </font><font color="#330033">"fred"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1198_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1215_walk_dir">walk_dir</a></p>
+
+<p> 
+<a name="filesyscurrent_dir"></a><a name="dir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.15 current_dir</h4>
+<a name="_1200_current_dir"></a><a name="current_dir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">current_dir</font><font color="#880033">()</font>
+</pre>
+
+<p>   Return the name of the current working directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1201_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the name of the current working directory</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1202_comments"></a><a name="comments"></a>
+<p> There will be no slash or backslash on the end of the current directory, except under <em>Windows</em>, at the top-level of a drive (such as <tt>C:\</tt>).</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1203_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">s</font>
+<font color="#330033">s = current_dir</font><font color="#880033">()</font>
+<font color="#FF0055">-- s would have "C:\EUPHORIA\DOC" if you were in that directory</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1204_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1192_dir">dir</a>, <a href="std_filesys.html#_1206_chdir">chdir</a></p>
+
+<p> 
+<a name="filesyschdir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.16 chdir</h4>
+<a name="_1206_chdir"></a><a name="chdir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">chdir</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">newdir</font><font color="#880033">)</font>
+</pre>
+
+<p>   sets a new value for the current directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1207_parameters"></a><a name="parameters"></a>
+<p> <tt>newdir</tt> : a sequence, the name for the new working directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1208_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1209_comments"></a><a name="comments"></a>
+<p> By setting the current directory, you can refer to files in that directory using just the file name.</p>
+
+<p> The <a href="std_filesys.html#_1200_current_dir">current_dir</a> function will return the name of the current directory.</p>
+
+<p> On <em>Windows</em> the current directory is a public property shared by all the processes running under one shell. On <em>Unix</em> a subprocess can change the current directory for itself, but this will not affect the current directory of its parent process.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1210_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">chdir</font><font color="#880033">(</font><font color="#330033">"c:\\euphoria"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">    f = </font><font color="#0000FF">open</font><font color="#880033">(</font><font color="#330033">"readme.doc"</font><font color="#330033">, </font><font color="#330033">"r"</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">STDERR, </font><font color="#330033">"Error: No euphoria directory?\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1211_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1200_current_dir">current_dir</a>, <a href="std_filesys.html#_1192_dir">dir</a></p>
+
+<p> 
+<a name="filesysmy_dir"></a><a name="dir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.17 my_dir</h4>
+<a name="_1213_my_dir"></a><a name="my_dir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public integer </font><font color="#330033">my_dir</font>
+</pre>
+
+<p>   <strong>Deprecated</strong>, so therefore not documented.</p>
+
+<p> 
+<a name="filesyswalk_dir"></a><a name="dir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.18 walk_dir</h4>
+<a name="_1215_walk_dir"></a><a name="walk_dir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">walk_dir</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path_name, </font><font color="#0000FF">object </font><font color="#330033">your_function,</font>
+<font color="#0000FF">        integer </font><font color="#330033">scan_subdirs = types :FALSE,</font>
+<font color="#0000FF">        object </font><font color="#330033">dir_source = types :NO_ROUTINE_ID</font><font color="#880033">)</font>
+</pre>
+
+<p>   Generalized Directory Walker</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1216_parameters"></a><a name="parameters"></a><ol><li><tt>path_name</tt> : a sequence, the name of the directory to walk through
+</li><li><tt>your_function</tt> : the routine id of a function that will receive each path returned from the result of <tt>dir_source</tt>, one at a time. Optionally, to include extra data for your function, <tt>your_function</tt> can be a 2 element sequence, with the routine_id as the first element and other data as the second element.
+</li><li><tt>scan_subdirs</tt> : an optional integer, <tt>1</tt> to also walk though subfolders, <tt>0</tt> (the default) to skip them all.
+</li><li><tt>dir_source</tt> : an optional integer. A routine_id of a user-defined routine that returns the list of paths to pass to <tt>your_function</tt>. If omitted, the <a href="std_filesys.html#_1192_dir">dir</a>() function is used. If your routine requires an extra parameter,  <tt>dir_source</tt> may be a 2 element sequence where the first element is the routine id and the second is the extra data to be passed as the second parameter to your function.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1217_returns"></a><a name="returns"></a>
+<p> An <strong>object</strong>, </p>
+<ul><li><tt>0</tt> on success
+</li><li><tt>W_BAD_PATH</tt>  an error occurred
+</li><li>anything else the custom function returned something to stop <a href="std_filesys.html#_1215_walk_dir">walk_dir</a>.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1218_comments"></a><a name="comments"></a>
+<p> This routine will "walk" through a directory named <tt>path_name</tt>. For each entry in the directory, it will call a function, whose routine_id is <tt>your_function</tt>. If <tt>scan_subdirs</tt> is non-zero (TRUE), then the subdirectories in <tt>path_name</tt> will be walked through recursively in the very same way.</p>
+
+<p> The routine that you supply should accept two sequences, the <em>path name</em> and <em>dir</em> entry for each file and subdirectory. It should return <tt>0</tt> to keep going, <tt>W_SKIP_DIRECTORY</tt> to avoid scan the contents of the supplied path name (if a directory), or non-zero to stop <tt>walk_dir</tt>. Returning <tt>W_BAD_PATH</tt> is taken as denoting some error.</p>
+
+<p> This mechanism allows you to write a simple function that handles one file at a time, while <tt>walk_dir</tt> handles the process of walking through all the files and subdirectories.</p>
+
+<p> By default, the files and subdirectories will be visited in alphabetical order. To use a different order, use the <tt>dir_source</tt> to pass the routine_id of your own modified <a href="std_filesys.html#_1192_dir">dir</a> function that sorts the directory entries differently.</p>
+
+<p> The path that you supply to <tt>walk_dir</tt> must not contain wildcards (<tt>*</tt> or <tt>?</tt>). Only a single directory (and its subdirectories) can be searched at one time.</p>
+
+<p> For <em>Windows</em> systems, any <tt>'/'</tt> characters in <tt>path_name</tt> are replaced with <tt>'\'</tt>.</p>
+
+<p> All trailing slash and whitespace characters are removed from <tt>path_name</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1219_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">function </font><font color="#330033">look_at</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path_name, </font><font color="#0000FF">sequence </font><font color="#330033">item</font><font color="#880033">)</font>
+<font color="#FF0055">-- this function accepts two sequences as arguments</font>
+<font color="#FF0055">-- it displays all C/C++ source files and their sizes</font>
+<font color="#0000FF">    if find</font><font color="#880033">(</font><font color="#330033">'d'</font><font color="#330033">, item</font><font color="#993333">[</font><font color="#330033">D_ATTRIBUTES</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#FF0055">        -- Ignore directories</font>
+<font color="#0000FF">        if find</font><font color="#880033">(</font><font color="#330033">'s'</font><font color="#330033">, item</font><font color="#993333">[</font><font color="#330033">D_ATTRIBUTES</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">           return </font><font color="#330033">W_SKIP_DIRECTORY </font><font color="#FF0055">-- Don't recurse a system directory</font>
+<font color="#0000FF">        else</font>
+<font color="#0000FF">           return </font><font color="#330033">0 </font><font color="#FF0055">-- Keep processing as normal</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">    if not find</font><font color="#880033">(</font><font color="#330033">fileext</font><font color="#993333">(</font><font color="#330033">item</font><font color="#0000FF">[</font><font color="#330033">D_NAME</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"c"</font><font color="#330033">,</font><font color="#330033">"h"</font><font color="#330033">,</font><font color="#330033">"cpp"</font><font color="#330033">,</font><font color="#330033">"hpp"</font><font color="#330033">,</font><font color="#330033">"cp"</font><font color="#993333">}</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">        return </font><font color="#330033">0 </font><font color="#FF0055">-- ignore non-C/C++ files</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">STDOUT, </font><font color="#330033">"%s%s%s: %d\n"</font><font color="#330033">,</font>
+<font color="#993333">           {</font><font color="#330033">path_name, </font><font color="#0000FF">{</font><font color="#330033">SLASH</font><font color="#0000FF">}</font><font color="#330033">, item</font><font color="#0000FF">[</font><font color="#330033">D_NAME</font><font color="#0000FF">]</font><font color="#330033">, item</font><font color="#0000FF">[</font><font color="#330033">D_SIZE</font><font color="#0000FF">]</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">    return </font><font color="#330033">0 </font><font color="#FF0055">-- keep going</font>
+<font color="#0000FF">end function</font>
+
+<font color="#0000FF">function </font><font color="#330033">mysort</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+<font color="#0000FF">	object </font><font color="#330033">d</font>
+	
+<font color="#330033">	d = dir</font><font color="#880033">(</font><font color="#330033">path</font><font color="#880033">)</font>
+<font color="#0000FF">	if atom</font><font color="#880033">(</font><font color="#330033">d</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">		return </font><font color="#330033">d</font>
+<font color="#0000FF">	end if</font>
+<font color="#FF0055">	-- Sort in descending file size.</font>
+<font color="#0000FF"> return </font><font color="#330033">sort_columns</font><font color="#880033">(</font><font color="#330033">d, </font><font color="#993333">{</font><font color="#330033">-D_SIZE</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#0000FF">end function</font>
+
+<font color="#330033">exit_code = walk_dir</font><font color="#880033">(</font><font color="#330033">"C:\\MYFILES\\"</font><font color="#330033">, </font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"look_at"</font><font color="#993333">)</font><font color="#330033">, TRUE, </font>
+<font color="#0000FF">                                                        routine_id</font><font color="#993333">(</font><font color="#330033">"mysort"</font><font color="#993333">)</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1220_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1192_dir">dir</a>, <a href="std_sort.html#_2939_sort">sort</a>, <a href="std_sort.html#_2955_sort_columns">sort_columns</a></p>
+
+<p> 
+<a name="filesyscreate_directory"></a><a name="directory"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.19 create_directory</h4>
+<a name="_1222_create_directory"></a><a name="create_directory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">create_directory</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name, </font><font color="#0000FF">integer </font><font color="#330033">mode = 448, </font><font color="#0000FF">integer </font><font color="#330033">mkparent = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   creates a new directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1223_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the new directory to create
+</li><li><tt>mode</tt> : on <em>Unix</em> systems, permissions for the new directory. Default is  <tt>448</tt> (all rights for owner, none for others).
+</li><li><tt>mkparent</tt> : If true (default) the parent directories are also created if needed.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1224_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1225_comments"></a><a name="comments"></a>
+<p> <tt>mode</tt> is ignored on <em>Windows</em> platforms.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1226_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if not </font><font color="#330033">create_directory</font><font color="#880033">(</font><font color="#330033">"the_new_folder"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not create the new folder"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+
+<font color="#FF0055">-- This example will also create "myapp/" and "myapp/interface/" </font>
+<font color="#FF0055">-- if they don't exist.</font>
+<font color="#0000FF">if not </font><font color="#330033">create_directory</font><font color="#880033">(</font><font color="#330033">"myapp/interface/letters"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not create the new folder"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+
+<font color="#FF0055">-- This example will NOT create "myapp/" and "myapp/interface/" </font>
+<font color="#FF0055">-- if they don't exist.</font>
+<font color="#0000FF">if not </font><font color="#330033">create_directory</font><font color="#880033">(</font><font color="#330033">"myapp/interface/letters"</font><font color="#330033">,,0</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not create the new folder"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1227_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1261_remove_directory">remove_directory</a>, <a href="std_filesys.html#_1206_chdir">chdir</a></p>
+
+<p> 
+<a name="filesyscreate_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.20 create_file</h4>
+<a name="_1229_create_file"></a><a name="create_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">create_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   Create a new file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1230_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the new file to create
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1231_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1232_comments"></a><a name="comments"></a><ul><li>The created file will be empty, that is it has a length of zero.
+</li><li>The created file will not be open when this returns.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1233_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if not </font><font color="#330033">create_file</font><font color="#880033">(</font><font color="#330033">"the_new_file"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not create the new file"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1234_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1222_create_directory">create_directory</a></p>
+
+<p> 
+<a name="filesysdelete_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.21 delete_file</h4>
+<a name="_1236_delete_file"></a><a name="delete_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">delete_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   deletes a file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1237_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the file to delete.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1238_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<p> 
+<a name="filesyscurdir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.22 curdir</h4>
+<a name="_1240_curdir"></a><a name="curdir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">curdir</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">drive_id = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   Returns the current directory, with a trailing SLASH</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1241_parameters"></a><a name="parameters"></a><ol><li><tt>drive_id</tt> : For <em>Windows</em> systems only. This is the Drive letter to to get the current directory of. If omitted, the current drive is used.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1242_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the current directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1243_comments"></a><a name="comments"></a>
+<p> <em>Windows</em> maintains a current directory for each disk drive. You would use this routine if you wanted the current directory for a drive that may not be the current drive.</p>
+
+<p> For <em>Unix</em> systems, this is simply ignored because there is only one current directory at any time on <em>Unix</em>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Note:</h5>
+<a name="_1244_note"></a><a name="note"></a>
+<p> This always ensures that the returned value has a trailing <em>SLASH</em> character.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1245_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = curdir</font><font color="#880033">(</font><font color="#330033">'D'</font><font color="#880033">) </font><font color="#FF0055">-- Find the current directory on the D: drive.</font>
+<font color="#FF0055">-- res might be "D:\backup\music\"</font>
+<font color="#330033">res = curdir</font><font color="#880033">()    </font><font color="#FF0055">-- Find the current directory on the current drive.</font>
+<font color="#FF0055">-- res might be "C:\myapp\work\"</font>
+</pre>
+
+<p> 
+<a name="filesysinit_curdir"></a><a name="curdir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.23 init_curdir</h4>
+<a name="_1247_init_curdir"></a><a name="init_curdir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">init_curdir</font><font color="#880033">()</font>
+</pre>
+
+<p>   returns the original current directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1248_parameters"></a><a name="parameters"></a><ol><li>None.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1249_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the current directory at the time the program started running.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1250_comments"></a><a name="comments"></a>
+<p> You would use this if the program might change the current directory during its processing and you wanted to return to the original directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Note:</h5>
+<a name="_1251_note"></a><a name="note"></a>
+<p> This always ensures that the returned value has a trailing <tt>SLASH</tt> character.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1252_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = init_curdir</font><font color="#880033">() </font><font color="#FF0055">-- Find the original current directory.</font>
+</pre>
+
+<p> 
+<a name="filesysclear_directory"></a><a name="directory"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.24 clear_directory</h4>
+<a name="_1254_clear_directory"></a><a name="clear_directory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">clear_directory</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">recurse = 1</font><font color="#880033">)</font>
+</pre>
+
+<p>   clears (deletes) a directory of all files, but retaining sub-directories.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1255_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the directory whose files you want to remove.
+</li><li><tt>recurse</tt> : an integer, whether or not to remove files in the directory's sub-directories. If <tt>0</tt> then this function is identical to <tt>remove_directory</tt>. If <tt>1</tt>, then we recursively delete the directory and its contents. Defaults to <tt>1</tt> .
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1256_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, otherwise the number of files plus <tt>1</tt> .</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1257_comments"></a><a name="comments"></a>
+<p> This never removes a directory. It only ever removes files. It is used to clear a directory structure of all existing files, leaving the structure intact.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1258_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">cnt = clear_directory</font><font color="#880033">(</font><font color="#330033">"the_old_folder"</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">cnt = 0 </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not remove one or more of the files."</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Number of files removed: %d\n"</font><font color="#330033">, cnt - 1</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1259_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1261_remove_directory">remove_directory</a>, <a href="std_filesys.html#_1236_delete_file">delete_file</a></p>
+
+<p> 
+<a name="filesysremove_directory"></a><a name="directory"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.2.25 remove_directory</h4>
+<a name="_1261_remove_directory"></a><a name="remove_directory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">remove_directory</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">dir_name, </font><font color="#0000FF">integer </font><font color="#330033">force = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   removes a directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1262_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : a sequence, the name of the directory to remove.
+</li><li><tt>force</tt> : an integer, if <tt>1</tt> this will also remove files and sub-directories in the directory. The default is  <tt>0</tt>, which means that it will only remove the directory if it is already empty.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1263_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1264_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if not </font><font color="#330033">remove_directory</font><font color="#880033">(</font><font color="#330033">"the_old_folder"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#330033">	crash</font><font color="#880033">(</font><font color="#330033">"Filesystem problem - could not remove the old folder"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1265_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1222_create_directory">create_directory</a>, <a href="std_filesys.html#_1206_chdir">chdir</a>, <a href="std_filesys.html#_1254_clear_directory">clear_directory</a></p>
+
+<!-- ..\include\std\filesys.e -->
+<h3>8.5.3 File Name Parsing</h3>
+<a name="_1266_filenameparsing"></a><a name="filenameparsing"></a>
+<p> 
+<a name="filesyspath_dir"></a><a name="dir"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.1 PATH_DIR</h4>
+<a name="_1268_path_dir"></a><a name="path_dir"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">PATH_DIR</font>
+</pre>
+
+<p> 
+<a name="filesyspath_filename"></a><a name="filename"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.2 PATH_FILENAME</h4>
+<a name="_1270_path_filename"></a><a name="path_filename"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">PATH_FILENAME</font>
+</pre>
+
+<p> 
+<a name="filesyspath_basename"></a><a name="basename"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.3 PATH_BASENAME</h4>
+<a name="_1272_path_basename"></a><a name="path_basename"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">PATH_BASENAME</font>
+</pre>
+
+<p> 
+<a name="filesyspath_fileext"></a><a name="fileext"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.4 PATH_FILEEXT</h4>
+<a name="_1274_path_fileext"></a><a name="path_fileext"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">PATH_FILEEXT</font>
+</pre>
+
+<p> 
+<a name="filesyspath_driveid"></a><a name="driveid"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.5 PATH_DRIVEID</h4>
+<a name="_1276_path_driveid"></a><a name="path_driveid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">PATH_DRIVEID</font>
+</pre>
+
+<p> 
+<a name="filesyspathinfo"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.6 pathinfo</h4>
+<a name="_1278_pathinfo"></a><a name="pathinfo"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">pathinfo</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">std_slash = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   parses a fully qualified pathname. </p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1279_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : a sequence, the path to parse
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1280_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of length five. Each of these elements is a string: </p>
+<ul><li>The path name. For <em>Windows</em> this excludes the drive id.
+</li><li>The full unqualified file name
+</li><li>the file name, without extension
+</li><li>the file extension
+</li><li>the drive id
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1281_comments"></a><a name="comments"></a>
+<p> The host operating system path separator is used in the parsing.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1282_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- WINDOWS</font>
+<font color="#330033">info = pathinfo</font><font color="#880033">(</font><font color="#330033">"C:\\euphoria\\docs\\readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- info is {"C:\\euphoria\\docs", "readme.txt", "readme", "txt", "C"}</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 2:</h5>
+<a name="_1283_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- Unix variants</font>
+<font color="#330033">info = pathinfo</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- info is {"/opt/euphoria/docs", "readme.txt", "readme", "txt", ""}</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 3:</h5>
+<a name="_1284_example3"></a><a name="example3"></a>
+<pre class="examplecode"><font color="#FF0055">-- no extension</font>
+<font color="#330033">info = pathinfo</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme"</font><font color="#880033">)</font>
+<font color="#FF0055">-- info is {"/opt/euphoria/docs", "readme", "readme", "", ""}</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1285_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1321_driveid">driveid</a>, <a href="std_filesys.html#_1287_dirname">dirname</a>, <a href="std_filesys.html#_1301_filename">filename</a>, <a href="std_filesys.html#_1314_fileext">fileext</a>, <a href="std_filesys.html#_1272_path_basename">PATH_BASENAME</a>, <a href="std_filesys.html#_1268_path_dir">PATH_DIR</a>, <a href="std_filesys.html#_1276_path_driveid">PATH_DRIVEID</a>, <a href="std_filesys.html#_1274_path_fileext">PATH_FILEEXT</a>, <a href="std_filesys.html#_1270_path_filename">PATH_FILENAME</a></p>
+
+<p> 
+<a name="filesysdirname"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.7 dirname</h4>
+<a name="_1287_dirname"></a><a name="dirname"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">dirname</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">integer </font><font color="#330033">pcd = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the directory name of a fully qualified filename.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1288_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li><li><tt>pcd</tt> : If not zero and there is no directory name in <tt>path</tt> then "." is returned. The default (<tt>0</tt>) will just return any directory name in <tt>path</tt>.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1289_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the full file name part of <tt>path</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1290_comments"></a><a name="comments"></a>
+<p> The host operating system path separator is used.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1291_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fname = dirname</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- fname is "/opt/euphoria/docs"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1292_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1321_driveid">driveid</a>, <a href="std_filesys.html#_1301_filename">filename</a>, <a href="std_filesys.html#_1278_pathinfo">pathinfo</a></p>
+
+<p> 
+<a name="filesyspathname"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.8 pathname</h4>
+<a name="_1294_pathname"></a><a name="pathname"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">pathname</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the directory name of a fully qualified filename.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1295_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li><li><tt>pcd</tt> : If not zero and there is no directory name in <tt>path</tt> then "." is returned. The default (<tt>0</tt>) will just return any directory name in <tt>path</tt>.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1296_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the full file name part of <tt>path</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1297_comments"></a><a name="comments"></a>
+<p> The host operating system path separator is used.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1298_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fname = dirname</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- fname is "/opt/euphoria/docs"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1299_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1321_driveid">driveid</a>, <a href="std_filesys.html#_1301_filename">filename</a>, <a href="std_filesys.html#_1278_pathinfo">pathinfo</a></p>
+
+<p> 
+<a name="filesysfilename"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.9 filename</h4>
+<a name="_1301_filename"></a><a name="filename"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">filename</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the file name portion of a fully qualified filename.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1302_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1303_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the file name part of <tt>path</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1304_comments"></a><a name="comments"></a>
+<p> The host operating system path separator is used.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1305_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fname = filename</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- fname is "readme.txt"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1306_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1278_pathinfo">pathinfo</a>, <a href="std_filesys.html#_1308_filebase">filebase</a>, <a href="std_filesys.html#_1314_fileext">fileext</a></p>
+
+<p> 
+<a name="filesysfilebase"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.10 filebase</h4>
+<a name="_1308_filebase"></a><a name="filebase"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">filebase</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the base filename of path.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1309_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1310_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the base file name part of <tt>path</tt>.</p>
+
+<p> TODO: Test</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1311_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">base = filebase</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- base is "readme"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1312_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1278_pathinfo">pathinfo</a>, <a href="std_filesys.html#_1301_filename">filename</a>, <a href="std_filesys.html#_1314_fileext">fileext</a></p>
+
+<p> 
+<a name="filesysfileext"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.11 fileext</h4>
+<a name="_1314_fileext"></a><a name="fileext"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">fileext</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the file extension of a fully qualified filename.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1315_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1316_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the file extension part of <tt>path</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1317_comments"></a><a name="comments"></a>
+<p> The host operating system path separator is used.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1318_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">fname = fileext</font><font color="#880033">(</font><font color="#330033">"/opt/euphoria/docs/readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- fname is "txt"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1319_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1278_pathinfo">pathinfo</a>, <a href="std_filesys.html#_1301_filename">filename</a>, <a href="std_filesys.html#_1308_filebase">filebase</a></p>
+
+<p> 
+<a name="filesysdriveid"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.12 driveid</h4>
+<a name="_1321_driveid"></a><a name="driveid"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">driveid</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the drive letter of the path on <em>Windows</em> platforms.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1322_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path from which to extract information
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1323_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the file extension part of <tt>path</tt>.</p>
+
+<p> TODO: Test</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1324_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">letter = driveid</font><font color="#880033">(</font><font color="#330033">"C:\\EUPHORIA\\Readme.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- letter is "C"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1325_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1278_pathinfo">pathinfo</a>, <a href="std_filesys.html#_1287_dirname">dirname</a>, <a href="std_filesys.html#_1301_filename">filename</a></p>
+
+<p> 
+<a name="filesysdefaultext"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.13 defaultext</h4>
+<a name="_1327_defaultext"></a><a name="defaultext"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">defaultext</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path, </font><font color="#0000FF">sequence </font><font color="#330033">defext</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the supplied filepath with the supplied extension, if the filepath does not have an extension already.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1328_parameters"></a><a name="parameters"></a><ol><li><tt>path</tt> : the path to check for an extension.
+</li><li><tt>defext</tt> : the extension to add if <tt>path</tt> does not have one.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1329_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the path with an extension.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1330_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- ensure that the supplied path has an extension,</font>
+<font color="#FF0055"> -- but if it doesn't use "tmp".</font>
+<font color="#330033">theFile = defaultext</font><font color="#880033">(</font><font color="#330033">UserFileName, </font><font color="#330033">"tmp"</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1331_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1278_pathinfo">pathinfo</a></p>
+
+<p> 
+<a name="filesysabsolute_path"></a><a name="path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.14 absolute_path</h4>
+<a name="_1333_absolute_path"></a><a name="absolute_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">absolute_path</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename</font><font color="#880033">)</font>
+</pre>
+
+<p>   determines if the supplied string is an absolute path or a relative path.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1334_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : a sequence, the name of the file path
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1335_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> if <tt>filename</tt> is a relative path or <tt>1</tt> otherwise.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1336_comments"></a><a name="comments"></a>
+<p> A <em>relative</em> path is one which is relative to the current directory and an <em>absolute</em> path is one that doesn't need to know the current directory to find the file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1337_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">""</font><font color="#880033">) </font><font color="#FF0055">-- returns 0</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"/usr/bin/abc"</font><font color="#880033">) </font><font color="#FF0055">-- returns 1</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"\\temp\\somefile.doc"</font><font color="#880033">) </font><font color="#FF0055">-- returns 1</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"../abc"</font><font color="#880033">) </font><font color="#FF0055">-- returns 0</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"local/abc.txt"</font><font color="#880033">) </font><font color="#FF0055">-- returns 0</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"abc.txt"</font><font color="#880033">) </font><font color="#FF0055">-- returns 0</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"c:..\\abc"</font><font color="#880033">) </font><font color="#FF0055">-- returns 0</font>
+
+<font color="#FF0055">-- The next two examples return </font>
+<font color="#FF0055">-- 0 on Unix platforms and </font>
+<font color="#FF0055">-- 1 on Microsoft platforms</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"c:\\windows\\system32\\abc"</font><font color="#880033">)</font>
+<font color="#330033">? absolute_path</font><font color="#880033">(</font><font color="#330033">"c:/windows/system32/abc"</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="filesysas_is"></a><a name="is"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.15 AS_IS</h4>
+<a name="_1339_as_is"></a><a name="as_is"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">AS_IS</font>
+</pre>
+
+<p> 
+<a name="filesysto_lower"></a><a name="lower"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.16 TO_LOWER</h4>
+<a name="_1341_to_lower"></a><a name="to_lower"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">TO_LOWER</font>
+</pre>
+
+<p> 
+<a name="filesyscorrect"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.17 CORRECT</h4>
+<a name="_1343_correct"></a><a name="correct"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">CORRECT</font>
+</pre>
+
+<p> 
+<a name="filesysto_short"></a><a name="short"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.18 TO_SHORT</h4>
+<a name="_1345_to_short"></a><a name="to_short"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">TO_SHORT</font>
+</pre>
+
+<p> 
+<a name="filesyscase_flagset_type"></a><a name="flagset_type"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.19 case_flagset_type</h4>
+<a name="_1347_case_flagset_type"></a><a name="case_flagset_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public type </font><font color="#330033">case_flagset_type</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">x</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="filesyscanonical_path"></a><a name="path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.20 canonical_path</h4>
+<a name="_1349_canonical_path"></a><a name="canonical_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">canonical_path</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path_in, </font><font color="#0000FF">integer </font><font color="#330033">directory_given = 0,</font>
+<font color="#330033">        case_flagset_type case_flags = AS_IS</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the full path and file name of the supplied file name.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1350_parameters"></a><a name="parameters"></a><ol><li><tt>path_in</tt> : A sequence. This is the file name whose full path you want.
+</li><li><tt>directory_given</tt> : An integer. This is zero if <tt>path_in</tt> is to be interpreted as a file specification otherwise it is assumed to be a directory specification. The default is zero.
+</li><li><tt>case_flags</tt> : An integer. This is a combination of flags. AS_IS      =  Includes no flags TO_LOWER   =  If passed will convert the part of the path not affected by other case flags to lowercase. CORRECT    =  If passed will correct the parts of the filepath that exist in the current filesystem in parts of the filesystem that is case insensitive.  This should  work on <em>Windows</em> or SMB mounted volumes on <em>Unix</em> and all OS X filesystems.
+</li></ol>
+<p>TO_LOWER    =  If passed alone the entire path is converted to lowercase. or_bits(TO_LOWER,CORRECT) = If these flags are passed together the the part that exists has the case of that of the filesystem.  The part that does not is converted to lower case. TO_SHORT    =  If passed the elements of the path that exist are also converted to their <em>Windows</em> short names if avaliable.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1351_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the full path and file name.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1352_comments"></a><a name="comments"></a><ul><li>The supplied file/directory does not have to actually exist.
+</li><li><tt>path_in</tt> can be enclosed in quotes, which will be stripped off.
+</li><li>If <tt>path_in</tt> begins with a tilde <tt>'~'</tt> then that is replaced by the contents of <tt>$HOME</tt> in <em>Unix</em> platforms and <tt>%HOMEDRIVE%%HOMEPATH%</tt> in <em>Windows</em>.
+</li><li>In <em>Windows</em> all <tt>'/'</tt> characters are replaced by <tt>'\'</tt> characters.
+</li><li>Does not (yet) handle UNC paths or <em>Unix</em> links.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1353_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Assuming the current directory is "/usr/foo/bar"</font>
+<font color="#330033">res = canonical_path</font><font color="#880033">(</font><font color="#330033">"../abc.def"</font><font color="#880033">)</font>
+<font color="#FF0055">-- res is now "/usr/foo/abc.def"</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 2:</h5>
+<a name="_1354_example2"></a><a name="example2"></a>
+<pre class="examplecode"><font color="#FF0055">-- res is "C:\Program Files" on systems that have that directory.</font>
+<font color="#330033">res = canonical_path</font><font color="#880033">(</font><font color="#330033">"c:\pRoGrAm FiLeS"</font><font color="#330033">, CORRECT</font><font color="#880033">)</font>
+<font color="#FF0055">-- on Windows Vista this would be "c:\Program Files" for Vista uses lowercase for its drives.</font>
+</pre>
+
+<p> 
+<a name="filesysabbreviate_path"></a><a name="path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.21 abbreviate_path</h4>
+<a name="_1356_abbreviate_path"></a><a name="abbreviate_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">abbreviate_path</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">orig_path, </font><font color="#0000FF">sequence </font><font color="#330033">base_paths = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a path string to the supplied file which is shorter than the given path string.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1357_parameters"></a><a name="parameters"></a><ol><li><tt>orig_path</tt> : A sequence. This is the path to a file.
+</li><li><tt>base_paths</tt> : A sequence. This is an optional list of paths that may prefix the original path. The default is an empty list.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1358_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, an equivalent path to <tt>orig_path</tt> which is shorter than the supplied path. If a shorter one cannot be formed, then the original path is returned.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1359_comments"></a><a name="comments"></a><ul><li>This function is primarily used to get the shortest form of a file path for output to a file or screen.
+</li><li>It works by first trying to find if the <tt>orig_path</tt> begins with any of the <tt>base_paths</tt>. If so it returns the parameter minus the base path prefix.
+</li><li>Next it checks if the <tt>orig_path</tt> begins with the current directory path. If so it returns the parameter minus the current directory path.
+</li><li>Next it checks if it can form a relative path from the current directory to the supplied file which is shorter than the parameter string.
+</li><li>Failing all of that, it returns the original parameter.
+</li><li>In <em>Windows</em> the shorter result has all <tt>'/'</tt> characters are replaced by <tt>'\'</tt> characters.
+</li><li>The supplied path does not have to actually exist.
+</li><li><tt>orig_path</tt> can be enclosed in quotes, which will be stripped off.
+</li><li>If <tt>orig_path</tt> begins with a tilde <tt>'~'</tt> then that is replaced by the contents of <tt>$HOME</tt> in <em>Unix</em> platforms and <tt>%HOMEDRIVE%%HOMEPATH%</tt> in <em>Windows</em>.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1360_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Assuming the current directory is "/usr/foo/bar"</font>
+<font color="#330033">res = abbreviate_path</font><font color="#880033">(</font><font color="#330033">"/usr/foo/abc.def"</font><font color="#880033">)</font>
+<font color="#FF0055">-- res is now "../abc.def"</font>
+<font color="#330033">res = abbreviate_path</font><font color="#880033">(</font><font color="#330033">"/usr/foo/bar/inc/abc.def"</font><font color="#880033">)</font>
+<font color="#FF0055">-- res is now "inc/abc.def"</font>
+<font color="#330033">res = abbreviate_path</font><font color="#880033">(</font><font color="#330033">"abc.def"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"/usr/foo"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- res is now "bar/abc.def"</font>
+</pre>
+
+<p> 
+<a name="filesyssplit_path"></a><a name="path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.22 split_path</h4>
+<a name="_1362_split_path"></a><a name="split_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">split_path</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">fname</font><font color="#880033">)</font>
+</pre>
+
+<p>   split a filename into path segments.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1363_parameters"></a><a name="parameters"></a><ul><li><tt>fname</tt> -- Filename to split
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1364_returns"></a><a name="returns"></a>
+<p> A sequence of strings representing each path element found in <tt>fname</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1365_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">path_elements = split_path</font><font color="#880033">(</font><font color="#330033">"/usr/home/john/hello.txt"</font><font color="#880033">)</font>
+<font color="#FF0055">-- path_elements would be { "usr", "home", "john", "hello.txt" }</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Versioning:</h5>
+<a name="_1366_versioning"></a><a name="versioning"></a><ul><li>Added in 4.0.1
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1367_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1369_join_path">join_path</a></p>
+
+<p> 
+<a name="filesysjoin_path"></a><a name="path"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.3.23 join_path</h4>
+<a name="_1369_join_path"></a><a name="join_path"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">join_path</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">path_elements</font><font color="#880033">)</font>
+</pre>
+
+<p>   Join multiple path segments into a single path/filename</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1370_parameters"></a><a name="parameters"></a><ul><li><tt>path_elements</tt> -- Sequence of path elements
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1371_returns"></a><a name="returns"></a>
+<p> A string representing the path elements on the given platform</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1372_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">fname = join_path</font><font color="#880033">(</font><font color="#993333">{ </font><font color="#330033">"usr"</font><font color="#330033">, </font><font color="#330033">"home"</font><font color="#330033">, </font><font color="#330033">"john"</font><font color="#330033">, </font><font color="#330033">"hello.txt" </font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#FF0055">-- fname would be "/usr/home/john/hello.txt" on Unix</font>
+<font color="#FF0055">-- fname would be "\\usr\\home\\john\\hello.txt" on Windows</font>
+</pre>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Versioning:</h5>
+<a name="_1373_versioning"></a><a name="versioning"></a><ul><li>Added in 4.0.1
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1374_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1362_split_path">split_path</a></p>
+
+<!-- ..\include\std\filesys.e -->
+<h3>8.5.4 File Types</h3>
+<a name="_1375_filetypes"></a><a name="filetypes"></a>
+<p> 
+<a name="filesysfiletype_undefined"></a><a name="undefined"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.4.1 FILETYPE_UNDEFINED</h4>
+<a name="_1377_filetype_undefined"></a><a name="filetype_undefined"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">FILETYPE_UNDEFINED</font>
+</pre>
+
+<p> 
+<a name="filesysfiletype_not_found"></a><a name="not_found"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.4.2 FILETYPE_NOT_FOUND</h4>
+<a name="_1379_filetype_not_found"></a><a name="filetype_not_found"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">FILETYPE_NOT_FOUND</font>
+</pre>
+
+<p> 
+<a name="filesysfiletype_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.4.3 FILETYPE_FILE</h4>
+<a name="_1381_filetype_file"></a><a name="filetype_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">FILETYPE_FILE</font>
+</pre>
+
+<p> 
+<a name="filesysfiletype_directory"></a><a name="directory"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.4.4 FILETYPE_DIRECTORY</h4>
+<a name="_1383_filetype_directory"></a><a name="filetype_directory"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">FILETYPE_DIRECTORY</font>
+</pre>
+
+<p> 
+<a name="filesysfile_type"></a><a name="type"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.4.5 file_type</h4>
+<a name="_1385_file_type"></a><a name="file_type"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">file_type</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the type of a file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1386_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : the name of the file to query. It must not have wildcards.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1387_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>FILETYPE_UNDEFINED (-1) if file could be multiply defined (i.e., contains any wildcards - '*' or '?')
+</li><li>FILETYPE_NOT_FOUND (0) if filename does not exist
+</li><li>FILETYPE_FILE (1) if filename is a file
+</li><li>FILETYPE_DIRECTORY (2) if filename is a directory
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1388_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1192_dir">dir</a>, <a href="std_filesys.html#_1383_filetype_directory">FILETYPE_DIRECTORY</a>, <a href="std_filesys.html#_1381_filetype_file">FILETYPE_FILE</a>, <a href="std_filesys.html#_1379_filetype_not_found">FILETYPE_NOT_FOUND</a>, <a href="std_filesys.html#_1377_filetype_undefined">FILETYPE_UNDEFINED</a></p>
+
+<!-- ..\include\std\filesys.e -->
+<h3>8.5.5 File Handling</h3>
+<a name="_1389_filehandling"></a><a name="filehandling"></a>
+<p> 
+<a name="filesyssectors_per_cluster"></a><a name="per_cluster"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.1 SECTORS_PER_CLUSTER</h4>
+<a name="_1391_sectors_per_cluster"></a><a name="sectors_per_cluster"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">SECTORS_PER_CLUSTER</font>
+</pre>
+
+<p> 
+<a name="filesysbytes_per_sector"></a><a name="per_sector"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.2 BYTES_PER_SECTOR</h4>
+<a name="_1393_bytes_per_sector"></a><a name="bytes_per_sector"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">BYTES_PER_SECTOR</font>
+</pre>
+
+<p> 
+<a name="filesysnumber_of_free_clusters"></a><a name="of_free_clusters"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.3 NUMBER_OF_FREE_CLUSTERS</h4>
+<a name="_1395_number_of_free_clusters"></a><a name="number_of_free_clusters"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">NUMBER_OF_FREE_CLUSTERS</font>
+</pre>
+
+<p> 
+<a name="filesystotal_number_of_clusters"></a><a name="number_of_clusters"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.4 TOTAL_NUMBER_OF_CLUSTERS</h4>
+<a name="_1397_total_number_of_clusters"></a><a name="total_number_of_clusters"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">TOTAL_NUMBER_OF_CLUSTERS</font>
+</pre>
+
+<p> 
+<a name="filesystotal_bytes"></a><a name="bytes"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.5 TOTAL_BYTES</h4>
+<a name="_1399_total_bytes"></a><a name="total_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">TOTAL_BYTES</font>
+</pre>
+
+<p> 
+<a name="filesysfree_bytes"></a><a name="bytes"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.6 FREE_BYTES</h4>
+<a name="_1401_free_bytes"></a><a name="free_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">FREE_BYTES</font>
+</pre>
+
+<p> 
+<a name="filesysused_bytes"></a><a name="bytes"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.7 USED_BYTES</h4>
+<a name="_1403_used_bytes"></a><a name="used_bytes"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">USED_BYTES</font>
+</pre>
+
+<p> 
+<a name="filesyscount_dirs"></a><a name="dirs"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.8 COUNT_DIRS</h4>
+<a name="_1405_count_dirs"></a><a name="count_dirs"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">COUNT_DIRS</font>
+</pre>
+
+<p> 
+<a name="filesyscount_files"></a><a name="files"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.9 COUNT_FILES</h4>
+<a name="_1407_count_files"></a><a name="count_files"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">COUNT_FILES</font>
+</pre>
+
+<p> 
+<a name="filesyscount_size"></a><a name="size"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.10 COUNT_SIZE</h4>
+<a name="_1409_count_size"></a><a name="count_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">COUNT_SIZE</font>
+</pre>
+
+<p> 
+<a name="filesyscount_types"></a><a name="types"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.11 COUNT_TYPES</h4>
+<a name="_1411_count_types"></a><a name="count_types"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">COUNT_TYPES</font>
+</pre>
+
+<p> 
+<a name="filesysext_name"></a><a name="name"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.12 EXT_NAME</h4>
+<a name="_1413_ext_name"></a><a name="ext_name"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">EXT_NAME</font>
+</pre>
+
+<p> 
+<a name="filesysext_count"></a><a name="count"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.13 EXT_COUNT</h4>
+<a name="_1415_ext_count"></a><a name="ext_count"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">EXT_COUNT</font>
+</pre>
+
+<p> 
+<a name="filesysext_size"></a><a name="size"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.14 EXT_SIZE</h4>
+<a name="_1417_ext_size"></a><a name="ext_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public enum </font><font color="#330033">EXT_SIZE</font>
+</pre>
+
+<p> 
+<a name="filesysfile_exists"></a><a name="exists"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.15 file_exists</h4>
+<a name="_1419_file_exists"></a><a name="file_exists"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">file_exists</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">name</font><font color="#880033">)</font>
+</pre>
+
+<p>   checks to see if a file exists.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1420_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> :  filename to check existence of
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1421_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>1</tt> on yes, <tt>0</tt> on no.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1422_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">file_exists</font><font color="#880033">(</font><font color="#330033">"abc.e"</font><font color="#880033">) </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"abc.e exists already\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<p> 
+<a name="filesysfile_timestamp"></a><a name="timestamp"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.16 file_timestamp</h4>
+<a name="_1424_file_timestamp"></a><a name="file_timestamp"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">file_timestamp</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">fname</font><font color="#880033">)</font>
+</pre>
+
+<p>   gets the timestamp of the file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1425_parameters"></a><a name="parameters"></a><ol><li><tt>name</tt> : the filename to get the date of
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1426_returns"></a><a name="returns"></a>
+<p> A valid <strong>datetime type</strong>, representing the files date and time or <tt>-1</tt> if the file's date and time could not be read.</p>
+
+<p> 
+<a name="filesyscopy_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.17 copy_file</h4>
+<a name="_1428_copy_file"></a><a name="copy_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">copy_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">src, </font><font color="#0000FF">sequence </font><font color="#330033">dest, </font><font color="#0000FF">integer </font><font color="#330033">overwrite = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   copies a file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1429_parameters"></a><a name="parameters"></a><ol><li><tt>src</tt> : a sequence, the name of the file or directory to copy
+</li><li><tt>dest</tt> : a sequence, the new name or location of the file
+</li><li><tt>overwrite</tt> : an integer; <tt>0</tt> (the default) will prevent an existing destination file from being overwritten. Non-zero will overwrite the destination file.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1430_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1431_comments"></a><a name="comments"></a>
+<p> If <tt>overwrite</tt> is true, and if <tt>dest</tt> file already exists, the function overwrites the existing file and succeeds.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1432_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1440_move_file">move_file</a>, <a href="std_filesys.html#_1434_rename_file">rename_file</a></p>
+
+<p> 
+<a name="filesysrename_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.18 rename_file</h4>
+<a name="_1434_rename_file"></a><a name="rename_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">rename_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">old_name, </font><font color="#0000FF">sequence </font><font color="#330033">new_name, </font><font color="#0000FF">integer </font><font color="#330033">overwrite = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   rename a file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1435_parameters"></a><a name="parameters"></a><ol><li><tt>old_name</tt> : a sequence, the name of the file or directory to rename.
+</li><li><tt>new_name</tt> : a sequence, the new name for the renamed file
+</li><li><tt>overwrite</tt> : an integer, <tt>0</tt> (the default) to prevent renaming if destination file exists,  <tt>1</tt> to delete existing destination file first
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1436_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1437_comments"></a><a name="comments"></a><ul><li>If <tt>new_name</tt> contains a path specification, this is equivalent to moving the file, as well as possibly changing its name. However, the path must be on the same drive for this to work.
+</li><li>If <tt>overwrite</tt> was requested but the rename fails, any existing destination file is preserved.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1438_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1440_move_file">move_file</a>, <a href="std_filesys.html#_1428_copy_file">copy_file</a></p>
+
+<p> 
+<a name="filesysmove_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.19 move_file</h4>
+<a name="_1440_move_file"></a><a name="move_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">move_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">src, </font><font color="#0000FF">sequence </font><font color="#330033">dest, </font><font color="#0000FF">integer </font><font color="#330033">overwrite = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   moves a file to another location.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1441_parameters"></a><a name="parameters"></a><ol><li><tt>src</tt> : a sequence, the name of the file or directory to move
+</li><li><tt>dest</tt> : a sequence, the new location for the file
+</li><li><tt>overwrite</tt> : an integer, <tt>0</tt> (the default) to prevent overwriting an existing destination file,  <tt>1</tt> to overwrite existing destination file
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1442_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, <tt>0</tt> on failure, <tt>1</tt> on success.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1443_comments"></a><a name="comments"></a>
+<p> If <tt>overwrite</tt> was requested but the move fails, any existing destination file is preserved.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1444_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1434_rename_file">rename_file</a>, <a href="std_filesys.html#_1428_copy_file">copy_file</a></p>
+
+<p> 
+<a name="filesysfile_length"></a><a name="length"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.20 file_length</h4>
+<a name="_1446_file_length"></a><a name="file_length"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">file_length</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the size of a file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1447_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : the name of the queried file
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1448_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, the file size, or <tt>-1</tt> if file is not found.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1449_comments"></a><a name="comments"></a>
+<p> This function does not compute the total size for a directory, and returns <tt>0</tt> instead. </p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>See Also:</h5>
+<a name="_1450_seealso"></a><a name="seealso"></a>
+<p> <a href="std_filesys.html#_1192_dir">dir</a></p>
+
+<p> 
+<a name="filesyslocate_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.21 locate_file</h4>
+<a name="_1452_locate_file"></a><a name="locate_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">locate_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename, </font><font color="#0000FF">sequence </font><font color="#330033">search_list = </font><font color="#993333">{}</font><font color="#330033">,</font>
+<font color="#0000FF">        sequence </font><font color="#330033">subdir = </font><font color="#993333">{}</font><font color="#880033">)</font>
+</pre>
+
+<p>   locates a file by looking in a set of directories for it.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1453_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : a sequence, the name of the file to search for.
+</li><li><tt>search_list</tt> : a sequence, the list of directories to look in. By default this is <tt>""</tt>, meaning that a predefined set of directories is scanned. See comments below.
+</li><li><tt>subdir</tt> : a sequence, the sub directory within the search directories to check. This is optional.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1454_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, the located file path if found, else the original file name.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1455_comments"></a><a name="comments"></a>
+<p> If <tt>filename</tt> is an absolute path, it is just returned and no searching takes place.</p>
+
+<p> If <tt>filename</tt> is located, the full path of the file is returned.</p>
+
+<p> If <tt>search_list</tt> is supplied, it can be either a sequence of directory names, of a string of directory names delimited by <tt>':'</tt> in <em>Unix</em> and <tt>';'</tt> in <em>Windows</em>.</p>
+
+<p> If the <tt>search_list</tt> is omitted or <tt>""</tt>, this will look in the following places: </p>
+<ul><li>The current directory
+</li><li>The directory that the program is run from.
+</li><li>The directory in <tt>$HOME</tt> (<tt>$HOMEDRIVE &amp; $HOMEPATH</tt> in <em>Windows</em>)
+</li><li>The parent directory of the current directory
+</li><li>The directories returned by <tt>include_paths</tt>
+</li><li>$EUDIR/bin
+</li><li>$EUDIR/docs
+</li><li>$EUDIST/
+</li><li>$EUDIST/etc
+</li><li>$EUDIST/data
+</li><li>The directories listed in $USERPATH
+</li><li>The directories listed in $PATH
+</li></ul>
+<p>If the <tt>subdir</tt> is supplied, the function looks in this sub directory for each of the directories in the search list.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1456_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = locate_file</font><font color="#880033">(</font><font color="#330033">"abc.def"</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">"/usr/bin"</font><font color="#330033">, </font><font color="#330033">"/u2/someapp"</font><font color="#330033">, </font><font color="#330033">"/etc"</font><font color="#993333">}</font><font color="#880033">)</font>
+<font color="#330033"> res = locate_file</font><font color="#880033">(</font><font color="#330033">"abc.def"</font><font color="#330033">, </font><font color="#330033">"/usr/bin:/u2/someapp:/etc"</font><font color="#880033">)</font>
+<font color="#330033"> res = locate_file</font><font color="#880033">(</font><font color="#330033">"abc.def"</font><font color="#880033">) </font>
+<font color="#FF0055">       -- Scan default locations.</font>
+<font color="#330033"> res = locate_file</font><font color="#880033">(</font><font color="#330033">"abc.def"</font><font color="#330033">, , </font><font color="#330033">"app"</font><font color="#880033">) </font>
+<font color="#FF0055">       -- Scan the 'app' sub directory in the default locations.</font>
+</pre>
+
+<p> 
+<a name="filesysdisk_metrics"></a><a name="metrics"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.22 disk_metrics</h4>
+<a name="_1458_disk_metrics"></a><a name="disk_metrics"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">disk_metrics</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">disk_path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns some information about a disk drive.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1459_parameters"></a><a name="parameters"></a><ol><li><tt>disk_path</tt> : A sequence. This is the path that identifies the disk to inquire upon.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1460_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing <tt>SECTORS_PER_CLUSTER</tt>, <tt>BYTES_PER_SECTOR</tt>, <tt>NUMBER_OF_FREE_CLUSTERS</tt>, and <tt>TOTAL_NUMBER_OF_CLUSTERS</tt></p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1461_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = disk_metrics</font><font color="#880033">(</font><font color="#330033">"C:\\"</font><font color="#880033">)</font>
+<font color="#330033">min_file_size = res</font><font color="#880033">[</font><font color="#330033">SECTORS_PER_CLUSTER</font><font color="#880033">] </font><font color="#330033">* res</font><font color="#880033">[</font><font color="#330033">BYTES_PER_SECTOR</font><font color="#880033">]</font>
+</pre>
+
+<p> 
+<a name="filesysdisk_size"></a><a name="size"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.23 disk_size</h4>
+<a name="_1463_disk_size"></a><a name="disk_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">disk_size</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">disk_path</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the amount of space for a disk drive.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1464_parameters"></a><a name="parameters"></a><ol><li><tt>disk_path</tt> : A sequence. This is the path that identifies the disk to inquire upon.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1465_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing <tt>TOTAL_BYTES</tt>, <tt>USED_BYTES</tt>, <tt>FREE_BYTES</tt>, and a string which represents the filesystem name</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1466_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = disk_size</font><font color="#880033">(</font><font color="#330033">"C:\\"</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Drive %s has %3.2f%% free space\n"</font><font color="#330033">, </font><font color="#993333">{ </font>
+<font color="#330033">    "C:"</font><font color="#330033">, res</font><font color="#0000FF">[</font><font color="#330033">FREE_BYTES</font><font color="#0000FF">] </font><font color="#330033">/ res</font><font color="#0000FF">[</font><font color="#330033">TOTAL_BYTES</font><font color="#0000FF">]</font>
+<font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<p> 
+<a name="filesysdir_size"></a><a name="size"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.24 dir_size</h4>
+<a name="_1468_dir_size"></a><a name="dir_size"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">dir_size</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">dir_path, </font><font color="#0000FF">integer </font><font color="#330033">count_all = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns the amount of space used by a directory.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1469_parameters"></a><a name="parameters"></a><ol><li><tt>dir_path</tt> : A sequence. This is the path that identifies the directory to inquire upon.
+</li><li><tt>count_all</tt> : An integer. Used by <em>Windows</em> systems. If zero (the default) it will not include <em>system</em> or <em>hidden</em> files in the count, otherwise they are included.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1470_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, containing four elements; the number of sub-directories <tt>[COUNT_DIRS]</tt>, the number of files <tt>[COUNT_FILES]</tt>, the total space used by the directory <tt>[COUNT_SIZE]</tt>, and breakdown of the file contents by file extension <tt>[COUNT_TYPES]</tt>.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1471_comments"></a><a name="comments"></a><ul><li>The total space used by the directory does not include space used by any sub-directories.
+</li><li>The file breakdown is a sequence of three-element sub-sequences. Each sub-sequence contains the extension <tt>[EXT_NAME]</tt>, the number of files of this extension <tt>[EXT_COUNT]</tt>, and the space used by these files <tt>[EXT_SIZE]</tt>. The sub-sequences are presented in extension name order. On <em>Windows</em> the extensions are all in lowercase.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1472_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">res = dir_size</font><font color="#880033">(</font><font color="#330033">"/usr/localbin"</font><font color="#880033">)</font>
+<font color="#0000FF">printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Directory %s contains %d files\n"</font><font color="#330033">, </font><font color="#993333">{</font>
+<font color="#330033">        "/usr/localbin"</font><font color="#330033">, res</font><font color="#0000FF">[</font><font color="#330033">COUNT_FILES</font><font color="#0000FF">]</font>
+<font color="#993333">    }</font><font color="#880033">)</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">res</font><font color="#993333">[</font><font color="#330033">COUNT_TYPES</font><font color="#993333">]</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"Type: %s (%d files %d bytes)\n"</font><font color="#330033">, </font><font color="#993333">{</font>
+<font color="#330033">        res</font><font color="#0000FF">[</font><font color="#330033">COUNT_TYPES</font><font color="#0000FF">][</font><font color="#330033">i</font><font color="#0000FF">][</font><font color="#330033">EXT_NAME</font><font color="#0000FF">]</font><font color="#330033">,</font>
+<font color="#330033">        res</font><font color="#0000FF">[</font><font color="#330033">COUNT_TYPES</font><font color="#0000FF">][</font><font color="#330033">i</font><font color="#0000FF">][</font><font color="#330033">EXT_COUNT</font><font color="#0000FF">]</font><font color="#330033">,</font>
+<font color="#330033">        res</font><font color="#0000FF">[</font><font color="#330033">COUNT_TYPES</font><font color="#0000FF">][</font><font color="#330033">i</font><font color="#0000FF">][</font><font color="#330033">EXT_SIZE</font><font color="#0000FF">]</font>
+<font color="#993333">    }</font><font color="#880033">)</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<p> 
+<a name="filesystemp_file"></a><a name="file"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.25 temp_file</h4>
+<a name="_1474_temp_file"></a><a name="temp_file"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">temp_file</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">temp_location = </font><font color="#330033">""</font><font color="#330033">, </font><font color="#0000FF">sequence </font><font color="#330033">temp_prefix = </font><font color="#330033">""</font><font color="#330033">,</font>
+<font color="#0000FF">        sequence </font><font color="#330033">temp_extn = </font><font color="#330033">"_T_"</font><font color="#330033">, </font><font color="#0000FF">integer </font><font color="#330033">reserve_temp = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a file name that can be used as a temporary file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1475_parameters"></a><a name="parameters"></a><ol><li><tt>temp_location</tt> : A sequence. A directory where the temporary file is expected to be created.<ul><li>If omitted (the default) the 'temporary' directory will be used. The temporary directory is defined in the "TEMP" environment symbol, or failing that the "TMP" symbol and failing that "C:\TEMP\" is used on <em>Windows</em> systems and "/tmp/" is used on <em>Unix</em> systems.
+</li><li>If <tt>temp_location</tt> was supplied,<ul><li>If it is an existing file, that file's directory is used.
+</li><li>If it is an existing directory, it is used.
+</li><li>If it doesn't exist, the directory name portion is used.
+</li></ul>
+</li></ul>
+</li><li><tt>temp_prefix</tt> : A sequence: The is prepended to the start of the generated file name. The default is <tt>""</tt> .
+</li><li><tt>temp_extn</tt> : A sequence: The is a file extention used in the generated file. The default is <tt>"_T_"</tt> .
+</li><li><tt>reserve_temp</tt> : An integer: If not zero an empty file is created using the generated name. The default is not to reserve (create) the file.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1476_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, A generated file name.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1477_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">temp_file</font><font color="#880033">(</font><font color="#330033">"/usr/space"</font><font color="#330033">, </font><font color="#330033">"myapp"</font><font color="#330033">, </font><font color="#330033">"tmp"</font><font color="#880033">) </font><font color="#FF0055">--&gt; /usr/space/myapp736321.tmp</font>
+<font color="#330033">temp_file</font><font color="#880033">() </font><font color="#FF0055">--&gt; /tmp/277382._T_</font>
+<font color="#330033">temp_file</font><font color="#880033">(</font><font color="#330033">"/users/me/abc.exw"</font><font color="#880033">) </font><font color="#FF0055">--&gt; /users/me/992831._T_</font>
+</pre>
+
+<p> 
+<a name="filesyschecksum"></a> </p>
+
+<!-- ..\include\std\filesys.e -->
+<h4>8.5.5.26 checksum</h4>
+<a name="_1479_checksum"></a><a name="checksum"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/filesys.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">filesys</font>
+<font color="#0000FF">public function </font><font color="#330033">checksum</font><font color="#880033">(</font><font color="#0000FF">sequence </font><font color="#330033">filename, </font><font color="#0000FF">integer </font><font color="#330033">size = 4, </font><font color="#0000FF">integer </font><font color="#330033">usename = 0,</font>
+<font color="#0000FF">        integer </font><font color="#330033">return_text = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a checksum value for the specified file.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Parameters:</h5>
+<a name="_1480_parameters"></a><a name="parameters"></a><ol><li><tt>filename</tt> : A sequence. The name of the file whose checksum you want.
+</li><li><tt>size</tt> : An integer. The number of atoms to return. Default is 4
+</li><li><tt>usename</tt>: An integer. If not zero then the actual text of <tt>filename</tt> will affect the resulting checksum. The default (<tt>0</tt>) will not use the name of the file.
+</li><li><tt>return_text</tt>: An integer. If not zero, the check sum is returned as a text string of hexadecimal digits otherwise (the default) the check sum is returned as a sequence of <tt>size</tt> atoms.
+</li></ol>
+<!-- ..\include\std\filesys.e -->
+<h5>Returns:</h5>
+<a name="_1481_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong> containing <tt>size</tt> atoms.</p>
+
+<!-- ..\include\std\filesys.e -->
+<h5>Comments:</h5>
+<a name="_1482_comments"></a><a name="comments"></a><ul><li>The larger the <tt>size</tt> value, the more unique will the checksum be. For most files and uses, a single atom will be sufficient as this gives a 32-bit file signature. However, if you require better proof that the content of two files are different then use higher values for <tt>size</tt>. For example,  <tt>size = 8</tt> gives you 256 bits of file signature.
+</li><li>If <tt>size</tt> is zero or negative, an empty sequence is returned.
+</li><li>All files of zero length will return the same checksum value when <tt>usename</tt> is zero.
+</li></ul>
+<!-- ..\include\std\filesys.e -->
+<h5>Example 1:</h5>
+<a name="_1483_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Example values. The exact values depend on the contents of the file.</font>
+<font color="#0000FF"> include </font><font color="#330033">std/console.e</font>
+<font color="#330033"> display</font><font color="#880033">( </font><font color="#330033">checksum</font><font color="#993333">(</font><font color="#330033">"myfile"</font><font color="#330033">, 1</font><font color="#993333">) </font><font color="#880033">) </font><font color="#FF0055">--&gt; {92837498}</font>
+<font color="#330033"> display</font><font color="#880033">( </font><font color="#330033">checksum</font><font color="#993333">(</font><font color="#330033">"myfile"</font><font color="#330033">, 2</font><font color="#993333">) </font><font color="#880033">) </font><font color="#FF0055">--&gt; {1238176, 87192873}</font>
+<font color="#330033"> display</font><font color="#880033">( </font><font color="#330033">checksum</font><font color="#993333">(</font><font color="#330033">"myfile"</font><font color="#330033">, 2,,1</font><font color="#993333">)</font><font color="#880033">) </font><font color="#FF0055">--&gt; "0012E480 05327529"</font>
+<font color="#330033"> display</font><font color="#880033">( </font><font color="#330033">checksum</font><font color="#993333">(</font><font color="#330033">"myfile"</font><font color="#330033">, 4</font><font color="#993333">) </font><font color="#880033">) </font><font color="#FF0055">--&gt; {23448, 239807, 79283749, 427370}</font>
+<font color="#330033"> display</font><font color="#880033">( </font><font color="#330033">checksum</font><font color="#993333">(</font><font color="#330033">"myfile"</font><font color="#993333">) </font><font color="#880033">)    </font><font color="#FF0055">--&gt; {23448, 239807, 79283749, 427370} -- default</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\io.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_datetime.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_io.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_datetime.html">8.4 Date and Time</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_io.html">8.6 I/O</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

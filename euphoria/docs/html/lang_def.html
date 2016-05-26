@@ -1,0 +1,1004 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="command_switches.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_decl.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="command_switches.html">3.5 Command Line Switches</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_decl.html">4.2 Declarations</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							 </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h2>4.1 Definition</h2>
+<a name="_80_definition"></a><a name="definition"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="lang_def.html#_80_definition">4.1 Definition</a></div>
+<div class="toc_3"><a href="lang_def.html#_81_objects">4.1.1 Objects</a></div>
+<div class="toc_4"><a href="lang_def.html#_83_atomsandsequences">4.1.1.1 Atoms and Sequences</a></div>
+<div class="toc_4"><a href="lang_def.html#_84_characterstringsandindividualcharacters">4.1.1.2 Character Strings and Individual Characters</a></div>
+<div class="toc_4"><a href="lang_def.html#_86_escapedcharacters">4.1.1.3 Escaped Characters</a></div>
+<div class="toc_3"><a href="lang_def.html#_87_identifiers">4.1.2 Identifiers</a></div>
+<div class="toc_3"><a href="lang_def.html#_89_comments">4.1.3 Comments</a></div>
+<div class="toc_3"><a href="lang_def.html#_90_expressions">4.1.4 Expressions</a></div>
+<div class="toc_4"><a href="lang_def.html#_91_relationaloperators">4.1.4.1 Relational Operators</a></div>
+<div class="toc_4"><a href="lang_def.html#_92_logicaloperators">4.1.4.2 Logical Operators</a></div>
+<div class="toc_4"><a href="lang_def.html#_93_arithmeticoperators">4.1.4.3 Arithmetic Operators</a></div>
+<div class="toc_4"><a href="lang_def.html#_94_operationsonsequences">4.1.4.4 Operations on Sequences</a></div>
+<div class="toc_4"><a href="lang_def.html#_95_subscriptingofsequences">4.1.4.5 Subscripting of Sequences</a></div>
+<div class="toc_4"><a href="lang_def.html#_96_slicingofsequences">4.1.4.6 Slicing of Sequences</a></div>
+<div class="toc_4"><a href="lang_def.html#_97_concatenationofsequencesandatomstheoperator">4.1.4.7 Concatenation of Sequences and Atoms - The '&' Operator</a></div>
+<div class="toc_4"><a href="lang_def.html#_100_sequenceformation">4.1.4.8 Sequence-Formation</a></div>
+<div class="toc_4"><a href="lang_def.html#_101_multipleassignment">4.1.4.9 Multiple Assignment</a></div>
+<div class="toc_4"><a href="lang_def.html#_102_otheroperationsonsequences">4.1.4.10 Other Operations on Sequences</a></div>
+<div class="toc_3"><a href="lang_def.html#_109_precedencechart">4.1.5 Precedence Chart</a></div>
+</div>
+</div>
+ </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.1.1 Objects</h3>
+<a name="_81_objects"></a><a name="objects"></a>
+<p> 
+<a name="predefinedtypes"></a></p>
+</div>
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.1.1 Atoms and Sequences</h4>
+<a name="_83_atomsandsequences"></a><a name="atomsandsequences"></a>
+<p> All data <strong>objects</strong> in Euphoria are either <strong>atoms</strong> or <strong>sequences</strong>.  An <strong>atom</strong> is a single numeric value.  A <strong>sequence</strong> is a collection of objects, either atoms or sequences themselves. A sequence can contain any mixture of atom and sequences; a sequence does not have to contain all the same data type. Because the <strong>objects</strong> contained in a sequence can be an arbitrary mix of atoms or sequences, it is an extremely versatile data structure, capable of representing any sort of data.</p>
+
+<p> A sequence is represented by a list of objects in brace brackets <strong>{ }</strong>, separated by commas with an optional sequence terminator, <tt>$</tt>. Atoms can have any integer or double-precision floating point value. They can range from approximately -1e300 (minus one times 10 to the power 300) to +1e300 with 15 decimal digits of accuracy. Here are some Euphoria objects:</p>
+
+<pre class="examplecode"><font color="#FF0055">-- examples of atoms:</font>
+<font color="#330033">0</font>
+<font color="#330033">1000</font>
+<font color="#330033">98.6</font>
+<font color="#330033">-1e6</font>
+<font color="#330033">23_100_000</font>
+<font color="#330033">x</font>
+<font color="#330033">$</font>
+
+<font color="#FF0055">-- examples of sequences:</font>
+<font color="#880033">{</font><font color="#330033">2, 3, 5, 7, 11, 13, 17, 19</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#330033">1, 2, </font><font color="#993333">{</font><font color="#330033">3, 3, 3</font><font color="#993333">}</font><font color="#330033">, 4, </font><font color="#993333">{</font><font color="#330033">5, </font><font color="#0000FF">{</font><font color="#330033">6</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#880033">}</font>
+<font color="#880033">{</font><font color="#993333">{</font><font color="#330033">"jon"</font><font color="#330033">, </font><font color="#330033">"smith"</font><font color="#993333">}</font><font color="#330033">, 52389, 97.25</font><font color="#880033">}</font>
+<font color="#880033">{} </font><font color="#FF0055">-- the 0-element sequence</font>
+</pre>
+
+<p> By default, number literals use <em>base 10</em>, but you can have integer literals written in other bases, namely binary <em>(base 2)</em>, octal <em>(base 8)</em>, and hexadecimal <em>(base 16)</em>. To do this, the number is prefixed by a 2-character code that lets Euphoria know which base to use. </p>
+<table><tr><th> Code </th>
+<th> Base                </th>
+</tr>
+<tr><td> 0b    </td>
+<td> 2 = <strong>B</strong>inary       </td>
+</tr>
+<tr><td> 0t    </td>
+<td> 8 = Oc<strong>t</strong>al        </td>
+</tr>
+<tr><td> 0d    </td>
+<td> 10 = <strong>D</strong>ecimal     </td>
+</tr>
+<tr><td> 0x    </td>
+<td> 16 = He<strong>x</strong>adecimal </td>
+</tr>
+</table>
+
+<p> For example: </p>
+
+<pre class="examplecode"><font color="#330033">0b101 </font><font color="#FF0055">--&gt; decimal 5</font>
+<font color="#330033">0t101 </font><font color="#FF0055">--&gt; decimal 65</font>
+<font color="#330033">0d101 </font><font color="#FF0055">--&gt; decimal 101</font>
+<font color="#330033">0x101 </font><font color="#FF0055">--&gt; decimal 257</font>
+</pre>
+
+<p> Additionally, hexadecimal integers can also be written by prefixing the number with the '#' character.</p>
+
+<p> For example: </p>
+
+<pre class="examplecode"><font color="#330033">#FE             </font><font color="#FF0055">-- 254</font>
+<font color="#330033">#A000           </font><font color="#FF0055">-- 40960</font>
+<font color="#330033">#FFFF00008      </font><font color="#FF0055">-- 68718428168</font>
+<font color="#330033">-#10            </font><font color="#FF0055">-- -16</font>
+</pre>
+
+<p> Only digits and the letters A, B, C, D, E, F, in either uppercase or lowercase, are allowed in hexadecimal numbers.  Hexadecimal numbers are always positive, unless you add a minus sign in front of the # character. So for instance </p>
+<ol><li>FFFFFFFF is a huge positive number (4294967295), <strong>not</strong> <tt>-1</tt>, as some machine-language programmers might expect.
+</li></ol>
+<p>Sometimes, and especially with large numbers, it can make reading numeric literals easier when they have embedded grouping characters. We are familiar with using commas (periods in Europe) to group large numbers by three-digit subgroups. In Euphoria we use the underscore character to achieve the same thing, and we can group them anyway that is useful to us.</p>
+
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">big = 32_873_787   </font><font color="#FF0055">-- Set 'big' to the value 32873787</font>
+
+<font color="#0000FF">atom </font><font color="#330033">salary = 56_110.66 </font><font color="#FF0055">-- Set salary to the value 56110.66</font>
+
+<font color="#0000FF">integer </font><font color="#330033">defflags = #0323_F3CD</font>
+
+<font color="#0000FF">object </font><font color="#330033">phone = 61_3_5536_7733</font>
+
+<font color="#0000FF">integer </font><font color="#330033">bits = 0b11_00010_1</font>
+</pre>
+
+<p> <strong>Sequences</strong> can be nested to any depth, i.e. you can have sequences within sequences within sequences and so on to any depth (until you run out of memory). Brace brackets are used to construct sequences out of a list of expressions.  These expressions can be constant or evaluated at run-time. e.g.</p>
+
+<pre class="examplecode"><font color="#880033">{ </font><font color="#330033">x+6, 9, y*w+2, </font><font color="#0000FF">sin</font><font color="#993333">(</font><font color="#330033">0.5</font><font color="#993333">) </font><font color="#880033">}</font>
+</pre>
+
+<p> All sequences can include a special <em>end of sequence</em> marker which is the <tt>$</tt> character. This is for convience of editing lists that may change often as development proceeds.</p>
+
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">seq_1 = </font><font color="#880033">{ </font><font color="#330033">10, 20, 30, $ </font><font color="#880033">}</font>
+<font color="#0000FF">sequence </font><font color="#330033">seq_2 = </font><font color="#880033">{ </font><font color="#330033">10, 20, 30 </font><font color="#880033">}</font>
+
+<font color="#0000FF">equal</font><font color="#880033">(</font><font color="#330033">seq_1, seq_2</font><font color="#880033">) </font><font color="#FF0055">-- TRUE</font>
+</pre>
+
+<p> The <strong>"Hierarchical Objects"</strong> part of the Euphoria acronym comes from the hierarchical nature of nested sequences. This should not be confused with the class hierarchies of certain object-oriented languages.</p>
+
+<p> Why do we call them atoms?  Why not just "numbers"? Well, an <tt>atom</tt> <em>is</em> just a number, but we wanted to have a distinctive term that emphasizes that they are indivisible (that's what "atom" means in Greek). In the world of physics you can 'split' an atom into smaller parts, but you no longer have an atom--only various particles. You can 'split' a number into smaller parts, but you no longer have a number--only various digits.</p>
+
+<p> Atoms are the basic building blocks of all the data that a Euphoria program can manipulate. With this analogy, <strong>sequence</strong>s might be thought of as "molecules", made from atoms and other molecules. A better analogy would be that sequences are like directories, and atoms are like files. Just as a directory on your computer can contain both files and other directories, a sequence can contain both atoms and other sequences (and <em>those</em> sequences can contain atoms and sequences and so on).</p>
+
+<p> 
+<pre>.          object
+.           /  \
+.          /    \
+.        atom  sequence
+</pre>
+
+<p> As you will soon discover, sequences make Euphoria very simple <em>and</em> very powerful.  <strong>Understanding atoms and sequences is the key to understanding Euphoria.</strong></p>
+
+<p> <dl>
+<dt><strong>Performance Note:</strong>
+</dt>
+<dd>Does this mean that all atoms are stored in memory as eight-byte floating-point numbers? No. The Euphoria interpreter usually stores integer-valued atoms as machine integers (four bytes) to save space and improve execution speed. When fractional results occur or integers get too big, conversion to IEEE eight-byte floating-point format happens automatically.</dd>
+</dl>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.1.2 Character Strings and Individual Characters</h4>
+<a name="_84_characterstringsandindividualcharacters"></a><a name="characterstringsandindividualcharacters"></a>
+<p> A <strong>character string</strong> is just a <tt>sequence</tt> of characters.  It may be entered in a number of ways ...</p>
+<ul><li>Using double-quotes e.g.
+</li></ul>
+<pre class="examplecode"><font color="#330033">"ABCDEFG"</font>
+</pre>
+<ul><li>Using raw string notation e.g.
+</li></ul>
+<pre class="examplecode"><font color="#FF0055">-- Using back-quotes</font>
+<font color="#330033">`ABCDEFG`</font>
+</pre>
+
+<p>  or </p>
+
+<pre class="examplecode"><font color="#FF0055">-- Using three double-quotes</font>
+<font color="#330033">"""ABCDEFG"""</font>
+</pre>
+<ul><li>Using binary strings e.g.
+</li></ul>
+<pre class="examplecode"><font color="#330033">b</font><font color="#330033">"1001 00110110 0110_0111 1_0101_1010" </font><font color="#FF0055">-- ==&gt; {#9,#36,#67,#15A}</font>
+</pre>
+<ul><li>Using hexadecimal byte strings e.g.
+</li></ul>
+<pre class="examplecode"><font color="#330033">x"" </font><font color="#FF0055">-- ==&gt; {#65,#66,#67,#AE}</font>
+</pre>
+
+<p> When you put too many hex characters together they are split up appropriately for you:</p>
+
+<pre class="examplecode"><font color="#330033">x""  </font><font color="#FF0055">-- 8-bit  ==&gt; {#65,#66,#67,#AE}</font>
+</pre>
+
+<p> <strong>The rules for double-quote strings are:</strong> </p>
+<ol><li>They begin and end with a double-quote character
+</li><li>They cannot contain a double-quote
+</li><li>They must be only on a single line
+</li><li>They cannot contain the TAB character
+</li><li>If they contain the back-slash '\' character, that character must immediately be followed by one of the special <em>escape</em> codes. The back-slash and escape code will be replaced by the appropriate single character equivalent. If you need to include double-quote, end-of-line, back-slash, or TAB characters inside a double-quoted string, you need to enter them in a special manner.
+</li></ol>
+<p>e.g.</p>
+
+<pre class="examplecode"><font color="#330033">"Bill said\n\t\"This is a back-slash \\ character\".\n"</font>
+</pre>
+
+<p> Which, when displayed should look like ... 
+<pre>Bill said
+    "This is a back-slash \ character".
+</pre>
+
+<p> <strong>The rules for raw strings are:</strong> </p>
+<ol><li>Enclose with three double-quotes  """...""" or back-quote. `...`
+</li><li>The resulting string will never have any carriage-return characters in it.
+</li><li>If the resulting string begins with a new-line, the initial new-line is removed and any trailing new-line is also removed.
+</li><li>A special form is used to automatically remove leading whitespace from the source code text. You might code this form to align the source text for ease of reading. If the first line after the raw string start token begins with one or more underscore characters, the number of consecutive underscores signifies the maximum number of whitespace characters that will be removed from each line of the raw string text. The underscores represent an assumed left margin width. <strong>Note</strong>, these leading underscores do not form part of the raw string text.
+</li></ol>
+<p>e.g.</p>
+
+<pre class="examplecode"><font color="#FF0055">-- No leading underscores and no leading whitespace</font>
+<font color="#330033">`
+</font>
+<font color="#330033">Bill said</font>
+<font color="#330033">    "This is a back-slash \ character"</font><font color="#330033">.</font>
+<font color="#330033">`
+</font>
+</pre>
+
+<p> Which, when displayed should look like ... 
+<pre>Bill said
+    "This is a back-slash \ character".
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- No leading underscores and but leading whitespace</font>
+<font color="#330033">`
+</font>
+<font color="#330033">   Bill said</font>
+<font color="#330033">      "This is a back-slash \ character"</font><font color="#330033">.</font>
+<font color="#330033">`
+</font>
+</pre>
+
+<p> Which, when displayed should look like ... 
+<pre>   Bill said
+      "This is a back-slash \ character".
+</pre>
+
+<pre class="examplecode"><font color="#FF0055">-- Leading underscores and leading whitespace</font>
+<font color="#330033">`
+</font>
+<font color="#330033">_____Bill said</font>
+<font color="#330033">         "This is a back-slash \ character"</font><font color="#330033">.</font>
+<font color="#330033">`
+</font>
+</pre>
+
+<p> Which, when displayed should look like ... 
+<pre>Bill said
+    "This is a back-slash \ character".
+</pre>
+
+<p> Extended string literals are useful when the string contains new-lines, tabs, or back-slash characters because they do not have to be entered in the special manner. The back-quote form can be used when the string literal contains a set of three double-quote characters, and the triple quote form can be used when the text literal contains back-quote characters. If a literal contains both a back quote and a set of three double-quotes, you will need to concatenate two literals.</p>
+
+<pre class="examplecode"><font color="#0000FF">object </font><font color="#330033">TQ, BQ, QQ</font>
+<font color="#330033">TQ = </font><font color="#330033">`This text contains """ for some reason.`</font>
+<font color="#330033">BQ = </font><font color="#330033">"""This text contains a back quote ` for some reason."""</font>
+<font color="#330033">QQ = </font><font color="#330033">"""This text contains a back quote ` """ </font><font color="#330033">&amp; </font><font color="#330033">`and """ for some reason.`</font>
+</pre>
+
+<p> <strong>The rules for binary strings are...</strong></p>
+<ol><li>they begin with the pair <tt>b"</tt> and end with a double-quote (<tt>"</tt>) character
+</li><li>they can only contain binary digits (0-1), and space, underscore, tab, newline, carriage-return. Anything else is invalid.
+</li><li>an underscore is simply ignored, as if it was never there. It is used to aid readability.
+</li><li>each set of contiguous binary digits represents a single sequence element
+</li><li>they can span multiple lines
+</li><li>The non-digits  are treated as punctuation and used to delimit individual values.
+</li></ol>
+<pre class="examplecode"><font color="#330033">b</font><font color="#330033">"1 10 11_0100 01010110_01111000" </font><font color="#330033">== </font><font color="#880033">{</font><font color="#330033">0x01, 0x02, 0x34, 0x5678</font><font color="#880033">}</font>
+</pre>
+
+<p> <strong>The rules for hexadecimal strings are:</strong> </p>
+<ol><li>They begin with the pair <tt>x"</tt> and end with a double-quote (<tt>"</tt>) character
+</li><li>They can only contain hexadecimal digits (0-9 A-F a-f), and space, underscore, tab, newline, carriage-return. Anything else is invalid.
+</li><li>An underscore is simply ignored, as if it was never there. It is used to aid readability.
+</li><li>Each pair of contiguous hex digits represents a single sequence element with a value from 0 to 255
+</li><li>They can span multiple lines
+</li><li>The non-digits are treated as punctuation and used to delimit individual values.
+</li></ol>
+<pre class="examplecode"><font color="#330033">x"" </font><font color="#330033">== </font><font color="#880033">{</font><font color="#330033">0x01, 0x02, 0x34, 0x56, 0x78, 0xAB, 0x0C</font><font color="#880033">}</font>
+</pre>
+
+<p> Character strings may be manipulated and operated upon just like any other sequences. For example the string we first looked at "ABCDEFG" is entirely equivalent to the sequence:</p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">65, 66, 67, 68, 69, 70, 71</font><font color="#880033">}</font>
+</pre>
+
+<p> which contains the corresponding ASCII codes. The Euphoria compiler will immediately convert "ABCDEFG" to the above sequence of numbers.  In a sense, there are no "strings" in Euphoria, only sequences of numbers.  A quoted string is really just a convenient notation that saves you from having to type in all the ASCII codes. 
+<a name="emptyseq"></a> It follows that "" is equivalent to {}. Both represent the sequence of zero length, also known as the <strong>empty sequence</strong>. As a matter of programming style, it is natural to use "" to suggest a zero length sequence of characters, and {} to suggest some other kind of sequence. An <strong>individual character</strong> is an <strong>atom</strong>. It must be entered using single quotes. There is a difference between an individual character (which is an atom), and a character string of length 1 (which is a sequence). e.g.</p>
+
+<pre class="examplecode"><font color="#330033">'B'   </font><font color="#FF0055">-- equivalent to the atom 66 - the ASCII code for B</font>
+<font color="#330033">"B"   </font><font color="#FF0055">-- equivalent to the sequence {66}</font>
+</pre>
+
+<p> Again, <tt>'B'</tt> is just a notation that is equivalent to typing <tt>66</tt>. There are no "characters" in Euphoria, just numbers (atoms). However, it is possible to use characters without ever having to use their numerical representation.</p>
+
+<p> Keep in mind that an atom is <em>not</em> equivalent to a one-element sequence containing the same value, although there are a few built-in routines that choose to treat them similarly.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.1.3 Escaped Characters</h4>
+<a name="_86_escapedcharacters"></a><a name="escapedcharacters"></a>
+<p> Special characters may be entered using a back-slash: </p>
+<table><tr><th>Code     </th>
+<th> Meaning</th>
+</tr>
+<tr><td> \n       </td>
+<td> newline </td>
+</tr>
+<tr><td> \r       </td>
+<td> carriage return </td>
+</tr>
+<tr><td> \t       </td>
+<td> tab </td>
+</tr>
+<tr><td> \\ </td>
+<td> backslash </td>
+</tr>
+<tr><td> \"       </td>
+<td> double quote </td>
+</tr>
+<tr><td> \'       </td>
+<td> single quote </td>
+</tr>
+<tr><td> \0       </td>
+<td> null </td>
+</tr>
+<tr><td> \e       </td>
+<td> escape </td>
+</tr>
+<tr><td> \E       </td>
+<td> escape </td>
+</tr>
+<tr><td> \b/d..d/ </td>
+<td> A binary coded value, the \b is followed by 1 or more binary digits. <br />
+Inside strings, use the space character to delimit or end a binary value.</td>
+</tr>
+<tr><td> \x/hh/   </td>
+<td> A 2-hex-digit value, e.g. "\x5F" ==&gt; {95} </td>
+</tr>
+<tr><td> \u/hhhh/ </td>
+<td> A 4-hex-digit value, e.g. "\u2A7C" ==&gt; {10876} </td>
+</tr>
+<tr><td> \U/hhhhhhhh/ </td>
+<td> An 8-hex-digit value, e.g. "\U8123FEDC" ==&gt; {2166619868} </td>
+</tr>
+</table>
+
+<p> For example, <tt>"Hello, World!\n"</tt>, or <tt>'\\'</tt>. The demonstration editor <tt>edx</tt> displays character strings in green.</p>
+
+<p> Note that you can use the underscore character <tt>'_'</tt> inside the <tt>\b</tt>, <tt>\x</tt>, <tt>\u</tt>, and <tt>\U</tt> values to aid readability, e.g. <tt>"\U8123_FEDC" ==&gt; {2166619868}</tt></p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.1.2 Identifiers</h3>
+<a name="_87_identifiers"></a><a name="identifiers"></a>
+<p> An identifier is just the name you give something in your program. This can be a variable, constant, function, procedure, parameter, or namespace. An identifier must begin with either a letter or an underscore, then followed by zero or more letters, digits or underscore characters. There is no theoretical limit to how large an identifier can be but in practice it should be no more than about 30 characters.</p>
+
+<p> Identifiers are <strong>case-sensitive</strong>. This means that <tt>"Name"</tt> is a different identifier from <tt>"name"</tt>, or <tt>"NAME"</tt>, etc...</p>
+
+<p> Examples of valid identifiers: </p>
+
+<pre class="examplecode"><font color="#330033">n</font>
+<font color="#330033">color26</font>
+<font color="#330033">ShellSort</font>
+<font color="#330033">quick_sort</font>
+<font color="#330033">a_very_long_indentifier_that_is_really_too_long_for_its_own_good</font>
+<font color="#330033">_alpha</font>
+</pre>
+
+<p> Examples of invalid identifiers: </p>
+
+<pre class="examplecode"><font color="#330033">0n         </font><font color="#FF0055">-- must not start with a digit</font>
+<font color="#330033">^color26   </font><font color="#FF0055">-- must not start with a punctuation character</font>
+<font color="#330033">Shell Sort </font><font color="#FF0055">-- Cannot have spaces in identifiers.</font>
+<font color="#330033">quick-sort </font><font color="#FF0055">-- must only consist of letters, digits or underscore.</font>
+</pre>
+
+<p> 
+<a name="source_comments"></a><a name="comments"></a> </p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.1.3 Comments</h3>
+<a name="_89_comments"></a><a name="comments"></a>
+<p> Comments are ignored by Euphoria and have no effect on execution speed. For example the <tt>edx</tt> editor displays comments in red.</p>
+
+<p> There are three forms of comment text:</p>
+<ul><li>The <em>line</em> format comment is started by two dashes and extends to the end of the current line.
+</li></ul>
+<p>e.g. </p>
+
+<pre class="examplecode"><font color="#FF0055">-- This is a comment which extends to the end of this line only.</font>
+</pre>
+<ul><li>The <em>multi-line</em> format comment is started by <tt>/*</tt> and extends to the next occurrence of <tt>*/</tt>, even if that occurs on a different line.
+</li></ul>
+<p>e.g. </p>
+
+<pre class="examplecode"><font color="#FF0055">/* This is a comment which
+</font>
+<font color="#330033">   extends over a number</font>
+<font color="#330033">   of text lines.</font>
+<font color="#330033">*/</font>
+</pre>
+<ul><li>On the first line only of your program, you can use a special comment beginning with the two character sequence <tt>#!</tt>. This is mainly used to tell <em>Unix</em> shells which program to execute the 'script' program with.
+</li></ul>
+<p>e.g. </p>
+
+<pre class="examplecode"><font color="#330033">#!/home/rob/euphoria/bin/eui</font>
+</pre>
+
+<p> This informs the Linux shell that your file should be executed by the Euphoria interpreter, and gives the full path to the interpreter.  If you make your file executable, you can run it, just by typing its name, and without the need to type "<tt>eui</tt>". On <em>Windows</em> this line is just treated as a comment (though Apache Web server on <em>Windows</em> does recognize it.). If your file is a shrouded <tt>.il</tt> file, use <tt>eub.exe</tt> instead of <tt>eui</tt>.</p>
+
+<p> Line comments are typically used to annotate a single (or small section) of code, whereas multi-line comments are typically used to give larger pieces of documentation inside the source text.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.1.4 Expressions</h3>
+<a name="_90_expressions"></a><a name="expressions"></a>
+<p> Like other programming languages, Euphoria lets you calculate results by forming expressions. However, in Euphoria you can perform calculations on entire sequences of data with one expression, where in most other languages you would have to construct a loop. In Euphoria you can handle a sequence much as you would a single number. It can be copied, passed to a subroutine, or calculated upon as a unit. For example,</p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">1,2,3</font><font color="#880033">} </font><font color="#330033">+ 5</font>
+</pre>
+
+<p> is an expression that adds the sequence <tt>{1,2,3}</tt> and the <tt>atom 5</tt> to get the resulting sequence <tt>{6,7,8}</tt>.</p>
+
+<p> We will see more examples later.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.1 Relational Operators</h4>
+<a name="_91_relationaloperators"></a><a name="relationaloperators"></a>
+<p> The relational operators  <strong><tt>&lt; &gt; &lt;= &gt;= = !=</tt></strong> each produce a <tt>1</tt> (true) or a <tt>0</tt> (false) result.</p>
+
+<pre class="examplecode"><font color="#330033">8.8 &lt; 8.7   </font><font color="#FF0055">-- 8.8 less than 8.7 (false)</font>
+<font color="#330033">-4.4 &gt; -4.3 </font><font color="#FF0055">-- -4.4 greater than -4.3 (false)</font>
+<font color="#330033">8 &lt;= 7      </font><font color="#FF0055">-- 8 less than or equal to 7 (false)</font>
+<font color="#330033">4 &gt;= 4      </font><font color="#FF0055">-- 4 greater than or equal to 4 (true)</font>
+<font color="#330033">1 = 10      </font><font color="#FF0055">-- 1 equal to 10 (false)</font>
+<font color="#330033">8.7 != 8.8  </font><font color="#FF0055">-- 8.7 not equal to 8.8 (true)</font>
+</pre>
+
+<p> As we will soon see you can also apply these operators to sequences.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.2 Logical Operators</h4>
+<a name="_92_logicaloperators"></a><a name="logicaloperators"></a>
+<p> The logical operators <tt>and</tt>, <tt>or</tt>, <tt>xor</tt>, and <tt>not</tt> are used to determine the "truth" of an expression. e.g.</p>
+
+<pre class="examplecode"><font color="#330033">1 </font><font color="#0000FF">and </font><font color="#330033">1     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">1 </font><font color="#0000FF">and </font><font color="#330033">0     </font><font color="#FF0055">-- 0 (false)</font>
+<font color="#330033">0 </font><font color="#0000FF">and </font><font color="#330033">1     </font><font color="#FF0055">-- 0 (false)</font>
+<font color="#330033">0 </font><font color="#0000FF">and </font><font color="#330033">0     </font><font color="#FF0055">-- 0 (false)</font>
+
+<font color="#330033">1 </font><font color="#0000FF">or  </font><font color="#330033">1     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">1 </font><font color="#0000FF">or  </font><font color="#330033">0     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">0 </font><font color="#0000FF">or  </font><font color="#330033">1     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">0 </font><font color="#0000FF">or  </font><font color="#330033">0     </font><font color="#FF0055">-- 0 (false)</font>
+
+<font color="#330033">1 </font><font color="#0000FF">xor </font><font color="#330033">1     </font><font color="#FF0055">-- 0 (false)</font>
+<font color="#330033">1 </font><font color="#0000FF">xor </font><font color="#330033">0     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">0 </font><font color="#0000FF">xor </font><font color="#330033">1     </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#330033">0 </font><font color="#0000FF">xor </font><font color="#330033">0     </font><font color="#FF0055">-- 0 (false)</font>
+
+<font color="#0000FF">not </font><font color="#330033">1       </font><font color="#FF0055">-- 0 (false)</font>
+<font color="#0000FF">not </font><font color="#330033">0       </font><font color="#FF0055">-- 1 (true)</font>
+</pre>
+
+<p> You can also apply these operators to numbers other than <tt>1</tt> or <tt>0</tt>. The rule is: zero means false and non-zero means true. So for instance:</p>
+
+<pre class="examplecode"><font color="#330033">5 </font><font color="#0000FF">and </font><font color="#330033">-4    </font><font color="#FF0055">-- 1 (true)</font>
+<font color="#0000FF">not </font><font color="#330033">6       </font><font color="#FF0055">-- 0 (false)</font>
+</pre>
+
+<p> These operators can also be applied to sequences. See below.</p>
+
+<p> In some cases <a href="lang_short_circuit.html#short_circuit">short_circuit</a> evaluation will be used for expressions containing <tt>and</tt> or <tt>or</tt>. Specifically, short circuiting applies inside decision making expressions.  These are found in the <a href="lang_branch.html#_146_ifstatement">if statement</a>, <a href="lang_loop.html#_160_whilestatement">while statement</a> and the <a href="lang_loop.html#_161_loopuntilstatement">loop until statement</a>.  More on this later.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.3 Arithmetic Operators</h4>
+<a name="_93_arithmeticoperators"></a><a name="arithmeticoperators"></a>
+<p> The usual arithmetic operators are available: add, subtract, multiply, divide, unary minus, unary plus.</p>
+
+<pre class="examplecode"><font color="#330033">3.5 + 3  </font><font color="#FF0055">-- 6.5</font>
+<font color="#330033">3 - 5    </font><font color="#FF0055">-- -2</font>
+<font color="#330033">6 * 2    </font><font color="#FF0055">-- 12</font>
+<font color="#330033">7 / 2    </font><font color="#FF0055">-- 3.5</font>
+<font color="#330033">-8.1     </font><font color="#FF0055">-- -8.1</font>
+<font color="#330033">+8       </font><font color="#FF0055">-- +8</font>
+</pre>
+
+<p> Computing a result that is too big (i.e. outside of -1e300 to +1e300) will result in one of the special atoms <strong>+infinity</strong> or <strong>-infinity</strong>.  These appear as <tt>inf</tt> or <tt>-inf</tt> when you print them out. It is also possible to generate <tt>nan</tt> or <tt>-nan</tt>.  "nan" means "not a number", i.e. an undefined value (such as <tt>inf</tt> divided by <tt>inf</tt>). These values are defined in the IEEE floating-point standard. If you see one of these special values in your output, it usually indicates an error in your program logic, although generating inf as an intermediate result may be acceptable in some cases. For instance, <tt>1/inf</tt> is <tt>0</tt>, which may be the "right" answer for your algorithm.</p>
+
+<p> Division by zero, as well as bad arguments to math library routines, e.g. square root of a negative number, log of a non-positive number etc. cause an immediate error message and your program is aborted.</p>
+
+<p> The only reason that you might use unary plus is to emphasize to the reader of your program that a number is positive. The interpreter does not actually calculate anything for this.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.4 Operations on Sequences</h4>
+<a name="_94_operationsonsequences"></a><a name="operationsonsequences"></a>
+<p> All of the relational, logical and arithmetic operators described above, as well as the math routines described in <a href="langref_index.html#_78_languagereference">Language Reference</a>, can be applied to sequences as well as to single numbers (atoms).</p>
+
+<p> When applied to a sequence, a unary (one operand) operator is actually applied to each element in the sequence to yield a sequence of results of the same length. If one of these elements is itself a sequence then the same rule is applied again recursively. e.g.</p>
+
+<pre class="examplecode"><font color="#330033">x = -</font><font color="#880033">{</font><font color="#330033">1, 2, 3, </font><font color="#993333">{</font><font color="#330033">4, 5</font><font color="#993333">}</font><font color="#880033">}   </font><font color="#FF0055">-- x is {-1, -2, -3, {-4, -5}}</font>
+</pre>
+
+<p> If a binary (two-operand) operator has operands which are both sequences then the two sequences must be of the same length. The binary operation is then applied to corresponding elements taken from the two sequences to get a sequence of results. e.g.</p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#880033">{</font><font color="#330033">5, 6, 7, 8</font><font color="#880033">} </font><font color="#330033">+ </font><font color="#880033">{</font><font color="#330033">10, 10, 20, 100</font><font color="#880033">}</font>
+<font color="#FF0055">-- x is {15, 16, 27, 108}</font>
+<font color="#330033">x = </font><font color="#880033">{</font><font color="#993333">{</font><font color="#330033">1, 2, 3</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">4, 5, 6</font><font color="#993333">}</font><font color="#880033">} </font><font color="#330033">+ </font><font color="#880033">{</font><font color="#330033">-1, 0, 1</font><font color="#880033">} </font><font color="#FF0055">-- ERROR: 2 != 3</font>
+<font color="#FF0055">-- but</font>
+<font color="#330033">x = </font><font color="#880033">{</font><font color="#993333">{</font><font color="#330033">1, 2, 3</font><font color="#993333">} </font><font color="#330033">+ </font><font color="#993333">{</font><font color="#330033">-1, 0, 1</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">4, 5, 6</font><font color="#993333">} </font><font color="#330033">+ </font><font color="#993333">{</font><font color="#330033">-1, 0, 1</font><font color="#993333">}</font><font color="#880033">} </font><font color="#FF0055">-- CORRECT</font>
+<font color="#FF0055">-- x is {{0, 2, 4}, {3, 5, 7}}</font>
+</pre>
+
+<p> If a binary operator has one operand which is a sequence while the other is a single number (atom) then the single number is effectively repeated to form a sequence of equal length to the sequence operand. The rules for operating on two sequences then apply. Some examples:</p>
+
+<pre class="examplecode"><font color="#330033">y = </font><font color="#880033">{</font><font color="#330033">4, 5, 6</font><font color="#880033">}</font>
+<font color="#330033">w = 5 * y                          </font><font color="#FF0055">-- w is {20, 25, 30}</font>
+
+<font color="#330033">x = </font><font color="#880033">{</font><font color="#330033">1, 2, 3</font><font color="#880033">}</font>
+<font color="#330033">z = x + y                          </font><font color="#FF0055">-- z is {5, 7, 9}</font>
+<font color="#330033">z = x &lt; y                          </font><font color="#FF0055">-- z is {1, 1, 1}</font>
+
+<font color="#330033">w = </font><font color="#880033">{</font><font color="#993333">{</font><font color="#330033">1, 2</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">3, 4</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5</font><font color="#993333">}</font><font color="#880033">}</font>
+<font color="#330033">w = w * y                          </font><font color="#FF0055">-- w is {{4, 8}, {15, 20}, {30}}</font>
+
+<font color="#330033">w = </font><font color="#880033">{</font><font color="#330033">1, 0, 0, 1</font><font color="#880033">} </font><font color="#0000FF">and </font><font color="#880033">{</font><font color="#330033">1, 1, 1, 0</font><font color="#880033">}  </font><font color="#FF0055">-- {1, 0, 0, 0}</font>
+<font color="#330033">w = </font><font color="#0000FF">not </font><font color="#880033">{</font><font color="#330033">1, 5, -2, 0, 0</font><font color="#880033">}           </font><font color="#FF0055">-- w is {0, 0, 0, 1, 1}</font>
+
+<font color="#330033">w = </font><font color="#880033">{</font><font color="#330033">1, 2, 3</font><font color="#880033">} </font><font color="#330033">= </font><font color="#880033">{</font><font color="#330033">1, 2, 4</font><font color="#880033">}          </font><font color="#FF0055">-- w is {1, 1, 0}</font>
+
+<font color="#FF0055">-- note that the first '=' is assignment, and the</font>
+<font color="#FF0055">-- second '=' is a relational operator that tests</font>
+<font color="#FF0055">-- equality</font>
+</pre>
+
+<p> <strong>Note:</strong> When you wish to compare two strings (or other sequences), you should <strong>not</strong> (as in some other languages) use the '=' operator:</p>
+
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">"APPLE" </font><font color="#330033">= </font><font color="#330033">"ORANGE" </font><font color="#0000FF">then  </font><font color="#FF0055">-- ERROR!</font>
+</pre>
+
+<p> '<tt>=</tt>' is treated as an operator, just like '<tt>+</tt>', '<tt>*</tt>' etc., so it is applied to corresponding sequence elements, and the sequences must be the same length. When they are equal length, the result is a sequence of ones an zeros. When they are not equal length, the result is an error. Either way you'll get an error, since an if-condition must be an atom, not a sequence.  Instead you should use the <tt>equal</tt> built-in routine:</p>
+
+<pre class="examplecode"><font color="#0000FF">if equal</font><font color="#880033">(</font><font color="#330033">"APPLE"</font><font color="#330033">, </font><font color="#330033">"ORANGE"</font><font color="#880033">) </font><font color="#0000FF">then  </font><font color="#FF0055">-- CORRECT</font>
+</pre>
+
+<p> In general, you can do relational comparisons using the <tt>compare</tt> built-in routine:</p>
+
+<pre class="examplecode"><font color="#0000FF">if compare</font><font color="#880033">(</font><font color="#330033">"APPLE"</font><font color="#330033">, </font><font color="#330033">"ORANGE"</font><font color="#880033">) </font><font color="#330033">= 0 </font><font color="#0000FF">then  </font><font color="#FF0055">-- CORRECT</font>
+</pre>
+
+<p> You can use <tt>compare</tt> for other comparisons as well:</p>
+
+<pre class="examplecode"><font color="#0000FF">if compare</font><font color="#880033">(</font><font color="#330033">"APPLE"</font><font color="#330033">, </font><font color="#330033">"ORANGE"</font><font color="#880033">) </font><font color="#330033">&lt; 0 </font><font color="#0000FF">then  </font><font color="#FF0055">-- CORRECT</font>
+<font color="#FF0055">-- enter here if "APPLE" is less than "ORANGE" (TRUE)</font>
+</pre>
+
+<p> Especially useful is the idiom <tt>compare(x, "") = 1</tt> to determine whether <tt>x</tt> is a non empty sequence. <tt>compare(x, "") = -1</tt> would test for <tt>x</tt> being an atom, but <tt>atom(x) = 1</tt> does the same faster and is clearer to read.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.5 Subscripting of Sequences</h4>
+<a name="_95_subscriptingofsequences"></a><a name="subscriptingofsequences"></a>
+<p> A single element of a sequence may be selected by giving the element number in square brackets. Element numbers start at 1. Non-integer subscripts are rounded down to an integer.</p>
+
+<p> For example, if <tt>x</tt> contains <tt>{5, 7.2, 9, 0.5, 13}</tt> then <tt>x[2]</tt> is <tt>7.2</tt>. Suppose we assign something different to <tt>x[2]</tt>:</p>
+
+<pre class="examplecode"><font color="#330033">x</font><font color="#880033">[</font><font color="#330033">2</font><font color="#880033">] </font><font color="#330033">= </font><font color="#880033">{</font><font color="#330033">11,22,33</font><font color="#880033">}</font>
+</pre>
+
+<p> Then <tt>x</tt> becomes: <tt>{5, {11,22,33}, 9, 0.5, 13}</tt>. Now if we ask for <tt>x[2]</tt> we get <tt>{11,22,33}</tt> and if we ask for <tt>x[2][3]</tt> we get the <tt>atom</tt> 33. If you try to subscript with a number that is outside of the range <tt>1</tt> to the number of elements, you will get a subscript error. For example <tt>x[0]</tt>,  <tt>x[-99]</tt> or <tt>x[6]</tt> will cause errors. So will <tt>x[1][3]</tt> since <tt>x[1]</tt> is not a sequence. There is no limit to the number of subscripts that may follow a variable, but the variable must contain sequences that are nested deeply enough. The two dimensional array, common in other languages, can be easily represented with a sequence of sequences:</p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#330033">5, 6, 7, 8, 9</font><font color="#993333">}</font><font color="#330033">,      </font><font color="#FF0055">-- x[1]</font>
+<font color="#993333">    {</font><font color="#330033">1, 2, 3, 4, 5</font><font color="#993333">}</font><font color="#330033">,      </font><font color="#FF0055">-- x[2]</font>
+<font color="#993333">    {</font><font color="#330033">0, 1, 0, 1, 0</font><font color="#993333">}       </font><font color="#FF0055">-- x[3]</font>
+<font color="#880033">}</font>
+</pre>
+
+<p> where we have written the numbers in a way that makes the structure clearer. An expression of the form x[i][j] can be used to access any element.</p>
+
+<p> The two dimensions are not symmetric however, since an entire "row" can be selected with x[i], but you need to use <a href="std_sequence.html#_2707_vslice">vslice</a> in the Standard Library to select an entire column. Other logical structures, such as n-dimensional arrays, arrays of strings, structures, arrays of structures etc. can also be handled easily and flexibly:</p>
+
+<p> 3-D array:</p>
+
+<pre class="examplecode"><font color="#330033">y = </font><font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">1,1</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">3,3</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">5,5</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">0,0</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">0,1</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">9,1</font><font color="#0000FF">}</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">-1,9</font><font color="#0000FF">}</font><font color="#330033">,</font><font color="#0000FF">{</font><font color="#330033">1,1</font><font color="#0000FF">}</font><font color="#330033">, </font><font color="#0000FF">{</font><font color="#330033">2,2</font><font color="#0000FF">}</font><font color="#993333">}</font>
+<font color="#880033">}</font>
+
+<font color="#FF0055">-- y[2][3][1] is 9</font>
+</pre>
+
+<p> Array of strings:</p>
+
+<pre class="examplecode"><font color="#330033">s = </font><font color="#880033">{</font><font color="#330033">"Hello"</font><font color="#330033">, </font><font color="#330033">"World"</font><font color="#330033">, </font><font color="#330033">"Euphoria"</font><font color="#330033">, </font><font color="#330033">""</font><font color="#330033">, </font><font color="#330033">"Last One"</font><font color="#880033">}</font>
+
+<font color="#FF0055">-- s[3] is "Euphoria"</font>
+<font color="#FF0055">-- s[3][1] is 'E'</font>
+</pre>
+
+<p> A Structure:</p>
+
+<pre class="examplecode"><font color="#330033">employee = </font><font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#330033">"John"</font><font color="#330033">,</font><font color="#330033">"Smith"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">    45000,</font>
+<font color="#330033">    27,</font>
+<font color="#330033">    185.5</font>
+<font color="#880033">}</font>
+</pre>
+
+<p> To access "fields" or elements within a structure it is good programming style to make up an enum that names the various fields. This will make your program easier to read. For the example above you might have:</p>
+
+<pre class="examplecode"><font color="#0000FF">enum </font><font color="#330033">NAME, SALARY, AGE, WEIGHT</font>
+<font color="#0000FF">enum </font><font color="#330033">FIRST_NAME, LAST_NAME</font>
+
+<font color="#330033">employees = </font><font color="#880033">{</font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">"John"</font><font color="#330033">,</font><font color="#330033">"Smith"</font><font color="#0000FF">}</font><font color="#330033">, 45000, 27, 185.5</font><font color="#993333">}</font><font color="#330033">,   </font><font color="#FF0055">-- a[1]</font>
+<font color="#993333">    {</font><font color="#0000FF">{</font><font color="#330033">"Bill"</font><font color="#330033">,</font><font color="#330033">"Jones"</font><font color="#0000FF">}</font><font color="#330033">, 57000, 48, 177.2</font><font color="#993333">}</font><font color="#330033">,   </font><font color="#FF0055">-- a[2]</font>
+<font color="#FF0055">    -- .... etc.</font>
+<font color="#880033">}</font>
+
+<font color="#FF0055">-- employees[2][SALARY] would be 57000.</font>
+</pre>
+
+<p> The <tt>length</tt> built-in function will tell you how many elements are in a sequence.  So the last element of a sequence <tt>s</tt>, is:</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">s</font><font color="#993333">)</font><font color="#880033">]</font>
+</pre>
+
+<p> A short-hand for this is:</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">$</font><font color="#880033">]</font>
+</pre>
+
+<p> Similarly,</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">s</font><font color="#993333">)</font><font color="#330033">-1</font><font color="#880033">]</font>
+</pre>
+
+<p> can be simplified to:</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">$-1</font><font color="#880033">]</font>
+</pre>
+
+<p> The <tt>$</tt> may only appear between square braces and it equals the length of the sequence that is being subscripted. Where there's nesting, e.g.:</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">$ - t</font><font color="#993333">[</font><font color="#330033">$-1</font><font color="#993333">] </font><font color="#330033">+ 1</font><font color="#880033">]</font>
+</pre>
+
+<p> The first <tt>$</tt> above refers to the length of <tt>s</tt>, while the second <tt>$</tt> refers to the length of <tt>t</tt> (as you'd probably expect).  An example where <tt>$</tt> can save a lot of typing, make your code clearer, and probably even faster is:</p>
+
+<pre class="examplecode"><font color="#330033">longname</font><font color="#880033">[</font><font color="#330033">$</font><font color="#880033">][</font><font color="#330033">$</font><font color="#880033">] </font><font color="#FF0055">-- last element of the last element</font>
+</pre>
+
+<p> Compare that with the equivalent:</p>
+
+<pre class="examplecode"><font color="#330033">longname</font><font color="#880033">[</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">longname</font><font color="#993333">)</font><font color="#880033">][</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">longname</font><font color="#0000FF">[</font><font color="#0000FF">length</font><font color="#5500FF">(</font><font color="#330033">longname</font><font color="#5500FF">)</font><font color="#0000FF">]</font><font color="#993333">)</font><font color="#880033">]</font>
+</pre>
+
+<p> <strong>Subscripting and function side-effects:</strong></p>
+
+<p> In an assignment statement, with left-hand-side subscripts:</p>
+
+<pre class="examplecode"><font color="#330033">lhs_var</font><font color="#880033">[</font><font color="#330033">lhs_expr1</font><font color="#880033">][</font><font color="#330033">lhs_expr2</font><font color="#880033">]</font><font color="#330033">... = rhs_expr</font>
+</pre>
+
+<p> The expressions are evaluated, and any subscripting is performed, from left to right. It is possible to have function calls in the right-hand-side expression, or in any of the left-hand-side expressions.  If a function call has the side-effect of modifying the lhs_var, it is not defined whether those changes will appear in the final value of the lhs_var, once the assignment has been completed.  To be sure about what is going to happen, perform the function call in a separate statement, i.e. do not try to modify the lhs_var in two different ways in the same statement.  Where there are no left-hand-side subscripts, you can always assume that the final value of the lhs_var will be the value of rhs_expr, regardless of any side-effects that may have changed lhs_var.</p>
+
+<p> <strong>Euphoria data structures are almost infinitely flexible.</strong></p>
+
+<p> Arrays in many languages are constrained to have a fixed number of elements, and those elements must all be of the same type. Euphoria eliminates both of those restrictions by defining all arrays (sequences) as a list of zero or more Euphoria objects whose element count can be changed at any time. You can easily add a new structure to the employee sequence above, or store an unusually long name in the NAME field and Euphoria will take care of it for you. If you wish, you can store a variety of different employee "structures", with different sizes, all in one sequence. However, when you retrieve a sequence element, it is not guaranteed to be of any type. You, as a programmer, need to check that the retrieved data is of the type you'd expect, Euphoria will not. The only thing it will check is whether an assignment is legal. For example, if you try to assign a sequence to an integer variable, Euphoria will complain at the time your code does the assignment.</p>
+
+<p> Not only can a Euphoria program represent all conventional data structures but you can create very useful, flexible structures that would be hard to declare in many other languages.</p>
+
+<p> Note that expressions in general may not be subscripted, just variables. For example: <tt>{5+2,6-1,7*8,8+1}[3]</tt> is <em>not</em> supported, nor is something like: <tt>date()[MONTH]</tt>. You have to assign the sequence returned by <tt>date</tt> to a variable, then subscript the variable to get the month.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.6 Slicing of Sequences</h4>
+<a name="_96_slicingofsequences"></a><a name="slicingofsequences"></a>
+<p> A sequence of consecutive elements may be selected by giving the starting and ending element numbers. For example if <tt>x</tt> is <tt>{1, 1, 2, 2, 2, 1, 1, 1}</tt> then <tt>x[3..5]</tt> is the sequence <tt>{2, 2, 2}</tt>. <tt>x[3..3]</tt> is the sequence <tt>{2}</tt>. <tt>x[3..2]</tt> is also allowed. It evaluates to the zero length sequence <tt>{}</tt>.  If <tt>y</tt> has the value: <tt>{"fred", "george", "mary"}</tt> then <tt>y[1..2]</tt> is <tt>{"fred", "george"}</tt>.</p>
+
+<p> We can also use slices for overwriting portions of variables. After <tt>x[3..5] = {9, 9, 9}</tt> <tt>x</tt> would be <tt>{1, 1, 9, 9, 9, 1, 1, 1}</tt>. We could also have said <tt>x[3..5] = 9</tt> with the same effect. Suppose <tt>y</tt> is <tt>{0, "Euphoria", 1, 1}</tt>. Then <tt>y[2][1..4]</tt> is <tt>"Euph"</tt>. If we say <tt>y[2][1..4] = "ABCD"</tt> then <tt>y</tt> will become  <tt>{0, "ABCDoria", 1, 1}</tt>.</p>
+
+<p> In general, a variable name can be followed by 0 or more subscripts, followed in turn by 0 or 1 slices. Only variables may be subscripted or sliced, not expressions.</p>
+
+<p> We need to be a bit more precise in defining the rules for <strong>empty slices</strong>. Consider a slice <tt>s[i..j]</tt> where <tt>s</tt> is of length <tt>n</tt>. A slice from <tt>i</tt> to <tt>j</tt>, where  <tt>j = i - 1</tt>  and <tt>i &gt;= 1</tt> produces the <a href="lang_def.html#emptyseq">empty sequence</a>, even if <tt>i = n + 1</tt>. Thus <tt>1..0</tt> and <tt>n + 1..n</tt> and everything in between are legal <strong>(empty) slices</strong>.  Empty slices are quite useful in many algorithms. A slice from <tt>i</tt> to <tt>j</tt> where <tt>j &lt; i - 1</tt> is illegal , i.e. "reverse" slices such as <tt>s[5..3]</tt> are not allowed.</p>
+
+<p> We can also use the <tt>$</tt> shorthand with slices, e.g.</p>
+
+<pre class="examplecode"><font color="#330033">s</font><font color="#880033">[</font><font color="#330033">2..$</font><font color="#880033">]</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">5..$-2</font><font color="#880033">]</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">$-5..$</font><font color="#880033">]</font>
+<font color="#330033">s</font><font color="#880033">[</font><font color="#330033">$</font><font color="#880033">][</font><font color="#330033">1..</font><font color="#0000FF">floor</font><font color="#993333">(</font><font color="#330033">$/2</font><font color="#993333">)</font><font color="#880033">] </font><font color="#FF0055">-- first half of the last element of s</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.7 Concatenation of Sequences and Atoms - The '&' Operator</h4>
+<a name="_97_concatenationofsequencesandatomstheoperator"></a><a name="concatenationofsequencesandatomstheoperator"></a>
+<p> 
+<a name="ampconcat"></a> 
+<a name="amp_concat"></a><a name="concat"></a></p>
+
+<p> Any two objects may be concatenated using the <strong>&amp;</strong> operator. The result is a sequence with a length equal to the sum of the lengths of the concatenated objects. e.g.</p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">1, 2, 3</font><font color="#880033">} </font><font color="#330033">&amp; 4              </font><font color="#FF0055">-- {1, 2, 3, 4}</font>
+
+<font color="#330033">4 &amp; 5                      </font><font color="#FF0055">-- {4, 5}</font>
+
+<font color="#880033">{</font><font color="#993333">{</font><font color="#330033">1, 1</font><font color="#993333">}</font><font color="#330033">, 2, 3</font><font color="#880033">} </font><font color="#330033">&amp; </font><font color="#880033">{</font><font color="#330033">4, 5</font><font color="#880033">}    </font><font color="#FF0055">-- {{1, 1}, 2, 3, 4, 5}</font>
+
+<font color="#330033">x = </font><font color="#880033">{}</font>
+<font color="#330033">y = </font><font color="#880033">{</font><font color="#330033">1, 2</font><font color="#880033">}</font>
+<font color="#330033">y = y &amp; x                  </font><font color="#FF0055">-- y is still {1, 2}</font>
+</pre>
+
+<p> You can delete element <tt>i</tt> of any sequence s by concatenating the parts of the sequence before and after <tt>i</tt>:</p>
+
+<pre class="examplecode"><font color="#330033">s = s</font><font color="#880033">[</font><font color="#330033">1..i-1</font><font color="#880033">] </font><font color="#330033">&amp; s</font><font color="#880033">[</font><font color="#330033">i+1..</font><font color="#0000FF">length</font><font color="#993333">(</font><font color="#330033">s</font><font color="#993333">)</font><font color="#880033">]</font>
+</pre>
+
+<p> This works even when <tt>i</tt> is <tt>1</tt> or <tt>length(s)</tt>, since <tt>s[1..0]</tt> is a legal empty slice, and so is <tt>s[length(s)+1..length(s)]</tt>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.8 Sequence-Formation</h4>
+<a name="_100_sequenceformation"></a><a name="sequenceformation"></a>
+<p> Finally, sequence-formation, using braces and commas:</p>
+
+<pre class="examplecode"><font color="#880033">{</font><font color="#330033">a, b, c, ... </font><font color="#880033">}</font>
+</pre>
+
+<p> is also an operator. It takes n operands, where <tt>n</tt> is <tt>0</tt> or more, and makes an n-element sequence from their values. e.g.</p>
+
+<pre class="examplecode"><font color="#330033">x = </font><font color="#880033">{</font><font color="#330033">apple, orange*2, </font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, 99/4+foobar</font><font color="#880033">}</font>
+</pre>
+
+<p> The sequence-formation operator is listed at the bottom of the a <a href="lang_def.html#_109_precedencechart">precedence chart</a>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.9 Multiple Assignment</h4>
+<a name="_101_multipleassignment"></a><a name="multipleassignment"></a>
+<p> Special sequence notation on the left hand side of an assignment can be made to assign to multiple variables with a single statement.  This can be useful for using functions that return multiple values in a sequence, such as <tt><a href="std_get.html#_2298_value">value</a></tt>.</p>
+
+<pre class="examplecode"><font color="#0000FF">atom </font><font color="#330033">success, val</font>
+
+<font color="#880033">{ </font><font color="#330033">success, val </font><font color="#880033">} </font><font color="#330033">= value</font><font color="#880033">( </font><font color="#330033">"100" </font><font color="#880033">)</font>
+
+<font color="#FF0055">-- success = GET_SUCCESS</font>
+<font color="#FF0055">-- val = 100</font>
+</pre>
+
+<p> It is also possible to ignore some of the values in the right hand side.  Any elements beyond the number supplied on the left hand side are ignored.  Other values can also be ignored by using a question mark ('<tt>?</tt>') instead of a variable name:</p>
+
+<pre class="examplecode"><font color="#880033">{ </font><font color="#330033">?, val </font><font color="#880033">} </font><font color="#330033">= value</font><font color="#880033">( </font><font color="#330033">"100" </font><font color="#880033">)</font>
+</pre>
+
+<p> Variables may only appear once on the left hand side, however, they may appear on both the left and right hand side.  For instance, to swap the values of two variables:</p>
+
+<pre class="examplecode"><font color="#880033">{ </font><font color="#330033">a, b </font><font color="#880033">} </font><font color="#330033">= </font><font color="#880033">{ </font><font color="#330033">b, a </font><font color="#880033">}</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h4>4.1.4.10 Other Operations on Sequences</h4>
+<a name="_102_otheroperationsonsequences"></a><a name="otheroperationsonsequences"></a>
+<p> Some other important operations that you can perform on sequences have English names, rather than special characters. These operations are built-in to <strong>eui.exe/euiw.exe</strong>, so they'll always be there, and so they'll be fast. They are described in detail in the <a href="langref_index.html#_78_languagereference">Language Reference</a>, but are important enough to Euphoria programming that we should mention them here before proceeding. You call these operations as if they were subroutines, although they are actually implemented much more efficiently than that.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>length(sequence s)</h5>
+<a name="_103_lengthsequences"></a><a name="lengthsequences"></a>
+<p> Returns the length of a sequence s.</p>
+
+<p> This is the number of elements in s. Some of these elements may be sequences that contain elements of their own, but <tt>length</tt> just gives you the "top-level" count. Note however that the length of an atom is always <tt>1</tt>. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">length</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">5,6,7</font><font color="#993333">}</font><font color="#880033">)             </font><font color="#FF0055">-- 3</font>
+<font color="#0000FF">length</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1, </font><font color="#0000FF">{</font><font color="#330033">5,5,5</font><font color="#0000FF">}</font><font color="#330033">, 2, 3</font><font color="#993333">}</font><font color="#880033">)  </font><font color="#FF0055">-- 4 (not 6!)</font>
+<font color="#0000FF">length</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#880033">)                  </font><font color="#FF0055">-- 0</font>
+<font color="#0000FF">length</font><font color="#880033">(</font><font color="#330033">5</font><font color="#880033">)                   </font><font color="#FF0055">-- 1</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>repeat(object o1, integer count)</h5>
+<a name="_104_repeatobjecto1integercount"></a><a name="repeatobjecto1integercount"></a>
+<p> Returns a sequence that consists of an item repeated count times. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">0, 100</font><font color="#880033">)         </font><font color="#FF0055">-- {0,0,0,...,0}   i.e. 100 zeros</font>
+<font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">"Hello"</font><font color="#330033">, 3</font><font color="#880033">)     </font><font color="#FF0055">-- {"Hello", "Hello", "Hello"}</font>
+<font color="#0000FF">repeat</font><font color="#880033">(</font><font color="#330033">99,0</font><font color="#880033">)           </font><font color="#FF0055">-- {}</font>
+</pre>
+
+<p> The item to be repeated can be any atom or sequence.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>append(sequence s1, object o1)</h5>
+<a name="_105_appendsequences1objecto1"></a><a name="appendsequences1objecto1"></a>
+<p> Returns a sequence by adding an object o1 to the end of a sequence s1.</p>
+
+<pre class="examplecode"><font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, 4</font><font color="#880033">)         </font><font color="#FF0055">-- {1,2,3,4}</font>
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5,5,5</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- {1,2,3,{5,5,5}}</font>
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#330033">, 9</font><font color="#880033">)              </font><font color="#FF0055">-- {9}</font>
+</pre>
+
+<p> The length of the new sequence is always 1 greater than the length of the original sequence. The item to be added to the sequence can be any atom or sequence.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>prepend(sequence s1, object o1)</h5>
+<a name="_106_prependsequences1objecto1"></a><a name="prependsequences1objecto1"></a>
+<p> Returns a new sequence by adding an element to the beginning of a sequence s. e.g.</p>
+
+<pre class="examplecode"><font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, 4</font><font color="#880033">)         </font><font color="#FF0055">-- {1,2,3,4}</font>
+<font color="#0000FF">prepend</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, 4</font><font color="#880033">)        </font><font color="#FF0055">-- {4,1,2,3}</font>
+
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5,5,5</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- {1,2,3,{5,5,5}}</font>
+<font color="#0000FF">prepend</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#330033">, 9</font><font color="#880033">)             </font><font color="#FF0055">-- {9}</font>
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{}</font><font color="#330033">, 9</font><font color="#880033">)              </font><font color="#FF0055">-- {9}</font>
+</pre>
+
+<p> The length of the new sequence is always one greater than the length of the original sequence. The item to be added to the sequence can be any atom or sequence.</p>
+
+<p> These two built-in functions, <tt>append</tt> and <tt>prepend</tt>, have some similarities to the concatenate operator, <tt>&amp;</tt>, but there are clear differences. e.g.</p>
+
+<pre class="examplecode"><font color="#FF0055">-- appending a sequence is different</font>
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5,5,5</font><font color="#993333">}</font><font color="#880033">)   </font><font color="#FF0055">-- {1,2,3,{5,5,5}}</font>
+<font color="#880033">{</font><font color="#330033">1,2,3</font><font color="#880033">} </font><font color="#330033">&amp; </font><font color="#880033">{</font><font color="#330033">5,5,5</font><font color="#880033">}          </font><font color="#FF0055">-- {1,2,3,5,5,5}</font>
+
+<font color="#FF0055">-- appending an atom is the same</font>
+<font color="#0000FF">append</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">, 5</font><font color="#880033">)         </font><font color="#FF0055">-- {1,2,3,5}</font>
+<font color="#880033">{</font><font color="#330033">1,2,3</font><font color="#880033">} </font><font color="#330033">&amp; 5                </font><font color="#FF0055">-- {1,2,3,5}</font>
+</pre>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>insert(sequence in_what, object what, atom position)</h5>
+<a name="_107_insertsequencein_whatobjectwhatatomposition"></a><a name="insertsequencein_whatobjectwhatatomposition"></a>
+<p> This function takes a target sequence, in_what, shifts its tail one notch and plugs the object what in the hole just created. The modified sequence is returned. For instance:</p>
+
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">insert</font><font color="#880033">(</font><font color="#330033">"Joe"</font><font color="#330033">,</font><font color="#330033">'h'</font><font color="#330033">,3</font><font color="#880033">)     </font><font color="#FF0055">-- s is "Johe", another string</font>
+<font color="#330033">s = </font><font color="#0000FF">insert</font><font color="#880033">(</font><font color="#330033">"Joe"</font><font color="#330033">,</font><font color="#330033">"h"</font><font color="#330033">,3</font><font color="#880033">)     </font><font color="#FF0055">-- s is {'J','o',{'h'},'e'}, not a string</font>
+<font color="#330033">s = </font><font color="#0000FF">insert</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">,4,-0.5</font><font color="#880033">)  </font><font color="#FF0055">-- s is {4,1,2,3}, like prepend()</font>
+<font color="#330033">s = </font><font color="#0000FF">insert</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">,4,8.5</font><font color="#880033">)   </font><font color="#FF0055">-- s is {1,2,3,4}, like append()</font>
+</pre>
+
+<p> The length of the returned sequence is one more than the one of <tt>in_what</tt>. This is the same rule as for <tt>append</tt> and <tt>prepend</tt> above, which are actually special cases of <tt>insert</tt>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h5>splice(sequence in_what, object what, atom position)</h5>
+<a name="_108_splicesequencein_whatobjectwhatatomposition"></a><a name="splicesequencein_whatobjectwhatatomposition"></a>
+<p> If what is an <tt>atom</tt>, this is the same as <tt>insert</tt>. But if what is a sequence, that sequence is inserted as successive elements into <tt>in_what</tt> at <tt>position</tt>. Example:</p>
+
+<pre class="examplecode"><font color="#330033">s = </font><font color="#0000FF">splice</font><font color="#880033">(</font><font color="#330033">"Joe"</font><font color="#330033">,</font><font color="#330033">'h'</font><font color="#330033">,3</font><font color="#880033">)</font>
+<font color="#FF0055">    -- s is "Johe", like insert()</font>
+<font color="#330033">s = </font><font color="#0000FF">splice</font><font color="#880033">(</font><font color="#330033">"Joe"</font><font color="#330033">,</font><font color="#330033">"hn Do"</font><font color="#330033">,3</font><font color="#880033">)</font>
+<font color="#FF0055">    -- s is "John Doe", another string</font>
+<font color="#330033">s = </font><font color="#0000FF">splice</font><font color="#880033">(</font><font color="#330033">"Joh"</font><font color="#330033">,</font><font color="#330033">"n Doe"</font><font color="#330033">,9.3</font><font color="#880033">)</font>
+<font color="#FF0055">    -- s is "John Doe", like with the &amp; operator</font>
+<font color="#330033">s = </font><font color="#0000FF">splice</font><font color="#880033">(</font><font color="#993333">{</font><font color="#330033">1,2,3</font><font color="#993333">}</font><font color="#330033">,4,-2</font><font color="#880033">)</font>
+<font color="#FF0055">    -- s is {4,1,2,3}, like with the &amp; operator in reversed order</font>
+</pre>
+
+<p> The length of <tt>splice(in_what, what, position)</tt> always is <tt>length(in_what) + length(what)</tt>, like for concatenation using <tt>&amp;</tt>.</p>
+
+<!-- ..\docs\refman_2.txt -->
+<h3>4.1.5 Precedence Chart</h3>
+<a name="_109_precedencechart"></a><a name="precedencechart"></a>
+<p> When two or more operators follow one another in an expression, there must be rules to tell in which order they should be evaluated, as different orders usually lead to different results. It is common and convenient to use a <strong>precedence order</strong> on operators. Operators with the highest degree of precedence are evaluated first, then those with highest precedence among what remains, and so on.</p>
+
+<p> The precedence of operators in expressions is as follows:</p>
+
+<p> <strong>highest precedence</strong></p>
+
+<p> 
+<pre>**highest precedence**
+
+function/type calls
+unary-  unary+  not
+*  /
++  -
+&amp;
+&lt;  &gt;  &lt;=  &gt;=  =  !=
+and  or  xor
+</pre>
+
+<p> <strong>lowest precedence</strong> 
+<pre>{ , , , }
+</pre>
+
+<p> Thus <tt>2+6*3</tt> means <tt>2+(6*3)</tt> rather than <tt>(2+6)*3</tt>. Operators on the same line above have equal precedence and are evaluated left to right. You can force any order of operations by placing round brackets <tt>( )</tt> around an expression. For instance, <tt>6/3*5</tt> is <tt>2*5</tt>, not <tt>6/15</tt>.</p>
+
+<p> Different languages or contexts may have slightly different precedence rules. You should be careful when translating a formula from a language to another; Euphoria is no exception. Adding superfluous parentheses to explicitly denote the exact order of evaluation does not cost much, and may help either readers used to some other precedence chart or translating to or from another context with slightly different rules. Watch out for <tt>and</tt> and <tt>or</tt>, or <tt>*</tt> and <tt>/</tt>.</p>
+
+<p> The equals symbol <tt>'='</tt> used in an <a href="lang_assignment.html#_140_assignmentstatement">assignment statement</a> is not an operator, it's just part of the syntax of the language.</p>
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="command_switches.html"><img src="images/prev.png" /></a></td>
+									<td><a href="langref_index.html">Up</a></td>
+									<td><a href="lang_decl.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="using.html">3 Using Euphoria</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="command_switches.html">3.5 Command Line Switches</a>
+									</td>
+									<td width="20%">
+										Up: <a href="langref_index.html">4 Language Reference</a>
+									</td>
+									<td width="20%">
+										<a href="lang_decl.html">4.2 Declarations</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

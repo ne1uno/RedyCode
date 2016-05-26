@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_1_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_0_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_1_0b.html">9.41 Version 2.1 Beta March 5, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_0_0.html">9.43 Version 2.0 March 25, 1998</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\release\2.1.0a.txt -->
+<h2>9.42 Version 2.1 Alpha January 15, 1999</h2>
+<a name="_6796_version21alphajanuary151999"></a><a name="version21alphajanuary151999"></a><ul><li>We've made a number of changes to the packaging, pricing, and registration incentives for the Euphoria product:<ul><li>The Dual-Platform (DOS32+WIN32) package, formerly $53 has been reduced to $39 U.S., effective immediately.
+</li><li>The Single-Platform (DOS32-only) package, formerly $32, has been discontinued.
+</li><li>The printed manual has been discontinued. Instead, there is now an official HTML version of the manual, included with the Public Domain .zip file.
+</li><li>All useful 3rd-party include files, such as <strong>Win32Lib.ew</strong> and many others, will be "stamped" by RDS with a code number that makes them <strong><em>free</em></strong>, just like the files in <strong>euphoria\include</strong>. They will not add to your statement count, provided you do not significantly modify them. This will also allow 3rd-party developers to get better diagnostic information from their users.
+</li><li><strong>Binding</strong>, <strong>shrouding</strong> and <strong>profiling</strong> will now be part of the Complete Edition only. These are features that beginners do not require, but serious users might find valuable.
+</li></ul>
+</li><li>Short-form assignment operators <tt>+=</tt>, <tt>-=</tt>, <tt>*=</tt>, <tt>/=</tt>, and <tt>&amp;=</tt> have been added. For example, instead of saying:
+</li></ul>
+<pre class="examplecode"><font color="#330033">count = count + 1</font>
+  
+</pre>
+
+<p>   You can now say:   </p>
+
+<pre class="examplecode"><font color="#330033">count += 1</font>
+  
+</pre>
+
+<p>   Instead of saying:   </p>
+
+<pre class="examplecode"><font color="#330033">matrix</font><font color="#880033">[</font><font color="#330033">row</font><font color="#880033">][</font><font color="#330033">column</font><font color="#880033">] </font><font color="#330033">= matrix</font><font color="#880033">[</font><font color="#330033">row</font><font color="#880033">][</font><font color="#330033">column</font><font color="#880033">] </font><font color="#330033">* 5.0</font>
+  
+</pre>
+
+<p>   You can say:   </p>
+
+<pre class="examplecode"><font color="#330033">matrix</font><font color="#880033">[</font><font color="#330033">row</font><font color="#880033">][</font><font color="#330033">column</font><font color="#880033">] </font><font color="#330033">*= 5.0</font>
+<font color="#330033">  &lt;/euuode&gt;</font>
+<font color="#330033">  Instead of saying:</font>
+<font color="#330033">  &lt;eucode&gt;</font>
+<font color="#330033">  test_scores</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">= test_scores</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">/ 100</font>
+  
+</pre>
+
+<p>   You can say:   </p>
+
+<pre class="examplecode"><font color="#330033">test_scores</font><font color="#880033">[</font><font color="#330033">start..finish</font><font color="#880033">] </font><font color="#330033">/= 100</font>
+  
+</pre>
+<ul><li>Euphoria now uses "short-circuit" evaluation of <tt>and</tt> and <tt>or</tt> expressions in <strong>if/elsif/while</strong> conditions.  e.g. in an <tt>and</tt> condition:
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">A </font><font color="#0000FF">and </font><font color="#330033">B </font><font color="#0000FF">then </font><font color="#330033">...</font>
+  
+</pre>
+
+<p>   the interpreter will skip the evaluation of expression B whenever expression   A is 0 (false), since it knows that the overall result must be false. In an   <tt>or</tt> condition:   </p>
+
+<pre class="examplecode"><font color="#0000FF">while </font><font color="#330033">A </font><font color="#0000FF">or </font><font color="#330033">B </font><font color="#0000FF">do </font><font color="#330033">...</font>
+  
+</pre>
+
+<p>   the interpreter will skip the evaluation of expression B whenever   expression A is non-zero (true), since it knows that the overall result   must be true. <br />
+  <br />
+  Euphoria code written prior to version 2.1 may no longer work correctly if   expression B contains a function with <strong><em>side-effects</em></strong> such as setting a   global variable, doing I/O etc. In practice this kind of code is very rare,   but just in case, a warning will now be issued if a function with   side-effects might be short-circuited.  <br />
+  <br />
+  By skipping the evaluation of B, short-circuit evaluation is typically   faster, and will allow you to write statements such as:   </p>
+
+<pre class="examplecode"><font color="#0000FF">if atom</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">) </font><font color="#0000FF">or length</font><font color="#880033">(</font><font color="#330033">x</font><font color="#880033">)</font><font color="#330033">=1 </font><font color="#0000FF">then </font><font color="#330033">...</font>
+  
+</pre>
+
+<p>   that would generate an error on older versions of Euphoria whenever x was an   <strong>atom</strong>, since length() is not defined for atoms. </p>
+<ul><li>Several new routines were added.<ul><li>Built-in to ex.exe/exw.exe:<ul><li>profile() - turns <strong>profiling</strong> <strong>on/off</strong> so you can focus your <strong>profile</strong> and  <strong>profile_time</strong> runs on particular events within your program."
+</li><li>system_exec() - gives you the exit code from calling a <strong>.exe</strong> or <strong>.com</strong> file, or another Euphoria program.
+</li><li>equal() - compares any 2 Euphoria objects for equality. equivalent to: compare(a,b) = 0  but more readable.
+</li></ul>
+</li><li><strong>Added to various include files:</strong><ul><li>walk_dir() - recursively goes through a directory and subdirectories, calling a routine that you supply.
+</li><li>reverse() - returns a sequence in reverse order.
+</li><li>sprint() - returns the string representation of any Euphoria object.
+</li><li>arcsin() - inverse trig function.
+</li><li>arccos() - inverse trig function.
+</li><li>get_bytes() - returns the next n bytes from a file.
+</li><li>prompt_number() - prompts the user to enter a number.
+</li><li>prompt_string() - prompts the user to enter a string.
+</li><li>instance() - <strong>WIN32:</strong> returns the instance handle of the program.
+</li><li>PI - the constant PI - 3.14159... was added to <strong>misc.e</strong>.
+</li></ul>
+</li></ul>
+</li><li>The main Euphoria documentation can now be viewed locally with a Web browser. The plain-text files <strong>refman.doc</strong> and <strong>library.doc</strong> are still available in the <strong>doc</strong> subdirectory, but we now have <strong>refman.htm</strong> and <strong>library.htm</strong> in the new <strong>html</strong> subdirectory. We have developed a tool (written in Euphoria) that lets us easily maintain both an up-to-date HTML version, and an up-to-date plain-text version of <strong>refman</strong> and <strong>library</strong>.
+</li><li>The documentation has also been clarified and expanded in many places.
+</li><li><strong>WIN32:</strong> you can create an <strong>unlimited</strong> number of Euphoria call-back routines, as long as each routine is a function with 0 to 8 parameters. In version 2.0 you could only have one call-back routine and it had to have exactly 4 parameters.
+</li><li>The <tt>xor</tt> keyword has been added to complement: <strong>and/or/not</strong> and  <strong>xor_bits()</strong> e.g.
+</li></ul>
+<pre class="examplecode"><font color="#0000FF">if </font><font color="#330033">a </font><font color="#0000FF">xor </font><font color="#330033">b </font><font color="#0000FF">then</font><font color="#330033">...</font>
+  
+</pre>
+
+<p>   <tt>xor</tt> works on sequences too. It's similar to <tt>or</tt>. </p>
+<ul><li>The <strong>dir(path)</strong> library routine now officially supports the use of  <strong>wildcards *</strong> and <strong>?</strong> in the path that you supply. This feature was always available, but wasn't documented until now. e.g.
+</li></ul>
+<pre class="examplecode"><font color="#330033">info = dir</font><font color="#880033">(</font><font color="#330033">"mydata\\*.d?t"</font><font color="#880033">)</font>
+  
+</pre>
+<ul><li><strong>optimization:</strong> Subroutine call+return overhead was reduced by an average of 30%. The speed-up occurs for all normal function/procedure/type calls, user-defined type-checks, call_proc()/call_func() calls using a <strong>routine id</strong>, and Windows call-backs. Only recursive calls cost the same as before.  Programs with a reasonably-high frequency of calls can easily be 10% faster overall because of this.
+</li><li><strong>optimization:</strong> Branch <tt><em>straightening</em></tt> has been implemented. The compiler will optimize branches in the internal code such that a branch from A-&gt;B where location B contains a branch to location C, will be optimized to a direct branch from A-&gt;C. Even something like A-&gt;B-&gt;C-&gt;D can be straightened to A-&gt;D. This often occurs in while-loops that contain if-statements.
+</li><li><strong>optimization:</strong> In many cases, variable initialization checks are now replaced by "no-ops" after the first check is performed. Euphoria was already optimizing out many checks at compile-time.
+</li><li><strong>optimization:</strong> <strong>get()</strong> and <strong>value()</strong> are now much faster in most cases thanks to Jiri Babor and some further optimizations by RDS.  The new v2.1  <strong>ex.exe</strong> with the new v2.1 <strong>get.e</strong> is: </p>
+
+<div class="quote">quote: <strong></strong><br />
+
+<p> 1.45x faster reading a sequence of f.p. numbers from a file and&lt;br&gt; 2.25x faster when reading a sequence of integers from a file.</p>
+
+</div>
+
+</li><li><strong>optimization:</strong> <strong>power(x,2)</strong> is converted internally to x*x which is faster in all cases, especially when x is a large integer or a f.p. number.
+</li><li><strong>optimization:</strong> Thanks to Jiri Babor, <strong>int_to_bits()</strong> is at least 15% faster in most cases.
+</li><li><strong>optimization:</strong> Plotting a long sequence of pixels in 16-color graphics modes is about 3% faster.
+</li><li><strong>optimization:</strong> <strong>draw_line()</strong> has been sped up by a few percent.
+</li><li><strong>Language War</strong> has had a major face-lift. It now runs in <strong>pixel-graphics mode 18</strong> (640 x 480 x 16 colors) instead of <strong>text mode</strong>. It also has  <tt><em>fine-grain</em></tt> parallelism, i.e. virtually anything can happen in parallel with anything else. Multiple torpedos, phasors etc can be drawn on the screen simultaneously, while ships are moving, commands are being entered, things are exploding etc. Even the timing needed for the PC speaker sound effects is handled by the <strong>task scheduler</strong>. There are <strong><em>no</em></strong> time-delay "busy" loops executed during the game. The galaxy scan now shows you a scaled picture of the whole galaxy, rather than just a bunch of numbers.
+</li><li>The default print format for atoms was changed from "%g" to "%<strong>.</strong>10g".  This format is used by print(), <strong>?</strong>, the <strong>trace</strong> facility, and <strong>ex.err</strong> dumps. This allows large integers -9,999,999,999 to +9,999,999,999 to be printed as integers, rather than as scientific notation. It also provides about 10 digits of accuracy to be displayed on fractional numbers, rather than just 6. Art Adamson and others made it clear that more digits should be displayed.
+</li><li>The state of all <strong>with/without</strong> settings is saved upon entering an <strong>included file</strong>, and restored at the end of the <strong>included file</strong>. An included file can change the settings, but they will be restored at the end of the included file. e.g. warnings might be turned off just within the included file (and any files it includes). As a result some programs now display warnings where none were seen before.
+</li><li>Warnings are now displayed &lt;_ba&gt;<em>after</em>&lt;/_ba&gt; your program finishes execution, so they won't be erased by clear_screen(), graphics_mode() etc. Some programs now show warnings where none were seen before.
+</li><li>The security of scrambled code and bound code has been improved thanks to ideas contributed by Rusty Davis. When a bound program starts executing, a quick integrity check will be made to detect any corruption or tampering.  It's still ok to add data to the end of a <strong>bound .exe</strong> file, as long as your last line is <tt>abort(x)</tt>.
+</li><li>The <strong>ed</strong> editor now lets you view and edit beyond column 80.
+</li><li><strong>ed</strong> has a new command: <strong>Esc m</strong> (modifications). It will show the differences between the original file on disk and the current edit buffer. This can be very useful when you've forgotten what changes you've made, and you are wondering if it's safe to save them.
+</li><li>The <strong>trace</strong> window now provides an upper case <strong>Q</strong> command which lets the program run to completion, ignoring any trace(1) commands. Lower case <strong>q</strong> lets it run to the next trace(1).
+</li><li><strong>safe.e</strong> (debug version of <strong>machine.e</strong>) has been enhanced. It will now automatically catch additional cases where data is illegally written just  <strong><em>before</em></strong>, or just <strong><em>after</em></strong>, the boundaries of an allocated block of memory. This can be particularly useful in <strong>WIN32</strong> where Windows might overwrite one of your under-sized blocks. Without a tool such as <strong>safe.e</strong>, this type of bug could take hours or even days to track down.
+</li><li>The <strong>euphoria\tutorial</strong> directory was created to hold several small tutorial programs.
+</li><li>The limit on the number of open files was raised to 25 from 15.  Three of these files are 0,1,2: standard-input, standard-output and standard-error, so you can now have up to 22 of your own files open simultaneously. (As far as we know, no one ever exceeded the old limit, but it seemed wise to raise it.)
+</li><li>When the user simply types <tt>ex</tt> or <tt>exw</tt> and is prompted for the name of the Euphoria <strong>.ex</strong> or <strong>.exw</strong> file to run, <strong>command_line()</strong> will now be updated to include the filename as the second command-line argument, just as if the user had originally typed: <tt>ex filename</tt>.  Thanks to Mathew Hounsell for suggesting this.
+</li><li><strong>mset.ex</strong> now saves pictures in <strong>.bmp</strong> format. Previously it was using a non-standard, compressed format.
+</li><li><strong>lines.ex</strong> (<strong>lines.bat</strong>) now reports non-blank/non-comment lines as well. This is &lt;_ba&gt;<em>not</em>&lt;/_ba&gt; the same as the "statement count" used by Euphoria for the diagnostic limit, but it's usually within +/- 10%, assuming you write one statement per line.
+</li><li>Numeric literals greater than 1e308 (roughly) are now set to <strong>+/-</strong> <tt>inf</tt>. They used to cause a compile-time error.
+</li></ul>
+<p> 
+<!-- ..\docs\release\2.0.0.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="release_2_1_0b.html"><img src="images/prev.png" /></a></td>
+									<td><a href="relnotes.html">Up</a></td>
+									<td><a href="release_2_0_0.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="release_2_1_0b.html">9.41 Version 2.1 Beta March 5, 1999</a>
+									</td>
+									<td width="20%">
+										Up: <a href="relnotes.html">9 Release Notes</a>
+									</td>
+									<td width="20%">
+										<a href="release_2_0_0.html">9.43 Version 2.0 March 25, 1998</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="key_index.html">10 Index</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

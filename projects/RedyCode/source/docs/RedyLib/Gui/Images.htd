@@ -1,0 +1,10 @@
+=Images Library
+gui/images/images.e : Define GUI themes
+
+===Introduction
+Images contains embedded images.
+
+===API
+====routines
+
+Next page: See also [[Canvas Objects->RedyLib\Gui\Objects]]

@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="tasking.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="preproc.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="tasking.html">6.6 Multitasking in Euphoria</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="preproc.html">6.8 The User Defined Pre-Processor</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\docs\database.txt -->
+<h2>6.7 Euphoria Database System (EDS)</h2>
+<a name="_592_euphoriadatabasesystemeds"></a><a name="euphoriadatabasesystemeds"></a>
+<p> <div style="margin-left:2em"><div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="database.html#_592_euphoriadatabasesystemeds">6.7 Euphoria Database System (EDS)</a></div>
+<div class="toc_3"><a href="database.html#_593_introduction">6.7.1 Introduction</a></div>
+<div class="toc_3"><a href="database.html#_594_edsdatabasestructure">6.7.2 EDS Database Structure</a></div>
+<div class="toc_3"><a href="database.html#_595_accessingdata">6.7.3 Accessing Data</a></div>
+<div class="toc_4"><a href="database.html#_596_currentdatabase">6.7.3.1 Current Database.</a></div>
+<div class="toc_4"><a href="database.html#_597_currenttable">6.7.3.2 Current Table.</a></div>
+<div class="toc_4"><a href="database.html#_598_accessingdata">6.7.3.3 Accessing Data</a></div>
+<div class="toc_3"><a href="database.html#_599_storagerecycling">6.7.4 Storage Recycling</a></div>
+<div class="toc_3"><a href="database.html#_600_securityandmultiuseraccess">6.7.5 Security and Multi-user Access</a></div>
+<div class="toc_3"><a href="database.html#_601_scalability">6.7.6 Scalability</a></div>
+<div class="toc_3"><a href="database.html#_602_edsapi">6.7.7 EDS API</a></div>
+<div class="toc_3"><a href="database.html#_603_disclaimer">6.7.8 Disclaimer</a></div>
+<div class="toc_3"><a href="database.html#_604_warningusebinaryfilemode">6.7.9 Warning: Use Binary File Mode</a></div>
+</div>
+</div>
+</p>
+</div>
+<!-- ..\docs\database.txt -->
+<h3>6.7.1 Introduction</h3>
+<a name="_593_introduction"></a><a name="introduction"></a>
+<p> While you can connect Euphoria to most databases (MySQL, SQLite, PostgreSQL, etc.), sometimes you don't need that kind of power. The <strong>Euphoria Database System</strong> (EDS) is a simple, easy-to-use, flexible, Euphoria-oriented database for storing data that works better for cases where you need more than a text file and don't quite need or want the power and complexity of larger database packages.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.2 EDS Database Structure</h3>
+<a name="_594_edsdatabasestructure"></a><a name="edsdatabasestructure"></a>
+<p> In EDS, a <strong>database</strong> is "a single file with a <tt>.edb</tt> file extension."  An EDS database contains zero or more <strong>tables</strong>. Each table has a <strong>name</strong>, and contains zero or more <strong>records</strong>.  Each record consists of a <strong>key</strong> part, and a <strong>data</strong> part. The key can be <em>any</em> Euphoria object--an atom, a sequence, a deeply-nested sequence, whatever. Similarly the data can be <em>any</em> Euphoria object.  There are <em>no</em> constraints on the size or structure of the key or data. Within a given table, the keys are all unique. That is, no two records in the same table can have the same key part.</p>
+
+<p> The records of a table are stored in ascending order of key value.  An efficient binary search is used when you refer to a record by key. You can also access a record directly, with no search, if you know its current <strong>record number</strong> within the table. Record numbers are integers from one to the length (current number of records) of the table. By incrementing the record number, you can efficiently step through all the records, in order of key. Note however that a record's number can change whenever a new record is inserted, or an existing record is deleted.</p>
+
+<p> The keys and data parts are stored in a compact form, but <em>no</em> accuracy is lost when saving or restoring floating-point numbers or <em>any</em> other Euphoria data.</p>
+
+<p> <tt>std/eds.e</tt> will work as is, on all platforms. EDS database files can be copied and shared between programs running on all platforms as well. When sharing EDS database files, be sure to make an exact byte-for-byte copy using "binary" mode copying, rather than "text" or "ASCII" mode, which could change the line terminators.</p>
+
+<p> Example:</p>
+
+<p> 
+<pre>database: "mydata.edb"
+    first table: "passwords"
+        record #1:  key: "jones"   data: "euphor123"
+        record #2:  key: "smith"   data: "billgates"
+        
+    second table: "parts"
+        record #1:  key: 134525    data: {"hammer", 15.95, 500}
+        record #2:  key: 134526    data: {"saw", 25.95, 100}
+        record #3:  key: 134530    data: {"screw driver", 5.50, 1500}
+</pre>
+
+<p> It's up to you to interpret the meaning of the key and data. <em>In keeping with the spirit of Euphoria, you have total flexibility.</em> Unlike most other database systems, an EDS record is <em>not</em> required to have either a fixed number of fields, or fields with a preset maximum length.</p>
+
+<p> In many cases there will not be any natural key value for your records.  In those cases you should simply create a meaningless, but unique, integer to be the key. Remember that you can always access the data by record number. It's easy to loop through the records looking for a particular field value.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.3 Accessing Data</h3>
+<a name="_595_accessingdata"></a><a name="accessingdata"></a>
+<p> To reduce the number of parameters that you have to pass, there is a notion of the <strong>current database</strong>, and <strong>current table</strong>. </p>
+
+<!-- ..\docs\database.txt -->
+<h4>6.7.3.1 Current Database.</h4>
+<a name="_596_currentdatabase"></a><a name="currentdatabase"></a>
+<p> Any data operation or table operation assumes there is a current database being defined. You set the current database by opening, creating or selecting a database. Deleting the current database leaves the current database undefined.</p>
+
+<!-- ..\docs\database.txt -->
+<h4>6.7.3.2 Current Table.</h4>
+<a name="_597_currenttable"></a><a name="currenttable"></a>
+<p> All data operations assume there is a current table being defined. You must create, select or rename a table in order to make it current. Deleting the current table leaves the current table undefined.</p>
+
+<!-- ..\docs\database.txt -->
+<h4>6.7.3.3 Accessing Data</h4>
+<a name="_598_accessingdata"></a><a name="accessingdata"></a>
+<p> Most routines use these <em>current</em> values automatically.  You normally start by opening (or creating) a database file, then selecting the table that you want to work with.</p>
+
+<p> You can map a key to a record number using <a href="std_eds.html#_4237_db_find_key">db_find_key</a>. It uses an efficient binary search. Most of the other record-level routines expect the record number as a parameter. You can very quickly access any record, given it's number. You can access all the records by starting at record number one and looping through to the record number returned by <a href="std_eds.html#_4264_db_table_size">db_table_size</a>.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.4 Storage Recycling</h3>
+<a name="_599_storagerecycling"></a><a name="storagerecycling"></a>
+<p> When you delete something, such as a record, the space for that item gets put on a free list, for future use. Adjacent free areas are combined into larger free areas. When more space is needed, and no suitable space is found on the free list, the file will grow in size.  Currently there is no automatic way that a file will shrink in size, but you can use a <a href="std_eds.html#_4296_db_compress">db_compress</a> to completely rewrite a database, removing the unused spaces.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.5 Security and Multi-user Access</h3>
+<a name="_600_securityandmultiuseraccess"></a><a name="securityandmultiuseraccess"></a>
+<p> This release provides a simple way to lock an entire database to prevent unsafe access by other processes.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.6 Scalability</h3>
+<a name="_601_scalability"></a><a name="scalability"></a>
+<p> Internal pointers are 4 bytes. In theory that limits the size of a database file to 4 Gb. In practice, the limit is 2 Gb because of limitations in various C file functions used by Euphoria.  Given enough user demand, EDS databases could be expanded well beyond 2 Gb in the future.</p>
+
+<p> The current algorithm allocates four bytes of memory per record in the current table. So you will need at least 4 Mb RAM per million records on disk.</p>
+
+<p> The binary search for keys should work reasonably well for large tables. </p>
+
+<p> Inserts and deletes take slightly longer as a table gets larger. </p>
+
+<p> At the low end of the scale, it's possible to create extremely small databases without incurring much disk space overhead.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.7 EDS API</h3>
+<a name="_602_edsapi"></a><a name="edsapi"></a>
+<p> More details on using EDS, including complete coverage of the EDS API, can be found at <a href="std_eds.html#_4074_euphoriadatabaseeds">Euphoria Database (EDS)</a>.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.8 Disclaimer</h3>
+<a name="_603_disclaimer"></a><a name="disclaimer"></a>
+<p> Do not store valuable data without a backup.  RDS will not be responsible for any damage or data loss.</p>
+
+<!-- ..\docs\database.txt -->
+<h3>6.7.9 Warning: Use Binary File Mode</h3>
+<a name="_604_warningusebinaryfilemode"></a><a name="warningusebinaryfilemode"></a>
+<p> <tt>.edb</tt> files are binary files, not text files.  You <strong>must</strong> use <tt>BINARY</tt> mode when transferring a <tt>.edb</tt> file via FTP from one machine to another. You must also avoid loading a <tt>.edb</tt> file into an editor and saving it. If you open a <tt>.edb</tt> file directly using Euphoria's <tt>open</tt>, which is not recommended, you must use binary mode, not text mode.  Failure to follow these rules could result in 10 (line-feed) and 13 (carriage-return) bytes being changed, leading to subtle and not-so-subtle forms of corruption in your database.</p>
+
+<p> 
+<!-- ..\docs\preproc.txt -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="tasking.html"><img src="images/prev.png" /></a></td>
+									<td><a href="miniguide.html">Up</a></td>
+									<td><a href="preproc.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="syntax_toc.html">5 Formal Syntax</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="tasking.html">6.6 Multitasking in Euphoria</a>
+									</td>
+									<td width="20%">
+										Up: <a href="miniguide.html">6 Mini-Guides</a>
+									</td>
+									<td width="20%">
+										<a href="preproc.html">6.8 The User Defined Pre-Processor</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="tools.html">7 Included Tools</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

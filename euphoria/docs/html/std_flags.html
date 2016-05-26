@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_primes.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_hash.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_primes.html">8.30 Prime Numbers</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_hash.html">8.32 Hashing Algorithms</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\flags.e -->
+<h2>8.31 Flags</h2>
+<a name="_4363_flags"></a><a name="flags"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_flags.html#_4363_flags">8.31 Flags</a></div>
+<div class="toc_3"><a href="std_flags.html#_4364_routines">8.31.1 Routines</a></div>
+<div class="toc_4"><a href="std_flags.html#_4366_which_bit">8.31.1.1 which_bit</a></div>
+<div class="toc_4"><a href="std_flags.html#_4371_flags_to_string">8.31.1.2 flags_to_string</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\flags.e -->
+<h3>8.31.1 Routines</h3>
+<a name="_4364_routines"></a><a name="routines"></a>
+<p> 
+<a name="flagswhich_bit"></a><a name="bit"></a> </p>
+
+<!-- ..\include\std\flags.e -->
+<h4>8.31.1.1 which_bit</h4>
+<a name="_4366_which_bit"></a><a name="which_bit"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/flags.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">flags</font>
+<font color="#0000FF">public function </font><font color="#330033">which_bit</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">theValue</font><font color="#880033">)</font>
+</pre>
+
+<p>   tests if the supplied value has only a single bit on in its representation. </p>
+
+<!-- ..\include\std\flags.e -->
+<h5>Parameters:</h5>
+<a name="_4367_parameters"></a><a name="parameters"></a><ol><li><tt>theValue</tt> : an object to test.
+</li></ol>
+<!-- ..\include\std\flags.e -->
+<h5>Returns:</h5>
+<a name="_4368_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, either 0 if it contains multiple bits, zero bits or is an invalid value, otherwise the bit number set. The right-most bit is position 1 and the leftmost bit is position 32.</p>
+
+<!-- ..\include\std\flags.e -->
+<h5>Example 1:</h5>
+<a name="_4369_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">2</font><font color="#880033">) </font><font color="#FF0055">--&gt; 2</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">0</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">3</font><font color="#880033">) </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">4</font><font color="#880033">)          </font><font color="#FF0055">--&gt; 3</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">17</font><font color="#880033">)         </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">1.7</font><font color="#880033">)        </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">-2</font><font color="#880033">)         </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">"one"</font><font color="#880033">)      </font><font color="#FF0055">--&gt; 0</font>
+<font color="#330033">? which_bit</font><font color="#880033">(</font><font color="#330033">0x80000000</font><font color="#880033">) </font><font color="#FF0055">--&gt; 32</font>
+</pre>
+
+<p> 
+<a name="flagsflags_to_string"></a><a name="to_string"></a> </p>
+
+<!-- ..\include\std\flags.e -->
+<h4>8.31.1.2 flags_to_string</h4>
+<a name="_4371_flags_to_string"></a><a name="flags_to_string"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/flags.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">flags</font>
+<font color="#0000FF">public function </font><font color="#330033">flags_to_string</font><font color="#880033">(</font><font color="#0000FF">object </font><font color="#330033">flag_bits, </font><font color="#0000FF">sequence </font><font color="#330033">flag_names,</font>
+<font color="#0000FF">        integer </font><font color="#330033">expand_flags = 0</font><font color="#880033">)</font>
+</pre>
+
+<p>   returns a list of strings that represent the human-readable identities of the supplied flag or flags.</p>
+
+<!-- ..\include\std\flags.e -->
+<h5>Parameters:</h5>
+<a name="_4372_parameters"></a><a name="parameters"></a><ol><li><tt>flag_bits</tt> : Either a single 32-bit set of flags (a flag value), or a list of such flag values. The function returns the names for these flag values.
+</li><li><tt>flag_names</tt> : A sequence of two-element sub-sequences. Each sub-sequence is contains <tt>{FlagValue, FlagName}</tt>, where <em>FlagName</em> is a string and <em>FlagValue</em> is the set of bits that set the flag on.
+</li><li><tt>expand_flags</tt>: An integer. 0 (the default) means that the flag values in  <tt>flag_bits</tt> are not broken down to their single-bit values. For example: <tt>#0c</tt> returns the name of <tt>#0c</tt> and not the names for <tt>#08</tt> and <tt>#04</tt>. When <tt>expand_flags</tt> is non-zero then each bit in the <tt>flag_bits</tt> parameter is scanned for a matching name.
+</li></ol>
+<!-- ..\include\std\flags.e -->
+<h5>Returns:</h5>
+<a name="_4373_returns"></a><a name="returns"></a>
+<p> A sequence. This contains the name or names for each supplied flag value or values.</p>
+
+<!-- ..\include\std\flags.e -->
+<h5>Comments:</h5>
+<a name="_4374_comments"></a><a name="comments"></a><ul><li>The number of strings in the returned value depends on <tt>expand_flags</tt> is non-zero and whether <tt>flags_bits</tt> is an atom or sequence.
+</li><li>When <tt>flag_bits</tt> is an atom, you get returned a sequence of strings, one for each matching name (according to <tt>expand_flags</tt> option).
+</li><li>When <tt>flag_bits</tt> is a sequence, it is assumed to represent a list of atomic flags. That is, <tt>{#1, #4}</tt> is a set of two flags for which you want their names. In this case, you get returned a sequence that contains one sequence for each element in <tt>flag_bits</tt>, which in turn contain the matching name or names.
+</li><li>When a flag's name can not be found in <tt>flag_names</tt>, this function returns the <em>name</em> of "<tt>?</tt>".
+</li></ul>
+<!-- ..\include\std\flags.e -->
+<h5>Example 1:</h5>
+<a name="_4375_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/console.e</font>
+<font color="#0000FF">sequence </font><font color="#330033">s</font>
+<font color="#330033">s = </font><font color="#880033">{</font>
+<font color="#993333">	{</font><font color="#330033">#00000000, </font><font color="#330033">"WS_OVERLAPPED"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#80000000, </font><font color="#330033">"WS_POPUP"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#40000000, </font><font color="#330033">"WS_CHILD"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#20000000, </font><font color="#330033">"WS_MINIMIZE"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#10000000, </font><font color="#330033">"WS_VISIBLE"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#08000000, </font><font color="#330033">"WS_DISABLED"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#44000000, </font><font color="#330033">"WS_CLIPPINGCHILD"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#04000000, </font><font color="#330033">"WS_CLIPSIBLINGS"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#02000000, </font><font color="#330033">"WS_CLIPCHILDREN"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#01000000, </font><font color="#330033">"WS_MAXIMIZE"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00C00000, </font><font color="#330033">"WS_CAPTION"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00800000, </font><font color="#330033">"WS_BORDER"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00400000, </font><font color="#330033">"WS_DLGFRAME"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00100000, </font><font color="#330033">"WS_HSCROLL"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00200000, </font><font color="#330033">"WS_VSCROLL"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00080000, </font><font color="#330033">"WS_SYSMENU"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00040000, </font><font color="#330033">"WS_THICKFRAME"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00020000, </font><font color="#330033">"WS_MINIMIZEBOX"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00010000, </font><font color="#330033">"WS_MAXIMIZEBOX"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00300000, </font><font color="#330033">"WS_SCROLLBARS"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#993333">	{</font><font color="#330033">#00CF0000, </font><font color="#330033">"WS_OVERLAPPEDWINDOW"</font><font color="#993333">}</font><font color="#330033">,</font>
+<font color="#330033">	$</font>
+<font color="#880033">}</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#0000FF">{</font><font color="#330033">#0C20000,2,9,0</font><font color="#0000FF">}</font><font color="#330033">, s,1</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;     "WS_BORDER",</font>
+<font color="#FF0055">--&gt;     "WS_DLGFRAME",</font>
+<font color="#FF0055">--&gt;     "WS_MINIMIZEBOX"</font>
+<font color="#FF0055">--&gt;   },</font>
+<font color="#FF0055">--&gt;   {</font>
+<font color="#FF0055">--&gt;     "?"</font>
+<font color="#FF0055">--&gt;   },</font>
+<font color="#FF0055">--&gt;   {</font>
+<font color="#FF0055">--&gt;     "?"</font>
+<font color="#FF0055">--&gt;   },</font>
+<font color="#FF0055">--&gt;   {</font>
+<font color="#FF0055">--&gt;     "WS_OVERLAPPED"</font>
+<font color="#FF0055">--&gt;   }</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#80000000, s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_POPUP"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#00C00000, s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_CAPTION"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#44000000, s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_CLIPPINGCHILD"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#44000000, s, 1</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_CHILD",</font>
+<font color="#FF0055">--&gt;   "WS_CLIPSIBLINGS"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#00000000, s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_OVERLAPPED"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#00CF0000, s</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_OVERLAPPEDWINDOW"</font>
+<font color="#FF0055">--&gt; }</font>
+<font color="#330033">display</font><font color="#880033">( </font><font color="#330033">flags_to_string</font><font color="#993333">( </font><font color="#330033">#00CF0000, s, 1</font><font color="#993333">)</font><font color="#880033">)</font>
+<font color="#FF0055">--&gt; {</font>
+<font color="#FF0055">--&gt;   "WS_BORDER",</font>
+<font color="#FF0055">--&gt;   "WS_DLGFRAME",</font>
+<font color="#FF0055">--&gt;   "WS_SYSMENU",</font>
+<font color="#FF0055">--&gt;   "WS_THICKFRAME",</font>
+<font color="#FF0055">--&gt;   "WS_MINIMIZEBOX",</font>
+<font color="#FF0055">--&gt;   "WS_MAXIMIZEBOX"</font>
+<font color="#FF0055">--&gt; }</font>
+</pre>
+
+<p> 
+<!-- ..\include\std\hash.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_primes.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_hash.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_primes.html">8.30 Prime Numbers</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_hash.html">8.32 Hashing Algorithms</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

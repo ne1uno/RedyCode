@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+	Nonzero1.0 by nodethirtythree design
+	http://www.nodethirtythree.com
+	missing in a maze
+
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>OpenEuphoria: Euphoria v4.1</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="js/search.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+		<div id="header_inner" class="fluid">
+			<div id="logo">
+				<h1><a href="index.html"><span>Open</span>Euphoria Manual</a></h1>
+				<h2>Euphoria v4.1</h2>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<div id="main_inner" class="fluid">
+			<div id="docs">
+	<form method=get action="javascript:void(0)" onsubmit="search(srchval); return false;">
+	<table width="100%" border=0 padding=0 cellpadding=0>
+		<tr align="left">
+			<td>
+			<b>routine</b> or <b>constant</b> name search</td>
+		</tr>
+		<tr>	
+			<td><input type=text name=srchval value=""><input type=submit></td>
+		</tr>
+		<tr>
+		<td><span id="searchresults" name="searchresults"></td></span>
+	</table>
+	</form>
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_pretty.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_types.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_pretty.html">8.9 Pretty Printing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_types.html">8.11 Types - Extended</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+
+						<div class="body">
+							</p>
+
+<!-- ..\include\std\task.e -->
+<h2>8.10 Multi-Tasking</h2>
+<a name="_1888_multitasking"></a><a name="multitasking"></a>
+<p> <div class="TOC">
+<div class="TOCBody"><div class="toc_2"><a href="std_task.html#_1888_multitasking">8.10 Multi-Tasking</a></div>
+<div class="toc_3"><a href="std_task.html#_1889_generalnotes">8.10.1 General Notes</a></div>
+<div class="toc_3"><a href="std_task.html#_1890_warning">8.10.2 Warning</a></div>
+<div class="toc_3"><a href="std_task.html#_1891_routines">8.10.3 Routines</a></div>
+<div class="toc_4"><a href="std_task.html#_1893_task_delay">8.10.3.1 task_delay</a></div>
+<div class="toc_4"><a href="std_task.html#_1898_task_clock_start">8.10.3.2 task_clock_start</a></div>
+<div class="toc_4"><a href="std_task.html#_1903_task_clock_stop">8.10.3.3 task_clock_stop</a></div>
+<div class="toc_4"><a href="std_task.html#_1907_task_create">8.10.3.4 task_create</a></div>
+<div class="toc_4"><a href="std_task.html#_1915_task_list">8.10.3.5 task_list</a></div>
+<div class="toc_4"><a href="std_task.html#_1921_task_schedule">8.10.3.6 task_schedule</a></div>
+<div class="toc_4"><a href="std_task.html#_1927_task_self">8.10.3.7 task_self</a></div>
+<div class="toc_4"><a href="std_task.html#_1932_task_status">8.10.3.8 task_status</a></div>
+<div class="toc_4"><a href="std_task.html#_1939_task_suspend">8.10.3.9 task_suspend</a></div>
+<div class="toc_4"><a href="std_task.html#_1945_task_yield">8.10.3.10 task_yield</a></div>
+</div>
+</div>
+</p>
+
+<!-- ..\include\std\task.e -->
+<h3>8.10.1 General Notes</h3>
+<a name="_1889_generalnotes"></a><a name="generalnotes"></a>
+<p> For a complete overview of the task system, please see the mini-guide <a href="tasking.html#_583_multitaskingineuphoria">Multitasking in Euphoria</a>.</p>
+
+<!-- ..\include\std\task.e -->
+<h3>8.10.2 Warning</h3>
+<a name="_1890_warning"></a><a name="warning"></a>
+<p> The task system does not yet function in a shared library. Task routine calls that are compiled into a shared library are emitted as a NOP (no operation) and will therefore have no effect.</p>
+
+<p> It is planned to allow the task system to function in shared libraries in future versions of OpenEuphoria.</p>
+
+<!-- ..\include\std\task.e -->
+<h3>8.10.3 Routines</h3>
+<a name="_1891_routines"></a><a name="routines"></a>
+<p> 
+<a name="tasktask_delay"></a><a name="delay"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.1 task_delay</h4>
+<a name="_1893_task_delay"></a><a name="task_delay"></a>
+<pre class="examplecode"><font color="#0000FF">include </font><font color="#330033">std/task.e</font>
+<font color="#0000FF">namespace </font><font color="#330033">task</font>
+<font color="#0000FF">public procedure </font><font color="#330033">task_delay</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">delaytime</font><font color="#880033">)</font>
+</pre>
+
+<p>   suspends a task for a short period, allowing other tasks to run in the meantime.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Parameters:</h5>
+<a name="_1894_parameters"></a><a name="parameters"></a><ol><li><tt>delaytime</tt> : an atom, the duration of the delay in seconds.
+</li></ol>
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1895_comments"></a><a name="comments"></a>
+<p> This procedure is similar to <a href="std_os.html#_1794_sleep">sleep</a> but allows for other tasks to run by yielding on a regular basis. Like <a href="std_os.html#_1794_sleep">sleep</a> its argument needs not being an integer.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1896_seealso"></a><a name="seealso"></a>
+<p> <a href="std_os.html#_1794_sleep">sleep</a></p>
+
+<p> 
+<a name="eutask_clock_start"></a><a name="clock_start"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.2 task_clock_start</h4>
+<a name="_1898_task_clock_start"></a><a name="task_clock_start"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure task_clock_start</font><font color="#880033">()</font>
+</pre>
+
+<p> restarts the clock used for scheduling real-time tasks.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1899_comments"></a><a name="comments"></a>
+<p> Call this routine, some time after calling <tt>task_clock_stop</tt>, when you want scheduling of real-time tasks to continue.</p>
+
+<p> <a href="std_task.html#_1903_task_clock_stop">task_clock_stop</a> and <tt>task_clock_start</tt> can be used to freeze the scheduling of real-time tasks.</p>
+
+<p> <tt>task_clock_start</tt> causes the scheduled times of all real-time tasks to be incremented by the amount of time since <a href="std_task.html#_1903_task_clock_stop">task_clock_stop</a> was called. This allows a game, simulation, or other program to continue smoothly.</p>
+
+<p> Time-shared tasks are not affected.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1900_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- freeze the game while the player answers the phone</font>
+<font color="#0000FF">task_clock_stop</font><font color="#880033">()</font>
+<font color="#0000FF">while get_key</font><font color="#880033">() </font><font color="#330033">= -1 </font><font color="#0000FF">do</font>
+<font color="#0000FF">end while</font>
+<font color="#0000FF">task_clock_start</font><font color="#880033">()</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1901_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1903_task_clock_stop">task_clock_stop</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a>, <a href="std_task.html#_1893_task_delay">task_delay</a></p>
+
+<p> 
+<a name="eutask_clock_stop"></a><a name="clock_stop"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.3 task_clock_stop</h4>
+<a name="_1903_task_clock_stop"></a><a name="task_clock_stop"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure task_clock_stop</font><font color="#880033">()</font>
+</pre>
+
+<p> stops the scheduling of real-time tasks.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1904_comments"></a><a name="comments"></a>
+<p> Call <tt>task_clock_stop</tt> when you want to take time out from scheduling real-time tasks. For instance, you want to temporarily suspend a game or simulation for a period of time.</p>
+
+<p> Scheduling will resume when <a href="std_task.html#_1898_task_clock_start">task_clock_start</a> is called.</p>
+
+<p> Time-shared tasks can continue. The current task can also continue, unless it is a real-time task and it yields.</p>
+
+<p> The <a href="std_datetime.html#_1030_time">time</a> function is not affected by this.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1905_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1898_task_clock_start">task_clock_start</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a>, <a href="std_task.html#_1893_task_delay">task_delay</a></p>
+
+<p> 
+<a name="eutask_create"></a><a name="create"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.4 task_create</h4>
+<a name="_1907_task_create"></a><a name="task_create"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function task_create</font><font color="#880033">(</font><font color="#0000FF">integer </font><font color="#330033">rid, </font><font color="#0000FF">sequence </font><font color="#330033">args</font><font color="#880033">)</font>
+</pre>
+
+<p> creates a new task, given a home procedure and the arguments passed to it.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Parameters:</h5>
+<a name="_1908_parameters"></a><a name="parameters"></a><ol><li><tt>rid</tt> : an integer, the routine_id of a user-defined Euphoria procedure.
+</li><li><tt>args</tt> : a sequence, the list of arguments that will be passed to this procedure when the task starts executing.
+</li></ol>
+<!-- ..\include\std\task.e -->
+<h5>Returns:</h5>
+<a name="_1909_returns"></a><a name="returns"></a>
+<p> An <strong>atom</strong>, a task identifier, created by the system. It can be used to identify this task to the other Euphoria multitasking routines.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Errors:</h5>
+<a name="_1910_errors"></a><a name="errors"></a>
+<p> There must be at most 12 parameters in <tt>args</tt>.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1911_comments"></a><a name="comments"></a>
+<p> <tt>task_create</tt> creates a new task, but does not start it executing. You must call <a href="std_task.html#_1921_task_schedule">task_schedule</a> for this purpose.</p>
+
+<p> Each task has its own set of private variables and its own call stack. Global and local variables are shared between all tasks.</p>
+
+<p> If a run-time error is detected, the traceback will include information on all tasks, with the offending task listed first.</p>
+
+<p> Many tasks can be created that all run the same procedure, possibly with different parameters.</p>
+
+<p> A task cannot be based on a function, since there would be no way of using the function result.</p>
+
+<p> Each task id is unique. <tt>task_create</tt> never returns the same task id as it did before. Task id's are integer-valued atoms and can be as large as the largest integer-valued atom (15 digits).</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1912_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#330033">mytask = </font><font color="#0000FF">task_create</font><font color="#880033">(</font><font color="#0000FF">routine_id</font><font color="#993333">(</font><font color="#330033">"myproc"</font><font color="#993333">)</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5, 9, </font><font color="#330033">"ABC"</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1913_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a>, <a href="std_task.html#_1927_task_self">task_self</a></p>
+
+<p> 
+<a name="eutask_list"></a><a name="list"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.5 task_list</h4>
+<a name="_1915_task_list"></a><a name="task_list"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function task_list</font><font color="#880033">()</font>
+</pre>
+
+<p> gets a sequence containing the task id's for all active or suspended tasks.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Returns:</h5>
+<a name="_1916_returns"></a><a name="returns"></a>
+<p> A <strong>sequence</strong>, of atoms, the list of all task that are or may be scheduled.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1917_comments"></a><a name="comments"></a>
+<p> This function lets you find out which tasks currently exist. Tasks that have terminated are not included. You can pass a task id to <a href="std_task.html#_1932_task_status">task_status</a> to find out more about a particular task.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1918_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">sequence </font><font color="#330033">tasks</font>
+
+<font color="#330033">tasks = </font><font color="#0000FF">task_list</font><font color="#880033">()</font>
+<font color="#0000FF">for </font><font color="#330033">i = 1 </font><font color="#0000FF">to length</font><font color="#880033">(</font><font color="#330033">tasks</font><font color="#880033">) </font><font color="#0000FF">do</font>
+<font color="#0000FF">    if task_status</font><font color="#880033">(</font><font color="#330033">tasks</font><font color="#993333">[</font><font color="#330033">i</font><font color="#993333">]</font><font color="#880033">) </font><font color="#330033">&gt; 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">        printf</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"task %d is active\n"</font><font color="#330033">, tasks</font><font color="#993333">[</font><font color="#330033">i</font><font color="#993333">]</font><font color="#880033">)</font>
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">end for</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1919_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1932_task_status">task_status</a>, <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a></p>
+
+<p> 
+<a name="eutask_schedule"></a><a name="schedule"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.6 task_schedule</h4>
+<a name="_1921_task_schedule"></a><a name="task_schedule"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure task_schedule</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">task_id, </font><font color="#0000FF">object </font><font color="#330033">schedule</font><font color="#880033">)</font>
+</pre>
+
+<p> schedules a task to run using a scheduling parameter.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Parameters:</h5>
+<a name="_1922_parameters"></a><a name="parameters"></a><ol><li><tt>task_id</tt> : an atom, the identifier of a task that did not terminate yet.
+</li><li><tt>schedule</tt> : an object, describing when and how often to run the task.
+</li></ol>
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1923_comments"></a><a name="comments"></a>
+<p> <tt>task_id</tt> must have been returned by <a href="std_task.html#_1907_task_create">task_create</a>.</p>
+
+<p> The task scheduler, which is built-in to the Euphoria run-time system, will use <tt>schedule</tt> as a guide when scheduling this task. It may not always be possible to achieve the desired number of consecutive runs, or the desired time frame. For instance, a task might take so long before yielding control, that another task misses its desired time window.</p>
+
+<p> <tt>schedule</tt> is being interpreted as follows:</p>
+
+<p> <tt>schedule</tt> is an integer:</p>
+
+<p> This defines <tt>task_id</tt> as time shared, and tells the task scheduler how many times it should the task in one burst before it considers running other tasks. <tt>schedule</tt> must be greater than zero then.</p>
+
+<p> Increasing this count will increase the percentage of CPU time given to the selected task, while decreasing the percentage given to other time-shared tasks. Use trial and error to find the optimal trade off. It will also increase the efficiency of the program, since each actual task switch wastes a bit of time.</p>
+
+<p> <tt>schedule</tt> is a sequence:</p>
+
+<p> In this case, it must be a pair of positive atoms, the first one not being less than the second one. This defines <tt>task_id</tt> as a real time task. The pair states the minimum and maximum times, in seconds, to wait before running the task. The pair also sets the time interval for subsequent runs of the task, until the next call to <tt>task_schedule</tt> or <a href="std_task.html#_1939_task_suspend">task_suspend</a>.</p>
+
+<p> Real-time tasks have a higher priority. Time-shared tasks are run when no real-time task is ready to execute.</p>
+
+<hr />
+A task can switch back and forth between real-time and time-shared. It all depends on the last call to <tt>task_schedule</tt> for that task. The scheduler never runs a real-time task before the start of its time frame (min value in the <tt>{min, max}</tt> pair), and it tries to avoid missing the task's deadline (max value).</p>
+
+<p> For precise timing, you can specify the same value for min and max. However, by specifying a range of times, you give the scheduler some flexibility. This allows it to schedule tasks more efficiently, and avoid non-productive delays. When the scheduler must delay, it calls <a href="std_os.html#_1794_sleep">sleep</a>, unless the required delay is very short. <a href="std_os.html#_1794_sleep">sleep</a> lets the operating system run other programs.</p>
+
+<p> The min and max values can be fractional. If the min value is smaller than the resolution of the scheduler's clock (currently <tt>0.01</tt> seconds on <em>Windows</em> or <em>Unix</em>) then accurate time scheduling cannot be performed, but the scheduler will try to run the task several times in a row to approximate what is desired.</p>
+
+<p> For example, if you ask for a min time of <tt>0.002</tt> seconds, then the scheduler will try to run your task <tt>0.01/0.002 = 5</tt> times in a row before waiting for the clock to "click" ahead by <tt>0.01</tt> . During the next <tt>0.01</tt> seconds it will run your task (up to) another 5 times etc. provided your task can be completed 5 times in one clock period.</p>
+
+<p> At program start-up there is a single task running. Its task id is 0, and initially it is a time-shared task allowed 1 run per <a href="std_task.html#_1945_task_yield">task_yield</a>. No other task can run until task 0 executes a <a href="std_task.html#_1945_task_yield">task_yield</a>.</p>
+
+<p> If task 0 (top-level) runs off the end of the main file, the whole program terminates, regardless of what other tasks may still be active.</p>
+
+<p> If the scheduler finds that no task is active, i.e. no task will ever run again (not even task 0), it terminates the program with a 0 exit code, similar to <tt>abort(0)</tt>.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1924_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- Task t1 will be executed up to 10 times in a row before</font>
+<font color="#FF0055">-- other time-shared tasks are given control. If a real-time</font>
+<font color="#FF0055">-- task needs control, t1 will lose control to the real-time task.</font>
+<font color="#0000FF">task_schedule</font><font color="#880033">(</font><font color="#330033">t1, 10</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- Task t2 will be scheduled to run some time between 4 and 5 seconds</font>
+<font color="#FF0055">-- from now. Barring any rescheduling of t2, it will continue to</font>
+<font color="#FF0055">-- execute every 4 to 5 seconds thereafter.</font>
+<font color="#0000FF">task_schedule</font><font color="#880033">(</font><font color="#330033">t2, </font><font color="#993333">{</font><font color="#330033">4, 5</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1925_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a></p>
+
+<p> 
+<a name="eutask_self"></a><a name="self"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.7 task_self</h4>
+<a name="_1927_task_self"></a><a name="task_self"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function task_self</font><font color="#880033">()</font>
+</pre>
+
+<p> returns the task id of the current task.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1928_comments"></a><a name="comments"></a>
+<p> This value may be needed, if a task wants to schedule or suspend itself.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1929_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- schedule self</font>
+<font color="#0000FF">task_schedule</font><font color="#880033">(</font><font color="#0000FF">task_self</font><font color="#993333">()</font><font color="#330033">, </font><font color="#993333">{</font><font color="#330033">5.9, 6.0</font><font color="#993333">}</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1930_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1945_task_yield">task_yield</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a></p>
+
+<p> 
+<a name="eutask_status"></a><a name="status"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.8 task_status</h4>
+<a name="_1932_task_status"></a><a name="task_status"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">function task_status</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">task_id</font><font color="#880033">)</font>
+</pre>
+
+<p> returns the status of a task.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Parameters:</h5>
+<a name="_1933_parameters"></a><a name="parameters"></a><ol><li><tt>task_id</tt> : an atom, the id of the task being queried.
+</li></ol>
+<!-- ..\include\std\task.e -->
+<h5>Returns:</h5>
+<a name="_1934_returns"></a><a name="returns"></a>
+<p> An <strong>integer</strong>, </p>
+<ul><li>-1 -- task does not exist, or terminated
+</li><li>0 -- task is suspended
+</li><li>1 -- task is active
+</li></ul>
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1935_comments"></a><a name="comments"></a>
+<p> A task might want to know the status of one or more other tasks when deciding whether to proceed with some processing.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1936_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#0000FF">integer </font><font color="#330033">s</font>
+
+<font color="#330033">s = </font><font color="#0000FF">task_status</font><font color="#880033">(</font><font color="#330033">tid</font><font color="#880033">)</font>
+<font color="#0000FF">if </font><font color="#330033">s = 1 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"ACTIVE\n"</font><font color="#880033">)</font>
+<font color="#0000FF">elsif </font><font color="#330033">s = 0 </font><font color="#0000FF">then</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"SUSPENDED\n"</font><font color="#880033">)</font>
+<font color="#0000FF">else</font>
+<font color="#0000FF">    puts</font><font color="#880033">(</font><font color="#330033">1, </font><font color="#330033">"DOESN'T EXIST\n"</font><font color="#880033">)</font>
+<font color="#0000FF">end if</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1937_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1915_task_list">task_list</a>, <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a></p>
+
+<p> 
+<a name="eutask_suspend"></a><a name="suspend"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.9 task_suspend</h4>
+<a name="_1939_task_suspend"></a><a name="task_suspend"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure task_suspend</font><font color="#880033">(</font><font color="#0000FF">atom </font><font color="#330033">task_id</font><font color="#880033">)</font>
+</pre>
+
+<p> suspends execution of a task.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Parameters:</h5>
+<a name="_1940_parameters"></a><a name="parameters"></a><ol><li><tt>task_id</tt> : an atom, the id of the task to suspend.
+</li></ol>
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1941_comments"></a><a name="comments"></a>
+<p> A suspended task will not be executed again unless there is a call to <a href="std_task.html#_1921_task_schedule">task_schedule</a> for the task.</p>
+
+<p> <tt>task_id</tt> is a task id returned from <a href="std_task.html#_1907_task_create">task_create</a>. - Any task can suspend any other task. If a task suspends itself, the suspension will start as soon as the task calls <a href="std_task.html#_1945_task_yield">task_yield</a>.</p>
+
+<p> Suspending a task and never scheduling it again is how to kill a task. There is no <tt>task_kill</tt> primitives because undead tasks were creating too much trouble and confusion. As a general fact, nothing that impacts a running task can be effective as long as the task has not yielded.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1942_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- suspend task 15</font>
+<font color="#0000FF">task_suspend</font><font color="#880033">(</font><font color="#330033">15</font><font color="#880033">)</font>
+
+<font color="#FF0055">-- suspend current task</font>
+<font color="#0000FF">task_suspend</font><font color="#880033">(</font><font color="#0000FF">task_self</font><font color="#993333">()</font><font color="#880033">)</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1943_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1927_task_self">task_self</a>, <a href="std_task.html#_1945_task_yield">task_yield</a></p>
+
+<p> 
+<a name="eutask_yield"></a><a name="yield"></a> </p>
+
+<!-- ..\include\std\task.e -->
+<h4>8.10.3.10 task_yield</h4>
+<a name="_1945_task_yield"></a><a name="task_yield"></a>
+<pre class="examplecode"><font color="#330033">&lt;built-in&gt; </font><font color="#0000FF">procedure task_yield</font><font color="#880033">()</font>
+</pre>
+
+<p> yields control to the scheduler. The scheduler can then choose another task to run, or perhaps let the current task continue running.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Comments:</h5>
+<a name="_1946_comments"></a><a name="comments"></a>
+<p> Tasks should call <tt>task_yield</tt> periodically so other tasks will have a chance to run. Only when <tt>task_yield</tt> is called, is there a way for the scheduler to take back control from a task. This is what is known as cooperative multitasking.</p>
+
+<p> A task can have calls to <tt>task_yield</tt> in many different places in its code, and at any depth of subroutine call.</p>
+
+<p> The scheduler will use the current scheduling parameter (see <a href="std_task.html#_1921_task_schedule">task_schedule</a>), in determining when to return to the current task.</p>
+
+<p> When control returns, execution will continue with the statement that follows <tt>task_yield</tt>. The call-stack and all private variables will remain as they were when <tt>task_yield</tt> was called. Global and local variables may have changed, due to the execution of other tasks.</p>
+
+<p> Tasks should try to call <tt>task_yield</tt> often enough to avoid causing real-time tasks to miss their time window, and to avoid blocking time-shared tasks for an excessive period of time. On the other hand, there is a bit of overhead in calling <tt>task_yield</tt>, and this overhead is slightly larger when an actual switch to a different task takes place. A <tt>task_yield</tt> where the same task continues executing takes less time.</p>
+
+<p> A task should avoid calling <tt>task_yield</tt> when it is in the middle of a delicate operation that requires exclusive access to some data. Otherwise a race condition could occur, where one task might interfere with an operation being carried out by another task. In some cases a task might need to mark some data as "locked" or "unlocked" in order to prevent this possibility. With cooperative multitasking, these concurrency issues are much less of a problem than with the preemptive multitasking that other languages support.</p>
+
+<!-- ..\include\std\task.e -->
+<h5>Example 1:</h5>
+<a name="_1947_example1"></a><a name="example1"></a>
+<pre class="examplecode"><font color="#FF0055">-- From Language war game.</font>
+<font color="#FF0055">-- This small task deducts life support energy from either the</font>
+<font color="#FF0055">-- large Euphoria ship or the small shuttle.</font>
+<font color="#FF0055">-- It seems to run "forever" in an infinite loop, </font>
+<font color="#FF0055">-- but it's actually a real-time task that is called</font>
+<font color="#FF0055">-- every 1.7 to 1.8 seconds throughout the game.</font>
+<font color="#FF0055">-- It deducts either 3 units or 13 units of life support energy each time.</font>
+
+<font color="#0000FF">procedure </font><font color="#330033">task_life</font><font color="#880033">()</font>
+<font color="#FF0055">-- independent task: subtract life support energy </font>
+<font color="#0000FF">    while </font><font color="#330033">TRUE </font><font color="#0000FF">do</font>
+<font color="#0000FF">        if </font><font color="#330033">shuttle </font><font color="#0000FF">then</font>
+<font color="#330033">            p_energy</font><font color="#880033">(</font><font color="#330033">-3</font><font color="#880033">)</font>
+<font color="#0000FF">        else</font>
+<font color="#330033">            p_energy</font><font color="#880033">(</font><font color="#330033">-13</font><font color="#880033">)</font>
+<font color="#0000FF">        end if</font>
+<font color="#0000FF">        task_yield</font><font color="#880033">()</font>
+<font color="#0000FF">    end while</font>
+<font color="#0000FF">end procedure</font>
+</pre>
+
+<!-- ..\include\std\task.e -->
+<h5>See Also:</h5>
+<a name="_1948_seealso"></a><a name="seealso"></a>
+<p> <a href="std_task.html#_1907_task_create">task_create</a>, <a href="std_task.html#_1921_task_schedule">task_schedule</a>, <a href="std_task.html#_1939_task_suspend">task_suspend</a></p>
+
+<p> 
+<!-- ..\include\std\types.e -->
+
+						</div>
+
+						<!-- BEGIN NAV -->
+						<div class="doc-tools">
+							<table border=0 padding=0 cellpadding=0 width="100%">
+								<tr>
+									<td><a href="std_pretty.html"><img src="images/prev.png" /></a></td>
+									<td><a href="apiref.html">Up</a></td>
+									<td><a href="std_types.html"><img src="images/next.png" /></a></td>
+									<!-- Spacer -->
+									<td width="100%" colspan="3">&nbsp;</td>
+									<td><a href="index.html">TOC</a></td>
+									<td><a href="key_index.html">Index</a></td>
+								</tr>
+								<tr>
+									<td width="20%" colspan="3">
+										&lt;&lt;
+										<a href="tools.html">7 Included Tools</a>
+									</td>
+									<td width="20%">
+										&lt;
+										<a href="std_pretty.html">8.9 Pretty Printing</a>
+									</td>
+									<td width="20%">
+										Up: <a href="apiref.html">8 API Reference</a>
+									</td>
+									<td width="20%">
+										<a href="std_types.html">8.11 Types - Extended</a>
+										&gt;
+									</td>
+									<td width="20%" colspan="2">
+										<a href="relnotes.html">9 Release Notes</a>
+										&gt;&gt;
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END NAV -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>
