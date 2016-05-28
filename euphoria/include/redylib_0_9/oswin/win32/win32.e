@@ -1033,6 +1033,41 @@ public function GetSaveFileName(atom hwnd, sequence currentName)
 end function
 
 
+
+public function ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL)
+    object ret
+    
+    UseMainTimer = 0
+    
+    -- allocate strings if necessary and free them automatically 
+    if sequence(lpOperation) then
+        lpOperation = allocate_string(lpOperation, 1)
+    else
+        lpOperation = NULL
+    end if
+    if sequence(lpFile) then
+        lpFile = allocate_string(lpFile, 1)
+    else
+        lpFile = NULL
+    end if
+    if sequence(lpParameters) then
+        lpParameters = allocate_string(lpParameters, 1)
+    else
+        lpParameters = NULL
+    end if
+    if sequence(lpDirectory) then
+        lpDirectory = allocate_string(lpDirectory, 1)
+    else
+        lpDirectory = NULL
+    end if
+    ret = c_func(xShellExecute,{hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd})
+    
+    UseMainTimer = 1
+    
+    return ret
+    --If the function succeeds, it returns a value greater than 32.
+end function
+
 -- Clipboard ------------------------
 
 public function clipboard_write_txt(atom hWnd, sequence txt) --"cut" or "copy" text to the clipboard. hWnd is a Window handle
