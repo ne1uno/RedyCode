@@ -435,12 +435,22 @@ end procedure
 procedure do_project_explore_folder()
     if length(pPath) > 0 then
         --puts(1, pPath)
-        --if atom(msgdata) then
+        
         atom wh = gui:widget_get_handle("winMain")
-        atom ret = gui:ShellExecute(wh, pPath, "", "explore")
-        --else
-        --    gui:ShellExecute(gui:widget_get_handle("winMain"), pPath & "\\" & msgdata, "", "explore")
-        --end if
+        --Old version:
+        --atom ret = gui:ShellExecute(wh, pPath, "", "explore")
+        
+        --New version:
+        atom ret = gui:ShellExecute(wh, "explore", pPath, "")
+        
+        if ret > 32 then 
+          -- success
+        else 
+          -- failure
+            msgbox:msg("Unable to explore folder '" & pPath & "'. ShellExecute returned: " & sprint(ret) & "", "Error")
+        end if
+        
+        
     end if
 end procedure
 

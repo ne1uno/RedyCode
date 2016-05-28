@@ -262,6 +262,7 @@ iCanvasName = {},       --Name of canvas currently being used or "" if hidden
 iParentName = {},       --Name of parentn of canvas currently being used
 iLabel = {},            --Label text (file name, page title, etc.)
 iEventRid = {},         --Routine ID of external event handler
+iMenuID = {},           --Context Menu wid
 
 iSyntaxMode = {},       --type of syntax
 iEditMode = {},         --edit mode (normal, block, or grid)
@@ -2856,11 +2857,118 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                 end if
                                 iIsSelecting[idx] = 0
                                 
-                                
                             case "RightDown" then
                                 
                             case "RightUp" then
-                                --todo: show context menu
+                                sequence menuitems
+                                
+                                --TODO: callback to generate context menu on-the-fly
+                                --Temporary hard-coded menus: 
+                                if iLocked[idx] then
+                                    if is_selection(idx) then
+                                        menuitems = {
+                                            "copy",
+                                            "-",
+                                            "select_all"
+                                        }
+                                    else
+                                        menuitems = {
+                                            "select_all"
+                                        }
+                                    end if
+                                else
+                                    if is_selection(idx) then
+                                        if iSyntaxMode[idx] = synEuphoria then
+                                            menuitems = {
+                                                "cut",
+                                                "copy",
+                                                "paste",
+                                                "-",
+                                                "delete",
+                                                "-",
+                                                "select_all",
+                                                "-",
+                                                "format_indent_less",
+                                                "format_indent_more" /*,
+                                                "-",
+                                                {"Convert", {
+                                                    "comment",
+                                                    "uncomment",
+                                                    "-",
+                                                    "beautify",
+                                                    "-",
+                                                    "make_string"
+                                                }},
+                                                {"Surround with", {
+                                                    "surround_brackets"
+                                                }}*/
+                                            }
+                                        elsif iSyntaxMode[idx] = synCreole then
+                                            menuitems = {
+                                                "cut",
+                                                "copy",
+                                                "paste",
+                                                "-",
+                                                "delete",
+                                                "-",
+                                                "select_all",
+                                                "-",
+                                                "format_indent_less",
+                                                "format_indent_more" /*,
+                                                "-",
+                                                "format_link",
+                                                "format_bold",
+                                                "format_italics",
+                                                "format_underline",
+                                                "format_bullet_list"*/
+                                            }
+                                        else
+                                            menuitems = {
+                                                "cut",
+                                                "copy",
+                                                "paste",
+                                                "-",
+                                                "delete",
+                                                "-",
+                                                "select_all",
+                                                "-",
+                                                "format_indent_less",
+                                                "format_indent_more"
+                                            }
+                                        end if
+                                    else
+                                        if iSyntaxMode[idx] = synEuphoria then
+                                            menuitems = {
+                                                "paste",
+                                                "-",
+                                                "select_all" /*,
+                                                "-",
+                                                {"Insert", {
+                                                    "insert_widgets",
+                                                    "insert_string"
+                                                }}*/
+                                            }
+                                        elsif iSyntaxMode[idx] = synCreole then
+                                            menuitems = {
+                                                "paste",
+                                                "-",
+                                                "select_all" /*,
+                                                "-",
+                                                {"Insert", {
+                                                    "insert_link",
+                                                    "insert_image"
+                                                }}*/
+                                            }
+                                        else
+                                            menuitems = {
+                                                "paste",
+                                                "-",
+                                                "select_all"
+                                            }
+                                        end if
+                                    end if
+                                end if
+                                gui:wproc(iCanvasName[idx], "popup_menu", {evdata[3], evdata[4], menuitems, 0})
                                 
                         end switch
                     end if
@@ -3158,6 +3266,7 @@ export procedure create(sequence wprops) --Create a text editor instance
     iParentName         &= {nParentName}
     iLabel              &= {nLabel}
     iEventRid           &= {nEventRid}
+    iMenuID             &= {0}
     
     iSyntaxMode         &= {nSyntaxMode}
     iEditMode           &= {nEditMode}
@@ -3239,6 +3348,7 @@ export procedure destroy(sequence iname) --Destroy a text editor instance (after
         iParentName[idx]        = remove(iParentName, idx)
         iLabel[idx]             = remove(iLabel, idx)
         iEventRid[idx]          = remove(iEventRid, idx)
+        iMenuID[idx]            = remove(iMenuID, idx)
         
         iSyntaxMode[idx]        = remove(iSyntaxMode, idx)
         iEditMode[idx]          = remove(iEditMode, idx)

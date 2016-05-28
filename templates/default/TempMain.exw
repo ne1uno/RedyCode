@@ -30,7 +30,7 @@ include std/filesys.e
 --Define Application Info
 app:define({
     {"title", "AppName"},
-    {"version", "0.9.0"},
+    {"version", "0.9.1"},
     {"author", "You"},
     {"copyright", "2016 You"},
     {"license", {

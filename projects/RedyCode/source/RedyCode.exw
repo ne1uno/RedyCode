@@ -51,7 +51,7 @@ include std/filesys.e
 --Define Application Info
 app:define({
     {"title", "RedyCode"},
-    {"version", "0.9.0"},
+    {"version", "0.9.1"},
     {"website", "http://redy-project.org/"},
     {"author", "Ryan W. Johnson"},
     {"copyright", "2016 Ryan W. Johnson"},
@@ -530,6 +530,11 @@ procedure destroy_tab(sequence tabname)
             action:set_enabled("beautify", 0)
             action:set_enabled("format_indent_less", 0)
             action:set_enabled("format_indent_more", 0)
+            
+            action:set_enabled("find", 0)
+            action:set_enabled("find_replace", 0)
+            action:set_enabled("find_next", 0)
+            action:set_enabled("find_prev", 0)
         end if
         
         --sequence flist = {}
@@ -721,6 +726,13 @@ procedure do_file_switch_to(object selectedtab)
                 action:set_enabled("format_indent_less", 0)
                 action:set_enabled("format_indent_more", 0)
                 
+                if not equal(fTabFileTypes[tidx], "image") then
+                    action:set_enabled("find", 1)
+                    action:set_enabled("find_replace", 0)
+                    action:set_enabled("find_next", 1)
+                    action:set_enabled("find_prev", 1)
+                end if
+                
                 if equal(fTabFileTypes[tidx], "source") then
                     action:set_enabled("goto_line", 1)
                     action:set_enabled("goto_routine", 1)
@@ -754,6 +766,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
                     
+                    action:set_enabled("find", 0) --1)
+                    action:set_enabled("find_replace", 0) --1)
+                    action:set_enabled("find_next", 0) --1)
+                    action:set_enabled("find_prev", 0) --1)
+                    
                     action:set_enabled("goto_line", 0) --1)
                     action:set_enabled("goto_routine", 0) --1)
                     action:set_enabled("goto_bookmark", 0) --1)
@@ -770,6 +787,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("beautify", 0) --1)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
+                    
+                    action:set_enabled("find", 0) --1)
+                    action:set_enabled("find_replace", 0) --1)
+                    action:set_enabled("find_next", 0) --1)
+                    action:set_enabled("find_prev", 0) --1)
                     
                     action:set_enabled("goto_line", 0)
                     action:set_enabled("goto_routine", 0)
@@ -804,6 +826,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_less", 0)
                     action:set_enabled("format_indent_more", 0)
                     
+                    action:set_enabled("find", 0)
+                    action:set_enabled("find_replace", 0)
+                    action:set_enabled("find_next", 0)
+                    action:set_enabled("find_prev", 0)
+                    
                     action:set_enabled("goto_line", 0)
                     action:set_enabled("goto_routine", 0)
                     action:set_enabled("goto_bookmark", 0)
@@ -820,6 +847,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("beautify", 0)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
+                    
+                    action:set_enabled("find", 0) --1)
+                    action:set_enabled("find_replace", 0) --1)
+                    action:set_enabled("find_next", 0) --1)
+                    action:set_enabled("find_prev", 0) --1)
                     
                     action:set_enabled("goto_line", 0)
                     action:set_enabled("goto_routine", 0)
@@ -847,6 +879,11 @@ procedure do_file_switch_to(object selectedtab)
         action:set_enabled("beautify", 0)
         action:set_enabled("format_indent_less", 0)
         action:set_enabled("format_indent_more", 0)
+        
+        action:set_enabled("find", 0)
+        action:set_enabled("find_replace", 0)
+        action:set_enabled("find_next", 0)
+        action:set_enabled("find_prev", 0)
         
         action:set_enabled("goto_line", 0)
         action:set_enabled("goto_routine", 0)
@@ -918,7 +955,7 @@ procedure start()
     gui:load_bitmap("txt16", ImgPath & "txt16.bmp")
     gui:load_bitmap("img16", ImgPath & "img16.bmp")
     
-    action:do_proc("show_splash")
+    
     
     --set_tabs_double_click_action("file_close") --these are not necessary, defaults are already the same as this 
     --set_tabs_select_action("file_switch_to")
@@ -938,15 +975,19 @@ procedure start()
     end if
     
     if sequence(CmdFile) then
+        --puts(1, CmdAction & ": " & CmdFile & "\n")
+        action:do_proc("list_projects", {})
         switch CmdAction do
         case "edit" then
-            action:do_proc("open_project", {CmdFile})
+            action:do_proc("project_load", {CmdFile})
         case "run" then
-            action:do_proc("run_project", {CmdFile})
+            action:do_proc("project_load", {CmdFile})
+            action:do_proc("app_run_default", {})
         case "build" then
-            action:do_proc("build_project", {CmdFile})
+            action:do_proc("project_load", {CmdFile})
         end switch
     else
+        action:do_proc("show_splash")
         tips:start()
         action:do_proc("list_projects", {})
     end if

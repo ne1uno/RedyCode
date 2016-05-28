@@ -328,21 +328,21 @@ public procedure link_dll_routines()
     xGetFileTitle = link_c_func(comdlg32, "GetFileTitleA", {C_POINTER, C_POINTER, C_WORD}, C_SHORT)
     
     --Shell functions:
-    xBrowseForFolder = link_c_func(shell32, "SHBrowseForFolderA", {C_POINTER}, C_ULONG)
-    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_HWND)
-
+    --xBrowseForFolder = link_c_func(shell32, "SHBrowseForFolderA", {C_POINTER}, C_ULONG)
+    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_INT) --C_HWND)
+    
     --IPC:
     xCreateProcess = link_c_func(kernel32, "CreateProcessA", {C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_BOOL, C_DWORD, C_POINTER, C_POINTER, C_POINTER, C_POINTER},C_BOOL)
     xTerminateProcess = link_c_func(kernel32,"TerminateProcess", {C_POINTER, C_UINT}, C_BOOL)
     
-    xGetLastError = link_c_func(kernel32, "GetLastError", {}, C_DWORD)
-    xCloseHandle = link_c_func(kernel32,"CloseHandle", {C_HANDLE}, C_BOOL)
-    xCreateFileMapping = link_c_func(kernel32, "CreateFileMappingA", {C_HANDLE, C_POINTER, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_HANDLE)
-    xMapViewOfFile = link_c_func(kernel32, "MapViewOfFile", {C_HANDLE, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_LONG)
-    xUnmapViewOfFile = link_c_func(kernel32, "UnmapViewOfFile", {C_POINTER}, C_BOOL)
-    xOpenFileMapping = link_c_func(kernel32, "OpenFileMappingA", {C_DWORD, C_BOOL, C_POINTER}, C_HANDLE)
+    --xGetLastError = link_c_func(kernel32, "GetLastError", {}, C_DWORD)
+    --xCloseHandle = link_c_func(kernel32,"CloseHandle", {C_HANDLE}, C_BOOL)
+    --xCreateFileMapping = link_c_func(kernel32, "CreateFileMappingA", {C_HANDLE, C_POINTER, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_HANDLE)
+    --xMapViewOfFile = link_c_func(kernel32, "MapViewOfFile", {C_HANDLE, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_LONG)
+    --xUnmapViewOfFile = link_c_func(kernel32, "UnmapViewOfFile", {C_POINTER}, C_BOOL)
+    --xOpenFileMapping = link_c_func(kernel32, "OpenFileMappingA", {C_DWORD, C_BOOL, C_POINTER}, C_HANDLE)
     
-    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_LONG)
+    --xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_LONG)
     
     
     
@@ -892,7 +892,7 @@ end function
 -- Shared Memory Messaging system --------------------------------------------
 
 -- based on Memory Sharing Library, Version: 3.3 by Jason Mirwald and Mario Steele
-
+/*
 sequence 
 strHandles = {}, smHandles = {}, smPointers = {}
 
@@ -992,7 +992,7 @@ export procedure sm_close(object smPointer)
         smPointers = remove(smPointers, idx)
     end if
 end procedure
-
+*/
 
 
 
@@ -1194,53 +1194,6 @@ public function GetFileTitle(sequence File)
 end function
 */
 
-
---** from tinewg
--- Starts or open the given program, file or directory, using the given parameters,
--- if any. Not-executable files can be run directly, but only if their extension is already associated with an executable application.
--- Note that this procedure DOES NOT change the working directory to the one of the started application;
--- should it be necessary to change working directory, just use the Euphoria function chdir() before calling this procedure.
---
--- [sequence program] is the complete pathname of the program or file to run\\
--- [sequence parameters] are the parameters to use when running the specified program\\
--- 
-
-
-
-
-
-
-
-public function ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb = "", sequence workingdir = "")
-    atom result,szapp,szpara,szaction,szdirectory
-    --RunApp_old(appname,parameter)
-    -- in Shell32.dll ShellExecuteA
-    --HINSTANCE ShellExecute(
-    --  __in_opt    HWND hwnd,
-    --  __in_opt    LPCTSTR lpOperation,
-    --  __in        LPCTSTR lpFile,
-    --  __in_opt    LPCTSTR lpParameters,
-    --  __in_opt    LPCTSTR lpDirectory,
-    --  __in        INT nShowCmd
-    --);
-    --Commond verbs: "edit", "explore", "find", "open", "print"
-    
-    szaction=allocate_string(verb)
-    szapp=allocate_string(filename)
-    szpara=allocate_string(parameter)
-    szdirectory=allocate_string(workingdir)
-    result=c_func(xShellExecute,{WinHwnd,szaction,szapp,szpara,szdirectory,SW_SHOWNORMAL})
-    free(szaction)
-    free(szpara)
-    free(szapp)
-    
-
-    if result > 32 then  --If the function succeeds, it returns a value greater than 32.
-        return 1 --success
-    else
-        return 0 --failure
-    end if
-end function
 
 
 /*

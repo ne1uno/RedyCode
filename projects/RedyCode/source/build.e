@@ -27,6 +27,7 @@ include redylib_0_9/config.e as cfg
 include redylib_0_9/actions.e as action
 
 include redylib_0_9/gui/dialogs/dialog_file.e as dlgfile
+include redylib_0_9/gui/dialogs/msgbox.e as msgbox
 
 include std/task.e
 include std/text.e
@@ -111,6 +112,7 @@ procedure do_app_run(sequence exfile)
         EuiPath = cfg:get_var("", "Projects", "EuiPath"),
         IncludePath = cfg:get_var("", "Projects", "IncludePath")
         --RedyLibPath = cfg:get_var("", "Projects", "RedyLibPath")
+        atom wh = gui:widget_get_handle("winMain")
         
         if sequence(EuiPath) and sequence(IncludePath) then --and sequence(RedyLibPath) then
             sequence cmdline = 
@@ -119,10 +121,26 @@ procedure do_app_run(sequence exfile)
             "-I \"" & IncludePath & "\" \"" & exfile & "\""
             
             --puts(1, "<" & cmdline & ">\n")
-            gui:ShellExecute(gui:widget_get_handle("winMain"), EuiPath, cmdline, "open", filesys:pathname(exfile))
             
-            --gui:ShellExecute(gui:widget_get_handle("winMain"), EuiPath, cmdline, "open", driveid(exfile) & ":" & pathname(exfile))
+            --Old version:
+            --gui:ShellExecute(gui:widget_get_handle("winMain"), EuiPath, cmdline, "open", filesys:pathname(exfile))
+            --ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb = "", sequence workingdir = "")
+            
+            --New version:
+            atom ret = gui:ShellExecute(wh, "open", EuiPath, cmdline, filesys:pathname(exfile))
+            --ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL )
+            
+            if ret > 32 then 
+              -- success
+            else 
+              -- failure
+                msgbox:msg("Unable to run '" & exfile & "'. ShellExecute returned: " & sprint(ret) & "", "Error")
+            end if
+        else
+            msgbox:msg("Unable to run '" & exfile & "'. Invalid eui or include path.", "Error")
         end if
+    else
+        msgbox:msg("Unable to run '" & exfile & "'. File does not exist.", "Error")
     end if
 end procedure
 
