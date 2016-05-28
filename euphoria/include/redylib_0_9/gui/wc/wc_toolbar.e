@@ -201,7 +201,7 @@ end procedure
 
 
 procedure wc_draw(atom wid)
-    sequence cmds = {}, wrect, hrect, chwid, txex, box, tools
+    sequence cmds = {}, ttcmds = {}, wrect, hrect, chwid, txex, box, tools, ttpos
     atom idx = find(wid, wcprops[wcpID]), wh, wf, hlcolor, shcolor, hicolor, fillcolor, txtcolor, chkcolor, x1, y1, c
     
     if idx > 0 then
@@ -377,6 +377,23 @@ procedure wc_draw(atom wid)
                             {DR_PenColor, shcolor},
                             {DR_Line, box[3] - 1, box[2], box[3] - 1, box[4] - 1},
                             {DR_Line, box[1], box[4] - 1, box[3] - 1, box[4] - 1}
+                        }
+                    end if
+                    --tooltip:
+                    if wcprops[wcpSoftFocus][idx] = t and tools[itmEnabled][t] then
+                        ttpos = {box[1], box[4] + 6} --todo: reposition if outside window dimensions
+                        oswin:set_font(wh, "Arial", 9, Normal)
+                        txex = oswin:get_text_extent(wh, tools[itmLabel][t])
+                        ttcmds = {
+                            {DR_PenColor, rgb(255, 255, 200)},
+                            {DR_Rectangle, True, ttpos[1], ttpos[2], ttpos[1] + txex[1] + 6, ttpos[2] + txex[2] + 6},
+                            {DR_PenColor, rgb(140, 140, 140)},
+                            {DR_Rectangle, False, ttpos[1], ttpos[2], ttpos[1] + txex[1] + 6, ttpos[2] + txex[2] + 6},
+                            
+                            {DR_Font, "Arial", 9, Normal},
+                            {DR_TextColor, rgb(0, 0, 0)},
+                            {DR_PenPos, ttpos[1] + 3, ttpos[2] + 3},
+                            {DR_Puts, tools[itmLabel][t]}
                         }
                     end if
                 end if
@@ -572,7 +589,11 @@ procedure wc_draw(atom wid)
             end if
         end for*/
         
-        draw(widget:widget_get_handle(wid), cmds)
+        draw(wh, cmds)
+        
+        if sequence(ttcmds) then
+            draw_direct(wh, ttcmds)
+        end if
     end if
 end procedure
 

@@ -328,21 +328,21 @@ public procedure link_dll_routines()
     xGetFileTitle = link_c_func(comdlg32, "GetFileTitleA", {C_POINTER, C_POINTER, C_WORD}, C_SHORT)
     
     --Shell functions:
-    xBrowseForFolder = link_c_func(shell32, "SHBrowseForFolderA", {C_POINTER}, C_ULONG)
-    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_HWND)
-
+    --xBrowseForFolder = link_c_func(shell32, "SHBrowseForFolderA", {C_POINTER}, C_ULONG)
+    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_INT) --C_HWND)
+    
     --IPC:
     xCreateProcess = link_c_func(kernel32, "CreateProcessA", {C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_BOOL, C_DWORD, C_POINTER, C_POINTER, C_POINTER, C_POINTER},C_BOOL)
     xTerminateProcess = link_c_func(kernel32,"TerminateProcess", {C_POINTER, C_UINT}, C_BOOL)
     
-    xGetLastError = link_c_func(kernel32, "GetLastError", {}, C_DWORD)
-    xCloseHandle = link_c_func(kernel32,"CloseHandle", {C_HANDLE}, C_BOOL)
-    xCreateFileMapping = link_c_func(kernel32, "CreateFileMappingA", {C_HANDLE, C_POINTER, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_HANDLE)
-    xMapViewOfFile = link_c_func(kernel32, "MapViewOfFile", {C_HANDLE, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_LONG)
-    xUnmapViewOfFile = link_c_func(kernel32, "UnmapViewOfFile", {C_POINTER}, C_BOOL)
-    xOpenFileMapping = link_c_func(kernel32, "OpenFileMappingA", {C_DWORD, C_BOOL, C_POINTER}, C_HANDLE)
+    --xGetLastError = link_c_func(kernel32, "GetLastError", {}, C_DWORD)
+    --xCloseHandle = link_c_func(kernel32,"CloseHandle", {C_HANDLE}, C_BOOL)
+    --xCreateFileMapping = link_c_func(kernel32, "CreateFileMappingA", {C_HANDLE, C_POINTER, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_HANDLE)
+    --xMapViewOfFile = link_c_func(kernel32, "MapViewOfFile", {C_HANDLE, C_DWORD, C_DWORD, C_DWORD, C_POINTER}, C_LONG)
+    --xUnmapViewOfFile = link_c_func(kernel32, "UnmapViewOfFile", {C_POINTER}, C_BOOL)
+    --xOpenFileMapping = link_c_func(kernel32, "OpenFileMappingA", {C_DWORD, C_BOOL, C_POINTER}, C_HANDLE)
     
-    xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_LONG)
+    --xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_LONG)
     
     
     
@@ -892,7 +892,7 @@ end function
 -- Shared Memory Messaging system --------------------------------------------
 
 -- based on Memory Sharing Library, Version: 3.3 by Jason Mirwald and Mario Steele
-
+/*
 sequence 
 strHandles = {}, smHandles = {}, smPointers = {}
 
@@ -992,7 +992,7 @@ export procedure sm_close(object smPointer)
         smPointers = remove(smPointers, idx)
     end if
 end procedure
-
+*/
 
 
 
@@ -1207,10 +1207,36 @@ end function
 
 
 
+--new version:
+public function ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL)
+    -- allocate strings if necessary and free them automatically 
+    if sequence(lpOperation) then
+        lpOperation = allocate_string(lpOperation, 1)
+    else
+        lpOperation = NULL
+    end if
+    if sequence(lpFile) then
+        lpFile = allocate_string(lpFile, 1)
+    else
+        lpFile = NULL
+    end if
+    if sequence(lpParameters) then
+        lpParameters = allocate_string(lpParameters, 1)
+    else
+        lpParameters = NULL
+    end if
+    if sequence(lpDirectory) then
+        lpDirectory = allocate_string(lpDirectory, 1)
+    else
+        lpDirectory = NULL
+    end if
+    
+    return c_func(xShellExecute,{hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd})
+    --If the function succeeds, it returns a value greater than 32.
+end function
 
 
-
-
+/* --old version:
 public function ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb = "", sequence workingdir = "")
     atom result,szapp,szpara,szaction,szdirectory
     --RunApp_old(appname,parameter)
@@ -1241,6 +1267,7 @@ public function ShellExecute(atom WinHwnd, sequence filename, sequence parameter
         return 0 --failure
     end if
 end function
+*/
 
 
 /*

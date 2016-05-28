@@ -75,6 +75,7 @@ enum
     wcpScrollPosX,
     wcpScrollPosY,
  
+    wcpMenuID, --context menu widgetid
     wcpScrollV, --vertial scrollbar widgetid
     wcpScrollH --horizontal scrollbar widgetid
     
@@ -377,6 +378,7 @@ procedure wc_create(atom wid, object wprops)
     wcprops[wcpScrollPosX] &= {0}
     wcprops[wcpScrollPosY] &= {0}
 
+    wcprops[wcpMenuID] &= {0}
     wcprops[wcpScrollV] &= {0}
     wcprops[wcpScrollH] &= {0}
 end procedure
@@ -656,6 +658,11 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         widget:wc_send_event(wname, "HardFocus", {0})
                         doredraw = 1
                     end if*/
+                end if
+                
+                if wcprops[wcpMenuID][idx] > 0 then
+                    wcprops[wcpMenuID][idx] = 0
+                    oswin:close_all_popups("canvas")
                 end if
                 
             case "LeftUp" then
@@ -1088,7 +1095,8 @@ function wc_debug(atom wid)
             {"ScrollYEnabled", wcprops[wcpScrollYEnabled][idx]},
             {"ScrollPosX", wcprops[wcpScrollPosX][idx]},
             {"ScrollPosY", wcprops[wcpScrollPosY][idx]},
-                          
+            
+            {"MenuID", wcprops[wcpMenuID][idx]},
             {"ScrollV", wcprops[wcpScrollV][idx]},
             {"ScrollH", wcprops[wcpScrollH][idx]}
         }
@@ -1353,6 +1361,49 @@ function cmd_get_canvas_size(atom wid)
     return csize
 end function
 wc_define_function("canvas", "get_canvas_size", routine_id("cmd_get_canvas_size"))
+
+
+procedure cmd_popup_menu(atom wid, atom xpos, atom ypos, sequence menuitems, atom pressed = 1)
+    atom idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        atom wh = widget:widget_get_handle(wid)
+        sequence winpos = client_area_offset(wh),
+        wrect = widget_get_rect(wid),
+        avrect = {
+            winpos[1] + wrect[1] + xpos,
+            winpos[2] + wrect[2] + ypos,
+            winpos[1] + wrect[1] + xpos + 1,
+            winpos[2] + wrect[2] + ypos + 1
+        }
+        
+        wcprops[wcpMenuID][idx] = 0
+        oswin:close_all_popups("c")
+        
+        wcprops[wcpMenuID][idx] = widget_create(widget_get_name(wid) & ".mnuContext", wid, "menu", {
+            {"title", "Edit"},
+            {"actions", menuitems},
+            {"avoid", avrect & 1},
+            {"root", wid},
+            {"pressed", pressed}
+        })
+    end if
+    
+    --draw_handles(wid, idx)
+end procedure
+wc_define_command("canvas", "popup_menu", routine_id("cmd_popup_menu"))
+
+
+procedure cmd_unpress_popup_menu(atom wid)
+    atom idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        if wcprops[wcpMenuID][idx] > 0 then
+            widget:wc_call_event(wcprops[wcpMenuID][idx], "unpressed", wid)
+        end if
+        --wc_call_draw(wid)
+    end if
+end procedure
+wc_define_command("canvas", "unpress_popup_menu", routine_id("cmd_unpress_popup_menu"))
+
 
 
 

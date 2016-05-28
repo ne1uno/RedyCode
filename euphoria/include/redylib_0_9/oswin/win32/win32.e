@@ -60,6 +60,7 @@ windowList = {},
 windowDCs = {},
 windowBitmaps = {},
 windowBackColor = {},
+windowForeDraw = {}, --commands to draw directly to the window during WM_PAINT after the Bitmap has been blitted (useful for tooltips)
 windowNeedRefresh = {}, --0=no 1=yes 2=disable
 windowOwner = {},       --id of widget that created the window
 windowCloseAllow = {},  --routine to call on close event (if 0, then just close window)
@@ -149,7 +150,11 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 VOID = c_func(xBitBlt, {hdc, rect[RECT_Left], rect[RECT_Top], rect[RECT_Right], rect[RECT_Bottom], 
                                         windowDCs[widx], rect[RECT_Left], rect[RECT_Top], SRCCOPY})
                 if VOID != 1 then
-                    puts(1, "error: BitBlit\n")
+                    puts(1, "error: WM_PAINT: BitBlit\n")
+                end if
+                
+                if length(windowForeDraw[widx]) > 0 then
+                    draw(hwnd, windowForeDraw[widx], hdc)
                 end if
                 
                 -------
@@ -250,6 +255,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 windowDCs = remove(windowDCs, widx)
                 windowBitmaps = remove(windowBitmaps, widx)
                 windowBackColor = remove(windowBackColor, widx)
+                windowForeDraw = remove(windowForeDraw, widx)
                 windowNeedRefresh = remove(windowNeedRefresh, widx)
                 windowOwner = remove(windowOwner, widx)
                 windowCloseAllow = remove(windowCloseAllow, widx)
@@ -597,17 +603,18 @@ atom wleft, atom wtop, atom wwidth, atom wheight, atom wmaximized = 0, atom wbac
 	hbit = c_func(xCreateCompatibleBitmap, {hdc, ScreenX, ScreenY})
     VOID = c_func(xReleaseDC, {hWnd, hdc})
 
-    windowList &= hWnd
-    windowDCs &= memdc
-    windowBitmaps &= hbit
-    windowBackColor &= wbackcolor
-    windowNeedRefresh &= 2
-    windowOwner &= wid
-    windowCloseAllow &= 0
-    windowModalOverride &= 0
-    windowCursor &= mArrow
+    windowList &= {hWnd}
+    windowDCs &= {memdc}
+    windowBitmaps &= {hbit}
+    windowBackColor &= {wbackcolor}
+    windowForeDraw &= {{}}
+    windowNeedRefresh &= {2}
+    windowOwner &= {wid}
+    windowCloseAllow &= {0}
+    windowModalOverride &= {0}
+    windowCursor &= {mArrow}
     windowStyle &= {wstyle}
-    windowTrackCursor &= 0
+    windowTrackCursor &= {0}
     
     ScrollTimer = c_func(xSetTimer, {hWnd, 2, 10, NULL})
     CursorTimer = c_func(xSetTimer, {hWnd, 3, 500, NULL})
@@ -1466,40 +1473,61 @@ public procedure set_font(object windowid, sequence fontname, object size, objec
 end procedure
 
 
-public procedure draw(atom hwnd, sequence cmds, sequence bmpname = "", object invalidrect = 0)
+public procedure draw_direct(atom hwnd, sequence cmds, atom clearcmds = 1, object invalidrect = 0)
+    atom widx = find(hwnd, windowList)
+    
+    if widx > 0 then
+        if clearcmds then
+            if not equal(cmds, windowForeDraw[widx]) then
+                windowForeDraw[widx] = cmds
+                InvalidatedWindows &= {hwnd}
+            end if
+        else
+            windowForeDraw[widx] &= cmds
+            InvalidatedWindows &= {hwnd}
+        end if
+    end if
+end procedure
+
+public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object invalidrect = 0)
     atom idx, wdc, bmpidx = 0, bidx, bmp, xoff = 0, yoff = 0, sbDC = 0, zstxt
     sequence rect = {0, 0, 0, 0}, ccmd
     
-    if length(bmpname) > 0 then
-        bmpidx = find(bmpname, hBitmapNames)
-    end if
-    if bmpidx = 0 then --draw to a window's DC
-        idx = find(hwnd, windowList)
-        if idx > 0 then
-            hdc = windowDCs[idx]
-            bmp = windowBitmaps[idx]
-        else
-            return
+    if atom(bmpname) then --draw directly to window during WM_PAINT. bmpname is the hdc returned by BeginPaint.
+        hdc = bmpname
+    else
+        if length(bmpname) > 0 then
+            bmpidx = find(bmpname, hBitmapNames)
         end if
-    else --draw to a memory bitmap's DC
-        idx = find(hwnd, windowList)
-        if idx > 0 then
-            --hdc = windowDCs[idx]
-            hdc = c_func(xCreateCompatibleDC, {windowDCs[idx]})
-            bmp = hBitmaps[bmpidx]
-        else
-            return
+        if bmpidx = 0 then --draw to a window's DC
+            idx = find(hwnd, windowList)
+            if idx > 0 then
+                hdc = windowDCs[idx]
+                bmp = windowBitmaps[idx]
+            else
+                return
+            end if
+        else --draw to a memory bitmap's DC
+            idx = find(hwnd, windowList)
+            if idx > 0 then
+                --hdc = windowDCs[idx]
+                hdc = c_func(xCreateCompatibleDC, {windowDCs[idx]})
+                bmp = hBitmaps[bmpidx]
+            else
+                return
+            end if
+        end if
+        
+        --wdc = c_func(xGetDC, {hwnd})
+    	--hdc = c_func(xCreateCompatibleDC, {wdc})
+        --VOID = c_func(xReleaseDC, {hwnd, wdc})
+        
+        VOID = c_func(xSelectObject, {hdc, bmp})
+        if VOID = NULL then --error
+            puts(1, "Error: SelectObject (draw ini)\n")
         end if
     end if
     
-    --wdc = c_func(xGetDC, {hwnd})
-	--hdc = c_func(xCreateCompatibleDC, {wdc})
-    --VOID = c_func(xReleaseDC, {hwnd, wdc})
-    
-    VOID = c_func(xSelectObject, {hdc, bmp})
-    if VOID = NULL then --error
-        puts(1, "Error: SelectObject (draw ini)\n")
-    end if
     VOID = c_func(xSetBkMode, {hdc, TRANSPARENT})
     
     for dc = 0 to length(cmds) do
@@ -1511,61 +1539,65 @@ public procedure draw(atom hwnd, sequence cmds, sequence bmpname = "", object in
         switch ccmd[1] do
 --resticted regions and bitmaps
             case DR_Restrict then --restrict drawing to (integer xpos, integer ypos, integer wide, integer high)
-                /*VOID = c_func(xSelectObject, {ClipScreenDC, ClipScreenBM})
-                if VOID = NULL then --error
-                    puts(1, "Error: SelectObject (DR_Restrict)\n")
+                if sequence(bmpname) then
+                    /*VOID = c_func(xSelectObject, {ClipScreenDC, ClipScreenBM})
+                    if VOID = NULL then --error
+                        puts(1, "Error: SelectObject (DR_Restrict)\n")
+                    end if
+                    hdc = ClipScreenDC
+                    */
+                    
+                    --rect = {50, 50, 150, 150}
+                    rect = {ccmd[2], ccmd[3], ccmd[4], ccmd[5]}
+                    --rect = {ccmd[2], ccmd[3], ccmd[2] + ccmd[4], ccmd[3] + ccmd[5]}
+                    
+                    --atom hRgn = c_func(xCreateRectRgn, rect)
+                    --xSelectClipRgn =  c_func(xSelectClipRgn, {hdc, hRgn})
+                    --xSelectClipRgn =  c_func(xSelectClipRgn, {hdc, 0})
+                    --c_proc(xDeleteObject, {hRgn})
+                    atom phPen = c_func(xGetStockObject, {WHITE_PEN})
+                    VOID = c_func(xSelectObject, {hdc, phPen})
+                    atom phBrush = c_func(xGetStockObject, {WHITE_BRUSH})
+                    VOID = c_func(xSelectObject, {hdc, phBrush})
+                    VOID = c_func(xBeginPath, {hdc})
+                    VOID = c_func(xRectangle, {hdc, rect[1], rect[2], rect[3], rect[4]})
+                    VOID = c_func(xEndPath, {hdc})
+                    VOID = c_func(xSelectClipPath, {hdc, RGN_COPY})
+                    c_proc(xDeleteObject, {phPen})
+                    c_proc(xDeleteObject, {phBrush})
                 end if
-                hdc = ClipScreenDC
-                */
-                
-                --rect = {50, 50, 150, 150}
-                rect = {ccmd[2], ccmd[3], ccmd[4], ccmd[5]}
-                --rect = {ccmd[2], ccmd[3], ccmd[2] + ccmd[4], ccmd[3] + ccmd[5]}
-                
-                --atom hRgn = c_func(xCreateRectRgn, rect)
-                --xSelectClipRgn =  c_func(xSelectClipRgn, {hdc, hRgn})
-                --xSelectClipRgn =  c_func(xSelectClipRgn, {hdc, 0})
-                --c_proc(xDeleteObject, {hRgn})
-                atom phPen = c_func(xGetStockObject, {WHITE_PEN})
-                VOID = c_func(xSelectObject, {hdc, phPen})
-                atom phBrush = c_func(xGetStockObject, {WHITE_BRUSH})
-                VOID = c_func(xSelectObject, {hdc, phBrush})
-                VOID = c_func(xBeginPath, {hdc})
-                VOID = c_func(xRectangle, {hdc, rect[1], rect[2], rect[3], rect[4]})
-                VOID = c_func(xEndPath, {hdc})
-                VOID = c_func(xSelectClipPath, {hdc, RGN_COPY})
-                c_proc(xDeleteObject, {phPen})
-                c_proc(xDeleteObject, {phBrush})
                 
             case DR_Release then --copy restriction area to buffer
-                /*VOID = c_func(xSelectObject, {iniDC, iniBM})
-                if VOID = NULL then --error
-                    puts(1, "Error: SelectObject (DR_Release)\n")
+                if sequence(bmpname) then
+                    /*VOID = c_func(xSelectObject, {iniDC, iniBM})
+                    if VOID = NULL then --error
+                        puts(1, "Error: SelectObject (DR_Release)\n")
+                    end if
+                    hdc = iniDC
+                    VOID = c_func(xBitBlt, {hdc, xoff + rect[RECT_Left], yoff + rect[RECT_Top], 
+                                                 rect[RECT_Right] - rect[RECT_Left], rect[RECT_Bottom] - rect[RECT_Top], 
+                                            ClipScreenDC, xoff + rect[RECT_Left], yoff + rect[RECT_Top], SRCCOPY})
+                    */
+                    
+                    atom bm = allocate(SIZEOF_BITMAP)
+                    atom objsz = c_func(xGetObject, {bmp, SIZEOF_BITMAP, bm})
+                    if objsz = 0 or objsz != SIZEOF_BITMAP then
+                        puts(1, "DR_Image Error: GetObject hBitmap")
+                    end if
+                    atom bmWidth = peek4s(bm + szLong)
+                    atom bmHeight = peek4s(bm + szLong + szLong)
+                    atom phPen = c_func(xGetStockObject, {WHITE_PEN})
+                    VOID = c_func(xSelectObject, {hdc, phPen})
+                    atom phBrush = c_func(xGetStockObject, {WHITE_BRUSH})
+                    VOID = c_func(xSelectObject, {hdc, phBrush})
+                    VOID = c_func(xBeginPath, {hdc})
+                    VOID = c_func(xRectangle, {hdc, 0, 0, bmWidth+1, bmHeight+1})
+                    VOID = c_func(xEndPath, {hdc})
+                    VOID = c_func(xSelectClipPath, {hdc, RGN_COPY})
+                    c_proc(xDeleteObject, {phPen})
+                    c_proc(xDeleteObject, {phBrush})
+                    free(bm)
                 end if
-                hdc = iniDC
-                VOID = c_func(xBitBlt, {hdc, xoff + rect[RECT_Left], yoff + rect[RECT_Top], 
-                                             rect[RECT_Right] - rect[RECT_Left], rect[RECT_Bottom] - rect[RECT_Top], 
-                                        ClipScreenDC, xoff + rect[RECT_Left], yoff + rect[RECT_Top], SRCCOPY})
-                */
-                
-                atom bm = allocate(SIZEOF_BITMAP)
-                atom objsz = c_func(xGetObject, {bmp, SIZEOF_BITMAP, bm})
-                if objsz = 0 or objsz != SIZEOF_BITMAP then
-                    puts(1, "DR_Image Error: GetObject hBitmap")
-                end if
-                atom bmWidth = peek4s(bm + szLong)
-                atom bmHeight = peek4s(bm + szLong + szLong)
-                atom phPen = c_func(xGetStockObject, {WHITE_PEN})
-                VOID = c_func(xSelectObject, {hdc, phPen})
-                atom phBrush = c_func(xGetStockObject, {WHITE_BRUSH})
-                VOID = c_func(xSelectObject, {hdc, phBrush})
-                VOID = c_func(xBeginPath, {hdc})
-                VOID = c_func(xRectangle, {hdc, 0, 0, bmWidth+1, bmHeight+1})
-                VOID = c_func(xEndPath, {hdc})
-                VOID = c_func(xSelectClipPath, {hdc, RGN_COPY})
-                c_proc(xDeleteObject, {phPen})
-                c_proc(xDeleteObject, {phBrush})
-                free(bm)
                 
             case DR_Offset then --setPenPos ( window, x, y )
                 xoff = ccmd[2]
@@ -1833,18 +1865,20 @@ public procedure draw(atom hwnd, sequence cmds, sequence bmpname = "", object in
         end switch
     end for
     
-    if bmpidx != 0 then
-        VOID = c_func(xDeleteDC, {hdc})
-    end if
-    
-    --if sbDC > 0 then
-    --    VOID = c_func(xDeleteDC, {sbDC})
-    --end if
-    if bmpidx = 0 then
-        if atom(invalidrect) then
-            InvalidatedWindows &= {hwnd}
+    if sequence(bmpname) then
+        if bmpidx != 0 then
+            VOID = c_func(xDeleteDC, {hdc})
         end if
-        --VOID = c_func(xInvalidateRgn, {windowid, NULL, 0})  --_In_  HWND hWnd,  _In_  HRGN hRgn,  _In_  BOOL bErase
+        
+        --if sbDC > 0 then
+        --    VOID = c_func(xDeleteDC, {sbDC})
+        --end if
+        if bmpidx = 0 then
+            if atom(invalidrect) then
+                InvalidatedWindows &= {hwnd}
+            end if
+            --VOID = c_func(xInvalidateRgn, {windowid, NULL, 0})  --_In_  HWND hWnd,  _In_  HRGN hRgn,  _In_  BOOL bErase
+        end if
     end if
 end procedure
 
