@@ -33,11 +33,12 @@ include std/task.e
 include std/text.e
 include std/pretty.e
 include std/filesys.e
-         
+include std/convert.e
+include std/sequence.e
+
 
 object ProjectPath, EuiPath, EubindPath, IncludePath
 sequence SourcePath = "", IncludePaths = {}, DefaultApp = "", AppList = {}
-
 
 
 action:define({
@@ -78,7 +79,6 @@ action:define({
 })
 
 
-
 export procedure set_source_path(sequence sourcepath)
     SourcePath = sourcepath
 end procedure
@@ -107,6 +107,8 @@ end procedure
 
 
 procedure do_app_run(sequence exfile)
+    exfile = filesys:pathname(exfile) & "\\" & filesys:filename(exfile)
+    
     if file_exists(exfile) then
         object
         EuiPath = cfg:get_var("", "Projects", "EuiPath"),
@@ -115,6 +117,7 @@ procedure do_app_run(sequence exfile)
         atom wh = gui:widget_get_handle("winMain")
         
         if sequence(EuiPath) and sequence(IncludePath) then --and sequence(RedyLibPath) then
+            clear_error()
             sequence cmdline = 
             --" -EUDIR \"\"" & eupath --is this needed to override possible conflicts with installed version of euphoria? 
             --"-I \"" & IncludePath & "\" -I \"" & RedyLibPath & "\" \"" & exfile & "\""
@@ -144,13 +147,106 @@ procedure do_app_run(sequence exfile)
     end if
 end procedure
 
+
 procedure do_app_bind()
+    clear_error()
     show_build()
 end procedure
 
+
 procedure do_app_build()
+    clear_error()
     show_build()
 end procedure
+
+
+procedure clear_error()
+    sequence errfile = pPath & "\\source\\ex.err"
+    if file_exists(errfile) then
+        if not delete_file(errfile) then
+            atom fn = open(errfile, "w")
+            if fn = -1 then
+            else
+                puts(fn, "") --Just incase it fails to delete the file, try to make it empty at least.
+                close(fn)
+            end if
+        end if
+    end if
+    pError = 0 
+    action:set_enabled("project_show_error", 0)
+end procedure
+
+
+export function check_error()
+    atom fn = -1, sp, errline = 0
+    object ln, txt = ""
+    sequence errfile = "", errtxt
+    
+    if length(pPath) > 0 then
+        fn = open(pPath & "\\source\\ex.err", "r")
+    end if
+    if fn = -1 then
+        clear_error()
+    else
+        for li = 1 to 4 do
+            ln = gets(fn)
+            if sequence(ln) then
+                ln = remove_all(10, ln)
+                ln = remove_all(13, ln)
+                txt &= {ln}
+            else
+                exit
+            end if
+        end for
+        close(fn)
+        
+        --Examples:
+        
+        --C:\RedyCode\projects\RedyCode\source\context.e:250
+        --<0132>:: Syntax error - expected to see possibly 'then', not a procedure
+        --                action:do_proc("set_selection", {sln, scol, eln, ecol})
+        --                             ^
+        
+        ------------------------ TASK ID 5 guitask ---------------------------------
+        --C:\RedyCode\projects\RedyCode\source\build.e:121 in procedure do_app_run() 
+        --subscript value -48 is out of bounds, reading from a sequence of length 49 - in subscript #1 of 'exfile' 
+        
+        
+        
+        if length(txt) > 1 then
+            sp = find(':', txt[1], 4)
+            if sp > 0 then --seems to be a syntax error or runtime error in main task
+                errfile = txt[1][1..sp-1]
+                for ec = sp+1 to length(txt[1]) + 1 do
+                    if ec = length(txt[1]) + 1 or not find(txt[1][ec], "0123456789") then
+                        errline = to_number(txt[1][sp+1..ec-1])
+                        exit
+                    end if
+                end for
+                errtxt = txt[2..$]
+                
+            else
+                sp = find(':', txt[2], 4)
+                if sp > 0 then --seems to be a runtime error in another task
+                    errfile = txt[2][1..sp-1]
+                    for ec = sp+1 to length(txt[2]) + 1 do
+                    if ec = length(txt[2]) + 1 or not find(txt[2][ec], "0123456789") then
+                        errline = to_number(txt[2][sp+1..ec-1])
+                        exit
+                    end if
+                end for
+                    errtxt = {txt[1]} & txt[3..$]
+                end if
+            end if
+        end if
+        
+        if length(errfile) > 0 then
+            return {filesys:pathname(errfile) & "\\" & filesys:filename(errfile), errline, errtxt}
+        end if
+    end if
+    
+    return 0
+end function
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)

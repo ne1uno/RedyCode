@@ -21,6 +21,7 @@
 include redylib_0_9/gui.e as gui
 include redylib_0_9/gui/dialogs/dialog_file.e as dlgfile
 include redylib_0_9/gui/dialogs/msgbox.e as msgbox
+include redylib_0_9/gui/objects/textdoc.e as txtdoc
 include redylib_0_9/app.e as app
 include redylib_0_9/config.e as cfg
 include redylib_0_9/actions.e as action
@@ -38,11 +39,11 @@ include std/error.e
 include build.e as build
 include context.e as context
 
-
 global object
 pPath = "",         --project folder path
 pName = "",         --project name (used for name of *.redy file)
 pDefaultApp = "",   --default app file name
+pError = 0,         --current error from ex.err (noerror: 0, error: {errfile, errline, errtxt})
 
 pEuiPath = 0,       --0=use default eui, sequence=override eui location
 pEubindPath = 0,    --0=use default eubind, sequence=override eubind location
@@ -57,8 +58,9 @@ pModified = 0,      --Whether or not any files in project are modified
 --pDocsNode = 0,      --docs folder node
 pSourceNode = 0,    --source folder node
 pIncludesNode = 0,  --redylib, stdlib, and additional include folders node
-pFileNodes = {}     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename, readonly})
-
+pFileNodes = {},     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename, readonly})
+pFolderNodes = {},   --list of folder tree nodes (each one is {nodeid, path})
+pExpandedFolders = {} --list of paths that are expanded in the project tree (so when refreshing the tree, expanded nodes can be recalled)
 
 atom SettingsTabWid = 0
 
@@ -170,9 +172,32 @@ action:define({
     {"description", "List projects in default folder"}
 })
 
+action:define({
+    {"name", "project_show_error"},
+    {"do_proc", routine_id("do_project_show_error")},
+    {"label", "Go to Error"},
+    {"icon", "go-jump"},
+    {"description", "Go to error in code reported by ex.err"},
+    {"enabled", 0}
+})
 
-procedure run_app(sequence exfile)
-    
+
+procedure do_project_show_error()
+    if sequence(pError) then --{errfile, errline, errtxt}
+        atom readonly = 0, linenum = pError[2]
+        if match(filesys:pathname(pPath), filesys:pathname(pError[1])) != 1 then
+            readonly = 1
+        end if
+        action:do_proc("file_load", {{{filesys:pathname(pError[1]) & "\\", filesys:filename(pError[1]), readonly}}})
+        if linenum > 0 then
+            if txtdoc:is_locked(action:getfocus() & ".filepage") then
+                txtdoc:queue_cmd(action:getfocus() & ".filepage", "jump", {"location", linenum, 0, linenum, "$"})
+            else
+                txtdoc:queue_cmd(action:getfocus() & ".filepage", "jump", {"location", linenum, 0})
+                gui:set_key_focus(action:getfocus() & ".canvas")
+            end if
+        end if
+    end if
 end procedure
 
 
@@ -309,12 +334,13 @@ procedure do_project_load(sequence projfile)
     gui:widget_hide("btnOpenProject")
     gui:widget_show("btnRun")
     gui:widget_show("treeProject")
-    gui:widget_show("divProjects")
-    gui:widget_show("treeContents")
+    gui:widget_show("divSearch")
+    gui:widget_show("cntSearch")
     
     pPath = projPath
     pName = projName
     pDefaultApp = projDefaultApp
+    pError = 0
     
     pEuiPath = projEuiPath
     pEubindPath = projEubindPath
@@ -330,6 +356,8 @@ procedure do_project_load(sequence projfile)
     pSourceNode = 0
     pIncludesNode = 0
     pFileNodes = {}
+    pFolderNodes = {}
+    pExpandedFolders = {}
     
     --refresh_source_tree()
     action:do_proc("project_refresh", {})
@@ -395,6 +423,7 @@ procedure do_project_close()
         pPath = ""
         pName = ""
         pDefaultApp = ""
+        pError = 0
         
         pEuiPath = 0
         pEubindPath = 0
@@ -410,6 +439,8 @@ procedure do_project_close()
         pSourceNode = 0
         pIncludesNode = 0
         pFileNodes = {}
+        pFolderNodes = {}
+        pExpandedFolders = {}
         
         build:set_source_path("")
         --build:set_include_paths(pIncludes)
@@ -457,6 +488,7 @@ end procedure
 
 procedure do_project_refresh() --scan source folders for files and subfolders, rebuild tree
     atom fnode
+    object prevError = pError
     
     gui:wproc("treeProject", "clear_tree", {})
     --pProjectNode = gui:wfunc("treeProject", "add_item", {0, "redy16", "Project: " & pName, 0})
@@ -465,6 +497,7 @@ procedure do_project_refresh() --scan source folders for files and subfolders, r
     pSourceNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Source", 1})
     pIncludesNode = gui:wfunc("treeProject", "add_item", {0, "folder_open_16", "Includes", 1})
     pFileNodes = {}
+    pFolderNodes = {}
     
     build_dir(pSourceNode, pPath & "\\source\\", 0)
     build_app_list()
@@ -474,6 +507,19 @@ procedure do_project_refresh() --scan source folders for files and subfolders, r
     --    build_dir(fnode, pIncludes[f][2], 1)
         build_dir(pIncludesNode, pIncludes[f] & "\\", 1)
     end for
+    
+    pError = build:check_error() --noerror: 0, error: {errfile, errline, errtxt}
+    
+    --pretty_print(1, pError, {2})
+    
+    if sequence(pError) > 0 then
+        action:set_enabled("project_show_error", 1)
+        if not equal(prevError, pError) then
+            action:do_proc("project_show_error", {})
+        end if
+    else
+        action:set_enabled("project_show_error", 0)
+    end if
 end procedure
 
 
@@ -967,6 +1013,8 @@ procedure do_list_projects()
             {"visible", 0}
         })
         
+        --------------------
+        
         /*gui:wcreate({
             {"name", "cntMain"},
             {"parent", "winMain"},
@@ -1005,8 +1053,8 @@ procedure do_list_projects()
     gui:widget_show("btnOpenProject")
     gui:widget_hide("btnRun")
     gui:widget_hide("treeProject")
-    gui:widget_hide("divProjects")
-    gui:widget_hide("treeContents")
+    gui:widget_hide("divSearch")
+    gui:widget_hide("cntSearch")
     
     gui:wproc("lstProjects", "select_items", {0})
     gui:wproc("lstProjects", "clear_list", {})
@@ -1281,7 +1329,7 @@ end procedure
 
 procedure build_dir(atom parentnodeid, sequence path, atom readonly)
     object ficon, flist
-    atom dnode
+    atom dnode, expanded
      
     flist = dir(path)
     
@@ -1291,9 +1339,14 @@ procedure build_dir(atom parentnodeid, sequence path, atom readonly)
             ficon = ""
             if find('d', flist[f][D_ATTRIBUTES]) and not find(flist[f][D_NAME], {".", ".."}) then
                 ficon = "folder_open_16"
-                dnode = gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], 0})
+                
+                --pExpandedFolders: {path1, path2, ...}
+                expanded = (find(path & flist[f][D_NAME], pExpandedFolders) > 0) 
+                
+                dnode = gui:wfunc("treeProject", "add_item", {parentnodeid, ficon, flist[f][D_NAME], expanded})
                 --build_dir(dnode, path & "\\" & flist[f][D_NAME] & "\\", readonly)
                 build_dir(dnode, path & flist[f][D_NAME] & "\\", readonly)
+                pFolderNodes &= {{dnode, path & flist[f][D_NAME]}}
             end if
         end for
         --scan for executable files
@@ -1467,8 +1520,6 @@ procedure gui_event(object evwidget, object evtype, object evdata)
             action:do_proc("app_run_default", {})
             
         case "treeProject" then
-            -- "expand_item"
-            
             --if evdata[1] = pProjectNode then
             --    if equal(evtype, "selection") then
             --        action:do_proc("project_settings", {})
@@ -1496,23 +1547,45 @@ procedure gui_event(object evwidget, object evtype, object evdata)
             --
             --else
                 --action:do_proc("RecentFileList", {})
-                
-            for f = 1 to length(pFileNodes) do
-                if pFileNodes[f][1] = evdata[1] then
-                    if equal(evtype, "selection") then
-                        action:do_proc("file_load", {{{pFileNodes[f][2], pFileNodes[f][3], pFileNodes[f][4]}}})
+            
+            if equal(evtype, "expand_item") then
+                for f = 1 to length(pFolderNodes) do
+                    if pFolderNodes[f][1] = evdata[1] then
+                        pExpandedFolders &= {pFolderNodes[f][2]}
+                        --puts(1, "expand:<" & pFolderNodes[f][2] & ">")
                         exit
-                        
-                    elsif equal(evtype, "left_double_click") then
-                        if find(filesys:fileext(pFileNodes[f][3]), {"ex", "exw", "exu"}) then
-                            action:do_proc("app_run", {pFileNodes[f][2] & "\\" & pFileNodes[f][3]})
-                        else
-                            --shell execute
+                    end if
+                end for
+                
+            elsif equal(evtype, "collapse_item") then
+                for f = 1 to length(pFolderNodes) do
+                    if pFolderNodes[f][1] = evdata[1] then
+                        atom ef = find(pFolderNodes[f][2], pExpandedFolders)
+                        if ef > 0 then
+                            pExpandedFolders = remove(pExpandedFolders, ef)
+                            --puts(1, "collapse:<" & pFolderNodes[f][2] & ">")
+                            exit
                         end if
                     end if
-                end if
-            end for
-            --end if
+                end for
+                
+            else
+                for f = 1 to length(pFileNodes) do
+                    if pFileNodes[f][1] = evdata[1] then
+                        if equal(evtype, "selection") then
+                            action:do_proc("file_load", {{{pFileNodes[f][2], pFileNodes[f][3], pFileNodes[f][4]}}})
+                            exit
+                            
+                        elsif equal(evtype, "left_double_click") then
+                            if find(filesys:fileext(pFileNodes[f][3]), {"ex", "exw", "exu"}) then
+                                action:do_proc("app_run", {pFileNodes[f][2] & "\\" & pFileNodes[f][3]})
+                            else
+                                --shell execute
+                            end if
+                        end if
+                    end if
+                end for
+            end if
             
         case "winProjectSettings.btnCreate" then
             create_project()

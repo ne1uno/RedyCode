@@ -1,4 +1,4 @@
-=RedyCode 0.9.1
+=RedyCode 0.9.2
 
 RedyCode™ is an open source Integrated Development Environment for the Euphoria
 programming language. It is easy enough for beginners to learn GUI programming,

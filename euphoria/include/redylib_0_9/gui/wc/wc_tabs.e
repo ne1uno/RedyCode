@@ -489,13 +489,16 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
             trect = {wrect[1] + 8, wrect[2] + 2, wrect[3] - 2, wrect[2] + 2 + headingheight - 2}
         end if
         
-        
         switch evtype do        
             case "MouseMove" then --{x, y, shift, mousepos[1], mousepos[2]}
                 if in_rect(evdata[1], evdata[2], wrect) then
                     if wcprops[wcpSoftFocus][idx] = 0 then
                         wcprops[wcpSoftFocus][idx] = 1
                         doredraw = 1
+                    end if
+                    if in_rect(evdata[1], evdata[2], trect) then
+                        set_mouse_pointer(wh, mArrow)
+                        refresh_mouse_pointer(wh)
                     end if
                 else
                     if wcprops[wcpSoftFocus][idx] = 1 then
@@ -511,7 +514,6 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         --widget:set_key_focus(wid)
                         doredraw = 1
                     end if
-                    
                     atom mousetab = tab_under_mouse(idx, wid, trect, evdata[1], evdata[2])
                     if mousetab > 0 then
                         select_tab(idx, wid, mousetab)
@@ -712,7 +714,6 @@ procedure wc_resize(atom wid)  --resizing affects parent and ancestors
 end procedure
 
 
-
 procedure wc_arrange(atom wid)  --arranging affects children and offspring
     atom idx = find(wid, wcprops[wcpID]), wh
     sequence wpos, wsize, txex, trect, oldsize, newsize
@@ -827,7 +828,6 @@ function wc_debug(atom wid)
 end function
 
 
-
 wc_define(
     "tabs",
     routine_id("wc_create"),
@@ -841,7 +841,6 @@ wc_define(
     
 
 -- widgetclass commands -------------------------------------------------------
-
 
 
 procedure cmd_select_tab_by_widget(atom wid, object tabwidget)

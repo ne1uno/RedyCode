@@ -32,7 +32,6 @@ sequence wcprops
 enum
 wcpID,
 wcpSoftFocus,
-wcpHardFocus,
 wcpKeyFocus,
 wcpLabel,
 wcpIcon,
@@ -85,7 +84,6 @@ procedure wc_create(atom wid, object wprops)
     
     wcprops[wcpID] &= {wid}
     wcprops[wcpSoftFocus] &= {0}
-    wcprops[wcpHardFocus] &= {0}
     wcprops[wcpKeyFocus] &= {0}
     wcprops[wcpLabel] &= {wlabel}
     wcprops[wcpIcon] &= {wicon}
@@ -126,7 +124,7 @@ procedure wc_draw(atom wid)
         if widget:widget_is_enabled(wid) = 0 then
             hicolor = th:cOuterFill
             lblcolor = th:cButtonDisLabel
-        elsif wcprops[wcpHardFocus][idx] and wf then
+        elsif wcprops[wcpKeyFocus][idx] and wf then
             hicolor = th:cButtonActive
             lblcolor = th:cButtonLabel
         elsif wcprops[wcpSoftFocus][idx] then
@@ -187,7 +185,7 @@ procedure wc_draw(atom wid)
             --wcprops[wcpIcon][idx]
         }
         
-        if wcprops[wcpHardFocus][idx] and wf then
+        if wcprops[wcpKeyFocus][idx] and wf then
             cmds &= {
                 {DR_PenColor, shcolor},
                 {DR_Line, wrect[1] + 1 + 2, wrect[2] + 2, wrect[3] - 1 - 2, wrect[2] + 2},
@@ -259,13 +257,13 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     oswin:capture_mouse(wh)
                     wcprops[wcpPressed][idx] = 1
                     wcprops[wcpClicked][idx] = 1
-                    wcprops[wcpHardFocus][idx] = 1
+                    wcprops[wcpKeyFocus][idx] = 1
                     --widget:wc_send_event(widget_get_name(wid), "GotFocus", {})
                     widget:set_key_focus(wid)
                     doredraw = 1
                 else
-                    if wcprops[wcpHardFocus][idx] = 1 then
-                        wcprops[wcpHardFocus][idx] = 0
+                    if wcprops[wcpKeyFocus][idx] = 1 then
+                        wcprops[wcpKeyFocus][idx] = 0
                         doredraw = 1
                     end if
                 end if
@@ -286,14 +284,20 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 
             case "KeyFocus" then
                 if evdata = wid then
-                    wcprops[wcpKeyFocus][idx] = 1
+                    if wcprops[wcpKeyFocus][idx] != 1 then
+                        wcprops[wcpKeyFocus][idx] = 1
+                        doredraw = 1
+                    end if
                 else
-                    wcprops[wcpKeyFocus][idx] = 0
+                    if wcprops[wcpKeyFocus][idx] != 0 then
+                        wcprops[wcpKeyFocus][idx] = 0
+                        doredraw = 1
+                    end if
                 end if
                 
             case "SetEnabled" then
                 if evdata = 0 then
-                    wcprops[wcpHardFocus][idx] = 0
+                    wcprops[wcpKeyFocus][idx] = 0
                     wcprops[wcpClicked][idx] = 0
                     wcprops[wcpPressed][idx] = 0
                 end if
@@ -365,7 +369,6 @@ function wc_debug(atom wid)
     if idx > 0 then    
         debuginfo = {
             {"SoftFocus", wcprops[wcpSoftFocus][idx]},
-            {"HardFocus", wcprops[wcpHardFocus][idx]},
             {"KeyFocus", wcprops[wcpKeyFocus][idx]},
             {"Label", wcprops[wcpLabel][idx]},
             {"Icon", wcprops[wcpIcon][idx]},

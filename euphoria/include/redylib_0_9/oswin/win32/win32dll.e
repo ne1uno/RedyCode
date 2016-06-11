@@ -73,7 +73,7 @@ public atom xChangeClipboardChain,xCloseClipboard, xCountClipboardFormats, xEmpt
  
 public atom xClientToScreen, xSetMapMode, xGetMapMode, xDPtoLP, xTrackMouseEvent, xSetCapture, xReleaseCapture, xGetCapture
 
-public atom xGetOpenFileName, xGetSaveFileName, xCommDlgExtendedError, xGetFileTitle, xBrowseForFolder, xShellExecute
+public atom xGetOpenFileName, xGetSaveFileName, xCommDlgExtendedError, xGetFileTitle, xBrowseForFolder, xShellExecute, xReadDirectoryChanges 
 
 public atom xGetLogicalDriveStrings, xlstrlen, xGetDiskFreeSpaceEx, xGetDriveType
 
@@ -330,6 +330,7 @@ public procedure link_dll_routines()
     --Shell functions:
     --xBrowseForFolder = link_c_func(shell32, "SHBrowseForFolderA", {C_POINTER}, C_ULONG)
     xShellExecute = link_c_func(shell32, "ShellExecuteA", {C_HWND, C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_INT}, C_INT) --C_HWND)
+    --xReadDirectoryChanges= link_c_func(shell32, "ReadDirectoryChangesW", {}, )
     
     --IPC:
     xCreateProcess = link_c_func(kernel32, "CreateProcessA", {C_POINTER, C_POINTER, C_POINTER, C_POINTER, C_BOOL, C_DWORD, C_POINTER, C_POINTER, C_POINTER, C_POINTER},C_BOOL)
@@ -696,8 +697,10 @@ end function
 atom MouseCaptured = 0
 
 global procedure capture_mouse(atom hwnd)
+    --if MouseCaptured != 1 then
     atom void = c_func(xSetCapture, {hwnd})
     MouseCaptured = 1
+    --end if
 end procedure
 
 global procedure release_mouse()

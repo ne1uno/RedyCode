@@ -261,7 +261,7 @@ public function info(object infoname = 0)
     end if
 end function
 
-public procedure create_main_window()
-    mainwin:start()
+public procedure create_main_window(atom evhandlerrid = 0)
+    mainwin:start(evhandlerrid)
 end procedure
 

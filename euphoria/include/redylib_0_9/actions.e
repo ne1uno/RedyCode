@@ -107,6 +107,7 @@ atNumberbox     --Number range selector that triggers "action_name"  with the nu
 
 
 atom initialized = 0
+object CurrentFocus = "" --which "object" is being acted upon
 
 sequence
 --Static (readonly) properties
@@ -180,6 +181,20 @@ end procedure
 
 
 -- Public Routines -------------------------------------------
+
+
+public procedure setfocus(object focusid) --set which "object" is being acted upon
+    --TODO: not really implemented yet, redesign actions to use this for v1.0
+    --I realized i will need this as apps get more complex
+    --Probably insert CurrentFocus as the first parameter when calling do_proc()
+    
+    CurrentFocus = focusid
+end procedure 
+
+
+public function getfocus() --return which "object" is being acted upon
+    return CurrentFocus
+end function 
 
 
 public procedure define(object actionprops)

@@ -90,7 +90,7 @@ object --todo: clean up options and styles
 
 headingheight = 16,
 thMonoFonts = {"Consolas", "Courier New", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono"},
-thNormalFonts = {"Times New Roman", "Tahoma", "Sans Serif"},
+thNormalFonts = {"Times New Roman", "Tahoma", "Sans Serif", "Arial"},
 thMonoFontSize = 10,
 thLineNumberWidth = 40,
 thBookmarkWidth = 16,
@@ -114,6 +114,9 @@ atom
 defMonoFontSize = thMonoFontSize,
 defNormalFontSize = 10
 
+constant
+BlockChars = "\"\'[](){}",
+IdentifierChars = "01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
 
 enum  --sym
 symIgnoreOn,
@@ -293,6 +296,7 @@ iAutoFocus = {},        --Editor automatically takes focus when it is made visib
 iCursorState = {},      --is cursor visible or not
 iLastMousePos = {},     --last known mouse pos (used for retriggering MouseMove on timer event)
 iIsSelecting = {},      --is currently selecting text
+iSelStartWord = {},     --if selecting "words", start and end char of word
 iSelStartLine = {},     --selection start line
 iSelStartCol = {},      --selection start column in line
 iSelEndLine = {},       --selection end line
@@ -305,6 +309,7 @@ iLineNumWidth = {},     --width of line number area (automatically adjusts)
 iTotalHeight = {},      --total width of all text lines
 iTotalWidth = {},       --total height of all text lines
 
+iRebuildLines = {},     --Lines that need to be rebuilt: 0 or {startline, endline}
 iBusyStatus = {},       --0 = ready, 1-100 = busy
 iBusyTime = {},         --time busy became > 0 (if busy for longer than 0.5s, show progress indicator)
 iCmdQueue = {},         --queue of commands to process
@@ -368,12 +373,24 @@ action:define({
     {"enabled", 0}
 })*/
 
+/*
 action:define({
     {"name", "goto_section"},
     {"do_proc", routine_id("do_goto_section")},
-    {"label", "Go to Section"},
     {"enabled", 1}
 })
+
+action:define({
+    {"name", "set_selection"},
+    {"do_proc", routine_id("do_set_selection")},
+    {"enabled", 1}
+})
+
+action:define({
+    {"name", "goto_bookmark"},
+    {"do_proc", routine_id("do_goto_bookmark")},
+    {"enabled", 1}
+})*/
 
 action:define({
     {"name", "paste"},
@@ -615,10 +632,22 @@ procedure do_format_indent_more()
 end procedure
 
 
+/*
 procedure do_goto_section(sequence sectionname)
-    call_cmd(CurrentEditor, "find", {"section", sectionname})
+    call_cmd(CurrentEditor, "jump", {"section", sectionname})
 end procedure
 
+
+procedure do_set_selection(atom sln, atom scol, atom eln, atom ecol)
+    call_cmd(CurrentEditor, "move", {"to", sln, scol})
+    call_cmd(CurrentEditor, "select", {"to", eln, ecol})
+end procedure
+
+
+procedure do_goto_bookmark(sequence bookmarkname)
+    call_cmd(CurrentEditor, "jump", {"bookmark", bookmarkname})
+end procedure
+*/
 
 --Tasks
 
@@ -649,24 +678,114 @@ procedure cursor_blink_task()
 end procedure
 
 
+procedure set_rebuild_lines(atom idx, atom startline, atom endline) --consolidate multiple rebuild requests into one
+    if atom(iRebuildLines[idx]) then
+        iRebuildLines[idx] = {startline, endline}
+    else
+        if iRebuildLines[idx][1] > startline then
+            iRebuildLines[idx][1] = startline
+        end if
+        if iRebuildLines[idx][2] < endline then
+            iRebuildLines[idx][2] = endline
+        end if
+    end if
+end procedure
+
+procedure draw_progress_bar(atom idx)
+    sequence ttcmds, prect, wrect, cpos, txex, txt
+    atom ipos, wh, cxoffset
+    
+    wh = gui:widget_get_handle(iCanvasName[idx])
+    if wh = 0 then
+        return
+    end if
+    if iBusyStatus[idx] = 0 then --or iBusyStatus[idx] = 1 then
+        ttcmds = {}
+        draw_direct(wh, ttcmds)
+    --thin rectangle at top canvas
+    elsif gui:widget_is_visible(iCanvasName[idx]) then
+        wrect = widget_get_rect(iCanvasName[idx])
+        
+        prect = {wrect[1], wrect[2], wrect[3], wrect[2]+4}
+        ipos = floor((prect[3] - prect[1]) * iBusyStatus[idx])
+        --txt = sprint(floor(iBusyStatus[idx] * 100)) & "%"      
+        --gui:set_font(wh, "Arial", 12, Bold)
+        --txex = gui:get_text_extent(wh, txt)
+        
+        ttcmds = {
+            {DR_PenColor, rgb(80, 80, 80)},
+            {DR_Rectangle, True, prect[1]+ipos, prect[2], prect[3], prect[4]},
+            {DR_PenColor, rgb(255, 255, 127)},
+            {DR_Rectangle, True, prect[1], prect[2], prect[1]+ipos, prect[4]}
+            
+            --{DR_PenColor, rgb(80, 80, 80)},
+            --{DR_Rectangle, True, wrect[1] + 4, wrect[4] - 4 - txex[2], wrect[1] + 4 + txex[1], wrect[4] - 4},
+            --{DR_Font, "Arial", 12, Bold},
+            --{DR_TextColor, rgb(255, 255, 127)},
+            --{DR_PenPos, wrect[1] + 4, wrect[4] - 4 - txex[2]},
+            --{DR_Puts, txt}
+        }
+        --? {prect, ipos}
+        draw_direct(wh, ttcmds)
+    end if
+    /*
+    --rectangle in center of canvas
+    elsif gui:widget_is_visible(iCanvasName[idx]) then
+        wrect = widget_get_rect(iCanvasName[idx])
+        --wrect[3] -= wrect[1]
+        --wrect[4] -= wrect[2]
+        cpos = {wrect[1] + floor((wrect[3] - wrect[1]) / 2), wrect[2] + floor((wrect[4] - wrect[2]) / 2)}
+        cxoffset = floor((wrect[3] - wrect[1]) / 3) 
+        prect = {cpos[1] - cxoffset, cpos[2] - 10, cpos[1] + cxoffset, cpos[2] + 10}
+        ipos = floor((prect[3] - prect[1]) * iBusyStatus[idx])
+        --oswin:set_font(wh, "Arial", 9, Normal)
+        --txex = oswin:get_text_extent(wh, tools[itmLabel][t])
+        ttcmds = {
+            {DR_PenColor, rgb(0, 0, 0)}, -- rgb(255, 255, 200)},
+            {DR_Rectangle, False, prect[1]-1, prect[2]-1, prect[3]+1, prect[4]+1},
+            {DR_Rectangle, False, prect[1]-2, prect[2]-2, prect[3]+2, prect[4]+2},
+            {DR_PenColor, th:cOuterActive},
+            {DR_Rectangle, True, prect[1], prect[2], prect[1]+ipos, prect[4]},
+            {DR_PenColor, th:cButtonDark},
+            {DR_Rectangle, True, prect[1]+ipos, prect[2], prect[3], prect[4]}
+            
+            --{DR_Font, "Arial", 9, Normal},
+            --{DR_TextColor, rgb(0, 0, 0)},
+            --{DR_PenPos, ttpos[1] + 3, ttpos[2] + 3},
+            --{DR_Puts, tools[itmLabel][t]}
+        }
+        --? {prect, ipos}
+        draw_direct(wh, ttcmds)
+    end if*/
+end procedure
+
+
 procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at end of each line, wordwrap, positions, sizes
-    atom idx, startline, endline, whnd, prevlnw, MaxWidth, tt, tx, ty, SkipBelow = 0
+    atom startline, endline, whnd, prevlnw, MaxWidth, tt, tx, ty, SkipBelow = 0
     sequence tokens, txex, te, vislines, prevtotalsize
-    object csize
+    object csize, tcsize
     
     while 1 do
-        if length(RebuildQueue) > 0 then
+        for idx = 1 to length(iRebuildLines) do
+            if idx > length(iRebuildLines) then
+                exit
+            end if
             
-            idx = find(RebuildQueue[1][1], iName)
-            startline = RebuildQueue[1][2]
-            endline = RebuildQueue[1][3]
-            
-            if idx > 0 then
+            if sequence(iRebuildLines[idx]) then
                 task_suspend(CursorBlinkTask)
+                --task_schedule(RebuildTask, 1000) --{0.01, 0.2})
                 
+                startline = iRebuildLines[idx][1]
+                endline = iRebuildLines[idx][2]
                 csize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
+                iRebuildLines[idx] = 0
+                whnd = gui:widget_get_handle(iCanvasName[idx])
                 
                 if sequence(csize) and csize[1] > 0 and csize[2] > 0 then
+                    if csize[1] < 100 then
+                        csize[1] = 200
+                    end if
+                    iBusyStatus[idx] = 0
                     iBusyTime[idx] = time()
                     
                     if startline < 1 then
@@ -675,7 +794,7 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                     if endline > length(iTxtLnText[idx]) then
                         endline = length(iTxtLnText[idx])
                     end if
-                    whnd = gui:widget_get_handle(iCanvasName[idx])
+                    
                     --set linenumber width:
                     if iViewMode[idx] = 0 then
                         set_font(whnd, iLineNumFont[idx], iLineNumFontSize[idx], Normal)
@@ -693,8 +812,6 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                     
                     prevtotalsize = {iTotalWidth[idx], iTotalHeight[idx]}
                     
-                    tt = time()
-                    
                     if iViewMode[idx] = 0 and prevlnw != iLineNumWidth[idx] then --rebuild all lines if line number width changes
                         startline = 1
                         endline = length(iTxtLnText[idx])
@@ -708,6 +825,7 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                         if li > length(iTxtLnText[idx]) then
                             exit
                         end if
+                        
                         --update paragraph position (based on previous paragraph)
                         iTxtLnPosX[idx][li] = iLineNumWidth[idx]
                         if li = 1 then
@@ -719,42 +837,87 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                             end if
                             iTxtLnPosY[idx][li] = iTxtLnPosY[idx][li-1] + iTxtLnHeight[idx][li-1]
                         end if
-                        if li <= endline then --get tokens to calculate wordwrap and paragraph size 
+                        if li <= endline then --get tokens to calculate wordwrap and paragraph size
                             tokenize_line(idx, li, MaxWidth)
                         end if
                         
                         --if taking too long, caculate percentage completed and yield
-                        --todo: draw visible lines asap even if more lines need to be built below active area
                         if time() - iBusyTime[idx] > 0.25 then
-                            gui:wproc(iCanvasName[idx], "set_background_pointer", {"Busy"})
-                            if length(iTxtLnText[idx]) - startline > 0 then
-                                iBusyStatus[idx] = floor(li / (length(iTxtLnText[idx]) - startline))
-                            else
-                                iBusyStatus[idx] = 0
-                            end if
-                            task_yield()
+                            --set_rebuild_lines(idx, li, endline)
                             
-                            idx = find(RebuildQueue[1][1], iName)
-                            --iBusyTime[idx] = time()
-                            if idx = 0 then
+                            gui:wproc(iCanvasName[idx], "set_background_pointer", {"Busy"})
+                            --gui:refresh_mouse_pointer(whnd)
+                            --if li < endline then  --length(iTxtLnText[idx]) - startline > 0 then
+                                iBusyStatus[idx] = li / endline --(length(iTxtLnText[idx]) - startline)
+                                if iBusyStatus[idx] > 1 then
+                                    iBusyStatus[idx] = 1
+                                elsif iBusyStatus[idx] < 0 then
+                                    iBusyStatus[idx] = 0
+                                end if
+                            --else
+                            --    iBusyStatus[idx] = 0
+                            --end if
+                            
+                            --? {li, endline}
+                            iTotalHeight[idx] = iTxtLnPosY[idx][li] + iTxtLnHeight[idx][li] + floor(csize[2] * optScrollPast)
+                            
+                            draw_progress_bar(idx)
+                            
+                            --task_delay(0.1)
+                            --exit
+                            iBusyTime[idx] = time()
+                            
+                            --task_schedule(RebuildTask, 1)
+                            task_yield()
+                            --task_schedule(RebuildTask, 1000)
+                            
+                            if idx > length(iRebuildLines) or li > length(iTxtLnText[idx]) then
                                 exit
                             end if
+                            
+                            iBusyTime[idx] = time()
+                            
+                            tcsize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
+                            if equal(csize[1], tcsize[1]) then
+                                set_rebuild_lines(idx, li, endline)
+                                
+                                if li != iRebuildLines[idx][1] or endline != iRebuildLines[idx][2] then
+                                    exit
+                                end if
+                            else
+                                set_rebuild_lines(idx, startline, endline)
+                                exit
+                            end if
+                            
                             set_font(whnd, iLineNumFont[idx], iLineNumFontSize[idx], Normal)
+                            
                         end if
                     end for
-                    if idx > 0 then
-                        --iTotalHeight[idx] = iTxtLnPosY[idx][$] + iTxtLnHeight[idx][$] + floor((csize[2] - emptysize[2]) * optScrollPast)
-                        iTotalHeight[idx] = iTxtLnPosY[idx][$] + iTxtLnHeight[idx][$] + floor(csize[2] * optScrollPast)
+                    
+                    --if iBusyStatus[idx] = 0 then
+                    --iTotalHeight[idx] = iTxtLnPosY[idx][$] + iTxtLnHeight[idx][$] + floor((csize[2] - emptysize[2]) * optScrollPast)
+                    if idx > 0 and idx <= length(iBusyStatus) then
+                        if iBusyStatus[idx] = 0 then
+                            iTotalHeight[idx] = iTxtLnPosY[idx][$] + iTxtLnHeight[idx][$] + floor(csize[2] * optScrollPast)
+                        end if
+                        
                         if not equal(prevtotalsize, {iTotalWidth[idx], iTotalHeight[idx]}) then
                             gui:wproc(iCanvasName[idx], "set_canvas_size", {iTotalWidth[idx], iTotalHeight[idx]})
-                            sequence cansize = gui:wfunc(iCanvasName[idx], "get_visible_size", {iTotalWidth[idx], iTotalHeight[idx]})
-                            if iTotalHeight[idx] < cansize[2] then
+                            tcsize = gui:wfunc(iCanvasName[idx], "get_visible_size", {iTotalWidth[idx], iTotalHeight[idx]})
+                            if iTotalHeight[idx] < tcsize[2] then
                                 iScrollY[idx] = 0
                             end if
                         end if
-                        iBusyStatus[idx] = 0
-                        iBusyTime[idx] = 0
-                        gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
+                        if atom(iRebuildLines[idx]) then
+                            iBusyStatus[idx] = 0
+                            iBusyTime[idx] = 0
+                            
+                            gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
+                            --gui:refresh_mouse_pointer(whnd)
+                            scroll_to_active_line(idx)
+                            send_txt_event(idx, "toc_refresh", {})
+                        end if
+                        draw_progress_bar(idx)
                         
                         --if not scroll_to_active_line(idx) then
                         vislines = visible_lines(idx)
@@ -772,14 +935,30 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                             
                             draw_lines(idx, startline, endline)
                         end if
+                        
+                        if iBusyStatus[idx] > 0 and atom(iRebuildLines[idx]) then
+                            iBusyStatus[idx] = 0
+                            draw_progress_bar(idx)
+                        end if
                     end if
                 end if
                 
                 task_schedule(CursorBlinkTask, {0.5, 0.6})
             end if
             
-            RebuildQueue = RebuildQueue[2..$]
-        end if
+            if idx > 0 and idx <= length(iCmdQueue) and length(iCmdQueue[idx]) > 0 then
+                if iBusyStatus[idx] = 0 and iTxtLnPosY[idx][$] > 0 and length(iTxtLnTokens[idx][$]) > 0 then
+                
+                    --There seems to be a bug with correctly detecting when "Busy" status is truely finished,
+                    --so check line position to verify if it has been built yet, otherwise wait to call the queued commands
+                    call_cmd(idx, iCmdQueue[idx][1][1], iCmdQueue[idx][1][2])
+                    iCmdQueue[idx] = iCmdQueue[idx][2..$]
+                end if
+            end if
+            
+            task_yield()
+        end for
+        task_schedule(RebuildTask, 1)
         task_yield()
     end while
 end procedure
@@ -869,8 +1048,8 @@ procedure tokenize_line(atom idx, atom li, atom liw)
         whnd = gui:widget_get_handle(iCanvasName[idx])      
         
         txt = iTxtLnText[idx][li]
-        txt = match_replace("\t", txt, repeat(' ', IndentSpace))
-        txt = filter(txt, "in",  {32,255}, "[]")
+        --txt = match_replace("\t", txt, repeat(' ', IndentSpace))
+        --txt = filter(txt, "in",  {32,255}, "[]")
         
         if iViewMode[idx] = 0 then --source view mode
             if length(txt) = 0 then
@@ -916,6 +1095,7 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                     }
                     
                 elsif iSyntaxMode[idx] = synEuphoria then
+                    
                     tokens = highlight_syntax(txt)
                     
                     /*syntoks = syncolor:SyntaxColor(txt)
@@ -1205,7 +1385,6 @@ procedure tokenize_line(atom idx, atom li, atom liw)
             end if
         end if
         
-        
         --Process tokens that are so long that they need to be wrapped (split them into additional tokens)
         temptokens = repeat({}, length(tokens))
         
@@ -1331,11 +1510,13 @@ function visible_lines(atom idx) --find text lines that are within view
             for li = 1 to length(iTxtLnText[idx]) do
                 if iTxtLnVisible[idx][li] then
                     --if iTxtLnPosY[idx][li] + iTxtLnHeight[idx][li] - iScrollY[idx] > 0 and iTxtLnPosY[idx][li] - iScrollY[idx] < csize[2] then
-                    if iTxtLnPosY[idx][li] + iTxtLnHeight[idx][li] >= iScrollY[idx] and iTxtLnPosY[idx][li] <= iScrollY[idx] + csize[2] then
-                        if startline = 0 then
-                            startline = li
+                    if iTxtLnHeight[idx][li] > 0 then
+                        if iTxtLnPosY[idx][li] + iTxtLnHeight[idx][li] >= iScrollY[idx] and iTxtLnPosY[idx][li] <= iScrollY[idx] + csize[2] then
+                            if startline = 0 then
+                                startline = li
+                            end if
+                            endline = li
                         end if
-                        endline = li
                     end if
                 end if
             end for
@@ -1353,6 +1534,24 @@ function visible_lines(atom idx) --find text lines that are within view
     end if
     
     return {startline, endline}
+end function
+
+
+function select_direction(atom idx)
+    if idx > 0 then
+        if iSelStartLine[idx] < iSelEndLine[idx] then
+            return 1
+        elsif iSelStartLine[idx] > iSelEndLine[idx] then
+            return -1
+        elsif iSelStartLine[idx] = iSelEndLine[idx] then
+            if iSelStartCol[idx] < iSelEndCol[idx] then
+                return 1
+            elsif iSelStartCol[idx] > iSelEndCol[idx] then
+                return -1
+            end if
+        end if
+    end if
+    return 0
 end function
 
 
@@ -1499,8 +1698,9 @@ procedure rebuild_lines(atom idx, atom startline, atom endline)
     if idx > 0 then
         iBusyStatus[idx] = 1
         iBusyTime[idx] = 0
-        gui:wproc(iCanvasName[idx], "set_background_pointer", {"Busy"})
-        RebuildQueue &= {{iName[idx], startline, endline}}
+        --gui:wproc(iCanvasName[idx], "set_background_pointer", {"Busy"})
+        set_rebuild_lines(idx, startline, endline)
+        
         task_yield()
     end if
 end procedure
@@ -1509,13 +1709,28 @@ end procedure
 procedure draw_lines(atom idx, atom startline, atom endline)
     if idx > 0 and startline > 0 and endline >= startline then
         atom bwidth, ih, whnd, px, py, tx, ty, sline, scol, eline, ecol, lnx, MaxWidth, starty, endy, currchar,
-        hasfocus, selbackcolor, seltextcolor, currlinebackcolor
-        sequence tokens, tokstyle, txex, csize, brect, trect, ccmds, bcmds, tcmds, lcmds, hshape, scc, ecc
+        hasfocus, selbackcolor, seltextcolor, currlinebackcolor, tt
+        sequence vislines, tokens, tokstyle, txex, csize, brect, trect, ccmds, bcmds, tcmds, lcmds, hshape, scc, ecc
         
-        --? {{iSelStartLine[idx], iSelEndCol[idx], iSelEndLine[idx], iSelStartCol[idx]}, {startline, endline}}
+        if not gui:widget_is_visible(iCanvasName[idx]) then
+            return
+        end if
         whnd = gui:widget_get_handle(iCanvasName[idx])
         if whnd = 0 then
             return
+        end if
+        
+        vislines = visible_lines(idx)
+
+        if startline > vislines[2] or endline < vislines[1] then --out of range, nothing needs to be redrawn
+            return
+        else
+            if startline < vislines[1] then
+                startline = vislines[1]
+            end if
+            if endline > vislines[2] then
+                endline = vislines[2]
+            end if
         end if
         
         --if iKeyFocus[idx] and whnd = gui:get_window_focus() then
@@ -1583,7 +1798,7 @@ procedure draw_lines(atom idx, atom startline, atom endline)
         end if
         if bwidth > 0 then
             hshape = {  --handle shape for line number, bookmark, folding (margin) area
-                {DR_Rectangle, True, brect[1], brect[2], brect[3], brect[4]}
+                {DR_Rectangle, True, brect[1], 0, brect[3], csize[2]}
             }
             lnx = brect[1] + iLineNumFontSize[idx] + 6
         end if
@@ -1618,7 +1833,6 @@ procedure draw_lines(atom idx, atom startline, atom endline)
                 scc = char_coords(idx, sline, scol) --{cx, cy, tnum, tcol, thight}
                 ecc = char_coords(idx, eline, ecol)
                 
-                
                 --append line number drawing commands
                 if bwidth > 0 then
                     if iViewMode[idx] = 0 then
@@ -1627,9 +1841,9 @@ procedure draw_lines(atom idx, atom startline, atom endline)
                             {DR_Puts, sprintf("%d", {li})}
                         }
                     end if
-                    if iTxtLnBookmark[idx][li] = 1 then
+                    if iTxtLnBookmark[idx][li] > 0 then
                         lcmds &= {  --draw bookmark symbol
-                            {DR_PenColor, rgb(180, 180, 250)},
+                            {DR_PenColor, rgb(140, 160, 250)},
                             {DR_RoundRect, True, brect[1]+2, py+1, brect[1]+ih, py+ih-1, ih, ih}
                         }
                     end if
@@ -2090,7 +2304,8 @@ function scroll_to_active_line(atom idx, atom withmargin = 1)
             --    gui:wproc(iCanvasName[idx], "scroll_to", {0, 0})
             --else
             
-        if iTxtLnPosY[idx][iSelEndLine[idx]] = 0 or iTxtLnVisible[idx][iSelEndLine[idx]] = 0 then
+        --if iTxtLnPosY[idx][iSelEndLine[idx]] = 0 or iTxtLnVisible[idx][iSelEndLine[idx]] = 0 then
+        if equal(csize, {0, 0}) then
             return 0
         end if
         
@@ -2183,37 +2398,39 @@ procedure move_cursor_to(atom idx, object li, object col)  --move cursor to posi
         if li > length(iTxtLnText[idx]) then
             li = length(iTxtLnText[idx])
         end if
-        if sequence(col) then
-            if equal(col, ".") then
-                col = iSelEndCol[idx]
-            elsif equal(col, "$") then
-                col = length(iTxtLnText[idx][li])
-            else
+        if li > 0 then
+            if sequence(col) then
+                if equal(col, ".") then
+                    col = iSelEndCol[idx]
+                elsif equal(col, "$") then
+                    col = length(iTxtLnText[idx][li])
+                else
+                    col = 0
+                end if
+            end if
+            if col < 0 then
                 col = 0
             end if
-        end if
-        if col < 0 then
-            col = 0
-        end if
-        if col > length(iTxtLnText[idx][li]) then
-            col = length(iTxtLnText[idx][li])
-        end if
-        
-        refreshlines = {li, li}
-        if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
-            refreshlines = visible_lines(idx)
-        end if
-        iSelStartLine[idx] = li
-        iSelStartCol[idx] = col
-        iSelEndLine[idx] = li
-        iSelEndCol[idx] = col
-        iCursorState[idx] = 2
-        
-        if iIsSelecting[idx] then --prevent scrolling to active line when starting selection with the mouse
-            draw_lines(idx, refreshlines[1], refreshlines[2])
+            if col > length(iTxtLnText[idx][li]) then
+                col = length(iTxtLnText[idx][li])
+            end if
             
-        elsif not scroll_to_active_line(idx) then --keep end of selection in view
-            draw_lines(idx, refreshlines[1], refreshlines[2])
+            refreshlines = {li, li}
+            if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
+                refreshlines = visible_lines(idx)
+            end if
+            iSelStartLine[idx] = li
+            iSelStartCol[idx] = col
+            iSelEndLine[idx] = li
+            iSelEndCol[idx] = col
+            iCursorState[idx] = 2
+            
+            if iIsSelecting[idx] then --prevent scrolling to active line when starting selection with the mouse
+                draw_lines(idx, refreshlines[1], refreshlines[2])
+                
+            elsif not scroll_to_active_line(idx) then --keep end of selection in view
+                draw_lines(idx, refreshlines[1], refreshlines[2])
+            end if
         end if
     end if
 end procedure
@@ -2484,7 +2701,7 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
             elsif length(txt) > 1 then
                 iSelStartCol[idx] = oldtextendlen
             end if
-            scroll_to_active_line(idx)
+            --scroll_to_active_line(idx)
             iSelEndLine[idx] = iSelStartLine[idx]
             iSelEndCol[idx] = iSelStartCol[idx]
             iCursorState[idx] = 2
@@ -2548,6 +2765,18 @@ procedure call_cmd(atom idx, sequence cmd, object args)
     atom issel, wh, li, col
     sequence txt, vislines
 
+    /*if sequence(iRebuildLines[idx]) and length(iCmdQueue[idx]) > 0 then
+        --if busy rebuilding and commands are in the queue, any further commands should be queued
+        --to avoid out-of-order problems
+        queue_cmd(iName[idx], cmd, args)
+        return
+    end if
+    */
+    
+    if equal(cmd, "find") then --temporary compatibility patch for 0.9.1, will remove for 1.0.0
+        cmd = "jump"
+    end if
+    
     switch cmd do
         case "move" then
             switch args[1] do
@@ -2598,7 +2827,7 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                     move_cursor_rel(idx, 0, 0)
             end switch
         
-        case "find" then
+        case "jump" then
             switch args[1] do
                 case "section" then
                     if length(args[2]) = 0 or equal(args[2], "top") then
@@ -2611,6 +2840,17 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                             end if
                         end for
                     end if
+                
+                case "location" then
+                    if length(args) > 2 then
+                        move_cursor_to(idx, args[2], args[3])
+                        if length(args) > 4 then
+                            select_to(idx, args[4], args[5])
+                        end if
+                    end if
+                    
+                case "bookmark" then
+                    
             end switch
             
         case "char" then
@@ -2767,11 +3007,206 @@ procedure call_cmd(atom idx, sequence cmd, object args)
             set_modified(idx, 1)*/
             
         case "resize" then
-            rebuild_lines(idx, 1, length(iTxtLnText[idx]))
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
+            sequence csize = gui:wfunc(iCanvasName[idx], "get_visible_size", {iTotalWidth[idx], iTotalHeight[idx]})
+            if iTotalHeight[idx] = csize[2] then
+                vislines = visible_lines(idx)
+                draw_lines(idx, vislines[1], vislines[2])
+            else
+                rebuild_lines(idx, 1, length(iTxtLnText[idx]))
+            end if
     end switch
 end procedure
+
+
+function word_range(sequence txt, atom cpos)
+    atom sch = cpos, ech = cpos, ignorecount = 0
+    --find beginning and end of a "word". The behavior depends on what type of character is at cpos.
+    --If alphanumeric, it finds beginning and end of alphanumeric
+    --If whitespace or symbols, it finds beginning and end of whitespace/symbols
+    --If quote or bracket, it tries to find the same kind of quote or bracket
+    
+    if length(txt) > 0 then
+        if cpos > length(txt)-1 then
+            cpos = length(txt)-1
+        end if
+        if find(txt[cpos+1], IdentifierChars) then --find first and last identifier chars before and after cpos
+            for ch = cpos+1 to length(txt) do --find end of word
+                if find(txt[ch], IdentifierChars) then
+                    ech = ch
+                else
+                    exit
+                end if
+            end for
+            for ch = cpos to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], IdentifierChars) then
+                    sch = ch
+                else
+                    exit
+                end if
+            end for
+            
+        elsif find(txt[cpos+1], "\"") then --find first and last identifier chars before and after cpos
+            for ch = cpos+2 to length(txt) do --find end of word
+                if find(txt[ch], "\"") then
+                    ech = ch
+                    exit
+                else
+                    ech = cpos+1
+                end if
+            end for
+            for ch = cpos-1 to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], "\"") then
+                    sch = ch
+                    exit
+                else
+                    sch = cpos
+                end if
+            end for
+        elsif find(txt[cpos+1], "'") then --find first and last identifier chars before and after cpos
+            for ch = cpos+2 to length(txt) do --find end of word
+                if find(txt[ch], "'") then
+                    ech = ch
+                    exit
+                else
+                    ech = cpos+1
+                end if
+            end for
+            for ch = cpos-1 to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], "'") then
+                    sch = ch
+                    exit
+                else
+                    sch = cpos
+                end if
+            end for
+            
+        elsif find(txt[cpos+1], "[") then --find first and last identifier chars before and after cpos
+            ignorecount = 1
+            for ch = cpos+2 to length(txt) do --find end of word
+                if find(txt[ch], "]") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        ech = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch], "[") then
+                        ignorecount += 1
+                    end if
+                    ech = cpos+1
+                end if
+            end for
+            sch = cpos --find beginning of word
+        elsif find(txt[cpos+1], "{") then --find first and last identifier chars before and after cpos
+            ignorecount = 1
+            for ch = cpos+2 to length(txt) do --find end of word
+                if find(txt[ch], "}") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        ech = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch], "{") then
+                        ignorecount += 1
+                    end if
+                    ech = cpos+1
+                end if
+            end for
+            sch = cpos --find beginning of word
+        elsif find(txt[cpos+1], "(") then --find first and last identifier chars before and after cpos
+            ignorecount = 1
+            for ch = cpos+2 to length(txt) do --find end of word
+                if find(txt[ch], ")") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        ech = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch], "(") then
+                        ignorecount += 1
+                    end if
+                    ech = cpos+1
+                end if
+            end for
+            sch = cpos --find beginning of word
+            
+        elsif find(txt[cpos+1], "]") then --find first and last identifier chars before and after cpos
+            ech = cpos+1 --find end of word
+            sch = cpos
+            ignorecount = 1
+            for ch = cpos-1 to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], "[") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        sch = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch+1], "]") then
+                        ignorecount += 1
+                    end if
+                    sch = cpos
+                end if
+            end for
+        elsif find(txt[cpos+1], "}") then --find first and last identifier chars before and after cpos
+            ech = cpos+1 --find end of word
+            sch = cpos
+            ignorecount = 1
+            for ch = cpos-1 to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], "{") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        sch = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch+1], "}") then
+                        ignorecount += 1
+                    end if
+                    sch = cpos
+                end if
+            end for
+        elsif find(txt[cpos+1], ")") then --find first and last identifier chars before and after cpos
+            ech = cpos+1 --find end of word
+            sch = cpos
+            ignorecount = 1
+            for ch = cpos-1 to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], "(") then
+                    ignorecount -= 1
+                    if ignorecount = 0 then
+                        sch = ch
+                        exit
+                    end if
+                else
+                    if find(txt[ch+1], ")") then
+                        ignorecount += 1
+                    end if
+                    sch = cpos
+                end if
+            end for
+            
+        else --find first and last non-identifier chars before and after cpos
+            for ch = cpos+1 to length(txt) do --find end of word
+                if find(txt[ch], IdentifierChars) or find(txt[ch], BlockChars) then
+                    exit
+                else
+                    ech = ch
+                end if
+            end for
+            for ch = cpos to 0 by -1 do --find beginning of word
+                if find(txt[ch+1], IdentifierChars) or find(txt[ch+1], BlockChars) then
+                    exit
+                else
+                    sch = ch
+                end if
+            end for
+        end if
+    end if
+    
+    return {sch, ech}
+end function
 
 
 procedure textedit_event_handler(object evwidget, object evtype, object evdata)
@@ -2814,8 +3249,23 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                             case "MouseMove" then
                                 if iIsSelecting[idx] then
                                     iLastMousePos[idx] = {evdata[3], evdata[4]}
-                                    call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                                    
                                     gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
+                                    
+                                    if iIsSelecting[idx] = 1 then
+                                        call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                                        
+                                    elsif iIsSelecting[idx] = 2 then
+                                        sequence wr = word_range(iTxtLnText[idx][mpos[1]], mpos[2])
+                                        if select_direction(idx) > 0 then
+                                            call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][1]})
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[2]})
+                                        else
+                                            call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][2]})
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[1]})
+                                        end if
+                                    end if
+                                    
                                 else
                                     iLastMousePos[idx] = 0
                                     --check if token is a link and set mouse cursor
@@ -2844,10 +3294,43 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                 
                             case "LeftDoubleClick" then
                                 --select word/token under mpos[1], mpos[2]
+                                sequence wr = word_range(iTxtLnText[idx][mpos[1]], mpos[2])
+                                set_current_editor(idx)
+                                --check if token is a link
+                                linkurl = is_token_link(idx, mpos)
+                                if sequence(linkurl) then
+                                    
+                                else
+                                    iIsSelecting[idx] = 2
+                                    iSelStartWord[idx] = {wr[1], wr[2], mpos[1]}
+                                    if evdata[5] then --shift key
+                                        if select_direction(idx) > 0 then
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[2]})
+                                        else
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[1]})
+                                        end if
+                                    else
+                                        call_cmd(idx, "move", {"to", mpos[1], wr[1]})
+                                        call_cmd(idx, "select", {"to", mpos[1], wr[2]})
+                                    end if
+                                end if
+                                
                                 
                             case "LeftUp" then
                                 if iIsSelecting[idx] then
-                                    call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                                    if iIsSelecting[idx] = 1 then
+                                        call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                                        
+                                    elsif iIsSelecting[idx] = 2 then
+                                        sequence wr = word_range(iTxtLnText[idx][mpos[1]], mpos[2])
+                                        if select_direction(idx) > 0 then
+                                            call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][1]})
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[2]})
+                                        else
+                                            call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][2]})
+                                            call_cmd(idx, "select", {"to", mpos[1], wr[1]})
+                                        end if
+                                    end if
                                 else
                                     --check if token is a link and navigate to it
                                     linkurl = is_token_link(idx, mpos)
@@ -2869,7 +3352,9 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                         menuitems = {
                                             "copy",
                                             "-",
-                                            "select_all"
+                                            "select_all",
+                                            "-",
+                                            "find"
                                         }
                                     else
                                         menuitems = {
@@ -2887,6 +3372,8 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                                 "delete",
                                                 "-",
                                                 "select_all",
+                                                "-",
+                                                "find",
                                                 "-",
                                                 "format_indent_less",
                                                 "format_indent_more" /*,
@@ -2913,6 +3400,8 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                                 "-",
                                                 "select_all",
                                                 "-",
+                                                "find",
+                                                "-",
                                                 "format_indent_less",
                                                 "format_indent_more" /*,
                                                 "-",
@@ -2931,6 +3420,8 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                                                 "delete",
                                                 "-",
                                                 "select_all",
+                                                "-",
+                                                "find",
                                                 "-",
                                                 "format_indent_less",
                                                 "format_indent_more"
@@ -2973,89 +3464,180 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                         end switch
                     end if
                     
-                elsif equal(evdata[1], "lineheaders") then
-                    --if equal(evdata[2], "MouseMove") then --evdata = {"handle", {hname, "MouseMove", mx, my}}
-                    --    grect = graphs[grRect][gr[i]]
-                    --    if gui:in_rect(evdata[3], evdata[4], grect) then --in_rect(atom xpos, atom ypos, sequence rect)
-                    --    end if
-                    --end if
+                elsif equal(evdata[1], "lineheaders") then --line headers
+                    switch evdata[2] do
+                        case "MouseMove" then
+                            /*if iIsSelecting[idx] then
+                                iLastMousePos[idx] = {evdata[3], evdata[4]}
+                                
+                                gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
+                                
+                                if iIsSelecting[idx] > 0 then
+                                    if seldirection = 1 then
+                                        call_cmd(idx, "select", {"to", mline, "$"})
+                                    else
+                                        call_cmd(idx, "select", {"to", mline, 1})
+                                    end if
+                                end if
+                                
+                            else
+                                iLastMousePos[idx] = 0
+                                --check if token is a link and set mouse cursor
+                                linkurl = is_token_link(idx, mpos)
+                                if sequence(linkurl) then
+                                    gui:wproc(iCanvasName[idx], "set_background_pointer", {"Link"})
+                                else
+                                    gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
+                                end if
+                            end if*/
+                            
+                        case "LeftDown" then
+                            /*set_current_editor(idx)
+                            
+                            iIsSelecting[idx] = 1
+                            if evdata[5] then --shift key
+                                call_cmd(idx, "select", {"to", mline, "$"})
+                            else
+                                call_cmd(idx, "move", {"to", mline, 0})
+                                call_cmd(idx, "select", {"to", mline, "$"})
+                            end if*/
+                            
+                        case "LeftDoubleClick" then
+                            
+                        case "LeftUp" then
+                            sequence vislines = visible_lines(idx)
+                            atom px, py
+                            --{mousex, mousey} = {evdata[3], evdata[4]}
+                            for li = vislines[1] to vislines[2] do
+                                if iTxtLnVisible[idx][li] then
+                                    px = iTxtLnPosX[idx][li] - iScrollX[idx]
+                                    py = iTxtLnPosY[idx][li] - iScrollY[idx]
+                                    if evdata[4] >= py and evdata[4] < py + iTxtLnHeight[idx][li] then
+                                        if iTxtLnBookmark[idx][li] = 0 then
+                                            iTxtLnBookmark[idx][li] = 1
+                                        else
+                                            iTxtLnBookmark[idx][li] = 0
+                                        end if
+                                        --rebuild_lines(idx, li, li)
+                                        if is_locked(iName[idx]) then
+                                            queue_cmd(iName[idx], "jump", {"location", li, 0, li, "$"})
+                                        else
+                                            queue_cmd(iName[idx], "jump", {"location", li, 0})
+                                        end if
+                                        send_txt_event(idx, "toc_refresh", {})
+                                        exit
+                                    end if
+                                end if
+                            end for
+                            
+                            /*if iIsSelecting[idx] then
+                                if iIsSelecting[idx] > 0 then
+                                    call_cmd(idx, "select", {"to", mline, "$"})
+                                end if
+                            end if
+                            iIsSelecting[idx] = 0*/
+                            
+                        case "RightDown" then
+                            
+                        case "RightUp" then
+                            
+                    end switch
                 end if
                 
             case "KeyDown" then
+                --TODO: some of these will be replaced by customizeable hotkeys in actions.e, once actions are fully implemented
                 --puts(1, "KeyDown:" & sprint(evdata) & "\n")
                 if evdata[1] = 37 then --left
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"left", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"left", 1})
                     end if
                 elsif evdata[1] = 39 then --right
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"right", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"right", 1})
                     end if
                 elsif evdata[1] = 38 then --up
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"up", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"up", 1})
                     end if
                 elsif evdata[1] = 40 then --down
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"down", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"down", 1})
                     end if
                 elsif evdata[1] = 33 then --pgup
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"pgup", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"pgup", 1})
                     end if
                 elsif evdata[1] = 34 then --pgdown
-                    if evdata[2] then --shift
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                         call_cmd(idx, "select", {"pgdown", 1})
-                    else
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
                         call_cmd(idx, "move", {"pgdown", 1})
                     end if
                 elsif evdata[1] = 36 then --home
                     if evdata[3] then --ctrl (beginning of file)
-                        if evdata[2] then --shift
+                        if evdata[2] = 1 and evdata[4] = 0 then --shift+ctrl
                             call_cmd(idx, "select", {"to", 1, 0})
-                        else
+                        elsif evdata[2] = 0 and evdata[4] = 0 then
                             call_cmd(idx, "move", {"to", 1, 0})
                         end if
                     else              --(beginning of line)
-                        if evdata[2] then --shift
+                        if evdata[2] = 1 and evdata[4] = 0 then --shift
                             call_cmd(idx, "select", {"to", ".", 0})
-                        else
+                        elsif evdata[2] = 0 and evdata[4] = 0 then
                             call_cmd(idx, "move", {"to", ".", 0})
                         end if
                     end if
                 elsif evdata[1] = 35 then --end
                     if evdata[3] then --ctrl (end of file)
-                        if evdata[2] then --shift
+                        if evdata[2] = 1 and evdata[4] = 0 then --shift+ctrl
                             call_cmd(idx, "select", {"to", "$", "$"})
-                        else
+                        elsif evdata[2] = 0 and evdata[4] = 0 then
                             call_cmd(idx, "move", {"to", "$", "$"})
                         end if
                     else              --(end of line)
-                        if evdata[2] then --shift
+                        if evdata[2] = 1 and evdata[4] = 0 then --shift
                             call_cmd(idx, "select", {"to", ".", "$"})
-                        else
+                        elsif evdata[2] = 0 and evdata[4] = 0 then
                             call_cmd(idx, "move", {"to", ".", "$"})
                         end if
                     end if
                 elsif evdata[1] = 8 and iLocked[idx] = 0 then --backspace
-                    call_cmd(idx, "backspace", {})
+                    if evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
+                        call_cmd(idx, "backspace", {})
+                    end if
+                    
+                elsif evdata[1] = 45 and iLocked[idx] = 0 then --insert
+                    if evdata[2] = 0 and evdata[3] = 1 and evdata[4] = 0 then --ctrl
+                        call_cmd(idx, "copy", {})
+                    elsif evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
+                        call_cmd(idx, "paste", {})
+                    end if
                     
                 elsif evdata[1] = 46 and iLocked[idx] = 0 then --delete
-                    call_cmd(idx, "delete", {})
+                    if evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
+                        call_cmd(idx, "delete", {})
+                    elsif evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
+                        call_cmd(idx, "cut", {})
+                    end if
                     
                 elsif evdata[1] = 112 then --F1
                 elsif evdata[1] = 113 then --F2
                 elsif evdata[1] = 114 then --F3
+                    if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
+                        action:do_proc("find_prev", {})
+                    elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then
+                        action:do_proc("find_next", {})
+                    end if
                 elsif evdata[1] = 115 then --F4
                 elsif evdata[1] = 116 then --F5
                 elsif evdata[1] = 117 then --F6
@@ -3072,8 +3654,18 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                 --puts(1, "KeyUp:" & sprint(evdata) & "\n")
                 
             case "KeyPress" then
+                --TODO: some of these will be replaced by customizeable hotkeys in actions.e, once actions are fully implemented
                 --puts(1, "KeyPress:" & sprint(evdata) & "\n")
-                if evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
+                if evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 0 then --no shift, ctrl, or alt
+                    if evdata[1] = 13 and iLocked[idx] = 0 then --newline
+                        call_cmd(idx, "newline", {})
+                    elsif evdata[1] = 9 and iLocked[idx] = 0 then --tab
+                        call_cmd(idx, "tab", {})
+                    elsif evdata[1] > 13 and iLocked[idx] = 0 then --normal character
+                        call_cmd(idx, "char", {evdata[1]})
+                    end if
+                    
+                elsif evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 0 then --shift
                     if evdata[1] = 13 and iLocked[idx] = 0 then --shift-enter
                         call_cmd(idx, "newline", {})
                     elsif evdata[1] = 9 and iLocked[idx] = 0 then --shift-tab
@@ -3095,18 +3687,26 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                         
                     elsif evdata[1] + 96 = 'a' then --paste
                         call_cmd(idx, "select", {"all"})
+                        
+                    elsif evdata[1] + 96 = 's' then --save
+                        action:do_proc("file_save", {})
+                        
+                    elsif evdata[1] + 96 = 'f' then --find
+                        action:do_proc("find", {})
+                        
+                    elsif evdata[1] + 96 = 'h' then --replace
+                        action:do_proc("find_replace", {})
+                        
+                    elsif evdata[1] + 96 = 'g' then --goto line
+                        action:do_proc("show_goto", {})
+                        
                     end if
                     
-                elsif evdata[2] = 1 and evdata[3] = 1 and evdata[4] = 0 then --shift+ctrl
-                    
-                else --no ctrl or alt
-                    if evdata[1] = 13 and iLocked[idx] = 0 then --newline
-                        call_cmd(idx, "newline", {})
-                    elsif evdata[1] = 9 and iLocked[idx] = 0 then --tab
-                        call_cmd(idx, "tab", {})
-                    elsif evdata[1] > 13 and iLocked[idx] = 0 then --normal character
-                        call_cmd(idx, "char", {evdata[1]})
-                    end if
+                --elsif evdata[2] = 0 and evdata[3] = 0 and evdata[4] = 1 then --alt
+                --elsif evdata[2] = 1 and evdata[3] = 1 and evdata[4] = 0 then --shift+ctrl
+                --elsif evdata[2] = 1 and evdata[3] = 0 and evdata[4] = 1 then --shift+alt
+                --elsif evdata[2] = 0 and evdata[3] = 1 and evdata[4] = 1 then --ctrl+alt
+                --elsif evdata[2] = 1 and evdata[3] = 1 and evdata[4] = 1 then --shift+ctrl+alt
                 end if
                 
             case "Timer" then
@@ -3115,7 +3715,18 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                         atom whnd = gui:widget_get_handle(iCanvasName[idx])
                         set_font(whnd, iLineNumFont[idx], iLineNumFontSize[idx], Normal)
                         object mpos = get_mouse_pos(idx, iLastMousePos[idx][1], iLastMousePos[idx][2])
-                        call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                        if iIsSelecting[idx] = 1 then
+                            call_cmd(idx, "select", {"to", mpos[1], mpos[2]})
+                        elsif iIsSelecting[idx] = 2 then
+                            sequence wr = word_range(iTxtLnText[idx][mpos[1]], mpos[2])
+                            if select_direction(idx) > 0 then
+                                call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][1]})
+                                call_cmd(idx, "select", {"to", mpos[1], wr[2]})
+                            else
+                                call_cmd(idx, "move", {"to", iSelStartWord[idx][3], iSelStartWord[idx][2]})
+                                call_cmd(idx, "select", {"to", mpos[1], wr[1]})
+                            end if
+                        end if
                     end if
                 end if
                 
@@ -3297,6 +3908,7 @@ export procedure create(sequence wprops) --Create a text editor instance
     iCursorState        &= {0}
     iLastMousePos       &= {0}
     iIsSelecting        &= {0}
+    iSelStartWord       &= {0}
     iSelStartLine       &= {1}
     iSelStartCol        &= {0}
     iSelEndLine         &= {1}
@@ -3309,6 +3921,7 @@ export procedure create(sequence wprops) --Create a text editor instance
     iTotalHeight        &= {0}
     iTotalWidth         &= {0}
     
+    iRebuildLines       &= {0}
     iBusyStatus         &= {0}
     iBusyTime           &= {0}
     iCmdQueue           &= {{}}
@@ -3343,58 +3956,60 @@ export procedure destroy(sequence iname) --Destroy a text editor instance (after
         
         --set_current_editor(0)
         
-        iName[idx]              = remove(iName, idx)
-        iCanvasName[idx]        = remove(iCanvasName, idx)
-        iParentName[idx]        = remove(iParentName, idx)
-        iLabel[idx]             = remove(iLabel, idx)
-        iEventRid[idx]          = remove(iEventRid, idx)
-        iMenuID[idx]            = remove(iMenuID, idx)
+        iName              = remove(iName, idx)
+        iCanvasName        = remove(iCanvasName, idx)
+        iParentName        = remove(iParentName, idx)
+        iLabel             = remove(iLabel, idx)
+        iEventRid          = remove(iEventRid, idx)
+        iMenuID            = remove(iMenuID, idx)
         
-        iSyntaxMode[idx]        = remove(iSyntaxMode, idx)
-        iEditMode[idx]          = remove(iEditMode, idx)
-        iViewMode[idx]          = remove(iViewMode, idx)
-        iLocked[idx]            = remove(iLocked, idx)
-        iModified[idx]          = remove(iModified, idx)
-        iWordWrap[idx]          = remove(iWordWrap, idx)
+        iSyntaxMode        = remove(iSyntaxMode, idx)
+        iEditMode          = remove(iEditMode, idx)
+        iViewMode          = remove(iViewMode, idx)
+        iLocked            = remove(iLocked, idx)
+        iModified          = remove(iModified, idx)
+        iWordWrap          = remove(iWordWrap, idx)
         
-        iTokenStyles[idx]       = remove(iTokenStyles, idx)
-        iShowHidden[idx]        = remove(iShowHidden, idx)
-        iLineNumFont[idx]       = remove(iLineNumFont, idx)
-        iLineNumFontSize[idx]   = remove(iLineNumFontSize, idx)
+        iTokenStyles       = remove(iTokenStyles, idx)
+        iShowHidden        = remove(iShowHidden, idx)
+        iLineNumFont       = remove(iLineNumFont, idx)
+        iLineNumFontSize   = remove(iLineNumFontSize, idx)
         
-        iTxtLnText[idx]         = remove(iTxtLnText, idx)
-        iTxtLnTokens[idx]       = remove(iTxtLnTokens, idx)
-        iTxtLnSyntaxState[idx]  = remove(iTxtLnSyntaxState, idx)
-        iTxtLnBookmark[idx]     = remove(iTxtLnBookmark, idx)
-        iTxtLnFold[idx]         = remove(iTxtLnFold, idx)
-        iTxtLnVisible[idx]      = remove(iTxtLnVisible, idx)
-        iTxtLnTag[idx]          = remove(iTxtLnTag, idx)
-        iTxtLnPosX[idx]         = remove(iTxtLnPosX, idx)
-        iTxtLnPosY[idx]         = remove(iTxtLnPosY, idx)
-        iTxtLnWidth[idx]        = remove(iTxtLnWidth, idx)
-        iTxtLnHeight[idx]       = remove(iTxtLnHeight, idx)
+        iTxtLnText         = remove(iTxtLnText, idx)
+        iTxtLnTokens       = remove(iTxtLnTokens, idx)
+        iTxtLnSyntaxState  = remove(iTxtLnSyntaxState, idx)
+        iTxtLnBookmark     = remove(iTxtLnBookmark, idx)
+        iTxtLnFold         = remove(iTxtLnFold, idx)
+        iTxtLnVisible      = remove(iTxtLnVisible, idx)
+        iTxtLnTag          = remove(iTxtLnTag, idx)
+        iTxtLnPosX         = remove(iTxtLnPosX, idx)
+        iTxtLnPosY         = remove(iTxtLnPosY, idx)
+        iTxtLnWidth        = remove(iTxtLnWidth, idx)
+        iTxtLnHeight       = remove(iTxtLnHeight, idx)
         
-        iKeyFocus[idx]          = remove(iKeyFocus, idx)
-        iAutoFocus[idx]         = remove(iAutoFocus, idx)
-        iCursorState[idx]       = remove(iCursorState, idx)
-        iLastMousePos[idx]      = remove(iLastMousePos, idx)
-        iIsSelecting[idx]       = remove(iIsSelecting, idx)
-        iSelStartLine[idx]      = remove(iSelStartLine, idx)
-        iSelStartCol[idx]       = remove(iSelStartCol, idx)
-        iSelEndLine[idx]        = remove(iSelEndLine, idx)
-        iSelEndCol[idx]         = remove(iSelEndCol, idx)
-        iVirtualColX[idx]       = remove(iVirtualColX, idx)
-        iScrollX[idx]           = remove(iScrollX, idx)
-        iScrollY[idx]           = remove(iScrollY, idx)
+        iKeyFocus          = remove(iKeyFocus, idx)
+        iAutoFocus         = remove(iAutoFocus, idx)
+        iCursorState       = remove(iCursorState, idx)
+        iLastMousePos      = remove(iLastMousePos, idx)
+        iIsSelecting       = remove(iIsSelecting, idx)
+        iSelStartWord      = remove(iSelStartWord, idx)
+        iSelStartLine      = remove(iSelStartLine, idx)
+        iSelStartCol       = remove(iSelStartCol, idx)
+        iSelEndLine        = remove(iSelEndLine, idx)
+        iSelEndCol         = remove(iSelEndCol, idx)
+        iVirtualColX       = remove(iVirtualColX, idx)
+        iScrollX           = remove(iScrollX, idx)
+        iScrollY           = remove(iScrollY, idx)
         
-        iLineNumWidth[idx]      = remove(iLineNumWidth, idx)
-        iTotalHeight[idx]       = remove(iTotalHeight, idx)
-        iTotalWidth[idx]        = remove(iTotalWidth, idx)
+        iLineNumWidth      = remove(iLineNumWidth, idx)
+        iTotalHeight       = remove(iTotalHeight, idx)
+        iTotalWidth        = remove(iTotalWidth, idx)
         
-        iBusyStatus[idx]        = remove(iBusyStatus, idx)
-        iBusyTime[idx]          = remove(iBusyTime, idx)
-        iCmdQueue[idx]          = remove(iCmdQueue, idx)
-        iUndoQueue[idx]         = remove(iUndoQueue, idx)
+        iRebuildLines      = remove(iRebuildLines, idx)
+        iBusyStatus        = remove(iBusyStatus, idx)
+        iBusyTime          = remove(iBusyTime, idx)
+        iCmdQueue          = remove(iCmdQueue, idx)
+        iUndoQueue         = remove(iUndoQueue, idx)
     end if                      
 end procedure
 
@@ -3434,7 +4049,8 @@ export procedure show(sequence iname, sequence cparent) --Show a text editor ins
             {"scroll_wheel_distance", 128},
             {"background_pointer", "Ibeam"},
             {"handler", routine_id("textedit_event_handler")},
-            {"autofocus", iAutoFocus[idx]}
+            {"autofocus", iAutoFocus[idx]},
+            {"handle_debug", 0}
         })
         
         gui:wproc(iCanvasName[idx], "set_background_pointer", {"Busy"})
@@ -3465,7 +4081,15 @@ export procedure hide(sequence iname) --Hide a text editor instance (and recreat
 end procedure
 
 
-export procedure docmd(sequence iname, sequence cmd, object args)
+export procedure queue_cmd(sequence iname, sequence cmd, object args)
+    atom idx = find(iname, iName)
+    if idx > 0 then
+        iCmdQueue[idx] &= {{cmd, args}}
+    end if
+end procedure
+
+
+export procedure docmd(sequence iname, sequence cmd, object args) --depreciated, will probably remove in v1.0
     atom idx = find(iname, iName)
     if idx > 0 then
         call_cmd(idx, cmd, args)
@@ -3495,6 +4119,268 @@ export procedure set_modified(object inameoridx, atom ismodified)
         send_txt_event(idx, "modified", ismodified)
     end if
 end procedure
+
+
+export function is_locked(sequence iname)
+    atom idx = find(iname, iName)
+    atom islocked = 1
+    if idx > 0 then
+        islocked = iLocked[idx]
+    end if
+    return islocked
+end function
+
+
+export procedure set_locked(object inameoridx, atom islocked)
+    atom idx
+    if atom(inameoridx) then
+        idx = inameoridx
+    else
+        idx = find(inameoridx, iName)
+    end if
+    if idx > 0 and iLocked[idx] != islocked then
+        iLocked[idx] = islocked
+        send_txt_event(idx, "locked", islocked)
+    end if
+end procedure
+
+
+export function get_selected_text(object iname)
+    atom idx = find(iname, iName)
+    if idx > 0 then
+        return text_get(idx)
+    else
+        return {""}
+    end if
+end function
+
+
+export function get_current_line_num(object iname)
+    atom idx = find(iname, iName)
+    if idx > 0 then
+        return iSelStartLine[idx]
+    else
+        return 0
+    end if
+end function
+
+
+function custom_match(sequence findstr, sequence linestr, atom casesensitive, atom wholewords)
+    sequence matchall, matchlist
+    atom
+    strlen = length(findstr),
+    linelen = length(linestr)
+    
+    if strlen > 0 and linelen > 0 then
+        if not casesensitive then
+            findstr = lower(findstr)
+            linestr = lower(linestr)
+        end if
+        
+        matchall = match_all(findstr, linestr, 1)
+        if length(matchall) > 0 then
+            if wholewords = 1 then
+                matchlist = {}
+                for m = 1 to length(matchall) do
+                    if matchall[m] <= 1 or find(linestr[matchall[m]-1], IdentifierChars) = 0 then --check beginning
+                        if matchall[m] - 1 + strlen >= linelen or find(linestr[matchall[m]+strlen], IdentifierChars) = 0 then --check end
+                            matchlist &= matchall[m]
+                        end if
+                    end if
+                end for
+                return matchlist
+            else
+                return matchall
+            end if
+        end if
+    end if
+    
+    return {}
+end function
+
+
+export function get_toc(object iname) --returns a list of sections/routines: {{icon, linenum1, txt1}, {icon, linenum2, txt2}, ...}
+    atom idx = find(iname, iName)
+    sequence toclist = {}, txt
+    
+    if idx > 0 then
+        if iViewMode[idx] = 0 and iSyntaxMode[idx] = synEuphoria then
+            toclist &= {{"go-top", "1", "top"}}
+            for li = 1 to length(iTxtLnText[idx]) do
+                txt = iTxtLnText[idx][li]
+                if match("function", txt) and not match("end", txt) then
+                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                elsif match("procedure", txt) and not match("end", txt) then
+                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                end if
+            end for
+            toclist &= {{"go-bottom", sprint(length(iTxtLnText[idx])), "bottom"}}
+            
+        elsif iViewMode[idx] = 1 then
+            toclist &= {{"go-top", "1", "top"}}
+            for li = 1 to length(iTxtLnText[idx]) do
+                txt = iTxtLnText[idx][li]
+                if find('=', txt) = 1 then
+                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                end if
+            end for
+            toclist &= {{"go-bottom", sprint(length(iTxtLnText[idx])), "bottom"}}
+        
+        else
+            toclist &= {{"go-top", "1", "top"}}
+            for li = 1 to length(iTxtLnText[idx]) do
+                txt = iTxtLnText[idx][li]
+                if find('[', txt) = 1 and find(']', txt) then
+                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                end if
+            end for
+            toclist &= {{"go-bottom", sprint(length(iTxtLnText[idx])), "bottom"}}
+            
+        end if
+    end if
+    
+    return toclist
+end function
+
+
+export function get_bookmarks(object iname) --returns a list of bookmarks: {{icon, linenum1, txt1}, {icon, linenum2, txt2}, ...}
+    atom idx = find(iname, iName)
+    sequence bookmarks = {}
+    
+    if idx > 0 then
+        for li = 1 to length(iTxtLnText[idx]) do
+            if iTxtLnBookmark[idx][li] > 0 then
+                bookmarks &= {{"emblem-symbolic-link", sprint(li), iTxtLnText[idx][li]}}
+            end if
+        end for
+    end if
+    
+    return bookmarks
+end function
+
+
+export function match_string(sequence iname, sequence findstr, atom direction = 1, atom casesensitive = 1, atom wholewords = 0)
+--find and optionally replace the next or previous matching string in the text
+--direction: 1=forward, -1=backwards
+--casesensitive: 1=case must match, 0=case doesn't need to match
+--wholewords: 1=found string must be a complete word, 0=found string can be part of a word.
+--(A complete word means the found string must have non-alpha-numeric characters or beginning/end of line before and after it).
+--returns: 0=not found, {line, column}=start position of found string
+
+    atom idx = find(iname, iName)
+    object matchlist
+    atom li, col = 0, mcol = 0
+    
+    if idx > 0 then
+        if direction < -2 or direction = 0 or direction > 2 then
+            direction = 1
+        end if
+        if direction = -2 then --first
+            li = 1
+            direction = 1
+        elsif direction = 2 then --last
+            li = length(iTxtLnText[idx])
+            direction = -1
+        else --next/prev
+            li = iSelStartLine[idx]
+        end if
+        
+        while li > 0 and li <= length(iTxtLnText[idx]) do
+            matchlist = custom_match(findstr, iTxtLnText[idx][li], casesensitive, wholewords)
+            if length(matchlist) > 0 then
+                if direction = 1 then
+                    if li = iSelStartLine[idx] then
+                        for lp = 1 to length(matchlist) do
+                            if matchlist[lp] > iSelStartCol[idx] + 1 then
+                                return {li, matchlist[lp]}
+                                exit
+                            end if
+                        end for
+                    else
+                        return {li, matchlist[1]}
+                        exit
+                    end if
+                else
+                    if li = iSelStartLine[idx] then
+                        for lp = length(matchlist) to 1 by -1 do
+                            if matchlist[lp] < iSelStartCol[idx] + 1 then
+                                return {li, matchlist[lp]}
+                                exit
+                            end if
+                        end for
+                    else
+                        return {li, matchlist[$]}
+                        exit
+                    end if
+                end if
+            end if
+            
+            li += direction
+        end while
+    end if
+    
+    return 0
+end function
+
+
+export function match_replace_all(sequence iname, sequence findstr, sequence replacestr, atom direction, atom casesensitive, atom wholewords)
+    --replace multiple occurrences of text quickly, bypassing slower do_cmd methods
+    --note: only direction 1 (forward) and -2 (start at top) are allowed
+    object nextmatch
+    atom idx = find(iname, iName), rcount = 0, li, col, sli, scol 
+    
+    if idx > 0 then
+        sli = iSelStartLine[idx]
+        scol = iSelStartCol[idx]
+        if direction != -2 then
+            direction = 1
+        end if
+        
+        while 1 do
+            nextmatch = match_string(iname, findstr, direction, casesensitive, wholewords)
+            if direction = -2 then --first
+                direction = 1
+            end if
+            
+            if sequence(nextmatch) then --{li, matchlist}
+                li = nextmatch[1]
+                col = nextmatch[2]
+                rcount += 1
+                
+                --replace first match
+                iTxtLnText[idx][li] =
+                    iTxtLnText[idx][li][1..col-1]
+                    & replacestr
+                    & iTxtLnText[idx][li][col+length(findstr)..$]
+                
+                --move cursor to end of replaced text
+                iSelStartLine[idx] = li
+                iSelStartCol[idx] = col+length(replacestr)
+                iSelEndLine[idx] = iSelStartLine[idx]
+                iSelEndCol[idx] = iSelStartCol[idx]
+                
+                iTxtLnTokens[idx][li]       = 0
+                iTxtLnSyntaxState[idx][li]  = 0
+                iTxtLnBookmark[idx][li]     = 0
+                iTxtLnFold[idx][li]         = 0
+                iTxtLnVisible[idx][li]      = 1
+                iTxtLnTag[idx][li]          = 0
+                iTxtLnPosX[idx][li]         = 0
+                iTxtLnPosY[idx][li]         = 0
+                iTxtLnWidth[idx][li]        = 0
+                iTxtLnHeight[idx][li]       = 0
+                
+            else
+                set_rebuild_lines(idx, 1, length(iTxtLnText[idx]))
+                set_modified(idx, 1)
+                queue_cmd(iname, "move", {"to", sli, scol})
+                exit
+            end if
+        end while
+    end if
+    
+    return rcount
+end function
 
 
 export function get_prop(object inameoridx, sequence opt, object val)
@@ -3608,7 +4494,6 @@ export procedure set_prop(object inameoridx, sequence opt, object val)
                 
             case "locked" then
                 iLocked[idx] = val
-                
             --case "word_wrap" then
             --    iWordWrap[idx] = val
                 
@@ -3649,4 +4534,10 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
+
+
+
+
+
+
 

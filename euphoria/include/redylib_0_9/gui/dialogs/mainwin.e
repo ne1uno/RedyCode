@@ -49,7 +49,8 @@ include std/utils.e
 
 atom
 LastTabNum = 0,
-ActiveTab = 0 --TODO
+ActiveTab = 0,  --TODO
+MainEvHandlerRid = 0 --optional routine to forward "winMain" gui events
 
 sequence tabDoubleClickAction = "file_close" --action to do when a tab is double-clicked (typically "file_close")
 sequence tabSelectAction = "file_switch_to" --action to do when a tab is selected (typically "file_switch_to"})
@@ -160,19 +161,24 @@ procedure gui_event(object evwidget, object evtype, object evdata)
                 --tContextMenu[ActiveTab]
                 
             end if
-            
+        case "winMain" then
+            if MainEvHandlerRid > 0 then
+                call_proc(MainEvHandlerRid, {evwidget, evtype, evdata})
+            end if
         case else
             
     end switch
 end procedure
 
 
-export procedure start()
+export procedure start(atom evhandlerrid = 0)
     --sequence
     --displaysize = gui:getPrimaryDisplaySize()
     --atom
     --wwidth = floor(displaysize[1] * 1 / 2),
     --wheight = floor(displaysize[2] * 2 / 3)
+    
+    MainEvHandlerRid = evhandlerrid
     
     gui:wcreate({
         {"name", "winMain"},
@@ -188,7 +194,7 @@ export procedure start()
         {"name", "cntMain"},
         {"parent", "winMain"},
         {"class", "container"},
-        {"orientation", "horizontal"},
+        {"orientation", "vertical"},
         {"sizemode_x", "expand"},
         {"sizemode_y", "expand"}
     })

@@ -13,7 +13,7 @@ include redylib_0_9/app.e as app
 
 app:define({
     {"title", "SimpleApp"},
-    {"version", "0.9.1"},
+    {"version", "0.9.2"},
     {"author", "You"},
     {"copyright", "2016 You"},
     {"license", {

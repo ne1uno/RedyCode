@@ -33,8 +33,11 @@ include redylib_0_9/err.e as err
 
 include redylib_0_9/gui/objects/textdoc.e as txtdoc
 
+
 include project.e
-include search.e
+include build.e as build
+include context.e as context
+include navfile.e as navfile
 include help.e
 include preferences.e
 include tips.e as tips
@@ -51,7 +54,7 @@ include std/filesys.e
 --Define Application Info
 app:define({
     {"title", "RedyCode"},
-    {"version", "0.9.1"},
+    {"version", "0.9.2"},
     {"website", "http://redy-project.org/"},
     {"author", "Ryan W. Johnson"},
     {"copyright", "2016 Ryan W. Johnson"},
@@ -75,7 +78,7 @@ app:define({
 
 -- Edit Files ----------------------------------------------------------------
 
-sequence
+global sequence
 FileTypeDescriptions = {
     "Euphoria Source Code",
     "Hypertext Documentation",
@@ -262,18 +265,20 @@ app:set_menus({
         "comment",
         "uncomment",
         "-",
-        "beautify"}
+        "beautify",
+        "show_code_builder"}
     },
     {"Search", {
         "find",
         "find_replace",
-        "find_next",
         "find_prev",
+        "find_next",
+        --"find_line",
         "-",
-        "goto_line",
-        "goto_routine",
-        "-",
-        "goto_bookmark"}
+        "show_goto"}
+        --"find_bookmark",
+        --"bookmark_create",
+        --"bookmark_destroy"
     },
     {"Tools", {
         "show_preferences",
@@ -287,7 +292,9 @@ app:set_menus({
         --"app_run",     --this will use list_func to automatically generate menu items for each .ex or .exw file in the project
         "-",
         "app_bind",
-        "app_build"}
+        "app_build",
+        "-",
+        "project_show_error"}
     },
     {"Help", {
         "show_help",
@@ -329,9 +336,19 @@ app:set_default_toolbars({
         "-",
         "find",
         "find_replace",
+        "find_prev",
+        "find_next",
+        "-",
+        --"find_line",
+        "show_goto",
+        --"find_bookmark",
+        --"bookmark_create",
+        --"bookmark_destroy",
         "-",
         "format_indent_less",
-        "format_indent_more"}
+        "format_indent_more",
+        "-",
+        "show_code_builder"}
     }
     /*{"Syntax", "top", {
         "syntax_comment",
@@ -371,17 +388,256 @@ sequence
 fTabNames = {},
 fTabFileNames = {},
 fTabFileTypes = {},
-fTabFileReadOnlys = {}
+fTabFileReadOnlys = {},
+fTabFileModifyTime = {}
+
+
+export procedure update_tab_info(atom tabidx)
+    navfile:refresh_toc()
+    
+    if gui:wexists(fTabNames[tabidx] & ".cntError") then
+        gui:wdestroy(fTabNames[tabidx] & ".cntError")
+    end if
+    if gui:wexists(fTabNames[tabidx] & ".cntErrAnalysis") then
+        gui:wdestroy(fTabNames[tabidx] & ".cntErrAnalysis")
+    end if
+    if gui:wexists(fTabNames[tabidx] & ".cntExtWarn") then
+        gui:wdestroy(fTabNames[tabidx] & ".cntExtWarn")
+    end if
+    if gui:wexists(fTabNames[tabidx] & ".cntFileChanged") then
+        gui:wdestroy(fTabNames[tabidx] & ".cntFileChanged")
+    end if
+    
+    if sequence(pError) then --{errfile, errline, errtxt}
+        if equal(fTabFileNames[tabidx], pError[1]) then --the current error is in this file
+            --show error message
+            gui:wcreate({
+                {"name", fTabNames[tabidx] & ".cntError"},
+                {"parent", fTabNames[tabidx] & ".cntContext"},
+                {"class", "container"},
+                {"orientation", "horizontal"},
+                {"sizemode_x", "expand"},
+                {"sizemode_y", "equal"},
+                {"handler", routine_id("gui_event")}
+            })
+            gui:wcreate({
+                {"name", fTabNames[tabidx] & ".canError"},
+                {"parent", fTabNames[tabidx] & ".cntError"},
+                {"class", "canvas"},
+                {"size", {18, 30}},
+                {"border", 0}
+            })
+            sequence cmds = {
+                {DR_Image, "dialog-error", 1, 1, rgb(0, 0, 0)}
+            }
+            gui:wproc(fTabNames[tabidx] & ".canError", "draw_background", {cmds})
+            
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".txtErrorInfo"},
+                {"parent",  fTabNames[tabidx] & ".cntError"},
+                {"class", "textbox"},
+                {"mode", "text"},
+                {"label", "Error in line " & sprint(pError[2]) & ":"},
+                {"label_position", "above"},
+                {"monowidth", 1},
+                {"text", pError[3]}
+                --{"size", {0, 64}}
+            })
+            gui:wcreate({
+                {"name", fTabNames[tabidx] & ".cntErrorButtons"},
+                {"parent", fTabNames[tabidx] & ".cntError"},
+                {"class", "container"},
+                {"orientation", "vertical"},
+                {"sizemode_x", "equal"},
+                {"sizemode_y", "normal"},
+                {"justify_y", "center"},
+                {"handler", routine_id("gui_event")}
+            })
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".btnErrorGoToLine"},
+                {"parent",  fTabNames[tabidx] & ".cntErrorButtons"},
+                {"class", "button"},
+                {"label", "Go to Line"}
+            })
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".btnErrorHelp"},
+                {"parent",  fTabNames[tabidx] & ".cntErrorButtons"},
+                {"class", "button"},
+                {"label", "Full Report"}
+            })
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".btnErrorSaveAndRun"},
+                {"parent",  fTabNames[tabidx] & ".cntErrorButtons"},
+                {"class", "button"},
+                {"label", "Save and Run"}
+            })
+        end if
+    end if
+    
+    if equal(filesys:filename(fTabFileNames[tabidx]), "ex.err") then
+        --show err analysis
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".cntErrAnalysis"},
+            {"parent", fTabNames[tabidx] & ".cntContext"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "expand"},
+            {"sizemode_y", "equal"},
+            {"handler", routine_id("gui_event")}
+        })
+        gui:wcreate({
+            {"name",  fTabNames[tabidx] & ".txtErrAnalysisInfo"},
+            {"parent",  fTabNames[tabidx] & ".cntErrAnalysis"},
+            {"class", "textbox"},
+            {"mode", "text"},
+            --{"monowidth", 1},
+            {"text", "Error Report"}
+            --{"size", {0, 64}}
+        })
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".cntErrAnalysisButtons"},
+            {"parent", fTabNames[tabidx] & ".cntErrAnalysis"},
+            {"class", "container"},
+            {"orientation", "vertical"},
+            {"sizemode_x", "equal"},
+            {"sizemode_y", "normal"},
+            {"justify_y", "center"},
+            {"handler", routine_id("gui_event")}
+        })
+        gui:wcreate({
+            {"name",  fTabNames[tabidx] & ".btnErrAnalysisGoToError"},
+            {"parent",  fTabNames[tabidx] & ".cntErrAnalysisButtons"},
+            {"class", "button"},
+            {"label", "Go to Error"}
+        })
+    end if
+    
+    if match(filesys:pathname(pPath), filesys:pathname(fTabFileNames[tabidx])) != 1 then
+        --show external warning
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".cntExtWarn"},
+            {"parent", fTabNames[tabidx] & ".cntContext"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "expand"},
+            {"sizemode_y", "equal"},
+            {"handler", routine_id("gui_event")}
+        })
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".canExtWarn"},
+            {"parent", fTabNames[tabidx] & ".cntExtWarn"},
+            {"class", "canvas"},
+            {"size", {18, 30}},
+            {"border", 0}
+        })
+        sequence cmds = {
+            {DR_Image, "dialog-warning", 1, 8, rgb(0, 0, 0)}
+        }
+        gui:wproc(fTabNames[tabidx] & ".canExtWarn", "draw_background", {cmds})
+        gui:wcreate({
+            {"name",  fTabNames[tabidx] & ".txtExtWarnInfo"},
+            {"parent",  fTabNames[tabidx] & ".cntExtWarn"},
+            {"class", "textbox"},
+            {"mode", "text"},
+            --{"monowidth", 1},
+            {"text", "Warning: this file is outside the project folder. Modifying it may affect other programs."}
+            --{"size", {0, 64}}
+        })
+        
+        if txtdoc:is_locked(fTabNames[tabidx] & ".filepage") then
+            gui:wcreate({
+                {"name", fTabNames[tabidx] & ".cntExtWarnButtons"},
+                {"parent", fTabNames[tabidx] & ".cntExtWarn"},
+                {"class", "container"},
+                {"orientation", "vertical"},
+                {"sizemode_x", "equal"},
+                {"sizemode_y", "normal"},
+                {"justify_y", "center"},
+                {"handler", routine_id("gui_event")}
+            })
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".btnExtWarnEdit"},
+                {"parent",  fTabNames[tabidx] & ".cntExtWarnButtons"},
+                {"class", "button"},
+                {"label", "Edit"}
+            })
+        end if
+    end if
+    
+    if not equal(fTabFileModifyTime[tabidx], filesys:file_timestamp(fTabFileNames[tabidx])) then
+        --show file changed
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".cntFileChanged"},
+            {"parent", fTabNames[tabidx] & ".cntContext"},
+            {"class", "container"},
+            {"orientation", "horizontal"},
+            {"sizemode_x", "expand"},
+            {"sizemode_y", "equal"},
+            {"handler", routine_id("gui_event")}
+        })
+        gui:wcreate({
+            {"name", fTabNames[tabidx] & ".canFileChanged"},
+            {"parent", fTabNames[tabidx] & ".cntFileChanged"},
+            {"class", "canvas"},
+            {"size", {18, 30}},
+            {"border", 0}
+        })
+        sequence cmds = {
+            {DR_Image, "dialog-information", 1, 8, rgb(0, 0, 0)}
+        }
+        gui:wproc(fTabNames[tabidx] & ".canFileChanged", "draw_background", {cmds})
+        
+        if filesys:file_exists(fTabFileNames[tabidx]) then
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".txtFileChangedInfo"},
+                {"parent",  fTabNames[tabidx] & ".cntFileChanged"},
+                {"class", "textbox"},
+                {"mode", "text"},
+                --{"monowidth", 1},
+                {"text", "This file has been changed. Would you like to reload it?"}
+                --{"size", {0, 64}}
+            })
+            gui:wcreate({
+                {"name", fTabNames[tabidx] & ".cntFileChangedButtons"},
+                {"parent", fTabNames[tabidx] & ".cntFileChanged"},
+                {"class", "container"},
+                {"orientation", "vertical"},
+                {"sizemode_x", "equal"},
+                {"sizemode_y", "normal"},
+                {"justify_y", "center"},
+                {"handler", routine_id("gui_event")}
+            })
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".btnFileChangedReload"},
+                {"parent",  fTabNames[tabidx] & ".cntFileChangedButtons"},
+                {"class", "button"},
+                {"label", "Reload"}
+            })
+        else
+            gui:wcreate({
+                {"name",  fTabNames[tabidx] & ".txtFileChangedInfo"},
+                {"parent",  fTabNames[tabidx] & ".cntFileChanged"},
+                {"class", "textbox"},
+                {"mode", "text"},
+                --{"monowidth", 1},
+                {"text", "This file does not exist."}
+                --{"size", {0, 64}}
+            })
+        end if
+        
+    end if
+end procedure
+
 
 procedure select_file_tab(sequence filename)
     atom tabidx = find(filename, fTabFileNames)
     if tabidx > 0 then
         app:select_tab(fTabNames[tabidx])
+        action:setfocus(fTabNames[tabidx])
     end if
 end procedure
 
 
---todo: use tablist instead
 procedure create_tab(sequence tablabel, sequence filename, sequence txt, atom readonly = 0)
     sequence tabname = app:create_tab(tablabel, filename, readonly)
     sequence ext = filesys:fileext(filename)
@@ -398,31 +654,38 @@ procedure create_tab(sequence tablabel, sequence filename, sequence txt, atom re
         destroy_tab(fTabNames[1])
     end if
     
+    action:setfocus(tabname)
+    
     if equal(filename, NullFileName) then
         filetype = "source"
         
     else
-        for st = 1 to length(FileTypeNames) do
-            if find(ext, FileTypeExts[st]) then
-                switch FileTypeNames[st] do
-                case "source" then
-                    filetype = "source"
-                case "doc" then
-                    filetype = "doc"
-                case "image" then
-                    filetype = "image"
-                case else
-                    filetype = "text"
-                end switch
-            end if
-        end for
+        if equal(ext, "err") then
+            filetype = "text" --"source"
+        else
+            for st = 1 to length(FileTypeNames) do
+                if find(ext, FileTypeExts[st]) then
+                    switch FileTypeNames[st] do
+                    case "source" then
+                        filetype = "source"
+                    case "doc" then
+                        filetype = "doc"
+                    case "image" then
+                        filetype = "image"
+                    case else
+                        filetype = "text"
+                    end switch
+                end if
+            end for
+        end if
     end if
     
     fTabNames &= {tabname}
     fTabFileNames &= {filename}
     fTabFileTypes &= {filetype}
     fTabFileReadOnlys &= {readonly}
-    
+    fTabFileModifyTime &= {filesys:file_timestamp(filename)}
+        
     app:set_tab_context_menu(tabname, {
         "file_close",
         "file_close_all",
@@ -431,6 +694,16 @@ procedure create_tab(sequence tablabel, sequence filename, sequence txt, atom re
         "file_save_as",
         "-",
         "file_reopen"
+    })
+    
+    gui:wcreate({
+        {"name", tabname & ".cntContext"},
+        {"parent", tabname},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "normal"},
+        {"handler", routine_id("gui_event")}
     })
     
     switch filetype do
@@ -507,6 +780,7 @@ procedure destroy_tab(sequence tabname)
         fTabFileNames = remove(fTabFileNames, idx)
         fTabFileTypes = remove(fTabFileTypes, idx)
         fTabFileReadOnlys = remove(fTabFileReadOnlys, idx)
+        fTabFileModifyTime = remove(fTabFileModifyTime, idx)
         
         app:destroy_tab(tabname)
         txtdoc:destroy(tabname & ".filepage")
@@ -532,9 +806,16 @@ procedure destroy_tab(sequence tabname)
             action:set_enabled("format_indent_more", 0)
             
             action:set_enabled("find", 0)
-            action:set_enabled("find_replace", 0)
-            action:set_enabled("find_next", 0)
             action:set_enabled("find_prev", 0)
+            action:set_enabled("find_next", 0)
+            action:set_enabled("find_replace", 0)
+            action:set_enabled("show_goto", 0)
+            action:set_enabled("find_bookmark", 0)
+            action:set_enabled("bookmark_create", 0)
+            action:set_enabled("bookmark_destroy", 0)
+            
+            --action:set_enabled("find_prev", 1)
+            
         end if
         
         --sequence flist = {}
@@ -591,7 +872,7 @@ procedure do_file_open()
 end procedure
 
 
-procedure do_file_load(sequence filelist)
+procedure do_file_load(sequence filelist) --filelist: {{filepath, filename, readonly}, ...}
     atom fn
     object ln, tablabel, txt
     sequence filename
@@ -599,6 +880,7 @@ procedure do_file_load(sequence filelist)
     for f = 1 to length(filelist) do
         tablabel = filelist[f][2]
         filename = filelist[f][1] & filelist[f][2]
+        
         txt = ""
         
         if find(filename, fTabFileNames) then
@@ -607,7 +889,11 @@ procedure do_file_load(sequence filelist)
             fn = open(filename, "r")
             if fn = -1 then
                 -- "read_file() error!"
-                create_tab(tablabel, "File read error", "The file \"" & filename & "\" does not exist.", filelist[f][3])
+                if filesys:file_exists(filename) then
+                    create_tab(tablabel, "File read error", "Unable to open \"" & filename & "\".", filelist[f][3])
+                else
+                    create_tab(tablabel, "File read error", "The file \"" & filename & "\" does not exist.", filelist[f][3])
+                end if
             else
                 while 1 do
                     ln = gets(fn)
@@ -649,7 +935,8 @@ procedure do_file_save()
             else
                 --pretty_print(1, {"Save", CurrentTab & ".filepage", fTabFileNames[fidx]}, {2})
                 txtdoc:save_to_file(CurrentTab & ".filepage", fTabFileNames[fidx])
-                txtdoc:set_modified(CurrentTab & ".filepage", 0) 
+                txtdoc:set_modified(CurrentTab & ".filepage", 0)
+                fTabFileModifyTime[fidx] = filesys:file_timestamp(fTabFileNames[fidx])
             end if
         end if
     end if
@@ -692,7 +979,9 @@ procedure do_file_save_as()
                 --pretty_print(1, {"Save As", CurrentTab & ".filepage", fTabFileNames[fidx]}, {2})
                 txtdoc:save_to_file(CurrentTab & ".filepage", fTabFileNames[fidx])
                 txtdoc:set_modified(CurrentTab & ".filepage", 0)
+                fTabFileModifyTime[fidx] = filesys:file_timestamp(fTabFileNames[fidx])
                 action:do_proc("project_refresh", {})
+                update_tab_info(fidx)
             end if
         end if
     end if
@@ -702,9 +991,12 @@ end procedure
 procedure do_file_switch_to(object selectedtab)
     atom tidx
     CurrentTab = selectedtab
+    action:setfocus(CurrentTab)
     if length(selectedtab) > 0 then
         tidx = find(CurrentTab, fTabNames)
         if tidx > 0 then
+            update_tab_info(tidx)
+            
             if fTabFileReadOnlys[tidx] then
                 action:set_enabled("file_close", 1)
                 action:set_enabled("file_close_all", 1)
@@ -726,21 +1018,17 @@ procedure do_file_switch_to(object selectedtab)
                 action:set_enabled("format_indent_less", 0)
                 action:set_enabled("format_indent_more", 0)
                 
+                action:set_enabled("show_code_builder", 0)
+                
                 if not equal(fTabFileTypes[tidx], "image") then
                     action:set_enabled("find", 1)
-                    action:set_enabled("find_replace", 0)
-                    action:set_enabled("find_next", 1)
-                    action:set_enabled("find_prev", 1)
-                end if
-                
-                if equal(fTabFileTypes[tidx], "source") then
-                    action:set_enabled("goto_line", 1)
-                    action:set_enabled("goto_routine", 1)
-                    action:set_enabled("goto_bookmark", 1)
-                else
-                    action:set_enabled("goto_line", 0)
-                    action:set_enabled("goto_routine", 0)
-                    action:set_enabled("goto_bookmark", 0)
+                    --action:set_enabled("find_prev", 1)
+                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_replace", 1)
+                    action:set_enabled("show_goto", 1)
+                    action:set_enabled("find_bookmark", 0)
+                    action:set_enabled("bookmark_create", 0)
+                    action:set_enabled("bookmark_destroy", 0)
                 end if
                 
             else
@@ -760,20 +1048,22 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("paste", 1)
                     action:set_enabled("delete", 1)
                     action:set_enabled("select_all", 1)
-                    action:set_enabled("comment", 0) --1)
-                    action:set_enabled("uncomment", 0) --1)
-                    action:set_enabled("beautify", 0) --1)
+                    action:set_enabled("comment", 1)
+                    action:set_enabled("uncomment", 1)
+                    action:set_enabled("beautify", 1)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
                     
-                    action:set_enabled("find", 0) --1)
-                    action:set_enabled("find_replace", 0) --1)
-                    action:set_enabled("find_next", 0) --1)
-                    action:set_enabled("find_prev", 0) --1)
+                    action:set_enabled("find", 1)
+                    --action:set_enabled("find_prev", 1)
+                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_replace", 1)
+                    action:set_enabled("show_goto", 1)
+                    action:set_enabled("find_bookmark", 0)
+                    action:set_enabled("bookmark_create", 0)
+                    action:set_enabled("bookmark_destroy", 0)
                     
-                    action:set_enabled("goto_line", 0) --1)
-                    action:set_enabled("goto_routine", 0) --1)
-                    action:set_enabled("goto_bookmark", 0) --1)
+                    action:set_enabled("show_code_builder", 1)
                 case "doc" then
                     action:set_enabled("undo", 0)
                     action:set_enabled("redo", 0)
@@ -782,21 +1072,22 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("paste", 1)
                     action:set_enabled("delete", 1)
                     action:set_enabled("select_all", 1)
-                    action:set_enabled("comment", 0) --1)
-                    action:set_enabled("uncomment", 0) --1)
-                    action:set_enabled("beautify", 0) --1)
+                    action:set_enabled("comment", 1)
+                    action:set_enabled("uncomment", 1)
+                    action:set_enabled("beautify", 1)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
                     
-                    action:set_enabled("find", 0) --1)
-                    action:set_enabled("find_replace", 0) --1)
-                    action:set_enabled("find_next", 0) --1)
-                    action:set_enabled("find_prev", 0) --1)
-                    
-                    action:set_enabled("goto_line", 0)
-                    action:set_enabled("goto_routine", 0)
-                    action:set_enabled("goto_bookmark", 0)
-                    
+                    action:set_enabled("find", 1)
+                    --action:set_enabled("find_prev", 1)
+                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_replace", 1)
+                    action:set_enabled("show_goto", 1)
+                    action:set_enabled("find_bookmark", 0)
+                    action:set_enabled("bookmark_create", 0)
+                    action:set_enabled("bookmark_destroy", 0)
+                
+                    action:set_enabled("show_code_builder", 0)
                     /* --possibly implement format actions:
                     "text_style_select"
                     "format_text_normal"
@@ -827,13 +1118,15 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_more", 0)
                     
                     action:set_enabled("find", 0)
-                    action:set_enabled("find_replace", 0)
-                    action:set_enabled("find_next", 0)
                     action:set_enabled("find_prev", 0)
+                    action:set_enabled("find_next", 0)
+                    action:set_enabled("find_replace", 0)
+                    action:set_enabled("show_goto", 0)
+                    action:set_enabled("find_bookmark", 0)
+                    action:set_enabled("bookmark_create", 0)
+                    action:set_enabled("bookmark_destroy", 0)
                     
-                    action:set_enabled("goto_line", 0)
-                    action:set_enabled("goto_routine", 0)
-                    action:set_enabled("goto_bookmark", 0)
+                    action:set_enabled("show_code_builder", 0)
                 case else
                     action:set_enabled("undo", 0)
                     action:set_enabled("redo", 0)
@@ -848,19 +1141,23 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_less", 1)
                     action:set_enabled("format_indent_more", 1)
                     
-                    action:set_enabled("find", 0) --1)
-                    action:set_enabled("find_replace", 0) --1)
-                    action:set_enabled("find_next", 0) --1)
-                    action:set_enabled("find_prev", 0) --1)
+                    action:set_enabled("find", 1)
+                    --action:set_enabled("find_prev", 1)
+                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_replace", 1)
+                    action:set_enabled("show_goto", 1)
+                    action:set_enabled("find_bookmark", 0)
+                    action:set_enabled("bookmark_create", 0)
+                    action:set_enabled("bookmark_destroy", 0)
                     
-                    action:set_enabled("goto_line", 0)
-                    action:set_enabled("goto_routine", 0)
-                    action:set_enabled("goto_bookmark", 0)
+                    action:set_enabled("show_code_builder", 0)
                 end switch
             end if
         end if
         
     else
+        navfile:refresh_toc()
+        
         action:set_enabled("file_close", 0)
         action:set_enabled("file_close_all", 0)
         action:set_enabled("file_save", 0)
@@ -881,13 +1178,15 @@ procedure do_file_switch_to(object selectedtab)
         action:set_enabled("format_indent_more", 0)
         
         action:set_enabled("find", 0)
-        action:set_enabled("find_replace", 0)
-        action:set_enabled("find_next", 0)
         action:set_enabled("find_prev", 0)
+        action:set_enabled("find_next", 0)
+        action:set_enabled("find_replace", 0)
+        action:set_enabled("show_goto", 0)
+        action:set_enabled("find_bookmark", 0)
+        action:set_enabled("bookmark_create", 0)
+        action:set_enabled("bookmark_destroy", 0)
         
-        action:set_enabled("goto_line", 0)
-        action:set_enabled("goto_routine", 0)
-        action:set_enabled("goto_bookmark", 0)
+        action:set_enabled("show_code_builder", 0)
     end if
 end procedure
 
@@ -926,17 +1225,74 @@ end procedure
 
 procedure gui_event(object evwidget, object evtype, object evdata)
     --pretty_print(1, {evwidget, evtype, evdata}, {2})
-    for fidx = 1 to length(fTabNames) do
-        if equal(evwidget, fTabNames[fidx] & ".filepage") then
-            if equal(evtype, "modified") then
-                app:set_tab_modified(fTabNames[fidx], evdata)
-                if equal(CurrentTab, fTabNames[fidx]) then
-                    action:set_enabled("file_save", evdata)
+    if equal(evwidget, "winMain") then
+        if equal(evtype, "GotFocus") then
+            action:do_proc("project_refresh", {})
+            atom tabidx = find(CurrentTab, fTabNames)
+            if tabidx > 0 then
+                update_tab_info(tabidx)
+            end if
+        end if
+    else
+        for fidx = 1 to length(fTabNames) do
+            if equal(evtype, "clicked") then
+                if equal(evwidget, fTabNames[fidx] & ".btnErrorGoToLine") then
+                    action:do_proc("project_show_error", {})
+                    exit
+                    
+                elsif equal(evwidget, fTabNames[fidx] & ".btnErrorHelp") then
+                    action:do_proc("file_load", {{{pPath & "\\source\\", "ex.err", 0}}})
+                    exit
+                    
+                elsif equal(evwidget, fTabNames[fidx] & ".btnErrorSaveAndRun") then
+                    action:do_proc("file_save", {})
+                    action:do_proc("app_run_default", {})
+                    exit
+                    
+                elsif equal(evwidget, fTabNames[fidx] & ".btnErrAnalysisGoToError") then
+                    action:do_proc("project_show_error", {})
+                    exit
+                    
+                elsif equal(evwidget, fTabNames[fidx] & ".btnExtWarnEdit") then
+                    --turn off read-only mode
+                    txtdoc:set_locked(fTabNames[fidx] & ".filepage", 0)
+                    update_tab_info(fidx)
+                    exit
+                    
+                elsif equal(evwidget, fTabNames[fidx] & ".btnFileChangedReload") then
+                    --reload file
+                    atom islocked = txtdoc:is_locked(fTabNames[fidx] & ".filepage")
+                    sequence pathname = filesys:pathname(fTabFileNames[fidx]) & "\\",
+                    filename = filesys:filename(fTabFileNames[fidx])
+                    txtdoc:set_modified(fTabNames[fidx] & ".filepage", 0)
+                    action:do_proc("file_close", {})
+                    action:do_proc("file_load", {{{pathname, filename, islocked}}})
+                    exit
+                    
                 end if
             end if
-            exit
-        end if
-    end for
+            
+            if equal(evwidget, fTabNames[fidx] & ".filepage") then
+                if equal(evtype, "modified") then
+                    app:set_tab_modified(fTabNames[fidx], evdata)
+                    if equal(CurrentTab, fTabNames[fidx]) then
+                        action:set_enabled("file_save", evdata)
+                    end if
+                    
+                elsif equal(evtype, "locked") then
+                    app:set_tab_readonly(fTabNames[fidx], evdata)
+                    fTabFileReadOnlys[fidx] = evdata
+                    if equal(CurrentTab, fTabNames[fidx]) then
+                        do_file_switch_to(fTabNames[fidx]) --reset toolbars
+                    end if
+                    
+                elsif equal(evtype, "toc_refresh") then
+                    navfile:refresh_toc()
+                end if
+                exit
+            end if
+        end for
+    end if
 end procedure
     
 
@@ -944,7 +1300,7 @@ procedure start()
     sequence cmdline = command_line()
     object CmdFile = 0, CmdAction = "edit"
     
-    app:create_main_window()
+    app:create_main_window(routine_id("gui_event"))
     
     sequence ImgPath = ExePath & "\\images\\"
     gui:load_bitmap("folder_open_16", ImgPath & "folder_open_16.bmp")
@@ -994,6 +1350,10 @@ procedure start()
 end procedure
 
 gui:start(routine_id("start"), routine_id("gui_event"))
+
+
+
+
 
 
 

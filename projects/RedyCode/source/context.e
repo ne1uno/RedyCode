@@ -22,6 +22,7 @@ include redylib_0_9/gui.e as gui
 include redylib_0_9/gui/dialogs/msgbox.e as msgbox
 include redylib_0_9/actions.e as action
 include redylib_0_9/app.e as app
+include redylib_0_9/gui/objects/textdoc.e as txtdoc
 
 include std/task.e
 include std/text.e
@@ -62,29 +63,11 @@ action:define({
 })
 
 action:define({
-    {"name", "goto_line"},
-    {"do_proc", routine_id("do_goto_line")},
-    {"label", "Go to Line Number..."},
-    {"icon", "goto_line"},
-    {"description", "Goto line"},
-    {"enabled", 0}
-})
-
-action:define({
-    {"name", "goto_routine"},
-    {"do_proc", routine_id("do_goto_routine")},
-    {"label", "Go to Routine..."},
-    {"icon", "goto_routine"},
-    {"description", "Goto routine"},
-    {"enabled", 0}
-})
-
-action:define({
-    {"name", "goto_bookmark"},
-    {"do_proc", routine_id("do_goto_bookmark")},
-    {"label", "Go to Bookmark..."},
-    {"icon", "goto_bookmark"},
-    {"description", "Goto bookmark"},
+    {"name", "show_code_builder"},
+    {"do_proc", routine_id("do_show_code_builder")},
+    {"label", "Code Builder..."},
+    {"icon", "text-x-script"},
+    {"description", "show code builder"},
     {"enabled", 0}
 })
 
@@ -106,28 +89,47 @@ action:define({
     {"enabled", 0}
 })
 
+
+action:define({
+    {"name", "show_color_selector"},
+    {"do_proc", routine_id("do_show_color_selector")},
+    {"label", "Show Color Selector..."},
+    {"icon", "show_color_selector"},
+    {"description", "Show color selector"},
+    {"enabled", 0}
+})
+
+
 procedure do_comment()
 end procedure
+
 
 procedure do_uncomment()
 end procedure
 
+
 procedure do_beautify()
 end procedure
 
-procedure do_goto_line()
-end procedure
-
-procedure do_goto_routine()
-end procedure
-
-procedure do_goto_bookmark()
-end procedure
 
 procedure do_show_ascii_chart()
 end procedure
 
+
 procedure do_show_color_selector()
 end procedure
+
+
+procedure do_show_code_builder()
+
+end procedure
+
+
+export procedure gui_event(object evwidget, object evtype, object evdata)
+
+end procedure
+
+
+
 
 

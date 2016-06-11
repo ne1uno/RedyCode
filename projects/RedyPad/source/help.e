@@ -163,7 +163,7 @@ procedure do_help_navigate(sequence helpurl)
         
         txtdoc:show("winHelp.txtHelp", "winHelp.cntHelp")
         task_delay(0.3) --temp fix: Text doesn't get processed until after "find" is called, causing it to not find any sections because they don't exist yet!
-        txtdoc:docmd("winHelp.txtHelp", "find", {"section", sectionname})
+        txtdoc:queue_cmd("winHelp.txtHelp", "jump", {"section", sectionname})
     end if
     
     if length(sectionname) > 0 then
@@ -254,6 +254,8 @@ end procedure
 --export procedure start()
 --    msg:subscribe("help", "command", routine_id("msg_event"))
 --end procedure
+
+
 
 
 
