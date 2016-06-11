@@ -32,7 +32,6 @@ sequence wcprops
 enum
 wcpID,
 wcpSoftFocus,
-wcpHardFocus,
 wcpKeyFocus,
 wcpLabel,
 wcpBoxStyle,
@@ -89,7 +88,6 @@ procedure wc_create(atom wid, object wprops)
     
     wcprops[wcpID] &= {wid}
     wcprops[wcpSoftFocus] &= {0}
-    wcprops[wcpHardFocus] &= {0}
     wcprops[wcpKeyFocus] &= {0}
     wcprops[wcpLabel] &= {wlabel}
     wcprops[wcpBoxStyle] &= {bstyle}
@@ -133,7 +131,7 @@ procedure wc_draw(atom wid)
         if wenabled = 0 then
             hicolor = th:cOuterFill
             txtcolor = th:cButtonDisLabel
-        elsif wcprops[wcpHardFocus][idx] and wf then
+        elsif wcprops[wcpKeyFocus][idx] and wf then
             hicolor = th:cOuterActive
             txtcolor = th:cButtonLabel
         elsif wcprops[wcpSoftFocus][idx] then
@@ -182,35 +180,62 @@ procedure wc_draw(atom wid)
             hlcolor = th:cButtonHighlight
         end if
         
-        
-                    
-        cmds = {
-            --fill:
-            {DR_PenColor, hicolor},
-            {DR_Rectangle, True} & wrect,
-            --checkbox fill:
-            {DR_PenColor, chkcolor},
-            {DR_Rectangle, True} & box,
-        
-            --border:
-            {DR_PenColor, hlcolor},
-            {DR_Line, box[1] + 1, box[2], box[3] - 1, box[2]},
-            {DR_Line, box[1], box[2] + 1, box[1], box[4] - 1},
-                    
-            {DR_PenColor, shcolor},
-        
-            {DR_Line, box[3] - 1, box[2], box[3] - 1, box[4] - 1},
-            {DR_Line, box[1], box[4] - 1, box[3] - 1, box[4] - 1}
-        }
-            
         if wcprops[wcpBoxStyle][idx] = 1 then
+            cmds = {
+                --fill:
+                {DR_PenColor, hicolor},
+                {DR_Rectangle, True} & wrect,
+                --checkbox fill:
+                {DR_PenColor, chkcolor},
+                {DR_Ellipse, True} & box,
+                
+                --border:
+                --TODO: {DR_Arc, filled, x1, y1, x2, y2, xStart, yStart, xEnd, yEnd}
+                {DR_PenColor, hlcolor},
+                {DR_Arc, 
+                    box[1], box[2], box[3], box[4],
+                    box[3], box[2], box[1], box[4]
+                },
+                {DR_PenColor, shcolor},
+                {DR_Arc, 
+                    box[1], box[2], box[3], box[4],
+                    box[1], box[4], box[3], box[2]
+                }
+                
+                -- + floor((box[4] - box[2]) / 2)
+                
+                /*{DR_PenColor, hlcolor},
+                {DR_Line, box[1] + 1, box[2], box[3] - 1, box[2]},
+                {DR_Line, box[1], box[2] + 1, box[1], box[4] - 1},
+                {DR_PenColor, shcolor},
+                {DR_Line, box[3] - 1, box[2], box[3] - 1, box[4] - 1},
+                {DR_Line, box[1], box[4] - 1, box[3] - 1, box[4] - 1}*/
+            }
             if wcprops[wcpValue][idx] then
                 cmds &= {
                     {DR_PenColor, pressedcolor},
-                    {DR_Rectangle, True, box[1] + 3, box[2] + 3, box[3] - 3, box[4] - 3}
+                    {DR_Ellipse, True, box[1] + 3, box[2] + 3, box[3] - 3, box[4] - 3}
                 }
             end if
         else
+            cmds = {
+                --fill:
+                {DR_PenColor, hicolor},
+                {DR_Rectangle, True} & wrect,
+                --checkbox fill:
+                {DR_PenColor, chkcolor},
+                {DR_Rectangle, True} & box,
+            
+                --border:
+                {DR_PenColor, hlcolor},
+                {DR_Line, box[1] + 1, box[2], box[3] - 1, box[2]},
+                {DR_Line, box[1], box[2] + 1, box[1], box[4] - 1},
+                        
+                {DR_PenColor, shcolor},
+            
+                {DR_Line, box[3] - 1, box[2], box[3] - 1, box[4] - 1},
+                {DR_Line, box[1], box[4] - 1, box[3] - 1, box[4] - 1}
+            }
             if wcprops[wcpSoftFocus][idx] and wenabled = 1 then
                 cmds &= {
                     {DR_PenColor, th:cButtonHover},
@@ -265,7 +290,7 @@ procedure wc_draw(atom wid)
             {DR_Puts, wcprops[wcpLabel][idx]}
         }
         
-        if wcprops[wcpHardFocus][idx] then
+        if wcprops[wcpKeyFocus][idx] then
             cmds &= {
                 {DR_PenColor, shcolor},
                 {DR_Line, wrect[1] + 1 + 2, wrect[2] + 2, wrect[3] - 1 - 2, wrect[2] + 2},
@@ -356,7 +381,6 @@ end procedure
 procedure wc_event(atom wid, sequence evtype, object evdata)
     sequence ampos, wrect
     atom idx, wh, doredraw = 0, wenabled
-    sequence wname
     
     idx = find(wid, wcprops[wcpID])
     
@@ -403,7 +427,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     oswin:capture_mouse(wh)
                     wcprops[wcpPressed][idx] = 1
                     wcprops[wcpClicked][idx] = 1
-                    wcprops[wcpHardFocus][idx] = 1
+                    wcprops[wcpKeyFocus][idx] = 1
                     --widget:wc_send_event(widget_get_name(wid), "GotFocus", {})
                     widget:set_key_focus(wid)
                     doredraw = 1
@@ -434,14 +458,20 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 
             case "KeyFocus" then
                 if evdata = wid then
-                    wcprops[wcpKeyFocus][idx] = 1
+                    if wcprops[wcpKeyFocus][idx] != 1 then
+                        wcprops[wcpKeyFocus][idx] = 1
+                        doredraw = 1
+                    end if
                 else
-                    wcprops[wcpKeyFocus][idx] = 0
+                    if wcprops[wcpKeyFocus][idx] != 0 then
+                        wcprops[wcpKeyFocus][idx] = 0
+                        doredraw = 1
+                    end if
                 end if
                 
             case "SetEnabled" then
                 if evdata = 0 then
-                    wcprops[wcpHardFocus][idx] = 0
+                    wcprops[wcpKeyFocus][idx] = 0
                     wcprops[wcpClicked][idx] = 0
                     wcprops[wcpPressed][idx] = 0
                 end if
@@ -502,7 +532,6 @@ function wc_debug(atom wid)
     if idx > 0 then    
         debuginfo = {
             {"SoftFocus", wcprops[wcpSoftFocus][idx]},
-            {"HardFocus", wcprops[wcpHardFocus][idx]},
             {"KeyFocus", wcprops[wcpKeyFocus][idx]},
             {"Label", wcprops[wcpLabel][idx]},
             {"BoxStyle", wcprops[wcpBoxStyle][idx]},
@@ -554,20 +583,22 @@ end procedure
 wc_define_command("option", "set_group_value", routine_id("cmd_set_group_value"))
 
 
-function func_get_group_value(sequence groupname) --oops, this won't work without a wid. FIX PLEASE.
-    atom idx, gvalue = 0
+function func_get_group_value(atom wid) --return widget name of selected widget in group
+    atom idx
+    sequence gname
     
-    idx = find(groupname, wcprops[wcpGroupName])
-    
+    idx = find(wid, wcprops[wcpID])
     if idx > 0 then
+        gname = wcprops[wcpGroupName][idx]
+        
         for w = 1 to length(wcprops[wcpID]) do
-            if equal(wcprops[wcpGroupName][w], groupname) and wcprops[wcpValue][w] = 1 then
-                gvalue = wcprops[wcpID][w]
+            if equal(wcprops[wcpGroupName][w], gname) and wcprops[wcpValue][w] = 1 then
+                return widget:widget_get_name(wcprops[wcpID][w])
             end if
         end for
     end if
     
-    return gvalue
+    return ""
 end function
 wc_define_function("option", "get_group_value", routine_id("func_get_group_value"))
 

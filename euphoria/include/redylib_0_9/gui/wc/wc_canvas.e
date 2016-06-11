@@ -681,7 +681,6 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     
                 elsif in_rect(evdata[1], evdata[2], lrect) then
                     wname = widget_get_name(wid)
-                    --widget:wc_send_event(wname, "LeftUp", {evdata[1], evdata[2]})
                     hidx = identify_handle(idx, wh, evdata[1] - lrect[1], evdata[2] - lrect[2])
                     check_pointer(idx, wh, hidx)
                     if hidx > 0 then
@@ -696,7 +695,6 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
             case "LeftDoubleClick" then
                 if in_rect(evdata[1], evdata[2], lrect) then
                     wname = widget_get_name(wid)
-                    --widget:wc_send_event(wname, "LeftUp", {evdata[1], evdata[2]})
                     hidx = identify_handle(idx, wh, evdata[1] - lrect[1], evdata[2] - lrect[2])
                     check_pointer(idx, wh, hidx)
                     if hidx > 0 then
@@ -715,7 +713,6 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 if in_rect(evdata[1], evdata[2], wrect) then
                     if in_rect(evdata[1], evdata[2], lrect) then
                         oswin:capture_mouse(wh)
-                        --widget:wc_send_event(wname, "LeftDown", {evdata[1], evdata[2]})
                         hidx = identify_handle(idx, wh, evdata[1] - lrect[1], evdata[2] - lrect[2])
                         wcprops[wcpOverrideHandleIdx][idx] = hidx
                         check_pointer(idx, wh, hidx)
@@ -753,7 +750,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         hname = ""
                     end if
                     widget:wc_send_event(wname, "handle", {hname, "RightUp", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
-                    doredraw = 1
+                    --doredraw = 1
                 end if
                 
             case "RightDoubleClick" then
@@ -768,7 +765,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         hname = ""
                     end if
                     widget:wc_send_event(wname, "handle", {hname, "RightDoubleClick", evdata[1] - lrect[1], evdata[2] - lrect[2], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
-                    doredraw = 1
+                    --doredraw = 1
                 end if
                 
             case "WheelMove" then
@@ -788,47 +785,41 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 end if
                 
             case "KeyDown" then
+                --puts(1, "KeyDown:") ? evdata
+                if evdata[1] = 16 then --shift
+                    wcprops[wcpKeyShift][idx] = 1
+                elsif evdata[1] = 17 then --ctrl
+                    wcprops[wcpKeyCtrl][idx] = 1
+                elsif evdata[1] = 18 then --alt
+                    wcprops[wcpKeyAlt][idx] = 1
+                elsif evdata[1] = 92 then --win
+                end if
                 if wcprops[wcpKeyFocus][idx] then
-                    if evdata[1] = 16 then --shift
-                        wcprops[wcpKeyShift][idx] = 1
-                    elsif evdata[1] = 17 then --ctrl
-                        wcprops[wcpKeyCtrl][idx] = 1
-                    elsif evdata[1] = 18 then --alt
-                        wcprops[wcpKeyAlt][idx] = 1
-                    elsif evdata[1] = 92 then --win
-                    end if
-                    
                     wname = widget_get_name(wid)
                     widget:wc_send_event(wname, "KeyDown", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
-                    
-                    doredraw = 1
+                    --doredraw = 1
                 end if
                 
             case "KeyUp" then
+                --puts(1, "KeyUp:") ? evdata
+                if evdata[1] = 16 then --shift
+                    wcprops[wcpKeyShift][idx] = 0
+                elsif evdata[1] = 17 then --ctrl
+                    wcprops[wcpKeyCtrl][idx] = 0
+                elsif evdata[1] = 18 then --alt
+                    wcprops[wcpKeyAlt][idx] = 0
+                elsif evdata[1] = 92 then --win
+                end if
                 if wcprops[wcpKeyFocus][idx] then
-                    if evdata[1] = 16 then --shift
-                        wcprops[wcpKeyShift][idx] = 0
-                    elsif evdata[1] = 17 then --ctrl
-                        wcprops[wcpKeyCtrl][idx] = 0
-                    elsif evdata[1] = 18 then --alt
-                        wcprops[wcpKeyAlt][idx] = 0
-                    elsif evdata[1] = 92 then --win
-                    end if
-                    
                     wname = widget_get_name(wid)
                     widget:wc_send_event(wname, "KeyUp", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
                 end if
                 
             case "KeyPress" then
+                --puts(1, "KeyPress:") ? evdata
                 if wcprops[wcpKeyFocus][idx] then
-                    if evdata[1] > 13 then --normal characters
-                        
-                    end if
-                    
                     wname = widget_get_name(wid)
                     widget:wc_send_event(wname, "KeyPress", {evdata[1], wcprops[wcpKeyShift][idx], wcprops[wcpKeyCtrl][idx], wcprops[wcpKeyAlt][idx]})
-                    
-                    doredraw = 1
                 end if
                 
             case "scroll" then
@@ -874,7 +865,6 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 
             case "Visible" then
                 widget:wc_send_event(widget_get_name(wid), "Visible", evdata)
-                
                 if evdata = 0 then
                     --wcprops[wcpKeyFocus][idx] = 0
                     --puts(1, widget_get_name(wid) & ": Visible=0: KeyFocus=0\n")

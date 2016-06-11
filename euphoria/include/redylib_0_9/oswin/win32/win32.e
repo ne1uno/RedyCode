@@ -921,7 +921,7 @@ public function get_window_focus()
 end function
 
 
--- File Open/Save Dialogs -----------------------
+-- File Operations -----------------------
 
 --Used some code from COMMDLG.E by Jacques Deschenes (November 6th, 1997) as a starting point, and adapted pieces of it to work with Redy
 
@@ -1067,6 +1067,34 @@ public function ShellExecute(atom hwnd, object lpOperation, object lpFile, objec
     return ret
     --If the function succeeds, it returns a value greater than 32.
 end function
+
+
+/*
+public function ReadDirectoryChanges()
+    
+    return ret
+end function
+
+
+BOOL WINAPI ReadDirectoryChangesW(
+  _In_        HANDLE                          hDirectory,
+  _Out_       LPVOID                          lpBuffer,
+  _In_        DWORD                           nBufferLength,
+  _In_        BOOL                            bWatchSubtree,
+  _In_        DWORD                           dwNotifyFilter,
+  _Out_opt_   LPDWORD                         lpBytesReturned,
+  _Inout_opt_ LPOVERLAPPED                    lpOverlapped,
+  _In_opt_    LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
+);
+
+typedef struct _FILE_NOTIFY_INFORMATION {
+  DWORD NextEntryOffset;
+  DWORD Action;
+  DWORD FileNameLength;
+  WCHAR FileName[1];
+} FILE_NOTIFY_INFORMATION, *PFILE_NOTIFY_INFORMATION;
+*/
+
 
 -- Clipboard ------------------------
 
@@ -1762,9 +1790,17 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
 --drawing lines, curves, and shapes
             case DR_Arc then --# proc drawArc( window, filled, x1, y1, x2, y2, xStart, yStart, xEnd, yEnd )  Draw an arc.
                 --if ccmd[2] = True then --filled
-                check_styles()
-                VOID = c_func(xArc,{hdc,   ccmd[3], ccmd[4], ccmd[5], ccmd[6],   ccmd[7], ccmd[8], ccmd[9], ccmd[10]})
+                --check_styles()
+                --VOID = c_func(xArc,{hdc,   ccmd[3], ccmd[4], ccmd[5], ccmd[6],   ccmd[7], ccmd[8], ccmd[9], ccmd[10]})
                 --HDC hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nXStartArc, int nYStartArc, int nXEndArc, int nYEndArc    
+                --c_proc(xDeleteObject, {hPen})
+                --c_proc(xDeleteObject, {hBrush})
+                
+                check_styles()
+                VOID = c_func(xArc, {hdc,
+                    xoff + ccmd[2], yoff + ccmd[3], xoff + ccmd[4], yoff + ccmd[5],
+                    xoff + ccmd[6], yoff + ccmd[7], xoff + ccmd[8], yoff + ccmd[9]
+                })
                 c_proc(xDeleteObject, {hPen})
                 c_proc(xDeleteObject, {hBrush})
                 
@@ -1776,9 +1812,14 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
                 c_proc(xDeleteObject, {hBrush})
                 
             case DR_Ellipse then --# proc drawEllipse( window, filled, x1, y1, x2, y2 )  Draw an ellipse.
+                if ccmd[2] = True then --filled
+                    BrushStyle = BS_SOLID
+                    BrushColor = PenColor
+                else
+                    BrushStyle = BS_HOLLOW
+                end if
                 check_styles()
-                VOID = c_func(xEllipse, {hdc, cmds[2], cmds[3], cmds[4], cmds[5]})
-                --HDC hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect
+                VOID = c_func(xEllipse, {hdc, xoff + ccmd[3], yoff + ccmd[4], xoff + ccmd[5], yoff + ccmd[6]})  --HDC hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect
                 c_proc(xDeleteObject, {hPen})
                 c_proc(xDeleteObject, {hBrush})
                 

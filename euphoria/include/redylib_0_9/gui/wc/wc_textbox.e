@@ -74,54 +74,58 @@ include std/text.e
 sequence wcprops
 
 enum
-    wcpID,
-    wcpSoftFocus,
-    --wcpHardFocus, --now obsolete?
-    wcpKeyFocus,
-    wcpAutoFocus,
-    wcpIsSelecting,
-    wcpLabel,
-    wcpLabelPosition,
-    wcpHover,
-    wcpCursorState,
-    wcpMenuID,      
-    wcpSpecialRect,
-    wcpSpecialHover,
-    wcpSpecialPressed,
-    wcpSpecialWidgetID,
-    wcpSpecialMaxSize,
-    
-    wcpOptMode,         --{"number", "text", "string", "item", "datetime", "password"}
-    wcpOptModeOptions,
-    wcpOptDataFormat,
-    wcpOptControlVisible,
-    wcpOptSameWidth,
-    wcpOptHighlightLine,
-    wcpOptLocked,    
-    
-    wcpLineHeight,
-    wcpLabelPos,
-    wcpEditRect,
-    wcpVisibleSize,     --size of visible area
-    wcpContentSize,     --size of actual content
-    wcpScrollPosX,
-    wcpScrollPosY,
-    wcpScrollV,         --vertial scrollbar widgetid
-    wcpScrollH,         --horizontal scrollbar widgetid
-    
-    wcpSelStartLine,
-    wcpSelStartCol,
-    wcpSelEndLine,
-    wcpSelEndCol,
-    
-    wcpSelStartX,
-    wcpSelEndX,
-    
-    wcpText,            --raw text
-    wcpTextLinesLine,   --Line index of corresponding text
-    wcpTextLinesCol,    --Column index of corresponding text
-    wcpTextLinesLength, --length of each line of text
-    wcpTextLinesWidth   --width of each line of text
+wcpID,
+wcpSoftFocus,
+wcpKeyFocus,
+wcpAutoFocus,
+wcpIsSelecting,
+wcpLabel,
+wcpLabelPosition,
+wcpHover,
+wcpCursorState,
+wcpKeyShift,             --Shift key (16) is pressed
+wcpKeyCtrl,              --Ctrl key (17) is pressed
+wcpKeyAlt,               --Alt key (18) is pressed
+
+wcpMenuID,      
+wcpSpecialRect,
+wcpSpecialHover,
+wcpSpecialPressed,
+wcpSpecialWidgetID,
+wcpSpecialMaxSize,
+
+wcpOptMode,         --{"number", "text", "string", "item", "datetime", "password"}
+wcpOptModeOptions,
+wcpOptDataFormat,
+wcpOptControlVisible,
+wcpOptSameWidth,
+wcpOptHighlightLine,
+wcpOptLocked,
+wcpOptAllowNewline, --allow newline character to be inserted when pressing Enter in "text" mode
+
+wcpLineHeight,
+wcpLabelPos,
+wcpEditRect,
+wcpVisibleSize,     --size of visible area
+wcpContentSize,     --size of actual content
+wcpScrollPosX,
+wcpScrollPosY,
+wcpScrollV,         --vertial scrollbar widgetid
+wcpScrollH,         --horizontal scrollbar widgetid
+
+wcpSelStartLine,
+wcpSelStartCol,
+wcpSelEndLine,
+wcpSelEndCol,
+
+wcpSelStartX,
+wcpSelEndX,
+
+wcpText,            --raw text
+wcpTextLinesLine,   --Line index of corresponding text
+wcpTextLinesCol,    --Column index of corresponding text
+wcpTextLinesLength, --length of each line of text
+wcpTextLinesWidth   --width of each line of text
 
 
 constant wcpLENGTH = wcpTextLinesWidth
@@ -133,10 +137,31 @@ wcprops = repeat({}, wcpLENGTH)
 
 atom headingheight = 16, thCurrLineBkColor = rgb(255, 255, 200)
 constant
-thMonoFont = "DejaVu Sans Mono",
+thMonoFonts = {"Consolas", "Courier New", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono"},
 thNormalFont = "Arial",
 thSpButtonWidth = 20
 
+sequence
+thMonoFont = "DejaVu Sans Mono",
+FontList = {}
+
+procedure set_default_monofont(atom hWnd, sequence monofonts)
+--set default monofont to the first matching font in list of preferred fonts
+    if length(FontList) = 0 then
+        FontList = EnumFonts(hWnd) -- returns a list of { {"font name", {"style 1", "style 2", ... }}, ... }
+    end if
+    
+    thMonoFont = thMonoFonts[1]
+    
+    for mf = 1 to length(monofonts) do
+        for f = 1 to length(FontList) do
+            if match(monofonts[mf], FontList[f][1]) then
+                thMonoFont = FontList[f][1]
+                return
+            end if
+        end for
+    end for
+end procedure
 
 -- local routines ---------------------------------------------------------------------------
 
@@ -168,6 +193,10 @@ function wordwrap(atom idx, atom wh, atom li)
  --returns sequences of {{ncol1, nlen1}, {ncol2, nlen2}, {ncol3, nlen3},...}
     --if srl > 0 then wordwrap starting at line srl column src and continue to end of line
     --if srl = 0 then wordwrap starting at line srl column 1 and continue to end of last line
+    
+    if equal(wcprops[wcpVisibleSize][idx], {0, 0}) then --size has not been set yet
+        return {wcprops[wcpText][idx][li]}
+    end if
     
     sequence txt, src, words = {}, wtxt = {""}, txex, tsize = {64, 64}, tfont
     atom st, spx, spy, tx = 0, ty = 0, twidth, wcount
@@ -223,7 +252,9 @@ function wordwrap(atom idx, atom wh, atom li)
         tx += txex[1] --+ spx
         if tx > twidth then
             tx = txex[1]
-            ty += spy
+            if w > 1 then
+                ty += spy
+            end if
             wtxt &= {""}
         end if
         wtxt[$] &= words[w] --& " "
@@ -294,6 +325,73 @@ function get_selected_text(atom idx, atom wh)
     
     return {}
 end function
+
+
+procedure rebuild_text_lines(atom idx, atom wh)
+    sequence txt, nline = {}, ncol = {}, nlen = {}, nwidth = {}
+    atom llen, ccol
+    
+    --Build new text lines
+    wcprops[wcpTextLinesLine][idx] = {}
+    wcprops[wcpTextLinesCol][idx] = {}
+    wcprops[wcpTextLinesLength][idx] = {}
+    wcprops[wcpTextLinesWidth][idx] = {} 
+    
+    
+    
+    if equal(wcprops[wcpOptMode][idx], "text") and wcprops[wcpOptModeOptions][idx][1] = 1 then --wordwrap enabled
+        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
+        for li = 1 to length(wcprops[wcpText][idx]) do
+            --wordwrap
+            txt = wordwrap(idx, wh, li) --returns sequences of {{ncol1, nlen1}, {ncol2, nlen2}, {ncol3, nlen3},...}
+            ccol = 0
+            for wwl = 1 to length(txt) do
+                --puts(1, ">" & txt[wwl] & "<\n")
+                llen = length(txt[wwl])
+                
+                nline &= {li}
+                ncol &= {ccol}
+                nlen &= {llen}
+                nwidth &= {0}
+                
+                --? {li, ccol, llen}
+                
+                ccol += llen
+                
+            end for
+            --? {nline, ncol, nlen, nwidth}
+        end for
+    else --wordwrap disabled
+        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
+        for li = 1 to length(wcprops[wcpText][idx]) do  --sEndLine do
+            nline &= {li}
+            ncol &= {0}
+            nlen &= {length(wcprops[wcpText][idx][li])}
+            nwidth &= {0}
+        end for
+    end if
+    
+    --? {nline, ncol, nlen, nwidth}
+    --Update text lines
+    wcprops[wcpTextLinesLine][idx]   = nline   --wcprops[wcpTextLinesLine][idx][1..rStartLine-1] & nline & aline
+    wcprops[wcpTextLinesCol][idx]    = ncol    --wcprops[wcpTextLinesCol][idx][1..rStartLine-1] & ncol & acol
+    wcprops[wcpTextLinesLength][idx] = nlen    --wcprops[wcpTextLinesLength][idx][1..rStartLine-1] & nlen & alen 
+    wcprops[wcpTextLinesWidth][idx]  = nwidth  --wcprops[wcpTextLinesWidth][idx][1..rStartLine-1] & nwidth & awidth 
+    
+    if wcprops[wcpSelStartLine][idx] > length(wcprops[wcpTextLinesLength][idx]) then
+        wcprops[wcpSelStartLine][idx] = length(wcprops[wcpTextLinesLength][idx])
+    end if
+    if wcprops[wcpSelStartCol][idx] > wcprops[wcpTextLinesLength][idx][wcprops[wcpSelStartLine][idx]] then
+        wcprops[wcpSelStartCol][idx] = wcprops[wcpTextLinesLength][idx][wcprops[wcpSelStartLine][idx]]
+    end if
+    
+    if wcprops[wcpSelEndLine][idx] > length(wcprops[wcpTextLinesLength][idx]) then
+        wcprops[wcpSelEndLine][idx] = length(wcprops[wcpTextLinesLength][idx])
+    end if
+    if wcprops[wcpSelEndCol][idx] > wcprops[wcpTextLinesLength][idx][wcprops[wcpSelEndLine][idx]] then
+        wcprops[wcpSelEndCol][idx] = wcprops[wcpTextLinesLength][idx][wcprops[wcpSelEndLine][idx]]
+    end if
+end procedure
 
 
 procedure delete_selection(atom idx, atom wh, atom dobackspace=0)
@@ -395,56 +493,11 @@ procedure delete_selection(atom idx, atom wh, atom dobackspace=0)
     rEndCol = wcprops[wcpTextLinesCol][idx][sEndLine] + sEndCol
     
     --If called from wc_create() then don't build text lines (will be done later during arrange)
-    if equal(wcprops[wcpVisibleSize][idx], {0, 0}) then
-        return
-    end if
+    --if equal(wcprops[wcpVisibleSize][idx], {0, 0}) then
+    --    return
+    --end if
     
-    --Build new text lines
-    wcprops[wcpTextLinesLine][idx] = {}
-    wcprops[wcpTextLinesCol][idx] = {}
-    wcprops[wcpTextLinesLength][idx] = {}
-    wcprops[wcpTextLinesWidth][idx] = {} 
-    
-    if equal(wcprops[wcpOptMode][idx], "text") and wcprops[wcpOptModeOptions][idx][1] = 1 then --wordwrap enabled
-        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
-        for li = 1 to length(wcprops[wcpText][idx]) do
-            --wordwrap
-            txt = wordwrap(idx, wh, li) --returns sequences of {{ncol1, nlen1}, {ncol2, nlen2}, {ncol3, nlen3},...}
-            
-            ccol = 0
-            for wwl = 1 to length(txt) do
-                --puts(1, ">" & txt[wwl] & "<\n")
-                llen = length(txt[wwl])
-                
-                nline &= {li}
-                ncol &= {ccol}
-                nlen &= {llen}
-                nwidth &= {0}
-                
-                --? {li, ccol, llen}
-                
-                ccol += llen
-                
-            end for
-            --? {nline, ncol, nlen, nwidth}
-        end for
-    else --wordwrap disabled
-        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
-        for li = 1 to length(wcprops[wcpText][idx]) do  --sEndLine do
-            nline &= {li}
-            ncol &= {0}
-            nlen &= {length(wcprops[wcpText][idx][li])}
-            nwidth &= {0}
-        end for
-    end if
-    
-    --? {nline, ncol, nlen,nwidth}
-    --Update text lines
-    wcprops[wcpTextLinesLine][idx]   = nline   --wcprops[wcpTextLinesLine][idx][1..rStartLine-1] & nline & aline
-    wcprops[wcpTextLinesCol][idx]    = ncol    --wcprops[wcpTextLinesCol][idx][1..rStartLine-1] & ncol & acol
-    wcprops[wcpTextLinesLength][idx] = nlen    --wcprops[wcpTextLinesLength][idx][1..rStartLine-1] & nlen & alen 
-    wcprops[wcpTextLinesWidth][idx]  = nwidth  --wcprops[wcpTextLinesWidth][idx][1..rStartLine-1] & nwidth & awidth 
-    
+    rebuild_text_lines(idx, wh)
     move_cursor(idx, wh, 0, 0)
 end procedure
 
@@ -452,8 +505,8 @@ end procedure
 procedure insert_txt(atom idx, atom wh, sequence newtxt)
     --Insert text at cursor position, then move cursor to end of new text
     --move_cursor(atom idx, atom wh, atom relcol, atom relline)
-    sequence txt, nline = {}, ncol = {}, nlen = {}, nwidth = {}, aline = {}, acol = {}, alen = {}, awidth = {}
-    atom sStartLine, sStartCol, sEndLine, sEndCol, rStartLine, rStartCol, rEndLine, rEndCol, nl, nc, llen, ccol
+    sequence txt, aline = {}, acol = {}, alen = {}, awidth = {}
+    atom sStartLine, sStartCol, sEndLine, sEndCol, rStartLine, rStartCol, rEndLine, rEndCol, nl, nc
     
     if length(newtxt) > 0 then
         if wcprops[wcpSelStartLine][idx] > wcprops[wcpSelEndLine][idx] then
@@ -544,56 +597,11 @@ procedure insert_txt(atom idx, atom wh, sequence newtxt)
     end if
     
     --If called from wc_create() then don't build text lines (will be done later during arrange)
-    if equal(wcprops[wcpVisibleSize][idx], {0, 0}) then
-        return
-    end if
+    --if equal(wcprops[wcpVisibleSize][idx], {0, 0}) then
+    --    return
+    --end if
     
-    --Build new text lines
-    wcprops[wcpTextLinesLine][idx] = {}
-    wcprops[wcpTextLinesCol][idx] = {}
-    wcprops[wcpTextLinesLength][idx] = {}
-    wcprops[wcpTextLinesWidth][idx] = {} 
-    
-    if equal(wcprops[wcpOptMode][idx], "text") and wcprops[wcpOptModeOptions][idx][1] = 1 then --wordwrap enabled
-        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
-        for li = 1 to length(wcprops[wcpText][idx]) do
-            --wordwrap
-            txt = wordwrap(idx, wh, li) --returns sequences of {{ncol1, nlen1}, {ncol2, nlen2}, {ncol3, nlen3},...}
-            
-            ccol = 0
-            for wwl = 1 to length(txt) do
-                --puts(1, ">" & txt[wwl] & "<\n")
-                llen = length(txt[wwl])
-                
-                nline &= {li}
-                ncol &= {ccol}
-                nlen &= {llen}
-                nwidth &= {0}
-                
-                --? {li, ccol, llen}
-                
-                ccol += llen
-                
-            end for
-            --? {nline, ncol, nlen, nwidth}
-        end for
-    else --wordwrap disabled
-        --for li = rStartLine to length(wcprops[wcpText][idx]) do  --sEndLine do
-        for li = 1 to length(wcprops[wcpText][idx]) do  --sEndLine do
-            nline &= {li}
-            ncol &= {0}
-            nlen &= {length(wcprops[wcpText][idx][li])}
-            nwidth &= {0}
-        end for
-    end if
-    
-    --? {nline, ncol, nlen,nwidth}
-    --Update text lines
-    wcprops[wcpTextLinesLine][idx]   = nline   --wcprops[wcpTextLinesLine][idx][1..rStartLine-1] & nline & aline
-    wcprops[wcpTextLinesCol][idx]    = ncol    --wcprops[wcpTextLinesCol][idx][1..rStartLine-1] & ncol & acol
-    wcprops[wcpTextLinesLength][idx] = nlen    --wcprops[wcpTextLinesLength][idx][1..rStartLine-1] & nlen & alen 
-    wcprops[wcpTextLinesWidth][idx]  = nwidth  --wcprops[wcpTextLinesWidth][idx][1..rStartLine-1] & nwidth & awidth 
-    
+    rebuild_text_lines(idx, wh)
     move_cursor(idx, wh, 0, 0)
     
     --move cursor to end of new text
@@ -604,8 +612,7 @@ procedure insert_txt(atom idx, atom wh, sequence newtxt)
 
     --? {wcprops[wcpTextLinesLine][idx], wcprops[wcpTextLinesCol][idx], wcprops[wcpTextLinesLength][idx], wcprops[wcpTextLinesWidth][idx]}
     
-end procedure                                    
-
+end procedure
 
 
 function get_line_width(atom idx, atom wh, atom cLine)
@@ -935,7 +942,8 @@ end procedure
 -- widgetclass handlers ----------------------------
 
 procedure wc_create(atom wid, object wprops) 
-    atom orientation = 0, smx = 0, smy = 0, wparent, wh, optSameWidth = 0, optHighlightLine = 0, optLocked = 0, wlabelpos = 0
+    atom orientation = 0, smx = 0, smy = 0, wparent, wh, optSameWidth = 0, optHighlightLine = 0, optLocked = 0, optAllowNewline = 1,
+    wlabelpos = 0
     sequence wpos, wsize, wlabel = "", wtext = {""}, txex, lpos, trect
     object optMode = "string", optModeOptions = 0, optMin = 0, optMax = 0, optDataFormat = 0, optControlVisible = 0,
     optWordWrap = 1, optVisibleLines = 3, optList = {}, optRestrict = 0, optPrecision = "second", optMask = 149,
@@ -985,6 +993,8 @@ procedure wc_create(atom wid, object wprops)
                     optWordWrap = wprops[p][2]
                 case "visible_lines" then
                     optVisibleLines = wprops[p][2]
+                case "allow_newline" then  --{"year", "month", "day", "minute", "second"}
+                    optAllowNewline = wprops[p][2]
                 case "list" then
                     optList = wprops[p][2]
                 case "restrict_to_list" then
@@ -1015,7 +1025,7 @@ procedure wc_create(atom wid, object wprops)
                 --else
                 --    wlabelpos = 2 --single line default: side
                 --end if
-                wlabelpos = 2
+                wlabelpos = 1
             end if
         case "string" then
             optModeOptions = optList
@@ -1053,10 +1063,13 @@ procedure wc_create(atom wid, object wprops)
     wcprops[wcpAutoFocus] &= {wautofocus}
     wcprops[wcpIsSelecting] &= {0}
     wcprops[wcpCursorState] &= {0}
+    wcprops[wcpKeyShift] &= {0}
+    wcprops[wcpKeyCtrl] &= {0}
+    wcprops[wcpKeyAlt] &= {0}
+    
     wcprops[wcpLabel] &= {wlabel}    
     wcprops[wcpLabelPosition] &= {wlabelpos}
-    wcprops[wcpHover] &= {0}    
-    wcprops[wcpCursorState] &= {0}    
+    wcprops[wcpHover] &= {0}  
     wcprops[wcpMenuID] &= {0}
     
     wcprops[wcpSpecialRect] &= {sprect}
@@ -1072,6 +1085,7 @@ procedure wc_create(atom wid, object wprops)
     wcprops[wcpOptSameWidth] &= {optSameWidth}
     wcprops[wcpOptHighlightLine] &= {optHighlightLine}    
     wcprops[wcpOptLocked] &= {optLocked}
+    wcprops[wcpOptAllowNewline] &= {optAllowNewline}
     
     wcprops[wcpLineHeight] &= {16}
     wcprops[wcpLabelPos] &= {{0, 0}}
@@ -1100,7 +1114,14 @@ procedure wc_create(atom wid, object wprops)
     
     atom idx = find(wid, wcprops[wcpID])
     if idx > 0 then
-        insert_txt(idx, widget:widget_get_handle(wid), wtext)
+        wh = widget:widget_get_handle(wid)
+        if length(FontList) = 0 then
+            set_default_monofont(wh, thMonoFonts)
+        end if
+        insert_txt(idx, wh, wtext)
+        
+        --rebuild_text_lines(idx, wh)
+        
         --pretty_print(1, wcprops[wcpText][idx], {2})
         --update_content_size(wid)
         --check_scrollbars(idx, wid)
@@ -1172,12 +1193,15 @@ procedure wc_draw(atom wid)
         shcolor = th:cButtonShadow
         hlcolor = th:cButtonHighlight
         lblcolor = th:cOuterLabel
+        txtcolor = th:cInnerText
+        txtbkcolor = th:cInnerFill
         
         if widget:widget_is_enabled(wid) = 0 then
             hicolor = th:cOuterFill
             lblcolor = th:cButtonDisLabel
+            txtselcolor = th:cButtonDisLabel
             txtcolor = th:cButtonDisLabel
-            txtbkcolor = th:cOuterFill
+            txtbkcolor = th:cInnerItemOddSelInact --th:cButtonFace --th:cOuterFill
         end if
         
         txpos = {
@@ -1202,7 +1226,6 @@ procedure wc_draw(atom wid)
             {DR_Line, trect[1], trect[2]-1, trect[1], trect[4]-1},
             
             {DR_PenColor, hlcolor},
-            
             {DR_Line, trect[3]-1, trect[2] + 1-1, trect[3]-1, trect[4]-1},
             {DR_Line, trect[1], trect[4]-1, trect[3]-1, trect[4]-1}
         }
@@ -1223,7 +1246,7 @@ procedure wc_draw(atom wid)
         cmds &= {
             {DR_Release},
             {DR_Restrict, xp, yp, trect[3], trect[4]},
-            {DR_PenColor, th:cInnerFill},
+            {DR_PenColor, txtbkcolor},
             {DR_Rectangle, True, xp, yp, trect[3], trect[4]}
         }
         
@@ -1301,13 +1324,13 @@ procedure wc_draw(atom wid)
                 --selection:
                 if li < sStartLine or li > sEndLine then      --draw a line of normal text only
                     cmds &= {
-                        {DR_TextColor, th:cInnerText},
+                        {DR_TextColor, txtcolor},
                         {DR_PenPos, xp - scrx + 2, yp - scry + 0},
                         {DR_Puts, rawtext(idx, li, 1, wcprops[wcpTextLinesLength][idx][li])}
                     }
                 elsif li = sStartLine and li = sEndLine then  --draw a line of normal text first...
                     cmds &= {
-                        {DR_TextColor, th:cInnerText},
+                        {DR_TextColor, txtcolor},
                         {DR_PenPos, xp - scrx + 2, yp - scry + 0},
                         {DR_Puts, rawtext(idx, li, 1, wcprops[wcpTextLinesLength][idx][li])}
                     }
@@ -1335,7 +1358,7 @@ procedure wc_draw(atom wid)
                 elsif li = sStartLine and li < sEndLine then  --draw selected text from start
                     cmds &= {
                         --draw normal text:
-                        {DR_TextColor, th:cInnerText},
+                        {DR_TextColor, txtcolor},
                         {DR_PenPos, xp - scrx + 2, yp - scry + 0},
                         {DR_Puts, rawtext(idx, li, 1, sStartCol)},
                         --draw selected text:
@@ -1371,7 +1394,7 @@ procedure wc_draw(atom wid)
                         {DR_PenPos,  xp - scrx + 2, yp - scry + 0},
                         {DR_Puts, rawtext(idx, li, 1, sEndCol)},
                         --draw normal text:
-                        {DR_TextColor, th:cInnerText},
+                        {DR_TextColor, txtcolor},
                         {DR_PenPos, xp - scrx + 2 + sEndX, yp - scry + 0},
                         {DR_Puts, rawtext(idx, li, sEndCol+1, wcprops[wcpTextLinesLength][idx][li])}
                     }
@@ -1467,10 +1490,15 @@ end procedure
 
 procedure wc_event(atom wid, sequence evtype, object evdata)
     sequence ampos, wrect, lpos, trect, tw, avrect, winpos, cbaction = "", txt
-    atom idx, doredraw = 0, wh, ss, se, skip = 0, cLine, th, vh, vw
+    atom idx, doredraw = 0, wh, ss, se, skip = 0, cLine, th, vh, vw, enabled
     
     idx = find(wid, wcprops[wcpID])
     if idx > 0 then
+        --if not equal(evtype, "Timer") then
+        --    pretty_print(1, {evtype, evdata}, {2})
+        --end if
+        
+        enabled = widget:widget_is_enabled(wid)
         wh = widget:widget_get_handle(wid)
         wrect = widget_get_rect(wid)
         --wrect[3] -= 1
@@ -1598,7 +1626,14 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     wcprops[wcpMenuID][idx] = 0
                     oswin:close_all_popups("5")
                 end if
-
+                
+            case "LeftDoubleClick" then
+                if in_rect(evdata[1], evdata[2], trect) then --and not equal(wcprops[wcpOptMode][idx], "text") then
+                    wcprops[wcpIsSelecting][idx] = 0
+                    cbaction = "Select All"
+                    doredraw = 1
+                end if
+                
             case "LeftUp" then      
                 if in_rect(evdata[1], evdata[2], trect) then
                     -------
@@ -1608,7 +1643,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     wcprops[wcpIsSelecting][idx] = 0
                     doredraw = 1
                 end if
-
+                
             case "RightDown" then
                 winpos = client_area_offset(wh)
                 avrect = {
@@ -1635,7 +1670,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 if wcprops[wcpMenuID][idx] > 0 then
                     widget:wc_call_event(wcprops[wcpMenuID][idx], "unpressed", wid)
                 end if
-                doredraw = 1
+                --doredraw = 1
                 
             case "WheelMove" then
                 if wcprops[wcpSoftFocus][idx] > 0 then
@@ -1644,6 +1679,15 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 
             case "KeyDown" then
                 if wcprops[wcpKeyFocus][idx] then
+                    if evdata[1] = 16 then --shift
+                        wcprops[wcpKeyShift][idx] = 1
+                    elsif evdata[1] = 17 then --ctrl
+                        wcprops[wcpKeyCtrl][idx] = 1
+                    elsif evdata[1] = 18 then --alt
+                        wcprops[wcpKeyAlt][idx] = 1
+                    elsif evdata[1] = 92 then --win
+                    end if
+                    
                     if evdata[1] = 37 then --left
                         move_cursor(idx, wh, -1, 0)
                     elsif evdata[1] = 39 then --right
@@ -1660,15 +1704,32 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         move_cursor(idx, wh, -2, 0)
                     elsif evdata[1] = 35 then --end
                         move_cursor(idx, wh, 2, 0)
-                    elsif evdata[1] = 8 then --backspace
-                        --if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
-                        --    move_cursor(idx, wh, -1, 0)
-                        --else
-                        --end if
-                        delete_selection(idx, wh, 1)
+                    elsif evdata[1] = 8 then
+                        if wcprops[wcpOptLocked][idx] = 0 and enabled then --backspace
+                            --if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
+                            --    move_cursor(idx, wh, -1, 0)
+                            --else
+                            --end if
+                            delete_selection(idx, wh, 1)
+                        end if
                         
-                    elsif evdata[1] = 46 then --delete
-                        delete_selection(idx, wh)
+                    elsif evdata[1] = 45 then
+                        if wcprops[wcpKeyShift][idx] = 0 and wcprops[wcpKeyCtrl][idx] = 1 and wcprops[wcpKeyAlt][idx] = 0 then --ctrl
+                            cbaction = "Copy"
+                        elsif wcprops[wcpKeyShift][idx] = 1 and wcprops[wcpKeyCtrl][idx] = 0 and wcprops[wcpKeyAlt][idx] = 0 then --shift
+                            if wcprops[wcpOptLocked][idx] = 0 and enabled then --insert
+                                cbaction = "Paste"
+                            end if
+                        end if
+                        
+                    elsif evdata[1] = 46 then
+                        if wcprops[wcpOptLocked][idx] = 0 and enabled then --delete
+                            if wcprops[wcpKeyShift][idx] = 1 and wcprops[wcpKeyCtrl][idx] = 0 and wcprops[wcpKeyAlt][idx] = 0 then --shift
+                                cbaction = "Cut"
+                            else
+                                delete_selection(idx, wh)
+                            end if
+                        end if
                         
                     end if
                     keep_cursor_in_view(idx, trect)
@@ -1678,28 +1739,64 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     wc_call_event(wid, "changed", {})
                 end if
                 
+            case "KeyUp" then
+                if wcprops[wcpKeyFocus][idx] then
+                    if evdata[1] = 16 then --shift
+                        wcprops[wcpKeyShift][idx] = 0
+                    elsif evdata[1] = 17 then --ctrl
+                        wcprops[wcpKeyCtrl][idx] = 0
+                    elsif evdata[1] = 18 then --alt
+                        wcprops[wcpKeyAlt][idx] = 0
+                    elsif evdata[1] = 92 then --win
+                    end if
+                end if
+                
             case "KeyPress" then
                 if wcprops[wcpKeyFocus][idx] then
-                    if evdata[1] = 13 then --newline
-                        if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
-                        else
-                            delete_selection(idx, wh)
+                    if wcprops[wcpKeyShift][idx] = 0 and wcprops[wcpKeyCtrl][idx] = 1 and wcprops[wcpKeyAlt][idx] = 0 then --ctrl
+                        if evdata[1] + 96 = 'x' then
+                            if wcprops[wcpOptLocked][idx] = 0 and enabled then --copy
+                                cbaction = "Cut"
+                            end if
+                            
+                        elsif evdata[1] + 96 = 'c' then --copy
+                            cbaction = "Copy"
+                            
+                        elsif evdata[1] + 96 = 'v' then
+                            if wcprops[wcpOptLocked][idx] = 0 and enabled then --paste
+                                cbaction = "Paste"
+                            end if
+                            
+                        elsif evdata[1] + 96 = 'a' then
+                            cbaction = "Select All"
                         end if
-                        insert_txt(idx, wh, {10})
-                        move_cursor(idx, wh, 1, 0)
-                        widget:wc_send_event(widget_get_name(wid), "enter", wcprops[wcpTextLinesLength][idx])
+                        
+                    elsif evdata[1] = 13 then --newline
+                        if equal(wcprops[wcpOptMode][idx], "text") and wcprops[wcpOptAllowNewline][idx] then
+                            if wcprops[wcpOptLocked][idx] = 0 and enabled then
+                                if wcprops[wcpSelStartLine][idx] != wcprops[wcpSelEndLine][idx] or wcprops[wcpSelStartCol][idx] != wcprops[wcpSelEndCol][idx] then
+                                    delete_selection(idx, wh)
+                                end if
+                                insert_txt(idx, wh, {10})
+                                move_cursor(idx, wh, 1, 0)
+                            end if
+                            --widget:wc_send_event(widget_get_name(wid), "enter", wcprops[wcpTextLinesLength][idx]) --why?
+                        else
+                            widget:wc_send_event(widget_get_name(wid), "Enter", wcprops[wcpText][idx][1])
+                        end if
                         
                     elsif evdata[1] > 13 then
-                        if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
-                            --if OverwriteMode = 1 then --if in over-write mode, delete character before inserting character
-                            --    delete_selection(idx, wh)
-                            --end if
-                        else
-                            delete_selection(idx, wh)
+                        if wcprops[wcpOptLocked][idx] = 0 and enabled then
+                            if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
+                                --if OverwriteMode = 1 then --if in over-write mode, delete character before inserting character
+                                --    delete_selection(idx, wh)
+                                --end if
+                            else
+                                delete_selection(idx, wh)
+                            end if
+                            insert_txt(idx, wh, {evdata[1]})
+                            move_cursor(idx, wh, 1, 0)
                         end if
-                        insert_txt(idx, wh, {evdata[1]})
-                        move_cursor(idx, wh, 1, 0)
-                        
                     end if
                     
                     keep_cursor_in_view(idx, trect)
@@ -1710,8 +1807,7 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 end if
                 
             case "Timer" then
-                if wcprops[wcpKeyFocus][idx]
-                and evdata[1] = 3 and wcprops[wcpOptLocked][idx] = 0 and widget:widget_is_enabled(wid) then
+                if wcprops[wcpKeyFocus][idx] and evdata[1] = 3 and wcprops[wcpOptLocked][idx] = 0 and enabled then
                     if wcprops[wcpCursorState][idx] > 0 then
                         wcprops[wcpCursorState][idx] -= 1
                     else
@@ -1740,8 +1836,10 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 wcprops[wcpMenuID][idx] = 0
                 
             case "MenuItemClicked" then            
-                cbaction = evdata[2]
-                oswin:close_all_popups("textedit")
+                if evdata[1] > 0 and evdata[1] = wcprops[wcpMenuID][idx] then
+                    cbaction = evdata[2]
+                    oswin:close_all_popups("textedit")
+                end if
                 
             case "LostFocus" then
                 wcprops[wcpSoftFocus][idx] = 0
@@ -1772,11 +1870,14 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     widget:set_key_focus(wid)
                 end if
                 
+            case "SetEnabled" then
+                doredraw = 1
         end switch
         
         if length(cbaction) > 0 then
             switch cbaction do 
-                case "Cut" then
+            case "Cut" then
+                if wcprops[wcpOptLocked][idx] = 0 and enabled then 
                     if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
                     else
                         clipboard_write_txt(wh, get_selected_text(idx, wh))
@@ -1786,14 +1887,16 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         doredraw = 1
                         wc_call_event(wid, "changed", {}) 
                     end if
-                    
-                case "Copy" then
-                    if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
-                    else
-                        clipboard_write_txt(wh, get_selected_text(idx, wh))
-                    end if
-                    
-                case "Paste" then
+                end if
+                
+            case "Copy" then
+                if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
+                else
+                    clipboard_write_txt(wh, get_selected_text(idx, wh))
+                end if
+                
+            case "Paste" then
+                if wcprops[wcpOptLocked][idx] = 0 and enabled then 
                     if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
                     else
                         delete_selection(idx, wh)
@@ -1803,8 +1906,10 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     wcprops[wcpCursorState][idx] = 3
                     doredraw = 1
                     wc_call_event(wid, "changed", {})
-                    
-                case "Delete" then
+                end if
+                
+            case "Delete" then
+                if wcprops[wcpOptLocked][idx] = 0 and enabled then 
                     if wcprops[wcpSelStartLine][idx] = wcprops[wcpSelEndLine][idx] and wcprops[wcpSelStartCol][idx] = wcprops[wcpSelEndCol][idx] then
                     else
                         delete_selection(idx, wh)
@@ -1813,35 +1918,46 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                         doredraw = 1
                         wc_call_event(wid, "changed", {})
                     end if
-                    
-                case "Undo" then
-                    
-                case "Redo" then
-                    
-                case "Select All" then
-                    atom
-                    sStartLine = 1,
-                    sStartCol = 0,
-                    sEndLine = length(wcprops[wcpTextLinesLength][idx]),
-                    sEndCol = wcprops[wcpTextLinesLength][idx][sEndLine]
-                    
-                    if wcprops[wcpOptSameWidth][idx] then
-                        oswin:set_font(wh, thMonoFont, 9, Normal)
-                    else
-                        oswin:set_font(wh, thNormalFont, 9, Normal)
-                    end if
-                    wcprops[wcpSelStartLine][idx] = sStartLine
-                    wcprops[wcpSelStartCol][idx] = sStartCol
-                    wcprops[wcpSelStartX][idx] = 0
-                    wcprops[wcpSelEndLine][idx] = sEndLine
-                    wcprops[wcpSelEndCol][idx] = sEndCol
-                    wcprops[wcpSelEndX][idx] = get_text_width(wh, rawtext(idx, sEndLine, 1, wcprops[wcpTextLinesLength][idx][sEndLine]))
-                    
+                end if
+                
+            case "Undo" then
+                
+            case "Redo" then
+                
+            case "Select All" then
+                atom
+                sStartLine = 1,
+                sStartCol = 0,
+                sEndLine = length(wcprops[wcpTextLinesLength][idx]),
+                sEndCol = wcprops[wcpTextLinesLength][idx][sEndLine]
+                
+                if wcprops[wcpOptSameWidth][idx] then
+                    oswin:set_font(wh, thMonoFont, 9, Normal)
+                else
+                    oswin:set_font(wh, thNormalFont, 9, Normal)
+                end if
+                wcprops[wcpIsSelecting][idx] = 0
+                wcprops[wcpSelStartLine][idx] = sStartLine
+                wcprops[wcpSelStartCol][idx] = sStartCol
+                wcprops[wcpSelStartX][idx] = 0
+                wcprops[wcpSelEndLine][idx] = sEndLine
+                wcprops[wcpSelEndCol][idx] = sEndCol
+                wcprops[wcpSelEndX][idx] = get_text_width(wh, rawtext(idx, sEndLine, 1, sEndCol))
+                
+                doredraw = 1
+                
             end switch
-            --wc_call_event(wid, "changed", {})
         end if
         
         if doredraw then
+            /*pretty_print(1, 
+                {wcprops[wcpSelStartLine][idx],
+                wcprops[wcpSelStartCol][idx],
+                wcprops[wcpSelStartX][idx],
+                wcprops[wcpSelEndLine][idx],
+                wcprops[wcpSelEndCol][idx],
+                wcprops[wcpSelEndX][idx]}, {2}
+            )*/
             wc_call_draw(wid)
         end if
         
@@ -1874,7 +1990,7 @@ procedure wc_resize(atom wid)
                 end if
                 wc_call_resize(wparent)
             end if
-            insert_txt(idx, wh, "")
+            rebuild_text_lines(idx, wh)
             update_content_size(wid)
             check_scrollbars(idx, wid)
             
@@ -1917,9 +2033,7 @@ procedure wc_resize(atom wid)
                 end if
                 wc_call_resize(wparent)
             end if
-            
-            
-            insert_txt(idx, wh, "")
+            rebuild_text_lines(idx, wh)
             update_content_size(wid)
             check_scrollbars(idx, wid)
         end if
@@ -1979,6 +2093,9 @@ procedure wc_arrange(atom wid)
                 widget_set_size(wcprops[wcpScrollH][idx], trect[3] - trect[1] + 1, scrwidth)
             end if
             
+            rebuild_text_lines(idx, wh)
+            update_content_size(wid)
+            check_scrollbars(idx, wid)
             wc_call_draw(wid)
             
             if wcprops[wcpScrollV][idx] then
@@ -1987,9 +2104,6 @@ procedure wc_arrange(atom wid)
             if wcprops[wcpScrollH][idx] then
                 wc_call_arrange(wcprops[wcpScrollH][idx])
             end if
-            insert_txt(idx, wh, "")
-            update_content_size(wid)
-            check_scrollbars(idx, wid)
             
         else  --{"number", "string", "item", "datetime", "password"}
             --label:
@@ -2019,11 +2133,10 @@ procedure wc_arrange(atom wid)
             wcprops[wcpEditRect][idx] = trect
             wcprops[wcpSpecialRect][idx] = sprect
             
-            wc_call_draw(wid)
-            
-            insert_txt(idx, wh, "")
+            rebuild_text_lines(idx, wh)
             update_content_size(wid)
             check_scrollbars(idx, wid)
+            wc_call_draw(wid)
         end if
     end if
 end procedure
@@ -2046,6 +2159,10 @@ function wc_debug(atom wid)
             {"LabelPosition", wcprops[wcpLabelPosition][idx]},
             {"Hover", wcprops[wcpHover][idx]},
             {"CursorState", wcprops[wcpCursorState][idx]},
+            {"KeyShift", wcprops[wcpKeyShift][idx]},
+            {"KeyCtrl", wcprops[wcpKeyCtrl][idx]},
+            {"KeyAlt", wcprops[wcpKeyAlt][idx]},
+            
             {"MenuID", wcprops[wcpMenuID][idx]},
             {"SpecialRect", wcprops[wcpSpecialRect][idx]},
             {"SpecialHover", wcprops[wcpSpecialHover][idx]},
@@ -2060,6 +2177,7 @@ function wc_debug(atom wid)
             {"OptSameWidth", wcprops[wcpOptSameWidth][idx]},
             {"OptHighlightLine", wcprops[wcpOptHighlightLine][idx]},            
             {"OptLocked", wcprops[wcpOptLocked][idx]},
+            {"OptAllowNewline", wcprops[wcpOptAllowNewline][idx]},
             
             {"LineHeight", wcprops[wcpLineHeight][idx]},
             {"LabelPos", wcprops[wcpLabelPos][idx]},
@@ -2137,7 +2255,27 @@ procedure cmd_set_text(atom wid, sequence txtlines)
     
     idx = find(wid, wcprops[wcpID])
     if idx > 0 then
-        wh = widget_get_handle(wid)
+        wh = widget:widget_get_handle(wid)
+        wcprops[wcpText][idx] = {""}
+        wcprops[wcpTextLinesLine][idx] = {1}
+        wcprops[wcpTextLinesCol][idx] = {0}
+        wcprops[wcpTextLinesLength][idx] = {0}
+        wcprops[wcpTextLinesWidth][idx] = {0}
+        
+        wcprops[wcpSelStartLine][idx] = 1
+        wcprops[wcpSelStartCol][idx] = 0
+        wcprops[wcpSelEndLine][idx] = 1
+        wcprops[wcpSelEndCol][idx] = 0
+        
+        move_cursor(idx, wh, -2, -2)
+        
+        insert_txt(idx, wh, txtlines)
+        keep_cursor_in_view(idx, wcprops[wcpEditRect][idx])
+        wcprops[wcpCursorState][idx] = 3
+        --wc_call_draw(wid)
+        wc_call_event(wid, "changed", {})
+    
+        /*wh = widget_get_handle(wid)
         if length(txtlines) > 0 then
             if atom(txtlines[1]) then --if this is an atom, it means that this is raw text, not a sequence of lines of text)
                 txtlines = remove_all(13, txtlines)
@@ -2187,37 +2325,31 @@ procedure cmd_set_text(atom wid, sequence txtlines)
             --else
             --move_cursor(idx, wh, -2, -2)
             --end if
+            rebuild_text_lines(idx, wh)
+            move_cursor(idx, wh, 0, 0)
             update_content_size(wid)
             
             wc_call_event(wid, "changed", {})
-        end if
+        end if*/
     end if
 end procedure
 wc_define_command("textbox", "set_text", routine_id("cmd_set_text"))
 
 
 procedure cmd_append_text(atom wid, sequence txtlines) --Lines:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
-    atom idx, st, len, wh
+    atom idx, wh
     idx = find(wid, wcprops[wcpID])
     if idx > 0 then
-        if length(txtlines) > 0 then
-            if atom(txtlines[1]) then --if this is an atom, it means that this is raw text, not a sequence of lines of text)
-                txtlines = remove_all(13, txtlines)
-                txtlines = split(txtlines, 10)
-            end if
-            
-            st = length(wcprops[wcpText][idx])
-            len = length(txtlines)
-            
-            for i = 1 to len do
-                wcprops[wcpText][idx][st+i] = txtlines[i]
-            end for
-            --if wcprops[wcpStayAtBottom][idx] then
-            --    wh = widget_get_handle(wid)
-            --    move_cursor(idx, wh, -2, 2)
-            --end if
-            wc_call_event(wid, "changed", {})
+        wh = widget:widget_get_handle(wid)
+        if atom(txtlines[1]) then --if this is an atom, it means that this is raw text, not a sequence of lines of text)
+            txtlines = remove_all(13, txtlines)
+            txtlines = split(txtlines, 10)
         end if
+        if length(txtlines) > 0 then
+            move_cursor(idx, wh, 2, 2)
+            insert_txt(idx, wh, txtlines)
+        end if
+        move_cursor(idx, wh, 2, 2)
     end if
 end procedure
 wc_define_command("textbox", "append_text", routine_id("cmd_append_text"))
@@ -2256,9 +2388,7 @@ wc_define_function("textbox", "get_label", routine_id("cmd_get_label"))
 
 
 procedure cmd_set_label(atom wid, sequence txt)
-    atom idx
-    
-    idx = find(wid, wcprops[wcpID])
+    atom idx = find(wid, wcprops[wcpID])
     if idx > 0 then
         wcprops[wcpLabel][idx] = txt
         wc_call_event(wid, "changed", {})
@@ -2266,4 +2396,37 @@ procedure cmd_set_label(atom wid, sequence txt)
 end procedure
 wc_define_command("textbox", "set_label", routine_id("cmd_set_label"))
 
+
+procedure cmd_select_all(atom wid)
+    atom idx, wh, sStartLine, sStartCol, sEndLine, sEndCol
+    idx = find(wid, wcprops[wcpID])
+    
+    if idx > 0 then
+        wh = widget:widget_get_handle(wid)
+        
+        rebuild_text_lines(idx, wh)
+        move_cursor(idx, wh, 0, 0)
+        
+        sStartLine = 1
+        sStartCol = 0
+        sEndLine = length(wcprops[wcpTextLinesLength][idx])
+        sEndCol = wcprops[wcpTextLinesLength][idx][sEndLine]
+        
+        if wcprops[wcpOptSameWidth][idx] then
+            oswin:set_font(wh, thMonoFont, 9, Normal)
+        else
+            oswin:set_font(wh, thNormalFont, 9, Normal)
+        end if
+        wcprops[wcpIsSelecting][idx] = 0
+        wcprops[wcpSelStartLine][idx] = sStartLine
+        wcprops[wcpSelStartCol][idx] = sStartCol
+        wcprops[wcpSelStartX][idx] = 0
+        wcprops[wcpSelEndLine][idx] = sEndLine
+        wcprops[wcpSelEndCol][idx] = sEndCol
+        wcprops[wcpSelEndX][idx] = get_text_width(wh, rawtext(idx, sEndLine, 1, sEndCol))
+        
+        wc_call_draw(wid)
+    end if
+end procedure
+wc_define_command("textbox", "select_all", routine_id("cmd_select_all"))
 

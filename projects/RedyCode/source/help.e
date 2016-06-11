@@ -170,8 +170,7 @@ procedure do_help_navigate(sequence helpurl)
     end if
     
     if length(sectionname) > 0 or not equal(filename, CurrFile) then
-        task_delay(0.3) --temp fix: Text doesn't get processed until after "find" is called, causing it to not find any sections because they don't exist yet!
-        txtdoc:docmd("winHelp.txtHelp", "find", {"section", sectionname})
+        txtdoc:queue_cmd("winHelp.txtHelp", "jump", {"section", sectionname})
     end if
     CurrFile = filename
 end procedure

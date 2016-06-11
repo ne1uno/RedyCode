@@ -119,6 +119,11 @@ procedure send_double_click_event(atom idx, sequence wname, sequence sel)
 end procedure
 
 
+procedure send_keypress_event(atom idx, sequence wname, atom keycode)
+    widget:wc_send_event(wname, "KeyPress", keycode)
+end procedure
+
+
 procedure show_context_menu(atom idx, sequence wname, sequence sel)
     
 end procedure
@@ -802,13 +807,12 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                 
             case "KeyPress" then
                 if wcprops[wcpHardFocus][idx] then
-                    
-                
-                    if evdata[1] > 13 then --normal characters
-                        
-                    end if
-                    
-                    doredraw = 1
+                    --if evdata[1] = 13 then --Enter key  
+                    --elsif evdata[1] > 13 then --normal characters
+                    --end if
+                    wname = widget_get_name(wid)
+                    send_keypress_event(idx, wname, evdata[1])
+                    --doredraw = 1
                 end if
                   
             case "scroll" then
@@ -1067,6 +1071,24 @@ wc_define_command("listbox", "add_column", routine_id("cmd_add_column"))
 
 
 procedure cmd_set_list_items(atom wid, sequence items) --items:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+    atom idx, len
+    idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        len = length(items)
+        wcprops[wcpItemText][idx] = repeat({}, len)
+        wcprops[wcpItemIcons][idx] = repeat({}, len)
+        wcprops[wcpItemSelected][idx] = repeat(0, len)
+        for i = 1 to len do
+            wcprops[wcpItemText][idx][i] = items[i][2..$]
+            wcprops[wcpItemIcons][idx][i] = items[i][1]
+        end for
+        wc_call_event(wid, "changed", {})
+    end if
+end procedure
+wc_define_command("listbox", "set_list_items", routine_id("cmd_set_list_items"))
+
+/*
+procedure cmd_replace_list_items(atom wid, sequence items) --items:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
     atom idx, st, len, oldlen
     idx = find(wid, wcprops[wcpID])
     if idx > 0 then
@@ -1089,8 +1111,8 @@ procedure cmd_set_list_items(atom wid, sequence items) --items:{{icon1, "col1", 
         wc_call_event(wid, "changed", {})
     end if
 end procedure
-wc_define_command("listbox", "set_list_items", routine_id("cmd_set_list_items"))
-
+wc_define_command("listbox", "replace_list_items", routine_id("cmd_replace_list_items"))
+*/
 
 procedure cmd_add_list_items(atom wid, sequence items) --items:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
     atom idx, st, len
@@ -1181,5 +1203,7 @@ procedure cmd_select_items(atom wid, object sel)
     
 end procedure
 wc_define_command("listbox", "select_items", routine_id("cmd_select_items"))
+
+
 
 

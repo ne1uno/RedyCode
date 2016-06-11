@@ -124,27 +124,27 @@ procedure check_config()
     end if
     
     if file_exists(TemplatePath) then
-        cfg:set_var("", "Projects", "TemplatePath", TemplatePath)
+        cfg:set_var("", "Projects", "TemplatePath", filesys:pathname(TemplatePath & "\\"))
     else
         TemplatePath = ""
     end if
     if file_exists(ProjectPath) then
-        cfg:set_var("", "Projects", "ProjectPath", ProjectPath)
+        cfg:set_var("", "Projects", "ProjectPath", filesys:pathname(ProjectPath & "\\"))
     else
         ProjectPath = ""
     end if
     if file_exists(EuiPath) then
-        cfg:set_var("", "Projects", "EuiPath", EuiPath)
+        cfg:set_var("", "Projects", "EuiPath", filesys:pathname(EuiPath) & "\\" & filesys:filename(EuiPath))
     else
         EuiPath = ""
     end if
     if file_exists(EubindPath) then
-        cfg:set_var("", "Projects", "EubindPath", EubindPath)
+        cfg:set_var("", "Projects", "EubindPath", filesys:pathname(EubindPath) & "\\" & filesys:filename(EubindPath))
     else
         EubindPath = ""
     end if
     if file_exists(IncludePath) then
-        cfg:set_var("", "Projects", "IncludePath", IncludePath)
+        cfg:set_var("", "Projects", "IncludePath", filesys:pathname(IncludePath & "\\"))
     else
         IncludePath = ""
     end if
@@ -175,27 +175,27 @@ procedure save_prefs()
     --RedyLibPath = gui:wfunc("winPreferences.txtRedyLibPath", "get_text", {})
     
     if file_exists(TemplatePath) then
-        cfg:set_var("", "Projects", "TemplatePath", TemplatePath)
+        cfg:set_var("", "Projects", "TemplatePath", filesys:pathname(TemplatePath & "\\"))
     else
         ProjectPath = ""
     end if
     if file_exists(ProjectPath) then
-        cfg:set_var("", "Projects", "ProjectPath", ProjectPath)
+        cfg:set_var("", "Projects", "ProjectPath", filesys:pathname(ProjectPath & "\\"))
     else
         ProjectPath = ""
     end if
     if file_exists(EuiPath) then
-        cfg:set_var("", "Projects", "EuiPath", EuiPath)
+        cfg:set_var("", "Projects", "EuiPath", filesys:pathname(EuiPath) & "\\" & filesys:filename(EuiPath))
     else
         EuiPath = ""
     end if
     if file_exists(EubindPath) then
-        cfg:set_var("", "Projects", "EubindPath", EubindPath)
+        cfg:set_var("", "Projects", "EubindPath", filesys:pathname(EubindPath) & "\\" & filesys:filename(EubindPath))
     else
         EubindPath = ""
     end if
     if file_exists(IncludePath) then
-        cfg:set_var("", "Projects", "IncludePath", IncludePath)
+        cfg:set_var("", "Projects", "IncludePath", filesys:pathname(IncludePath & "\\"))
     else
         IncludePath = ""
     end if
