@@ -273,17 +273,15 @@ app:set_menus({
         "find_replace",
         "find_prev",
         "find_next",
-        --"find_line",
         "-",
-        "show_goto"}
-        --"find_bookmark",
-        --"bookmark_create",
-        --"bookmark_destroy"
+        "show_goto",
+        "show_bookmarks"}
     },
     {"Tools", {
         "show_preferences",
         "show_edit_toolbars",
         "-",
+        "show_code_builder",
         "show_ascii_chart",
         "show_color_selector"}
     },
@@ -334,49 +332,19 @@ app:set_default_toolbars({
         "paste",
         "delete",
         "-",
+        "format_indent_less",
+        "format_indent_more"}
+    },
+    {"Search", "top", {
         "find",
         "find_replace",
+        "-",
         "find_prev",
         "find_next",
         "-",
-        --"find_line",
         "show_goto",
-        --"find_bookmark",
-        --"bookmark_create",
-        --"bookmark_destroy",
-        "-",
-        "format_indent_less",
-        "format_indent_more",
-        "-",
-        "show_code_builder"}
+        "show_bookmarks"}
     }
-    /*{"Syntax", "top", {
-        "syntax_comment",
-        "syntax_uncomment",
-        "-",
-        "syntax_beautify",
-        "-",
-        "syntax_build_gui",
-        "syntax_build_actions",
-        "syntax_build_app"}
-    }*/
-    /*{"Format", "top", {
-        "text_style_select",
-        "-",
-        "format_text_normal",
-        "format_text_bold",
-        "format_text_italic",
-        "format_text_underline",
-        "format_text_strikethrough",
-        "-",
-        "format_justify_center",
-        "format_justify_fill",
-        "format-justify-left",
-        "format_justify_right",
-        "-",
-        "insert_link",
-        "insert_image"}
-    }*/
 })
 
 
@@ -810,9 +778,7 @@ procedure destroy_tab(sequence tabname)
             action:set_enabled("find_next", 0)
             action:set_enabled("find_replace", 0)
             action:set_enabled("show_goto", 0)
-            action:set_enabled("find_bookmark", 0)
-            action:set_enabled("bookmark_create", 0)
-            action:set_enabled("bookmark_destroy", 0)
+            action:set_enabled("show_bookmarks", 0)
             
             --action:set_enabled("find_prev", 1)
             
@@ -1022,13 +988,11 @@ procedure do_file_switch_to(object selectedtab)
                 
                 if not equal(fTabFileTypes[tidx], "image") then
                     action:set_enabled("find", 1)
-                    --action:set_enabled("find_prev", 1)
-                    --action:set_enabled("find_next", 1)
-                    action:set_enabled("find_replace", 1)
+                    action:set_enabled("find_prev", 1)
+                    action:set_enabled("find_next", 1)
+                    action:set_enabled("find_replace", 0)
                     action:set_enabled("show_goto", 1)
-                    action:set_enabled("find_bookmark", 0)
-                    action:set_enabled("bookmark_create", 0)
-                    action:set_enabled("bookmark_destroy", 0)
+                    action:set_enabled("show_bookmarks", 1)
                 end if
                 
             else
@@ -1055,13 +1019,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_more", 1)
                     
                     action:set_enabled("find", 1)
-                    --action:set_enabled("find_prev", 1)
-                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_prev", 1)
+                    action:set_enabled("find_next", 1)
                     action:set_enabled("find_replace", 1)
                     action:set_enabled("show_goto", 1)
-                    action:set_enabled("find_bookmark", 0)
-                    action:set_enabled("bookmark_create", 0)
-                    action:set_enabled("bookmark_destroy", 0)
+                    action:set_enabled("show_bookmarks", 1)
                     
                     action:set_enabled("show_code_builder", 1)
                 case "doc" then
@@ -1079,13 +1041,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_more", 1)
                     
                     action:set_enabled("find", 1)
-                    --action:set_enabled("find_prev", 1)
-                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_prev", 1)
+                    action:set_enabled("find_next", 1)
                     action:set_enabled("find_replace", 1)
                     action:set_enabled("show_goto", 1)
-                    action:set_enabled("find_bookmark", 0)
-                    action:set_enabled("bookmark_create", 0)
-                    action:set_enabled("bookmark_destroy", 0)
+                    action:set_enabled("show_bookmarks", 1)
                 
                     action:set_enabled("show_code_builder", 0)
                     /* --possibly implement format actions:
@@ -1122,9 +1082,7 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("find_next", 0)
                     action:set_enabled("find_replace", 0)
                     action:set_enabled("show_goto", 0)
-                    action:set_enabled("find_bookmark", 0)
-                    action:set_enabled("bookmark_create", 0)
-                    action:set_enabled("bookmark_destroy", 0)
+                    action:set_enabled("show_bookmarks", 0)
                     
                     action:set_enabled("show_code_builder", 0)
                 case else
@@ -1142,13 +1100,11 @@ procedure do_file_switch_to(object selectedtab)
                     action:set_enabled("format_indent_more", 1)
                     
                     action:set_enabled("find", 1)
-                    --action:set_enabled("find_prev", 1)
-                    --action:set_enabled("find_next", 1)
+                    action:set_enabled("find_prev", 1)
+                    action:set_enabled("find_next", 1)
                     action:set_enabled("find_replace", 1)
                     action:set_enabled("show_goto", 1)
-                    action:set_enabled("find_bookmark", 0)
-                    action:set_enabled("bookmark_create", 0)
-                    action:set_enabled("bookmark_destroy", 0)
+                    action:set_enabled("show_bookmarks", 1)
                     
                     action:set_enabled("show_code_builder", 0)
                 end switch
@@ -1182,9 +1138,7 @@ procedure do_file_switch_to(object selectedtab)
         action:set_enabled("find_next", 0)
         action:set_enabled("find_replace", 0)
         action:set_enabled("show_goto", 0)
-        action:set_enabled("find_bookmark", 0)
-        action:set_enabled("bookmark_create", 0)
-        action:set_enabled("bookmark_destroy", 0)
+        action:set_enabled("show_bookmarks", 0)
         
         action:set_enabled("show_code_builder", 0)
     end if
@@ -1350,6 +1304,7 @@ procedure start()
 end procedure
 
 gui:start(routine_id("start"), routine_id("gui_event"))
+
 
 
 

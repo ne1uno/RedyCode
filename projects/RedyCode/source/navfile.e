@@ -119,8 +119,8 @@ action:define({
 action:define({
     {"name", "show_bookmarks"},
     {"do_proc", routine_id("do_show_bookmarks")},
-    {"label", "Go to bookmark..."},
-    {"icon", "bookmark-new"},
+    {"label", "Go to Bookmark..."},
+    {"icon", "emblem-favorite"},
     {"hotkey", "Ctrl+F"},
     {"description", "bookmarks"},
     {"enabled", 0}
@@ -766,6 +766,7 @@ export procedure create_search_panel()
     
     gui:wproc("tabSearch", "select_tab", {1})
 end procedure
+
 
 
 
