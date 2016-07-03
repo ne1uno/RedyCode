@@ -40,6 +40,7 @@ enum
 
     wcpLabel,
     wcpShowBorder,           --1 = show border and, if specified, a lable. 0 = no border (canvas rect covers the entire widget rect)
+    wcpFastDraw,
     wcpScrollForeground,
     wcpScrollWheelDistance,  --pixels to scroll when mouse wheel is moved
     
@@ -257,10 +258,9 @@ end procedure
 -- widgetclass handlers ----------------------------
 
 procedure wc_create(atom wid, object wprops) 
-    atom wh, wshowborder = 1, whandleroutine = 0, wbackgroundpointer = mArrow,
-    whandledebug = 0, wpreformancedebug = 0, wscrollforeground = 1, wscrollwheeldist = 48
-    sequence wname, wbackgroundimage, whandleimage, wlabel = ""
-    atom wautofocus = 0
+    object wh, wshowborder = 1, wfastdraw = 0, whandleroutine = 0, wbackgroundpointer = mArrow,
+    whandledebug = 0, wpreformancedebug = 0, wscrollforeground = 1, wscrollwheeldist = 48,
+    wname, wbackgroundimage, whandleimage, wlabel = "", wautofocus = 0, bmsize = {128, 128}
     
     for p = 1 to length(wprops) do
         if length(wprops[p]) = 2 then
@@ -273,6 +273,9 @@ procedure wc_create(atom wid, object wprops)
                     
                 case "border" then
                     wshowborder = wprops[p][2]
+                    
+                case "fast_draw" then --new experimental draw mode, should be faster
+                    wfastdraw = wprops[p][2]
                     
                 case "scroll_foreground" then
                     wscrollforeground = wprops[p][2]
@@ -318,16 +321,20 @@ procedure wc_create(atom wid, object wprops)
                 case "performance_debug" then
                     wpreformancedebug = wprops[p][2]
                     
+                case "size" then
+                    
+                    bmsize = wprops[p][2]
             end switch
         end if
     end for
     
     wh = widget:widget_get_handle(wid)
     wname = widget:widget_get_name(wid)
+    
     wbackgroundimage = wname & "_BackgroundImage"
-    create_bitmap(wbackgroundimage, ScreenX, ScreenY)
+    create_bitmap(wbackgroundimage, bmsize[1], bmsize[2])
     whandleimage = wname & "_HandleImage"
-    create_bitmap(whandleimage, ScreenX, ScreenY)
+    create_bitmap(whandleimage, bmsize[1], bmsize[2])
     
     sequence cmds = {
         --Fill background with color to match theme (otherwise, it would be black)
@@ -345,6 +352,7 @@ procedure wc_create(atom wid, object wprops)
     
     wcprops[wcpLabel] &= {wlabel}
     wcprops[wcpShowBorder] &= {wshowborder}
+    wcprops[wcpFastDraw] &= {wfastdraw}
     wcprops[wcpScrollForeground] &= {wscrollforeground}
     wcprops[wcpScrollWheelDistance] &= {wscrollwheeldist}
     
@@ -488,38 +496,43 @@ procedure wc_draw(atom wid)
         --    wcprops[wcpBackgroundDrawCmds][idx] = {}
         --end if
         
-        --Draw background and foreground:
-        cmds &= {
-            {DR_Restrict, lrect[1], lrect[2], lrect[3], lrect[4]}, --restrict drawing to canvas area
-            {DR_Image, wcprops[wcpBackgroundImage][idx], lrect[1], lrect[2], lrect[3], lrect[4]}
-            --{DR_Image, wcprops[wcpHandleImage][idx], lrect[1], lrect[2], lrect[3], lrect[4]},
-            --{DR_Image, "redy_logo", lrect[1], lrect[2], lrect[3], lrect[4]},
-        }
-        if wcprops[wcpScrollForeground][idx] = 1 then
-            cmds &= {
-                {DR_Offset, lrect[1] - wcprops[wcpScrollPosX][idx], lrect[2] - wcprops[wcpScrollPosY][idx]}
+        if wcprops[wcpFastDraw][idx] then
+            cmds &= { --{srcbitmap, srcx, srcy, destx, desty, width, height}
+                {DR_Copy, wcprops[wcpBackgroundImage][idx], 0, 0, lrect[1], lrect[2], lrect[3]-lrect[1], lrect[4]-lrect[2]}
             }
         else
+            --Draw background and foreground:
             cmds &= {
-                {DR_Offset, lrect[1], lrect[2]}
+                {DR_Restrict, lrect[1], lrect[2], lrect[3], lrect[4]}, --restrict drawing to canvas area
+                {DR_Copy, wcprops[wcpBackgroundImage][idx], 0, 0, lrect[1], lrect[2], lrect[3]-lrect[1], lrect[4]-lrect[2]}
+            }
+            if wcprops[wcpScrollForeground][idx] = 1 then
+                cmds &= {
+                    {DR_Offset, lrect[1] - wcprops[wcpScrollPosX][idx], lrect[2] - wcprops[wcpScrollPosY][idx]}
+                }
+            else
+                cmds &= {
+                    {DR_Offset, lrect[1], lrect[2]}
+                }
+            end if
+            cmds &= wcprops[wcpForegroundDrawCmds][idx]
+            
+            --Draw handles (visible parts):
+            --for h = 1 to length(wcprops[wcpHandleDrawCmds][idx]) do
+            --    cmds &= wcprops[wcpHandleDrawCmds][idx][h]
+            --end for
+            
+            
+            cmds &= {
+                {DR_Release},
+                {DR_Offset, 0, 0}
             }
         end if
-        cmds &= wcprops[wcpForegroundDrawCmds][idx]
-        
-        --Draw handles (visible parts):
-        --for h = 1 to length(wcprops[wcpHandleDrawCmds][idx]) do
-        --    cmds &= wcprops[wcpHandleDrawCmds][idx][h]
-        --end for
-        
-        
-        cmds &= {
-            {DR_Offset, 0, 0}
-        }
-        
         
         --Draw Debug Information
         if wcprops[wcpShowHandleDebug][idx] = 1 then
             cmds &= {
+               
                 {DR_Image, wcprops[wcpHandleImage][idx], lrect[1], lrect[2], lrect[3], lrect[4]}
                 --{DR_Image, "redy_logo", lrect[1]+50, lrect[2]+150, lrect[3], lrect[4]}
             }
@@ -533,12 +546,7 @@ procedure wc_draw(atom wid)
             }
         end if
         
-        
-        cmds &= {
-            {DR_Release}
-        }
-        
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do
@@ -825,13 +833,17 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
             case "scroll" then
                 if evdata[1] = wcprops[wcpScrollH][idx] then
                     wcprops[wcpScrollPosX][idx] = evdata[2]
-                    doredraw = 1
+                    if not wcprops[wcpFastDraw][idx] then
+                        doredraw = 1
+                    end if
                     wname = widget_get_name(wid)
                     widget:wc_send_event(wname, "scroll", {wcprops[wcpScrollPosX][idx], wcprops[wcpScrollPosY][idx]})
                 end if
                 if evdata[1] = wcprops[wcpScrollV][idx] then
                     wcprops[wcpScrollPosY][idx] = evdata[2]
-                    doredraw = 1
+                    if not wcprops[wcpFastDraw][idx] then
+                        doredraw = 1
+                    end if
                     wname = widget_get_name(wid)
                     widget:wc_send_event(wname, "scroll", {wcprops[wcpScrollPosX][idx], wcprops[wcpScrollPosY][idx]})
                 end if
@@ -949,7 +961,6 @@ procedure wc_resize(atom wid)
 end procedure
 
 
-
 procedure wc_arrange(atom wid)
     atom idx = find(wid, wcprops[wcpID]), wh
     sequence wname, wpos, wsize, txex, trect, oldsize, newsize
@@ -977,8 +988,11 @@ procedure wc_arrange(atom wid)
             wcprops[wcpCanvasRect][idx] = trect
             oldsize = wcprops[wcpVisibleSize][idx]
             newsize = {trect[3] - trect[1], trect[4] - trect[2]}
-            if not equal(oldsize, newsize) then
+            if not equal(newsize, oldsize) then
                 wcprops[wcpVisibleSize][idx] = newsize
+                
+                resize_bitmap(wcprops[wcpBackgroundImage][idx], newsize[1], newsize[2], th:cOuterFill) --th:cInnerFill)
+                resize_bitmap(wcprops[wcpHandleImage][idx], newsize[1], newsize[2], th:cOuterFill) --th:cInnerFill)
                 
                 /*
                 oswin:create_bitmap("temp", oldsize[1], oldsize[2])
@@ -1051,6 +1065,7 @@ function wc_debug(atom wid)
                           
             {"Label", wcprops[wcpLabel][idx]},
             {"ShowBorder", wcprops[wcpShowBorder][idx]},
+            {"FastDraw", wcprops[wcpFastDraw][idx]},
             {"ScrollForeground", wcprops[wcpScrollForeground][idx]},
             {"ScrollWheelDistance", wcprops[wcpScrollWheelDistance][idx]},
 
@@ -1270,7 +1285,84 @@ procedure cmd_draw_foreground(atom wid, object drawcmds) --drawcmds: 0 = clear, 
     end if
 end procedure
 wc_define_command("canvas", "draw_foreground", routine_id("cmd_draw_foreground"))
-  
+
+
+procedure cmd_draw(atom wid, object drawcmds, object invalidrect) --cmds: sequence = draw commands
+    atom idx = find(wid, wcprops[wcpID])
+    
+    if idx > 0 and sequence(drawcmds) then
+        sequence cmds, wrect, crect, csize
+        atom wh = widget:widget_get_handle(wid)
+        
+        wrect = widget_get_rect(wid)
+        crect = wcprops[wcpCanvasRect][idx]
+        
+        if length(crect) = 4 then
+            csize = {crect[3] - crect[1], crect[4] - crect[2]}
+            crect[1] += wrect[1]
+            crect[2] += wrect[2]
+            --crect[3] = csize[1] + wrect[1]
+            --crect[4] = csize[2] + wrect[2]
+            
+            --cmds = {
+            --    {DR_Restrict, crect[1], crect[2], crect[3], crect[4]},
+            --    {DR_Offset, crect[1], crect[2]}
+            --}
+            --cmds &= drawcmds
+            --cmds &= {
+            --    {DR_Offset, 0, 0},
+            --    {DR_Release}
+            --}
+            --oswin:draw(wh, cmds, wcprops[wcpBackgroundImage][idx])
+            
+            --if not equal(get_bitmap_size(wcprops[wcpBackgroundImage][idx]), csize) then
+            --    create_bitmap(wcprops[wcpBackgroundImage][idx], csize[1], csize[2])
+            --    create_bitmap(wcprops[wcpHandleImage][idx], csize[1], csize[2])
+            --end if
+            
+            oswin:draw(wh, drawcmds, wcprops[wcpBackgroundImage][idx], 0)
+            
+            --now draw background to window buffer
+            if sequence(invalidrect) and length(invalidrect) = 4 then
+            --invalidrect is relative to background image
+                if invalidrect[1] < 0 then
+                    invalidrect[1] = 0
+                end if
+                if invalidrect[2] < 0 then
+                    invalidrect[2] = 0
+                end if
+                if invalidrect[3] > csize[1] then
+                    invalidrect[3] = csize[1]
+                end if
+                if invalidrect[4] > csize[2] then
+                    invalidrect[4] = csize[2]
+                end if
+            else
+                invalidrect = {0, 0, csize[1], csize[2]}
+            end if
+            
+            cmds = {
+                {DR_Copy, wcprops[wcpBackgroundImage][idx], --{hBitmap, srcx, srcy, destx, desty, width, height}
+                    invalidrect[1], invalidrect[2],
+                    crect[1] + invalidrect[1], crect[2] + invalidrect[2],
+                    invalidrect[3] - invalidrect[1], invalidrect[4] - invalidrect[2]
+                }
+                --debug:
+                --{DR_PenColor, rgb(255, 0, 255)},
+                --{DR_Rectangle, False,
+                --    crect[1] + invalidrect[1], crect[2] + invalidrect[2],
+                --    crect[1] + invalidrect[3], crect[2] + invalidrect[4]
+                --}
+            }
+            oswin:draw(wh, cmds, "", {
+                crect[1] + invalidrect[1], crect[2] + invalidrect[2],
+                crect[1] + invalidrect[3], crect[2] + invalidrect[4]
+            })
+        end if
+    end if
+end procedure
+ wc_define_command("canvas", "draw", routine_id("cmd_draw"))
+
 
 --procedure cmd_set_handle(atom wid, sequence hname, sequence hshape, sequence hdraw, object hpointer) --creates a new handle, or overrides an existing handle
 procedure cmd_set_handle(atom wid, sequence hname, sequence hshape, object hpointer) --creates a new handle, or overrides an existing handle
@@ -1393,6 +1485,17 @@ procedure cmd_unpress_popup_menu(atom wid)
     end if
 end procedure
 wc_define_command("canvas", "unpress_popup_menu", routine_id("cmd_unpress_popup_menu"))
+
+
+
+
+
+
+
+
+
+
+
 
 
 

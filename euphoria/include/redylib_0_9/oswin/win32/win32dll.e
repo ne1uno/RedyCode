@@ -27,34 +27,35 @@ include std/dll.e
 include std/machine.e
 include std/math.e
 include std/error.e
-include std/sequence.e
 include std/convert.e
 include std/sort.e
-
+include std/sequence.e as seq
+ 
+ 
 object VOID
 
 /*
 constant
-	C_BYTE = C_UCHAR,  
-	C_BOOL = C_INT, 
-	C_ATOM = C_USHORT, 
-	C_WORD = C_USHORT, 
-	C_DWORD=  C_ULONG, 
-	C_WPARAM = C_POINTER, 
-	C_LPARAM = C_POINTER, 
-	C_HFILE = C_INT,  
-	C_HWND = C_POINTER, 
-	C_HANDLE = C_POINTER,  --all other H* are HANDLE 
-	C_WNDPROC = C_POINTER, 
-	C_LPSTR = C_POINTER, 
-	C_LRESULT = C_POINTER, 
-	C_LANGID =  C_WORD,   
-	C_COLORREF =  C_DWORD,    --0x00bbggrr 
-	$
+    C_BYTE = C_UCHAR,  
+    C_BOOL = C_INT, 
+    C_ATOM = C_USHORT, 
+    C_WORD = C_USHORT, 
+    C_DWORD=  C_ULONG, 
+    C_WPARAM = C_POINTER, 
+    C_LPARAM = C_POINTER, 
+    C_HFILE = C_INT,  
+    C_HWND = C_POINTER, 
+    C_HANDLE = C_POINTER,  --all other H* are HANDLE 
+    C_WNDPROC = C_POINTER, 
+    C_LPSTR = C_POINTER, 
+    C_LRESULT = C_POINTER, 
+    C_LANGID =  C_WORD,   
+    C_COLORREF =  C_DWORD,    --0x00bbggrr 
+    $
 */
-	
+    
 public atom xLoadIcon, xLoadCursor, xLoadImage, xGetStockObject, xRegisterClassEx, xCreateWindowEx, xShowWindow, xUpdateWindow, xPeekMessage, xGetMessage,
-	xTranslateMessage, xDispatchMessage, xPlaySound, xBeginPaint, xGetClientRect, xGetWindowRect, xDrawText, xEndPaint, xPostQuitMessage, xDefWindowProc,
+    xTranslateMessage, xDispatchMessage, xPlaySound, xBeginPaint, xGetClientRect, xGetWindowRect, xDrawText, xEndPaint, xPostQuitMessage, xDefWindowProc,
     xGetSystemMetrics, xCreateCursor, xDestroyCursor, xSetCursor, xGetUpdateRect, xInvalidateRect, xValidateRect, xInvalidateRgn,
     xSetTimer, xKillTimer, xSetWindowPos, xSetWindowText
     
@@ -86,93 +87,93 @@ public atom xGetLastError, xCloseHandle, xCreateFileMapping, xMapViewOfFile, xUn
 function link_c_func(atom dll, sequence name, sequence args, atom result)
     atom handle
     
-	handle = define_c_func(dll, name, args, result)
-	if handle = -1 then
-		crash("Couldn't find " & name)
-	end if
-	return handle
+    handle = define_c_func(dll, name, args, result)
+    if handle = -1 then
+        crash("Couldn't find " & name)
+    end if
+    return handle
 end function
     
 -- dynamically link a C routine as a Euphoria procedure
 function link_c_proc(atom dll, sequence name, sequence args)
-	atom handle
+    atom handle
     
-	handle = define_c_proc(dll, name, args)
-	if handle = -1 then
-		crash("Couldn't find " & name)
-	end if
-	return handle
+    handle = define_c_proc(dll, name, args)
+    if handle = -1 then
+        crash("Couldn't find " & name)
+    end if
+    return handle
 end function
 
 -- get handles to all dll routines that we need
 public procedure link_dll_routines()
-	atom user32, gdi32, winmm, kernel32, comdlg32, shell32, msimg32
-	
-	-- open the .DLL files
-	user32 = open_dll("user32.dll")
-	if user32 = NULL then
-		crash("Couldn't find user32.dll")
-	end if
-	gdi32 = open_dll("gdi32.dll")
-	if gdi32 = NULL then
-		crash("Couldn't find gdi32.dll")
-	end if
-	kernel32 = open_dll("kernel32.dll")
-	if kernel32 = NULL then
-		crash("Couldn't find kernel32.dll")
-	end if
+    atom user32, gdi32, winmm, kernel32, comdlg32, shell32, msimg32
+    
+    -- open the .DLL files
+    user32 = open_dll("user32.dll")
+    if user32 = NULL then
+        crash("Couldn't find user32.dll")
+    end if
+    gdi32 = open_dll("gdi32.dll")
+    if gdi32 = NULL then
+        crash("Couldn't find gdi32.dll")
+    end if
+    kernel32 = open_dll("kernel32.dll")
+    if kernel32 = NULL then
+        crash("Couldn't find kernel32.dll")
+    end if
     winmm = open_dll("winmm.dll")
-	if winmm = NULL then
-		crash("Couldn't find winmm.dll")
-	end if
+    if winmm = NULL then
+        crash("Couldn't find winmm.dll")
+    end if
     comdlg32 = open_dll("comdlg32.dll")
-	if comdlg32 = NULL then
-		crash("Couldn't find comdlg32.dll")
-	end if    
+    if comdlg32 = NULL then
+        crash("Couldn't find comdlg32.dll")
+    end if    
     comdlg32 = open_dll("comdlg32.dll")
-	if comdlg32 = NULL then
-		crash("Couldn't find comdlg32.dll")
-	end if  
+    if comdlg32 = NULL then
+        crash("Couldn't find comdlg32.dll")
+    end if  
     shell32 = open_dll("shell32.dll")
-	if shell32 = NULL then
-		crash("Couldn't find shell32.dll")
-	end if   
+    if shell32 = NULL then
+        crash("Couldn't find shell32.dll")
+    end if   
     msimg32 = open_dll("Msimg32.dll")
-	if msimg32 = NULL then
-		crash("Couldn't find Msimg32.dll")
-	end if  
+    if msimg32 = NULL then
+        crash("Couldn't find Msimg32.dll")
+    end if  
 
 
 
 
-	
-	-- link the C routines
-	--new code would use LoadImage    
-	xLoadIcon = link_c_func(user32, "LoadIconA", {C_HANDLE, C_LPSTR}, C_HANDLE)
-	xLoadCursor = link_c_func(user32, "LoadCursorA", {C_HANDLE, C_LPSTR}, C_HANDLE)
+    
+    -- link the C routines
+    --new code would use LoadImage    
+    xLoadIcon = link_c_func(user32, "LoadIconA", {C_HANDLE, C_LPSTR}, C_HANDLE)
+    xLoadCursor = link_c_func(user32, "LoadCursorA", {C_HANDLE, C_LPSTR}, C_HANDLE)
     xLoadImage = link_c_func(user32, "LoadImageA",{C_HANDLE, C_POINTER, C_UINT, C_INT, C_INT, C_UINT}, C_HANDLE)
     
-	xRegisterClassEx = link_c_func(user32, "RegisterClassExA", {C_POINTER}, C_ATOM)
-	xCreateWindowEx = link_c_func(user32, "CreateWindowExA", {C_DWORD, C_LPSTR, C_LPSTR,C_DWORD,C_INT,C_INT,C_INT,C_INT, C_HWND,C_HANDLE,C_HANDLE, C_POINTER}, C_HWND)
+    xRegisterClassEx = link_c_func(user32, "RegisterClassExA", {C_POINTER}, C_ATOM)
+    xCreateWindowEx = link_c_func(user32, "CreateWindowExA", {C_DWORD, C_LPSTR, C_LPSTR,C_DWORD,C_INT,C_INT,C_INT,C_INT, C_HWND,C_HANDLE,C_HANDLE, C_POINTER}, C_HWND)
 
-	xShowWindow = link_c_proc(user32, "ShowWindow", {C_HWND, C_INT})
-	xUpdateWindow = link_c_proc(user32, "UpdateWindow", {C_HWND})
+    xShowWindow = link_c_proc(user32, "ShowWindow", {C_HWND, C_INT})
+    xUpdateWindow = link_c_proc(user32, "UpdateWindow", {C_HWND})
     xPeekMessage = link_c_func(user32, "PeekMessageA", {C_LPSTR, C_HWND, C_UINT, C_UINT, C_UINT}, C_BOOL)
-	xGetMessage = link_c_func(user32, "GetMessageA", {C_LPSTR, C_HWND, C_UINT, C_UINT}, C_BOOL)
+    xGetMessage = link_c_func(user32, "GetMessageA", {C_LPSTR, C_HWND, C_UINT, C_UINT}, C_BOOL)
 
-	xTranslateMessage = link_c_proc(user32, "TranslateMessage", {C_LPSTR})
-	xDispatchMessage = link_c_proc(user32, "DispatchMessageA", {C_LPSTR})
-	xPlaySound = link_c_proc(winmm, "PlaySound", {C_LPSTR, C_HANDLE, C_DWORD})
-	xBeginPaint = link_c_func(user32, "BeginPaint", {C_HWND, C_POINTER}, C_HANDLE)
-	xGetClientRect = link_c_proc(user32, "GetClientRect", {C_HWND, C_POINTER})
+    xTranslateMessage = link_c_proc(user32, "TranslateMessage", {C_LPSTR})
+    xDispatchMessage = link_c_proc(user32, "DispatchMessageA", {C_LPSTR})
+    xPlaySound = link_c_proc(winmm, "PlaySound", {C_LPSTR, C_HANDLE, C_DWORD})
+    xBeginPaint = link_c_func(user32, "BeginPaint", {C_HWND, C_POINTER}, C_HANDLE)
+    xGetClientRect = link_c_proc(user32, "GetClientRect", {C_HWND, C_POINTER})
     xGetWindowRect = link_c_proc(user32, "GetWindowRect", {C_HWND, C_POINTER})
-	xDrawText = link_c_proc(user32, "DrawTextA", {C_HANDLE, C_LPSTR, C_INT, C_POINTER, C_UINT})
-	
+    xDrawText = link_c_proc(user32, "DrawTextA", {C_HANDLE, C_LPSTR, C_INT, C_POINTER, C_UINT})
+    
 
-	xEndPaint = link_c_proc(user32, "EndPaint", {C_HWND, C_POINTER})
-	xPostQuitMessage = link_c_proc(user32, "PostQuitMessage", {C_INT})
-	xDefWindowProc = link_c_func(user32, "DefWindowProcA", {C_HWND, C_UINT, C_WPARAM, C_LPARAM}, C_LRESULT)
-	xGetStockObject = link_c_func(gdi32, "GetStockObject", {C_UINT}, C_HANDLE)
+    xEndPaint = link_c_proc(user32, "EndPaint", {C_HWND, C_POINTER})
+    xPostQuitMessage = link_c_proc(user32, "PostQuitMessage", {C_INT})
+    xDefWindowProc = link_c_func(user32, "DefWindowProcA", {C_HWND, C_UINT, C_WPARAM, C_LPARAM}, C_LRESULT)
+    xGetStockObject = link_c_func(gdi32, "GetStockObject", {C_UINT}, C_HANDLE)
 
     xGetSystemMetrics = link_c_func(user32, "GetSystemMetrics", {C_INT}, C_INT)
     xCreateCursor = link_c_func(user32, "CreateCursor", {C_HANDLE, C_INT, C_INT, C_INT, C_INT, C_POINTER, C_POINTER}, C_HANDLE)
@@ -239,7 +240,7 @@ public procedure link_dll_routines()
     xGetObject = link_c_func(gdi32, "GetObjectA", {C_HANDLE, C_INT, C_POINTER}, C_INT)
     -- Bitmaps
     xSelectClipPath = link_c_func(gdi32, "SelectClipPath", {C_HANDLE, C_INT}, C_BOOL)
-    --xCreateRectRgn = link_c_func(gdi32, "CreateRectRgn", {C_INT, C_INT, C_INT, C_INT}, C_HANDLE)
+    xCreateRectRgn = link_c_func(gdi32, "CreateRectRgn", {C_INT, C_INT, C_INT, C_INT}, C_HANDLE)
     --xSelectClipRgn =  link_c_func(gdi32, "SelectClipRgn", {C_HANDLE, C_HANDLE}, C_INT)
     --xSelectClipPath = 
     xBitBlt = link_c_func(gdi32, "BitBlt", {C_HANDLE, C_INT, C_INT, C_INT, C_INT, C_HANDLE, C_INT, C_INT, C_DWORD}, C_BOOL)
@@ -377,30 +378,30 @@ public function RegisterClassEx(
     sequence AlpszClassName,
     atom AhIconSm
 )
-	-- Wolfgang Fritz observes that you can set an icon
-	-- dynamically using:
-	-- junk = sendMessage(YourWindow, 128, 1, icon_handle) 
-	-- where 128 is WM_SETICON   
+    -- Wolfgang Fritz observes that you can set an icon
+    -- dynamically using:
+    -- junk = sendMessage(YourWindow, 128, 1, icon_handle) 
+    -- where 128 is WM_SETICON   
 
     atom
     wndclass = allocate(AcbSize),
     szAlpszMenuName = allocate_string(AlpszMenuName),
     szAlpszClassName = allocate_string(AlpszClassName)
 
-	poke4(wndclass + cbSize, AcbSize)
-	poke4(wndclass + style, Astyle)
-	poke4(wndclass + lpfnWndProc, AlpfnWndProc)
-	poke4(wndclass + cbClsExtra, AcbClsExtra)
-	poke4(wndclass + cbWndExtra, AcbWndExtra)
-	poke4(wndclass + hInstance, AhInstance)
-	poke4(wndclass + hIcon, AhIcon)
-	poke4(wndclass + hCursor, AhCursor)
-	poke4(wndclass + hbrBackground, AhbrBackground)
-	poke4(wndclass + lpszMenuName, szAlpszMenuName)
-	poke4(wndclass + lpszClassName, szAlpszClassName)
+    poke4(wndclass + cbSize, AcbSize)
+    poke4(wndclass + style, Astyle)
+    poke4(wndclass + lpfnWndProc, AlpfnWndProc)
+    poke4(wndclass + cbClsExtra, AcbClsExtra)
+    poke4(wndclass + cbWndExtra, AcbWndExtra)
+    poke4(wndclass + hInstance, AhInstance)
+    poke4(wndclass + hIcon, AhIcon)
+    poke4(wndclass + hCursor, AhCursor)
+    poke4(wndclass + hbrBackground, AhbrBackground)
+    poke4(wndclass + lpszMenuName, szAlpszMenuName)
+    poke4(wndclass + lpszClassName, szAlpszClassName)
     poke4(wndclass + hIconSm, AhIconSm)
 
-	return c_func(xRegisterClassEx, {wndclass})
+    return c_func(xRegisterClassEx, {wndclass})
 end function
 
 public function CreateWindowEx(
@@ -439,17 +440,9 @@ public function CreateWindowEx(
 end function
 
 
-----------------
-
-public function rgb(atom r, atom g, atom b)
-    return r + g * 256 + b * 65536
-end function
 
 
-public function get_rgb(atom color)
-    return int_to_bytes(color)
-end function
-
+------------------------------------------------------------------------------
 
 public function short_int( atom i ) --from win32lib
 
@@ -607,12 +600,12 @@ public function createMousePointer( atom x, atom y, sequence image ) --from win3
 
     -- create the cursor
     hCursor = c_func( xCreateCursor,
-	        { instance(),       -- application instance
-	          x, y,             -- x and y of hotspot
-	          length( image ),    -- cursor width
-	          length( image[1] ), -- cursor height
-	          andPlane,
-	          xorPlane } )
+            { instance(),       -- application instance
+              x, y,             -- x and y of hotspot
+              length( image ),    -- cursor width
+              length( image[1] ), -- cursor height
+              andPlane,
+              xorPlane } )
 
     
     -- keep track of cursor
@@ -631,10 +624,10 @@ public function TrackMouseEvent(atom hwndTrack)
     atom cbSize = 16,
     lpEventTrack = allocate(cbSize)
 
-	poke4(lpEventTrack + 0, cbSize)
-	poke4(lpEventTrack + 4, TME_LEAVE)
-	poke4(lpEventTrack + 8, hwndTrack)
-	poke4(lpEventTrack + 12, 400)
+    poke4(lpEventTrack + 0, cbSize)
+    poke4(lpEventTrack + 4, TME_LEAVE)
+    poke4(lpEventTrack + 8, hwndTrack)
+    poke4(lpEventTrack + 12, 400)
     
     ret = c_func(xTrackMouseEvent, {lpEventTrack})
     free(lpEventTrack)
@@ -675,8 +668,8 @@ end function
 
 
 
-global function get_sys_color(atom color)
-    return rgb(128,128,128) --getSysColor(color)
+global function get_sys_color(atom color) --why is this here?
+    return 0 --rgb(128,128,128) --getSysColor(color)
 end function
 
 
@@ -688,10 +681,10 @@ global function ClientToScreen(atom hWnd, sequence xyin)
     ptrpoint = allocate(szLong * 2)
     poke4(ptrpoint, xyin)
     result = c_func(xClientToScreen, {hWnd, ptrpoint})
-	xy = peek4s({ptrpoint, 2})
+    xy = peek4s({ptrpoint, 2})
     free(ptrpoint)
     
-	return xy
+    return xy
 end function
 
 atom MouseCaptured = 0
@@ -849,6 +842,13 @@ elsedef
 end ifdef
 
 
+ifdef EU4_0 then
+    public function peek_pointer(object x)
+        return peek4u(x)
+    end function
+end ifdef
+
+
 export function CreateProcess(sequence CommandLine)
     object fnVal
     atom pPI, pSUI, pCmdLine
@@ -870,6 +870,10 @@ export function CreateProcess(sequence CommandLine)
     
     machine:free(pCmdLine)
     machine:free(pSUI)
+    
+
+    
+    
     ifdef BITS32 then
         ProcInfo = peek4u({pPI,4})
         elsedef
@@ -884,12 +888,12 @@ end function
 
 
 export function TerminateProcess(atom hProcess, atom signal = 15)
-	--ifdef WINDOWS then
-	atom ret = c_func(xTerminateProcess,{hProcess, signal and 0})
-	--elsedef
-	--	c_func(KILL, {p[PID], signal})
-	--end ifdef
-	return ret
+    --ifdef WINDOWS then
+    atom ret = c_func(xTerminateProcess,{hProcess, signal and 0})
+    --elsedef
+    --    c_func(KILL, {p[PID], signal})
+    --end ifdef
+    return ret
 end function
 
 -- Shared Memory Messaging system --------------------------------------------
@@ -1245,16 +1249,16 @@ enum
 
 atom shwl=open_dll("shlwapi.dll") 
 if shwl<0  then 
-	puts(1,"shlwapi.dll not found!\n") 
-	any_key() 
-	abort(1) 
+    puts(1,"shlwapi.dll not found!\n") 
+    any_key() 
+    abort(1) 
 end if 
  
 atom getassoc=define_c_func(shwl,"AssocQueryStringA",{C_INT,C_INT,C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER) 
 if getassoc<0  then 
-	puts(1,"AssocQueryStringA no found!\n") 
-	any_key() 
-	abort(1) 
+    puts(1,"AssocQueryStringA no found!\n") 
+    any_key() 
+    abort(1) 
 end if
  
 function GetAssoc(atom flag1,atom flag,sequence assoc,sequence extra) 
@@ -1263,22 +1267,26 @@ sequence result
 atom text=allocate_string(assoc) 
 atom addon=allocate_string(extra) 
  
-	pzbuffer=allocate(260) 
-	pbuffer_size=allocate(4) 
-	poke4(pbuffer_size,260) 
-	poke4(pzbuffer,0) 
-		c_func(getassoc,{flag1,flag,text,addon,pzbuffer,pbuffer_size}) 
-	result = peek_string(pzbuffer) 
-	free(pzbuffer) 
-	free(pbuffer_size) 
-	free(text) 
-	free(addon) 
-	return result 
+    pzbuffer=allocate(260) 
+    pbuffer_size=allocate(4) 
+    poke4(pbuffer_size,260) 
+    poke4(pzbuffer,0) 
+        c_func(getassoc,{flag1,flag,text,addon,pzbuffer,pbuffer_size}) 
+    result = peek_string(pzbuffer) 
+    free(pzbuffer) 
+    free(pbuffer_size) 
+    free(text) 
+    free(addon) 
+    return result 
  
 end function 
  
 --example = GetAssoc(ASSOCF_NONE,ASSOCSTR_EXECUTABLE,".png","open")&"\n") 
 */
+
+
+
+
 
 
 

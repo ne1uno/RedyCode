@@ -212,7 +212,7 @@ procedure wc_draw(atom wid)
             {DR_Puts, wcprops[wcpLabel][idx]}
         }
         
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do

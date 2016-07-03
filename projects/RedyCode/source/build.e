@@ -113,7 +113,6 @@ procedure do_app_run(sequence exfile)
         object
         EuiPath = cfg:get_var("", "Projects", "EuiPath"),
         IncludePath = cfg:get_var("", "Projects", "IncludePath")
-        --RedyLibPath = cfg:get_var("", "Projects", "RedyLibPath")
         atom wh = gui:widget_get_handle("winMain")
         
         if sequence(EuiPath) and sequence(IncludePath) then --and sequence(RedyLibPath) then
@@ -125,11 +124,6 @@ procedure do_app_run(sequence exfile)
             
             --puts(1, "<" & cmdline & ">\n")
             
-            --Old version:
-            --gui:ShellExecute(gui:widget_get_handle("winMain"), EuiPath, cmdline, "open", filesys:pathname(exfile))
-            --ShellExecute(atom WinHwnd, sequence filename, sequence parameter, sequence verb = "", sequence workingdir = "")
-            
-            --New version:
             atom ret = gui:ShellExecute(wh, "open", EuiPath, cmdline, filesys:pathname(exfile))
             --ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL )
             
@@ -321,4 +315,8 @@ procedure show_build()
         {"label", "Close"}
     })
 end procedure
+
+
+
+
 

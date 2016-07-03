@@ -348,6 +348,11 @@ public procedure select_tab(sequence tabname)
 end procedure
 
 
+public function list_tabs()
+    return {tName, tLabel, tTitle} 
+end function
+
+
 public procedure set_tab_label(sequence tabname, sequence tablabel)
     atom tidx = find(tabname, tName)
     if tidx > 0 then
@@ -398,4 +403,5 @@ public procedure set_tab_readonly(sequence tabname, atom readonly)
         end if
     end  if
 end procedure
+
 

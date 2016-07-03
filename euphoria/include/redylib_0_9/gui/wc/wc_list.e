@@ -219,13 +219,15 @@ end procedure
 
 procedure wc_draw(atom wid)
     sequence cmds, wrect, chwid, txpos, lrect, irect, itexts
-    atom idx, hlcolor, shcolor, fillcolor, txtcolor, hicolor, stripecolor
+    atom idx, wh, hlcolor, shcolor, fillcolor, txtcolor, hicolor, stripecolor
     atom ih, xp, yp, ss, scry,scrx, hover, selection
     
     idx = find(wid, wcprops[wcpID])
     
     if idx > 0 then
         wrect = {0, 0} & widget_get_size(wid)
+        wh = widget:widget_get_handle(wid)
+        
         lrect = wcprops[wcpListRect][idx]
         lrect[1] += wrect[1]
         lrect[2] += wrect[2]
@@ -360,7 +362,8 @@ procedure wc_draw(atom wid)
         cmds &= {
             {DR_Release}
         }              
-        draw(widget:widget_get_handle(wid), cmds)
+        
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do

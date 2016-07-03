@@ -28,6 +28,8 @@ include redylib_0_9/actions.e as action
 include redylib_0_9/gui/objects/textdoc.e as txtdoc
 include redylib_0_9/gui/dialogs/msgbox.e as msgbox
 
+include project.e as project
+
 include std/task.e
 include std/text.e
 include std/pretty.e
@@ -466,6 +468,7 @@ export procedure refresh_toc()
     if length(iname) > 0 then
         itms = txtdoc:get_toc(iname & ".filepage")
         bookmarks = txtdoc:get_bookmarks(iname & ".filepage")
+        project:update_bookmarks(iname, bookmarks)
         
         gui:wproc("cntGoto.lstContents", "set_list_items", {itms})
         gui:wproc("cntBookmarks.lstBookmarks", "set_list_items", {bookmarks})
@@ -766,6 +769,7 @@ export procedure create_search_panel()
     
     gui:wproc("tabSearch", "select_tab", {1})
 end procedure
+
 
 
 

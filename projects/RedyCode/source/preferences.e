@@ -348,7 +348,7 @@ procedure do_show_preferences()
     })
     
     
--- Paths Tab
+-- Paths Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntPathsTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -474,9 +474,8 @@ procedure do_show_preferences()
         {"label", "Select Folder..."}
     })
     
-    
-/*    
--- Projects Tab
+      
+-- Projects Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntProjectsTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -529,7 +528,7 @@ procedure do_show_preferences()
     })
     
     
--- Tools Tab
+-- Tools Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntToolsTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -554,9 +553,9 @@ procedure do_show_preferences()
         {"label", "Smart Tabs"},
         {"text", ""}
     })
-    */
+
     
--- Controls Tab
+-- Controls Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntControlsTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -582,8 +581,8 @@ procedure do_show_preferences()
         {rgb(127, 127, 255), "Ctrl+A", "Select All"}
     }})
     
-    /*
--- Editor Tab
+    
+-- Editor Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntEditorTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -692,10 +691,9 @@ procedure do_show_preferences()
         {"label", "Cursor Color"},
         {"text", ""}
     })
-    */
 
-    /*
--- Highlighter Tab
+
+-- Highlighter Tab --------------------------------------
     gui:wcreate({
         {"name", "winPreferences.cntHighlightingTab"},
         {"parent", "winPreferences.tabCategories"},
@@ -713,7 +711,7 @@ procedure do_show_preferences()
         {"label", "Enable syntax highlighting"},
         {"value", 1}
     })
-    */
+    
     -- ttStyles = repeat({}, ttComment) --token styles: {textfont, textsize, textstyle, textcolor}
     -- ttStyles[ttNone] = {Normal, th:cButtonLabel}
     -- ttStyles[ttInvalid] = {Normal, th:cButtonLabel}
@@ -755,5 +753,6 @@ procedure do_show_preferences()
 end procedure
 
 check_config()
+
 
 

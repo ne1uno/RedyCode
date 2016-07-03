@@ -648,7 +648,7 @@ procedure wc_draw(atom wid)
             {DR_Release}
         }
         
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do

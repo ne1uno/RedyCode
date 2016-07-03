@@ -18,7 +18,7 @@
 -------------------------------------------------------------------------------
 
 
-global constant RedyAE_Version  = "0.9.2",
+global constant RedyAE_Version  = "0.9.3",
 RedyAE_Copyright = "Copyright" & 169 & " 2016 Ryan W. Johnson",
 RedyAE_AboutText = 
     "Redy" & 153 & " application environment version " & RedyAE_Version & "\n" &
