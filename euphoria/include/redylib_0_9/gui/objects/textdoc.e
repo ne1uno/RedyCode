@@ -3246,7 +3246,7 @@ procedure call_cmd(atom idx, sequence cmd, object args)
             
         case "resize" then
             sequence csize = gui:wfunc(iCanvasName[idx], "get_visible_size", {iTotalWidth[idx], iTotalHeight[idx]})
-            if iTotalWidth[idx] = csize[1] then
+            if iTotalWidth[idx] = csize[1] and iLineNumWidth[idx] > 0 then
                 vislines = visible_lines(idx)
                 draw_lines(idx, {{vislines[1], vislines[2]}})
             else
@@ -3256,8 +3256,8 @@ procedure call_cmd(atom idx, sequence cmd, object args)
             sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
                 {DR_Rectangle, True, 0, 0, iLineNumWidth[idx] - 20, csize[2]}
             }
-            gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
             
+            gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
     end switch
 end procedure
 
@@ -4784,6 +4784,7 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
+
 
 
 
