@@ -814,6 +814,12 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                     else
                         iLineNumWidth[idx] = 0
                     end if
+                    
+                    sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
+                        {DR_Rectangle, True, 0, 0, iLineNumWidth[idx] - 20, csize[2]}
+                    }
+                    gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
+                    
                     --get canvas size, etc.
                     set_font(whnd, iLineNumFont[idx], iLineNumFontSize[idx], Normal)
                     --emptysize = get_text_extent(whnd, " ")
@@ -3253,11 +3259,12 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 rebuild_lines(idx, 1, length(iTxtLnText[idx]))
             end if
             
-            sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
+            /*sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
                 {DR_Rectangle, True, 0, 0, iLineNumWidth[idx] - 20, csize[2]}
             }
             
-            gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
+            gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})*/
+            
     end switch
 end procedure
 
@@ -4784,6 +4791,7 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
+
 
 
 
