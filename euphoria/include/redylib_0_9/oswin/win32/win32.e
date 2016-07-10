@@ -37,6 +37,8 @@ include std/sequence.e
 include std/task.e
 include std/text.e
 include std/pretty.e
+include std/convert.e
+include std/map.e
 
 include redylib_0_9/oswin/win32/redy_images.e as redyimg
 
@@ -137,10 +139,6 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                     + szByte --BOOL fIncUpdate;
                     + szByte * 32 --BYTE rgbReserved[32];
                 )
-                --ptrRect = allocate(szLong * 4)
-                --c_proc(xGetClientRect, {hwnd, ptrRect})
-                --VOID = c_func(xGetUpdateRect, {hwnd, ptrRect, 0}) --(_In_   HWND hWnd,  _Out_  LPRECT lpRect,  _In_   BOOL bErase)
-                --rect = peek4u({ptrRect,4}) --{RECT_Left, RECT_Top, RECT_Right, RECT_Bottom}
                 
                 hdc = c_func(xBeginPaint, {hwnd, ptrPs})
                 if hdc = 0 then
@@ -150,26 +148,24 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 VOID = c_func(xBitBlt, {hdc, rect[RECT_Left], rect[RECT_Top], rect[RECT_Right], rect[RECT_Bottom], 
                                         windowDCs[widx], rect[RECT_Left], rect[RECT_Top], SRCCOPY})
                 if VOID != 1 then
-                    puts(1, "error: WM_PAINT: BitBlit\n")
+                    puts(1, "error: BitBlit\n")
                 end if
                 
                 if length(windowForeDraw[widx]) > 0 then
                     draw(hwnd, windowForeDraw[widx], hdc)
                 end if
-                
                 -------
                 /*
+                --Invalidate Region debugging:
                 atom hPen = c_func(xCreatePen, {PenStyle, PenWidth, rgb(255, 100, 100)})
                 VOID = c_func(xSelectObject, {hdc, hPen})
                 atom hBrush = c_func(xGetStockObject, {HOLLOW_BRUSH})
                 VOID = c_func(xSelectObject, {hdc, hBrush})
-                VOID = c_func(xRectangle, {hdc, rect[RECT_Left], rect[RECT_Top], rect[RECT_Right], rect[RECT_Bottom]})
+                VOID = c_func(xRectangle, {hdc, rect[RECT_Left]+1, rect[RECT_Top]+1, rect[RECT_Right]-1, rect[RECT_Bottom]-1})
                 c_proc(xDeleteObject, {hPen})
                 c_proc(xDeleteObject, {hBrush})
                 */
                 ------
-                
-                --? {rect[RECT_Left], rect[RECT_Top], rect[RECT_Right], rect[RECT_Bottom]}
                 
                 c_proc(xEndPaint, {hwnd, ptrPs})
                 
@@ -190,7 +186,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 atom bm = allocate(SIZEOF_BITMAP)
                 atom objsz = c_func(xGetObject, {windowBitmaps[widx], SIZEOF_BITMAP, bm})
                 if objsz = 0 or objsz != SIZEOF_BITMAP then
-                    puts(1, "DR_Image Error: GetObject hBitmap")
+                    puts(1, "WM_SIZE Error: GetObject hBitmap")
                 end if
                 atom oldWidth = peek4s(bm + szLong)
                 atom oldHeight = peek4s(bm + szLong + szLong)
@@ -198,7 +194,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 
                 --delete old bitmap, create new one
                 hdc = c_func(xGetDC, {windowList[widx]})
-            	c_proc(xDeleteObject, {windowBitmaps[widx]})
+                c_proc(xDeleteObject, {windowBitmaps[widx]})
                 windowBitmaps[widx] = c_func(xCreateCompatibleBitmap, {hdc, params[3], params[4]})
                 
                 --if new bitmap is larger than old bitmap, fill with backgroudn color
@@ -236,7 +232,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
         case WM_MOVE then
             window_add_event(hwnd, "Move", {params[3], params[4]})
             
-    	case WM_CLOSE then
+        case WM_CLOSE then
             if windowCloseAllow[widx] = 1 and (WindowModal = 0 or WindowModal = hwnd) then
                 window_add_event(hwnd, "Close", {})
             elsif windowCloseAllow[widx] = 0 then
@@ -244,7 +240,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 return 1
             end if
             
-    	case WM_DESTROY then
+        case WM_DESTROY then
             if widx > 0 then
                 VOID = c_func(xDeleteDC, {windowDCs[widx]})
                 c_proc(xDeleteObject, {windowBitmaps[widx]})
@@ -279,13 +275,13 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 end if
             end if
                 
-    	case WM_ACTIVATE then
+        case WM_ACTIVATE then
             --params[1] value:
             --  WA_ACTIVE = 1 : Activated by some method other than a mouse click
             --    (for example, by a call to the SetActiveWindow function or by use of the keyboard interface to select the window).
             --  WA_CLICKACTIVE = 2 : Activated by a mouse click.
             --  WA_INACTIVE = 0 : Deactivated.
-    	    --printf(1, "WM_ACTIVATE: {%d,%d,%d,%d,%d}\n", {widx, params[1], params[2], params[3], params[4]})        
+            --printf(1, "WM_ACTIVATE: {%d,%d,%d,%d,%d}\n", {widx, params[1], params[2], params[3], params[4]})        
             
         case WM_MOUSEMOVE then
             if widx > 0 then
@@ -346,24 +342,24 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
             end for
             
         case WM_NCHITTEST then
-        	
+            
         case WM_SETCURSOR then
-          	
+              
         case WM_NCMOUSEMOVE then
-        	window_add_event(hwnd, "NonClientMouseMove", {params[3], params[4], params[3], params[4]})
+            window_add_event(hwnd, "NonClientMouseMove", {params[3], params[4], params[3], params[4]})
             
         case WM_MOUSEACTIVATE then
             if equal(windowStyle[widx], "popup") then
                 MenuActive = 1
                 window_add_event(hwnd, "LeftDown", {LastMousePos[1], LastMousePos[2], LastMousePos[1], LastMousePos[2]})
             end if
-        	
+            
         case WM_NCACTIVATE then
             if widx > 0 then
                 if MenuActive = 1 and not equal(windowStyle[widx], "popup") then
                     return 0
                 end if
-        	end if
+            end if
             
         case WM_KEYDOWN then    
             window_add_event(hwnd, "KeyDown", {params[1], params[2], params[3], params[4]})
@@ -388,7 +384,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
             end if
             
         case WM_ACTIVATEAPP then
-        	if params[1] = 0 then
+            if params[1] = 0 then
                 --close_all_popups("8")
             end if
             
@@ -415,7 +411,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
         case else
             
     end switch
-	return c_func(xDefWindowProc, {hwnd, iMsg, wParam, lParam})
+    return c_func(xDefWindowProc, {hwnd, iMsg, wParam, lParam})
 end function
 
 
@@ -435,22 +431,22 @@ end procedure
 
 
 public procedure start()
-	atom hwnd, class, hdc, id, WndProcAddress, icon_handle
-	
-	if started then
-	   return
-	end if
-	started = 1
+    atom hwnd, class, hdc, id, WndProcAddress, icon_handle
+    
+    if started then
+       return
+    end if
+    started = 1
     GuiRunning = 1
     link_dll_routines()
-	id = routine_id("WndProc")
-	if id = -1 then
-		crash("routine_id failed!")
-	end if
-	WndProcAddress = call_back(id) -- get address for callback
-	--icon_handle = c_func(xLoadIcon, {instance(), allocate_string("eui")})
-	
-	class = RegisterClassEx(	
+    id = routine_id("WndProc")
+    if id = -1 then
+        crash("routine_id failed!")
+    end if
+    WndProcAddress = call_back(id) -- get address for callback
+    --icon_handle = c_func(xLoadIcon, {instance(), allocate_string("eui")})
+    
+    class = RegisterClassEx(    
         SIZE_OF_WNDCLASS,
         or_all({CS_HREDRAW, CS_VREDRAW, CS_DBLCLKS}),
         WndProcAddress,
@@ -464,11 +460,11 @@ public procedure start()
         "AppWindow",
         NULL --icon_handle
     )
-	if class = 0 then
-		crash("Couldn't register AppWindow class")
-	end if
-	
-	class = RegisterClassEx(
+    if class = 0 then
+        crash("Couldn't register AppWindow class")
+    end if
+    
+    class = RegisterClassEx(
         SIZE_OF_WNDCLASS,
         or_all({CS_HREDRAW, CS_VREDRAW, CS_DROPSHADOW, CS_SAVEBITS}),
         WndProcAddress,
@@ -482,36 +478,36 @@ public procedure start()
         "MenuWindow",
         NULL --icon_handle
     )
-	if class = 0 then
-		crash("Couldn't register MenuWindow class")
-	end if
-	
-	--Create Main window
-	hwnd = CreateWindowEx(
-		0,                       -- extended style
-		"AppWindow",               -- window class name
-		"Main Window",                -- window caption
-		or_all({WS_OVERLAPPEDWINDOW}),     -- window style
-		1000,                          --CW_USEDEFAULT,           -- initial x position
-		50,           -- initial y position
-		600,           -- initial x size
-		350,           -- initial y size
-		HWND_MESSAGE,                    -- parent window handle
-		NULL,                    -- window menu handle
-		0 ,                 --hInstance // program instance handle
-		NULL              -- creation parameters
+    if class = 0 then
+        crash("Couldn't register MenuWindow class")
+    end if
+    
+    --Create Main window
+    hwnd = CreateWindowEx(
+        0,                       -- extended style
+        "AppWindow",               -- window class name
+        "Main Window",                -- window caption
+        or_all({WS_OVERLAPPEDWINDOW}),     -- window style
+        1000,                          --CW_USEDEFAULT,           -- initial x position
+        50,           -- initial y position
+        600,           -- initial x size
+        350,           -- initial y size
+        HWND_MESSAGE,                    -- parent window handle
+        NULL,                    -- window menu handle
+        0 ,                 --hInstance // program instance handle
+        NULL              -- creation parameters
     )
-	if hwnd = 0 then
-		crash("Couldn't CreateWindow")
-	end if
-	
+    if hwnd = 0 then
+        crash("Couldn't CreateWindow")
+    end if
+    
     load_mouse_cursors()
     
-	mainwin = hwnd
+    mainwin = hwnd
     hdc = c_func(xGetDC, {hwnd})
     --BitmapDC = c_func(xCreateCompatibleDC, {hdc})
-	--ClipScreenDC = c_func(xCreateCompatibleDC, {hdc})
-	--ClipScreenBM = c_func(xCreateCompatibleBitmap, {hdc, ScreenX, ScreenY})
+    --ClipScreenDC = c_func(xCreateCompatibleDC, {hdc})
+    --ClipScreenBM = c_func(xCreateCompatibleBitmap, {hdc, ScreenX, ScreenY})
     VOID  = c_func(xReleaseDC, {hwnd, hdc})
     MainTimer = c_func(xSetTimer, {hwnd, 1, 1, NULL})
     task_oswin = task_create(routine_id("win_main"), {})
@@ -581,26 +577,26 @@ atom wleft, atom wtop, atom wwidth, atom wheight, atom wmaximized = 0, atom wbac
     end switch
     
     hWnd = CreateWindowEx(
-		winexstyle,  -- extended style
-		winclass,    -- window class name
-		wtitle,      -- window caption
-		winstyle,    -- window style
-		wleft,       -- initial x position
-		wtop,        -- initial y position
-		wwidth,      -- initial x size
-		wheight,     -- initial y size
-		NULL,     -- parent window handle
-		NULL,        -- window menu handle
-		0 ,          --hInstance // program instance handle
-		NULL)        -- creation parameters
-	
-	if hWnd = 0 then
-		crash("Couldn't Create Window")
-	end if
-	
+        winexstyle,  -- extended style
+        winclass,    -- window class name
+        wtitle,      -- window caption
+        winstyle,    -- window style
+        wleft,       -- initial x position
+        wtop,        -- initial y position
+        wwidth,      -- initial x size
+        wheight,     -- initial y size
+        NULL,     -- parent window handle
+        NULL,        -- window menu handle
+        0 ,          --hInstance // program instance handle
+        NULL)        -- creation parameters
+    
+    if hWnd = 0 then
+        crash("Couldn't Create Window")
+    end if
+    
     hdc = c_func(xGetDC, {hWnd})
-	memdc = c_func(xCreateCompatibleDC, {hdc})
-	hbit = c_func(xCreateCompatibleBitmap, {hdc, ScreenX, ScreenY})
+    memdc = c_func(xCreateCompatibleDC, {hdc})
+    hbit = c_func(xCreateCompatibleBitmap, {hdc, ScreenX, ScreenY})
     VOID = c_func(xReleaseDC, {hWnd, hdc})
 
     windowList &= {hWnd}
@@ -653,7 +649,7 @@ public procedure show_window(atom hWnd, atom maximized = 0)
         else
             c_proc(xShowWindow, {hWnd, SW_SHOWNORMAL})
         end if
-    	c_proc(xUpdateWindow, {hWnd})
+        c_proc(xUpdateWindow, {hWnd})
         ptrRect = allocate(szLong * 4)
         c_proc(xGetClientRect, {hWnd, ptrRect})
         rect = peek4u({ptrRect,4}) --{RECT_Left, RECT_Top, RECT_Right, RECT_Bottom}
@@ -805,7 +801,7 @@ end function
 
 
 public function client_area_offset(atom hWnd)
-	sequence cpos = ClientToScreen(hWnd, {0, 0})
+    sequence cpos = ClientToScreen(hWnd, {0, 0})
     return cpos
 end function
 
@@ -1206,6 +1202,7 @@ DR_Scroll,
 
 DR_Arc,
 DR_Image,
+DR_Copy,
 DR_Chord,
 DR_Ellipse,
 DR_Line,
@@ -1233,6 +1230,217 @@ DR_Puts,
 DR_BrushStyle,
 DR_BrushHatch,
 DR_BrushColor
+
+sequence ColorNames = {}
+    
+public function rgb(atom r, atom g, atom b)
+    return r + g * 256 + b * 65536
+end function
+
+
+public function get_rgb(atom color)
+    return int_to_bytes(color)
+end function
+
+function hex_to_color(sequence hexcolor)
+    atom color = 0
+    if length(hexcolor) = 7 and hexcolor[1] = '#' then
+        color = to_number(hexcolor)
+        if color < 0 then
+            color = 0
+        elsif color > 16777215 then
+            color = 16777215
+        end if
+    end if
+    return color
+end function
+
+
+--public function color_to_hex(atom color)
+--    sequence hexcolor = int_to_bytes(color)
+--    
+--    return "#" & 
+--end function
+
+
+-- adapted from ne1uno's code pastey
+-- colors from http://centerkey.com/colors/ sorted by hue
+
+procedure init_color_names()
+    object hexnames = split(`
+    LavenderBlush FFF0F5 
+    SeaShell FFF5EE 
+    Linen FAF0E6 
+    MistyRose FFE4E1 
+    PeachPuff FFDAB9 
+    RosyBrown BC8F8F 
+    Pink FFC0CB 
+    LightPink FFB6C1 
+    PaleVioletRed D87093 
+    DarkSalmon E9967A 
+    Sienna A0522D 
+    HotPink FF69B4 
+    LightSalmon FFA07A 
+    SaddleBrown 8B4513 
+    LightCoral F08080 
+    Peru CD853F 
+    SandyBrown F4A460 
+    IndianRed CD5C5C 
+    Salmon FA8072 
+    Brown A52A2A 
+    Maroon 800000 
+    Chocolate D2691E 
+    Coral FF7F50 
+    FireBrick B22222 
+    DarkRed 8B0000 
+    Tomato FF6347 
+    Crimson DC143C 
+    OrangeRed FF4500 
+    Red FF0000 
+    MintCream F5FFFA 
+    HoneyDew F0FFF0 
+    DarkSeaGreen 8FBC8F 
+    SeaGreen 2E8B57 
+    LightGreen 90EE90 
+    PaleGreen 98FB98 
+    MediumSeaGreen 3CB371 
+    ForestGreen 228B22 
+    DarkGreen 006400 
+    Green 008000 
+    LimeGreen 32CD32 
+    SpringGreen 00FF7F 
+    LawnGreen 7CFC00 
+    Chartreuse 7FFF00 
+    Lime 00FF00 
+    Lavender E6E6FA 
+    LightSteelBlue B0C4DE 
+    LightSlateGray 778899 
+    SlateGray 708090 
+    DarkSlateBlue 483D8B 
+    MediumPurple 9370D8 
+    MidnightBlue 191970 
+    CornflowerBlue 6495ED 
+    SlateBlue 6A5ACD 
+    MediumSlateBlue 7B68EE 
+    RoyalBlue 4169E1 
+    Navy 000080 
+    DarkBlue 00008B 
+    MediumBlue 0000CD 
+    Blue 0000FF 
+    AliceBlue F0F8FF 
+    Azure F0FFFF 
+    LightCyan E0FFFF 
+    LightBlue ADD8E6 
+    PowderBlue B0E0E6 
+    PaleTurquoise AFEEEE 
+    DarkSlateGray 2F4F4F 
+    CadetBlue 5F9EA0 
+    SkyBlue 87CEEB 
+    LightSkyBlue 87CEFA 
+    MediumAquaMarine 66CDAA 
+    SteelBlue 4682B4 
+    Aquamarine 7FFFD4 
+    MediumTurquoise 48D1CC 
+    Teal 008080 
+    LightSeaGreen 20B2AA 
+    Turquoise 40E0D0 
+    DarkCyan 008B8B 
+    DodgerBlue 1E90FF 
+    MediumSpringGreen 00FA9A 
+    DarkTurquoise 00CED1 
+    DeepSkyBlue 00BFFF 
+    Aqua 00FFFF 
+    Cyan 00FFFF 
+    Thistle D8BFD8 
+    Plum DDA0DD 
+    Violet EE82EE 
+    Orchid DA70D6 
+    MediumOrchid BA55D3 
+    Indigo 4B0082 
+    DarkOrchid 9932CC 
+    BlueViolet 8A2BE2 
+    Purple 800080 
+    DarkMagenta 8B008B 
+    MediumVioletRed C71585 
+    DarkViolet 9400D3 
+    DeepPink FF1493 
+    Fuchsia FF00FF 
+    Magenta FF00FF 
+    FloralWhite FFFAF0 
+    Ivory FFFFF0 
+    OldLace FDF5E6 
+    Beige F5F5DC 
+    AntiqueWhite FAEBD7 
+    LightYellow FFFFE0 
+    Cornsilk FFF8DC 
+    PapayaWhip FFEFD5 
+    LightGoldenRodYellow FAFAD2 
+    BlanchedAlmond FFEBCD 
+    LemonChiffon FFFACD 
+    Bisque FFE4C4 
+    Wheat F5DEB3 
+    Moccasin FFE4B5 
+    Tan D2B48C 
+    PaleGoldenRod EEE8AA 
+    NavajoWhite FFDEAD 
+    DarkOliveGreen 556B2F 
+    BurlyWood DEB887 
+    DarkKhaki BDB76B 
+    Khaki F0E68C 
+    OliveDrab 6B8E23 
+    YellowGreen 9ACD32 
+    Olive 808000 
+    DarkGoldenRod B8860B 
+    GreenYellow ADFF2F 
+    GoldenRod DAA520 
+    DarkOrange FF8C00 
+    Orange FFA500 
+    Gold FFD700 
+    Yellow FFFF00 
+    White FFFFFF 
+    WhiteSmoke F5F5F5 
+    Snow FFFAFA 
+    Gainsboro DCDCDC 
+    GhostWhite F8F8FF 
+    LightGray D3D3D3 
+    Silver C0C0C0 
+    DarkGray A9A9A9 
+    Gray 808080 
+    DimGray 696969 
+    Black 000000 
+    `, "\n", 1, 0)
+    object hname
+    for i = 1 to length(hexnames) do
+        hname = split(hexnames[i],' ', 1, 0)
+        if length(hname) = 2 then
+            ColorNames &= {lower(hname[1]), hex_to_color("#" & hname[2])}
+            --puts(1, lower(hname[1]) & " = #" & lower(hname[2]) & " ")
+        end if
+    end for
+end procedure
+
+
+public function get_color_list()
+    if length(ColorNames) = 0 then
+        init_color_names()
+    end if
+    return ColorNames
+end function
+
+
+public function named_color(object hexornameedcolor)
+    if length(ColorNames) = 0 then
+        init_color_names()
+    end if
+    
+    sequence cname = lower(hexornameedcolor)
+    for c = 1 to length(ColorNames) do
+        if ColorNames[c][1] = cname then
+            return ColorNames[c][2]
+        end if
+    end for
+    return 0
+end function
 
 
 sequence hBitmapNames = {}, hBitmaps = {}, hBitmapSizes = {}
@@ -1285,7 +1493,7 @@ end procedure
 public procedure create_bitmap(sequence bitmapname, atom xs, atom ys)
     if length(windowList) > 0 then
         atom hdc = c_func(xGetDC, {windowList[1]})
-    	atom hbit = c_func(xCreateCompatibleBitmap, {hdc, xs, ys})
+        atom hbit = c_func(xCreateCompatibleBitmap, {hdc, xs, ys})
         VOID = c_func(xReleaseDC, {windowList[1], hdc})
         
         --puts(1, bitmapname)
@@ -1307,8 +1515,55 @@ public procedure create_bitmap(sequence bitmapname, atom xs, atom ys)
     --else
         --puts(1, "Error: create_bitmap: There are no windows to create a bitmap for.\n")
     end if
-    
-    
+end procedure
+
+
+public procedure resize_bitmap(sequence bitmapname, atom xs, atom ys, atom backcolor = 0)
+    if length(windowList) > 0 then
+        atom hdc = c_func(xGetDC, {windowList[1]})
+        atom hbit = c_func(xCreateCompatibleBitmap, {hdc, xs, ys})
+        atom srcDC = c_func(xCreateCompatibleDC, {hdc})
+        atom destDC = c_func(xCreateCompatibleDC, {hdc})
+        atom hPen, hBrush
+        
+        VOID = c_func(xReleaseDC, {windowList[1], hdc})
+        
+        atom bidx = find(bitmapname, hBitmapNames)
+        if bidx > 0 then
+            atom oldhbit = hBitmaps[bidx]
+            
+            -- select the bitmap into it
+            VOID = c_func(xSelectObject, {srcDC, oldhbit})
+            VOID = c_func(xSelectObject, {destDC, hbit})
+            
+            -- set mapping mode to same as destination
+            VOID = c_func(xSetMapMode, {srcDC, c_func(xGetMapMode, {hdc})})
+            
+            --fill new bitmap with background color
+            hPen = c_func(xCreatePen, {PS_SOLID, 1, backcolor})
+            VOID = c_func(xSelectObject, {destDC, hPen})
+            hBrush = c_func(xCreateSolidBrush, {backcolor})
+            VOID = c_func(xSelectObject, {destDC, hBrush})
+            VOID = c_func(xRectangle, {destDC, 0, 0, xs, ys})  --HDC hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect
+            c_proc(xDeleteObject, {hPen})
+            c_proc(xDeleteObject, {hBrush})
+            
+            -- copy bitmap to device context
+            --BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop);
+            VOID = c_func(xBitBlt, {destDC, 0, 0, xs, ys, srcDC, 0, 0, SRCCOPY})
+            -- release resourses
+            VOID = c_func(xDeleteDC, {srcDC})
+            VOID = c_func(xDeleteDC, {destDC})
+            
+            c_proc(xDeleteObject, {oldhbit})
+            hBitmaps[bidx] = hbit
+            hBitmapSizes[bidx] = {xs, ys}
+        else
+            hBitmapNames &= {bitmapname}
+            hBitmaps &= {hbit}
+            hBitmapSizes &= {{xs, ys}}
+        end if
+    end if
 end procedure
 
 
@@ -1361,7 +1616,7 @@ public function get_pixel_color(sequence bitmapname, atom wh, atom xpos, atom yp
     bidx = find(bitmapname, hBitmapNames)
     if bidx > 0 then
         hdc = c_func(xGetDC, {wh})
-    	memdc = c_func(xCreateCompatibleDC, {hdc})
+        memdc = c_func(xCreateCompatibleDC, {hdc})
         VOID = c_func(xReleaseDC, {wh, hdc})
         VOID = c_func(xSelectObject, {memdc, hBitmaps[bidx]})
         bc = c_func(xGetPixel, {memdc, xpos, ypos})
@@ -1389,7 +1644,7 @@ public function bitmap_to_sequence(sequence bitmapname, atom wh)
     bidx = find(bitmapname, hBitmapNames)
     if bidx > 0 then
         hdc = c_func(xGetDC, {wh})
-    	memdc = c_func(xCreateCompatibleDC, {hdc})
+        memdc = c_func(xCreateCompatibleDC, {hdc})
         VOID = c_func(xReleaseDC, {wh, hdc})
         
         DimX = hBitmapSizes[bidx][1]
@@ -1507,12 +1762,6 @@ end function
 
 
 
-
-
-
-
-
-
 public procedure set_font(object windowid, sequence fontname, object size, object attributes)
     --TODO: delete references to windowid
     FontName = fontname
@@ -1543,11 +1792,11 @@ public procedure draw_direct(atom hwnd, sequence cmds, atom clearcmds = 1, objec
         if clearcmds then
             if not equal(cmds, windowForeDraw[widx]) then
                 windowForeDraw[widx] = cmds
-                InvalidatedWindows &= {hwnd}
+                InvalidatedWindows &= {{hwnd, invalidrect}}
             end if
         else
             windowForeDraw[widx] &= cmds
-            InvalidatedWindows &= {hwnd}
+            InvalidatedWindows &= {{hwnd, invalidrect}}
         end if
     end if
 end procedure
@@ -1582,7 +1831,7 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
         end if
         
         --wdc = c_func(xGetDC, {hwnd})
-    	--hdc = c_func(xCreateCompatibleDC, {wdc})
+        --hdc = c_func(xCreateCompatibleDC, {wdc})
         --VOID = c_func(xReleaseDC, {hwnd, wdc})
         
         VOID = c_func(xSelectObject, {hdc, bmp})
@@ -1645,7 +1894,7 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
                     atom bm = allocate(SIZEOF_BITMAP)
                     atom objsz = c_func(xGetObject, {bmp, SIZEOF_BITMAP, bm})
                     if objsz = 0 or objsz != SIZEOF_BITMAP then
-                        puts(1, "DR_Image Error: GetObject hBitmap")
+                        puts(1, "DR_Release Error: GetObject hBitmap")
                     end if
                     atom bmWidth = peek4s(bm + szLong)
                     atom bmHeight = peek4s(bm + szLong + szLong)
@@ -1681,7 +1930,7 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
                 --VOID = c_func(xScrollDC, {hdc, ccmd[2], ccmd[3], rectscroll, rectclip, rgnupdate, rectupdate)
 
                 
-            case DR_Image then --{hBitmap, x, y} --todo: allow specific height, widgth, point of origin, etc.
+            case DR_Image then --{hBitmap, x, y, optional transparency color}
                 atom bm, bmDC, objsz, ptSize, ptOrg, bmWidth, bmHeight, bmOrgX, bmOrgY, hBitmap
                 
                 --ccmd[2] = "Redy"
@@ -1743,7 +1992,6 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
                         VOID = c_func(xBitBlt, {hdc, xoff + ccmd[3], yoff + ccmd[4], bmWidth, bmHeight, bmDC, bmOrgX, bmOrgY, SRCCOPY})
                     end if
                     
-                    
                     --? VOID
                     -- release resourses
                     VOID = c_func(xDeleteDC, {bmDC})
@@ -1752,6 +2000,49 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
                     --puts(1, "DR_Image error: Image '" & ccmd[2] & "' does not exist!\n")
                     --pretty_print(1, hBitmapNames, {2})
                 end if
+                
+                
+            case DR_Copy then --{srcbitmap, srcx, srcy, destx, desty, width, height}
+                atom bm, bmDC, objsz, ptOrg, hBitmap, samesrc = 0
+                
+                if equal(ccmd[2], ".") then --use the bitmap being drawn to as the source bitmap
+                    ccmd[2] = bmpname
+                    samesrc = 1
+                end if
+                bidx = find(ccmd[2], hBitmapNames)
+                if bidx > 0 then
+                    hBitmap = hBitmaps[bidx]
+                    
+                    -- create a memory device context based on the destination
+                    if samesrc then
+                        bmDC = hdc
+                    else
+                        bmDC = c_func(xCreateCompatibleDC, {hdc})
+                        if bmDC = NULL then --error
+                        end if
+                        
+                        -- select the bitmap into it
+                        VOID = c_func(xSelectObject, {bmDC, hBitmap})
+                        
+                        -- set mapping mode to same as destination
+                        VOID = c_func(xSetMapMode, {bmDC, c_func(xGetMapMode, {hdc})})
+                        -- int SetMapMode(  _In_  HDC hdc,  _In_  int fnMapMode);    int GetMapMode(  _In_  HDC hdc);
+                    end if
+                    
+                    -- copy bitmap to device context
+--BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop);
+                    VOID = c_func(xBitBlt, {hdc, xoff + ccmd[5], yoff + ccmd[6], ccmd[7], ccmd[8], bmDC, ccmd[3], ccmd[4], SRCCOPY})
+                    
+                    if samesrc then
+                    else
+                        -- release resourses
+                        VOID = c_func(xDeleteDC, {bmDC})
+                    end if
+                else
+                    --puts(1, "DR_Image error: Image '" & ccmd[2] & "' does not exist!\n")
+                    --pretty_print(1, hBitmapNames, {2})
+                end if
+                
                 
 --pens, brushes, and colors
             case DR_BackColor then --# proc setBackColor( integer id, object color )     Set the color for used for the pen fill color in id.
@@ -1950,26 +2241,51 @@ public procedure draw(atom hwnd, sequence cmds, object bmpname = "", object inva
         --    VOID = c_func(xDeleteDC, {sbDC})
         --end if
         if bmpidx = 0 then
-            if atom(invalidrect) then
-                InvalidatedWindows &= {hwnd}
-            end if
-            --VOID = c_func(xInvalidateRgn, {windowid, NULL, 0})  --_In_  HWND hWnd,  _In_  HRGN hRgn,  _In_  BOOL bErase
+            --if atom(invalidrect) then
+            InvalidatedWindows &= {{hwnd, invalidrect}}
+            --end if
         end if
     end if
 end procedure
 
 
 public procedure update_windows()
-    atom widx
+    atom widx, hRgn
     
     for w = 1 to length(InvalidatedWindows) do
-        widx = find(InvalidatedWindows[w], windowList)
+        widx = find(InvalidatedWindows[w][1], windowList)
         if widx > 0 then
-            VOID = c_func(xInvalidateRgn, {InvalidatedWindows[w], NULL, 0})  --_In_  HWND hWnd,  _In_  HRGN hRgn,  _In_  BOOL bErase
+            if sequence(InvalidatedWindows[w][2]) then
+                hRgn = c_func(xCreateRectRgn, InvalidatedWindows[w][2]) -- _In_ int nLeftRect, _In_ int nTopRect, _In_ int nRightRect, _In_ int nBottomRect
+            else
+                hRgn  = NULL
+            end if
+            VOID = c_func(xInvalidateRgn, {InvalidatedWindows[w][1], hRgn, 0}) --_In_  HWND hWnd,  _In_  HRGN hRgn,  _In_  BOOL bErase            
+            if hRgn != NULL then
+                
+                c_proc(xDeleteObject, {hRgn})
+            end if
         end if
     end for
     InvalidatedWindows = {}
 end procedure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -28,13 +28,11 @@ include redylib_0_9/gui.e as gui
 
 include redylib_0_9/gui/dialogs/dialog_file.e as dlgfile
 include redylib_0_9/gui/dialogs/msgbox.e as msgbox
+include redylib_0_9/gui/objects/textdoc.e as txtdoc
 
 include redylib_0_9/err.e as err
 
-include redylib_0_9/gui/objects/textdoc.e as txtdoc
-
-
-include project.e
+include project.e as project
 include build.e as build
 include context.e as context
 include navfile.e as navfile
@@ -51,10 +49,9 @@ include std/sequence.e
 include std/filesys.e
 
 
---Define Application Info
 app:define({
     {"title", "RedyCode"},
-    {"version", "0.9.2"},
+    {"version", "0.9.3"},
     {"website", "http://redy-project.org/"},
     {"author", "Ryan W. Johnson"},
     {"copyright", "2016 Ryan W. Johnson"},
@@ -303,18 +300,6 @@ app:set_menus({
 })
 
 app:set_default_toolbars({
---    {"Project", "top", {
-        /*"project_new",
-        "project_open",
-        "project_close",
-        "-",
-        "project_save",
-        "project_save_as",
-        "-",*/
---        "project_run"
-        --"project_bind",
-        --"project_build"}
---    },
     {"File", "top", {
         "file_new",
         "file_open",
@@ -398,7 +383,7 @@ export procedure update_tab_info(atom tabidx)
             sequence cmds = {
                 {DR_Image, "dialog-error", 1, 1, rgb(0, 0, 0)}
             }
-            gui:wproc(fTabNames[tabidx] & ".canError", "draw_background", {cmds})
+            gui:wproc(fTabNames[tabidx] & ".canError", "draw_foreground", {cmds})
             
             gui:wcreate({
                 {"name",  fTabNames[tabidx] & ".txtErrorInfo"},
@@ -501,7 +486,7 @@ export procedure update_tab_info(atom tabidx)
         sequence cmds = {
             {DR_Image, "dialog-warning", 1, 8, rgb(0, 0, 0)}
         }
-        gui:wproc(fTabNames[tabidx] & ".canExtWarn", "draw_background", {cmds})
+        gui:wproc(fTabNames[tabidx] & ".canExtWarn", "draw_foreground", {cmds})
         gui:wcreate({
             {"name",  fTabNames[tabidx] & ".txtExtWarnInfo"},
             {"parent",  fTabNames[tabidx] & ".cntExtWarn"},
@@ -553,7 +538,7 @@ export procedure update_tab_info(atom tabidx)
         sequence cmds = {
             {DR_Image, "dialog-information", 1, 8, rgb(0, 0, 0)}
         }
-        gui:wproc(fTabNames[tabidx] & ".canFileChanged", "draw_background", {cmds})
+        gui:wproc(fTabNames[tabidx] & ".canFileChanged", "draw_foreground", {cmds})
         
         if filesys:file_exists(fTabFileNames[tabidx]) then
             gui:wcreate({
@@ -722,7 +707,7 @@ procedure create_tab(sequence tablabel, sequence filename, sequence txt, atom re
                 {DR_Puts, "Sorry, this image format is not currently supported."}
             }
         end if
-        gui:wproc(tabname & ".filepage", "draw_background", {cmds})
+        gui:wproc(tabname & ".filepage", "draw_foreground", {cmds})
         
     case else
         txtdoc:create({
@@ -1172,9 +1157,7 @@ procedure do_file_close_all()
 end procedure
 
 
-
 -------------------------------------------------------------------------------
-
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
@@ -1265,12 +1248,8 @@ procedure start()
     gui:load_bitmap("txt16", ImgPath & "txt16.bmp")
     gui:load_bitmap("img16", ImgPath & "img16.bmp")
     
-    
-    
     --set_tabs_double_click_action("file_close") --these are not necessary, defaults are already the same as this 
     --set_tabs_select_action("file_switch_to")
-    
-    --todo: show crash message if previously crashed
     
     if length(cmdline) > 2 then
         for c = 3 to length(cmdline) do
@@ -1304,6 +1283,14 @@ procedure start()
 end procedure
 
 gui:start(routine_id("start"), routine_id("gui_event"))
+
+
+
+
+
+
+
+
 
 
 

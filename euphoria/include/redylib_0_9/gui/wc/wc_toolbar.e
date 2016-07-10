@@ -201,8 +201,9 @@ end procedure
 
 
 procedure wc_draw(atom wid)
-    sequence cmds = {}, ttcmds = {}, wrect, hrect, chwid, txex, box, tools, ttpos
+    sequence cmds = {}, wrect, hrect, chwid, txex, box, tools, ttpos
     atom idx = find(wid, wcprops[wcpID]), wh, wf, hlcolor, shcolor, hicolor, fillcolor, txtcolor, chkcolor, x1, y1, c
+    object ttcmds = {}, invalidrect = 0
     
     if idx > 0 then
         wrect = widget_get_rect(wid)
@@ -384,6 +385,7 @@ procedure wc_draw(atom wid)
                         ttpos = {box[1], box[4] + 6} --todo: reposition if outside window dimensions
                         oswin:set_font(wh, "Arial", 9, Normal)
                         txex = oswin:get_text_extent(wh, tools[itmLabel][t])
+                        --invalidrect = {ttpos[1], ttpos[2], ttpos[1] + txex[1] + 6, ttpos[2] + txex[2] + 6}
                         ttcmds = {
                             {DR_PenColor, rgb(255, 255, 200)},
                             {DR_Rectangle, True, ttpos[1], ttpos[2], ttpos[1] + txex[1] + 6, ttpos[2] + txex[2] + 6},
@@ -589,10 +591,10 @@ procedure wc_draw(atom wid)
             end if
         end for*/
         
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         if sequence(ttcmds) then
-            draw_direct(wh, ttcmds)
+            oswin:draw_direct(wh, ttcmds, 1, invalidrect) --(atom hwnd, sequence cmds, atom clearcmds = 1, object invalidrect = 0)
         end if
     end if
 end procedure
@@ -948,4 +950,6 @@ wc_define(
     
 
 -- widgetclass commands -------------------------------------------------------
+
+
 

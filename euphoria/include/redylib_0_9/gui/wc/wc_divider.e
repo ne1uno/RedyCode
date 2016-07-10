@@ -166,7 +166,7 @@ procedure wc_draw(atom wid)
                 --{DR_Line, wrect[3], wrect[2], wrect[3], wrect[4] - 1},
                 --{DR_Line, wrect[1], wrect[4], wrect[3], wrect[4]}
             }
-            draw(wh, cmds)
+            oswin:draw(wh, cmds, "", wrect)
                 
         else
             /*hicolor = th:cButtonFace

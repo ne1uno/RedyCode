@@ -54,9 +54,9 @@ include std/stack.e
 include std/math.e
 include std/search.e
 include std/convert.e
+include std/eumem.e
 
---include euphoria/tokenize.e
-include euphoria/syncolor.e
+include euphoria/tokenize.e
 
 enum            --iSyntaxMode - syntax modes
 synPlain,
@@ -116,7 +116,7 @@ defNormalFontSize = 10
 
 constant
 BlockChars = "\"\'[](){}",
-IdentifierChars = "01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
+IdentifierChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_#$"
 
 enum  --sym
 symIgnoreOn,
@@ -216,19 +216,21 @@ euIdentifiers = {}, --words recognised as declared identifiers (from analyzing e
 ttStyles = repeat({}, ttCode) --token styles: {textfont, textsize, textstyle, textcolor}
 
 
+-- #993333, #0000FF, #5500FF, #00FF00
+
 procedure refresh_styles()
     --Source Mode styles (iViewMode = 0) (may also be used in Formatted Mode if displaying a block of source code)
-    ttStyles[ttNone]        = {defMonoFont, defMonoFontSize, Normal, th:cButtonLabel}
-    ttStyles[ttInvalid]     = {defMonoFont, defMonoFontSize, Normal, th:cButtonLabel}
-    ttStyles[ttFound]       = {defMonoFont, defMonoFontSize, Normal, th:cButtonLabel}
-    ttStyles[ttIdentifier]  = {defMonoFont, defMonoFontSize, Normal, rgb(100, 0, 0)}
-    ttStyles[ttKeyword]     = {defMonoFont, defMonoFontSize, Bold, rgb(0, 0, 100)}
-    ttStyles[ttBuiltin]     = {defMonoFont, defMonoFontSize, Bold, rgb(0, 0, 128)}
-    ttStyles[ttNumber]      = {defMonoFont, defMonoFontSize, Normal, rgb(0, 0, 80)}
+    ttStyles[ttNone]        = {defMonoFont, defMonoFontSize, Normal, rgb(0, 0, 0)}
+    ttStyles[ttInvalid]     = {defMonoFont, defMonoFontSize, Normal, rgb(160, 0, 0)}
+    ttStyles[ttFound]       = {defMonoFont, defMonoFontSize, Normal, rgb(160, 0, 160)}
+    ttStyles[ttIdentifier]  = {defMonoFont, defMonoFontSize, Normal, rgb(0, 0, 50)}
+    ttStyles[ttKeyword]     = {defMonoFont, defMonoFontSize, Bold,  rgb(0, 50, 160)}
+    ttStyles[ttBuiltin]     = {defMonoFont, defMonoFontSize, Normal, rgb(0, 50, 160)}
+    ttStyles[ttNumber]      = {defMonoFont, defMonoFontSize, Normal, rgb(160, 0, 150)}
     ttStyles[ttSymbol]      = {defMonoFont, defMonoFontSize, Normal, rgb(0, 0, 0)}
-    ttStyles[ttBracket]     = {defMonoFont, defMonoFontSize, Normal,  rgb(200, 0, 0)}
-    ttStyles[ttString]      = {defMonoFont, defMonoFontSize, Normal, rgb(0, 128, 0)}
-    ttStyles[ttComment]     = {defMonoFont, defMonoFontSize, Italic, rgb(120, 100, 160)}
+    ttStyles[ttBracket]     = {defMonoFont, defMonoFontSize, Bold, rgb(200, 120, 0)}
+    ttStyles[ttString]      = {defMonoFont, defMonoFontSize, Normal, rgb(30, 140, 30)}
+    ttStyles[ttComment]     = {defMonoFont, defMonoFontSize, Italic, rgb(150, 140, 150)}
     --Formatted Mode styles (iViewMode = 1)
     ttStyles[ttHidden]      = {thNormalFonts[3], defNormalFontSize, Bold, rgb(255, 0, 255)}
     ttStyles[ttNormal]      = {thNormalFonts[3], defNormalFontSize, Normal, rgb(0, 0, 0)}
@@ -258,6 +260,11 @@ constant ctable = {  --color table, just to make it easy to give each plot a uni
     rgb(#C3, #FF, #00)
 }
 
+enum
+S_TOKENIZER,
+S_BRACKET_LEVEL,
+S_KEEP_NEWLINES
+
 
 sequence            --Info about each textedit instances
 iName = {},             --Unique String that identifies instance
@@ -281,7 +288,8 @@ iLineNumFontSize = {},  --font size to use
 
 iTxtLnText = {},        --text line: raw text
 iTxtLnTokens = {},      --text line: tokens {tokenTexts, tokenXs, tokenYs, tokenWidths, tokenHights, tokenTypes, tokenInfos}
-iTxtLnSyntaxState = {}, --text line: ending state of syntax highlighting (so next line can start in correct state)
+iTxtLnSyntaxState = {}, --text line: ending state of syntax highlighting (so block comments and bracket colors work correctly)
+iTxtLnTokenState = {},  --text line: ending state of token type (so next line can start in correct state)
 iTxtLnBookmark = {},    --text line: bookmark number, or 0 for not bookmarked
 iTxtLnFold = {},        --text line: fold status: 0=not foldable, 1=not folded, 2=folded
 iTxtLnVisible = {},     --text line: visible: 0=no, 1=yes (line may be hidden by folding a section or hiding comments)
@@ -666,10 +674,10 @@ procedure cursor_blink_task()
                     iCursorState[idx] = 1
                 elsif iCursorState[idx] = 0 then
                     iCursorState[idx] = 1
-                    draw_lines(idx, iSelEndLine[idx], iSelEndLine[idx])
+                    draw_lines(idx, {{iSelEndLine[idx], iSelEndLine[idx]}})
                 else
                     iCursorState[idx] = 0
-                    draw_lines(idx, iSelEndLine[idx], iSelEndLine[idx])
+                    draw_lines(idx, {{iSelEndLine[idx], iSelEndLine[idx]}})
                 end if
             end if
         end for
@@ -761,9 +769,9 @@ end procedure
 
 
 procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at end of each line, wordwrap, positions, sizes
-    atom startline, endline, whnd, prevlnw, MaxWidth, tt, tx, ty, SkipBelow = 0
+    atom startline, endline, whnd, prevlnw, MaxWidth, tt, tx, ty, prevsyntaxstate, SkipBelow
     sequence tokens, txex, te, vislines, prevtotalsize
-    object csize, tcsize
+    object csize, tcsize 
     
     while 1 do
         for idx = 1 to length(iRebuildLines) do
@@ -773,13 +781,15 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
             
             if sequence(iRebuildLines[idx]) then
                 task_suspend(CursorBlinkTask)
-                --task_schedule(RebuildTask, 1000) --{0.01, 0.2})
+                --task_schedule(RebuildTask, {0.01, 0.25})
                 
                 startline = iRebuildLines[idx][1]
                 endline = iRebuildLines[idx][2]
                 csize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
                 iRebuildLines[idx] = 0
                 whnd = gui:widget_get_handle(iCanvasName[idx])
+                prevsyntaxstate = 0
+                SkipBelow = 0
                 
                 if sequence(csize) and csize[1] > 0 and csize[2] > 0 then
                     if csize[1] < 100 then
@@ -804,6 +814,12 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                     else
                         iLineNumWidth[idx] = 0
                     end if
+                    
+                    sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
+                        {DR_Rectangle, True, 0, 0, iLineNumWidth[idx] - 20, csize[2]}
+                    }
+                    gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
+                    
                     --get canvas size, etc.
                     set_font(whnd, iLineNumFont[idx], iLineNumFontSize[idx], Normal)
                     --emptysize = get_text_extent(whnd, " ")
@@ -867,15 +883,22 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                             --exit
                             iBusyTime[idx] = time()
                             
-                            --task_schedule(RebuildTask, 1)
-                            task_yield()
+                            --task_schedule(RebuildTask, {0.01, 0.05})
                             --task_schedule(RebuildTask, 1000)
+                            
+                            task_yield()
                             
                             if idx > length(iRebuildLines) or li > length(iTxtLnText[idx]) then
                                 exit
                             end if
                             
                             iBusyTime[idx] = time()
+                            
+                            --if rebuildall then
+                            --    ? {startline, endline}
+                            --    set_rebuild_lines(idx, startline, endline)
+                            --    exit
+                            --end if
                             
                             tcsize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
                             if equal(csize[1], tcsize[1]) then
@@ -933,7 +956,7 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
                                 endline = vislines[2]
                             end if
                             
-                            draw_lines(idx, startline, endline)
+                            draw_lines(idx, {{startline, endline}})
                         end if
                         
                         if iBusyStatus[idx] > 0 and atom(iRebuildLines[idx]) then
@@ -958,62 +981,208 @@ procedure rebuild_lines_task() --get syntax tokens to rebuild syntax state at en
             
             task_yield()
         end for
-        task_schedule(RebuildTask, 1)
+        
         task_yield()
     end while
 end procedure
 
 
-task_schedule(RebuildTask, 100)
+task_schedule(RebuildTask, {0.01, 0.25})
 task_schedule(CursorBlinkTask, {0.5, 0.6})
 
 
 --Internal Functions
 
 
-function highlight_syntax(sequence txt)
-    object toktype
-    sequence tokwords,
-    ttexts = {},
-    ttypes = {},
-    tinfos = {},
-    syntoks = syncolor:SyntaxColor(txt)
+-- Taken from euphoria/syncolor.e and modified 
+constant DONT_CARE = -1  -- any color is ok - blanks, tabs
+
+sequence line           -- the line being processed
+sequence color_segments -- the value returned
+sequence linebuf = "" -- a buffer for same color segments of a line
+integer current_color, seg -- token of current segment of line
+
+procedure seg_flush(integer new_color)
+-- if the color must change,
+-- add the current color segment to the sequence
+-- and start a new segment
+    if new_color != current_color then
+        if current_color != DONT_CARE then
+            color_segments = append(color_segments,
+                    {current_color, linebuf})
+            linebuf = ""
+        end if
+        current_color = new_color
+    end if
+    linebuf &= line[seg][tokenize:TDATA]
+end procedure
+
+function default_state(atom token = 0)
+    if not token then
+        token = tokenize:new()
+    end if
+    return {
+        token, -- S_TOKENIZER
+        0,  -- S_BRACKET_LEVEL
+        0  -- S_KEEP_NEWLINES
+    }
+end function
+
+atom g_state = eumem:malloc()
+eumem:ram_space[g_state] = default_state()
+
+function new()
+    atom state = eumem:malloc()
     
-    --TODO: handle block comments properly
+    reset(state)
     
-    syncolor:reset()
+    return state
+end function
+
+
+procedure tokenize_reset(atom token)
+    if token then
+        tokenize:reset(token)
+    end if
+end procedure
+
+procedure reset(atom state = g_state)
+    atom token = eumem:ram_space[state][S_TOKENIZER]
+    tokenize_reset(token)
+    eumem:ram_space[state] = default_state(token)
+    eumem:ram_space[state] = default_state()
+end procedure
+
+procedure keep_newlines(integer val = 1, atom state = g_state)
+    eumem:ram_space[state][S_KEEP_NEWLINES] = val
+end procedure
+
+
+function SyntaxColor(sequence pline, atom state=g_state, multiline_token multi = 0)
+    integer class, last, i
+    sequence word, c
+    atom token = eumem:ram_space[state][S_TOKENIZER]
+
+    tokenize:keep_builtins(,token)
+    tokenize:keep_keywords(,token)
+    tokenize:keep_whitespace(,token)
+    tokenize:keep_newlines(,token)
+    tokenize:keep_comments(,token)
+    tokenize:string_numbers(,token)
+    tokenize:return_literal_string(,token)
+    tokenize:string_strip_quotes(0,token)
+
+    line = tokenize:tokenize_string(pline, token, 0, multi)
+    -- TODO error checking?
+    line = line[1]
+    current_color = DONT_CARE
+    seg = 1
+    color_segments = {}
+
+    while 1 do
+        if seg > length(line) then
+            exit
+        end if
+
+        c = line[seg]
+        class = c[tokenize:TTYPE]
+
+        if class = tokenize:T_WHITE then
+            linebuf &= c[tokenize:TDATA]-- continue with current color
+        
+        elsif class = tokenize:T_KEYWORD then
+            seg_flush(ttKeyword)
+
+        elsif class = tokenize:T_BUILTIN then
+            seg_flush(ttBuiltin)
+
+        elsif class = tokenize:T_IDENTIFIER then
+            seg_flush(ttNone)
+
+        elsif class = tokenize:T_LPAREN or class = tokenize:T_RPAREN or
+        class = tokenize:T_LBRACKET or class = tokenize:T_RBRACKET or
+        class = tokenize:T_LBRACE or class = tokenize:T_RBRACE then
+            seg_flush(ttBracket)
+            
+        elsif class = tokenize:T_NEWLINE then
+            if eumem:ram_space[state][S_KEEP_NEWLINES] then
+                -- continue with current color
+                if equal(c[tokenize:TDATA],"") then
+                    linebuf &= '\n'
+                else
+                    linebuf &= c[tokenize:TDATA]
+                end if
+            end if
+            exit  -- end of line
+
+        elsif class = tokenize:T_EOF then
+            exit  -- end of line
+
+        elsif class = tokenize:T_COMMENT then
+            seg_flush(ttComment)
+
+        elsif class = tokenize:T_STRING or class = tokenize:T_CHAR then
+            seg_flush(ttString)
+
+        elsif class = tokenize:T_NUMBER then
+            seg_flush(ttNumber)
+            
+        elsif class = tokenize:T_COMMA then
+            seg_flush(ttBracket)
+        
+        else
+            seg_flush(ttNone)
+        end if
+        seg += 1
+    end while
+/*
+ttNone,             --none (plain text)
+ttInvalid,          --invalid syntax
+ttFound,            --highlight text of search result
+ttIdentifier,       --identifier string
+ttKeyword,          --keyword string
+ttBuiltin,          --builtin word
+ttNumber,           --number
+ttSymbol,           --operator or other punctuation
+ttBracket,          --() {} []
+ttString,           --string inside quotes
+ttComment,
+*/
+    -- add the final piece:
+    if current_color = DONT_CARE then
+        current_color = ttNone
+    end if
+
+    sequence ret = linebuf
+    linebuf = ""
+    return append(color_segments, {current_color, ret})
+end function
+
+new()
+
+-----------------------------------------------
+
+
+function highlight_syntax(sequence txt, object prevstate)
+    object toktype, endstate = 0
+    sequence tokwords, ttexts = {}, ttypes = {}, tinfos = {}, syntoks
     
-    --{"NORMAL", ttNone},
-    --{"COMMENT", ttComment},
-    --{"KEYWORD", ttKeyword},
-    --{"BUILTIN", ttBuiltin},
-    --{"STRING", ttString},
-    --{"BRACKET", {ttBracket, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}}
-    
+    reset()
+    syntoks = SyntaxColor(txt, , prevstate)
+    endstate = last_multiline_token()
     
     for t = 1 to length(syntoks) do
         toktype = syntoks[t][1]
-        tokwords = {syntoks[t][2]}
-        for tt = 1 to length(tokwords) do
-            if toktype < 0 then
-                ttypes &= {ttBracket}
-                tinfos &= {0}
-                --tinfos &= {-toktype} --wierd negative number hack to identify different bracket colors
-            else
-                ttypes &= {toktype}
-                tinfos &= {0}
-            end if
-            ttexts &= {tokwords[tt]}
-            ttypes &= {}
-            tinfos &= {}
-        end for
+        tokwords = syntoks[t][2]
+        
+        ttypes &= {toktype}
+        tinfos &= {0}
+        ttexts &= {tokwords}
     end for
     
     if length(ttexts) = 0 then
         ttexts &= {""}
     end if
-    ttypes &= repeat(ttNone, length(ttexts))
-    tinfos &= repeat(0, length(ttexts))
     
     return {
         ttexts, -- tokenText,          
@@ -1022,7 +1191,8 @@ function highlight_syntax(sequence txt)
         repeat(0, length(ttexts)), -- tokenWidth,         
         repeat(0, length(ttexts)), -- tokenHeight,        
         ttypes, -- tokenType,          
-        tinfos  -- tokenInfo
+        tinfos,  -- tokenInfo
+        endstate
     }
 end function
 
@@ -1039,9 +1209,10 @@ procedure tokenize_line(atom idx, atom li, atom liw)
     ttypes = {},
     tinfos = {},
     ntxt = ""
-    atom tx = 0, ty = 0, whnd, sch, ech, maxh, th, splitp
+    atom tx = 0, ty = 0, whnd, sch, ech, maxh, th, splitp, prevsyntaxstate = 0
     
-    iTxtLnSyntaxState[idx][li] = 0
+    --iTxtLnSyntaxState[idx][li] = 0
+    iTxtLnTokenState[idx][li] = 0
     
     if idx > 0 and li > 0 and li <= length(iTxtLnText[idx]) then
         --Parse text syntax into tokens
@@ -1052,7 +1223,7 @@ procedure tokenize_line(atom idx, atom li, atom liw)
         --txt = filter(txt, "in",  {32,255}, "[]")
         
         if iViewMode[idx] = 0 then --source view mode
-            if length(txt) = 0 then
+            /*if length(txt) = 0 then
                 tokens = {
                     {""}, -- tokenText,          
                     {0},      -- tokenX,             
@@ -1062,7 +1233,7 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                     {ttNone}, -- tokenType,          
                     {0}       -- tokenInfo
                 }
-            else
+            else*/
                 if iSyntaxMode[idx] = synPlain then
                     /*txt = split(txt)
                     if length(txt) > 1 then
@@ -1095,56 +1266,11 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                     }
                     
                 elsif iSyntaxMode[idx] = synEuphoria then
-                    
-                    tokens = highlight_syntax(txt)
-                    
-                    /*syntoks = syncolor:SyntaxColor(txt)
-                    
-                    --TODO: handle block comments properly
-                    
-                    syncolor:reset()
-                    
-                    --{"NORMAL", ttNone},
-                    --{"COMMENT", ttComment},
-                    --{"KEYWORD", ttKeyword},
-                    --{"BUILTIN", ttBuiltin},
-                    --{"STRING", ttString},
-                    --{"BRACKET", {ttBracket, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}}
-                    
-                    
-                    for t = 1 to length(syntoks) do
-                        toktype = syntoks[t][1]
-                        tokwords = {syntoks[t][2]}
-                        for tt = 1 to length(tokwords) do
-                            if toktype < 0 then
-                                ttypes &= {ttBracket}
-                                tinfos &= {0}
-                                --tinfos &= {-toktype} --wierd negative number hack to identify different bracket colors
-                            else
-                                ttypes &= {toktype}
-                                tinfos &= {0}
-                            end if
-                            ttexts &= {tokwords[tt]}
-                            ttypes &= {}
-                            tinfos &= {}
-                        end for
-                    end for
-                    
-                    if length(ttexts) = 0 then
-                        ttexts &= {""}
+                    if li > 1 then
+                        prevsyntaxstate = iTxtLnSyntaxState[idx][li-1]
                     end if
-                    ttypes &= repeat(ttNone, length(ttexts))
-                    tinfos &= repeat(0, length(ttexts))
-                    
-                    tokens = {
-                        ttexts, -- tokenText,          
-                        repeat(0, length(ttexts)), -- tokenX,             
-                        repeat(0, length(ttexts)), -- tokenY,             
-                        repeat(0, length(ttexts)), -- tokenWidth,         
-                        repeat(0, length(ttexts)), -- tokenHeight,        
-                        ttypes, -- tokenType,          
-                        tinfos  -- tokenInfo
-                    }*/
+                    tokens = highlight_syntax(txt, prevsyntaxstate)
+                    iTxtLnSyntaxState[idx][li] = tokens[$]
                     
                 /*elsif iSyntaxMode[idx] = synCreole then
                     
@@ -1159,13 +1285,13 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                 elsif iSyntaxMode[idx] = synC then
                     */
                 end if
-            end if
+            --end if
             
         else --formatted view mode
             atom cpos = 1, m, slen, currtt = ttNormal, endlink = 0, iseucode = 0
             sequence currurl = ""
             
-            if li > 1 and iTxtLnSyntaxState[idx][li-1] = ttCode then
+            if li > 1 and iTxtLnTokenState[idx][li-1] = ttCode then
                 iseucode = 1
                 currtt = ttCode
             end if
@@ -1294,7 +1420,11 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                         --build token with text that came before the current symbol
                         if length(ntxt) > 0 then
                             if currtt = ttCode then
-                                temptokens = highlight_syntax(ntxt) --parse ntxt into eu syntax
+                                if li > 1 then
+                                    prevsyntaxstate = iTxtLnSyntaxState[idx][li-1]
+                                end if
+                                temptokens = highlight_syntax(ntxt, prevsyntaxstate) --parse ntxt into eu syntax
+                                iTxtLnSyntaxState[idx][li] = temptokens[$]
                                 ttypes &= temptokens[tokenType]
                                 tinfos &= temptokens[tokenInfo]
                                 ttexts &= temptokens[tokenText]
@@ -1344,7 +1474,11 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                 
                 if length(ntxt) > 0 then
                     if currtt = ttCode then
-                        temptokens = highlight_syntax(ntxt) --parse ntxt into eu syntax
+                        if li > 1 then
+                            prevsyntaxstate = iTxtLnSyntaxState[idx][li-1]
+                        end if
+                        temptokens = highlight_syntax(ntxt, prevsyntaxstate) --parse ntxt into eu syntax
+                        iTxtLnSyntaxState[idx][li] = temptokens[$]
                         ttypes &= temptokens[tokenType]
                         tinfos &= temptokens[tokenInfo]
                         ttexts &= temptokens[tokenText]
@@ -1381,7 +1515,7 @@ procedure tokenize_line(atom idx, atom li, atom liw)
                 
             end if
             if iseucode then
-                iTxtLnSyntaxState[idx][li] = ttCode
+                iTxtLnTokenState[idx][li] = ttCode
             end if
         end if
         
@@ -1663,12 +1797,15 @@ function get_mouse_pos(atom idx, atom mx, atom my)
                         set_font(whnd, tokstyle[1], tokstyle[2], tokstyle[3])
                         for ch = 0 to length(tokens[tokenText][t]) do
                             txex = get_text_extent(whnd, tokens[tokenText][t][1..ch])
+                            --if tokens[tokenText][t][ch] = '\t' then
+                            --    txex[1] += TabWidth
+                            --end if
                             if px + tokens[tokenX][t] + txex[1] < mx then
                                 mcol = ccol + ch -- - 1
                             end if
                         end for
                         if mx >= px + tokens[tokenX][t] and mx < px + tokens[tokenX][t] + tokens[tokenWidth][t] then
-                        exit
+                            exit
                         end if
                     end if
                 end if
@@ -1706,12 +1843,15 @@ procedure rebuild_lines(atom idx, atom startline, atom endline)
 end procedure
 
 
-procedure draw_lines(atom idx, atom startline, atom endline)
-    if idx > 0 and startline > 0 and endline >= startline then
-        atom bwidth, ih, whnd, px, py, tx, ty, sline, scol, eline, ecol, lnx, MaxWidth, starty, endy, currchar,
-        hasfocus, selbackcolor, seltextcolor, currlinebackcolor, tt
-        sequence vislines, tokens, tokstyle, txex, csize, brect, trect, ccmds, bcmds, tcmds, lcmds, hshape, scc, ecc
-        
+procedure draw_lines(atom idx, sequence lines)
+    atom startline, endline, bwidth, ih, whnd, px, py, tx, ty, sline, scol, eline, ecol, lnx, MaxWidth, starty, endy, currchar,
+    hasfocus, selbackcolor, seltextcolor, currlinebackcolor, tt
+    sequence tokens, vislines, tokstyle, txex, csize, brect, trect, ccmds, bcmds, tcmds, lcmds, hshape, scc, ecc
+    object invalidrect
+    sequence ranges = {}, nextrange
+    
+    if idx > 0 then
+        --initialize
         if not gui:widget_is_visible(iCanvasName[idx]) then
             return
         end if
@@ -1721,19 +1861,42 @@ procedure draw_lines(atom idx, atom startline, atom endline)
         end if
         
         vislines = visible_lines(idx)
-
-        if startline > vislines[2] or endline < vislines[1] then --out of range, nothing needs to be redrawn
-            return
-        else
-            if startline < vislines[1] then
-                startline = vislines[1]
-            end if
-            if endline > vislines[2] then
-                endline = vislines[2]
-            end if
-        end if
         
-        --if iKeyFocus[idx] and whnd = gui:get_window_focus() then
+        --combine overlapping ranges
+        for i = 1 to length(lines) do
+            nextrange = {-1, -1}
+            if atom(lines[i]) then
+                nextrange = {lines[i], lines[i]}
+            elsif sequence(lines[i]) and length(lines[i]) = 2 then
+                if lines[i][1] > lines[i][2] then
+                    nextrange = {lines[i][2], lines[i][1]}
+                else
+                    nextrange = {lines[i][1], lines[i][2]}
+                end if
+            end if
+            
+            if nextrange[1] < 0 then
+                continue
+            end if
+            if length(ranges) = 0 then
+                ranges &= {nextrange}
+            else
+                for r = 1 to length(ranges) do
+                    if is_in_range(nextrange[1], ranges[r]) and is_in_range(nextrange[2], ranges[r]) then --completely redundant
+                        exit
+                    elsif is_in_range(nextrange[1], ranges[r]) and nextrange[2] > ranges[r][2] then --starts in range, combine
+                        ranges[r][2] = nextrange[2]
+                        exit
+                    elsif nextrange[1] < ranges[r][1] and is_in_range(nextrange[2], ranges[r]) then --ends in range, combine
+                        ranges[r][1] = nextrange[1]
+                        exit
+                    else --separate range, append
+                        ranges &= {nextrange}
+                        exit
+                    end if
+                end for
+            end if
+        end for
         
         if iKeyFocus[idx] and whnd = gui:get_window_focus() then
             hasfocus = 1
@@ -1755,54 +1918,6 @@ procedure draw_lines(atom idx, atom startline, atom endline)
         --emptysize = get_text_extent(whnd, " ")
         csize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
         
-        starty = iTxtLnPosY[idx][startline] - iScrollY[idx]
-        if endline = length(iTxtLnText[idx]) then
-            endy = csize[2]
-        else
-            endy = iTxtLnPosY[idx][endline] + iTxtLnHeight[idx][endline] - iScrollY[idx]
-        end if
-        if starty < 0  then
-            starty = 0
-        end if
-        if endy > csize[2]  then
-            endy = csize[2]
-        end if
-        
-        brect = {0, starty, bwidth, endy}
-        trect = {bwidth, starty, csize[1], endy}
-        ccmds = {   --cursor commands
-            --{DR_PenColor, rgb(0, 0, 0)},
-            --{DR_Line, cx, cy, cx, cy+ih}
-        }
-        bcmds = {}
-        if bwidth > 0 then
-            bcmds &= {
-                {DR_PenColor, th:cButtonFace},
-                {DR_Rectangle, True, brect[1], brect[2], brect[3], brect[4]}
-            }
-        end if
-        tcmds = {   --text area commands
-            {DR_PenColor, thBackColor},
-            {DR_Rectangle, True, trect[1], trect[2], trect[3], trect[4]}
-            --{DR_TextColor, th:cButtonLabel},
-            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], Normal}
-            --{DR_Restrict, trect[1], trect[2], trect[3], trect[4]}
-        }
-        lcmds = {}
-        if iViewMode[idx] = 0 then
-            lcmds &= {   --line number, bookmark, folding (margin) area commands
-                --{DR_Release},
-                {DR_TextColor, th:cButtonLabel},
-                {DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], Normal}
-            }
-        end if
-        if bwidth > 0 then
-            hshape = {  --handle shape for line number, bookmark, folding (margin) area
-                {DR_Rectangle, True, brect[1], 0, brect[3], csize[2]}
-            }
-            lnx = brect[1] + iLineNumFontSize[idx] + 6
-        end if
-        
         if iSelStartLine[idx] > iSelEndLine[idx] then
             sline = iSelEndLine[idx]
             scol = iSelEndCol[idx]
@@ -1820,292 +1935,366 @@ procedure draw_lines(atom idx, atom startline, atom endline)
             ecol = iSelEndCol[idx]
         end if
         
-        for li = startline to endline do
-            if iTxtLnVisible[idx][li] then
-                if atom(iTxtLnTokens[idx][li]) then --this shouldn't happen, but just in case
-                    --refresh_lines(idx, li, endline)
-                    exit
-                end if
-                tokens = iTxtLnTokens[idx][li]
-                
-                px = iTxtLnPosX[idx][li] - iScrollX[idx]
-                py = iTxtLnPosY[idx][li] - iScrollY[idx]
-                scc = char_coords(idx, sline, scol) --{cx, cy, tnum, tcol, thight}
-                ecc = char_coords(idx, eline, ecol)
-                
-                --append line number drawing commands
-                if bwidth > 0 then
-                    if iViewMode[idx] = 0 then
-                        lcmds &= {
-                            {DR_PenPos, lnx, py},
-                            {DR_Puts, sprintf("%d", {li})}
-                        }
+        for i = 1 to length(ranges) do
+            startline = ranges[i][1]
+            endline = ranges[i][2]
+            
+             --verify range is valid and in visible area
+            if startline = 0 or startline > vislines[2] or endline < vislines[1] then
+                continue
+            end if
+            if startline < vislines[1] then
+                startline = vislines[1]
+            end if
+            if endline > vislines[2] then
+                endline = vislines[2]
+            end if
+            
+            --draw each range of lines
+            starty = iTxtLnPosY[idx][startline] - iScrollY[idx]
+            if endline = length(iTxtLnText[idx]) then
+                endy = csize[2]
+            else
+                endy = iTxtLnPosY[idx][endline] + iTxtLnHeight[idx][endline] - iScrollY[idx]
+            end if
+            if starty < 0  then
+                starty = 0
+            end if
+            if endy > csize[2]  then
+                endy = csize[2]
+            end if
+            
+            invalidrect = {}
+            brect = {0, starty, bwidth, endy}
+            trect = {bwidth, starty, csize[1], endy}
+            ccmds = {   --cursor commands
+                --{DR_PenColor, rgb(0, 0, 0)},
+                --{DR_Line, cx, cy, cx, cy+ih}
+            }
+            bcmds = {}
+            if bwidth > 0 then
+                bcmds &= {
+                    {DR_PenColor, th:cButtonFace},
+                    {DR_Rectangle, True, brect[1], brect[2], brect[3], brect[4]}
+                }
+            end if
+            tcmds = {   --text area commands
+                {DR_PenColor, thBackColor},
+                {DR_Rectangle, True, trect[1], trect[2], trect[3], trect[4]}
+                --{DR_TextColor, th:cButtonLabel},
+                --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], Normal}
+                --{DR_Restrict, trect[1], trect[2], trect[3], trect[4]}
+            }
+            lcmds = {}
+            if iViewMode[idx] = 0 then
+                lcmds &= {   --line number, bookmark, folding (margin) area commands
+                    --{DR_Release},
+                    {DR_TextColor, th:cButtonLabel},
+                    {DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], Normal}
+                }
+            end if
+            if bwidth > 0 then
+                --hshape = {  --handle shape for line number, bookmark, folding (margin) area
+                --    {DR_Rectangle, True, brect[1], 0, brect[3], csize[2]}
+                --}
+                lnx = brect[1] + iLineNumFontSize[idx] + 6
+            end if
+            
+            for li = startline to endline do
+                if iTxtLnVisible[idx][li] then
+                    if atom(iTxtLnTokens[idx][li]) then --this shouldn't happen, but just in case
+                        --refresh_lines(idx, li, endline)
+                        exit
                     end if
-                    if iTxtLnBookmark[idx][li] > 0 then
-                        lcmds &= {  --draw bookmark symbol
-                            {DR_PenColor, rgb(140, 160, 250)},
-                            {DR_RoundRect, True, brect[1]+2, py+1, brect[1]+ih, py+ih-1, ih, ih}
-                        }
-                    end if
-                    if iTxtLnFold[idx][li] = 1 then
-                        lcmds &= {  --draw fold symbol
-                            {DR_PenColor, rgb(128, 128, 128)},
-                            {DR_Rectangle, False, brect[3]-ih, py+1, brect[3]-2, py+ih-1},
-                            {DR_Line, floor((brect[3]-ih + brect[3]-2) / 2), py+1+2, floor((brect[3]-ih + brect[3]-2) / 2), py+ih-1-2},
-                            {DR_Line, brect[3]-ih+2, floor((py+1 + py+ih-1) / 2), brect[3]-2-2, floor((py+1 + py+ih-1) / 2)}
-                        }
-                    end if
-                end if
-                
-                --draw tokens
-                for t = 1 to length(tokens[tokenText]) do
-                    /*tokens[tokenText][t]
-                    tokens[tokenX][t]
-                    tokens[tokenY][t]
-                    tokens[tokenWidth][t]
-                    tokens[tokenHeight][t]
-                    tokens[tokenType][t]
-                    tokens[tokenInfo][t]*/
+                    tokens = iTxtLnTokens[idx][li]
                     
-                    if tokens[tokenType][t] != ttHidden or iShowHidden[idx] = 1 then
-                        tokstyle = iTokenStyles[idx][tokens[tokenType][t]]
-                        if tokens[tokenType][t] = ttBracket and tokens[tokenInfo][t] > 0 then
-                            tokstyle[4] = pick_color(tokens[tokenInfo][t])
-                        end if
-                        
-                        --draw link handles
-                        /*if find(tokens[tokenType][t], {ttLink, ttLinkUrl}) then
-                            hcmds &= {
-                                {DR_Rectangle, True,
-                                    px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                    px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                }
+                    px = iTxtLnPosX[idx][li] - iScrollX[idx]
+                    py = iTxtLnPosY[idx][li] - iScrollY[idx]
+                    scc = char_coords(idx, sline, scol) --{cx, cy, tnum, tcol, thight}
+                    ecc = char_coords(idx, eline, ecol)
+                    
+                    if length(invalidrect) = 0 then
+                        invalidrect = {0, py, csize[1], py + iTxtLnHeight[idx][li]}
+                    else
+                        invalidrect[4] = py + iTxtLnHeight[idx][li]
+                    end if
+                    if li = length(iTxtLnTokens[idx]) then
+                        invalidrect[4] = csize[2] --if last line, refresh to bottom of view
+                    end if
+                    
+                    --append line number drawing commands
+                    if bwidth > 0 then
+                        if iViewMode[idx] = 0 then
+                            lcmds &= {
+                                {DR_PenPos, lnx, py},
+                                {DR_Puts, sprintf("%d", {li})}
                             }
-                        end if*/
+                        end if
+                        if iTxtLnBookmark[idx][li] > 0 then
+                            lcmds &= {  --draw bookmark symbol
+                                {DR_PenColor, rgb(140, 160, 250)},
+                                {DR_RoundRect, True, brect[1]+2, py+1, brect[1]+ih, py+ih-1, ih, ih}
+                            }
+                        end if
+                        if iTxtLnFold[idx][li] = 1 then
+                            lcmds &= {  --draw fold symbol
+                                {DR_PenColor, rgb(128, 128, 128)},
+                                {DR_Rectangle, False, brect[3]-ih, py+1, brect[3]-2, py+ih-1},
+                                {DR_Line, floor((brect[3]-ih + brect[3]-2) / 2), py+1+2, floor((brect[3]-ih + brect[3]-2) / 2), py+ih-1-2},
+                                {DR_Line, brect[3]-ih+2, floor((py+1 + py+ih-1) / 2), brect[3]-2-2, floor((py+1 + py+ih-1) / 2)}
+                            }
+                        end if
+                    end if
+                    
+                    --draw tokens
+                    for t = 1 to length(tokens[tokenText]) do
+                        /*tokens[tokenText][t]
+                        tokens[tokenX][t]
+                        tokens[tokenY][t]
+                        tokens[tokenWidth][t]
+                        tokens[tokenHeight][t]
+                        tokens[tokenType][t]
+                        tokens[tokenInfo][t]*/
                         
-                         --draw text
-                        if li > sline and li < eline then --line in middle of selection
-                            --mode 1: highlight background for entire line (before drawing 1st token only)
-                            if t = 1 then
+                        if tokens[tokenType][t] != ttHidden or iShowHidden[idx] = 1 then
+                            tokstyle = iTokenStyles[idx][tokens[tokenType][t]]
+                            if tokens[tokenType][t] = ttBracket and tokens[tokenInfo][t] > 0 then
+                                tokstyle[4] = pick_color(tokens[tokenInfo][t])
+                            end if
+                            
+                            --draw link handles
+                            /*if find(tokens[tokenType][t], {ttLink, ttLinkUrl}) then
+                                hcmds &= {
+                                    {DR_Rectangle, True,
+                                        px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                        px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                    }
+                                }
+                            end if*/
+                            
+                             --draw text
+                            if li > sline and li < eline then --line in middle of selection
+                                --mode 1: highlight background for entire line (before drawing 1st token only)
+                                if t = 1 then
+                                    tcmds &= {
+                                        {DR_PenColor, selbackcolor},
+                                        {DR_Rectangle, True,
+                                            px, py,
+                                            csize[1], py + iTxtLnHeight[idx][li]
+                                        }
+                                    }
+                                end if
                                 tcmds &= {
+                                    --selected text:
+                                    /*
+                                    --mode 2: highlight background for each token (not currently used)
                                     {DR_PenColor, selbackcolor},
                                     {DR_Rectangle, True,
-                                        px, py,
-                                        csize[1], py + iTxtLnHeight[idx][li]
-                                    }
+                                        px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                        px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                    },
+                                    */
+                                    {DR_TextColor, seltextcolor},
+                                    --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                    {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                    {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                    {DR_Puts, tokens[tokenText][t]}
                                 }
-                            end if
-                            tcmds &= {
-                                --selected text:
-                                /*
-                                --mode 2: highlight background for each token (not currently used)
-                                {DR_PenColor, selbackcolor},
-                                {DR_Rectangle, True,
-                                    px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                    px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                },
-                                */
-                                {DR_TextColor, seltextcolor},
-                                --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                {DR_Puts, tokens[tokenText][t]}
-                            }
-                            
-                        else
-                            if t = 1 then --before drawing tokens, draw background color
-                                if li = iSelEndLine[idx] and iLocked[idx] = 0 then
-                                --draw highlight background color for active line
-                                    tcmds &= {
-                                        {DR_PenColor, currlinebackcolor},
-                                        {DR_Rectangle, True, px, py, csize[1], py + iTxtLnHeight[idx][li]}
-                                    }
-                                end if
-                            end if
-    
-                            tcmds &= {
-                                --unselected text: 
-                                {DR_PenColor, rgb(255,255,255)}, --temp color
-                                {DR_TextColor, rgb(0,0,40)}, --temp color
-                                {DR_TextColor, tokstyle[4]},
-                                --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                {DR_Puts, tokens[tokenText][t]}
                                 
-                                --Token debug:
-                                --{DR_PenColor, rgb(200,0,0)},
-                                --{DR_Rectangle, False, px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                --    px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]}
-                            }
-                            
-                            --draw selected text if needed
-                            if li = sline and li = eline then --selection starts and ends on same line
-                                --scc = char_coords(idx, sline, scol) --{cx, cy, tnum, tcol, thight}
-                                --ecc = char_coords(idx, eline, ecol) --{cx, cy, tnum, tcol, thight}
-                                
-                                if t = scc[3] and t = ecc[3] then --selection starts and ends in same token
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + scc[1], py + tokens[tokenY][t],
-                                            px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t][scc[4]+1..ecc[4]]}
-                                    }
-                                    
-                                elsif t = scc[3] then --selection starts in this token
-                                    if ecc[2] > scc[2] then
+                            else
+                                if t = 1 then --before drawing tokens, draw background color
+                                    if li = iSelEndLine[idx] and iLocked[idx] = 0 then
+                                    --draw highlight background color for active line
                                         tcmds &= {
-                                            {DR_PenColor, selbackcolor},
-                                            {DR_Rectangle, True,
-                                                px + scc[1], py + tokens[tokenY][t],
-                                                csize[1], py + ecc[2]
-                                            }
-                                        }
-                                    else
-                                        tcmds &= {
-                                            {DR_PenColor, selbackcolor},
-                                            {DR_Rectangle, True,
-                                                px + scc[1], py + tokens[tokenY][t],
-                                                px + tokens[tokenX][t] +  tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                            }
+                                            {DR_PenColor, currlinebackcolor},
+                                            {DR_Rectangle, True, px, py, csize[1], py + iTxtLnHeight[idx][li]}
                                         }
                                     end if
-                                    tcmds &= {
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t][scc[4]+1..$]}
-                                    }
-                                elsif t > scc[3] and t < ecc[3] then --token is in middle of selection
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                            px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t]}
-                                    }
-                                elsif t = ecc[3] then --selection ends in this token
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                            px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t][1..ecc[4]]}
-                                    }
                                 end if
+        
+                                tcmds &= {
+                                    --unselected text: 
+                                    {DR_PenColor, rgb(255,255,255)}, --temp color
+                                    {DR_TextColor, rgb(0,0,40)}, --temp color
+                                    {DR_TextColor, tokstyle[4]},
+                                    --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                    {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                    {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                    {DR_Puts, tokens[tokenText][t]}
+                                    
+                                    --Token debug:
+                                    --{DR_PenColor, rgb(200,0,0)},
+                                    --{DR_Rectangle, False, px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                    --    px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]}
+                                }
                                 
-                            elsif li = sline then --selection starts on this line
-                                if t = scc[3] then --selection starts in this token
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + scc[1], py + tokens[tokenY][t],
-                                            csize[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_Rectangle, True,
-                                            px, py + tokens[tokenY][t] + tokens[tokenHeight][t],
-                                            csize[1], py + iTxtLnHeight[idx][li]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t][scc[4]+1..$]}
-                                    }
-                                elsif t > scc[3] then --token is in middle of selection
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                            px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t]}
-                                    }
-                                end if
-                            elsif li = eline then --selection ends on this line
-                                if t < ecc[3] then --token is in middle of selection
-                                    if t = 1 then
+                                --draw selected text if needed
+                                if li = sline and li = eline then --selection starts and ends on same line
+                                    --scc = char_coords(idx, sline, scol) --{cx, cy, tnum, tcol, thight}
+                                    --ecc = char_coords(idx, eline, ecol) --{cx, cy, tnum, tcol, thight}
+                                    
+                                    if t = scc[3] and t = ecc[3] then --selection starts and ends in same token
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + scc[1], py + tokens[tokenY][t],
+                                                px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t][scc[4]+1..ecc[4]]}
+                                        }
+                                        
+                                    elsif t = scc[3] then --selection starts in this token
+                                        if ecc[2] > scc[2] then
+                                            tcmds &= {
+                                                {DR_PenColor, selbackcolor},
+                                                {DR_Rectangle, True,
+                                                    px + scc[1], py + tokens[tokenY][t],
+                                                    csize[1], py + ecc[2]
+                                                }
+                                            }
+                                        else
+                                            tcmds &= {
+                                                {DR_PenColor, selbackcolor},
+                                                {DR_Rectangle, True,
+                                                    px + scc[1], py + tokens[tokenY][t],
+                                                    px + tokens[tokenX][t] +  tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                                }
+                                            }
+                                        end if
+                                        tcmds &= {
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t][scc[4]+1..$]}
+                                        }
+                                    elsif t > scc[3] and t < ecc[3] then --token is in middle of selection
                                         tcmds &= {
                                             {DR_PenColor, selbackcolor},
                                             {DR_Rectangle, True,
                                                 px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                                csize[1], py + ecc[2]
-                                            }
+                                                px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t]}
+                                        }
+                                    elsif t = ecc[3] then --selection ends in this token
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                                px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t][1..ecc[4]]}
                                         }
                                     end if
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                            px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t]}
-                                    }
-                                elsif t = ecc[3] then --selection ends in this token
-                                    tcmds &= {
-                                        {DR_PenColor, selbackcolor},
-                                        {DR_Rectangle, True,
-                                            px + tokens[tokenX][t], py + tokens[tokenY][t],
-                                            px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
-                                        },
-                                        {DR_TextColor, seltextcolor},
-                                        --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
-                                        {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
-                                        {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
-                                        {DR_Puts, tokens[tokenText][t][1..ecc[4]]}
-                                    }
+                                    
+                                elsif li = sline then --selection starts on this line
+                                    if t = scc[3] then --selection starts in this token
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + scc[1], py + tokens[tokenY][t],
+                                                csize[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_Rectangle, True,
+                                                px, py + tokens[tokenY][t] + tokens[tokenHeight][t],
+                                                csize[1], py + iTxtLnHeight[idx][li]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + scc[1], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t][scc[4]+1..$]}
+                                        }
+                                    elsif t > scc[3] then --token is in middle of selection
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                                px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t]}
+                                        }
+                                    end if
+                                elsif li = eline then --selection ends on this line
+                                    if t < ecc[3] then --token is in middle of selection
+                                        if t = 1 then
+                                            tcmds &= {
+                                                {DR_PenColor, selbackcolor},
+                                                {DR_Rectangle, True,
+                                                    px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                                    csize[1], py + ecc[2]
+                                                }
+                                            }
+                                        end if
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                                px + tokens[tokenX][t] + tokens[tokenWidth][t], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t]}
+                                        }
+                                    elsif t = ecc[3] then --selection ends in this token
+                                        tcmds &= {
+                                            {DR_PenColor, selbackcolor},
+                                            {DR_Rectangle, True,
+                                                px + tokens[tokenX][t], py + tokens[tokenY][t],
+                                                px + ecc[1], py + tokens[tokenY][t] + tokens[tokenHeight][t]
+                                            },
+                                            {DR_TextColor, seltextcolor},
+                                            --{DR_Font, iLineNumFont[idx], iLineNumFontSize[idx], tokstyle[3]},
+                                            {DR_Font, tokstyle[1], tokstyle[2], tokstyle[3]},
+                                            {DR_PenPos, px + tokens[tokenX][t], py + tokens[tokenY][t]},
+                                            {DR_Puts, tokens[tokenText][t][1..ecc[4]]}
+                                        }
+                                    end if
                                 end if
                             end if
                         end if
-                    end if
-                end for
-                
-                --draw cursor if no selection
-                if hasfocus and iLocked[idx] = 0 and iCursorState[idx] > 0 and li = sline and li = eline and scol = ecol then
-                    --draw_cursor
-                    tcmds &= {
-                        {DR_PenColor, optCursorColor},
-                        {DR_Rectangle, True,
-                            px + ecc[1] - 1, py + ecc[2],
-                            px + ecc[1] + 1, py + ecc[2] + ecc[5]
+                    end for
+                    
+                    --draw cursor if no selection
+                    if hasfocus and iLocked[idx] = 0 and iCursorState[idx] > 0 and li = sline and li = eline and scol = ecol then
+                        --draw_cursor
+                        tcmds &= {
+                            {DR_PenColor, optCursorColor},
+                            {DR_Rectangle, True,
+                                px + ecc[1] - 1, py + ecc[2],
+                                px + ecc[1] + 1, py + ecc[2] + ecc[5]
+                            }
                         }
-                    }
+                    end if
                 end if
-            end if
+            end for
+            
+            gui:wproc(iCanvasName[idx], "draw", {tcmds & bcmds & lcmds, invalidrect})
+            
         end for
         
-        gui:wproc(iCanvasName[idx], "draw_background", {tcmds & bcmds & lcmds})
-        --gui:wproc(iCanvasName[idx], "draw_foreground", {tcmds & bcmds & lcmds})
-        --gui:wproc(iCanvasName[idx], "clear_handles", {})
-        if bwidth > 0 then
+        /*if bwidth > 0 then
             gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})
-        end if
-        --gui:wproc(iCanvasName[idx], "set_handle", {"hyperlinks", hcmds, "Link"})
+        end if*/
         gui:wproc(iCanvasName[idx], "set_background_pointer", {"Ibeam"})
     end if
 end procedure
@@ -2141,9 +2330,10 @@ function clean_text(object raw)  --clean up text
     
     --pretty_print(1, txt, {2})
     -- remove unwanted character codes
-    --for li = 1 to length(txt) do
-    --    txt[li] = filter(txt[li], "in",  {32,255}, "[]")
-    --end for
+    for li = 1 to length(txt) do
+        txt[li] = match_replace("\t", txt[li], repeat(' ', IndentSpace))
+        txt[li] = filter(txt[li], "in",  {32,255}, "[]")
+    end for
     
     return txt
 end function
@@ -2382,7 +2572,7 @@ end function
 
 procedure move_cursor_to(atom idx, object li, object col)  --move cursor to position (absolute {line, col})
     if idx > 0 then
-        sequence refreshlines
+        sequence refreshlines = {}
         if sequence(li) then
             if equal(li, ".") then
                 li = iSelEndLine[idx]
@@ -2415,21 +2605,22 @@ procedure move_cursor_to(atom idx, object li, object col)  --move cursor to posi
                 col = length(iTxtLnText[idx][li])
             end if
             
-            refreshlines = {li, li}
-            if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
-                refreshlines = visible_lines(idx)
-            end if
+            refreshlines &= {{iSelStartLine[idx], iSelEndLine[idx]}}
+            --if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
+            --    refreshlines = visible_lines(idx)
+            --end if
             iSelStartLine[idx] = li
             iSelStartCol[idx] = col
             iSelEndLine[idx] = li
             iSelEndCol[idx] = col
             iCursorState[idx] = 2
+            refreshlines &= {{iSelStartLine[idx], iSelEndLine[idx]}}
             
             if iIsSelecting[idx] then --prevent scrolling to active line when starting selection with the mouse
-                draw_lines(idx, refreshlines[1], refreshlines[2])
+                draw_lines(idx, refreshlines)
                 
             elsif not scroll_to_active_line(idx) then --keep end of selection in view
-                draw_lines(idx, refreshlines[1], refreshlines[2])
+                draw_lines(idx, refreshlines)
             end if
         end if
     end if
@@ -2447,6 +2638,7 @@ end procedure
 procedure select_to(atom idx, object li, object col) --select from cursor to position (absolute {line, col})
     if idx > 0 then
         sequence refreshlines
+        
         if sequence(li) then
             if equal(li, ".") then
                 li = iSelEndLine[idx]
@@ -2478,15 +2670,17 @@ procedure select_to(atom idx, object li, object col) --select from cursor to pos
             col = length(iTxtLnText[idx][li])
         end if
         
-        refreshlines = {li, li}
-        if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
-            refreshlines = visible_lines(idx)
-        end if
+        refreshlines = {{iSelEndLine[idx], li}}
+        
+        --refreshlines = {li, li}
+        --if iSelStartLine[idx] != li or iSelEndLine[idx] != li then
+        --    refreshlines = visible_lines(idx)
+        --end if
         iSelEndLine[idx] = li
         iSelEndCol[idx] = col
         
         if not scroll_to_active_line(idx, 0) then --keep end of selection in view
-            draw_lines(idx, refreshlines[1], refreshlines[2])
+            draw_lines(idx, refreshlines)
         end if
     end if
 end procedure
@@ -2495,16 +2689,7 @@ end procedure
 procedure select_rel(atom idx, atom lis, atom cols) --select number of characters (forward or backward, relative to cursor)
     if idx > 0 then
         sequence relpos = get_rel_pos(idx, lis, cols)
-        sequence refreshlines = {lis, lis}
         select_to(idx, relpos[1], relpos[2])
-        
-        if iSelStartLine[idx] != lis or iSelEndLine[idx] != lis then
-            refreshlines = visible_lines(idx)
-        end if
-        
-        if not scroll_to_active_line(idx) then --keep end of selection in view
-            draw_lines(idx, refreshlines[1], refreshlines[2])
-        end if
     end if
 end procedure
 
@@ -2590,10 +2775,10 @@ end procedure
 
 
 procedure delete_selection(atom idx) --Delete selection
-    sequence txt = {""}
     if idx > 0 then
-        sequence refreshlines
-        atom sline, scol, eline, ecol
+        sequence refreshlines, txt
+        atom sline, scol, eline, ecol, multilinesyntax = 0
+        
         if iSelStartLine[idx] > iSelEndLine[idx] then
             sline = iSelEndLine[idx]
             scol = iSelEndCol[idx]
@@ -2613,12 +2798,18 @@ procedure delete_selection(atom idx) --Delete selection
         
         refreshlines = {sline, eline}
         if sline = eline and scol = ecol then --nothing is selected
+            txt = {iTxtLnText[idx][sline]}
         else  --delete selection --When getting slices outside selection, the ranges must be [1..scol] and [ecol+1..$].
+            txt = {}
+            for li = sline to eline do
+                txt &= {iTxtLnText[idx][li]}
+            end for
             iTxtLnText[idx][sline]      = iTxtLnText[idx][sline][1..scol]   & iTxtLnText[idx][eline][ecol+1..$]
             if eline > sline then --multiple lines of text
                 iTxtLnText[idx]         = iTxtLnText[idx][1..sline]         & iTxtLnText[idx][eline+1..$]
                 iTxtLnTokens[idx]       = iTxtLnTokens[idx][1..sline]       & iTxtLnTokens[idx][eline+1..$]
                 iTxtLnSyntaxState[idx]  = iTxtLnSyntaxState[idx][1..sline]  & iTxtLnSyntaxState[idx][eline+1..$]
+                iTxtLnTokenState[idx]   = iTxtLnTokenState[idx][1..sline]   & iTxtLnTokenState[idx][eline+1..$]
                 iTxtLnBookmark[idx]     = iTxtLnBookmark[idx][1..sline]     & iTxtLnBookmark[idx][eline+1..$]
                 iTxtLnFold[idx]         = iTxtLnFold[idx][1..sline]         & iTxtLnFold[idx][eline+1..$]
                 iTxtLnVisible[idx]      = iTxtLnVisible[idx][1..sline]      & iTxtLnVisible[idx][eline+1..$]
@@ -2635,7 +2826,19 @@ procedure delete_selection(atom idx) --Delete selection
         iSelEndCol[idx] = scol
         iCursorState[idx] = 2
         
-        rebuild_lines(idx, refreshlines[1], refreshlines[2])
+        for li = 1 to length(txt) do
+            if match("/*", txt[li]) or match("*/", txt[li]) or match("\"\"\"", txt[li]) or match("`", txt[li]) then
+                multilinesyntax = 1
+                exit
+            end if
+        end for
+        
+        if multilinesyntax then --multi-line comment symbol detected, may affect other lines
+            rebuild_lines(idx, refreshlines[1], length(iTxtLnText[idx]))
+        else
+            rebuild_lines(idx, refreshlines[1], refreshlines[2])
+        end if
+        
         scroll_to_active_line(idx)
     end if
 end procedure
@@ -2648,8 +2851,9 @@ end procedure
 procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cursor (invalid if text is selected)
     if idx > 0 then
         sequence txt = clean_text(chars)
-        atom sline, scol, eline, ecol, oldtextendlen
+        atom sline, scol, eline, ecol, oldtextendlen, multilinesyntax = 0
         sequence pretext, posttext
+        
         if iSelStartLine[idx] > iSelEndLine[idx] then
             sline = iSelEndLine[idx]
             scol = iSelEndCol[idx]
@@ -2684,6 +2888,7 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
             iTxtLnText[idx]         = iTxtLnText[idx][1..sline]         & txt[2..$]                & iTxtLnText[idx][eline+1..$]
             iTxtLnTokens[idx]       = iTxtLnTokens[idx][1..sline]       & repeat(0, length(txt)-1) & iTxtLnTokens[idx][eline+1..$]
             iTxtLnSyntaxState[idx]  = iTxtLnSyntaxState[idx][1..sline]  & repeat(0, length(txt)-1) & iTxtLnSyntaxState[idx][eline+1..$]
+            iTxtLnTokenState[idx]   = iTxtLnTokenState[idx][1..sline]   & repeat(0, length(txt)-1) & iTxtLnTokenState[idx][eline+1..$]
             iTxtLnBookmark[idx]     = iTxtLnBookmark[idx][1..sline]     & repeat(0, length(txt)-1) & iTxtLnBookmark[idx][eline+1..$]
             iTxtLnFold[idx]         = iTxtLnFold[idx][1..sline]         & repeat(0, length(txt)-1) & iTxtLnFold[idx][eline+1..$]
             iTxtLnVisible[idx]      = iTxtLnVisible[idx][1..sline]      & repeat(1, length(txt)-1) & iTxtLnVisible[idx][eline+1..$]
@@ -2705,7 +2910,23 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
             iSelEndLine[idx] = iSelStartLine[idx]
             iSelEndCol[idx] = iSelStartCol[idx]
             iCursorState[idx] = 2
-            rebuild_lines(idx, sline, iSelEndLine[idx]+1)
+            
+            if length(txt) = 1 then
+                txt = {iTxtLnText[idx][sline]}
+            end if
+            for li = 1 to length(txt) do
+                if match("/*", txt[li]) or match("*/", txt[li]) or match("\"\"\"", txt[li]) or match("`", txt[li]) then
+                    multilinesyntax = 1
+                    exit
+                end if
+            end for
+            
+            if multilinesyntax then --multi-line comment symbol detected, may affect other lines
+                rebuild_lines(idx, sline, length(iTxtLnText[idx]))
+            else
+                rebuild_lines(idx, sline, iSelEndLine[idx]+1)
+            end if
+            
             --scroll_to_active_line(idx)
         end if
     end if
@@ -2860,8 +3081,6 @@ procedure call_cmd(atom idx, sequence cmd, object args)
             txt = clean_text(args[1])
             text_put(idx, txt)
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "tab" then
             if is_selection(idx) then
@@ -2871,8 +3090,6 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 text_put(idx, repeat(' ', indentc))
             end if
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "untab" then
             if is_selection(idx) then
@@ -2881,8 +3098,6 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 
             end if
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "backspace" then
             if is_selection(idx) then
@@ -2913,8 +3128,6 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 end if
             end if
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "delete" then
             if is_selection(idx) then
@@ -2924,8 +3137,6 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 delete_selection(idx)
             end if
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "newline" then
             if is_selection(idx) then
@@ -2951,16 +3162,49 @@ procedure call_cmd(atom idx, sequence cmd, object args)
                 text_put(idx, indent)
             end if
             set_modified(idx, 1)
-            --vislines = visible_lines(idx)
-            --draw_lines(idx, vislines[1], vislines[2])
             
         case "scroll" then
-            iScrollX[idx] = args[1]
-            iScrollY[idx] = args[2]
+            --shift bitmap of view up or down and draw only the lines that have been moved into view
+            sequence cmds, csize, invalidrect, oldvislines, prevscroll, lines
+            atom scry
             
+            oldvislines = visible_lines(idx)
+            prevscroll = {iScrollX[idx], iScrollY[idx]}
+            iScrollX[idx] = floor(args[1])
+            iScrollY[idx] = floor(args[2])
             vislines = visible_lines(idx)
-            draw_lines(idx, vislines[1], vislines[2])
-                        
+            
+            if prevscroll[1] != floor(args[1]) then --scroll horizontally
+                draw_lines(idx, {{vislines[1], vislines[2]}})
+                
+            else --scroll vertically
+                scry = floor(args[2]) - prevscroll[2]
+                csize = gui:wfunc(iCanvasName[idx], "get_canvas_size", {})
+                /*if iScrollX[idx] then
+                    csize[2] -= th:scrwidth
+                end if
+                if iScrollY[idx] then
+                    csize[1] -= th:scrwidth
+                end if*/
+                if scry > 0 then --scroll down (shift up)
+                    cmds = { --{DR_Copy, srcbitmap, srcx, srcy, destx, desty, width, height}
+                        {DR_Copy, ".", 0, scry, 0, 0, csize[1], csize[2]-scry}
+                    }
+                    invalidrect = {0, 0, csize[1], csize[2]-scry}
+                    gui:wproc(iCanvasName[idx], "draw", {cmds, invalidrect})
+                    draw_lines(idx, {{oldvislines[2], vislines[2]}})
+                    
+                elsif scry < 0 then --scroll up (shift down)
+                    cmds = { --{DR_Copy, srcbitmap, srcx, srcy, destx, desty, width, height}
+                        {DR_Copy, ".", 0, 0, 0, -scry, csize[1], csize[2]+scry}
+                    }
+                    invalidrect = {0, scry, csize[1], csize[2]}
+                    gui:wproc(iCanvasName[idx], "draw", {cmds, invalidrect})
+                    draw_lines(idx, {{vislines[1], oldvislines[1]}})
+                    
+                end if
+            end if
+                
         case "cut" then
             if iLocked[idx] = 0 then
                 if is_selection(idx) then
@@ -3008,12 +3252,19 @@ procedure call_cmd(atom idx, sequence cmd, object args)
             
         case "resize" then
             sequence csize = gui:wfunc(iCanvasName[idx], "get_visible_size", {iTotalWidth[idx], iTotalHeight[idx]})
-            if iTotalHeight[idx] = csize[2] then
+            if iTotalWidth[idx] = csize[1] and iLineNumWidth[idx] > 0 then
                 vislines = visible_lines(idx)
-                draw_lines(idx, vislines[1], vislines[2])
+                draw_lines(idx, {{vislines[1], vislines[2]}})
             else
                 rebuild_lines(idx, 1, length(iTxtLnText[idx]))
             end if
+            
+            /*sequence hshape = {  --handle shape for line number, bookmark, folding (margin) area
+                {DR_Rectangle, True, 0, 0, iLineNumWidth[idx] - 20, csize[2]}
+            }
+            
+            gui:wproc(iCanvasName[idx], "set_handle", {"lineheaders", hshape, "Arrow"})*/
+            
     end switch
 end procedure
 
@@ -3226,7 +3477,7 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                 
                 --if evdata != iKeyFocus[idx] then
                 sequence vislines = visible_lines(idx)
-                draw_lines(idx, vislines[1], vislines[2])
+                draw_lines(idx, {{vislines[1], vislines[2]}})
                 --end if
                 --? {evdata, iKeyFocus[idx]}
                 
@@ -3236,7 +3487,7 @@ procedure textedit_event_handler(object evwidget, object evtype, object evdata)
                     --set_current_editor(idx)
                     
                     --sequence vislines = visible_lines(idx)
-                    --draw_lines(idx, vislines[1], vislines[2])
+                    --draw_lines(idx, {{vislines[1], vislines[2]}})
                 --end if
                                      
             case "handle" then  --evdata = {"HandleName", "EventType", data1, data2})
@@ -3894,6 +4145,7 @@ export procedure create(sequence wprops) --Create a text editor instance
     iTxtLnText          &= {{""}}
     iTxtLnTokens        &= {{0}}
     iTxtLnSyntaxState   &= {{0}}
+    iTxtLnTokenState    &= {{0}}
     iTxtLnBookmark      &= {{0}}
     iTxtLnFold          &= {{0}}
     iTxtLnVisible       &= {{1}}
@@ -3926,15 +4178,6 @@ export procedure create(sequence wprops) --Create a text editor instance
     iBusyTime           &= {0}
     iCmdQueue           &= {{}}
     iUndoQueue          &= {{}}
-    
-    syncolor:set_colors({
-        {"NORMAL", ttNone},
-        {"COMMENT", ttComment},
-        {"KEYWORD", ttKeyword},
-        {"BUILTIN", ttBuiltin},
-        {"STRING", ttString},
-        {"BRACKET", {ttBracket, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}}
-    })
     
     atom idx = length(iName)
     
@@ -3978,6 +4221,7 @@ export procedure destroy(sequence iname) --Destroy a text editor instance (after
         iTxtLnText         = remove(iTxtLnText, idx)
         iTxtLnTokens       = remove(iTxtLnTokens, idx)
         iTxtLnSyntaxState  = remove(iTxtLnSyntaxState, idx)
+        iTxtLnTokenState   = remove(iTxtLnTokenState, idx)
         iTxtLnBookmark     = remove(iTxtLnBookmark, idx)
         iTxtLnFold         = remove(iTxtLnFold, idx)
         iTxtLnVisible      = remove(iTxtLnVisible, idx)
@@ -4045,7 +4289,8 @@ export procedure show(sequence iname, sequence cparent) --Show a text editor ins
             {"parent", cparent},
             {"class", "canvas"},
             {"label", iLabel[idx]},
-            {"scroll_foreground", 0},
+            --{"scroll_foreground", 0},
+            {"fast_draw", 1},
             {"scroll_wheel_distance", 128},
             {"background_pointer", "Ibeam"},
             {"handler", routine_id("textedit_event_handler")},
@@ -4207,11 +4452,22 @@ export function get_toc(object iname) --returns a list of sections/routines: {{i
         if iViewMode[idx] = 0 and iSyntaxMode[idx] = synEuphoria then
             toclist &= {{"go-top", "1", "top"}}
             for li = 1 to length(iTxtLnText[idx]) do
-                txt = iTxtLnText[idx][li]
-                if match("function", txt) and not match("end", txt) then
-                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
-                elsif match("procedure", txt) and not match("end", txt) then
-                    toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                if iTxtLnSyntaxState[idx][li] = 0 then --only process outside multi-line comments or quotes
+                    txt = trim(iTxtLnText[idx][li])
+                    
+                    if match("function", txt) = 1 or match("procedure", txt) = 1
+                    or match("export function", txt) = 1 or match("export procedure", txt) = 1
+                    or match("public function", txt) = 1 or match("public procedure", txt) = 1
+                    or match("global function", txt) = 1 or match("global procedure", txt) = 1 then
+                        toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                    
+                    elsif match("app:define", txt) = 1 or match("app:set_menus", txt) = 1 or match("app:set_default_toolbars", txt) = 1 then
+                        toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                        
+                    elsif match("-- ", txt) = 1 and match("----", txt) then --Display comments in the format "-- Section Title ----...")
+                        toclist &= {{"emblem-symbolic-link", sprint(li), txt}}
+                        
+                    end if
                 end if
             end for
             toclist &= {{"go-bottom", sprint(length(iTxtLnText[idx])), "bottom"}}
@@ -4361,6 +4617,7 @@ export function match_replace_all(sequence iname, sequence findstr, sequence rep
                 
                 iTxtLnTokens[idx][li]       = 0
                 iTxtLnSyntaxState[idx][li]  = 0
+                iTxtLnTokenState[idx][li]   = 0
                 iTxtLnBookmark[idx][li]     = 0
                 iTxtLnFold[idx][li]         = 0
                 iTxtLnVisible[idx][li]      = 1
@@ -4534,6 +4791,27 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

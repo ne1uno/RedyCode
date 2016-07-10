@@ -367,7 +367,7 @@ end procedure
 
 procedure wc_draw(atom wid)
     sequence cmds, wrect, chwid, txex, txpos, lrect, lpos, irect
-    atom idx, hlcolor, shcolor, fillcolor, txtcolor, hicolor, stripecolor
+    atom idx, wh, hlcolor, shcolor, fillcolor, txtcolor, hicolor, stripecolor
     atom indent, checkbox, numbered, ih, xp, yp, ss, yt
     sequence clabels, cwidths, csort, sortdir, iids, itexts, iicons, iselected
     atom scry,scrx, hover
@@ -377,6 +377,7 @@ procedure wc_draw(atom wid)
     
     if idx > 0 then
         wrect = widget_get_rect(wid)
+        wh = widget:widget_get_handle(wid)
         --wrect[3] -= 1
         --wrect[4] -= 1
         lpos = wcprops[wcpLabelPos][idx]
@@ -739,7 +740,7 @@ procedure wc_draw(atom wid)
             {DR_Release}
         }
         
-        draw(widget:widget_get_handle(wid), cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do

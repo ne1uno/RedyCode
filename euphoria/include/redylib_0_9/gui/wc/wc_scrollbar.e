@@ -268,12 +268,14 @@ end procedure
 
 procedure wc_draw(atom wid)
     sequence cmds, wrect, subrect, addrect, fastsubrect, fastaddrect, scrrect
-    atom idx, hlcolor, shcolor, fillcolor, areacolor, x1, y1, x2, y2, tx, ty, ts
+    atom idx, wh, hlcolor, shcolor, fillcolor, areacolor, x1, y1, x2, y2, tx, ty, ts
     idx = find(wid, wcprops[wcpID])
     
     if idx > 0 then
         --puts(1, "draw scrollbar")
         wrect = widget_get_rect(wid)
+        wh = widget:widget_get_handle(wid)
+        
         --wrect[3] -= 1
         --wrect[4] -= 1
         ts = 4
@@ -530,8 +532,7 @@ procedure wc_draw(atom wid)
             {DR_Line, scrrect[1], scrrect[4] - 1, scrrect[3] - 1, scrrect[4] - 1}
         }
         
-        draw(widget:widget_get_handle(wid), cmds)
-        
+        oswin:draw(wh, cmds, "", wrect)
     end if
     
 end procedure

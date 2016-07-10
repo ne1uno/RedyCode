@@ -60,7 +60,12 @@ pSourceNode = 0,    --source folder node
 pIncludesNode = 0,  --redylib, stdlib, and additional include folders node
 pFileNodes = {},     --list of file tree nodes, so clicking on node can open the associated file (each one is {nodeid, filepath, filename, readonly})
 pFolderNodes = {},   --list of folder tree nodes (each one is {nodeid, path})
-pExpandedFolders = {} --list of paths that are expanded in the project tree (so when refreshing the tree, expanded nodes can be recalled)
+pExpandedFolders = {}, --list of paths that are expanded in the project tree (so when refreshing the tree, expanded nodes can be recalled)
+
+pInfoVars = {}, --list of info vars used in header and appinfo. Example: {{"title", "App Title"}, {"author", "Firstname Lastname"}, ...}
+
+pBookmarks = {}, --list of bookmarks to remember: {{"file1", {num1, num2, num3, ...}, {"file2", {num1, num2, num3, ...}, ...}
+pOpenFiles = {}  --list of files to open automatically when project is opened
 
 atom SettingsTabWid = 0
 
@@ -81,8 +86,6 @@ sequence DefaultHeader =
 "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" &
 "See the License for the specific language governing permissions and\n" &
 "limitations under the License.\n"
-
-
 
 
 action:define({
@@ -226,7 +229,10 @@ procedure do_project_load(sequence projfile)
     projIncludePath = 0,
     projHeader = {},
     projIncludes = {},
-    projModified = 0
+    projModified = 0,
+    progInfoVars = {},
+    progBookmarks = {},
+    progOpenFiles = {}
     
     sequence dSections = {}, dNames = {}, dValues = {}
 
@@ -319,6 +325,22 @@ procedure do_project_load(sequence projfile)
         --    if sequence(dValues[v]) and length(dValues[v]) > 0 then
         --        projIncludes &= {{dNames[v], dValues[v]}}
         --    end if
+        
+        case "InfoVars" then
+            if sequence(dValues[v]) and length(dValues[v]) > 0 then
+                progInfoVars &= {{dNames[v], dValues[v]}}
+            end if
+        
+        case "Bookmarks" then
+            if sequence(dValues[v]) and length(dValues[v]) > 0 then
+                progBookmarks &= {{dNames[v], dValues[v]}}
+            end if
+        
+        case "OpenFiles" then
+            if sequence(dValues[v]) and length(dValues[v]) > 0 then
+                progOpenFiles &= {{dNames[v], dValues[v]}}
+            end if
+            
         end switch
     end for
     
@@ -329,13 +351,27 @@ procedure do_project_load(sequence projfile)
         projIncludes &= {projIncludePath}
     end if
     
-    gui:widget_hide("lstProjects")
-    gui:widget_hide("btnNewProject")
-    gui:widget_hide("btnOpenProject")
-    gui:widget_show("btnRun")
-    gui:widget_show("treeProject")
-    gui:widget_show("divSearch")
-    gui:widget_show("cntSearch")
+    gui:wdestroy("cntProject")
+    gui:wcreate({
+        {"name", "cntProject"},
+        {"parent", "panelProject"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "btnRun"},
+        {"parent", "cntProject"},
+        {"class", "button"},
+        {"label", "Run " & pDefaultApp}
+    })
+    gui:wcreate({
+        {"name", "treeProject"},
+        {"parent", "cntProject"},
+        {"class", "treebox"}
+    })
+    
     
     pPath = projPath
     pName = projName
@@ -359,6 +395,11 @@ procedure do_project_load(sequence projfile)
     pFolderNodes = {}
     pExpandedFolders = {}
     
+    pInfoVars = progInfoVars
+
+    pBookmarks = progBookmarks
+    pOpenFiles = progOpenFiles
+
     --refresh_source_tree()
     action:do_proc("project_refresh", {})
     
@@ -442,6 +483,11 @@ procedure do_project_close()
         pFolderNodes = {}
         pExpandedFolders = {}
         
+        pInfoVars = {}
+        
+        pBookmarks = {}
+        pOpenFiles = {}
+        
         build:set_source_path("")
         --build:set_include_paths(pIncludes)
         build:set_default_app("")
@@ -457,21 +503,15 @@ procedure do_project_save()
     --actually, this just does a "save all"
     action:do_proc("file_save_all", {})
     
-    --if length(pPath) > 0 and length(pName) > 0 then
-    --    save_project_settings(pPath & "\\" & pName & ".redy")
-    --end if
+    if length(pPath) > 0 and length(pName) > 0 then
+        save_project_settings(pPath & "\\" & pName & ".redy")
+    end if
 end procedure
 
 
 procedure do_project_explore_folder()
     if length(pPath) > 0 then
-        --puts(1, pPath)
-        
         atom wh = gui:widget_get_handle("winMain")
-        --Old version:
-        --atom ret = gui:ShellExecute(wh, pPath, "", "explore")
-        
-        --New version:
         atom ret = gui:ShellExecute(wh, "explore", pPath, "")
         
         if ret > 32 then 
@@ -480,8 +520,6 @@ procedure do_project_explore_folder()
           -- failure
             msgbox:msg("Unable to explore folder '" & pPath & "'. ShellExecute returned: " & sprint(ret) & "", "Error")
         end if
-        
-        
     end if
 end procedure
 
@@ -928,11 +966,21 @@ procedure save_project_settings(sequence projfile)
         else
             puts(fn, "IncludePath = \"" & pIncludePath & "\"\n")
         end if
-        --if atom(pRedyLibPath) then
-        --    puts(fn, "RedyLibPath = " & sprint(pRedyLibPath) & "\n")
-        --else
-        --    puts(fn, "RedyLibPath = \"" & pRedyLibPath & "\"\n")
-        --end if
+        
+        puts(fn, "[InfoVars]\n")
+        for i = 1 to length(pInfoVars) do
+            puts(fn,  pInfoVars[i][1] & " = " & pInfoVars[i][2] & "\n")
+        end for
+        
+        puts(fn, "[Bookmarks]\n")
+        for i = 1 to length(pBookmarks) do
+            puts(fn,  pBookmarks[i][1] & " = " & sprint(pBookmarks[i][2]) & "\n")
+        end for
+        
+        puts(fn, "[OpenFiles]\n")
+        for i = 1 to length(pOpenFiles) do
+            puts(fn,  pOpenFiles[i][1] & " = " & pOpenFiles[i][2] & "\n")
+        end for
         
         close(fn)
     end if
@@ -953,82 +1001,34 @@ procedure do_list_projects()
             {"dock", "left"},
             {"handler", routine_id("gui_event")}
         })
-        
-        gui:wcreate({
-            {"name", "cntProject"},
-            {"parent", "panelProject"},
-            {"class", "container"},
-            {"orientation", "vertical"},
-            {"sizemode_x", "expand"},
-            {"sizemode_y", "expand"}
-        })
-        gui:wcreate({
-            {"name", "btnNewProject"},
-            {"parent", "cntProject"},
-            {"class", "button"},
-            {"label", "Create new project..."},
-            {"visible", 0}
-        })
-        gui:wcreate({
-            {"name", "btnOpenProject"},
-            {"parent", "cntProject"},
-            {"class", "button"},
-            {"label", "Open other project..."},
-            {"visible", 0}
-        })
-        gui:wcreate({
-            {"name", "btnRun"},
-            {"parent", "cntProject"},
-            {"class", "button"},
-            {"label", "Run " & pDefaultApp},
-            {"visible", 0}
-        })
-        
-        gui:wcreate({
-            {"name", "btnProjectFiles"},
-            {"parent", "cntProject"},
-            {"class", "button"},
-            {"label", "Project Files"},
-            {"visible", 0}
-        })
-        gui:wcreate({
-            {"name", "btnSourceTree"},
-            {"parent", "cntProject"},
-            {"class", "button"},
-            {"label", "Source Map"},
-            {"visible", 0}
-        })
-        gui:wcreate({
-            {"name", "lstProjects"},
-            {"parent", "cntProject"},
-            {"class", "fancylist"},
-            {"label", "Open a project:"},
-            {"visible", 0}
-        })
-        
-        gui:wcreate({
-            {"name", "treeProject"},
-            {"parent", "cntProject"},
-            {"class", "treebox"},
-            {"visible", 0}
-        })
-        
-        --------------------
-        
-        /*gui:wcreate({
-            {"name", "cntMain"},
-            {"parent", "winMain"},
-            {"class", "container"},
-            {"orientation", "vertical"},
-            {"sizemode_x", "expand"},
-            {"sizemode_y", "expand"},
-            {"handler", routine_id("gui_event")}
-        })*/
-        
-        --tabs:start()
-        
-        --msg:subscribe("project", "command", routine_id("msg_event"))
     end if
+    gui:wdestroy("cntProject")
+    gui:wcreate({
+        {"name", "cntProject"},
+        {"parent", "panelProject"},
+        {"class", "container"},
+        {"orientation", "vertical"},
+        {"sizemode_x", "expand"},
+        {"sizemode_y", "expand"}
+    })
+    gui:wcreate({
+        {"name", "btnNewProject"},
+        {"parent", "cntProject"},
+        {"class", "button"},
+        {"label", "Create new project..."}
+    })
+    gui:wcreate({
+        {"name", "btnOpenProject"},
+        {"parent", "cntProject"},
+        {"class", "button"},
+        {"label", "Open other project..."}
+    })
+    gui:wcreate({
+        {"name", "lstProjects"},
+        {"parent", "cntProject"},
+        {"class", "fancylist"},
+        {"label", "Open a project:"}
+    })
     
     if sequence(plist) then
         for p = 1 to length(plist) do 
@@ -1047,14 +1047,6 @@ procedure do_list_projects()
             end if
         end for
     end if
-    
-    gui:widget_show("lstProjects")
-    gui:widget_show("btnNewProject")
-    gui:widget_show("btnOpenProject")
-    gui:widget_hide("btnRun")
-    gui:widget_hide("treeProject")
-    gui:widget_hide("divSearch")
-    gui:widget_hide("cntSearch")
     
     gui:wproc("lstProjects", "select_items", {0})
     gui:wproc("lstProjects", "clear_list", {})
@@ -1265,9 +1257,7 @@ procedure get_project_settings()
 end procedure
 
 
-
 -------------------------------
-
 
 
 function get_projects_path()
@@ -1460,12 +1450,6 @@ procedure build_dir(atom parentnodeid, sequence path, atom readonly)
 end procedure
 
 
-
-
-
-
-
-
 procedure confirm_close_project()
     if length(pPath) > 0 then
         sequence ans = "Yes"
@@ -1489,14 +1473,13 @@ procedure confirm_close_project()
 end procedure
 
 
-
-
-
-
-
-
-
 ------------------------
+
+
+export procedure update_bookmarks(sequence iname, sequence bookmarks)
+    --sequence tablist = app:list_tabs() --needed to match iname with tab?
+    
+end procedure
 
 
 procedure gui_event(object evwidget, object evtype, object evdata)
@@ -1617,5 +1600,8 @@ procedure gui_event(object evwidget, object evtype, object evdata)
     end switch
 
 end procedure
+
+
+
 
 

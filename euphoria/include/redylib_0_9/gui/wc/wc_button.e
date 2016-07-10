@@ -198,7 +198,7 @@ procedure wc_draw(atom wid)
         end if
         
         
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do
@@ -292,6 +292,31 @@ procedure wc_event(atom wid, sequence evtype, object evdata)
                     if wcprops[wcpKeyFocus][idx] != 0 then
                         wcprops[wcpKeyFocus][idx] = 0
                         doredraw = 1
+                    end if
+                end if
+            
+            case "KeyDown" then
+                if wcprops[wcpKeyFocus][idx] then
+                    if evdata[1] = 13 then --newline
+                        wcprops[wcpPressed][idx] = 1
+                        wcprops[wcpClicked][idx] = 1
+                        wcprops[wcpKeyFocus][idx] = 1
+                        widget:set_key_focus(wid)
+                        doredraw = 1
+                    end if
+                end if
+            
+            case "KeyUp" then
+                if wcprops[wcpKeyFocus][idx] then
+                    if evdata[1] = 13 then --newline
+                        if wcprops[wcpClicked][idx] = 1 and wcprops[wcpPressed][idx] = 1 and wenabled = 1 then
+                            --doWidgetAction(wID, wcprops[wcpAction])
+                            wname = widget_get_name(wid)
+                            widget:wc_send_event(wname, "clicked", {})
+                            doredraw = 1
+                        end if
+                        wcprops[wcpClicked][idx] = 0
+                        wcprops[wcpPressed][idx] = 0
                     end if
                 end if
                 
@@ -407,5 +432,6 @@ procedure cmd_set_label(atom wid, sequence txt)
     end if
 end procedure
 wc_define_command("button", "set_label", routine_id("cmd_set_label"))
+
 
 

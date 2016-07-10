@@ -267,11 +267,12 @@ end procedure
 
 procedure wc_draw(atom wid)
     sequence cmds, wrect, subrect, addrect, fastsubrect, fastaddrect, scrrect, sliderect
-    atom idx, hlcolor, shcolor, fillcolor, areacolor, x1, y1, x2, y2
+    atom idx, wh, hlcolor, shcolor, fillcolor, areacolor, x1, y1, x2, y2
     idx = find(wid, wcprops[wcpID])
     
     if idx > 0 then
         wrect = widget_get_rect(wid)
+        wh = widget:widget_get_handle(wid)
     
         if wcprops[wcpOrientation][idx] = scrV then
             subrect = {wrect[1], wrect[2] + wcprops[wcpSubStartPos][idx], wrect[3], wrect[2] + wcprops[wcpSubEndPos][idx]}
@@ -494,7 +495,7 @@ procedure wc_draw(atom wid)
             {DR_Line, scrrect[1] + 2, scrrect[2] + 1 + 2, scrrect[1] + 2, scrrect[4] - 1 - 2}
         }
         
-        draw(widget:widget_get_handle(wid), cmds)
+        oswin:draw(wh, cmds, "", wrect)
     end if
 end procedure
 

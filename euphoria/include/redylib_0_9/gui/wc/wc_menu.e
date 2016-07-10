@@ -354,8 +354,8 @@ procedure wc_draw(atom wid)
         wrect = widget_get_rect(wid)
         wrect[1] = 0
         wrect[2] = 0
-        --wrect[3] -= 1
-        --wrect[4] -= 1
+        wrect[3] += 1
+        wrect[4] += 1
         wh = widget_get_handle(wid)
         
         --fill:
@@ -569,7 +569,7 @@ procedure wc_draw(atom wid)
             end if
         end for
         
-        draw(widget:widget_get_handle(wid), cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do
@@ -939,4 +939,5 @@ wc_define(
 --  oswin:set_window_size(widget_get_handle(wid), width, height)
 --end procedure
 --wc_define_command("container", "maximize", routine_id("wc_maximize"))
+
 

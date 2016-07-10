@@ -1478,7 +1478,7 @@ procedure wc_draw(atom wid)
             --elsif equal(wcprops[wcpOptMode][idx], "password") then
             end if
         end if
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
         
         chwid = children_of(wid)
         for ch = 1 to length(chwid) do

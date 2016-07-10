@@ -504,14 +504,13 @@ procedure wc_draw(atom wid)
         
         if match("_winDebug", widget_get_name(wid)) then
             fcolor = rgb(255, 255, 200)
-        end  if
+        end if
         cmds = {
             {DR_PenColor, fcolor},
             {DR_Rectangle, True, 0, 0, wsize[1], wsize[2]}
             --{DR_PenColor, rgb(255, 64, 64)},
             --{DR_Rectangle, False, 0, 0, wsize[1], wsize[2]}
         }
-        
         draw(widget:widget_get_handle(wid), cmds)
         
         chwid = children_of(wid)
@@ -1243,6 +1242,8 @@ procedure cmd_set_title(atom wid, sequence title)
     end if
 end procedure
 wc_define_command("window", "set_title", routine_id("cmd_set_title"))
+
+
 
 
 

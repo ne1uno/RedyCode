@@ -290,6 +290,7 @@ function msgbox(sequence msgtxt, sequence msgicon, sequence msgbuttons, atom msg
                 {"label", "OK"},
                 {"size", {50, 0}}
             })
+            gui:set_key_focus(wname & ".btnOk")
             msgButtons &= {wname & ".btnOk"}
         end if
     else
@@ -344,4 +345,5 @@ export function waitmsg(sequence msgtxt, sequence msgicon = "Info", sequence msg
     
     return answer
 end function
+
 

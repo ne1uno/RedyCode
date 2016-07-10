@@ -239,7 +239,7 @@ procedure wc_draw(atom wid)
             }     
         end if
         
-        draw(wh, cmds)
+        oswin:draw(wh, cmds, "", wrect)
     end if
 end procedure
 
