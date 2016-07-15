@@ -15,7 +15,7 @@ include redylib_0_9/gui.e as gui
 --Define information about this application
 app:define({
     {"title", "SimpleApp"},
-    {"version", "0.9.3"},
+    {"version", "0.9.4"},
     {"author", "You"},
     {"copyright", "2016 You"},
     {"license", {

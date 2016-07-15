@@ -44,12 +44,24 @@ When you run RedyCode, it shows a list of projects contained in the defaulet pro
 
 RedyCode comes with a few example projects, one of which is the source to RedyCode itself. (You can use RedyCode to edit and run RedyCode recursively!)
 
-===Creating a new project from the default template
-RedyCode comes with a default project template (more templates will be added in a future version). To create a project:
+===Creating a new project
+New RedyCode projects are created from templates. 
     * Click New Project. An Create New Project dialog will open.
     * Type a new project name
-    * Edit the default header text, which will be placed at the top of each euphoria source code in the new project. This is useful for adding copyright and license information to your source files.
-    * Click Create New Project. The project will be generated and opened. You will see the new project's files in the [[Project Tree->RedyCode/ProjectTree]]. Open the project's .exw file. Find the app:define() statement, and edit the strings that define the application's info. It will look something like this: 
+    * Select a Template.
+    * Edit the app info variables. Default values are defined in [[Preferences]]. App Info is used in various places, such as the app:define({}) statement, the About dialog, the main window title, etc.  You may load a text file into the Variable text. This is useful for loading a license file, for example. 
+    * Edit the header text, which will be placed at the top of each euphoria source code in the new project. This is useful for adding copyright and license information to your source files. The default header is defined in [[Preferences]]. App Info varibales can be inserted into the header text as "$varname". Double-click an App Info Variable in the list, or click the Insert into Header button. You may load a text file to use as the Header if needed. Here is an example of a Header: 
+    
+<eucode>
+This file is part of $title
+$website
+
+Copyright $year $author
+
+$license
+</eucode>
+
+    * Click Create New Project. The project will be generated and opened. You will see the new project's files in the [[Project Tree->RedyCode/ProjectTree]]. If you open the project's .exw file, you will notice the Header has been created at the top of the file, and the app:define() has been created using the defined App Info variables. 
 
 <eucode>
 --Define Application Info
@@ -65,8 +77,6 @@ app:define({
     {"about", "Description of your app."}
 })
 </eucode>
-    * Save the file.
-    * Click Run, and you should see your project's application run and and create a window!
     
 ===Copying and renaming a project
 If you want to make a copy of a project and rename it, you will have to do that outside of RedyCode (currently). This is the suggested method:

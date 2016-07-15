@@ -2884,7 +2884,8 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
         elsif length(txt) > 1 then
             iTxtLnText[idx][sline] = pretext & txt[1]
             oldtextendlen = length(txt[$])
-            txt[$] = posttext & txt[$]
+            --txt[$] = posttext & txt[$]
+            txt[$] = txt[$] & posttext
             iTxtLnText[idx]         = iTxtLnText[idx][1..sline]         & txt[2..$]                & iTxtLnText[idx][eline+1..$]
             iTxtLnTokens[idx]       = iTxtLnTokens[idx][1..sline]       & repeat(0, length(txt)-1) & iTxtLnTokens[idx][eline+1..$]
             iTxtLnSyntaxState[idx]  = iTxtLnSyntaxState[idx][1..sline]  & repeat(0, length(txt)-1) & iTxtLnSyntaxState[idx][eline+1..$]
@@ -2914,6 +2915,7 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
             if length(txt) = 1 then
                 txt = {iTxtLnText[idx][sline]}
             end if
+            
             for li = 1 to length(txt) do
                 if match("/*", txt[li]) or match("*/", txt[li]) or match("\"\"\"", txt[li]) or match("`", txt[li]) then
                     multilinesyntax = 1
@@ -2922,7 +2924,7 @@ procedure text_put(atom idx, object chars)  --Insert 1 or more characters at cur
             end for
             
             if multilinesyntax then --multi-line comment symbol detected, may affect other lines
-                rebuild_lines(idx, sline, length(iTxtLnText[idx]))
+                rebuild_lines(idx, sline, length(iTxtLnText[idx])) --todo: smarter detection of when lines need to be rebuilt
             else
                 rebuild_lines(idx, sline, iSelEndLine[idx]+1)
             end if
@@ -4791,6 +4793,7 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
+
 
 
 

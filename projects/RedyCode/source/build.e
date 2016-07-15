@@ -1,5 +1,5 @@
--- This file is part of RedyCode™ Integrated Development Environment
--- <http://redy-project.org/>
+-- This file is part of RedyCode(TM) Integrated Development Environment
+-- http://redy-project.org/
 -- 
 -- Copyright 2016 Ryan W. Johnson
 -- 
@@ -7,15 +7,14 @@
 -- you may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
 -- 
---   http://www.apache.org/licenses/LICENSE-2.0
+-- http://www.apache.org/licenses/LICENSE-2.0
 -- 
 -- Unless required by applicable law or agreed to in writing, software
 -- distributed under the License is distributed on an "AS IS" BASIS,
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
---
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 
 without warning
@@ -37,7 +36,7 @@ include std/convert.e
 include std/sequence.e
 
 
-object ProjectPath, EuiPath, EubindPath, IncludePath
+object ProjectPath, EubinPath, IncludePath
 sequence SourcePath = "", IncludePaths = {}, DefaultApp = "", AppList = {}
 
 
@@ -47,16 +46,36 @@ action:define({
     {"label", "Run"},
     {"icon", "redy16"},
     {"description", "Run Default Program"},
-    {"enabled", 0}
+    {"enabled", 1}
 })
 
 action:define({
-    {"name", "app_run"},
-    {"do_proc", routine_id("do_app_run")},
+    {"name", "app_run_window"},
+    {"do_proc", routine_id("do_app_run_window")},
     {"label", "Run"},
     {"icon", ""},
     --{"list", {}},
     {"description", "Run Application"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "app_run_console"},
+    {"do_proc", routine_id("do_app_run_console")},
+    {"label", "Run"},
+    {"icon", ""},
+    --{"list", {}},
+    {"description", "Run Application (Console)"},
+    {"enabled", 0}
+})
+
+action:define({
+    {"name", "app_run_eu_backend"},
+    {"do_proc", routine_id("do_app_run_eu_backend")},
+    {"label", "Run"},
+    {"icon", ""},
+    --{"list", {}},
+    {"description", "Run Application (Eu Backend)"},
     {"enabled", 0}
 })
 
@@ -99,46 +118,61 @@ export procedure set_app_list(sequence applist)
 end procedure
 
 
-procedure do_app_run_default()
-    if length(SourcePath) > 0 and length(DefaultApp) > 0 then
-        action:do_proc("app_run", {SourcePath & "\\" & DefaultApp})
-    end if
-end procedure
-
-
-procedure do_app_run(sequence exfile)
+procedure open_file_with(sequence exfile, sequence cmdfile)
     exfile = filesys:pathname(exfile) & "\\" & filesys:filename(exfile)
     
     if file_exists(exfile) then
-        object
-        EuiPath = cfg:get_var("", "Projects", "EuiPath"),
-        IncludePath = cfg:get_var("", "Projects", "IncludePath")
-        atom wh = gui:widget_get_handle("winMain")
-        
-        if sequence(EuiPath) and sequence(IncludePath) then --and sequence(RedyLibPath) then
-            clear_error()
-            sequence cmdline = 
-            --" -EUDIR \"\"" & eupath --is this needed to override possible conflicts with installed version of euphoria? 
-            --"-I \"" & IncludePath & "\" -I \"" & RedyLibPath & "\" \"" & exfile & "\""
-            "-I \"" & IncludePath & "\" \"" & exfile & "\""
+        if find(cmdfile, {"euiw.exe", "eui.exe", "eu.exe", "eubind.exe", "euc.exe"}) then
+            object
+            EubinPath = cfg:get_var("", "Paths", "EubinPath"),
+            IncludePath = cfg:get_var("", "Paths", "IncludePath")
+            atom wh = gui:widget_get_handle("winMain")
             
-            --puts(1, "<" & cmdline & ">\n")
-            
-            atom ret = gui:ShellExecute(wh, "open", EuiPath, cmdline, filesys:pathname(exfile))
-            --ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL )
-            
-            if ret > 32 then 
-              -- success
-            else 
-              -- failure
-                msgbox:msg("Unable to run '" & exfile & "'. ShellExecute returned: " & sprint(ret) & "", "Error")
+            if sequence(EubinPath) and sequence(IncludePath) then --and sequence(RedyLibPath) then
+                clear_error()
+                sequence cmdline = 
+                --" -EUDIR \"\"" & eupath --is this needed to override possible conflicts with installed version of euphoria? 
+                --"-I \"" & IncludePath & "\" -I \"" & RedyLibPath & "\" \"" & exfile & "\""
+                `-I "` & IncludePath & `" "` & exfile & `"`
+                
+                atom ret = gui:ShellExecute(wh, "open", EubinPath & "\\" & cmdfile, cmdline, filesys:pathname(exfile))
+                --ShellExecute(atom hwnd, object lpOperation, object lpFile, object lpParameters = NULL, object lpDirectory = NULL, atom nShowCmd = SW_SHOWNORMAL )
+                
+                if ret > 32 then 
+                  -- success
+                else 
+                  -- failure
+                    msgbox:msg("Unable to run '" & exfile & "'. ShellExecute returned: " & sprint(ret) & "", "Error")
+                end if
+            else
+                msgbox:msg("Unable to run '" & exfile & "'. Invalid eui or include path.", "Error")
             end if
-        else
-            msgbox:msg("Unable to run '" & exfile & "'. Invalid eui or include path.", "Error")
         end if
     else
         msgbox:msg("Unable to run '" & exfile & "'. File does not exist.", "Error")
     end if
+end procedure
+
+
+procedure do_app_run_default()
+    if length(SourcePath) > 0 and length(DefaultApp) > 0 then
+        open_file_with(SourcePath & "\\" & DefaultApp, "euiw.exe")
+    end if
+end procedure
+
+
+procedure do_app_run_window(sequence exfile)
+    open_file_with(exfile, "euiw.exe")
+end procedure
+
+
+procedure do_app_run_console(sequence exfile)
+    open_file_with(exfile, "eui.exe")
+end procedure
+
+
+procedure do_app_run_eu_backend(sequence exfile)
+    open_file_with(exfile, "eu.exe")
 end procedure
 
 
@@ -166,8 +200,8 @@ procedure clear_error()
             end if
         end if
     end if
-    pError = 0 
-    action:set_enabled("project_show_error", 0)
+    --pError = 0
+    --action:set_enabled("project_show_error", 0)
 end procedure
 
 
@@ -315,6 +349,10 @@ procedure show_build()
         {"label", "Close"}
     })
 end procedure
+
+
+
+
 
 
 

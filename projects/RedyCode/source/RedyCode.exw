@@ -1,5 +1,5 @@
--- This file is part of RedyCode™ Integrated Development Environment
--- <http://redy-project.org/>
+-- This file is part of RedyCode(TM) Integrated Development Environment
+-- http://redy-project.org/
 -- 
 -- Copyright 2016 Ryan W. Johnson
 -- 
@@ -7,15 +7,14 @@
 -- you may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
 -- 
---   http://www.apache.org/licenses/LICENSE-2.0
+-- http://www.apache.org/licenses/LICENSE-2.0
 -- 
 -- Unless required by applicable law or agreed to in writing, software
 -- distributed under the License is distributed on an "AS IS" BASIS,
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
---
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 
 without warning
@@ -37,7 +36,7 @@ include build.e as build
 include context.e as context
 include navfile.e as navfile
 include help.e
-include preferences.e
+include preferences.e as pref
 include tips.e as tips
 include splash.e
 
@@ -51,7 +50,7 @@ include std/filesys.e
 
 app:define({
     {"title", "RedyCode"},
-    {"version", "0.9.3"},
+    {"version", "0.9.4"},
     {"website", "http://redy-project.org/"},
     {"author", "Ryan W. Johnson"},
     {"copyright", "2016 Ryan W. Johnson"},
@@ -217,8 +216,7 @@ app:set_menus({
         "project_open",
         "project_close",
         "-",
-        "project_save",
-        "project_save_as",
+        "project_copy_to",
         "-",
         "project_explore_folder",
         "project_refresh",
@@ -278,13 +276,12 @@ app:set_menus({
         "show_preferences",
         "show_edit_toolbars",
         "-",
-        "show_code_builder",
         "show_ascii_chart",
         "show_color_selector"}
     },
     {"Application", {
         "app_run_default",
-        --"app_run",     --this will use list_func to automatically generate menu items for each .ex or .exw file in the project
+        --"app_run_window",     --this will use list_func to automatically generate menu items for each .ex or .exw file in the project
         "-",
         "app_bind",
         "app_build",
@@ -783,6 +780,10 @@ end procedure
 
 procedure do_file_new()
     create_tab("Untitled", NullFileName, "")
+    sequence iname = action:getfocus()
+    if sequence(project:pHeader) and length(project:pHeader) > 0 then
+        txtdoc:docmd(iname & ".filepage", "char", {context:header_code(project:pInfoVars, project:pHeader)})
+    end if
 end procedure
 
 
@@ -1164,11 +1165,35 @@ procedure gui_event(object evwidget, object evtype, object evdata)
     --pretty_print(1, {evwidget, evtype, evdata}, {2})
     if equal(evwidget, "winMain") then
         if equal(evtype, "GotFocus") then
-            action:do_proc("project_refresh", {})
+            if length(pPath) = 0 then
+                action:do_proc("list_projects", {})
+            else
+                object prevError = project:pError
+                project:pError = build:check_error() --noerror: 0, error: {errfile, errline, errtxt}
+                
+                if not equal(prevError, project:pError) then
+                    action:do_proc("project_refresh", {})
+                    atom tabidx = find(CurrentTab, fTabNames)
+                    if tabidx > 0 then
+                        update_tab_info(tabidx)
+                    end if
+                end if
+                
+                if sequence(pError) > 0 then
+                    action:set_enabled("project_show_error", 1)
+                    if not equal(prevError, pError) then
+                        action:do_proc("project_show_error", {})
+                    end if
+                else
+                    action:set_enabled("project_show_error", 0)
+                end if
+            end if
+            
+            /*action:do_proc("project_refresh", {})
             atom tabidx = find(CurrentTab, fTabNames)
             if tabidx > 0 then
                 update_tab_info(tabidx)
-            end if
+            end if*/
         end if
     else
         for fidx = 1 to length(fTabNames) do
@@ -1239,6 +1264,8 @@ procedure start()
     
     app:create_main_window(routine_id("gui_event"))
     
+    pref:check_config()
+    
     sequence ImgPath = ExePath & "\\images\\"
     gui:load_bitmap("folder_open_16", ImgPath & "folder_open_16.bmp")
     gui:load_bitmap("redy16", ImgPath & "redy16.bmp")
@@ -1251,10 +1278,12 @@ procedure start()
     --set_tabs_double_click_action("file_close") --these are not necessary, defaults are already the same as this 
     --set_tabs_select_action("file_switch_to")
     
+    --pretty_print(1, cmdline, {2})
+    
     if length(cmdline) > 2 then
         for c = 3 to length(cmdline) do
-            if match(cmdline, "--") = 1 then
-                CmdAction = lower(cmdline[3..$])
+            if match("--", cmdline[c]) = 1 then
+                CmdAction = lower(cmdline[c][3..$])
             else
                 if equal(filesys:fileext(cmdline[c]), "redy") and file_exists(cmdline[c]) then
                     CmdFile = cmdline[c]
@@ -1271,6 +1300,7 @@ procedure start()
             action:do_proc("project_load", {CmdFile})
         case "run" then
             action:do_proc("project_load", {CmdFile})
+            action:set_enabled("app_run_default", 1)
             action:do_proc("app_run_default", {})
         case "build" then
             action:do_proc("project_load", {CmdFile})
@@ -1283,19 +1313,3 @@ procedure start()
 end procedure
 
 gui:start(routine_id("start"), routine_id("gui_event"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

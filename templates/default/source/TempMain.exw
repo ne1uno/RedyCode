@@ -27,18 +27,8 @@ include std/utils.e
 include std/sequence.e
 include std/filesys.e
 
---Define Application Info
-app:define({
-    {"title", "AppName"},
-    {"version", "0.9.2"},
-    {"author", "You"},
-    {"copyright", "2016 You"},
-    {"license", {
-        "Your license...",
-        "...continued."
-    }},
-    {"about", "RedyCode application template."}
-})
+
+app:define({})
 
 -- Edit Files ----------------------------------------------------------------
 
