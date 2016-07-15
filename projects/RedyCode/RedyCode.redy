@@ -1,14 +1,16 @@
-[Project]
-version = "0.9.3"
-author = "Ryan W. Johnson"
-description = "Integrated Developement Environment for the Euphoria programming language using the Redy Application Environment."
-license = "Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at"
-license = ""
-license = "  http://www.apache.org/licenses/LICENSE-2.0"
-license = ""
-license = "Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."
-
-[Euphoria]
-EuiPath = 0
-EubindPath = 0
-IncludePath = 0
+[App Info]
+AppInfo.title = "RedyCode"
+AppInfo.description = "Integrated Development Environment"
+AppInfo.version = "0.9.4"
+AppInfo.website = "http://redy-project.org/"
+AppInfo.author = "Ryan W. Johnson"
+AppInfo.year = "2016"
+AppInfo.license = "Licensed under the Apache License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License."
+AppInfo.about = "An open source Integrated Development Environment, which is written in the Euphoria programming language, to help you write graphical user interface applications in pure Euphoria code without using third-party widget toolkits."
+[Header]
+Header.1 = "This file is part of $title(TM) $description"
+Header.2 = "$website"
+Header.3 = ""
+Header.4 = "Copyright $year $author"
+Header.5 = ""
+Header.6 = "$license"
