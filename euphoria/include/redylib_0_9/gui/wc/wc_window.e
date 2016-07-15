@@ -253,15 +253,19 @@ procedure wc_create(atom wid, object wprops)
             end if
         end if
         
+        if wsize[1] > displaysize[1] then
+            wsize[1] = displaysize[1]
+        end if
+        if wsize[2] > displaysize[2] then
+            wsize[2] = displaysize[2]
+        end if
+        
         if wpos[1] < 0 then
             wpos[1] = floor(displaysize[1] / 2 - wsize[1] / 2)
         end if
         if wpos[2] < 0 then
             wpos[2] = floor(displaysize[2] / 2 - wsize[2] / 2)
         end if
-        --wmaximized = 0
-        
-        --? {wpos & wsize & wmaximized}
         
         if match("_winDebug", wname) then
             bcolor = rgb(255, 255, 200)

@@ -44,6 +44,7 @@ __text__                underline text
 include redylib_0_9/gui.e as gui
 include redylib_0_9/gui/themes.e as th
 include redylib_0_9/actions.e as action
+include redylib_0_9/gui/tokenize.e
 
 include std/sequence.e
 include std/search.e
@@ -56,7 +57,6 @@ include std/search.e
 include std/convert.e
 include std/eumem.e
 
-include euphoria/tokenize.e
 
 enum            --iSyntaxMode - syntax modes
 synPlain,
@@ -3307,14 +3307,16 @@ function word_range(sequence txt, atom cpos)
                     ech = cpos+1
                 end if
             end for
-            for ch = cpos-1 to 0 by -1 do --find beginning of word
-                if find(txt[ch+1], "\"") then
-                    sch = ch
-                    exit
-                else
-                    sch = cpos
-                end if
-            end for
+            if ech = cpos+1 then
+                for ch = cpos-1 to 0 by -1 do --find beginning of word
+                    if find(txt[ch+1], "\"") then
+                        sch = ch
+                        exit
+                    else
+                        sch = cpos
+                    end if
+                end for
+            end if
         elsif find(txt[cpos+1], "'") then --find first and last identifier chars before and after cpos
             for ch = cpos+2 to length(txt) do --find end of word
                 if find(txt[ch], "'") then
@@ -3324,15 +3326,16 @@ function word_range(sequence txt, atom cpos)
                     ech = cpos+1
                 end if
             end for
-            for ch = cpos-1 to 0 by -1 do --find beginning of word
-                if find(txt[ch+1], "'") then
-                    sch = ch
-                    exit
-                else
-                    sch = cpos
-                end if
-            end for
-            
+            if ech = cpos+1 then
+                for ch = cpos-1 to 0 by -1 do --find beginning of word
+                    if find(txt[ch+1], "'") then
+                        sch = ch
+                        exit
+                    else
+                        sch = cpos
+                    end if
+                end for
+            end if
         elsif find(txt[cpos+1], "[") then --find first and last identifier chars before and after cpos
             ignorecount = 1
             for ch = cpos+2 to length(txt) do --find end of word
@@ -4785,7 +4788,10 @@ export function save_to_file(sequence iname, sequence filename)
             success = 0
         else
             for t = 1 to length(iTxtLnText[idx]) do
-                puts(fn, iTxtLnText[idx][t] & "\n")
+                puts(fn, iTxtLnText[idx][t])
+                if t < length(iTxtLnText[idx]) then
+                    puts(fn, "\n")
+                end if
             end for
             close(fn)
             success = 1
@@ -4793,32 +4799,4 @@ export function save_to_file(sequence iname, sequence filename)
     end if
     return success
 end function
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

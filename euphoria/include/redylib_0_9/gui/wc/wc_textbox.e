@@ -1014,7 +1014,7 @@ procedure wc_create(atom wid, object wprops)
         case "number" then
             optModeOptions = {optMin, optMax}
             if wlabelpos = 0 then
-                wlabelpos = 2 --single line default: side
+                wlabelpos = 1 --single line default: side
             end if
         case "text" then
             optModeOptions = {optWordWrap, optVisibleLines}
@@ -1025,28 +1025,28 @@ procedure wc_create(atom wid, object wprops)
                 --else
                 --    wlabelpos = 2 --single line default: side
                 --end if
-                wlabelpos = 1
+                wlabelpos = 2
             end if
         case "string" then
             optModeOptions = optList
             if wlabelpos = 0 then
-                wlabelpos = 2 --single line default: side
+                wlabelpos = 1 --single line default: side
             end if
         case "item" then
             optModeOptions = optList
             optDataFormat = optRestrict
             if wlabelpos = 0 then
-                wlabelpos = 2 --single line default: side
+                wlabelpos = 1 --single line default: side
             end if
         case "datetime" then
             optModeOptions = optPrecision
             if wlabelpos = 0 then
-                wlabelpos = 2 --single line default: side
+                wlabelpos = 1 --single line default: side
             end if
         case "password" then
             optModeOptions = optMask
             if wlabelpos = 0 then
-                wlabelpos = 2 --single line default: side
+                wlabelpos = 1 --single line default: side
             end if
     end switch
     
@@ -1986,7 +1986,11 @@ procedure wc_resize(atom wid)
             wparent = parent_of(wid)
             if wparent > 0 then
                 if equal(widget_get_class(wparent), "container") then
-                    widget:wc_call_event(wparent, "setboxwidth", {wid, txex[1]})
+                    if wcprops[wcpLabelPosition][idx] = 1 then --side
+                        widget:wc_call_event(wparent, "setboxwidth", {wid, txex[1]})
+                    else
+                        widget:wc_call_event(wparent, "setboxwidth", {wid, 0})
+                    end if
                 end if
                 wc_call_resize(wparent)
             end if
@@ -2029,7 +2033,11 @@ procedure wc_resize(atom wid)
             wparent = parent_of(wid)
             if wparent > 0 then
                 if equal(widget_get_class(wparent), "container") then
-                    widget:wc_call_event(wparent, "setboxwidth", {wid, txex[1]})
+                    if wcprops[wcpLabelPosition][idx] = 1 then --side
+                        widget:wc_call_event(wparent, "setboxwidth", {wid, txex[1]})
+                    else
+                        widget:wc_call_event(wparent, "setboxwidth", {wid, 0})
+                    end if
                 end if
                 wc_call_resize(wparent)
             end if
@@ -2350,9 +2358,30 @@ procedure cmd_append_text(atom wid, sequence txtlines) --Lines:{{icon1, "col1", 
             insert_txt(idx, wh, txtlines)
         end if
         move_cursor(idx, wh, 2, 2)
+        
+        wc_call_event(wid, "changed", {})
     end if
 end procedure
 wc_define_command("textbox", "append_text", routine_id("cmd_append_text"))
+
+
+procedure cmd_insert_text(atom wid, sequence txtlines) --Lines:{{icon1, "col1", "col2",...},{icon2, "col1", "col2"...}...}
+    atom idx, wh
+    idx = find(wid, wcprops[wcpID])
+    if idx > 0 then
+        wh = widget:widget_get_handle(wid)
+        if atom(txtlines[1]) then --if this is an atom, it means that this is raw text, not a sequence of lines of text)
+            txtlines = remove_all(13, txtlines)
+            txtlines = split(txtlines, 10)
+        end if
+        if length(txtlines) > 0 then
+            insert_txt(idx, wh, txtlines)
+        end if
+        
+        wc_call_event(wid, "changed", {})
+    end if
+end procedure
+wc_define_command("textbox", "insert_text", routine_id("cmd_insert_text"))
 
 
 function cmd_get_text(atom wid)
@@ -2429,4 +2458,6 @@ procedure cmd_select_all(atom wid)
     end if
 end procedure
 wc_define_command("textbox", "select_all", routine_id("cmd_select_all"))
+
+
 

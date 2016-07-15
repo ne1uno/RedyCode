@@ -120,6 +120,11 @@ end procedure
 
 
 export procedure save_config(sequence fname)
+    --pretty_print(1, cfgVars[iConfigFile], {2})
+    --pretty_print(1, cfgVars[iSectionName], {2})
+    --pretty_print(1, cfgVars[iVarName], {2})
+    --pretty_print(1, cfgVars[iVarData], {2})
+    
     if length(fname) = 0 then
         fname = DefaultConfigFile
     end if
@@ -163,16 +168,11 @@ export procedure close_config(sequence fname)
 end procedure
 
 
-export procedure clear_config(sequence fname)
-    if length(fname) = 0 then
-        fname = DefaultConfigFile
-    end if
-    atom idx = find(fname, cfgVars[iConfigFile])
-    if idx > 0 then
-        cfgVars[iSectionName][idx] = {}
-        cfgVars[iVarName][idx] = {}
-        cfgVars[iVarData][idx] = {}
-    end if
+export procedure clear_config()
+    cfgVars[iConfigFile] = {}
+    cfgVars[iSectionName] = {}
+    cfgVars[iVarName] = {}
+    cfgVars[iVarData] = {}
 end procedure
 
 
