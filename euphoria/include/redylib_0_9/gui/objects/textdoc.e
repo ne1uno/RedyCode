@@ -4538,10 +4538,10 @@ export function match_string(sequence iname, sequence findstr, atom direction = 
         end if
         if direction = -2 then --first
             li = 1
-            direction = 1
+            --direction = 1
         elsif direction = 2 then --last
             li = length(iTxtLnText[idx])
-            direction = -1
+            --direction = -1
         else --next/prev
             li = iSelStartLine[idx]
         end if
@@ -4561,7 +4561,7 @@ export function match_string(sequence iname, sequence findstr, atom direction = 
                         return {li, matchlist[1]}
                         exit
                     end if
-                else
+                elsif direction = -1 then
                     if li = iSelStartLine[idx] then
                         for lp = length(matchlist) to 1 by -1 do
                             if matchlist[lp] < iSelStartCol[idx] + 1 then
@@ -4573,10 +4573,15 @@ export function match_string(sequence iname, sequence findstr, atom direction = 
                         return {li, matchlist[$]}
                         exit
                     end if
+                else
+                    return {li, matchlist[1]}
                 end if
             end if
-            
-            li += direction
+            if direction > 0 then
+                li += direction
+            else
+                li -= direction
+            end if
         end while
     end if
     
@@ -4593,6 +4598,7 @@ export function match_replace_all(sequence iname, sequence findstr, sequence rep
     if idx > 0 then
         sli = iSelStartLine[idx]
         scol = iSelStartCol[idx]
+        
         if direction != -2 then
             direction = 1
         end if

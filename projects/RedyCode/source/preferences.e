@@ -36,8 +36,8 @@ include std/sequence.e
 include std/io.e
          
 
-object ConfigPath, TemplatePath, ProjectPath, EubinPath, IncludePath,
-DefaultInfoVars, DefaultHeader, CurrDefaultInfoVarIdx
+object RedyPath, TemplatePath, ProjectPath, EubinPath, IncludePath,
+DefaultInfoVars, DefaultHeader, uiInfoVars, uiInfoVarIdx
 
 
 constant
@@ -80,145 +80,102 @@ action:define({
 })
 
 
-procedure detect_paths()
-    sequence patherr = {}
-    atom rescan
+function check_paths(object autoreset, object txtTemplatePath, object txtProjectPath, object txtEubinPath, object txtIncludePath)
     object sp
     
-    -- Detect if cfg has moved -------------------------------------
-    if sequence(ConfigPath) and file_exists(ConfigPath) and equal(ConfigPath, ExePath) then
-        rescan = 0
-    else
-        rescan = 1
-        ConfigPath = ExePath
-        cfg:set_var("", "Paths", "ConfigPath", ConfigPath)
-    end if
-    
-    --only redetect paths that are within the RedyCode folder structure (leave external paths alone)
-    if sequence(TemplatePath) then
-        if rescan and match(ExePath, TemplatePath) = 1 then
-            TemplatePath = 0
-        end if
-    end if
-    if sequence(ProjectPath) then
-        if rescan and match(ExePath, ProjectPath) = 1 then
-            ProjectPath = 0
-        end if
-    end if
-    if sequence(EubinPath) then
-        if rescan and match(ExePath, EubinPath) = 1 then
-            EubinPath = 0
-        end if
-    end if
-    if sequence(IncludePath) then
-        if rescan and match(ExePath, IncludePath) = 1 then
-            IncludePath = 0
-        end if
-    end if
-    
-    --detect undefined paths
-    if atom(TemplatePath) then
-        TemplatePath = ExePath & "\\templates"
-        if not file_exists(TemplatePath) then --see if running from project source folder
-            sp = split_path(ExePath)
-            if length(sp) > 3 then
-                TemplatePath = join_path(sp[1..$-3]) & "\\templates"
+    if autoreset then
+        if atom(txtTemplatePath) or not file_exists(txtTemplatePath) then
+            txtTemplatePath = ExePath & "\\templates"
+            if not file_exists(txtTemplatePath) then --see if running from project source folder
+                sp = split_path(ExePath)
+                if length(sp) > 3 then
+                    txtTemplatePath = join_path(sp[1..$-3]) & "\\templates"
+                end if
+                --TemplatePath = ExePath & "\\..\\..\\..\\templates"
             end if
-            --TemplatePath = ExePath & "\\..\\..\\..\\templates"
         end if
-    end if
-    if atom(ProjectPath) then
-        ProjectPath = ExePath & "\\projects"
-        if not file_exists(ProjectPath) then
-            sp = split_path(ExePath)
-            if length(sp) > 2 then
-                ProjectPath = join_path(sp[1..$-2])
+        if atom(txtProjectPath) or not file_exists(txtProjectPath) then
+            txtProjectPath = ExePath & "\\projects"
+            if not file_exists(txtProjectPath) then
+                sp = split_path(ExePath)
+                if length(sp) > 2 then
+                    txtProjectPath = join_path(sp[1..$-2])
+                end if
+                --ProjectPath = ExePath & "\\..\\.."
             end if
-            --ProjectPath = ExePath & "\\..\\.."
         end if
-    end if
-    if atom(EubinPath) then
-        EubinPath = ExePath & "\\euphoria\\bin"
-        if not file_exists(EubinPath) then
-            sp = split_path(ExePath)
-            if length(sp) > 3 then
-                EubinPath = join_path(sp[1..$-3]) & "\\euphoria\\bin"
+        if atom(txtEubinPath) or not file_exists(txtEubinPath) then
+            txtEubinPath = ExePath & "\\euphoria\\bin"
+            if not file_exists(txtEubinPath) then
+                sp = split_path(ExePath)
+                if length(sp) > 3 then
+                    txtEubinPath = join_path(sp[1..$-3]) & "\\euphoria\\bin"
+                end if
+                --EubinPath = ExePath & "\\..\\..\\..\\euphoria\\bin"
             end if
-            --EubinPath = ExePath & "\\..\\..\\..\\euphoria\\bin"
         end if
-    end if
-    if atom(IncludePath) then
-        IncludePath = ExePath & "\\euphoria\\include"
-        if not file_exists(IncludePath) then
-            sp = split_path(ExePath)
-            if length(sp) > 3 then
-                IncludePath = join_path(sp[1..$-3]) & "\\euphoria\\include"
+        if atom(txtIncludePath) or not file_exists(txtIncludePath) then
+            txtIncludePath = ExePath & "\\euphoria\\include"
+            if not file_exists(txtIncludePath) then
+                sp = split_path(ExePath)
+                if length(sp) > 3 then
+                    txtIncludePath = join_path(sp[1..$-3]) & "\\euphoria\\include"
+                    
+                end if
+                --IncludePath = ExePath & "\\..\\..\\..\\euphoria\\include"
             end if
-            --IncludePath = ExePath & "\\..\\..\\..\\euphoria\\include"
         end if
     end if
     
+    if length(txtTemplatePath) > 0 then
+        txtTemplatePath = filesys:pathname(txtTemplatePath & "\\")
+    end if
+    if length(txtProjectPath) > 0 then
+        txtProjectPath = filesys:pathname(txtProjectPath & "\\")
+    end if
+    if length(txtEubinPath) > 0 then
+        txtEubinPath = filesys:pathname(txtEubinPath & "\\")
+    end if
+    if length(txtIncludePath) > 0 then
+        txtIncludePath = filesys:pathname(txtIncludePath & "\\")
+    end if
+    
+    --pretty_print(1, {txtTemplatePath, txtProjectPath, txtEubinPath, txtIncludePath}, {2})
     --verify paths
-    if file_exists(TemplatePath) then
-        cfg:set_var("", "Paths", "TemplatePath", filesys:pathname(TemplatePath & "\\"))
-    else
-        TemplatePath = ""
-        patherr &= {"Templates"}
+    if not file_exists(txtTemplatePath) then
+        return 1
     end if
-    if file_exists(ProjectPath) then
-        cfg:set_var("", "Paths", "ProjectPath", filesys:pathname(ProjectPath & "\\"))
-    else
-        ProjectPath = ""
-        patherr &= {"Projects"}
+    if not file_exists(txtProjectPath) then
+        return 2
     end if
-    if file_exists(EubinPath) then
-        cfg:set_var("", "Paths", "EubinPath", filesys:pathname(EubinPath & "\\"))
-    else
-        EubinPath = ""
-        patherr &= {"Euphoria"}
+    if not file_exists(txtEubinPath) then
+        return 3
     end if
-    if file_exists(IncludePath) then
-        cfg:set_var("", "Paths", "IncludePath", filesys:pathname(IncludePath & "\\"))
-    else
-        IncludePath = ""
-        patherr &= {"Includes"}
+    if not file_exists(txtIncludePath) then
+        return 4
     end if
-    --if file_exists(RedyLibPath) then
-    --    cfg:set_var("", "Paths", "RedyLibPath", RedyLibPath)
-    --else
-    --    RedyLibPath = ""
-    --end if
     
-    path_error(patherr)
-end procedure
+    return {txtTemplatePath, txtProjectPath, txtEubinPath, txtIncludePath}
+end function
 
 
-export procedure check_config()
-    ConfigPath = cfg:get_var("", "Paths", "ConfigPath")
+procedure load_prefs()
+    cfg:close_config("")
+    cfg:load_config("")
+    
+    RedyPath = cfg:get_var("", "Paths", "RedyPath")
     TemplatePath = cfg:get_var("", "Paths", "TemplatePath")
     ProjectPath = cfg:get_var("", "Paths", "ProjectPath")
     EubinPath = cfg:get_var("", "Paths", "EubinPath")
     IncludePath = cfg:get_var("", "Paths", "IncludePath")
     
-    object 
-    prevConfigPath = ConfigPath,
-    prevTemplatePath = TemplatePath,
-    prevProjectPath = ProjectPath,
-    prevEubinPath = EubinPath,
-    prevIncludePath = IncludePath,
-    dosave = 0
-
-    detect_paths()
-    
     DefaultInfoVars = {}
     DefaultHeader = {}
-    CurrDefaultInfoVarIdx = 0
     sequence pvars = cfg:list_vars("", "Projects")
     object varval
     if length(pvars) = 0 then
         DefaultInfoVars = InitialInfoVars
         DefaultHeader = InitialHeader
-        dosave = 1
     else
         for v = 1 to length(pvars) do
             if match("DefaultInfoVar.", pvars[v]) = 1 then
@@ -245,98 +202,126 @@ export procedure check_config()
         cfg:set_var("", "Projects", "DefaultHeader." & sprint(v), DefaultHeader[v])
     end for
     
-    if not equal(prevConfigPath, ConfigPath) or not equal(prevTemplatePath, TemplatePath) or not equal(prevProjectPath, ProjectPath) or not equal(prevEubinPath, EubinPath) or not equal(prevIncludePath, IncludePath) then
-        dosave = 1
-    end if
-    
-    if dosave then
-        cfg:save_config("")
-    end if
-    --msg:publish("config", "command", "refresh_projects", 0)
-    
-end procedure
-
-
-procedure path_error(sequence patherr)
-    if length(patherr) > 0 then
-        sequence errtxt = "Invalid path: "
-        
-        action:do_proc("show_preferences", {})
-        
-        gui:wproc("winPreferences.tabCategories", "select_tab_by_widget", {"winPreferences.cntPathsTab"})
-        
-        
-        for p = 1 to length(patherr)-1 do
-            errtxt &= patherr[p] & ", "
-        end for
-        errtxt &= patherr[$]
-        msgbox:msg(errtxt, "Error")
-    end if
 end procedure
 
 
 procedure save_prefs()
-    sequence patherr = {}
-    
-    TemplatePath = gui:wfunc("winPreferences.txtTemplatePath", "get_text", {})
-    ProjectPath = gui:wfunc("winPreferences.txtProjectPath", "get_text", {})
-    EubinPath = gui:wfunc("winPreferences.txtEubinPath", "get_text", {})
-    IncludePath = gui:wfunc("winPreferences.txtIncludePath", "get_text", {})
-    --RedyLibPath = gui:wfunc("winPreferences.txtRedyLibPath", "get_text", {})
-        
-    if file_exists(TemplatePath) then
-        cfg:set_var("", "Paths", "TemplatePath", filesys:pathname(TemplatePath & "\\"))
-    else
-        ProjectPath = ""
-        patherr &= {"Templates"}
-    end if
-    if file_exists(ProjectPath) then
-        cfg:set_var("", "Paths", "ProjectPath", filesys:pathname(ProjectPath & "\\"))
-    else
-        ProjectPath = ""
-        patherr &= {"Projects"}
-    end if
-    if file_exists(EubinPath) then
-        cfg:set_var("", "Paths", "EubinPath", filesys:pathname(EubinPath & "\\"))
-    else
-        EubinPath = ""
-        patherr &= {"Euphoria"}
-    end if
-    if file_exists(IncludePath) then
-        cfg:set_var("", "Paths", "IncludePath", filesys:pathname(IncludePath & "\\"))
-    else
-        IncludePath = ""
-        patherr &= {"Includes"}
-    end if
-    --if file_exists(RedyLibPath) then
-    --    cfg:set_var("", "Paths", "RedyLibPath", RedyLibPath)
-    --else
-    --    RedyLibPath = ""
-    --end if
+    cfg:set_var("", "Paths", "RedyPath", RedyPath)
+    cfg:set_var("", "Paths", "TemplatePath", TemplatePath)
+    cfg:set_var("", "Paths", "ProjectPath", ProjectPath)
+    cfg:set_var("", "Paths", "EubinPath", EubinPath)
+    cfg:set_var("", "Paths", "IncludePath", IncludePath)
     
     cfg:delete_section("", "Projects")
-    
     for v = 1 to length(DefaultInfoVars) do
         cfg:set_var("", "Projects", "DefaultInfoVar." & DefaultInfoVars[v][1], join(DefaultInfoVars[v][2], "\\n"))
     end for
-    DefaultHeader = gui:wfunc("winPreferences.txtDefaultHeader", "get_text", {})
     for v = 1 to length(DefaultHeader) do
         cfg:set_var("", "Projects", "DefaultHeader." & sprint(v), DefaultHeader[v])
     end for
     
     cfg:save_config("")
-    
-    action:do_proc("project_refresh", {})
-    
 end procedure
 
 
 procedure refresh_infovar_list()
     sequence itms = {}
-    for i = 1 to length(DefaultInfoVars) do
-        itms &= {{rgb(255, 255, 255), DefaultInfoVars[i][1], join(DefaultInfoVars[i][2], "\\n")}}
+    for i = 1 to length(uiInfoVars) do
+        itms &= {{rgb(255, 255, 255), uiInfoVars[i][1], join(uiInfoVars[i][2], "\\n")}}
     end for
     gui:wproc("winPreferences.lstDefaultInfoVars", "set_list_items", {itms})
+end procedure
+
+
+procedure path_error(object paths)
+    if atom(paths) then
+        action:do_proc("show_preferences", {})
+        gui:wproc("winPreferences.tabCategories", "select_tab_by_widget", {"winPreferences.cntPathsTab"})
+        --gui:wproc("winPreferences.tabCategories", "select_tab", {"Paths"})
+        
+        if paths = 1 then
+            gui:set_key_focus("winPreferences.txtTemplatePath")
+            msgbox:msg("Invalid Template path.", "Error")
+        elsif paths = 2 then
+            gui:set_key_focus("winPreferences.txtProjectPath")
+            msgbox:msg("Invalid Project path.", "Error")
+        elsif paths = 3 then
+            gui:set_key_focus("winPreferences.txtEubinPath")
+            msgbox:msg("Invalid Eubin path.", "Error")
+        elsif paths = 4 then
+            gui:set_key_focus("winPreferences.txtIncludePath")
+            msgbox:msg("Invalid Include path.", "Error")
+        end if
+    end if
+end procedure
+
+
+export procedure check_config()
+    load_prefs()
+    object 
+    prevRedyPath = RedyPath,
+    prevTemplatePath = TemplatePath,
+    prevProjectPath = ProjectPath,
+    prevEubinPath = EubinPath,
+    prevIncludePath = IncludePath,
+    paths,
+    cmdline,
+    sp
+    
+    RedyPath = ExePath
+    
+    cmdline = command_line()
+    if equal(fileext(cmdline[2]), "exw") then
+        sp = split_path(ExePath)
+        if length(sp) > 3 and equal(sp[$], "source") then
+            RedyPath = join_path(sp[1..$-3])
+            --puts(1, ExePath & ": ")
+        end if
+    end if
+    --puts(1, RedyPath & "\n")
+    
+    -- Detect if cfg has moved -------------------------------------
+    if atom(prevRedyPath) then --no previous redy path, so initialize all paths
+        TemplatePath = 0
+        ProjectPath = 0
+        EubinPath = 0
+        IncludePath = 0
+        
+    elsif not equal(RedyPath, prevRedyPath) then --redy path has changed, check paths
+        --only redetect paths that were previously set to default paths (leave manually changed paths alone)
+        if sequence(TemplatePath) and equal(prevRedyPath & "\\templates", TemplatePath) = 1 then
+            TemplatePath = 0
+        end if
+        if sequence(ProjectPath) and equal(prevRedyPath & "\\projects", ProjectPath) = 1 then
+            ProjectPath = 0
+        end if
+        if sequence(EubinPath) and equal(prevRedyPath & "\\euphoria\\bin", EubinPath) = 1 then
+            EubinPath = 0
+        end if
+        if sequence(IncludePath) and equal(prevRedyPath & "\\euphoria\\include", IncludePath) = 1 then
+            IncludePath = 0
+        end if
+    end if
+    
+    paths = check_paths(1, TemplatePath, ProjectPath, EubinPath, IncludePath)
+    
+    --RedyPath = ExePath
+    if sequence(paths) then
+        TemplatePath = paths[1]
+        ProjectPath = paths[2]
+        EubinPath = paths[3]
+        IncludePath = paths[4]
+    else
+        TemplatePath = ""
+        ProjectPath = ""
+        EubinPath = ""
+        IncludePath = ""
+        path_error(paths)
+    end if
+    
+    if not equal(prevRedyPath, RedyPath) or not equal(prevTemplatePath, TemplatePath) or not equal(prevProjectPath, ProjectPath) or not equal(prevEubinPath, EubinPath) or not equal(prevIncludePath, IncludePath) then
+        save_prefs()
+    end if
 end procedure
 
 
@@ -368,7 +353,7 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
     case "winPreferences.txtEubinPath" then
         
     case "winPreferences.btnEubinPath" then
-        object selfiles = dlgfile:os_select_open_file("winPreferences", {{"Euphoria Interpretor", "eui.exe"}}, 0)
+        object selfiles = dlgfile:os_select_open_file("winPreferences", {{"Euphoria Interpretor", "euiw.exe"}}, 0)
         if sequence(selfiles) then
             gui:wproc("winPreferences.txtEubinPath", "set_text", {pathname(selfiles)})
         end if
@@ -390,28 +375,24 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
     --    end if
         
     case "winPreferences.btnReset" then
-        TemplatePath = 0
-        ProjectPath = 0
-        EubinPath = 0
-        IncludePath = 0
-        detect_paths()
-        TemplatePath = cfg:get_var("", "Paths", "TemplatePath")
-        ProjectPath = cfg:get_var("", "Paths", "ProjectPath")
-        EubinPath = cfg:get_var("", "Paths", "EubinPath")
-        IncludePath = cfg:get_var("", "Paths", "IncludePath")
-        gui:wproc("winPreferences.txtTemplatePath", "set_text", {TemplatePath})
-        gui:wproc("winPreferences.txtProjectPath", "set_text", {ProjectPath})
-        gui:wproc("winPreferences.txtEubinPath", "set_text", {EubinPath})
-        gui:wproc("winPreferences.txtIncludePath", "set_text", {IncludePath})
-           
+        object paths = check_paths(1, 0, 0, 0, 0)
+        if sequence(paths) then
+            gui:wproc("winPreferences.txtTemplatePath", "set_text", {paths[1]})
+            gui:wproc("winPreferences.txtProjectPath", "set_text", {paths[2]})
+            gui:wproc("winPreferences.txtEubinPath", "set_text", {paths[3]})
+            gui:wproc("winPreferences.txtIncludePath", "set_text", {paths[4]})
+        else
+            path_error(paths)
+        end if
+        
     case "winPreferences.lstDefaultInfoVars" then
         if equal(evtype, "selection") then
             if length(evdata) > 0 then
-                CurrDefaultInfoVarIdx = evdata[1][1]
+                uiInfoVarIdx = evdata[1][1]
                 gui:wproc("winPreferences.txtVarName", "set_text", {evdata[1][2][1]})
                 gui:wproc("winPreferences.txtVarString", "set_text", {split(evdata[1][2][2], "\\n")})
             else
-                CurrDefaultInfoVarIdx = 0
+                uiInfoVarIdx = 0
                 gui:wproc("winPreferences.txtVarName", "set_text", {""})
                 gui:wproc("winPreferences.txtVarString", "set_text", {""})
             end if
@@ -424,8 +405,8 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
     case "winPreferences.txtVarName" then
         if equal(evtype, "changed") then
             sequence txt = gui:wfunc("winPreferences.txtVarName", "get_text", {})
-            if CurrDefaultInfoVarIdx > 0 and CurrDefaultInfoVarIdx <= length(DefaultInfoVars) then
-                DefaultInfoVars[CurrDefaultInfoVarIdx][1] = flatten(txt)
+            if uiInfoVarIdx > 0 and uiInfoVarIdx <= length(uiInfoVars) then
+                uiInfoVars[uiInfoVarIdx][1] = flatten(txt)
                 refresh_infovar_list()
             end if
         end if
@@ -433,36 +414,36 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
     case "winPreferences.txtVarString" then
         if equal(evtype, "changed") then
             sequence txt = gui:wfunc("winPreferences.txtVarString", "get_text", {})
-            if CurrDefaultInfoVarIdx > 0 and CurrDefaultInfoVarIdx <= length(DefaultInfoVars) then
-                DefaultInfoVars[CurrDefaultInfoVarIdx][2] = txt
+            if uiInfoVarIdx > 0 and uiInfoVarIdx <= length(uiInfoVars) then
+                uiInfoVars[uiInfoVarIdx][2] = txt
                 refresh_infovar_list()
             end if
         end if
         
     case "winPreferences.btnDefaultInfoVarsAdd" then
-        if CurrDefaultInfoVarIdx > 0 and CurrDefaultInfoVarIdx <= length(DefaultInfoVars) then
-            DefaultInfoVars = DefaultInfoVars[1..CurrDefaultInfoVarIdx] & {{"NewVar", {"NewString"}}} & DefaultInfoVars[CurrDefaultInfoVarIdx+1..$]
-            CurrDefaultInfoVarIdx += 1
+        if uiInfoVarIdx > 0 and uiInfoVarIdx <= length(uiInfoVars) then
+            uiInfoVars = uiInfoVars[1..uiInfoVarIdx] & {{"NewVar", {"NewString"}}} & uiInfoVars[uiInfoVarIdx+1..$]
+            uiInfoVarIdx += 1
         else
-            DefaultInfoVars &= {{"NewVar", {"NewString"}}}
-            CurrDefaultInfoVarIdx = length(DefaultInfoVars)
+            uiInfoVars &= {{"NewVar", {"NewString"}}}
+            uiInfoVarIdx = length(uiInfoVars)
         end if
         refresh_infovar_list()
-        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{CurrDefaultInfoVarIdx}})
+        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{uiInfoVarIdx}})
         
     case "winPreferences.btnDefaultInfoVarsRemove" then
-        if CurrDefaultInfoVarIdx > 0 and CurrDefaultInfoVarIdx <= length(DefaultInfoVars) then
-            DefaultInfoVars = remove(DefaultInfoVars, CurrDefaultInfoVarIdx)
-            if CurrDefaultInfoVarIdx > length(DefaultInfoVars) then
-                CurrDefaultInfoVarIdx = length(DefaultInfoVars)
+        if uiInfoVarIdx > 0 and uiInfoVarIdx <= length(uiInfoVars) then
+            uiInfoVars = remove(uiInfoVars, uiInfoVarIdx)
+            if uiInfoVarIdx > length(uiInfoVars) then
+                uiInfoVarIdx = length(uiInfoVars)
             end if
         end if
         refresh_infovar_list()
-        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{CurrDefaultInfoVarIdx}})
+        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{uiInfoVarIdx}})
         
     case "winPreferences.btnDefaultInfoVarsInsert" then
-        if CurrDefaultInfoVarIdx > 0 and CurrDefaultInfoVarIdx <= length(DefaultInfoVars) then
-            gui:wproc("winPreferences.txtDefaultHeader", "insert_text", {"$" & DefaultInfoVars[CurrDefaultInfoVarIdx][1]})
+        if uiInfoVarIdx > 0 and uiInfoVarIdx <= length(uiInfoVars) then
+            gui:wproc("winPreferences.txtDefaultHeader", "insert_text", {"$" & uiInfoVars[uiInfoVarIdx][1]})
         end if
     case "winPreferences.btnDefaultInfoVarTextLoad" then
         object selfiles = dlgfile:os_select_open_file("winPreferences", {{"Text Files", "*.txt"}, {"All Files", "*.*"}}, 0)
@@ -474,12 +455,12 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
         end if
         
     case "winPreferences.btnDefaultInfoVarsReset" then
-        DefaultInfoVars = InitialInfoVars
-        if CurrDefaultInfoVarIdx > length(DefaultInfoVars) then
-            CurrDefaultInfoVarIdx = length(DefaultInfoVars)
+        uiInfoVars = InitialInfoVars
+        if uiInfoVarIdx > length(uiInfoVars) then
+            uiInfoVarIdx = length(uiInfoVars)
         end if
         refresh_infovar_list()
-        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{CurrDefaultInfoVarIdx}})
+        gui:wproc("winPreferences.lstDefaultInfoVars", "select_items", {{uiInfoVarIdx}})
         
     case "winPreferences.txtDefaultHeader" then
     case "winPreferences.btnDefaultHeaderLoad" then
@@ -492,7 +473,6 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
         end if
         
     case  "winPreferences.btnDefaultHeaderReset" then
-        DefaultHeader = InitialHeader
         gui:wproc("winPreferences.txtDefaultHeader", "set_text", {InitialHeader})
         
     case "winPreferences.lstControls" then
@@ -510,15 +490,31 @@ export procedure gui_event(object evwidget, object evtype, object evdata)
     case "winPreferences.chkEnableHighlighting" then
         
     case "winPreferences.btnOk" then
-        save_prefs()
-        gui:wdestroy("winPreferences")
-        check_config()
+        sequence 
+        txtTemplatePath = gui:wfunc("winPreferences.txtTemplatePath", "get_text", {}),
+        txtProjectPath = gui:wfunc("winPreferences.txtProjectPath", "get_text", {}),
+        txtEubinPath = gui:wfunc("winPreferences.txtEubinPath", "get_text", {}),
+        txtIncludePath = gui:wfunc("winPreferences.txtIncludePath", "get_text", {})
+        object paths = check_paths(0, txtTemplatePath, txtProjectPath, txtEubinPath, txtIncludePath)
+        
+        if sequence(paths) then
+            TemplatePath = paths[1]
+            ProjectPath = paths[2]
+            EubinPath = paths[3]
+            IncludePath = paths[4]
+            DefaultHeader = gui:wfunc("winPreferences.txtDefaultHeader", "get_text", {})
+            DefaultInfoVars = uiInfoVars
+            
+            save_prefs()
+            
+            gui:wdestroy("winPreferences")
+            action:do_proc("project_refresh", {})
+        else
+            path_error(paths)
+        end if
         
     case "winPreferences.btnCancel" then
-        cfg:close_config("")
-        cfg:load_config("")
         gui:wdestroy("winPreferences")
-        check_config()
         
     case "winPreferences" then
         if equal(evtype, "closed") then
@@ -534,10 +530,6 @@ procedure do_show_preferences()
         gui:set_window_top(gui:widget_get_handle("winPreferences"))
         return
     end if
-    
-    --check_config()
-    --cfg:clear_config("")
-    --cfg:load_config("")
     
     gui:wcreate({
         {"name", "winPreferences"},
@@ -706,6 +698,8 @@ procedure do_show_preferences()
     })
     gui:wproc("winPreferences.lstDefaultInfoVars", "add_column", {{"Name", 150, 0, 0}})
     gui:wproc("winPreferences.lstDefaultInfoVars", "add_column", {{"Text", 300, 0, 0}})
+    uiInfoVars = DefaultInfoVars
+    uiInfoVarIdx = 0
     refresh_infovar_list()
     gui:wcreate({
         {"name",  "winPreferences.txtVarName"},
@@ -1019,20 +1013,4 @@ procedure do_show_preferences()
     --gui:wproc("winPreferences.tabCategories", "select_tab", {"Paths"})
     gui:wproc("winPreferences.tabCategories", "select_tab", {1})
 end procedure
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

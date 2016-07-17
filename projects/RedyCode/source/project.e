@@ -891,7 +891,7 @@ procedure do_list_projects()
                 if sequence(flist) then
                     for f = 1 to length(flist) do
                         if not find('d', flist[f][D_ATTRIBUTES]) then
-                            if match(".redy", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 4 then --project config file
+                            if length(flist[f][D_NAME]) > 5 and match(".redy", flist[f][D_NAME]) = length(flist[f][D_NAME]) - 4 then --project config file
                                 listitems &= {{1, flist[f][D_NAME][1..$-5], projpath, plist[p][D_NAME] & "\\" & flist[f][D_NAME]}}
                             end if
                         end if
