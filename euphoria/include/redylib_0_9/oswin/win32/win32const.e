@@ -29,14 +29,32 @@ include std/math.e
 include std/error.e
 
 
-public constant
+ifdef NO_CHANDLE then  --eu4 and older eu41 beta doesn't have this
+   include std\win32\w32dllconst.ew
+end ifdef
+
+--this should be in win32dll too
+ifdef EU4_0 then
+	define BITS32
+end ifdef
+
+
+ifdef BITS32 then
+	constant szLpsz = 4
+elsedef
+	constant szLpsz = 8
+end ifdef
+
+public constant  --needs 32/64 switches
 szByte = 1,
 szWord = 2,
-szLong = 4,
+szLong = 4,     --may not be 4 on linux64?
 szDWord = 4,
-szLpsz = 4,
 szUInt = 4,
+szBOOL = 4,
 szShort = 2,
+
+
 SIZEOF_BITMAP = szLong + szLong + szLong + szLong + szWord + szWord + szLpsz
 /*typedef struct tagBITMAP {
     LONG   bmType;
