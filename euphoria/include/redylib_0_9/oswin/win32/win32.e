@@ -110,6 +110,17 @@ end procedure
 
 atom msg = allocate(SIZE_OF_MESSAGE)
 
+--use in PAINT msg loop so only gets allocated once
+--potential problem not being zeroed before usage?
+atom paintptr = allocate(
+				    szUInt --HDC  hdc;
+				    + szBOOL --BOOL fErase; BOOL are int
+				    + szLong * 4 --RECT rcPaint;
+				    + szBOOL --BOOL fRestore;
+				    + szBOOL --BOOL fIncUpdate;
+				    + szByte * 32 --BYTE rgbReserved[32];
+				, 1)  --free when out of scope
+
 
 -- callback routine to handle Window class
 function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
@@ -131,20 +142,13 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
             
         case WM_PAINT then
             if widx > 0 then
-                ptrPs = allocate(
-                    szUInt --HDC  hdc;
-                    + szByte --BOOL fErase;
-                    + szLong * 4 --RECT rcPaint;
-                    + szByte --BOOL fRestore;
-                    + szByte --BOOL fIncUpdate;
-                    + szByte * 32 --BYTE rgbReserved[32];
-                )
+                ptrPs  =  paintptr 
                 
                 hdc = c_func(xBeginPaint, {hwnd, ptrPs})
                 if hdc = 0 then
                     --puts(1, "error: BeginPaint\n")
                 end if
-                rect = peek4u({ptrPs + szUInt + szLong , 4}) --get update rect
+                rect = peek4u({ptrPs + szUInt + szBOOL , 4}) --get update rect
                 VOID = c_func(xBitBlt, {hdc, rect[RECT_Left], rect[RECT_Top], rect[RECT_Right], rect[RECT_Bottom], 
                                         windowDCs[widx], rect[RECT_Left], rect[RECT_Top], SRCCOPY})
                 if VOID != 1 then
@@ -168,8 +172,7 @@ function WndProc(atom hwnd, atom iMsg, atom wParam, atom lParam)
                 ------
                 
                 c_proc(xEndPaint, {hwnd, ptrPs})
-                
-                free({ptrPs})
+        
                 
                 if equal(windowStyle[widx], "popup") then
                     MenuActive = 0
